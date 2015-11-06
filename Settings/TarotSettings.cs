@@ -38,6 +38,8 @@ namespace Tarot.Settings
 
         private bool debugEnabled;
 
+        private bool exBuddyFlightEnabled;
+
         private bool waitForChainFates;
 
         private TarotSettings()
@@ -62,8 +64,37 @@ namespace Tarot.Settings
             }
         }
 
-        //// TODO: Remaining settings.
-        //// TODO: Rest of the accessors/mutators.
+        [DefaultValue(true)]
+        [Setting]
+        public bool DebugEnabled
+        {
+            get
+            {
+                return this.debugEnabled;
+            }
+
+            set
+            {
+                this.debugEnabled = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool ExBuddyFlightEnabled
+        {
+            get
+            {
+                return this.exBuddyFlightEnabled;
+            }
+
+            set
+            {
+                this.exBuddyFlightEnabled = value;
+                this.Save();
+            }
+        }
 
         [DefaultValue(true)]
         [Setting]
@@ -77,22 +108,6 @@ namespace Tarot.Settings
             set
             {
                 this.waitForChainFates = value;
-                this.Save();
-            }
-        }
-
-        [DefaultValue(true)]
-        [Setting]
-        public bool DebugEnabled
-        {
-            get
-            {
-                return this.debugEnabled;
-            }
-
-            set
-            {
-                this.debugEnabled = value;
                 this.Save();
             }
         }
