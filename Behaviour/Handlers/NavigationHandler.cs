@@ -26,6 +26,9 @@ namespace Tarot.Behaviour.Handlers
 {
     using System.Threading.Tasks;
 
+    using ff14bot;
+    using ff14bot.Managers;
+
     using TreeSharp;
 
     internal sealed class NavigationHandler
@@ -60,14 +63,17 @@ namespace Tarot.Behaviour.Handlers
 
         private static async Task<bool> CheckLocation()
         {
-            // TODO: Write nav check.
-            return true;
+            // Get current FATE from main behaviour.
+            var rbFate = MainBehaviour.Instance.CurrentRbFate;
+
+            // Are we already inside the FATE area?
+            return rbFate.Location.Distance2D(Core.Player.Location) <= rbFate.HotSpot.Radius * 0.95;
         }
 
         private static async Task<bool> HandleCustomWaypoints()
         {
-            // TODO: Handle waypoints.
-            return true;
+            // TODO: Handle waypoints. For now always return false.
+            return false;
         }
 
         private static bool IsFateNavigable()

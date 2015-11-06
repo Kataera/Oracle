@@ -89,8 +89,8 @@ namespace Tarot.Behaviour
         {
             Composite[] behaviours =
             {
-                FateSelector.Instance.Behaviour,
-                NavigationHandler.Instance.Behaviour, FateHandler.Instance.Behaviour
+                FateSelector.Instance.Behaviour, NavigationHandler.Instance.Behaviour,
+                FateHandler.Instance.Behaviour
             };
             this.Behaviour = new Sequence(behaviours);
         }
