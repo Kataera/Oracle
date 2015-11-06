@@ -1,0 +1,4423 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    #################
+    ##   License   ##
+    #################
+
+    Tarot - An improved FATE bot for RebornBuddy
+    Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
+
+    This file is part of Tarot.
+
+    Tarot is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Tarot is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Tarot. If not, see http://www.gnu.org/licenses/.
+-->
+
+<!DOCTYPE Fates[
+
+<!-- Fate types -->
+<!ENTITY Kill "0">
+<!ENTITY Collect "1">
+<!ENTITY Escort "2">
+<!ENTITY Defence "3">
+<!ENTITY Boss "4">
+<!ENTITY MegaBoss "5">
+
+<!-- Support levels -->
+<!ENTITY FullSupport "0">
+<!ENTITY CustomSupport "1">
+<!ENTITY Problematic "2">
+<!ENTITY Unsupported "3">
+<!ENTITY NotInGame "4">
+
+]>
+
+<Fates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="FateData.xsd">
+  <Fate>
+    <ID>102</ID>
+    <Name>aaaa</Name>
+    <Level>1</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>104</ID>
+    <Name>エリア防衛</Name>
+    <Level>1</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>105</ID>
+    <Name>山賊砦テスト</Name>
+    <Level>1</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>106</ID>
+    <Name>収集系テスト</Name>
+    <Level>1</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>107</ID>
+    <Name>山賊砦ボス</Name>
+    <Level>1</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>108</ID>
+    <Name>山賊砦味方防衛</Name>
+    <Level>1</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>109</ID>
+    <Name>りんご集め</Name>
+    <Level>1</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>120</ID>
+    <Name>Clever Girls</Name>
+    <Level>5</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>121</ID>
+    <Name>One Enchanted Eve</Name>
+    <Level>4</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>122</ID>
+    <Name>Sprig Cleaning</Name>
+    <Level>30</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>123</ID>
+    <Name>Something in the Water</Name>
+    <Level>8</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>124</ID>
+    <Name>The Sting</Name>
+    <Level>11</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>125</ID>
+    <Name>Asipatra Attacks</Name>
+    <Level>34</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>126</ID>
+    <Name>Leader of the Pack</Name>
+    <Level>9</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>127</ID>
+    <Name>A Mother Scorned</Name>
+    <Level>8</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>128</ID>
+    <Name>Alux of the Draw</Name>
+    <Level>9</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>129</ID>
+    <Name>※β1不要：船着場までチョコボの護衛（仮）</Name>
+    <Level>10</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>130</ID>
+    <Name>エバーシェイドの収穫祭</Name>
+    <Level>14</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+    <CollectItemId>0</CollectItemId>
+    <NpcId>0</NpcId>
+  </Fate>
+  <Fate>
+    <ID>131</ID>
+    <Name>Lethe on My Mind</Name>
+    <Level>10</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>132</ID>
+    <Name>※β1不要：採掘場奪取</Name>
+    <Level>35</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>133</ID>
+    <Name>※β1不要：採掘場奪取</Name>
+    <Level>35</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>134</ID>
+    <Name>※β1不要：採掘場防衛</Name>
+    <Level>35</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>135</ID>
+    <Name>※β1不要：採掘場防衛</Name>
+    <Level>35</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>136</ID>
+    <Name>Training Day</Name>
+    <Level>5</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>137</ID>
+    <Name>Bleeding Green</Name>
+    <Level>13</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>138</ID>
+    <Name>Tastes Like Chick</Name>
+    <Level>10</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>139</ID>
+    <Name>Sleep Tight</Name>
+    <Level>12</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>140</ID>
+    <Name>Spirithold Run</Name>
+    <Level>10</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>141</ID>
+    <Name>Love Is in the Air</Name>
+    <Level>11</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>142</ID>
+    <Name>There's Something about Lou</Name>
+    <Level>14</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>143</ID>
+    <Name>Now I See Bees I Won</Name>
+    <Level>11</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>144</ID>
+    <Name>Royal Rumble</Name>
+    <Level>16</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>145</ID>
+    <Name>戦場までは何マルム？</Name>
+    <Level>19</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>146</ID>
+    <Name>※β1不要：シルフの隊長撃破</Name>
+    <Level>45</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>147</ID>
+    <Name>※β1不要：蜂蜜酒輸送護衛</Name>
+    <Level>25</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>148</ID>
+    <Name>What a Bee Wants</Name>
+    <Level>10</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>149</ID>
+    <Name>Stopping the Spread</Name>
+    <Level>17</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>150</ID>
+    <Name>Jack of All Trades</Name>
+    <Level>19</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>151</ID>
+    <Name>リトルブリッジの戦い</Name>
+    <Level>24</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>152</ID>
+    <Name>Protecting the Patch</Name>
+    <Level>20</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>153</ID>
+    <Name>The Hunted</Name>
+    <Level>23</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>154</ID>
+    <Name>Eft for Dead</Name>
+    <Level>34</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>155</ID>
+    <Name>※β1不要：キャラバン護衛</Name>
+    <Level>25</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>156</ID>
+    <Name>※β1不要：野盗退治</Name>
+    <Level>35</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>157</ID>
+    <Name>※β1不要：インプ退治</Name>
+    <Level>37</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>158</ID>
+    <Name>The Negotiators</Name>
+    <Level>28</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>159</ID>
+    <Name>Breaching the Hive</Name>
+    <Level>32</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&Problematic;</TarotSupport>
+    <ChainIDSuccess>160</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>160</ID>
+    <Name>Clearing the Hive</Name>
+    <Level>32</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&Problematic;</TarotSupport>
+    <ChainIDSuccess>162</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>161</ID>
+    <Name>Defending the Hive</Name>
+    <Level>32</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&Problematic;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>162</ID>
+    <Name>Keeping the Hive</Name>
+    <Level>32</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&Problematic;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>163</ID>
+    <Name>Kickin' It with the Kedtraps</Name>
+    <Level>22</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>164</ID>
+    <Name>The Coeurl King</Name>
+    <Level>29</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>165</ID>
+    <Name>※β1不要：騎POP候補</Name>
+    <Level>50</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>166</ID>
+    <Name>Another Round</Name>
+    <Level>22</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>167</ID>
+    <Name>Stag Parting</Name>
+    <Level>21</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>168</ID>
+    <Name>Hide and Seek</Name>
+    <Level>29</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2000251</CollectItemId>
+    <NpcId>526</NpcId>
+  </Fate>
+  <Fate>
+    <ID>169</ID>
+    <Name>A Tale of Two-tails</Name>
+    <Level>32</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>170</ID>
+    <Name>To Whom the Toll Goes</Name>
+    <Level>22</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>171</ID>
+    <Name>Eat In, Hide Out</Name>
+    <Level>24</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>172</ID>
+    <Name>Robbin' Goblins</Name>
+    <Level>29</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2000252</CollectItemId>
+    <NpcId>520</NpcId>
+  </Fate>
+  <Fate>
+    <ID>173</ID>
+    <Name>※β1不要：ウォータースプライトの大量発生</Name>
+    <Level>34</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>174</ID>
+    <Name>No Birds Allowed</Name>
+    <Level>5</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>175</ID>
+    <Name>※β1不要：ハーストミル防衛</Name>
+    <Level>7</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>176</ID>
+    <Name>※β1不要：イクサルNM退治</Name>
+    <Level>50</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>177</ID>
+    <Name>※β1不要：イクサル流入阻止</Name>
+    <Level>45</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>178</ID>
+    <Name>Dschubba Snacks</Name>
+    <Level>3</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>179</ID>
+    <Name>Now Fall</Name>
+    <Level>25</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>180</ID>
+    <Name>That Which Binds Us</Name>
+    <Level>28</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2000253</CollectItemId>
+    <NpcId>533</NpcId>
+  </Fate>
+  <Fate>
+    <ID>181</ID>
+    <Name>※β1不要：キャラバン護衛</Name>
+    <Level>28</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>182</ID>
+    <Name>真理は死んだ</Name>
+    <Level>29</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>183</ID>
+    <Name>Breaking Bud</Name>
+    <Level>3</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>184</ID>
+    <Name>The Magical Fruit</Name>
+    <Level>7</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>185</ID>
+    <Name>Micromanaging</Name>
+    <Level>8</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>186</ID>
+    <Name>※没</Name>
+    <Level>5</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>187</ID>
+    <Name>The Big Issue</Name>
+    <Level>25</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>188</ID>
+    <Name>It Ziz What It Is</Name>
+    <Level>27</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>189</ID>
+    <Name>Hare Today</Name>
+    <Level>27</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>190</ID>
+    <Name>Where the Stone Rolls</Name>
+    <Level>33</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>191</ID>
+    <Name>Attack on Highbridge: Prelude</Name>
+    <Level>26</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>192</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>192</ID>
+    <Name>Attack on Highbridge: Act I</Name>
+    <Level>26</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>193</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>193</ID>
+    <Name>Attack on Highbridge: Act II</Name>
+    <Level>26</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>194</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>194</ID>
+    <Name>Attack on Highbridge: Act III</Name>
+    <Level>26</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>195</ID>
+    <Name>Attack on Highbridge: Denouement</Name>
+    <Level>26</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>196</ID>
+    <Name>Steel Reign</Name>
+    <Level>50</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>197</ID>
+    <Name>Steel Reign</Name>
+    <Level>50</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>198</ID>
+    <Name>Steel Reign</Name>
+    <Level>50</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>199</ID>
+    <Name>Steel Reign</Name>
+    <Level>50</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>200</ID>
+    <Name>Steel Reign</Name>
+    <Level>50</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>201</ID>
+    <Name>Steel Reign</Name>
+    <Level>50</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>202</ID>
+    <Name>Steel Reign</Name>
+    <Level>50</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>203</ID>
+    <Name>Steel Reign</Name>
+    <Level>50</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>204</ID>
+    <Name>Steel Reign</Name>
+    <Level>50</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>205</ID>
+    <Name>Steel Reign</Name>
+    <Level>50</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>206</ID>
+    <Name>Steel Reign</Name>
+    <Level>50</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>207</ID>
+    <Name>Steel Reign</Name>
+    <Level>50</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>208</ID>
+    <Name>Lady Killer</Name>
+    <Level>7</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>209</ID>
+    <Name>My Baby Green</Name>
+    <Level>31</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>210</ID>
+    <Name>偽造品の回収（仮）</Name>
+    <Level>10</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+    <CollectItemId>0</CollectItemId>
+    <NpcId>0</NpcId>
+  </Fate>
+  <Fate>
+    <ID>211</ID>
+    <Name>酒瓶の防衛（仮）</Name>
+    <Level>20</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&NotInGame;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>212</ID>
+    <Name>Ivy League</Name>
+    <Level>19</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>213</ID>
+    <Name>Thunderstruck</Name>
+    <Level>23</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>214</ID>
+    <Name>Carrion Baggage</Name>
+    <Level>11</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>215</ID>
+    <Name>Conspiracy Theory</Name>
+    <Level>24</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>216</ID>
+    <Name>Waiting for a Moon to Fall</Name>
+    <Level>28</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>217</ID>
+    <Name>What Have You Done for Mead Lately</Name>
+    <Level>21</Level>
+    <Type>&Escort;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>218</ID>
+    <Name>Lazy for You</Name>
+    <Level>20</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>220</ID>
+    <Name>Menuis at Work</Name>
+    <Level>8</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>221</ID>
+    <Name>Overnight Migration</Name>
+    <Level>5</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>222</ID>
+    <Name>Go Wespe</Name>
+    <Level>13</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>223</ID>
+    <Name>A Mad, Mad, Mad Sergeant</Name>
+    <Level>14</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>225</ID>
+    <Name>Thwack-a-Mole</Name>
+    <Level>6</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>226</ID>
+    <Name>Yellow-bellied Greenbacks</Name>
+    <Level>5</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>227</ID>
+    <Name>On the Lamb</Name>
+    <Level>3</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>229</ID>
+    <Name>The Orange Boxes</Name>
+    <Level>9</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>231</ID>
+    <Name>Shearing Is Caring</Name>
+    <Level>10</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>233</ID>
+    <Name>The Boy Who Cried Jackal</Name>
+    <Level>14</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>238</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>235</ID>
+    <Name>Sister Crustacean</Name>
+    <Level>12</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>237</ID>
+    <Name>Hello, Work</Name>
+    <Level>7</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>238</ID>
+    <Name>The Truth Is out There</Name>
+    <Level>14</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>239</ID>
+    <Name>Taking It to the Streams</Name>
+    <Level>4</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>240</ID>
+    <Name>Crying over Spilled Salt</Name>
+    <Level>7</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>245</ID>
+    <Name>One Prince</Name>
+    <Level>13</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>246</ID>
+    <Name>Fight the Flower</Name>
+    <Level>5</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>249</ID>
+    <Name>You Call That a Toad</Name>
+    <Level>4</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>250</ID>
+    <Name>Caving In</Name>
+    <Level>7</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>251</ID>
+    <Name>Man of the Flour</Name>
+    <Level>8</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>257</ID>
+    <Name>I Melt with You</Name>
+    <Level>3</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>260</ID>
+    <Name>Away in a Bilge Hold</Name>
+    <Level>11</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>261</ID>
+    <Name>In the Name of Love</Name>
+    <Level>10</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>262</ID>
+    <Name>Don't Drink the Water</Name>
+    <Level>12</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>264</ID>
+    <Name>Enter Beastman</Name>
+    <Level>9</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>265</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>265</ID>
+    <Name>One Pickman Enters</Name>
+    <Level>9</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>267</ID>
+    <Name>Finding Wine</Name>
+    <Level>32</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>268</ID>
+    <Name>The Thirst</Name>
+    <Level>32</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>271</ID>
+    <Name>Thrill of the Hunt</Name>
+    <Level>33</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>272</ID>
+    <Name>The Pelican Briefing</Name>
+    <Level>32</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2001054</CollectItemId>
+    <NpcId>1855</NpcId>
+  </Fate>
+  <Fate>
+    <ID>274</ID>
+    <Name>Them</Name>
+    <Level>33</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>278</ID>
+    <Name>Careless Whiskers</Name>
+    <Level>30</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>279</ID>
+    <Name>No Lip</Name>
+    <Level>33</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2000561</CollectItemId>
+    <NpcId>1363</NpcId>
+  </Fate>
+  <Fate>
+    <ID>280</ID>
+    <Name>Jewels of the Isle</Name>
+    <Level>32</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>282</ID>
+    <Name>Crab and Go</Name>
+    <Level>30</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>286</ID>
+    <Name>Follow the Light</Name>
+    <Level>33</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>287</ID>
+    <Name>Just a Matter of Rut</Name>
+    <Level>31</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>289</ID>
+    <Name>Absolutely, Positively</Name>
+    <Level>16</Level>
+    <Type>&Escort;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>290</ID>
+    <Name>Tender Buttons</Name>
+    <Level>12</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>291</ID>
+    <Name>The Killing Fields</Name>
+    <Level>10</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>295</ID>
+    <Name>(I Just) Died in Six Arms Tonight</Name>
+    <Level>13</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>297</ID>
+    <Name>Iron Contra Affair</Name>
+    <Level>18</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2000258</CollectItemId>
+    <NpcId>1359</NpcId>
+  </Fate>
+  <Fate>
+    <ID>298</ID>
+    <Name>Don't Call Him a Fishback</Name>
+    <Level>17</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>303</ID>
+    <Name>Letters from Tidegate</Name>
+    <Level>17</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>304</ID>
+    <Name>The Last Straw</Name>
+    <Level>12</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>306</ID>
+    <Name>Barometz Soup</Name>
+    <Level>10</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>308</ID>
+    <Name>Goblin Chain</Name>
+    <Level>15</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>309</ID>
+    <Name>Tryp Fantastic</Name>
+    <Level>18</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>310</ID>
+    <Name>Between Aurochs</Name>
+    <Level>15</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>312</ID>
+    <Name>In the Sac</Name>
+    <Level>16</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>314</ID>
+    <Name>Simurgh Is the Word</Name>
+    <Level>23</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>317</ID>
+    <Name>Surprise</Name>
+    <Level>34</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>320</ID>
+    <Name>The Road More Traveled</Name>
+    <Level>30</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>321</ID>
+    <Name>Nine-ilm Snails</Name>
+    <Level>31</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>322</ID>
+    <Name>Truth in Faerie Tales</Name>
+    <Level>30</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>323</ID>
+    <Name>Giant Enemy Crab</Name>
+    <Level>21</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>329</ID>
+    <Name>Shell Shocked</Name>
+    <Level>31</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>331</ID>
+    <Name>Peeping Ja</Name>
+    <Level>33</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>332</ID>
+    <Name>Hop, Skip, and a Jump</Name>
+    <Level>33</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>333</ID>
+    <Name>Under the Bridge</Name>
+    <Level>10</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>334</ID>
+    <Name>Consigned, Sealed, and Undelivered</Name>
+    <Level>33</Level>
+    <Type>&Escort;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>335</ID>
+    <Name>It's Not Lupus</Name>
+    <Level>32</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>336</ID>
+    <Name>The Mandragoras</Name>
+    <Level>45</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&Problematic;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>342</ID>
+    <Name>Needles to Slay</Name>
+    <Level>5</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>343</ID>
+    <Name>Things that Make You Go Home</Name>
+    <Level>6</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>344</ID>
+    <Name>Deface the Facts</Name>
+    <Level>8</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>345</ID>
+    <Name>Please Hammers, Don't Hurt Them</Name>
+    <Level>8</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>346</ID>
+    <Name>The Cores</Name>
+    <Level>8</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2000254</CollectItemId>
+    <NpcId>1323</NpcId>
+  </Fate>
+  <Fate>
+    <ID>347</ID>
+    <Name>Doomed</Name>
+    <Level>9</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>348</ID>
+    <Name>The Villain</Name>
+    <Level>9</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>349</ID>
+    <Name>Copied Peistes</Name>
+    <Level>10</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>350</ID>
+    <Name>Dog Eat Dog</Name>
+    <Level>10</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>352</ID>
+    <Name>Bigger Fish to Fry</Name>
+    <Level>13</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>353</ID>
+    <Name>Bubble Trouble</Name>
+    <Level>13</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>354</ID>
+    <Name>Tripped up by the Fruit of Another</Name>
+    <Level>22</Level>
+    <Type>&Escort;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>355</ID>
+    <Name>Juggernaut Down</Name>
+    <Level>23</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>356</ID>
+    <Name>A Matter of Rust</Name>
+    <Level>5</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>357</ID>
+    <Name>There Might Be Giants</Name>
+    <Level>21</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>361</ID>
+    <Name>Pound for Pound</Name>
+    <Level>10</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>366</ID>
+    <Name>He's Got Legs</Name>
+    <Level>22</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>367</ID>
+    <Name>Staying Dead</Name>
+    <Level>20</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>370</ID>
+    <Name>Something to Prove</Name>
+    <Level>5</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>373</ID>
+    <Name>Like an Eft out of Water</Name>
+    <Level>5</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>374</ID>
+    <Name>Wrecked Rats</Name>
+    <Level>7</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>375</ID>
+    <Name>Survivor Rats</Name>
+    <Level>6</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>376</ID>
+    <Name>Cracked</Name>
+    <Level>9</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>377</ID>
+    <Name>Orobon Part Two: The Spawning</Name>
+    <Level>14</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>378</ID>
+    <Name>Let them Eat Cactus</Name>
+    <Level>5</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2000256</CollectItemId>
+    <NpcId>1348</NpcId>
+  </Fate>
+  <Fate>
+    <ID>379</ID>
+    <Name>For the Queen</Name>
+    <Level>9</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>381</ID>
+    <Name>A Few Arrows Short of a Quiver</Name>
+    <Level>11</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2000255</CollectItemId>
+    <NpcId>520</NpcId>
+  </Fate>
+  <Fate>
+    <ID>383</ID>
+    <Name>Big Time</Name>
+    <Level>7</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>385</ID>
+    <Name>Cold-blooded</Name>
+    <Level>14</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>389</ID>
+    <Name>A Warm Welcome</Name>
+    <Level>7</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>393</ID>
+    <Name>Leaving the Nest</Name>
+    <Level>12</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>394</ID>
+    <Name>Men Who See Goats</Name>
+    <Level>19</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>395</ID>
+    <Name>License to Quill</Name>
+    <Level>15</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>397</ID>
+    <Name>Westward Bound</Name>
+    <Level>18</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>398</ID>
+    <Name>Bad Camp</Name>
+    <Level>18</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>400</ID>
+    <Name>Bazaar Blood Triangle</Name>
+    <Level>17</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>401</ID>
+    <Name>Grim Undertakings</Name>
+    <Level>17</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>402</ID>
+    <Name>Simple Minds</Name>
+    <Level>17</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>406</ID>
+    <Name>Manifest Destiny</Name>
+    <Level>27</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>407</ID>
+    <Name>Spare the Hair</Name>
+    <Level>29</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>409</ID>
+    <Name>Desert Rose</Name>
+    <Level>26</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>412</ID>
+    <Name>Almost Paradise</Name>
+    <Level>17</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>413</ID>
+    <Name>Deep in the Heart of Sagolii</Name>
+    <Level>17</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>419</ID>
+    <Name>Adventures in Throat Slitting</Name>
+    <Level>28</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>420</ID>
+    <Name>The Corpse Bribe</Name>
+    <Level>27</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>421</ID>
+    <Name>Downwind</Name>
+    <Level>25</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>422</ID>
+    <Name>Soul Man</Name>
+    <Level>29</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2000930</CollectItemId>
+    <NpcId>1351</NpcId>
+  </Fate>
+  <Fate>
+    <ID>423</ID>
+    <Name>Bigger than Life</Name>
+    <Level>46</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>424</ID>
+    <Name>Heroes of the 2nd</Name>
+    <Level>45</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>427</ID>
+    <Name>Diamond in the Rough</Name>
+    <Level>48</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>429</ID>
+    <Name>Children of the Sands</Name>
+    <Level>31</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>430</ID>
+    <Name>Return to Cinder</Name>
+    <Level>49</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>431</ID>
+    <Name>Hunters and the Hunted</Name>
+    <Level>49</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>432</ID>
+    <Name>From Point A</Name>
+    <Level>32</Level>
+    <Type>&Escort;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>434</ID>
+    <Name>Run Like a Flame</Name>
+    <Level>26</Level>
+    <Type>&Escort;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>436</ID>
+    <Name>Blood, Augur, Hex, Magicks</Name>
+    <Level>32</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>437</ID>
+    <Name>Fish out of Water</Name>
+    <Level>31</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>441</ID>
+    <Name>Harder, Bigger, Faster, Stronger</Name>
+    <Level>28</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>446</ID>
+    <Name>With One Eye Open</Name>
+    <Level>49</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>447</ID>
+    <Name>Under the Nails</Name>
+    <Level>49</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>449</ID>
+    <Name>Boom Goes the Ceruleum</Name>
+    <Level>49</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>450</ID>
+    <Name>Knock on Steel</Name>
+    <Level>49</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>451</ID>
+    <Name>Poor Maid's Mess</Name>
+    <Level>20</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>452</ID>
+    <Name>Poor Maid's Mishap</Name>
+    <Level>20</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>453</ID>
+    <Name>Poor Maid's Misfortune</Name>
+    <Level>20</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>454</ID>
+    <Name>Poor Maid's Misadventure</Name>
+    <Level>20</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>455</ID>
+    <Name>Revenge of the Worms</Name>
+    <Level>32</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>456</ID>
+    <Name>Bump and Grind</Name>
+    <Level>28</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>457</ID>
+    <Name>Reverse Engineering</Name>
+    <Level>49</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2001052</CollectItemId>
+    <NpcId>1726</NpcId>
+  </Fate>
+  <Fate>
+    <ID>460</ID>
+    <Name>Twelve Ilms of Snow</Name>
+    <Level>35</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>463</ID>
+    <Name>Baa Baa Black Sheep</Name>
+    <Level>36</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>464</ID>
+    <Name>Gavial</Name>
+    <Level>35</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>465</ID>
+    <Name>Whiteout</Name>
+    <Level>36</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>466</ID>
+    <Name>A Log Up</Name>
+    <Level>35</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>467</ID>
+    <Name>Croc-y Road</Name>
+    <Level>36</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>469</ID>
+    <Name>The Grey</Name>
+    <Level>38</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>470</ID>
+    <Name>Simply Red</Name>
+    <Level>38</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <!--TODO: Find NPC id for this fate. -->
+    <ID>472</ID>
+    <Name>Spring Forward, Fall Back</Name>
+    <Level>38</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2001051</CollectItemId>
+    <NpcId>0</NpcId>
+  </Fate>
+  <Fate>
+    <ID>473</ID>
+    <Name>A Fire in the Distance</Name>
+    <Level>37</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>474</ID>
+    <Name>Coming to a Head</Name>
+    <Level>37</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>475</ID>
+    <Name>Bellyful</Name>
+    <Level>39</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>479</ID>
+    <Name>A Freeze Is Coming</Name>
+    <Level>39</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>480</ID>
+    <Name>Giant Seps</Name>
+    <Level>40</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>482</ID>
+    <Name>Riddle Me This</Name>
+    <Level>40</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>483</ID>
+    <Name>Judge, Jury, and Executioner</Name>
+    <Level>39</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>484</ID>
+    <Name>In the Saint's Wake</Name>
+    <Level>45</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>486</ID>
+    <Name>Tower of Power</Name>
+    <Level>45</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>487</ID>
+    <Name>Turn Off Your Hearthlight</Name>
+    <Level>47</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>489</ID>
+    <Name>What's on Your Mind</Name>
+    <Level>47</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>490</ID>
+    <Name>The Bigger They Are</Name>
+    <Level>46</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>491</ID>
+    <Name>Wish Upon a Star</Name>
+    <Level>36</Level>
+    <Type>&Escort;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>493</ID>
+    <Name>The Taste of Fear</Name>
+    <Level>40</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>494</ID>
+    <Name>Roc of Ages</Name>
+    <Level>39</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>496</ID>
+    <Name>Front and Center</Name>
+    <Level>40</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>497</ID>
+    <Name>If This Wall Could Talk</Name>
+    <Level>40</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>498</ID>
+    <Name>Does Anyone Hear It</Name>
+    <Level>48</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>499</ID>
+    <Name>The Four Winds</Name>
+    <Level>49</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>500</ID>
+    <Name>Inspector Hatchet</Name>
+    <Level>49</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>501</ID>
+    <Name>Svara's Flight</Name>
+    <Level>38</Level>
+    <Type>&Escort;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>502</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>502</ID>
+    <Name>Svara's Fear</Name>
+    <Level>38</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>503</ChainIDSuccess>
+    <ChainIDFail>504</ChainIDFail>
+  </Fate>
+  <Fate>
+    <ID>503</ID>
+    <Name>Svara's Fall</Name>
+    <Level>38</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>504</ID>
+    <Name>Svara's Fury</Name>
+    <Level>38</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>505</ID>
+    <Name>Behold Now Behemoth</Name>
+    <Level>50</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>506</ID>
+    <Name>He Taketh It with His Eyes</Name>
+    <Level>50</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>507</ID>
+    <Name>The Eyes Have It</Name>
+    <Level>39</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>508</ID>
+    <Name>The Storm Caller</Name>
+    <Level>49</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>512</ID>
+    <Name>Toll Collector</Name>
+    <Level>45</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>514</ID>
+    <Name>Mud about You</Name>
+    <Level>44</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>516</ID>
+    <Name>Black and Nburu</Name>
+    <Level>45</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>517</ID>
+    <Name>Good to Be Bud</Name>
+    <Level>44</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>520</ID>
+    <Name>Standing Guard</Name>
+    <Level>46</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>521</ID>
+    <Name>Another Notch on the Torch</Name>
+    <Level>48</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>522</ID>
+    <Name>One Giant Leap</Name>
+    <Level>46</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>523</ID>
+    <Name>Among Giants</Name>
+    <Level>45</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>524</ID>
+    <Name>Another Day, Another Demon</Name>
+    <Level>46</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>525</ID>
+    <Name>That's What Adventurers Are For</Name>
+    <Level>46</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>526</ID>
+    <Name>Home Is Where the Horn Is</Name>
+    <Level>46</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>527</ID>
+    <Name>Gone with the Shadow</Name>
+    <Level>46</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>529</ID>
+    <Name>The Prodigal Son</Name>
+    <Level>45</Level>
+    <Type>&Escort;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>530</ID>
+    <Name>V for Vinedetta</Name>
+    <Level>44</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>532</ID>
+    <Name>Return of the King</Name>
+    <Level>32</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>533</ID>
+    <Name>Return of the King</Name>
+    <Level>5</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>534</ID>
+    <Name>Return of the King</Name>
+    <Level>13</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>535</ID>
+    <Name>Return of the King</Name>
+    <Level>5</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>536</ID>
+    <Name>Return of the King</Name>
+    <Level>15</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>537</ID>
+    <Name>Return of the King</Name>
+    <Level>11</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>538</ID>
+    <Name>Return of the King</Name>
+    <Level>6</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>540</ID>
+    <Name>Quartz Coupling</Name>
+    <Level>42</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>541</ID>
+    <Name>A Man Rides Through</Name>
+    <Level>40</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>542</ID>
+    <Name>Bad Hair Day</Name>
+    <Level>42</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>543</ID>
+    <Name>The Big Bagoly Theory</Name>
+    <Level>42</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>545</ID>
+    <Name>Call Me, Mayhaps</Name>
+    <Level>46</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>546</ID>
+    <Name>Book of Pride</Name>
+    <Level>46</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>548</ID>
+    <Name>Tempered, Tempered</Name>
+    <Level>46</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>549</ID>
+    <Name>Full of Rigor Mortis</Name>
+    <Level>46</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>550</ID>
+    <Name>An Inconvenient Truth</Name>
+    <Level>48</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>551</ID>
+    <Name>Future Shock</Name>
+    <Level>48</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>552</ID>
+    <Name>Taken</Name>
+    <Level>45</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>553</ID>
+    <Name>Gyve Talk</Name>
+    <Level>49</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>554</ID>
+    <Name>Spark off the Bench</Name>
+    <Level>49</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>555</ID>
+    <Name>Fallen Corpses Writhe in Style</Name>
+    <Level>46</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>556</ID>
+    <Name>Core Blimey</Name>
+    <Level>49</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2000254</CollectItemId>
+    <NpcId>1726</NpcId>
+  </Fate>
+  <Fate>
+    <ID>557</ID>
+    <Name>Quenching the Flame</Name>
+    <Level>49</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>558</ID>
+    <Name>He's a Firestarter</Name>
+    <Level>48</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>560</ID>
+    <Name>9 to 5</Name>
+    <Level>32</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>561</ID>
+    <Name>Closing Time</Name>
+    <Level>34</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>562</ID>
+    <Name>Sweeter than Honey</Name>
+    <Level>33</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2001057</CollectItemId>
+    <NpcId>1659</NpcId>
+  </Fate>
+  <Fate>
+    <ID>563</ID>
+    <Name>Ho Ho Ho</Name>
+    <Level>33</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>564</ID>
+    <Name>Say My Name</Name>
+    <Level>32</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>565</ID>
+    <Name>Long Way Home</Name>
+    <Level>33</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>566</ID>
+    <Name>Cliff Hanger</Name>
+    <Level>32</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>568</ID>
+    <Name>Gauging North Tidegate</Name>
+    <Level>44</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>569</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>569</ID>
+    <Name>Breaching North Tidegate</Name>
+    <Level>44</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>570</ID>
+    <Name>Gauging South Tidegate</Name>
+    <Level>45</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>571</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>571</ID>
+    <Name>Breaching South Tidegate</Name>
+    <Level>45</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>572</ID>
+    <Name>Sharknado</Name>
+    <Level>44</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>574</ID>
+    <Name>Tail of a Whale</Name>
+    <Level>46</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>575</ID>
+    <Name>Watch Your Tongue</Name>
+    <Level>48</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>576</ID>
+    <Name>Dead Man's Rest</Name>
+    <Level>40</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>577</ID>
+    <Name>The King's Justice</Name>
+    <Level>40</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>578</ID>
+    <Name>Making Waves</Name>
+    <Level>49</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>580</ID>
+    <Name>The Only Way Is Up</Name>
+    <Level>34</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>581</ID>
+    <Name>By a Whisker</Name>
+    <Level>34</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>583</ID>
+    <Name>When the Coeurl's Away</Name>
+    <Level>34</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>586</ID>
+    <Name>The Miner in the Mirror</Name>
+    <Level>44</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>587</ID>
+    <Name>Schism</Name>
+    <Level>41</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>588</ID>
+    <Name>Fire in the Hole</Name>
+    <Level>41</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>589</ID>
+    <Name>Make It Rain</Name>
+    <Level>41</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>591</ID>
+    <Name>Peryton, Perhaps</Name>
+    <Level>30</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>593</ID>
+    <Name>Restless in O'Ghomoro</Name>
+    <Level>34</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>594</ID>
+    <Name>I'm a Rock, Not a Number</Name>
+    <Level>34</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>595</ID>
+    <Name>Overlooking the Obvious</Name>
+    <Level>34</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>597</ID>
+    <Name>Full Metal Alchemist</Name>
+    <Level>48</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>598</ID>
+    <Name>Spandy Balidet</Name>
+    <Level>47</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>599</ID>
+    <Name>Stopping the Shakes</Name>
+    <Level>47</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>600</ID>
+    <Name>The Lindwurm Has Turned</Name>
+    <Level>31</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>601</ID>
+    <Name>What's Your Poison</Name>
+    <Level>30</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2001053</CollectItemId>
+    <NpcId>526</NpcId>
+  </Fate>
+  <Fate>
+    <ID>602</ID>
+    <Name>Revenant Things</Name>
+    <Level>31</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>603</ID>
+    <Name>If I Only Had a Soul</Name>
+    <Level>33</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2001056</CollectItemId>
+    <NpcId>2175</NpcId>
+  </Fate>
+  <Fate>
+    <ID>604</ID>
+    <Name>In Spite of It All</Name>
+    <Level>43</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>607</ID>
+    <Name>Collecting Keepsakes</Name>
+    <Level>40</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2001055</CollectItemId>
+    <NpcId>1728</NpcId>
+  </Fate>
+  <Fate>
+    <ID>608</ID>
+    <Name>All Vine and No Popotoes</Name>
+    <Level>40</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>609</ID>
+    <Name>The Squirrel Trapper's Wife</Name>
+    <Level>43</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>610</ID>
+    <Name>The Enemy of My Enemy</Name>
+    <Level>42</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>611</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>611</ID>
+    <Name>The Enmity of My Enemy</Name>
+    <Level>42</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>612</ID>
+    <Name>Below His Station</Name>
+    <Level>44</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>615</ID>
+    <Name>Got Milkroot</Name>
+    <Level>46</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>616</ID>
+    <Name>Breaking Dawn</Name>
+    <Level>47</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>618</ID>
+    <Name>Handful of Dreams</Name>
+    <Level>49</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>619</ID>
+    <Name>Bush Blade</Name>
+    <Level>47</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>620</ID>
+    <Name>Everything's Better</Name>
+    <Level>49</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>622</ID>
+    <Name>The Gale that Rocks the Cradle</Name>
+    <Level>49</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>624</ID>
+    <Name>Rogue on the Water</Name>
+    <Level>33</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>626</ID>
+    <Name>To Train a Tortoise</Name>
+    <Level>30</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>627</ID>
+    <Name>Fate Is a Fecal Mistress</Name>
+    <Level>31</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>628</ID>
+    <Name>What Gored Before</Name>
+    <Level>46</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>631</ID>
+    <Name>Don't Disturb This Grove</Name>
+    <Level>37</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>632</ID>
+    <Name>Rude Awakening</Name>
+    <Level>48</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>633</ID>
+    <Name>Air Supply</Name>
+    <Level>47</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>634</ID>
+    <Name>Smells Like Tree Spirit</Name>
+    <Level>37</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>637</ID>
+    <Name>The Red Baron</Name>
+    <Level>49</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>638</ID>
+    <Name>Just a Sip</Name>
+    <Level>49</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>639</ID>
+    <Name>East Meets Worst</Name>
+    <Level>49</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>641</ID>
+    <Name>Twinkle, Twinkle Little Trap</Name>
+    <Level>49</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>642</ID>
+    <Name>The Ceruleum Road</Name>
+    <Level>49</Level>
+    <Type>&Escort;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>643</ID>
+    <Name>Dark Devices - The Plea</Name>
+    <Level>49</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>644</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>644</ID>
+    <Name>Dark Devices - The Bait</Name>
+    <Level>49</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>645</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>645</ID>
+    <Name>Dark Devices - The Switch</Name>
+    <Level>49</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>646</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>646</ID>
+    <Name>Dark Devices - The End</Name>
+    <Level>49</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>647</ID>
+    <Name>Go, Go, Gorgimera</Name>
+    <Level>49</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>649</ID>
+    <Name>Sister Crustacean</Name>
+    <Level>12</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>650</ID>
+    <Name>Tender Buttons</Name>
+    <Level>12</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>651</ID>
+    <Name>Lightning Strikes - Armored Beast</Name>
+    <Level>26</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>652</ID>
+    <Name>Lightning Strikes - Armored Beast</Name>
+    <Level>26</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>653</ID>
+    <Name>Lightning Strikes - Dread on Arrival</Name>
+    <Level>38</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>654</ID>
+    <Name>Lightning Strikes - Dread on Arrival</Name>
+    <Level>38</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>655</ID>
+    <Name>Lightning Strikes - Anubys Assault</Name>
+    <Level>45</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>656</ID>
+    <Name>Lightning Strikes - Anubys Assault</Name>
+    <Level>45</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>657</ID>
+    <Name>Lightning Strikes - On Wings of Chaos</Name>
+    <Level>45</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>658</ID>
+    <Name>Lightning Strikes - On Wings of Chaos</Name>
+    <Level>45</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>660</ID>
+    <Name>Brick by Brick</Name>
+    <Level>7</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>661</ID>
+    <Name>Brick by Stone Brick</Name>
+    <Level>7</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>662</ID>
+    <Name>Brick by Brick</Name>
+    <Level>29</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>663</ID>
+    <Name>Brick by Stone Brick</Name>
+    <Level>29</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>664</ID>
+    <Name>Brick by Brick</Name>
+    <Level>29</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>665</ID>
+    <Name>Brick by Gold Brick</Name>
+    <Level>29</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>666</ID>
+    <Name>Brick by Brick</Name>
+    <Level>7</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>667</ID>
+    <Name>Brick by Stone Brick</Name>
+    <Level>7</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>668</ID>
+    <Name>Brick by Brick</Name>
+    <Level>30</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>669</ID>
+    <Name>Brick by Stone Brick</Name>
+    <Level>30</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>670</ID>
+    <Name>Brick by Brick</Name>
+    <Level>30</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>671</ID>
+    <Name>Brick by Gold Brick</Name>
+    <Level>30</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>672</ID>
+    <Name>Brick by Brick</Name>
+    <Level>7</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>673</ID>
+    <Name>Brick by Stone Brick</Name>
+    <Level>7</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>674</ID>
+    <Name>Brick by Brick</Name>
+    <Level>28</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>675</ID>
+    <Name>Brick by Stone Brick</Name>
+    <Level>28</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>676</ID>
+    <Name>Brick by Brick</Name>
+    <Level>28</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>677</ID>
+    <Name>Brick by Gold Brick</Name>
+    <Level>28</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>679</ID>
+    <Name>Embiggened Spriggans</Name>
+    <Level>11</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>680</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>680</ID>
+    <Name>Tower of Power</Name>
+    <Level>11</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>681</ID>
+    <Name>Embiggened Spriggans</Name>
+    <Level>33</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>682</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>682</ID>
+    <Name>Tower of Power</Name>
+    <Level>33</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>683</ID>
+    <Name>Embiggened Spriggans</Name>
+    <Level>10</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>684</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>684</ID>
+    <Name>Tower of Power</Name>
+    <Level>10</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>685</ID>
+    <Name>Embiggened Spriggans</Name>
+    <Level>31</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>686</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>686</ID>
+    <Name>Tower of Power</Name>
+    <Level>31</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>687</ID>
+    <Name>Embiggened Spriggans</Name>
+    <Level>12</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>688</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>688</ID>
+    <Name>Tower of Power</Name>
+    <Level>12</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>689</ID>
+    <Name>Embiggened Spriggans</Name>
+    <Level>32</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>690</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>690</ID>
+    <Name>Tower of Power</Name>
+    <Level>32</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>691</ID>
+    <Name>A Wrench in the Works</Name>
+    <Level>42</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>692</ID>
+    <Name>What a Boar</Name>
+    <Level>49</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>693</ID>
+    <Name>Stay Frosty</Name>
+    <Level>5</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>694</ID>
+    <Name>Stay Frosty</Name>
+    <Level>13</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>695</ID>
+    <Name>Stay Frosty</Name>
+    <Level>5</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>696</ID>
+    <Name>Stay Frosty</Name>
+    <Level>15</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>697</ID>
+    <Name>Stay Frosty</Name>
+    <Level>11</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>698</ID>
+    <Name>Stay Frosty</Name>
+    <Level>6</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>699</ID>
+    <Name>Stay Frosty</Name>
+    <Level>47</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>700</ID>
+    <Name>Making the Rounds</Name>
+    <Level>47</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>701</ID>
+    <Name>What's Yours Is Mine</Name>
+    <Level>32</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>702</ID>
+    <Name>Eggcelsior</Name>
+    <Level>41</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>703</ID>
+    <Name>What's Yours Is Mine</Name>
+    <Level>23</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>704</ID>
+    <Name>What's Yours Is Mine</Name>
+    <Level>23</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>705</ID>
+    <Name>Eggcelsior</Name>
+    <Level>44</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>706</ID>
+    <Name>What's Yours Is Mine</Name>
+    <Level>31</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>707</ID>
+    <Name>What's Yours Is Mine</Name>
+    <Level>14</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>708</ID>
+    <Name>What's Yours Is Mine</Name>
+    <Level>34</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>709</ID>
+    <Name>Eggcelsior</Name>
+    <Level>46</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>716</ID>
+    <Name>Main Street Spectral Parade</Name>
+    <Level>1</Level>
+    <Type>&Escort;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>717</ID>
+    <Name>Gloria in Eggcelsis</Name>
+    <Level>5</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>718</ID>
+    <Name>Gloria in Eggcelsis</Name>
+    <Level>5</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>719</ID>
+    <Name>Gloria in Eggcelsis</Name>
+    <Level>5</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>720</ID>
+    <Name>Gloria in Eggcelsis</Name>
+    <Level>5</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>722</ID>
+    <Name>Gloria in Eggcelsis</Name>
+    <Level>5</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>725</ID>
+    <Name>Wave Good-bye</Name>
+    <Level>54</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>726</ID>
+    <Name>The Nuts</Name>
+    <Level>54</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>727</ID>
+    <Name>Glycon Air</Name>
+    <Level>54</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>728</ID>
+    <Name>Coin Toss</Name>
+    <Level>55</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2001788</CollectItemId>
+    <NpcId>3959</NpcId>
+  </Fate>
+  <Fate>
+    <ID>731</ID>
+    <Name>Supper Time</Name>
+    <Level>54</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>732</ID>
+    <Name>Sprite Club</Name>
+    <Level>54</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>735</ID>
+    <Name>Whole Food</Name>
+    <Level>54</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>736</ID>
+    <Name>Say it Tulihand</Name>
+    <Level>54</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>737</ID>
+    <Name>Vouivre Believre</Name>
+    <Level>54</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>738</ID>
+    <Name>Waugyl Waugyl Waugyl</Name>
+    <Level>54</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>740</ID>
+    <Name>How to Cane Your Dragon</Name>
+    <Level>54</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>741</ID>
+    <Name>Aevis Has Left the Building</Name>
+    <Level>54</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>742</ID>
+    <Name>Asah, I Came, I Conquered</Name>
+    <Level>54</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>744</ID>
+    <Name>Waiting for Fjalar to Stall</Name>
+    <Level>55</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>746</ID>
+    <Name>Don't Know Wyvern</Name>
+    <Level>56</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>747</ID>
+    <Name>From Dusk Till Gone</Name>
+    <Level>55</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>748</ID>
+    <Name>Treehouse of the Spirits</Name>
+    <Level>55</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>751</ID>
+    <Name>As the World Burns</Name>
+    <Level>56</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>752</ID>
+    <Name>It's the Moogle, Reinvented</Name>
+    <Level>54</Level>
+    <Type>&Escort;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>753</ID>
+    <Name>Corporal Pomishment</Name>
+    <Level>54</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>754</ID>
+    <Name>Infamous</Name>
+    <Level>55</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>755</ID>
+    <Name>Ain't Misbehaving</Name>
+    <Level>54</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>756</ID>
+    <Name>Metal Gears Rising</Name>
+    <Level>58</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2001796</CollectItemId>
+    <NpcId>4416</NpcId>
+    <ChainIDSuccess>757</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>757</ID>
+    <Name>Metal Gears Revengeance</Name>
+    <Level>58</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>758</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>758</ID>
+    <Name>Metal Gears Revengeance 2</Name>
+    <Level>58</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>759</ID>
+    <Name>Tarantula Hawk, Pro Stinger</Name>
+    <Level>58</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>760</ID>
+    <Name>Wild Wilde Death</Name>
+    <Level>58</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>761</ID>
+    <Name>Gets the Red Out</Name>
+    <Level>58</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>762</ID>
+    <Name>Makes the Very Best...Nests</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>763</ID>
+    <Name>Olympus Has Pollen</Name>
+    <Level>58</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>764</ID>
+    <Name>Feed Me, See More</Name>
+    <Level>58</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>766</ID>
+    <Name>Pop Goes the Whizzle</Name>
+    <Level>58</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>767</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>767</ID>
+    <Name>Revenge of the Vengeful Revengeance</Name>
+    <Level>58</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>768</ID>
+    <Name>Ratel and Hum</Name>
+    <Level>58</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>769</ID>
+    <Name>Dobharch Did It for the Best</Name>
+    <Level>58</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>770</ID>
+    <Name>Infant Vangob</Name>
+    <Level>58</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>771</ID>
+    <Name>Morbol Man</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>772</ID>
+    <Name>On Melancholic Hill</Name>
+    <Level>58</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>773</ID>
+    <Name>Sun Bear, Sun Bear, What Do You Eat</Name>
+    <Level>58</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>774</ID>
+    <Name>The Bear Up There</Name>
+    <Level>58</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>775</ID>
+    <Name>The Birds and the Bears</Name>
+    <Level>58</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>777</ID>
+    <Name>Poroggo Stuck</Name>
+    <Level>59</Level>
+    <Type>&Escort;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>778</ID>
+    <Name>Frog Days of Summer</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>779</ID>
+    <Name>Toss 'Em Back</Name>
+    <Level>58</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>780</ID>
+    <Name>Tome Raider</Name>
+    <Level>58</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2001794</CollectItemId>
+    <NpcId>3937</NpcId>
+  </Fate>
+  <Fate>
+    <ID>781</ID>
+    <Name>Cockatrice Block</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>782</ID>
+    <Name>Come Shells or High Water</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>783</ID>
+    <Name>Toad Alone</Name>
+    <Level>59</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>784</ID>
+    <Name>How Do You Feed a Hungry Manlike Monster</Name>
+    <Level>59</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>785</ID>
+    <Name>Out of the Woodwork</Name>
+    <Level>58</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>786</ID>
+    <Name>Silkworm</Name>
+    <Level>58</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>787</ID>
+    <Name>Eye in the Sky</Name>
+    <Level>50</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>788</ID>
+    <Name>A Dung Deal</Name>
+    <Level>50</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>789</ID>
+    <Name>Land of the Freeze</Name>
+    <Level>50</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>791</ID>
+    <Name>Dawn of the Mylodons</Name>
+    <Level>50</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>792</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>792</ID>
+    <Name>Don of the Mylodons</Name>
+    <Level>50</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>793</ID>
+    <Name>We Fought a Dzu</Name>
+    <Level>51</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>794</ID>
+    <Name>True Convictions</Name>
+    <Level>51</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>795</ID>
+    <Name>The Polar Express</Name>
+    <Level>51</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>796</ID>
+    <Name>Apparent Trap</Name>
+    <Level>50</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>798</ID>
+    <Name>Abominable Me</Name>
+    <Level>51</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>800</ID>
+    <Name>Requiem for a Dragon</Name>
+    <Level>51</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>801</ID>
+    <Name>Follow the Sleet</Name>
+    <Level>50</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>802</ID>
+    <Name>Sick Pack</Name>
+    <Level>51</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>805</ID>
+    <Name>In Command</Name>
+    <Level>51</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>807</ID>
+    <Name>What You See Is What You Get</Name>
+    <Level>50</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>809</ID>
+    <Name>Panic Rheum</Name>
+    <Level>50</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>810</ID>
+    <Name>Sugar, Sugar</Name>
+    <Level>50</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>811</ID>
+    <Name>Unsilent Vigil</Name>
+    <Level>51</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>812</ID>
+    <Name>Pico de Gallows</Name>
+    <Level>51</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>813</ID>
+    <Name>Run, Riders, Run</Name>
+    <Level>50</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>814</ID>
+    <Name>One Whiskey, One Goat, One Spear</Name>
+    <Level>50</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>815</ID>
+    <Name>No Ifs, Ands, or Butts</Name>
+    <Level>50</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>816</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>816</ID>
+    <Name>Null and Void</Name>
+    <Level>50</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>817</ID>
+    <Name>Dishonored</Name>
+    <Level>51</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>818</ID>
+    <Name>By the Horns</Name>
+    <Level>52</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>819</ID>
+    <Name>Ladies First</Name>
+    <Level>52</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>820</ID>
+    <Name>Run, Run Away</Name>
+    <Level>52</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <!--TODO: Find NPC id for this fate. -->
+    <ID>821</ID>
+    <Name>Birds of a Feather</Name>
+    <Level>52</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2001885</CollectItemId>
+    <NpcId>0</NpcId>
+  </Fate>
+  <Fate>
+    <ID>822</ID>
+    <Name>Glawackus On, Glawackus Off</Name>
+    <Level>52</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>823</ID>
+    <Name>Bear Apparent</Name>
+    <Level>52</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>824</ID>
+    <Name>Who's the Moss</Name>
+    <Level>52</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>825</ID>
+    <Name>The Rite Stuff</Name>
+    <Level>52</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>826</ID>
+    <Name>Dead Meat</Name>
+    <Level>52</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>827</ID>
+    <Name>The Whole Truth</Name>
+    <Level>52</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>828</ID>
+    <Name>Nothing but the Truth</Name>
+    <Level>52</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>829</ID>
+    <Name>Drone Under</Name>
+    <Level>52</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>830</ID>
+    <Name>El Miacid</Name>
+    <Level>53</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>831</ID>
+    <Name>Cerf's Up</Name>
+    <Level>53</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>832</ID>
+    <Name>Elephant in the Brume</Name>
+    <Level>53</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>833</ID>
+    <Name>The Migas Touch</Name>
+    <Level>52</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>834</ID>
+    <Name>Hearing Voices</Name>
+    <Level>53</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>835</ID>
+    <Name>The Mourning After</Name>
+    <Level>53</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>836</ID>
+    <Name>Stamp the Yard</Name>
+    <Level>53</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>837</ID>
+    <Name>Come to My Arms</Name>
+    <Level>57</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>838</ID>
+    <Name>Special Tarasque Force</Name>
+    <Level>53</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>839</ID>
+    <Name>Mint Condition</Name>
+    <Level>50</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>840</ID>
+    <Name>Saved the Nests for Last</Name>
+    <Level>50</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>841</ID>
+    <Name>One Turned Over the Cloudkin's Nest</Name>
+    <Level>50</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>842</ID>
+    <Name>Food Fight</Name>
+    <Level>50</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>843</ID>
+    <Name>Leech the Sky</Name>
+    <Level>50</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>844</ID>
+    <Name>Anzu Trois</Name>
+    <Level>50</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>845</ID>
+    <Name>Youth Must Be Severed</Name>
+    <Level>50</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>846</ID>
+    <Name>A Long Way Down</Name>
+    <Level>50</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>847</ID>
+    <Name>This Is How We Gundu</Name>
+    <Level>50</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>851</ID>
+    <Name>Come to My Window</Name>
+    <Level>57</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <!--TODO: Find NPC id for this fate. -->
+    <ID>852</ID>
+    <Name>Obey their Thirst</Name>
+    <Level>57</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2001877</CollectItemId>
+    <NpcId>0</NpcId>
+  </Fate>
+  <Fate>
+    <ID>853</ID>
+    <Name>The Fugitive</Name>
+    <Level>57</Level>
+    <Type>&Escort;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>854</ID>
+    <Name>Zuns on the Run</Name>
+    <Level>57</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>855</ID>
+    <Name>On Dangerous Ground</Name>
+    <Level>57</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>856</ID>
+    <Name>Leather and Mace</Name>
+    <Level>57</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>857</ID>
+    <Name>Hearts Like Steel, Fists Like Thunder</Name>
+    <Level>57</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>860</ID>
+    <Name>Bones</Name>
+    <Level>57</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>861</ID>
+    <Name>Bismarcking Time</Name>
+    <Level>59</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>862</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>862</ID>
+    <Name>Let There Be Acolytes</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>863</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>863</ID>
+    <Name>A Disturbing Lack of Faith</Name>
+    <Level>59</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>864</ID>
+    <Name>Guano a Mano</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>865</ID>
+    <Name>The Sound of Madness</Name>
+    <Level>59</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>866</ID>
+    <Name>You Eat What You Aren't</Name>
+    <Level>59</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>867</ID>
+    <Name>A Dream, Perchance to Eat</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>868</ID>
+    <Name>Darkscale Descendeth</Name>
+    <Level>55</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>869</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>869</ID>
+    <Name>Darkscale Disappeareth</Name>
+    <Level>55</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>870</ChainIDSuccess>
+  </Fate>
+  <Fate>
+    <ID>870</ID>
+    <Name>Darkscale Devoureth</Name>
+    <Level>55</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>871</ID>
+    <Name>Vedrfolnir Devoteth</Name>
+    <Level>56</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>872</ID>
+    <Name>End of the Rainbow</Name>
+    <Level>54</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>873</ID>
+    <Name>Rastaban Vibration</Name>
+    <Level>55</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>874</ID>
+    <Name>Mogicide</Name>
+    <Level>54</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>875</ID>
+    <Name>Rebel Yehl</Name>
+    <Level>59</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>877</ID>
+    <Name>Prey Online</Name>
+    <Level>59</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>878</ID>
+    <Name>Prey Online</Name>
+    <Level>59</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>879</ID>
+    <Name>Prey Online</Name>
+    <Level>59</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>880</ID>
+    <Name>A Bug's Death</Name>
+    <Level>59</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>881</ID>
+    <Name>The Late Escape</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>882</ID>
+    <Name>Still Ticking</Name>
+    <Level>59</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>883</ID>
+    <Name>Life of Brain</Name>
+    <Level>59</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>884</ID>
+    <Name>The Monster Mass</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>885</ID>
+    <Name>Pet, Smart</Name>
+    <Level>59</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>886</ID>
+    <Name>The Root of Evil</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>887</ID>
+    <Name>The Mystery Machine</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>888</ID>
+    <Name>Rampant Speculation</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>889</ID>
+    <Name>Put the Knives Down</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>890</ID>
+    <Name>Scared Sylla</Name>
+    <Level>59</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>891</ID>
+    <Name>Phi Slamma Gamma East</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>892</ID>
+    <Name>Phi Slamma Gamma West</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>893</ID>
+    <Name>Phi Slamma Gamma South</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>894</ID>
+    <Name>Yak it Up</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>895</ID>
+    <Name>No Greater Goryshche</Name>
+    <Level>59</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>897</ID>
+    <Name>Harvest Moon</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>898</ID>
+    <Name>Out of Sight, Out of Mind</Name>
+    <Level>59</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>899</ID>
+    <Name>A Room Without Books</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>900</ID>
+    <Name>Curiously Strong Things</Name>
+    <Level>59</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>901</ID>
+    <Name>Do Spinners Dream of Electric Rooks</Name>
+    <Level>59</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>902</ID>
+    <Name>Long Live the Coeurl</Name>
+    <Level>52</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>903</ID>
+    <Name>Coeurls Chase Boys</Name>
+    <Level>57</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>904</ID>
+    <Name>Coeurls Chase Boys</Name>
+    <Level>57</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>905</ID>
+    <Name>Coeurls Chase Boys Chase Coeurls</Name>
+    <Level>60</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>906</ID>
+    <Name>Coeurls Chase Boys Chase Coeurls</Name>
+    <Level>60</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>907</ID>
+    <Name>Coeurls Chase Boys Chase Coeurls</Name>
+    <Level>60</Level>
+    <Type>&MegaBoss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>908</ID>
+    <Name>Sphenopalatine Ganglioneuralgia</Name>
+    <Level>56</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>909</ID>
+    <Name>A Stihi Situation</Name>
+    <Level>56</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>910</ID>
+    <Name>Ware the Maiden Fair</Name>
+    <Level>57</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>911</ID>
+    <Name>Recurring Bugs</Name>
+    <Level>9</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>912</ID>
+    <Name>Recurring Bugs</Name>
+    <Level>9</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>913</ID>
+    <Name>The Sarong Song</Name>
+    <Level>30</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>914</ID>
+    <Name>The Belle of the Beach</Name>
+    <Level>30</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>915</ID>
+    <Name>Sparking Up the Wrong Beach</Name>
+    <Level>30</Level>
+    <Type>&Kill;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>916</ID>
+    <Name>It Came from Beneath the Deep</Name>
+    <Level>30</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>917</ID>
+    <Name>Life's a Beach</Name>
+    <Level>30</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>918</ID>
+    <Name>Feeling Groggy</Name>
+    <Level>30</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+    <CollectItemId>2001895</CollectItemId>
+    <NpcId>4505</NpcId>
+  </Fate>
+</Fates>
