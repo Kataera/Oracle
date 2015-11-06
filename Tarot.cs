@@ -137,7 +137,6 @@ namespace Tarot
         {
             Logger.SendLog("Starting " + BotName + ".");
 
-            // TODO: Move this to navigator selector behaviour.
             // Set navigator.
             Navigator.PlayerMover = new SlideMover();
             Navigator.NavigationProvider = new GaiaNavigator();
