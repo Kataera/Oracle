@@ -241,3 +241,6 @@ Settings.StyleCop
 
 # Tarot Test project
 TarotTest/
+
+# Tarot solution
+Tarot.sln
