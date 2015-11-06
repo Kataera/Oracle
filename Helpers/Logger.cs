@@ -25,7 +25,6 @@
 namespace Tarot.Helpers
 {
     using System;
-    using System.Diagnostics;
     using System.Reflection;
     using System.Windows.Media;
 
@@ -41,19 +40,17 @@ namespace Tarot.Helpers
 
         private static readonly Color LoggerDebugColour = Color.FromRgb(255, 153, 0);
 
-        private static readonly Assembly Assembly = System.Reflection.Assembly.GetExecutingAssembly();
-
-        private static readonly Version Version = Assembly.GetName().Version;
+        private static readonly Version Version = Assembly.GetExecutingAssembly().GetName().Version;
 
         internal static void SendLog(string log)
         {
-            var prefix = "[" + Tarot.BotName + " v" + Version.ToString() + "]: ";
+            var prefix = "[" + Tarot.BotName + " v" + Version + "]: ";
             Logging.Write(LoggerRegularColour, prefix + log);
         }
 
         internal static void SendErrorLog(string log)
         {
-            var prefix = "[" + Tarot.BotName + " v" + Version.ToString() + "] [ERROR]: ";
+            var prefix = "[" + Tarot.BotName + " v" + Version + "] [ERROR]: ";
             Logging.Write(LoggerErrorColour, prefix + log);
         }
 
@@ -61,7 +58,7 @@ namespace Tarot.Helpers
         {
             if (TarotSettings.Instance.DebugEnabled)
             {
-                var prefix = "[" + Tarot.BotName + " v" + Version.ToString() + "] [DEBUG]: ";
+                var prefix = "[" + Tarot.BotName + " v" + Version + "] [DEBUG]: ";
                 Logging.Write(LoggerDebugColour, prefix + log);
             }
         }
