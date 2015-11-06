@@ -28,6 +28,8 @@ namespace Tarot.Behaviour.Handlers
 
     using ff14bot;
     using ff14bot.Managers;
+    using ff14bot.Navigation;
+    using ff14bot.Objects;
 
     using TreeSharp;
 
@@ -76,12 +78,6 @@ namespace Tarot.Behaviour.Handlers
             return false;
         }
 
-        private static bool IsFateNavigable()
-        {
-            // TODO: Write navigable check.
-            return true;
-        }
-
         private static void NavigateToFate()
         {
             // TODO: Write fate navigation logic.
@@ -93,7 +89,7 @@ namespace Tarot.Behaviour.Handlers
             {
                 new ActionRunCoroutine(coroutine => CheckLocation()),
                 new ActionRunCoroutine(coroutine => HandleCustomWaypoints()),
-                new Decorator(check => IsFateNavigable(), new Action(action => NavigateToFate()))
+                new Action(action => NavigateToFate())
             };
             this.Behaviour = new PrioritySelector(behaviours);
         }
