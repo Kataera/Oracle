@@ -68,6 +68,7 @@
     <Compile Include="Behaviour\Coroutines\EscortFate.cs" />
     <Compile Include="Behaviour\Coroutines\KillFate.cs" />
     <Compile Include="Behaviour\Coroutines\MegaBossFate.cs" />
+    <Compile Include="Behaviour\Handlers\CombatHandler.cs" />
     <Compile Include="Behaviour\Handlers\FateHandler.cs" />
     <Compile Include="Behaviour\Handlers\NavigationHandler.cs" />
     <Compile Include="Behaviour\MainBehaviour.cs" />

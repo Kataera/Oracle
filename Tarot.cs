@@ -25,6 +25,7 @@
 namespace Tarot
 {
     using System;
+    using System.Runtime.CompilerServices;
 
     using ff14bot;
     using ff14bot.AClasses;
@@ -32,8 +33,10 @@ namespace Tarot
     using ff14bot.Helpers;
     using ff14bot.Managers;
     using ff14bot.Navigation;
+    using ff14bot.Objects;
 
     using global::Tarot.Behaviour;
+    using global::Tarot.Behaviour.Handlers;
     using global::Tarot.Forms;
     using global::Tarot.Helpers;
 
@@ -52,6 +55,8 @@ namespace Tarot
         private SettingsForm settingsForm;
 
         public static Tarot Instance { get; set; }
+
+        public static Poi CurrentPoi { get; set; }
 
         public override string Name
         {
@@ -139,15 +144,12 @@ namespace Tarot
         {
             Logger.SendLog("Starting " + BotName + ".");
 
-            // Ensure Poi is set if bot was stopped/started.
-            if (Poi.Current == null)
-            {
-                Poi.Current = new Poi(Core.Player.Location, PoiType.Wait);
-            }
-
             // Set navigator.
             Navigator.PlayerMover = new SlideMover();
             Navigator.NavigationProvider = new GaiaNavigator();
+
+            // Set target provider.
+            CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
 
             // Make sure game settings are correct for botbase.
             this.playerFaceTargetOnAction = GameSettingsManager.FaceTargetOnAction;
@@ -155,12 +157,16 @@ namespace Tarot
             GameSettingsManager.FaceTargetOnAction = true;
             GameSettingsManager.FlightMode = true;
 
-            // Insert botbase hooks.
-            TreeHooks.Instance.ClearAll();
-            TreeHooks.Instance.InsertHook("TreeStart", 0, MainBehaviour.Instance.Behaviour);
-
             // Set default root behaviour.
+            TreeHooks.Instance.ClearAll();
+            TreeHooks.Instance.AddHook("TreeStart", MainBehaviour.Instance.Behaviour);
             this.root = BrainBehavior.CreateBrain();
+
+            // Ensure Poi is set if bot was stopped/started.
+            if (Poi.Current == null)
+            {
+                Poi.Current = new Poi(Core.Player.Location, PoiType.Wait);
+            }
         }
 
         public override void Stop()

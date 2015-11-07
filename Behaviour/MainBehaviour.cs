@@ -24,6 +24,8 @@
 
 namespace Tarot.Behaviour
 {
+    using ff14bot;
+    using ff14bot.Behavior;
     using ff14bot.Helpers;
     using ff14bot.Managers;
 
@@ -83,6 +85,7 @@ namespace Tarot.Behaviour
             if (rebornFateData != null)
             {
                 Poi.Current = new Poi(rebornFateData, PoiType.Fate);
+                Tarot.CurrentPoi = Poi.Current;
             }
         }
 
@@ -90,8 +93,8 @@ namespace Tarot.Behaviour
         {
             Composite[] behaviours =
             {
-                FateSelector.Instance.Behaviour, NavigationHandler.Behaviour,
-                FateHandler.Instance.Behaviour
+                FateSelector.Instance.Behaviour,
+                NavigationHandler.Behaviour, FateHandler.Instance.Behaviour
             };
             this.Behaviour = new Sequence(behaviours);
         }

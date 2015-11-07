@@ -24,6 +24,7 @@
 
 namespace Tarot.Behaviour.Handlers
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Buddy.Coroutines;
@@ -31,6 +32,7 @@ namespace Tarot.Behaviour.Handlers
     using Clio.Utilities;
 
     using ff14bot;
+    using ff14bot.Behavior;
     using ff14bot.Enums;
     using ff14bot.Helpers;
     using ff14bot.Managers;
@@ -40,8 +42,7 @@ namespace Tarot.Behaviour.Handlers
 
     using TreeSharp;
 
-    // TODO: Refactor this to use a static class rather than Singleton
-    internal sealed class NavigationHandler
+    internal static class NavigationHandler
     {
         private static bool isIdleNavigationComplete;
 
@@ -53,24 +54,10 @@ namespace Tarot.Behaviour.Handlers
             }
         }
 
-        private static async Task<bool> CheckLocation()
-        {
-            // Get current FATE from main behaviour.
-            var rbFate = MainBehaviour.Instance.CurrentRbFate;
-
-            // Are we already inside the FATE area?
-            if (rbFate != null)
-            {
-                return rbFate.Location.Distance2D(Core.Player.Location) <= rbFate.HotSpot.Radius * 0.95;
-            }
-
-            return false;
-        }
-
         private static async Task<bool> HandleCustomWaypoints()
         {
             // TODO: Handle waypoints. For now always return false.
-            return false;
+            return true;
         }
 
         private static async Task<bool> MoveToFate()
@@ -86,12 +73,20 @@ namespace Tarot.Behaviour.Handlers
             // Make sure we're mounted.
             while (!Core.Player.IsMounted)
             {
+                // Break behaviour if in combat.
+                if (Core.Player.InCombat)
+                {
+                    return false;
+                }
+
                 Actionmanager.Mount();
                 await Coroutine.Wait(5000, () => Core.Player.IsMounted);
             }
 
+            // TODO: Implement specific waiting spots for certain FATEs.
             // Continually poll the navigator until it returns done or we're in the fate area.
-            while (Navigator.MoveToPointWithin(fate.Location, fate.Radius, "Moving to '" + fate.Name + "'.") != MoveResult.Done)
+            while (Navigator.MoveToPointWithin(fate.Location, fate.Radius, "Moving to '" + fate.Name + "'.")
+                   != MoveResult.Done)
             {
                 // If the FATE becomes invalid/complete while traveling, stop and break loop.
                 if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
@@ -112,7 +107,7 @@ namespace Tarot.Behaviour.Handlers
                     return true;
                 }
 
-                Navigator.MoveToPointWithin(fate.Location, fate.Radius * 0.9f, "Moving to '" + fate.Name + "'.");
+                Navigator.MoveToPointWithin(fate.Location, fate.Radius, "Moving to '" + fate.Name + "'.");
                 await Coroutine.Yield();
             }
 
@@ -162,21 +157,21 @@ namespace Tarot.Behaviour.Handlers
             return location;
         }
 
-        public static PrioritySelector CreateBehaviour()
+        private static Composite CreateBehaviour()
         {
             Composite[] behaviours =
             {
-                new ActionRunCoroutine(coroutine => CheckLocation()),
+                new DecoratorContinue(check => Core.Player.InCombat, CombatHandler.Behaviour),
                 new ActionRunCoroutine(coroutine => HandleCustomWaypoints()),
-                new Decorator(
+                new DecoratorContinue(
                     check => Poi.Current.Type == PoiType.Fate,
                     new ActionRunCoroutine(coroutine => MoveToFate())),
-                new Decorator(
+                new DecoratorContinue(
                     check => Poi.Current.Type == PoiType.None && !isIdleNavigationComplete,
                     new ActionRunCoroutine(coroutine => MoveToIdle()))
             };
 
-            return new PrioritySelector(behaviours);
+            return new Sequence(behaviours);
         }
     }
 }

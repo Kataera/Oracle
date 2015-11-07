@@ -79,7 +79,8 @@ namespace Tarot.Behaviour.Selectors
 
         private static async Task<bool> CheckCurrentFateValidity()
         {
-            if (MainBehaviour.Instance.CurrentRbFate == null || MainBehaviour.Instance.CurrentFate == null)
+            if (MainBehaviour.Instance.CurrentRbFate == null || MainBehaviour.Instance.CurrentFate == null
+                || Poi.Current.Type != PoiType.Fate)
             {
                 return false;
             }
@@ -160,6 +161,7 @@ namespace Tarot.Behaviour.Selectors
             {
                 Logger.SendLog("There's no available FATEs, moving to wait location.");
                 Poi.Current = new Poi(new Vector3(-9.798996f, 46.99999f, -14.16332f), PoiType.Wait);
+                Tarot.CurrentPoi = Poi.Current;
 
                 this.waitFlag = true;
             }
