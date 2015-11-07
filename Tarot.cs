@@ -26,8 +26,10 @@ namespace Tarot
 {
     using System;
 
+    using ff14bot;
     using ff14bot.AClasses;
     using ff14bot.Behavior;
+    using ff14bot.Helpers;
     using ff14bot.Managers;
     using ff14bot.Navigation;
 
@@ -136,6 +138,12 @@ namespace Tarot
         public override void Start()
         {
             Logger.SendLog("Starting " + BotName + ".");
+
+            // Ensure Poi is set if bot was stopped/started.
+            if (Poi.Current == null)
+            {
+                Poi.Current = new Poi(Core.Player.Location, PoiType.Wait);
+            }
 
             // Set navigator.
             Navigator.PlayerMover = new SlideMover();

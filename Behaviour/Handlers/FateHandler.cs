@@ -36,6 +36,7 @@ namespace Tarot.Behaviour.Handlers
 
     using TreeSharp;
 
+    // TODO: Refactor this to use a static class rather than Singleton
     internal sealed class FateHandler
     {
         private static readonly object SyncRootObject = new object();

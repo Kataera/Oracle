@@ -35,6 +35,7 @@ namespace Tarot.Behaviour
 
     using TreeSharp;
 
+    // TODO: Refactor this to use a static class rather than Singleton
     internal sealed class MainBehaviour
     {
         private static readonly object SyncRootObject = new object();
@@ -89,7 +90,7 @@ namespace Tarot.Behaviour
         {
             Composite[] behaviours =
             {
-                FateSelector.Instance.Behaviour, NavigationHandler.Instance.Behaviour,
+                FateSelector.Instance.Behaviour, NavigationHandler.Behaviour,
                 FateHandler.Instance.Behaviour
             };
             this.Behaviour = new Sequence(behaviours);

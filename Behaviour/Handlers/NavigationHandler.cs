@@ -26,53 +26,35 @@ namespace Tarot.Behaviour.Handlers
 {
     using System.Threading.Tasks;
 
+    using Buddy.Coroutines;
+
     using Clio.Utilities;
 
     using ff14bot;
-    using ff14bot.Behavior;
+    using ff14bot.Enums;
     using ff14bot.Helpers;
     using ff14bot.Managers;
+    using ff14bot.Navigation;
 
     using global::Tarot.Helpers;
 
     using TreeSharp;
 
+    // TODO: Refactor this to use a static class rather than Singleton
     internal sealed class NavigationHandler
     {
-        private static readonly object SyncRootObject = new object();
+        private static bool isIdleNavigationComplete;
 
-        private static volatile NavigationHandler instance;
-
-        private NavigationHandler() {}
-
-        public static NavigationHandler Instance
+        public static Composite Behaviour
         {
             get
             {
-                if (instance == null)
-                {
-                    lock (SyncRootObject)
-                    {
-                        if (instance == null)
-                        {
-                            instance = new NavigationHandler();
-                            instance.CreateBehaviour();
-                        }
-                    }
-                }
-
-                return instance;
+                return CreateBehaviour();
             }
         }
 
-        private Composite MoveBehaviour;
-
-        public Composite Behaviour { get; private set; }
-
         private static async Task<bool> CheckLocation()
         {
-            Logger.SendDebugLog("Check location called.");
-
             // Get current FATE from main behaviour.
             var rbFate = MainBehaviour.Instance.CurrentRbFate;
 
@@ -87,44 +69,114 @@ namespace Tarot.Behaviour.Handlers
 
         private static async Task<bool> HandleCustomWaypoints()
         {
-            Logger.SendDebugLog("Custom waypoints called.");
             // TODO: Handle waypoints. For now always return false.
             return false;
         }
 
-        private PrioritySelector CreateMoveToFateBehaviour()
+        private static async Task<bool> MoveToFate()
         {
-            // TODO: Finish.
-            Composite[] behaviours =
+            var fate = MainBehaviour.Instance.CurrentRbFate;
+
+            // Sanity check before we request a path.
+            if (fate.Within2D(Core.Player.Location))
             {
-                new ActionRunCoroutine(coroutine => CheckLocation()),
-                new ActionRunCoroutine(coroutine => HandleCustomWaypoints())
-            };
-            return new PrioritySelector();
+                return true;
+            }
+
+            // Make sure we're mounted.
+            while (!Core.Player.IsMounted)
+            {
+                Actionmanager.Mount();
+                await Coroutine.Wait(5000, () => Core.Player.IsMounted);
+            }
+
+            // Continually poll the navigator until it returns done or we're in the fate area.
+            while (Navigator.MoveToPointWithin(fate.Location, fate.Radius, "Moving to '" + fate.Name + "'.") != MoveResult.Done)
+            {
+                // If the FATE becomes invalid/complete while traveling, stop and break loop.
+                if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
+                {
+                    // TODO: Check if clear stops by default.
+                    Navigator.Stop();
+                    Navigator.Clear();
+
+                    return false;
+                }
+
+                // If we reached the FATE boundary.
+                if (fate.Within2D(Core.Player.Location))
+                {
+                    Navigator.Stop();
+                    Navigator.Clear();
+
+                    return true;
+                }
+
+                Navigator.MoveToPointWithin(fate.Location, fate.Radius * 0.9f, "Moving to '" + fate.Name + "'.");
+                await Coroutine.Yield();
+            }
+
+            return true;
         }
 
-        private PrioritySelector CreateMoveToIdleBehaviour()
+        private static async Task<bool> MoveToIdle()
         {
+            Logger.SendDebugLog("Entered MoveToIdle coroutine.");
+            var aetheryteLocation = GetClosestAetheryteLocation();
+            var navResult = Navigator.MoveToPointWithin(aetheryteLocation, 20f, "Returning to Aetheryte Crystal.");
 
-            // TODO: Finish.
-            Composite[] behaviours =
+            // Continually poll the navigator until it returns done.
+            while (navResult != MoveResult.Done)
             {
-                new ActionRunCoroutine(coroutine => CheckLocation()),
-                new ActionRunCoroutine(coroutine => HandleCustomWaypoints())
-            };
-            return new PrioritySelector();
+                navResult = Navigator.MoveToPointWithin(aetheryteLocation, 20f, "Returning to Aetheryte Crystal.");
+                await Coroutine.Yield();
+            }
+
+            return true;
         }
 
-        private void CreateBehaviour()
+        private static Vector3 GetClosestAetheryteLocation()
+        {
+            var aetherytes = WorldManager.AetheryteIdsForZone(WorldManager.ZoneId);
+            var location = Vector3.Zero;
+
+            // If there's no aetheryte, return zeroed location and handle in behaviour.
+            if (aetherytes == null || aetherytes.Length == 0)
+            {
+                return location;
+            }
+
+            foreach (var aetheryte in aetherytes)
+            {
+                if (location == Vector3.Zero)
+                {
+                    location = aetheryte.Item2;
+                }
+
+                if (Core.Player.Location.Distance2D(location) > Core.Player.Location.Distance2D(aetheryte.Item2))
+                {
+                    location = aetheryte.Item2;
+                }
+            }
+
+            return location;
+        }
+
+        public static PrioritySelector CreateBehaviour()
         {
             Composite[] behaviours =
             {
                 new ActionRunCoroutine(coroutine => CheckLocation()),
                 new ActionRunCoroutine(coroutine => HandleCustomWaypoints()),
-                new Decorator(check => Poi.Current.Type == PoiType.Fate, this.CreateMoveToFateBehaviour()),
-                new Decorator(check => Poi.Current.Type == PoiType.None, this.CreateMoveToIdleBehaviour())
+                new Decorator(
+                    check => Poi.Current.Type == PoiType.Fate,
+                    new ActionRunCoroutine(coroutine => MoveToFate())),
+                new Decorator(
+                    check => Poi.Current.Type == PoiType.None && !isIdleNavigationComplete,
+                    new ActionRunCoroutine(coroutine => MoveToIdle()))
             };
-            this.Behaviour = new PrioritySelector(behaviours);
+
+            return new PrioritySelector(behaviours);
         }
     }
 }

@@ -81,6 +81,7 @@
     <Compile Include="Data\FateTypes\Fate.cs" />
     <Compile Include="Data\FateTypes\Kill.cs" />
     <Compile Include="Data\FateTypes\MegaBoss.cs" />
+    <Compile Include="Enumerations\FateIdle.cs" />
     <Compile Include="Enumerations\FateSupportLevel.cs" />
     <Compile Include="Enumerations\FateType.cs" />
     <Compile Include="Forms\MaterialSkin\Animations\AnimationDirection.cs">

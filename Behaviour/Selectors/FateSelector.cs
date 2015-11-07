@@ -43,6 +43,7 @@ namespace Tarot.Behaviour.Selectors
 
     using Action = TreeSharp.Action;
 
+    // TODO: Refactor this to use a static class rather than Singleton
     internal sealed class FateSelector
     {
         private static readonly object SyncRootObject = new object();
