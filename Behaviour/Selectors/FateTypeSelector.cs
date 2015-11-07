@@ -28,6 +28,7 @@ namespace Tarot.Behaviour.Selectors
 
     using TreeSharp;
 
+    // TODO: Refactor this to use a static class rather than Singleton
     internal sealed class FateTypeSelector
     {
         private static readonly object SyncRootObject = new object();

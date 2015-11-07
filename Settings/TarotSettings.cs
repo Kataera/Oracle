@@ -24,24 +24,42 @@
 
 namespace Tarot.Settings
 {
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Configuration;
     using System.IO;
 
+    using Clio.Utilities;
+
     using ff14bot.Helpers;
 
+    using global::Tarot.Enumerations;
+
+    // TODO: Refactor this to use a static class rather than Singleton
     internal sealed class TarotSettings : JsonSettings
     {
         private static readonly object SyncRootObject = new object();
 
         private static volatile TarotSettings instance;
 
+        public Dictionary<ushort, Vector3> FateWaitLocations;
+
         private bool debugEnabled;
+
+        private bool exBuddyFlightEnabled;
+
+        private int fateIdleMode;
 
         private bool waitForChainFates;
 
         private TarotSettings()
-            : base(Path.Combine(CharacterSettingsDirectory, "TarotSettings.json")) {}
+            : base(Path.Combine(CharacterSettingsDirectory, "TarotSettings.json"))
+        {
+            if (this.FateWaitLocations == null)
+            {
+                this.FateWaitLocations = new Dictionary<ushort, Vector3>();
+            }
+        }
 
         public static TarotSettings Instance
         {
@@ -62,8 +80,37 @@ namespace Tarot.Settings
             }
         }
 
-        //// TODO: Remaining settings.
-        //// TODO: Rest of the accessors/mutators.
+        [DefaultValue(true)]
+        [Setting]
+        public bool DebugEnabled
+        {
+            get
+            {
+                return this.debugEnabled;
+            }
+
+            set
+            {
+                this.debugEnabled = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool ExBuddyFlightEnabled
+        {
+            get
+            {
+                return this.exBuddyFlightEnabled;
+            }
+
+            set
+            {
+                this.exBuddyFlightEnabled = value;
+                this.Save();
+            }
+        }
 
         [DefaultValue(true)]
         [Setting]
@@ -81,18 +128,18 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(true)]
+        [DefaultValue(FateIdle.ReturnToAetheryte)]
         [Setting]
-        public bool DebugEnabled
+        public int FateIdleMode
         {
             get
             {
-                return this.debugEnabled;
+                return this.fateIdleMode;
             }
 
             set
             {
-                this.debugEnabled = value;
+                this.fateIdleMode = value;
                 this.Save();
             }
         }

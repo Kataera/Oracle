@@ -24,6 +24,8 @@
 
 namespace Tarot.Behaviour
 {
+    using ff14bot;
+    using ff14bot.Behavior;
     using ff14bot.Helpers;
     using ff14bot.Managers;
 
@@ -35,6 +37,7 @@ namespace Tarot.Behaviour
 
     using TreeSharp;
 
+    // TODO: Refactor this to use a static class rather than Singleton
     internal sealed class MainBehaviour
     {
         private static readonly object SyncRootObject = new object();
@@ -82,6 +85,7 @@ namespace Tarot.Behaviour
             if (rebornFateData != null)
             {
                 Poi.Current = new Poi(rebornFateData, PoiType.Fate);
+                Tarot.CurrentPoi = Poi.Current;
             }
         }
 
@@ -89,8 +93,8 @@ namespace Tarot.Behaviour
         {
             Composite[] behaviours =
             {
-                FateSelector.Instance.Behaviour, NavigationSelector.Instance.Behaviour,
-                NavigationHandler.Instance.Behaviour, FateHandler.Instance.Behaviour
+                FateSelector.Instance.Behaviour,
+                NavigationHandler.Behaviour, FateHandler.Instance.Behaviour
             };
             this.Behaviour = new Sequence(behaviours);
         }

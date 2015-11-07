@@ -28,6 +28,7 @@ namespace Tarot.Behaviour.Coroutines
 
     using TreeSharp;
 
+    // TODO: Refactor this to use a static class rather than Singleton
     internal sealed class CollectFate
     {
         private static readonly object SyncRootObject = new object();
