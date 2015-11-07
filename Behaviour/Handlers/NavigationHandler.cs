@@ -26,10 +26,14 @@ namespace Tarot.Behaviour.Handlers
 {
     using System.Threading.Tasks;
 
+    using Clio.Utilities;
+
     using ff14bot;
+    using ff14bot.Behavior;
+    using ff14bot.Helpers;
     using ff14bot.Managers;
-    using ff14bot.Navigation;
-    using ff14bot.Objects;
+
+    using global::Tarot.Helpers;
 
     using TreeSharp;
 
@@ -61,26 +65,54 @@ namespace Tarot.Behaviour.Handlers
             }
         }
 
+        private Composite MoveBehaviour;
+
         public Composite Behaviour { get; private set; }
 
         private static async Task<bool> CheckLocation()
         {
+            Logger.SendDebugLog("Check location called.");
+
             // Get current FATE from main behaviour.
             var rbFate = MainBehaviour.Instance.CurrentRbFate;
 
             // Are we already inside the FATE area?
-            return rbFate.Location.Distance2D(Core.Player.Location) <= rbFate.HotSpot.Radius * 0.95;
+            if (rbFate != null)
+            {
+                return rbFate.Location.Distance2D(Core.Player.Location) <= rbFate.HotSpot.Radius * 0.95;
+            }
+
+            return false;
         }
 
         private static async Task<bool> HandleCustomWaypoints()
         {
+            Logger.SendDebugLog("Custom waypoints called.");
             // TODO: Handle waypoints. For now always return false.
             return false;
         }
 
-        private static void NavigateToFate()
+        private PrioritySelector CreateMoveToFateBehaviour()
         {
-            // TODO: Write fate navigation logic.
+            // TODO: Finish.
+            Composite[] behaviours =
+            {
+                new ActionRunCoroutine(coroutine => CheckLocation()),
+                new ActionRunCoroutine(coroutine => HandleCustomWaypoints())
+            };
+            return new PrioritySelector();
+        }
+
+        private PrioritySelector CreateMoveToIdleBehaviour()
+        {
+
+            // TODO: Finish.
+            Composite[] behaviours =
+            {
+                new ActionRunCoroutine(coroutine => CheckLocation()),
+                new ActionRunCoroutine(coroutine => HandleCustomWaypoints())
+            };
+            return new PrioritySelector();
         }
 
         private void CreateBehaviour()
@@ -89,7 +121,8 @@ namespace Tarot.Behaviour.Handlers
             {
                 new ActionRunCoroutine(coroutine => CheckLocation()),
                 new ActionRunCoroutine(coroutine => HandleCustomWaypoints()),
-                new Action(action => NavigateToFate())
+                new Decorator(check => Poi.Current.Type == PoiType.Fate, this.CreateMoveToFateBehaviour()),
+                new Decorator(check => Poi.Current.Type == PoiType.None, this.CreateMoveToIdleBehaviour())
             };
             this.Behaviour = new PrioritySelector(behaviours);
         }

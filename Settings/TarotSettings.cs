@@ -24,11 +24,16 @@
 
 namespace Tarot.Settings
 {
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Configuration;
     using System.IO;
 
+    using Clio.Utilities;
+
     using ff14bot.Helpers;
+
+    using global::Tarot.Enumerations;
 
     internal sealed class TarotSettings : JsonSettings
     {
@@ -36,14 +41,24 @@ namespace Tarot.Settings
 
         private static volatile TarotSettings instance;
 
+        public Dictionary<ushort, Vector3> FateWaitLocations;
+
         private bool debugEnabled;
 
         private bool exBuddyFlightEnabled;
 
+        private int fateIdleMode;
+
         private bool waitForChainFates;
 
         private TarotSettings()
-            : base(Path.Combine(CharacterSettingsDirectory, "TarotSettings.json")) {}
+            : base(Path.Combine(CharacterSettingsDirectory, "TarotSettings.json"))
+        {
+            if (this.FateWaitLocations == null)
+            {
+                this.FateWaitLocations = new Dictionary<ushort, Vector3>();
+            }
+        }
 
         public static TarotSettings Instance
         {
@@ -108,6 +123,22 @@ namespace Tarot.Settings
             set
             {
                 this.waitForChainFates = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(FateIdle.ReturnToAetheryte)]
+        [Setting]
+        public int FateIdleMode
+        {
+            get
+            {
+                return this.fateIdleMode;
+            }
+
+            set
+            {
+                this.fateIdleMode = value;
                 this.Save();
             }
         }
