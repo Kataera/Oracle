@@ -24,6 +24,8 @@
 
 namespace Tarot.Behaviour.Tasks.Idles
 {
+    using System.Threading.Tasks;
+
     internal static class DoNothing
     {
         public static async Task<bool> Task()

@@ -24,6 +24,8 @@
 
 namespace Tarot.Behaviour.Tasks.Fates
 {
+    using System.Threading.Tasks;
+
     internal static class CollectFate
     {
         public static async Task<bool> Task()
