@@ -28,35 +28,15 @@ namespace Tarot.Behaviour.Coroutines
 
     using TreeSharp;
 
-    internal sealed class MegaBossFate
+    internal static class MegaBossFate
     {
-        private static readonly object SyncRootObject = new object();
-
-        private static volatile MegaBossFate instance;
-
-        private MegaBossFate() {}
-
-        public static MegaBossFate Instance
+        public static ActionRunCoroutine Coroutine
         {
             get
             {
-                if (instance == null)
-                {
-                    lock (SyncRootObject)
-                    {
-                        if (instance == null)
-                        {
-                            instance = new MegaBossFate();
-                            instance.CreateCoroutine();
-                        }
-                    }
-                }
-
-                return instance;
+                return CreateCoroutine();
             }
         }
-
-        public ActionRunCoroutine Coroutine { get; private set; }
 
         private static async Task<bool> MegaBossFateTask()
         {
@@ -64,9 +44,9 @@ namespace Tarot.Behaviour.Coroutines
             return true;
         }
 
-        private void CreateCoroutine()
+        private static ActionRunCoroutine CreateCoroutine()
         {
-            this.Coroutine = new ActionRunCoroutine(coroutine => MegaBossFateTask());
+            return new ActionRunCoroutine(coroutine => MegaBossFateTask());
         }
     }
 }

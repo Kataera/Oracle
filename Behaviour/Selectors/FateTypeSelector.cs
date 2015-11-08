@@ -28,35 +28,15 @@ namespace Tarot.Behaviour.Selectors
 
     using TreeSharp;
 
-    internal sealed class FateTypeSelector
+    internal static class FateTypeSelector
     {
-        private static readonly object SyncRootObject = new object();
-
-        private static volatile FateTypeSelector instance;
-
-        private FateTypeSelector() {}
-
-        public static FateTypeSelector Instance
+        public static Composite Behaviour
         {
             get
             {
-                if (instance == null)
-                {
-                    lock (SyncRootObject)
-                    {
-                        if (instance == null)
-                        {
-                            instance = new FateTypeSelector();
-                            instance.CreateBehaviour();
-                        }
-                    }
-                }
-
-                return instance;
+                return CreateBehaviour();
             }
         }
-
-        public Composite Behaviour { get; private set; }
 
         private static bool IsKillFate()
         {
@@ -94,19 +74,18 @@ namespace Tarot.Behaviour.Selectors
             return true;
         }
 
-        // TODO: Consider changing to switch composite.
-        private void CreateBehaviour()
+        private static Composite CreateBehaviour()
         {
             Composite[] behaviours =
             {
-                new Decorator(check => IsKillFate(), KillFate.Instance.Coroutine),
-                new Decorator(check => IsCollectFate(), CollectFate.Instance.Coroutine),
-                new Decorator(check => IsEscortFate(), EscortFate.Instance.Coroutine),
-                new Decorator(check => IsDefenceFate(), DefenceFate.Instance.Coroutine),
-                new Decorator(check => IsBossFate(), BossFate.Instance.Coroutine),
-                new Decorator(check => IsMegaBossFate(), MegaBossFate.Instance.Coroutine)
+                new Decorator(check => IsKillFate(), KillFate.Coroutine),
+                new Decorator(check => IsCollectFate(), CollectFate.Coroutine),
+                new Decorator(check => IsEscortFate(), EscortFate.Coroutine),
+                new Decorator(check => IsDefenceFate(), DefenceFate.Coroutine),
+                new Decorator(check => IsBossFate(), BossFate.Coroutine),
+                new Decorator(check => IsMegaBossFate(), MegaBossFate.Coroutine)
             };
-            this.Behaviour = new PrioritySelector(behaviours);
+            return new PrioritySelector(behaviours);
         }
     }
 }

@@ -22,31 +22,16 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Coroutines
+namespace Tarot.Enumerations
 {
-    using System.Threading.Tasks;
-
-    using TreeSharp;
-
-    internal static class EscortFate
+    internal enum FateIdle
     {
-        public static ActionRunCoroutine Coroutine
-        {
-            get
-            {
-                return CreateCoroutine();
-            }
-        }
+        ReturnToAetheryte,
 
-        private static async Task<bool> EscortFateTask()
-        {
-            // TODO: Write fate task.
-            return true;
-        }
+        MoveToWaitLocation,
 
-        private static ActionRunCoroutine CreateCoroutine()
-        {
-            return new ActionRunCoroutine(coroutine => EscortFateTask());
-        }
+        Patrol,
+
+        Nothing
     }
 }

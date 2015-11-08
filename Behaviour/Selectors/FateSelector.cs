@@ -43,59 +43,39 @@ namespace Tarot.Behaviour.Selectors
 
     using Action = TreeSharp.Action;
 
-    internal sealed class FateSelector
+    internal static class FateSelector
     {
-        private static readonly object SyncRootObject = new object();
+        private static bool waitFlag;
 
-        private static volatile FateSelector instance;
-
-        private bool waitFlag;
-
-        private FateSelector() {}
-
-        public static FateSelector Instance
+        public static Composite Behaviour
         {
             get
             {
-                if (instance == null)
-                {
-                    lock (SyncRootObject)
-                    {
-                        if (instance == null)
-                        {
-                            instance = new FateSelector();
-                            instance.CreateBehaviour();
-                            instance.waitFlag = false;
-                        }
-                    }
-                }
-
-                return instance;
+                return CreateBehaviour();
             }
         }
 
-        public Composite Behaviour { get; private set; }
-
         private static async Task<bool> CheckCurrentFateValidity()
         {
-            if (MainBehaviour.Instance.CurrentRbFate == null || MainBehaviour.Instance.CurrentFate == null)
+            if (MainBehaviour.CurrentRbFate == null || MainBehaviour.CurrentFate == null
+                || Poi.Current.Type != PoiType.Fate)
             {
                 return false;
             }
 
-            if (MainBehaviour.Instance.CurrentRbFate.Status == FateStatus.COMPLETE)
+            if (MainBehaviour.CurrentRbFate.Status == FateStatus.COMPLETE)
             {
                 Logger.SendLog("Current FATE is complete, selecting a new one.");
-                MainBehaviour.Instance.SetCurrentFate(null, null);
+                MainBehaviour.SetCurrentFate(null, null);
                 Poi.Clear("Current FATE is complete.");
 
                 return false;
             }
 
-            if (!MainBehaviour.Instance.CurrentRbFate.IsValid)
+            if (!MainBehaviour.CurrentRbFate.IsValid)
             {
                 Logger.SendLog("Current FATE is no longer valid, selecting a new one.");
-                MainBehaviour.Instance.SetCurrentFate(null, null);
+                MainBehaviour.SetCurrentFate(null, null);
                 Poi.Clear("Current FATE is no longer valid.");
 
                 return false;
@@ -104,7 +84,7 @@ namespace Tarot.Behaviour.Selectors
             return true;
         }
 
-        private void SelectFate()
+        private static void SelectFate()
         {
             /*
                 TODO:
@@ -121,7 +101,7 @@ namespace Tarot.Behaviour.Selectors
 
                 // Check if supported.
                 // TODO: Rewrite this so we're not using return.
-                if (MainBehaviour.Instance.FateDatabase.GetFateWithId(fateId).SupportLevel
+                if (MainBehaviour.FateDatabase.GetFateWithId(fateId).SupportLevel
                     >= (int) FateSupportLevel.Unsupported)
                 {
                     return;
@@ -132,14 +112,14 @@ namespace Tarot.Behaviour.Selectors
                 if (rebornFateData == null)
                 {
                     rebornFateData = fate;
-                    tarotFate = MainBehaviour.Instance.FateDatabase.GetFateWithId(fateId);
+                    tarotFate = MainBehaviour.FateDatabase.GetFateWithId(fateId);
                 }
 
                 if (fate.Location.Distance2D(Core.Player.Location)
                     < rebornFateData.Location.Distance2D(Core.Player.Location))
                 {
                     rebornFateData = fate;
-                    tarotFate = MainBehaviour.Instance.FateDatabase.GetFateWithId(fateId);
+                    tarotFate = MainBehaviour.FateDatabase.GetFateWithId(fateId);
                 }
             }
 
@@ -151,27 +131,28 @@ namespace Tarot.Behaviour.Selectors
                                    : Enum.GetName(typeof(FateType), tarotFate.Type);
                 Logger.SendLog("Selected FATE: " + rebornFateData.Name + " (" + fateType + ").");
 
-                MainBehaviour.Instance.SetCurrentFate(rebornFateData, tarotFate);
+                MainBehaviour.SetCurrentFate(rebornFateData, tarotFate);
 
-                this.waitFlag = false;
+                waitFlag = false;
             }
-            else if (!this.waitFlag)
+            else if (!waitFlag)
             {
                 Logger.SendLog("There's no available FATEs, moving to wait location.");
                 Poi.Current = new Poi(new Vector3(-9.798996f, 46.99999f, -14.16332f), PoiType.Wait);
+                Tarot.CurrentPoi = Poi.Current;
 
-                this.waitFlag = true;
+                waitFlag = true;
             }
         }
 
-        private void CreateBehaviour()
+        private static Composite CreateBehaviour()
         {
             Composite[] behaviours =
             {
                 new ActionRunCoroutine(coroutine => CheckCurrentFateValidity()),
-                new Action(action => this.SelectFate())
+                new Action(action => SelectFate())
             };
-            this.Behaviour = new PrioritySelector(behaviours);
+            return new PrioritySelector(behaviours);
         }
     }
 }

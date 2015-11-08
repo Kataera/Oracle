@@ -35,64 +35,46 @@ namespace Tarot.Behaviour
 
     using TreeSharp;
 
-    internal sealed class MainBehaviour
+    internal static class MainBehaviour
     {
-        private static readonly object SyncRootObject = new object();
+        private static FateDatabase fateDatabase;
 
-        private static volatile MainBehaviour instance;
-
-        private MainBehaviour(FateDatabase database)
-        {
-            this.FateDatabase = database;
-        }
-
-        public static MainBehaviour Instance
+        public static Composite Behaviour
         {
             get
             {
-                if (instance == null)
-                {
-                    lock (SyncRootObject)
-                    {
-                        if (instance == null)
-                        {
-                            instance = new MainBehaviour(XmlParser.GetFateDatabase(true));
-                            instance.CreateBehaviour();
-                        }
-                    }
-                }
-
-                return instance;
+                return CreateBehaviour();
             }
         }
 
-        public Composite Behaviour { get; private set; }
+        public static Fate CurrentFate { get; private set; }
 
-        public Fate CurrentFate { get; private set; }
+        public static FateData CurrentRbFate { get; private set; }
 
-        public FateData CurrentRbFate { get; private set; }
+        public static FateDatabase FateDatabase {
+            get
+            {
+                return fateDatabase ?? (fateDatabase = XmlParser.GetFateDatabase());
+            }
+        }
 
-        public FateDatabase FateDatabase { get; set; }
-
-        public void SetCurrentFate(FateData rebornFateData, Fate tarotFateData)
+        public static void SetCurrentFate(FateData rebornFateData, Fate tarotFateData)
         {
-            this.CurrentFate = tarotFateData;
-            this.CurrentRbFate = rebornFateData;
+            CurrentFate = tarotFateData;
+            CurrentRbFate = rebornFateData;
 
             if (rebornFateData != null)
             {
                 Poi.Current = new Poi(rebornFateData, PoiType.Fate);
+                Tarot.CurrentPoi = Poi.Current;
             }
         }
 
-        private void CreateBehaviour()
+        private static Composite CreateBehaviour()
         {
-            Composite[] behaviours =
-            {
-                FateSelector.Instance.Behaviour, NavigationSelector.Instance.Behaviour,
-                NavigationHandler.Instance.Behaviour, FateHandler.Instance.Behaviour
-            };
-            this.Behaviour = new Sequence(behaviours);
+            Composite[] behaviours = { FateSelector.Behaviour, NavigationHandler.Behaviour, FateHandler.Behaviour };
+
+            return new Sequence(behaviours);
         }
     }
 }
