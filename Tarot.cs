@@ -32,6 +32,7 @@ namespace Tarot
     using ff14bot.Managers;
     using ff14bot.Navigation;
 
+    using global::Tarot.Behaviour;
     using global::Tarot.Forms;
     using global::Tarot.Helpers;
 
@@ -53,7 +54,7 @@ namespace Tarot
 
         public Poi CurrentPoi { get; set; }
 
-        public Version CurrentVersion
+        public Version Version
         {
             get
             {
@@ -121,9 +122,6 @@ namespace Tarot
         {
             Logger.SendLog("Initialising " + this.Name + ".");
 
-            // Set the botbase instance so we can access its data.
-            Instance = this;
-
             // Check for updates
             // TODO: Implement rest of Updater.
             if (Updater.UpdateIsAvailable())
@@ -155,6 +153,9 @@ namespace Tarot
         {
             Logger.SendLog("Starting " + this.Name + ".");
 
+            // Set the botbase instance so we can access its data.
+            Instance = this;
+
             // Set navigator.
             Navigator.PlayerMover = new SlideMover();
             Navigator.NavigationProvider = new GaiaNavigator();
@@ -168,8 +169,8 @@ namespace Tarot
             GameSettingsManager.FaceTargetOnAction = true;
             GameSettingsManager.FlightMode = true;
 
-            // Set root behaviour to worker task.
-            this.root = null;
+            // Set root behaviour.
+            this.root = Main.Behaviour;
         }
 
         public override void Stop()
@@ -184,6 +185,9 @@ namespace Tarot
             }
 
             Navigator.NavigationProvider = null;
+
+            // Reset the target provider.
+            CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
 
             // Restore player's game settings.
             GameSettingsManager.FaceTargetOnAction = this.playerFaceTargetOnAction;

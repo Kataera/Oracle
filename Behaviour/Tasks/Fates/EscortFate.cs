@@ -26,5 +26,10 @@ namespace Tarot.Behaviour.Tasks.Fates
 {
     internal static class EscortFate
     {
+        public static async Task<bool> Task()
+        {
+            // TODO: Implement.
+            return true;
+        }
     }
 }

@@ -40,13 +40,13 @@ namespace Tarot.Helpers
 
         internal static void SendLog(string log)
         {
-            var prefix = "[" + Tarot.Instance.Name + "] [v" + Tarot.Instance.CurrentVersion + "]: ";
+            var prefix = "[" + Tarot.Instance.Name + "] [v" + Tarot.Instance.Version + "]: ";
             Logging.Write(LoggerRegularColour, prefix + log);
         }
 
         internal static void SendErrorLog(string log)
         {
-            var prefix = "[" + Tarot.Instance.Name + "] [v" + Tarot.Instance.CurrentVersion + "] [ERROR]: ";
+            var prefix = "[" + Tarot.Instance.Name + "] [v" + Tarot.Instance.Version + "] [ERROR]: ";
             Logging.Write(LoggerErrorColour, prefix + log);
         }
 
@@ -54,7 +54,7 @@ namespace Tarot.Helpers
         {
             if (TarotSettings.Instance.DebugEnabled)
             {
-                var prefix = "[" + Tarot.Instance.Name + "] [v" + Tarot.Instance.CurrentVersion + "] [DEBUG]: ";
+                var prefix = "[" + Tarot.Instance.Name + "] [v" + Tarot.Instance.Version + "] [DEBUG]: ";
                 Logging.Write(LoggerDebugColour, prefix + log);
             }
         }

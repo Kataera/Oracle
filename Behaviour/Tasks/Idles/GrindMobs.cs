@@ -26,5 +26,10 @@ namespace Tarot.Behaviour.Tasks.Idles
 {
     internal static class GrindMobs
     {
+        public static async Task<bool> Task()
+        {
+            // TODO: Implement.
+            return true;
+        }
     }
 }

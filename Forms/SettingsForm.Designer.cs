@@ -150,10 +150,10 @@ namespace Tarot.Forms
             this.panelControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.SuspendLayout();
-            //
+            // 
             // tabSelectorMain
-            //
-            this.tabSelectorMain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.tabSelectorMain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabSelectorMain.BaseTabControl = this.tabControllerMain;
             this.tabSelectorMain.Depth = 0;
@@ -165,11 +165,11 @@ namespace Tarot.Forms
             this.tabSelectorMain.Size = new System.Drawing.Size(678, 40);
             this.tabSelectorMain.TabIndex = 0;
             this.tabSelectorMain.Text = "Settings Tabs";
-            //
+            // 
             // tabControllerMain
-            //
-            this.tabControllerMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.tabControllerMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerMain.Controls.Add(this.tabGeneralSettings);
             this.tabControllerMain.Controls.Add(this.tabFateSettings);
@@ -185,9 +185,9 @@ namespace Tarot.Forms
             this.tabControllerMain.SelectedIndex = 0;
             this.tabControllerMain.Size = new System.Drawing.Size(850, 521);
             this.tabControllerMain.TabIndex = 1;
-            //
+            // 
             // tabGeneralSettings
-            //
+            // 
             this.tabGeneralSettings.Controls.Add(this.tabSelectorGeneral);
             this.tabGeneralSettings.Controls.Add(this.tabControllerGeneral);
             this.tabGeneralSettings.Location = new System.Drawing.Point(4, 29);
@@ -199,10 +199,10 @@ namespace Tarot.Forms
             this.tabGeneralSettings.TabIndex = 0;
             this.tabGeneralSettings.Text = "General Settings";
             this.tabGeneralSettings.UseVisualStyleBackColor = true;
-            //
+            // 
             // tabSelectorGeneral
-            //
-            this.tabSelectorGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            // 
+            this.tabSelectorGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tabSelectorGeneral.BaseTabControl = this.tabControllerGeneral;
             this.tabSelectorGeneral.Depth = 0;
@@ -214,11 +214,11 @@ namespace Tarot.Forms
             this.tabSelectorGeneral.Size = new System.Drawing.Size(173, 449);
             this.tabSelectorGeneral.TabIndex = 8;
             this.tabSelectorGeneral.Text = "materialTabSelectorVertical1";
-            //
+            // 
             // tabControllerGeneral
-            //
-            this.tabControllerGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.tabControllerGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerGeneral.Controls.Add(this.tabPageFateSelection);
             this.tabControllerGeneral.Controls.Add(this.tabPageBotMode);
@@ -235,9 +235,9 @@ namespace Tarot.Forms
             this.tabControllerGeneral.SelectedIndex = 0;
             this.tabControllerGeneral.Size = new System.Drawing.Size(674, 449);
             this.tabControllerGeneral.TabIndex = 2;
-            //
+            // 
             // tabPageFateSelection
-            //
+            // 
             this.tabPageFateSelection.AutoScroll = true;
             this.tabPageFateSelection.Controls.Add(this.labelFateSelectionTitle);
             this.tabPageFateSelection.Location = new System.Drawing.Point(4, 29);
@@ -248,9 +248,9 @@ namespace Tarot.Forms
             this.tabPageFateSelection.TabIndex = 0;
             this.tabPageFateSelection.Text = "FATE Selection";
             this.tabPageFateSelection.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelFateSelectionTitle
-            //
+            // 
             this.labelFateSelectionTitle.AutoSize = true;
             this.labelFateSelectionTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelFateSelectionTitle.Location = new System.Drawing.Point(10, 10);
@@ -259,9 +259,9 @@ namespace Tarot.Forms
             this.labelFateSelectionTitle.Size = new System.Drawing.Size(187, 38);
             this.labelFateSelectionTitle.TabIndex = 1;
             this.labelFateSelectionTitle.Text = "FATE Selection";
-            //
+            // 
             // tabPageBotMode
-            //
+            // 
             this.tabPageBotMode.Controls.Add(this.labelBotModeTitle);
             this.tabPageBotMode.Location = new System.Drawing.Point(4, 22);
             this.tabPageBotMode.Margin = new System.Windows.Forms.Padding(0);
@@ -271,9 +271,9 @@ namespace Tarot.Forms
             this.tabPageBotMode.TabIndex = 1;
             this.tabPageBotMode.Text = "Bot Mode";
             this.tabPageBotMode.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelBotModeTitle
-            //
+            // 
             this.labelBotModeTitle.AutoSize = true;
             this.labelBotModeTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelBotModeTitle.Location = new System.Drawing.Point(10, 10);
@@ -282,9 +282,9 @@ namespace Tarot.Forms
             this.labelBotModeTitle.Size = new System.Drawing.Size(124, 38);
             this.labelBotModeTitle.TabIndex = 4;
             this.labelBotModeTitle.Text = "Bot Mode";
-            //
+            // 
             // tabPageMovement
-            //
+            // 
             this.tabPageMovement.Controls.Add(this.labelMovementTitle);
             this.tabPageMovement.Location = new System.Drawing.Point(4, 22);
             this.tabPageMovement.Margin = new System.Windows.Forms.Padding(0);
@@ -293,9 +293,9 @@ namespace Tarot.Forms
             this.tabPageMovement.TabIndex = 2;
             this.tabPageMovement.Text = "Movement";
             this.tabPageMovement.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelMovementTitle
-            //
+            // 
             this.labelMovementTitle.AutoSize = true;
             this.labelMovementTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelMovementTitle.Location = new System.Drawing.Point(10, 10);
@@ -304,9 +304,9 @@ namespace Tarot.Forms
             this.labelMovementTitle.Size = new System.Drawing.Size(135, 38);
             this.labelMovementTitle.TabIndex = 5;
             this.labelMovementTitle.Text = "Movement";
-            //
+            // 
             // tabPageScheduler
-            //
+            // 
             this.tabPageScheduler.Controls.Add(this.labelSchedulerTitle);
             this.tabPageScheduler.Location = new System.Drawing.Point(4, 22);
             this.tabPageScheduler.Margin = new System.Windows.Forms.Padding(0);
@@ -315,9 +315,9 @@ namespace Tarot.Forms
             this.tabPageScheduler.TabIndex = 3;
             this.tabPageScheduler.Text = "Scheduler";
             this.tabPageScheduler.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelSchedulerTitle
-            //
+            // 
             this.labelSchedulerTitle.AutoSize = true;
             this.labelSchedulerTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelSchedulerTitle.Location = new System.Drawing.Point(10, 10);
@@ -326,9 +326,9 @@ namespace Tarot.Forms
             this.labelSchedulerTitle.Size = new System.Drawing.Size(130, 38);
             this.labelSchedulerTitle.TabIndex = 5;
             this.labelSchedulerTitle.Text = "Scheduler";
-            //
+            // 
             // tabPagePatrol
-            //
+            // 
             this.tabPagePatrol.Controls.Add(this.labelPatrolTitle);
             this.tabPagePatrol.Location = new System.Drawing.Point(4, 22);
             this.tabPagePatrol.Margin = new System.Windows.Forms.Padding(0);
@@ -337,9 +337,9 @@ namespace Tarot.Forms
             this.tabPagePatrol.TabIndex = 4;
             this.tabPagePatrol.Text = "Patrol";
             this.tabPagePatrol.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelPatrolTitle
-            //
+            // 
             this.labelPatrolTitle.AutoSize = true;
             this.labelPatrolTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelPatrolTitle.Location = new System.Drawing.Point(10, 10);
@@ -348,9 +348,9 @@ namespace Tarot.Forms
             this.labelPatrolTitle.Size = new System.Drawing.Size(85, 38);
             this.labelPatrolTitle.TabIndex = 5;
             this.labelPatrolTitle.Text = "Patrol";
-            //
+            // 
             // tabPageMiscellaneous
-            //
+            // 
             this.tabPageMiscellaneous.Controls.Add(this.labelMiscellaneousTitle);
             this.tabPageMiscellaneous.Location = new System.Drawing.Point(4, 22);
             this.tabPageMiscellaneous.Name = "tabPageMiscellaneous";
@@ -358,9 +358,9 @@ namespace Tarot.Forms
             this.tabPageMiscellaneous.TabIndex = 5;
             this.tabPageMiscellaneous.Text = "Miscellaneous";
             this.tabPageMiscellaneous.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelMiscellaneousTitle
-            //
+            // 
             this.labelMiscellaneousTitle.AutoSize = true;
             this.labelMiscellaneousTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelMiscellaneousTitle.Location = new System.Drawing.Point(10, 10);
@@ -369,9 +369,9 @@ namespace Tarot.Forms
             this.labelMiscellaneousTitle.Size = new System.Drawing.Size(179, 38);
             this.labelMiscellaneousTitle.TabIndex = 6;
             this.labelMiscellaneousTitle.Text = "Miscellaneous";
-            //
+            // 
             // tabFateSettings
-            //
+            // 
             this.tabFateSettings.Controls.Add(this.tabControllerFate);
             this.tabFateSettings.Controls.Add(this.tabSelectorFate);
             this.tabFateSettings.Location = new System.Drawing.Point(4, 29);
@@ -382,11 +382,11 @@ namespace Tarot.Forms
             this.tabFateSettings.TabIndex = 1;
             this.tabFateSettings.Text = "Fate Settings";
             this.tabFateSettings.UseVisualStyleBackColor = true;
-            //
+            // 
             // tabControllerFate
-            //
-            this.tabControllerFate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.tabControllerFate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerFate.Controls.Add(this.tabPageKillFates);
             this.tabControllerFate.Controls.Add(this.tabPageCollectFates);
@@ -403,9 +403,9 @@ namespace Tarot.Forms
             this.tabControllerFate.SelectedIndex = 0;
             this.tabControllerFate.Size = new System.Drawing.Size(674, 449);
             this.tabControllerFate.TabIndex = 9;
-            //
+            // 
             // tabPageKillFates
-            //
+            // 
             this.tabPageKillFates.Controls.Add(this.labelKillFatesTitle);
             this.tabPageKillFates.Location = new System.Drawing.Point(4, 29);
             this.tabPageKillFates.Margin = new System.Windows.Forms.Padding(0);
@@ -415,9 +415,9 @@ namespace Tarot.Forms
             this.tabPageKillFates.TabIndex = 0;
             this.tabPageKillFates.Text = "Kill FATEs";
             this.tabPageKillFates.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelKillFatesTitle
-            //
+            // 
             this.labelKillFatesTitle.AutoSize = true;
             this.labelKillFatesTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelKillFatesTitle.Location = new System.Drawing.Point(10, 10);
@@ -426,9 +426,9 @@ namespace Tarot.Forms
             this.labelKillFatesTitle.Size = new System.Drawing.Size(131, 38);
             this.labelKillFatesTitle.TabIndex = 1;
             this.labelKillFatesTitle.Text = "Kill FATEs";
-            //
+            // 
             // tabPageCollectFates
-            //
+            // 
             this.tabPageCollectFates.Controls.Add(this.labelCollectFatesTitle);
             this.tabPageCollectFates.Location = new System.Drawing.Point(4, 22);
             this.tabPageCollectFates.Margin = new System.Windows.Forms.Padding(0);
@@ -438,9 +438,9 @@ namespace Tarot.Forms
             this.tabPageCollectFates.TabIndex = 1;
             this.tabPageCollectFates.Text = "Collect FATEs";
             this.tabPageCollectFates.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelCollectFatesTitle
-            //
+            // 
             this.labelCollectFatesTitle.AutoSize = true;
             this.labelCollectFatesTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelCollectFatesTitle.Location = new System.Drawing.Point(10, 10);
@@ -449,9 +449,9 @@ namespace Tarot.Forms
             this.labelCollectFatesTitle.Size = new System.Drawing.Size(172, 38);
             this.labelCollectFatesTitle.TabIndex = 4;
             this.labelCollectFatesTitle.Text = "Collect FATEs";
-            //
+            // 
             // tabPageEscortFates
-            //
+            // 
             this.tabPageEscortFates.Controls.Add(this.labelEscortFatesTitle);
             this.tabPageEscortFates.Location = new System.Drawing.Point(4, 22);
             this.tabPageEscortFates.Margin = new System.Windows.Forms.Padding(0);
@@ -460,9 +460,9 @@ namespace Tarot.Forms
             this.tabPageEscortFates.TabIndex = 2;
             this.tabPageEscortFates.Text = "Escort FATEs";
             this.tabPageEscortFates.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelEscortFatesTitle
-            //
+            // 
             this.labelEscortFatesTitle.AutoSize = true;
             this.labelEscortFatesTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelEscortFatesTitle.Location = new System.Drawing.Point(10, 10);
@@ -471,9 +471,9 @@ namespace Tarot.Forms
             this.labelEscortFatesTitle.Size = new System.Drawing.Size(166, 38);
             this.labelEscortFatesTitle.TabIndex = 5;
             this.labelEscortFatesTitle.Text = "Escort FATEs";
-            //
+            // 
             // tabPageDefenceFates
-            //
+            // 
             this.tabPageDefenceFates.Controls.Add(this.labelDefenceFatesTitle);
             this.tabPageDefenceFates.Location = new System.Drawing.Point(4, 22);
             this.tabPageDefenceFates.Margin = new System.Windows.Forms.Padding(0);
@@ -482,9 +482,9 @@ namespace Tarot.Forms
             this.tabPageDefenceFates.TabIndex = 3;
             this.tabPageDefenceFates.Text = "Defence FATEs";
             this.tabPageDefenceFates.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelDefenceFatesTitle
-            //
+            // 
             this.labelDefenceFatesTitle.AutoSize = true;
             this.labelDefenceFatesTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDefenceFatesTitle.Location = new System.Drawing.Point(10, 10);
@@ -493,9 +493,9 @@ namespace Tarot.Forms
             this.labelDefenceFatesTitle.Size = new System.Drawing.Size(185, 38);
             this.labelDefenceFatesTitle.TabIndex = 6;
             this.labelDefenceFatesTitle.Text = "Defence FATEs";
-            //
+            // 
             // tabPageBossFates
-            //
+            // 
             this.tabPageBossFates.Controls.Add(this.labelBossFatesTitle);
             this.tabPageBossFates.Location = new System.Drawing.Point(4, 22);
             this.tabPageBossFates.Margin = new System.Windows.Forms.Padding(0);
@@ -504,9 +504,9 @@ namespace Tarot.Forms
             this.tabPageBossFates.TabIndex = 4;
             this.tabPageBossFates.Text = "Boss FATEs";
             this.tabPageBossFates.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelBossFatesTitle
-            //
+            // 
             this.labelBossFatesTitle.AutoSize = true;
             this.labelBossFatesTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelBossFatesTitle.Location = new System.Drawing.Point(10, 10);
@@ -515,9 +515,9 @@ namespace Tarot.Forms
             this.labelBossFatesTitle.Size = new System.Drawing.Size(150, 38);
             this.labelBossFatesTitle.TabIndex = 6;
             this.labelBossFatesTitle.Text = "Boss FATEs";
-            //
+            // 
             // tabPageMegaBossFates
-            //
+            // 
             this.tabPageMegaBossFates.Controls.Add(this.labelMegaBossFatesTitle);
             this.tabPageMegaBossFates.Location = new System.Drawing.Point(4, 22);
             this.tabPageMegaBossFates.Margin = new System.Windows.Forms.Padding(0);
@@ -526,9 +526,9 @@ namespace Tarot.Forms
             this.tabPageMegaBossFates.TabIndex = 5;
             this.tabPageMegaBossFates.Text = "Mega-Boss FATEs";
             this.tabPageMegaBossFates.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelMegaBossFatesTitle
-            //
+            // 
             this.labelMegaBossFatesTitle.AutoSize = true;
             this.labelMegaBossFatesTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelMegaBossFatesTitle.Location = new System.Drawing.Point(10, 10);
@@ -537,10 +537,10 @@ namespace Tarot.Forms
             this.labelMegaBossFatesTitle.Size = new System.Drawing.Size(222, 38);
             this.labelMegaBossFatesTitle.TabIndex = 6;
             this.labelMegaBossFatesTitle.Text = "Mega-Boss FATEs";
-            //
+            // 
             // tabSelectorFate
-            //
-            this.tabSelectorFate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            // 
+            this.tabSelectorFate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tabSelectorFate.BaseTabControl = this.tabControllerFate;
             this.tabSelectorFate.Depth = 0;
@@ -552,9 +552,9 @@ namespace Tarot.Forms
             this.tabSelectorFate.Size = new System.Drawing.Size(173, 449);
             this.tabSelectorFate.TabIndex = 8;
             this.tabSelectorFate.Text = "materialTabSelectorVertical1";
-            //
+            // 
             // tabCustomBehaviour
-            //
+            // 
             this.tabCustomBehaviour.Controls.Add(this.tabSelectorCustom);
             this.tabCustomBehaviour.Controls.Add(this.tabControllerCustom);
             this.tabCustomBehaviour.Location = new System.Drawing.Point(4, 29);
@@ -565,10 +565,10 @@ namespace Tarot.Forms
             this.tabCustomBehaviour.TabIndex = 2;
             this.tabCustomBehaviour.Text = "Custom Behaviour";
             this.tabCustomBehaviour.UseVisualStyleBackColor = true;
-            //
+            // 
             // tabSelectorCustom
-            //
-            this.tabSelectorCustom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            // 
+            this.tabSelectorCustom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tabSelectorCustom.BaseTabControl = this.tabControllerCustom;
             this.tabSelectorCustom.Depth = 0;
@@ -580,11 +580,11 @@ namespace Tarot.Forms
             this.tabSelectorCustom.Size = new System.Drawing.Size(173, 449);
             this.tabSelectorCustom.TabIndex = 7;
             this.tabSelectorCustom.Text = "materialTabSelectorVertical1";
-            //
+            // 
             // tabControllerCustom
-            //
-            this.tabControllerCustom.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.tabControllerCustom.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerCustom.Controls.Add(this.tabPageAvoidance);
             this.tabControllerCustom.Controls.Add(this.tabPageNavigation);
@@ -598,9 +598,9 @@ namespace Tarot.Forms
             this.tabControllerCustom.SelectedIndex = 0;
             this.tabControllerCustom.Size = new System.Drawing.Size(674, 449);
             this.tabControllerCustom.TabIndex = 2;
-            //
+            // 
             // tabPageAvoidance
-            //
+            // 
             this.tabPageAvoidance.Controls.Add(this.labelAvoidanceTitle);
             this.tabPageAvoidance.Location = new System.Drawing.Point(4, 29);
             this.tabPageAvoidance.Margin = new System.Windows.Forms.Padding(0);
@@ -610,9 +610,9 @@ namespace Tarot.Forms
             this.tabPageAvoidance.TabIndex = 0;
             this.tabPageAvoidance.Text = "Avoidance";
             this.tabPageAvoidance.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelAvoidanceTitle
-            //
+            // 
             this.labelAvoidanceTitle.AutoSize = true;
             this.labelAvoidanceTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelAvoidanceTitle.Location = new System.Drawing.Point(10, 10);
@@ -621,9 +621,9 @@ namespace Tarot.Forms
             this.labelAvoidanceTitle.Size = new System.Drawing.Size(134, 38);
             this.labelAvoidanceTitle.TabIndex = 1;
             this.labelAvoidanceTitle.Text = "Avoidance";
-            //
+            // 
             // tabPageNavigation
-            //
+            // 
             this.tabPageNavigation.Controls.Add(this.labelNavigationTitle);
             this.tabPageNavigation.Location = new System.Drawing.Point(4, 22);
             this.tabPageNavigation.Margin = new System.Windows.Forms.Padding(0);
@@ -633,9 +633,9 @@ namespace Tarot.Forms
             this.tabPageNavigation.TabIndex = 1;
             this.tabPageNavigation.Text = "Navigation";
             this.tabPageNavigation.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelNavigationTitle
-            //
+            // 
             this.labelNavigationTitle.AutoSize = true;
             this.labelNavigationTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelNavigationTitle.Location = new System.Drawing.Point(10, 10);
@@ -644,9 +644,9 @@ namespace Tarot.Forms
             this.labelNavigationTitle.Size = new System.Drawing.Size(139, 38);
             this.labelNavigationTitle.TabIndex = 4;
             this.labelNavigationTitle.Text = "Navigation";
-            //
+            // 
             // tabPageSpecialFates
-            //
+            // 
             this.tabPageSpecialFates.Controls.Add(this.labelSpecialFatesTitle);
             this.tabPageSpecialFates.Location = new System.Drawing.Point(4, 22);
             this.tabPageSpecialFates.Margin = new System.Windows.Forms.Padding(0);
@@ -655,9 +655,9 @@ namespace Tarot.Forms
             this.tabPageSpecialFates.TabIndex = 2;
             this.tabPageSpecialFates.Text = "Special FATEs";
             this.tabPageSpecialFates.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelSpecialFatesTitle
-            //
+            // 
             this.labelSpecialFatesTitle.AutoSize = true;
             this.labelSpecialFatesTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelSpecialFatesTitle.Location = new System.Drawing.Point(10, 10);
@@ -666,9 +666,9 @@ namespace Tarot.Forms
             this.labelSpecialFatesTitle.Size = new System.Drawing.Size(177, 38);
             this.labelSpecialFatesTitle.TabIndex = 5;
             this.labelSpecialFatesTitle.Text = "Special FATEs";
-            //
+            // 
             // tabBlacklist
-            //
+            // 
             this.tabBlacklist.Controls.Add(this.tabSelectorBlacklist);
             this.tabBlacklist.Controls.Add(this.tabControllerBlacklist);
             this.tabBlacklist.Location = new System.Drawing.Point(4, 29);
@@ -679,10 +679,10 @@ namespace Tarot.Forms
             this.tabBlacklist.TabIndex = 3;
             this.tabBlacklist.Text = "Blacklist";
             this.tabBlacklist.UseVisualStyleBackColor = true;
-            //
+            // 
             // tabSelectorBlacklist
-            //
-            this.tabSelectorBlacklist.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            // 
+            this.tabSelectorBlacklist.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tabSelectorBlacklist.BaseTabControl = this.tabControllerBlacklist;
             this.tabSelectorBlacklist.Depth = 0;
@@ -694,11 +694,11 @@ namespace Tarot.Forms
             this.tabSelectorBlacklist.Size = new System.Drawing.Size(173, 449);
             this.tabSelectorBlacklist.TabIndex = 6;
             this.tabSelectorBlacklist.Text = "materialTabSelectorVertical1";
-            //
+            // 
             // tabControllerBlacklist
-            //
-            this.tabControllerBlacklist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.tabControllerBlacklist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerBlacklist.Controls.Add(this.tabPageFateBlacklist);
             this.tabControllerBlacklist.Controls.Add(this.tabPageMobBlacklist);
@@ -711,9 +711,9 @@ namespace Tarot.Forms
             this.tabControllerBlacklist.SelectedIndex = 0;
             this.tabControllerBlacklist.Size = new System.Drawing.Size(674, 449);
             this.tabControllerBlacklist.TabIndex = 1;
-            //
+            // 
             // tabPageFateBlacklist
-            //
+            // 
             this.tabPageFateBlacklist.Controls.Add(this.labelFateBlacklistTitle);
             this.tabPageFateBlacklist.Location = new System.Drawing.Point(4, 29);
             this.tabPageFateBlacklist.Margin = new System.Windows.Forms.Padding(0);
@@ -723,9 +723,9 @@ namespace Tarot.Forms
             this.tabPageFateBlacklist.TabIndex = 0;
             this.tabPageFateBlacklist.Text = "FATE Blacklist";
             this.tabPageFateBlacklist.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelFateBlacklistTitle
-            //
+            // 
             this.labelFateBlacklistTitle.AutoSize = true;
             this.labelFateBlacklistTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelFateBlacklistTitle.Location = new System.Drawing.Point(10, 10);
@@ -734,9 +734,9 @@ namespace Tarot.Forms
             this.labelFateBlacklistTitle.Size = new System.Drawing.Size(180, 38);
             this.labelFateBlacklistTitle.TabIndex = 1;
             this.labelFateBlacklistTitle.Text = "FATE Blacklist";
-            //
+            // 
             // tabPageMobBlacklist
-            //
+            // 
             this.tabPageMobBlacklist.Controls.Add(this.labelMobBlacklistTitle);
             this.tabPageMobBlacklist.Location = new System.Drawing.Point(4, 22);
             this.tabPageMobBlacklist.Margin = new System.Windows.Forms.Padding(0);
@@ -746,9 +746,9 @@ namespace Tarot.Forms
             this.tabPageMobBlacklist.TabIndex = 1;
             this.tabPageMobBlacklist.Text = "Mob Blacklist";
             this.tabPageMobBlacklist.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelMobBlacklistTitle
-            //
+            // 
             this.labelMobBlacklistTitle.AutoSize = true;
             this.labelMobBlacklistTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelMobBlacklistTitle.Location = new System.Drawing.Point(10, 10);
@@ -757,9 +757,9 @@ namespace Tarot.Forms
             this.labelMobBlacklistTitle.Size = new System.Drawing.Size(171, 38);
             this.labelMobBlacklistTitle.TabIndex = 4;
             this.labelMobBlacklistTitle.Text = "Mob Blacklist";
-            //
+            // 
             // tabAbout
-            //
+            // 
             this.tabAbout.Controls.Add(this.tabControllerAbout);
             this.tabAbout.Controls.Add(this.tabSelectorAbout);
             this.tabAbout.Location = new System.Drawing.Point(4, 29);
@@ -770,11 +770,11 @@ namespace Tarot.Forms
             this.tabAbout.TabIndex = 4;
             this.tabAbout.Text = "About";
             this.tabAbout.UseVisualStyleBackColor = true;
-            //
+            // 
             // tabControllerAbout
-            //
-            this.tabControllerAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.tabControllerAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerAbout.Controls.Add(this.tabPageLicense);
             this.tabControllerAbout.Controls.Add(this.tabPageDonate);
@@ -787,9 +787,9 @@ namespace Tarot.Forms
             this.tabControllerAbout.SelectedIndex = 0;
             this.tabControllerAbout.Size = new System.Drawing.Size(674, 449);
             this.tabControllerAbout.TabIndex = 0;
-            //
+            // 
             // tabPageLicense
-            //
+            // 
             this.tabPageLicense.Controls.Add(this.labelFullLicenseLink);
             this.tabPageLicense.Controls.Add(this.labelLicenseText);
             this.tabPageLicense.Controls.Add(this.labelLicenseTitle);
@@ -801,9 +801,9 @@ namespace Tarot.Forms
             this.tabPageLicense.TabIndex = 0;
             this.tabPageLicense.Text = "License";
             this.tabPageLicense.UseVisualStyleBackColor = true;
-            //
+            // 
             // labelFullLicenseLink
-            //
+            // 
             this.labelFullLicenseLink.AutoSize = true;
             this.labelFullLicenseLink.Font = new System.Drawing.Font("Roboto", 11F);
             this.labelFullLicenseLink.Location = new System.Drawing.Point(13, 374);
@@ -814,11 +814,11 @@ namespace Tarot.Forms
             this.labelFullLicenseLink.TabStop = true;
             this.labelFullLicenseLink.Text = "GNU General Public License - Version 3";
             this.labelFullLicenseLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnFullLicenseLinkClicked);
-            //
+            // 
             // labelLicenseText
-            //
-            this.labelLicenseText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.labelLicenseText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelLicenseText.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelLicenseText.Location = new System.Drawing.Point(14, 56);
@@ -826,9 +826,9 @@ namespace Tarot.Forms
             this.labelLicenseText.Size = new System.Drawing.Size(641, 263);
             this.labelLicenseText.TabIndex = 4;
             this.labelLicenseText.Text = resources.GetString("labelLicenseText.Text");
-            //
+            // 
             // labelLicenseTitle
-            //
+            // 
             this.labelLicenseTitle.AutoSize = true;
             this.labelLicenseTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelLicenseTitle.Location = new System.Drawing.Point(10, 10);
@@ -837,9 +837,9 @@ namespace Tarot.Forms
             this.labelLicenseTitle.Size = new System.Drawing.Size(104, 38);
             this.labelLicenseTitle.TabIndex = 1;
             this.labelLicenseTitle.Text = "License";
-            //
+            // 
             // tabPageDonate
-            //
+            // 
             this.tabPageDonate.Controls.Add(this.pictureBoxDonate);
             this.tabPageDonate.Controls.Add(this.labelDonateText);
             this.tabPageDonate.Controls.Add(this.labelDonateTitle);
@@ -851,9 +851,9 @@ namespace Tarot.Forms
             this.tabPageDonate.TabIndex = 1;
             this.tabPageDonate.Text = "Donate";
             this.tabPageDonate.UseVisualStyleBackColor = true;
-            //
+            // 
             // pictureBoxDonate
-            //
+            // 
             this.pictureBoxDonate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pictureBoxDonate.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBoxDonate.Image = global::Tarot.Properties.Resources.PayPal;
@@ -865,10 +865,10 @@ namespace Tarot.Forms
             this.pictureBoxDonate.TabIndex = 7;
             this.pictureBoxDonate.TabStop = false;
             this.pictureBoxDonate.Click += new System.EventHandler(this.OnDonatePictureBoxClick);
-            //
+            // 
             // labelDonateText
-            //
-            this.labelDonateText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.labelDonateText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDonateText.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDonateText.Location = new System.Drawing.Point(14, 56);
@@ -877,9 +877,9 @@ namespace Tarot.Forms
             this.labelDonateText.Size = new System.Drawing.Size(641, 171);
             this.labelDonateText.TabIndex = 5;
             this.labelDonateText.Text = resources.GetString("labelDonateText.Text");
-            //
+            // 
             // labelDonateTitle
-            //
+            // 
             this.labelDonateTitle.AutoSize = true;
             this.labelDonateTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDonateTitle.Location = new System.Drawing.Point(10, 10);
@@ -888,10 +888,10 @@ namespace Tarot.Forms
             this.labelDonateTitle.Size = new System.Drawing.Size(96, 38);
             this.labelDonateTitle.TabIndex = 4;
             this.labelDonateTitle.Text = "Donate";
-            //
+            // 
             // tabSelectorAbout
-            //
-            this.tabSelectorAbout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            // 
+            this.tabSelectorAbout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tabSelectorAbout.BaseTabControl = this.tabControllerAbout;
             this.tabSelectorAbout.Depth = 0;
@@ -903,10 +903,10 @@ namespace Tarot.Forms
             this.tabSelectorAbout.Size = new System.Drawing.Size(173, 449);
             this.tabSelectorAbout.TabIndex = 5;
             this.tabSelectorAbout.Text = "materialTabSelectorVertical1";
-            //
+            // 
             // labelTooltip
-            //
-            this.labelTooltip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.labelTooltip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelTooltip.BackColor = System.Drawing.Color.Transparent;
             this.labelTooltip.Cursor = System.Windows.Forms.Cursors.Help;
@@ -919,9 +919,9 @@ namespace Tarot.Forms
             this.labelTooltip.TabIndex = 4;
             this.labelTooltip.Text = resources.GetString("labelTooltip.Text");
             this.labelTooltip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
-            //
+            // 
             // panelControl
-            //
+            // 
             this.panelControl.BackColor = System.Drawing.Color.Gainsboro;
             this.panelControl.Controls.Add(this.labelTooltip);
             this.panelControl.Controls.Add(this.buttonClose);
@@ -932,9 +932,9 @@ namespace Tarot.Forms
             this.panelControl.Size = new System.Drawing.Size(850, 44);
             this.panelControl.TabIndex = 5;
             this.panelControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
-            //
+            // 
             // buttonClose
-            //
+            // 
             this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonClose.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.buttonClose.Depth = 0;
@@ -949,9 +949,9 @@ namespace Tarot.Forms
             this.buttonClose.Text = "Close";
             this.buttonClose.UseVisualStyleBackColor = true;
             this.buttonClose.Click += new System.EventHandler(this.OnCloseButtonClick);
-            //
+            // 
             // pictureBoxLogo
-            //
+            // 
             this.pictureBoxLogo.BackColor = System.Drawing.Color.Transparent;
             this.pictureBoxLogo.Image = global::Tarot.Properties.Resources.Logo;
             this.pictureBoxLogo.Location = new System.Drawing.Point(0, 0);
@@ -961,9 +961,9 @@ namespace Tarot.Forms
             this.pictureBoxLogo.TabIndex = 0;
             this.pictureBoxLogo.TabStop = false;
             this.pictureBoxLogo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
-            //
+            // 
             // SettingsForm
-            //
+            // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(850, 585);
             this.Controls.Add(this.panelControl);

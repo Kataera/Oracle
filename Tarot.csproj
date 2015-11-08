@@ -73,6 +73,7 @@
     <Compile Include="Behaviour\Tasks\Fates\DefenceFate.cs" />
     <Compile Include="Behaviour\Tasks\Fates\EscortFate.cs" />
     <Compile Include="Behaviour\Tasks\Fates\KillFate.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\BuildFateDatabase.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LevelSync.cs" />
     <Compile Include="Behaviour\Tasks\Fates\MegaBossFate.cs" />
     <Compile Include="Data\FateDatabase.cs" />

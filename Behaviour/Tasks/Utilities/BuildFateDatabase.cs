@@ -24,7 +24,14 @@
 
 namespace Tarot.Behaviour.Tasks.Utilities
 {
+    using System.Threading.Tasks;
+
     internal static class BuildFateDatabase
     {
+        public static async Task<bool> Task()
+        {
+            // TODO: Implement.
+            return true;
+        }
     }
 }
