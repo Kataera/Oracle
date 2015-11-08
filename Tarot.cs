@@ -25,44 +25,47 @@
 namespace Tarot
 {
     using System;
-    using System.Runtime.CompilerServices;
 
-    using ff14bot;
     using ff14bot.AClasses;
     using ff14bot.Behavior;
     using ff14bot.Helpers;
     using ff14bot.Managers;
     using ff14bot.Navigation;
-    using ff14bot.Objects;
 
-    using global::Tarot.Behaviour;
-    using global::Tarot.Behaviour.Handlers;
     using global::Tarot.Forms;
     using global::Tarot.Helpers;
 
     using TreeSharp;
 
+    using static System.Reflection.Assembly;
+
     public class Tarot : BotBase
     {
-        internal const string BotName = "Tarot";
-
         private bool playerFaceTargetOnAction;
 
         private bool playerFlightMode;
 
-        private Composite root;
-
         private SettingsForm settingsForm;
+
+        private Composite root;
 
         public static Tarot Instance { get; set; }
 
-        public static Poi CurrentPoi { get; set; }
+        public Poi CurrentPoi { get; set; }
+
+        public Version CurrentVersion
+        {
+            get
+            {
+                return GetExecutingAssembly().GetName().Version;
+            }
+        }
 
         public override string Name
         {
             get
             {
-                return BotName;
+                return "Tarot";
             }
         }
 
@@ -70,7 +73,7 @@ namespace Tarot
         {
             get
             {
-                return BotName;
+                return "Tarot";
             }
         }
 
@@ -116,9 +119,17 @@ namespace Tarot
 
         public override void Initialize()
         {
-            Logger.SendLog("Initialising " + BotName + ".");
+            Logger.SendLog("Initialising " + this.Name + ".");
+
+            // Set the botbase instance so we can access its data.
             Instance = this;
-            Updater.CheckForUpdates();
+
+            // Check for updates
+            // TODO: Implement rest of Updater.
+            if (Updater.UpdateIsAvailable())
+            {
+                Logger.SendLog("An update for " + this.Name + " is available.");
+            }
         }
 
         public override void OnButtonPress()
@@ -142,7 +153,7 @@ namespace Tarot
 
         public override void Start()
         {
-            Logger.SendLog("Starting " + BotName + ".");
+            Logger.SendLog("Starting " + this.Name + ".");
 
             // Set navigator.
             Navigator.PlayerMover = new SlideMover();
@@ -157,21 +168,13 @@ namespace Tarot
             GameSettingsManager.FaceTargetOnAction = true;
             GameSettingsManager.FlightMode = true;
 
-            // Set default root behaviour.
-            TreeHooks.Instance.ClearAll();
-            TreeHooks.Instance.AddHook("TreeStart", MainBehaviour.Behaviour);
-            this.root = BrainBehavior.CreateBrain();
-
-            // Ensure Poi is set if bot was stopped/started.
-            if (Poi.Current == null)
-            {
-                Poi.Current = new Poi(Core.Player.Location, PoiType.Wait);
-            }
+            // Set root behaviour to worker task.
+            this.root = null;
         }
 
         public override void Stop()
         {
-            Logger.SendLog("Stopping " + BotName + ".");
+            Logger.SendLog("Stopping " + this.Name + ".");
 
             // Dispose of the navigator if it exists.
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
@@ -181,9 +184,6 @@ namespace Tarot
             }
 
             Navigator.NavigationProvider = null;
-
-            // Clear current fate.
-            MainBehaviour.SetCurrentFate(null, null);
 
             // Restore player's game settings.
             GameSettingsManager.FaceTargetOnAction = this.playerFaceTargetOnAction;

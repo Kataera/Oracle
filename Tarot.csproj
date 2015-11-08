@@ -62,18 +62,6 @@
     <None Include="Resources\Fonts\Roboto-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviour\Coroutines\BossFate.cs" />
-    <Compile Include="Behaviour\Coroutines\CollectFate.cs" />
-    <Compile Include="Behaviour\Coroutines\DefenceFate.cs" />
-    <Compile Include="Behaviour\Coroutines\EscortFate.cs" />
-    <Compile Include="Behaviour\Coroutines\KillFate.cs" />
-    <Compile Include="Behaviour\Coroutines\MegaBossFate.cs" />
-    <Compile Include="Behaviour\Handlers\CombatHandler.cs" />
-    <Compile Include="Behaviour\Handlers\FateHandler.cs" />
-    <Compile Include="Behaviour\Handlers\NavigationHandler.cs" />
-    <Compile Include="Behaviour\MainBehaviour.cs" />
-    <Compile Include="Behaviour\Selectors\FateSelector.cs" />
-    <Compile Include="Behaviour\Selectors\FateTypeSelector.cs" />
     <Compile Include="Data\FateDatabase.cs" />
     <Compile Include="Data\FateTypes\Boss.cs" />
     <Compile Include="Data\FateTypes\Collect.cs" />

@@ -26,9 +26,10 @@ namespace Tarot.Helpers
 {
     internal static class Updater
     {
-        internal static void CheckForUpdates()
+        internal static bool UpdateIsAvailable()
         {
-            Logger.SendLog("Checking for updates.");
+            // TODO: Implement.
+            return false;
         }
     }
 }
