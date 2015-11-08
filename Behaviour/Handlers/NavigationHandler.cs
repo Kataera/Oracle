@@ -79,13 +79,14 @@ namespace Tarot.Behaviour.Handlers
                     return false;
                 }
 
+                Navigator.Stop();
                 Actionmanager.Mount();
-                await Coroutine.Wait(5000, () => Core.Player.IsMounted);
+                await Coroutine.Wait(3000, () => Core.Player.IsMounted);
             }
 
             // TODO: Implement specific waiting spots for certain FATEs.
             // Continually poll the navigator until it returns done or we're in the fate area.
-            while (Navigator.MoveToPointWithin(fate.Location, fate.Radius, "Moving to '" + fate.Name + "'.")
+            while (Navigator.MoveToPointWithin(fate.Location, fate.Radius, "Moving to " + fate.Name)
                    != MoveResult.Done)
             {
                 // If the FATE becomes invalid/complete while traveling, stop and break loop.
@@ -98,7 +99,16 @@ namespace Tarot.Behaviour.Handlers
                     return false;
                 }
 
-                // If we reached the FATE boundary.
+                // Stop if we become dismounted.
+                if (!Core.Player.IsMounted)
+                {
+                    Navigator.Stop();
+                    Navigator.Clear();
+
+                    return false;
+                }
+
+                // Stop when we reach the FATE boundary.
                 if (fate.Within2D(Core.Player.Location))
                 {
                     Navigator.Stop();
@@ -107,7 +117,7 @@ namespace Tarot.Behaviour.Handlers
                     return true;
                 }
 
-                Navigator.MoveToPointWithin(fate.Location, fate.Radius, "Moving to '" + fate.Name + "'.");
+                //Navigator.MoveToPointWithin(fate.Location, fate.Radius, "Moving to " + fate.Name);
                 await Coroutine.Yield();
             }
 
@@ -116,14 +126,14 @@ namespace Tarot.Behaviour.Handlers
 
         private static async Task<bool> MoveToIdle()
         {
-            Logger.SendDebugLog("Entered MoveToIdle coroutine.");
+            Logger.SendDebugLog("Entered MoveToIdle coroutine");
             var aetheryteLocation = GetClosestAetheryteLocation();
-            var navResult = Navigator.MoveToPointWithin(aetheryteLocation, 20f, "Returning to Aetheryte Crystal.");
+            var navResult = Navigator.MoveToPointWithin(aetheryteLocation, 20f, "Returning to Aetheryte Crystal");
 
             // Continually poll the navigator until it returns done.
             while (navResult != MoveResult.Done)
             {
-                navResult = Navigator.MoveToPointWithin(aetheryteLocation, 20f, "Returning to Aetheryte Crystal.");
+                navResult = Navigator.MoveToPointWithin(aetheryteLocation, 20f, "Returning to Aetheryte Crystal");
                 await Coroutine.Yield();
             }
 

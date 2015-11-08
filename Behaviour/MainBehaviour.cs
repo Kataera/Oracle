@@ -31,11 +31,14 @@ namespace Tarot.Behaviour
     using global::Tarot.Behaviour.Selectors;
     using global::Tarot.Data;
     using global::Tarot.Data.FateTypes;
+    using global::Tarot.Helpers;
 
     using TreeSharp;
 
     internal static class MainBehaviour
     {
+        private static FateDatabase fateDatabase;
+
         public static Composite Behaviour
         {
             get
@@ -48,7 +51,12 @@ namespace Tarot.Behaviour
 
         public static FateData CurrentRbFate { get; private set; }
 
-        public static FateDatabase FateDatabase { get; set; }
+        public static FateDatabase FateDatabase {
+            get
+            {
+                return fateDatabase ?? (fateDatabase = XmlParser.GetFateDatabase());
+            }
+        }
 
         public static void SetCurrentFate(FateData rebornFateData, Fate tarotFateData)
         {
