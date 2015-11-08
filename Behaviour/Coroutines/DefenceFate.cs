@@ -28,36 +28,15 @@ namespace Tarot.Behaviour.Coroutines
 
     using TreeSharp;
 
-    // TODO: Refactor this to use a static class rather than Singleton
-    internal sealed class DefenceFate
+    internal static class DefenceFate
     {
-        private static readonly object SyncRootObject = new object();
-
-        private static volatile DefenceFate instance;
-
-        private DefenceFate() {}
-
-        public static DefenceFate Instance
+        public static ActionRunCoroutine Coroutine
         {
             get
             {
-                if (instance == null)
-                {
-                    lock (SyncRootObject)
-                    {
-                        if (instance == null)
-                        {
-                            instance = new DefenceFate();
-                            instance.CreateCoroutine();
-                        }
-                    }
-                }
-
-                return instance;
+                return CreateCoroutine();
             }
         }
-
-        public ActionRunCoroutine Coroutine { get; private set; }
 
         private static async Task<bool> DefenceFateTask()
         {
@@ -65,9 +44,9 @@ namespace Tarot.Behaviour.Coroutines
             return true;
         }
 
-        private void CreateCoroutine()
+        private static ActionRunCoroutine CreateCoroutine()
         {
-            this.Coroutine = new ActionRunCoroutine(coroutine => DefenceFateTask());
+            return new ActionRunCoroutine(coroutine => DefenceFateTask());
         }
     }
 }

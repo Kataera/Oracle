@@ -24,8 +24,6 @@
 
 namespace Tarot.Behaviour
 {
-    using ff14bot;
-    using ff14bot.Behavior;
     using ff14bot.Helpers;
     using ff14bot.Managers;
 
@@ -33,54 +31,29 @@ namespace Tarot.Behaviour
     using global::Tarot.Behaviour.Selectors;
     using global::Tarot.Data;
     using global::Tarot.Data.FateTypes;
-    using global::Tarot.Helpers;
 
     using TreeSharp;
 
-    // TODO: Refactor this to use a static class rather than Singleton
-    internal sealed class MainBehaviour
+    internal static class MainBehaviour
     {
-        private static readonly object SyncRootObject = new object();
-
-        private static volatile MainBehaviour instance;
-
-        private MainBehaviour(FateDatabase database)
-        {
-            this.FateDatabase = database;
-        }
-
-        public static MainBehaviour Instance
+        public static Composite Behaviour
         {
             get
             {
-                if (instance == null)
-                {
-                    lock (SyncRootObject)
-                    {
-                        if (instance == null)
-                        {
-                            instance = new MainBehaviour(XmlParser.GetFateDatabase(true));
-                            instance.CreateBehaviour();
-                        }
-                    }
-                }
-
-                return instance;
+                return CreateBehaviour();
             }
         }
 
-        public Composite Behaviour { get; private set; }
+        public static Fate CurrentFate { get; private set; }
 
-        public Fate CurrentFate { get; private set; }
+        public static FateData CurrentRbFate { get; private set; }
 
-        public FateData CurrentRbFate { get; private set; }
+        public static FateDatabase FateDatabase { get; set; }
 
-        public FateDatabase FateDatabase { get; set; }
-
-        public void SetCurrentFate(FateData rebornFateData, Fate tarotFateData)
+        public static void SetCurrentFate(FateData rebornFateData, Fate tarotFateData)
         {
-            this.CurrentFate = tarotFateData;
-            this.CurrentRbFate = rebornFateData;
+            CurrentFate = tarotFateData;
+            CurrentRbFate = rebornFateData;
 
             if (rebornFateData != null)
             {
@@ -89,14 +62,11 @@ namespace Tarot.Behaviour
             }
         }
 
-        private void CreateBehaviour()
+        private static Composite CreateBehaviour()
         {
-            Composite[] behaviours =
-            {
-                FateSelector.Instance.Behaviour,
-                NavigationHandler.Behaviour, FateHandler.Instance.Behaviour
-            };
-            this.Behaviour = new Sequence(behaviours);
+            Composite[] behaviours = { FateSelector.Behaviour, NavigationHandler.Behaviour, FateHandler.Behaviour };
+
+            return new Sequence(behaviours);
         }
     }
 }

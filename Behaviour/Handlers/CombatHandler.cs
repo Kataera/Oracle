@@ -25,7 +25,6 @@
 namespace Tarot.Behaviour.Handlers
 {
     using System.Linq;
-    using System.Threading.Tasks;
 
     using Buddy.Coroutines;
 

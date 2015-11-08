@@ -159,7 +159,7 @@ namespace Tarot
 
             // Set default root behaviour.
             TreeHooks.Instance.ClearAll();
-            TreeHooks.Instance.AddHook("TreeStart", MainBehaviour.Instance.Behaviour);
+            TreeHooks.Instance.AddHook("TreeStart", MainBehaviour.Behaviour);
             this.root = BrainBehavior.CreateBrain();
 
             // Ensure Poi is set if bot was stopped/started.
@@ -183,7 +183,7 @@ namespace Tarot
             Navigator.NavigationProvider = null;
 
             // Clear current fate.
-            MainBehaviour.Instance.SetCurrentFate(null, null);
+            MainBehaviour.SetCurrentFate(null, null);
 
             // Restore player's game settings.
             GameSettingsManager.FaceTargetOnAction = this.playerFaceTargetOnAction;

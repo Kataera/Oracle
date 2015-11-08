@@ -35,7 +35,6 @@ namespace Tarot.Settings
 
     using global::Tarot.Enumerations;
 
-    // TODO: Refactor this to use a static class rather than Singleton
     internal sealed class TarotSettings : JsonSettings
     {
         private static readonly object SyncRootObject = new object();

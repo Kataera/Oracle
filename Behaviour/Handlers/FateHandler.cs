@@ -36,53 +36,31 @@ namespace Tarot.Behaviour.Handlers
 
     using TreeSharp;
 
-    // TODO: Refactor this to use a static class rather than Singleton
-    internal sealed class FateHandler
+    internal static class FateHandler
     {
-        private static readonly object SyncRootObject = new object();
+        private static Stopwatch levelSyncCooldown;
 
-        private static volatile FateHandler instance;
-
-        private Stopwatch levelSyncCooldown;
-
-        private FateHandler() {}
-
-        public static FateHandler Instance
+        public static Composite Behaviour
         {
             get
             {
-                if (instance == null)
-                {
-                    lock (SyncRootObject)
-                    {
-                        if (instance == null)
-                        {
-                            instance = new FateHandler();
-                            instance.CreateBehaviour();
-                            instance.levelSyncCooldown = new Stopwatch();
-                        }
-                    }
-                }
-
-                return instance;
+                return CreateBehaviour();
             }
         }
 
-        public Composite Behaviour { get; private set; }
-
         private static bool LevelSyncNeeded()
         {
-            if (MainBehaviour.Instance.CurrentRbFate == null)
+            if (MainBehaviour.CurrentRbFate == null)
             {
                 return false;
             }
 
-            return Core.Player.ClassLevel > MainBehaviour.Instance.CurrentRbFate.MaxLevel;
+            return Core.Player.ClassLevel > MainBehaviour.CurrentRbFate.MaxLevel;
         }
 
-        private async Task<bool> LevelSyncTask()
+        private static async Task<bool> LevelSyncTask()
         {
-            if (MainBehaviour.Instance.CurrentRbFate == null)
+            if (MainBehaviour.CurrentRbFate == null)
             {
                 return false;
             }
@@ -93,30 +71,35 @@ namespace Tarot.Behaviour.Handlers
                 return true;
             }
 
-            if (this.levelSyncCooldown.ElapsedMilliseconds > 2000 || !this.levelSyncCooldown.IsRunning)
+            if (levelSyncCooldown == null)
             {
-                int level = MainBehaviour.Instance.CurrentRbFate.MaxLevel;
-                var name = MainBehaviour.Instance.CurrentRbFate.Name;
+                levelSyncCooldown = new Stopwatch();
+            }
+
+            if (levelSyncCooldown.ElapsedMilliseconds > 2000 || !levelSyncCooldown.IsRunning)
+            {
+                int level = MainBehaviour.CurrentRbFate.MaxLevel;
+                var name = MainBehaviour.CurrentRbFate.Name;
                 Logger.SendLog("Syncing to level " + level + " to participate in " + name + ".");
 
                 ToDoList.LevelSync();
-                this.levelSyncCooldown.Reset();
-                this.levelSyncCooldown.Start();
+                levelSyncCooldown.Reset();
+                levelSyncCooldown.Start();
             }
 
             return true;
         }
 
-        private void CreateBehaviour()
+        private static Composite CreateBehaviour()
         {
             Composite[] behaviours =
             {
                 new Decorator(
                     check => LevelSyncNeeded(),
-                    new ActionRunCoroutine(coroutine => this.LevelSyncTask())),
-                FateTypeSelector.Instance.Behaviour
+                    new ActionRunCoroutine(coroutine => LevelSyncTask())),
+                FateTypeSelector.Behaviour
             };
-            this.Behaviour = new Sequence(behaviours);
+            return new Sequence(behaviours);
         }
     }
 }

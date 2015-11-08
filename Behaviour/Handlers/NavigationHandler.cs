@@ -62,7 +62,7 @@ namespace Tarot.Behaviour.Handlers
 
         private static async Task<bool> MoveToFate()
         {
-            var fate = MainBehaviour.Instance.CurrentRbFate;
+            var fate = MainBehaviour.CurrentRbFate;
 
             // Sanity check before we request a path.
             if (fate.Within2D(Core.Player.Location))
