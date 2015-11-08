@@ -24,6 +24,8 @@
 
 namespace Tarot.Behaviour.Hooks
 {
+    using ff14bot.Behavior;
+
     using global::Tarot.Behaviour.Tasks.Utilities;
 
     using TreeSharp;
@@ -40,7 +42,11 @@ namespace Tarot.Behaviour.Hooks
 
         private static Composite CreateBehaviour()
         {
-            return new ActionRunCoroutine(coroutine => SelectIdle.Task());
+            Composite coroutineHook = new ActionRunCoroutine(coroutine => SelectIdle.Task());
+            return new HookExecutor(
+                "SetIdlePoi",
+                "Selects the idle action that the user has chosen in their settings.",
+                coroutineHook);
         }
     }
 }

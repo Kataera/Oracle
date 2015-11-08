@@ -24,6 +24,8 @@
 
 namespace Tarot.Behaviour.Hooks
 {
+    using ff14bot.Behavior;
+
     using global::Tarot.Behaviour.Tasks.Utilities;
 
     using TreeSharp;
@@ -40,7 +42,8 @@ namespace Tarot.Behaviour.Hooks
 
         private static Composite CreateBehaviour()
         {
-            return new ActionRunCoroutine(coroutine => SelectFate.Task());
+            Composite coroutineHook = new ActionRunCoroutine(coroutine => SelectFate.Task());
+            return new HookExecutor("SetFatePoi", "Selects a viable FATE and assigns it as the Poi.", coroutineHook);
         }
     }
 }
