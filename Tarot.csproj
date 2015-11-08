@@ -62,7 +62,10 @@
     <None Include="Resources\Fonts\Roboto-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviour\Hooks\SetFatePoi.cs" />
+    <Compile Include="Behaviour\Hooks\SetIdlePoi.cs" />
     <Compile Include="Behaviour\Main.cs" />
+    <Compile Include="Behaviour\Hooks\SelectPoiType.cs" />
     <Compile Include="Behaviour\Tasks\Idles\DoNothing.cs" />
     <Compile Include="Behaviour\Tasks\Idles\GrindMobs.cs" />
     <Compile Include="Behaviour\Tasks\Idles\ReturnToAetheryte.cs" />
@@ -76,6 +79,8 @@
     <Compile Include="Behaviour\Tasks\Utilities\BuildFateDatabase.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LevelSync.cs" />
     <Compile Include="Behaviour\Tasks\Fates\MegaBossFate.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\SelectFate.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\SelectIdle.cs" />
     <Compile Include="Data\FateDatabase.cs" />
     <Compile Include="Data\FateTypes\Boss.cs" />
     <Compile Include="Data\FateTypes\Collect.cs" />
