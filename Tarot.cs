@@ -46,9 +46,9 @@ namespace Tarot
 
         private bool playerFlightMode;
 
-        private SettingsForm settingsForm;
-
         private Composite root;
+
+        private SettingsForm settingsForm;
 
         public static Tarot Instance { get; set; }
 

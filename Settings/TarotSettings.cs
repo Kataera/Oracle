@@ -41,13 +41,13 @@ namespace Tarot.Settings
 
         private static volatile TarotSettings instance;
 
-        public Dictionary<ushort, Vector3> FateWaitLocations;
-
         private bool debugEnabled;
 
         private bool exBuddyFlightEnabled;
 
         private int fateIdleMode;
+
+        public Dictionary<ushort, Vector3> FateWaitLocations;
 
         private bool waitForChainFates;
 
