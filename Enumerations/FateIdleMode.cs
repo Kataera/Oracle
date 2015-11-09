@@ -24,7 +24,7 @@
 
 namespace Tarot.Enumerations
 {
-    internal enum FateIdle
+    internal enum FateIdleMode
     {
         ReturnToAetheryte,
 

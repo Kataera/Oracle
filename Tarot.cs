@@ -42,17 +42,32 @@ namespace Tarot
 
     public class Tarot : BotBase
     {
-        private bool playerFaceTargetOnAction;
+        private static bool playerFaceTargetOnAction;
 
-        private bool playerFlightMode;
+        private static bool playerFlightMode;
 
-        private Composite root;
+        private static Composite root;
 
-        private SettingsForm settingsForm;
+        private static SettingsForm settingsForm;
+
+        private static Poi currentPoi;
 
         public static Tarot Instance { get; set; }
 
-        public Poi CurrentPoi { get; set; }
+        public FateData CurrentFate { get; set; }
+
+        public Poi CurrentPoi
+        {
+            get
+            {
+                return currentPoi;
+            }
+
+            set
+            {
+                currentPoi = value;
+            }
+        }
 
         public Version Version
         {
@@ -114,7 +129,7 @@ namespace Tarot
         {
             get
             {
-                return this.root;
+                return root;
             }
         }
 
@@ -132,15 +147,15 @@ namespace Tarot
 
         public override void OnButtonPress()
         {
-            if (this.settingsForm == null || this.settingsForm.IsDisposed)
+            if (settingsForm == null || settingsForm.IsDisposed)
             {
-                this.settingsForm = new SettingsForm();
+                settingsForm = new SettingsForm();
             }
 
             try
             {
-                this.settingsForm.Show();
-                this.settingsForm.Activate();
+                settingsForm.Show();
+                settingsForm.Activate();
             }
             catch (ArgumentOutOfRangeException exception)
             {
@@ -164,13 +179,13 @@ namespace Tarot
             CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
 
             // Make sure game settings are correct for botbase.
-            this.playerFaceTargetOnAction = GameSettingsManager.FaceTargetOnAction;
-            this.playerFlightMode = GameSettingsManager.FlightMode;
+            playerFaceTargetOnAction = GameSettingsManager.FaceTargetOnAction;
+            playerFlightMode = GameSettingsManager.FlightMode;
             GameSettingsManager.FaceTargetOnAction = true;
             GameSettingsManager.FlightMode = true;
 
             // Set root behaviour.
-            this.root = Main.Behaviour;
+            root = Main.Behaviour;
         }
 
         public override void Stop()
@@ -190,8 +205,8 @@ namespace Tarot
             CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
 
             // Restore player's game settings.
-            GameSettingsManager.FaceTargetOnAction = this.playerFaceTargetOnAction;
-            GameSettingsManager.FlightMode = this.playerFlightMode;
+            GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
+            GameSettingsManager.FlightMode = playerFlightMode;
         }
     }
 }
