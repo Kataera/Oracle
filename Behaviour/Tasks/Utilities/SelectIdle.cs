@@ -26,11 +26,15 @@ namespace Tarot.Behaviour.Tasks.Utilities
 {
     using System.Threading.Tasks;
 
+    using Buddy.Coroutines;
+
     using Clio.Utilities;
 
     using ff14bot;
     using ff14bot.Behavior;
+    using ff14bot.Enums;
     using ff14bot.Managers;
+    using ff14bot.Navigation;
 
     using global::Tarot.Enumerations;
     using global::Tarot.Helpers;
@@ -45,7 +49,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             {
                 // If this occurs something is really wrong. Stop the bot.
                 Logger.SendErrorLog("Entered idle selector with an active FATE assigned, stopping the bot.");
-                TreeRoot.Stop("Continuing would lead to undefined behaviour.");
+                TreeRoot.Stop("Continuing could lead to undefined behaviour.");
             }
 
             // Determine FATE selection strategy.
@@ -74,7 +78,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                     break;
             }
 
-            // We should always return false so we continue to the main task.
+            // We should always return false so we can reprocess the Poi.
             return false;
         }
 
@@ -92,10 +96,40 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 return true;
             }
 
+            // Mount up if we're not already mounted.
+            // TODO: Check that CreateMountBehavior handles combat.
+            if (!Core.Player.IsMounted)
+            {
+                await CommonBehaviors.CreateMountBehavior().ExecuteCoroutine();
+            }
+
             // Move to the Aetheryte crystal.
-            await
-                CommonBehaviors.MoveAndStop(location => aetheryte, 15f, true, "Moving to Aetheryte crystal")
-                               .ExecuteCoroutine();
+            Logger.SendLog("Moving to the closest Aetheryte crystal to wait for the next FATE.");
+            var result = Navigator.MoveToPointWithin(aetheryte, 15f, "Moving to Aetheryte");
+
+            // Keep polling the result until we're done.
+            while (result != MoveResult.Done)
+            {
+                // Check if a FATE popped while we're moving.
+                if (IsFateActive())
+                {
+                    Logger.SendLog("Found a FATE, exiting idle coroutine.");
+                    Navigator.Stop();
+                    Navigator.Clear();
+
+                    return true;
+                }
+
+                // Continue moving.
+                result = Navigator.MoveToPointWithin(aetheryte, 15f, "Moving to Aetheryte");
+
+                // Make sure we yield control so we don't lock the bot.
+                await Coroutine.Yield();
+            }
+
+            // Make sure we stop moving now we're there.
+            Navigator.Stop();
+            Navigator.Clear();
 
             // Wait for FATE once we're there.
             await WaitForFate();
@@ -120,7 +154,18 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
         private static async Task<bool> WaitForFate()
         {
-            return true;
+            // Continually poll the FATE manager until we get a FATE.
+            while (true)
+            {
+                if (IsFateActive())
+                {
+                    Logger.SendLog("Found a FATE, exiting idle coroutine.");
+                    return true;
+                }
+
+                // Make sure we yield control so we don't lock the bot.
+                await Coroutine.Yield();
+            }
         }
 
         private static Vector3 GetClosestAetheryteLocation()
@@ -130,7 +175,11 @@ namespace Tarot.Behaviour.Tasks.Utilities
             var location = Vector3.Zero;
 
             // If there's no Aetheryte, return zeroed location and handle in task.
-            if (aetherytes == null || aetherytes.Length == 0)
+            if (aetherytes == null)
+            {
+                return location;
+            }
+            if (aetherytes.Length == 0)
             {
                 return location;
             }
@@ -143,6 +192,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                     location = aetheryte.Item2;
                 }
 
+                // If distance to current Aetheryte is less than current closest, set it as closest.
                 if (playerLocation.Distance2D(location) > playerLocation.Distance2D(aetheryte.Item2))
                 {
                     location = aetheryte.Item2;
@@ -150,6 +200,20 @@ namespace Tarot.Behaviour.Tasks.Utilities
             }
 
             return location;
+        }
+
+        private static bool IsFateActive()
+        {
+            var activeFates = FateManager.ActiveFates as FateData[];
+            if (activeFates != null)
+            {
+                if (activeFates.Length == 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
