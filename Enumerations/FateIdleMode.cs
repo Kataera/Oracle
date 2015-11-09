@@ -30,7 +30,7 @@ namespace Tarot.Enumerations
 
         MoveToWaitLocation,
 
-        Patrol,
+        GrindMobs,
 
         Nothing
     }
