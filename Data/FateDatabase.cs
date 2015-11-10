@@ -33,19 +33,19 @@ namespace Tarot.Data
 
     internal class FateDatabase
     {
-        private readonly Dictionary<int, Fate> fateDatabase;
+        private readonly Dictionary<uint, Fate> fateDatabase;
 
         public FateDatabase()
         {
-            this.fateDatabase = new Dictionary<int, Fate>();
+            this.fateDatabase = new Dictionary<uint, Fate>();
         }
 
-        public FateDatabase(Dictionary<int, Fate> fateDatabase)
+        public FateDatabase(Dictionary<uint, Fate> fateDatabase)
         {
             this.fateDatabase = fateDatabase;
         }
 
-        public Fate GetFateWithId(int id)
+        public Fate GetFateWithId(uint id)
         {
             Fate fate;
             try
@@ -61,8 +61,8 @@ namespace Tarot.Data
                 Logger.SendDebugLog("ArgumentNullException thrown:\n\n" + exception + "\n");
             }
 
-            // Create empty kill fate with Unsupported flag if we can't find it.
-            fate = new Kill { SupportLevel = (int) FateSupportLevel.Unsupported };
+            // Create a null fate with Unsupported flag if we can't find it.
+            fate = new NullFate { SupportLevel = FateSupportLevel.Unsupported };
             Logger.SendDebugLog("Fate with id: '" + id + "' not found, flagging as unsupported.");
 
             return fate;

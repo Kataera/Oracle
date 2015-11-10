@@ -26,9 +26,14 @@ namespace Tarot.Data.FateTypes
 {
     using global::Tarot.Enumerations;
 
-    internal abstract class Fate
+    /*
+        This class is a null implementation of Fate, it has no supporting coroutine
+        and it should only be created when a database lookup returns no results.
+    */
+
+    internal class NullFate : Fate
     {
-        protected Fate()
+        public NullFate()
         {
             this.ChainIdFailure = 0;
             this.ChainIdSuccess = 0;
@@ -40,23 +45,5 @@ namespace Tarot.Data.FateTypes
             this.SupportLevel = FateSupportLevel.Unsupported;
             this.Type = FateType.Null;
         }
-
-        public int ChainIdFailure { get; set; }
-
-        public int ChainIdSuccess { get; set; }
-
-        public uint Id { get; set; }
-
-        public int ItemId { get; set; }
-
-        public int Level { get; set; }
-
-        public string Name { get; set; }
-
-        public int NpcId { get; set; }
-
-        public FateSupportLevel SupportLevel { get; set; }
-
-        public FateType Type { get; set; }
     }
 }

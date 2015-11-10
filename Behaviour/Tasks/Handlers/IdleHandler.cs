@@ -26,24 +26,19 @@ namespace Tarot.Behaviour.Tasks.Handlers
 {
     using System.Threading.Tasks;
 
-    using ff14bot;
-
     using global::Tarot.Behaviour.Tasks.Handlers.Idles;
     using global::Tarot.Enumerations;
     using global::Tarot.Helpers;
     using global::Tarot.Settings;
 
-    internal static class IdleSelector
+    internal static class IdleHandler
     {
         public static async Task<bool> Task()
         {
             if (Tarot.CurrentFate != null)
             {
-                // If this occurs something is really wrong. Stop the bot.
-                Logger.SendErrorLog(
-                    "Entered idle handler with an active FATE assigned, stopping the bot."
-                    + " Please let Kataera know this occurred in Tarot's support thread.");
-                TreeRoot.Stop("Continuing could lead to undefined behaviour.");
+                Logger.SendErrorLog("Entered idle handler with an active FATE assigned.");
+                return true;
             }
 
             switch (TarotSettings.Instance.FateIdleMode)
@@ -65,8 +60,7 @@ namespace Tarot.Behaviour.Tasks.Handlers
                     break;
 
                 default:
-                    Logger.SendDebugLog(
-                        "Cannot determine idle handler strategy, defaulting to 'Return to Aetheryte'.");
+                    Logger.SendDebugLog("Cannot determine idle handler strategy, defaulting to 'Return to Aetheryte'.");
                     await ReturnToAetheryte.Task();
                     break;
             }

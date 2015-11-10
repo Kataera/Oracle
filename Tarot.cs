@@ -32,7 +32,6 @@ namespace Tarot
     using ff14bot.Managers;
     using ff14bot.Navigation;
 
-    using global::Tarot.Behaviour;
     using global::Tarot.Behaviour.Hooks;
     using global::Tarot.Data;
     using global::Tarot.Forms;

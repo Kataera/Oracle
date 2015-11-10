@@ -63,9 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviour\Hooks\SetFatePoi.cs" />
-    <Compile Include="Behaviour\Hooks\SetIdlePoi.cs" />
     <Compile Include="Behaviour\Root.cs" />
     <Compile Include="Behaviour\Hooks\SelectPoiType.cs" />
+    <Compile Include="Behaviour\Tasks\Handlers\FateHandler.cs" />
     <Compile Include="Behaviour\Tasks\Selectors\Fates\ChainAndTypePriority.cs" />
     <Compile Include="Behaviour\Tasks\Selectors\Fates\ChainPriority.cs" />
     <Compile Include="Behaviour\Tasks\Selectors\Fates\Closest.cs" />
@@ -93,6 +93,7 @@
     <Compile Include="Data\FateTypes\Fate.cs" />
     <Compile Include="Data\FateTypes\Kill.cs" />
     <Compile Include="Data\FateTypes\MegaBoss.cs" />
+    <Compile Include="Data\FateTypes\NullFate.cs" />
     <Compile Include="Enumerations\FateIdleMode.cs" />
     <Compile Include="Enumerations\FateSelectMode.cs" />
     <Compile Include="Enumerations\FateSupportLevel.cs" />

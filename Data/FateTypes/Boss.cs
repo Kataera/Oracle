@@ -37,8 +37,8 @@ namespace Tarot.Data.FateTypes
             this.Level = 0;
             this.Name = string.Empty;
             this.NpcId = 0;
-            this.SupportLevel = (int) FateSupportLevel.Unsupported;
-            this.Type = (int) FateType.Boss;
+            this.SupportLevel = FateSupportLevel.FullSupport;
+            this.Type = FateType.Boss;
         }
     }
 }
