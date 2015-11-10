@@ -34,6 +34,7 @@ namespace Tarot.Behaviour.Tasks.Idles.Strategies
     using ff14bot;
     using ff14bot.Behavior;
     using ff14bot.Enums;
+    using ff14bot.Helpers;
     using ff14bot.Managers;
     using ff14bot.Navigation;
 
@@ -65,7 +66,8 @@ namespace Tarot.Behaviour.Tasks.Idles.Strategies
                 }
             }
 
-            // Start moving.
+            // Set Poi and start moving.
+            Poi.Current = new Poi(aetheryte, PoiType.Wait);
             var result = Navigator.MoveToPointWithin(aetheryte, 15f, "Moving to Aetheryte");
 
             while (result != MoveResult.Done)
@@ -106,6 +108,7 @@ namespace Tarot.Behaviour.Tasks.Idles.Strategies
 
             foreach (var aetheryte in aetherytes)
             {
+                // TODO: Check the Aetheryte is navigable first.
                 if (location == Vector3.Zero
                     || playerLocation.Distance2D(location) > playerLocation.Distance2D(aetheryte.Item2))
                 {

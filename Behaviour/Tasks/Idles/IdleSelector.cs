@@ -71,8 +71,7 @@ namespace Tarot.Behaviour.Tasks.Idles
                     break;
             }
 
-            // We should always return false so we can reprocess the Poi.
-            return false;
+            return true;
         }
     }
 }

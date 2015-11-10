@@ -30,6 +30,8 @@ namespace Tarot.Behaviour.Tasks.Idles.Strategies
 
     using Buddy.Coroutines;
 
+    using ff14bot;
+    using ff14bot.Helpers;
     using ff14bot.Managers;
 
     using global::Tarot.Helpers;
@@ -41,9 +43,9 @@ namespace Tarot.Behaviour.Tasks.Idles.Strategies
             if (!IsFateActive())
             {
                 Logger.SendLog("Waiting for a FATE to activate.");
+                Poi.Current = new Poi(Core.Player.Location, PoiType.Wait);
+                await Coroutine.Wait(TimeSpan.MaxValue, IsFateActive);
             }
-
-            await Coroutine.Wait(TimeSpan.MaxValue, IsFateActive);
 
             Logger.SendLog("Found a FATE, exiting idle coroutine.");
             return true;
