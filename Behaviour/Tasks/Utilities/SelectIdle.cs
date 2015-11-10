@@ -116,6 +116,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                     Logger.SendLog("Found a FATE, exiting idle coroutine.");
                     Navigator.Stop();
                     Navigator.Clear();
+                    Navigator.PlayerMover.MoveStop();
 
                     return true;
                 }
@@ -128,8 +129,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             }
 
             // Make sure we stop moving now we're there.
-            Navigator.Stop();
-            Navigator.Clear();
+            Navigator.PlayerMover.MoveStop();
 
             // Wait for FATE once we're there.
             await WaitForFate();

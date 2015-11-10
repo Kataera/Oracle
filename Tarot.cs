@@ -33,6 +33,7 @@ namespace Tarot
     using ff14bot.Navigation;
 
     using global::Tarot.Behaviour;
+    using global::Tarot.Behaviour.Hooks;
     using global::Tarot.Data;
     using global::Tarot.Forms;
     using global::Tarot.Helpers;
@@ -166,6 +167,7 @@ namespace Tarot
             Navigator.NavigationProvider = new GaiaNavigator();
 
             // Set target provider.
+            // TODO: Implement our own targeting provider.
             CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
 
             // Make sure game settings are correct for botbase.
@@ -173,6 +175,9 @@ namespace Tarot
             playerFlightMode = GameSettingsManager.FlightMode;
             GameSettingsManager.FaceTargetOnAction = true;
             GameSettingsManager.FlightMode = true;
+
+            // Replace the select Poi hook with our own.
+            TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
 
             // Set root behaviour.
             root = Main.Behaviour;
