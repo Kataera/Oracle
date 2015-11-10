@@ -38,16 +38,13 @@ namespace Tarot.Behaviour.Tasks.Utilities
     {
         public static async Task<bool> Task()
         {
-            // Check the FATE database has been populated.
             if (Tarot.FateDatabase == null)
             {
                 await BuildFateDatabase.Task();
             }
 
-            // Check if we have a FATE already set.
             if (IsFateSet())
             {
-                // Check that the Poi has been set correctly.
                 if (!IsFatePoiSet())
                 {
                     Poi.Current = new Poi(Tarot.CurrentFate, PoiType.Fate);
@@ -56,7 +53,6 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 return true;
             }
 
-            // Determine FATE selection strategy.
             switch (TarotSettings.Instance.FateSelectMode)
             {
                 case (int) FateSelectMode.Closest:
@@ -84,7 +80,6 @@ namespace Tarot.Behaviour.Tasks.Utilities
                     break;
             }
 
-            // Check if the FATE selection succeeded.
             if (!IsFateSet() || !IsFatePoiSet())
             {
                 return false;
@@ -99,14 +94,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             var playerLocation = Core.Player.Location;
             FateData closestFate = null;
 
-            // Check if we got something back from the FATE manager.
-            if (activeFates == null)
-            {
-                return;
-            }
-
-            // Check if there's no active FATEs.
-            if (activeFates.Length == 0)
+            if (activeFates == null || activeFates.Length == 0)
             {
                 return;
             }
@@ -114,23 +102,18 @@ namespace Tarot.Behaviour.Tasks.Utilities
             Logger.SendLog("Selecting closest active FATE.");
             foreach (var fate in activeFates)
             {
-                // If this is the first FATE we're processing, just set as closest.
-                if (closestFate == null)
-                {
-                    closestFate = fate;
-                }
-
-                // If distance to current FATE is less than current closest, set it as closest.
-                if (playerLocation.Distance2D(closestFate.Location) > playerLocation.Distance2D(fate.Location))
+                if (closestFate == null
+                    || playerLocation.Distance2D(closestFate.Location) > playerLocation.Distance2D(fate.Location))
                 {
                     closestFate = fate;
                 }
             }
 
-            // Set FATE in Tarot and the Poi.
             if (closestFate != null)
             {
                 Logger.SendLog("Selected FATE: '" + closestFate.Name + "'.");
+
+                // Set FATE in Tarot and the Poi.
                 Tarot.CurrentFate = closestFate;
                 Poi.Current = new Poi(closestFate, PoiType.Fate);
             }
@@ -143,20 +126,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
         private static bool IsFatePoiSet()
         {
-            // Check for null Poi.
-            if (Poi.Current == null)
-            {
-                return false;
-            }
-
-            // Check if the current Poi is not a FATE.
-            if (Poi.Current.Type != PoiType.Fate)
-            {
-                return false;
-            }
-
-            // Check for current FATE Poi and Tarot FATE mismatch.
-            if (Poi.Current.Fate != Tarot.CurrentFate)
+            if (Poi.Current == null || Poi.Current.Type != PoiType.Fate || Poi.Current.Fate != Tarot.CurrentFate)
             {
                 return false;
             }

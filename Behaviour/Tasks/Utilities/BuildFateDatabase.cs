@@ -32,13 +32,12 @@ namespace Tarot.Behaviour.Tasks.Utilities
     {
         public static async Task<bool> Task()
         {
-            // Make sure we actually need to populate the data, since XML parsing is expensive.
+            // Make sure we actually need to populate the data, since XML parsing is very expensive.
             if (Tarot.FateDatabase != null)
             {
                 return true;
             }
 
-            // Populate the database.
             Logger.SendLog("Building " + Tarot.Instance.Name + "'s FATE database, this may take a few seconds.");
             Tarot.FateDatabase = XmlParser.GetFateDatabase();
             Logger.SendLog(Tarot.Instance.Name + "'s FATE database has been built successfully.");

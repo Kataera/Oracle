@@ -61,7 +61,7 @@ namespace Tarot.Data
                 Logger.SendDebugLog("ArgumentNullException thrown:\n\n" + exception + "\n");
             }
 
-            // Create empty kill fate with Unsupported flag.
+            // Create empty kill fate with Unsupported flag if we can't find it.
             fate = new Kill { SupportLevel = (int) FateSupportLevel.Unsupported };
             Logger.SendDebugLog("Fate with id: '" + id + "' not found, flagging as unsupported.");
 
