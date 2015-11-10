@@ -1,4 +1,4 @@
-﻿namespace MaterialSkin.Animations
+﻿namespace Tarot.Forms.MaterialSkin.Animations
 {
     #region Using Directives
 

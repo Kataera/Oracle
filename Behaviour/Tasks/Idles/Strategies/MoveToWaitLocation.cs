@@ -22,42 +22,20 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Idles
+namespace Tarot.Behaviour.Tasks.Idles.Strategies
 {
-    using System;
-    using System.Linq;
     using System.Threading.Tasks;
-
-    using Buddy.Coroutines;
-
-    using ff14bot.Managers;
 
     using global::Tarot.Helpers;
 
-    internal static class WaitForFates
+    internal static class MoveToWaitLocation
     {
         public static async Task<bool> Task()
         {
-            if (!IsFateActive())
-            {
-                Logger.SendLog("Waiting for a FATE to activate.");
-            }
-
-            await Coroutine.Wait(TimeSpan.MaxValue, IsFateActive);
-
-            Logger.SendLog("Found a FATE, exiting idle coroutine.");
+            // TODO: Implement.
+            Logger.SendLog("'Return to location' is not yet implemented, defaulting to 'Return to Aetheryte'.");
+            await ReturnToAetheryte.Task();
             return true;
-        }
-
-        private static bool IsFateActive()
-        {
-            var activeFates = FateManager.ActiveFates;
-            if (activeFates != null && !activeFates.Any())
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 }

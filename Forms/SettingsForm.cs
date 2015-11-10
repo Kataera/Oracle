@@ -28,8 +28,8 @@ namespace Tarot.Forms
     using System.Diagnostics;
     using System.Windows.Forms;
 
-    using MaterialSkin;
-    using MaterialSkin.Controls;
+    using global::Tarot.Forms.MaterialSkin;
+    using global::Tarot.Forms.MaterialSkin.Controls;
 
     public partial class SettingsForm : MaterialForm
     {

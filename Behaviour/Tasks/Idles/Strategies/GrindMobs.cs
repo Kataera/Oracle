@@ -22,18 +22,18 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Idles
+namespace Tarot.Behaviour.Tasks.Idles.Strategies
 {
     using System.Threading.Tasks;
 
     using global::Tarot.Helpers;
 
-    internal static class MoveToWaitLocation
+    internal static class GrindMobs
     {
         public static async Task<bool> Task()
         {
             // TODO: Implement.
-            Logger.SendLog("'Return to location' is not yet implemented, defaulting to 'Return to Aetheryte'.");
+            Logger.SendLog("'Grind mobs' is not yet implemented, defaulting to 'Return to Aetheryte'.");
             await ReturnToAetheryte.Task();
             return true;
         }

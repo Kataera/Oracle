@@ -22,31 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Hooks
+namespace Tarot.Behaviour.Tasks.FateSelection.Strategies
 {
-    using ff14bot.Behavior;
-
-    using global::Tarot.Behaviour.Tasks.Idles;
-
-    using TreeSharp;
-
-    internal static class SetIdlePoi
-    {
-        public static Composite Behaviour
-        {
-            get
-            {
-                return CreateBehaviour();
-            }
-        }
-
-        private static Composite CreateBehaviour()
-        {
-            Composite coroutineHook = new ActionRunCoroutine(coroutine => IdleSelector.Task());
-            return new HookExecutor(
-                "SetIdlePoi",
-                "Selects the idle action that the user has chosen in their settings.",
-                coroutineHook);
-        }
-    }
+    internal class ChainPriority {}
 }

@@ -22,31 +22,42 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Hooks
+namespace Tarot.Behaviour.Tasks.Idles.Strategies
 {
-    using ff14bot.Behavior;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
 
-    using global::Tarot.Behaviour.Tasks.Idles;
+    using Buddy.Coroutines;
 
-    using TreeSharp;
+    using ff14bot.Managers;
 
-    internal static class SetIdlePoi
+    using global::Tarot.Helpers;
+
+    internal static class WaitForFates
     {
-        public static Composite Behaviour
+        public static async Task<bool> Task()
         {
-            get
+            if (!IsFateActive())
             {
-                return CreateBehaviour();
+                Logger.SendLog("Waiting for a FATE to activate.");
             }
+
+            await Coroutine.Wait(TimeSpan.MaxValue, IsFateActive);
+
+            Logger.SendLog("Found a FATE, exiting idle coroutine.");
+            return true;
         }
 
-        private static Composite CreateBehaviour()
+        private static bool IsFateActive()
         {
-            Composite coroutineHook = new ActionRunCoroutine(coroutine => IdleSelector.Task());
-            return new HookExecutor(
-                "SetIdlePoi",
-                "Selects the idle action that the user has chosen in their settings.",
-                coroutineHook);
+            var activeFates = FateManager.ActiveFates;
+            if (activeFates != null && !activeFates.Any())
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

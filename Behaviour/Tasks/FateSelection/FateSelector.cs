@@ -22,26 +22,23 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Utilities
+namespace Tarot.Behaviour.Tasks.FateSelection
 {
     using System.Threading.Tasks;
 
-    using ff14bot;
     using ff14bot.Helpers;
-    using ff14bot.Managers;
 
+    using global::Tarot.Behaviour.Tasks.FateSelection.Strategies;
+    using global::Tarot.Behaviour.Tasks.Utilities;
     using global::Tarot.Enumerations;
     using global::Tarot.Helpers;
     using global::Tarot.Settings;
 
-    internal static class SelectFate
+    internal static class FateSelector
     {
         public static async Task<bool> Task()
         {
-            if (Tarot.FateDatabase == null)
-            {
-                await BuildFateDatabase.Task();
-            }
+            await BuildFateDatabase.Task();
 
             if (IsFateSet())
             {
@@ -56,67 +53,31 @@ namespace Tarot.Behaviour.Tasks.Utilities
             switch (TarotSettings.Instance.FateSelectMode)
             {
                 case (int) FateSelectMode.Closest:
-                    SelectClosestFate();
+                    await Closest.Task();
                     break;
 
                 case (int) FateSelectMode.TypePriority:
                     // TODO: Implement.
-                    SelectClosestFate();
+                    await Closest.Task();
                     break;
 
                 case (int) FateSelectMode.ChainPriority:
                     // TODO: Implement.
-                    SelectClosestFate();
+                    await Closest.Task();
                     break;
 
                 case (int) FateSelectMode.TypeAndChainPriority:
                     // TODO: Implement.
-                    SelectClosestFate();
+                    await Closest.Task();
                     break;
 
                 default:
                     Logger.SendDebugLog("Cannot determine FATE selection strategy, defaulting to closest FATE.");
-                    SelectClosestFate();
+                    await Closest.Task();
                     break;
             }
 
-            if (!IsFateSet() || !IsFatePoiSet())
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private static void SelectClosestFate()
-        {
-            var activeFates = FateManager.ActiveFates as FateData[];
-            var playerLocation = Core.Player.Location;
-            FateData closestFate = null;
-
-            if (activeFates == null || activeFates.Length == 0)
-            {
-                return;
-            }
-
-            Logger.SendLog("Selecting closest active FATE.");
-            foreach (var fate in activeFates)
-            {
-                if (closestFate == null
-                    || playerLocation.Distance2D(closestFate.Location) > playerLocation.Distance2D(fate.Location))
-                {
-                    closestFate = fate;
-                }
-            }
-
-            if (closestFate != null)
-            {
-                Logger.SendLog("Selected FATE: '" + closestFate.Name + "'.");
-
-                // Set FATE in Tarot and the Poi.
-                Tarot.CurrentFate = closestFate;
-                Poi.Current = new Poi(closestFate, PoiType.Fate);
-            }
+            return IsFateSet() && IsFatePoiSet();
         }
 
         private static bool IsFateSet()

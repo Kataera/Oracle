@@ -22,18 +22,18 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Utilities
+namespace Tarot.Behaviour.Tasks.Idles
 {
     using System.Threading.Tasks;
 
     using ff14bot;
 
-    using global::Tarot.Behaviour.Tasks.Idles;
+    using global::Tarot.Behaviour.Tasks.Idles.Strategies;
     using global::Tarot.Enumerations;
     using global::Tarot.Helpers;
     using global::Tarot.Settings;
 
-    internal static class SelectIdle
+    internal static class IdleSelector
     {
         public static async Task<bool> Task()
         {

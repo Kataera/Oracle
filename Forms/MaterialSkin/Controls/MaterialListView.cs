@@ -1,4 +1,4 @@
-﻿namespace MaterialSkin.Controls
+﻿namespace Tarot.Forms.MaterialSkin.Controls
 {
     #region Using Directives
 

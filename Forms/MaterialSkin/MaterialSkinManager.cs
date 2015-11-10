@@ -1,4 +1,4 @@
-﻿namespace MaterialSkin
+﻿namespace Tarot.Forms.MaterialSkin
 {
     #region Using Directives
 
@@ -10,9 +10,8 @@
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
-    using MaterialSkin.Controls;
-
-    using Tarot.Properties;
+    using global::Tarot.Forms.MaterialSkin.Controls;
+    using global::Tarot.Properties;
 
     #endregion
 

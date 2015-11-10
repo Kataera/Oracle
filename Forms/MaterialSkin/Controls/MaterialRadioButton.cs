@@ -1,4 +1,4 @@
-﻿namespace MaterialSkin.Controls
+﻿namespace Tarot.Forms.MaterialSkin.Controls
 {
     #region Using Directives
 
@@ -9,7 +9,7 @@
     using System.Drawing.Text;
     using System.Windows.Forms;
 
-    using MaterialSkin.Animations;
+    using global::Tarot.Forms.MaterialSkin.Animations;
 
     #endregion
 
