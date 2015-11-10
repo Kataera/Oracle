@@ -24,6 +24,8 @@
 
 namespace Tarot.Behaviour.Tasks.Utilities
 {
+    using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Buddy.Coroutines;
@@ -44,15 +46,15 @@ namespace Tarot.Behaviour.Tasks.Utilities
     {
         public static async Task<bool> Task()
         {
-            // Check if the current FATE isn't null.
             if (Tarot.CurrentFate != null)
             {
                 // If this occurs something is really wrong. Stop the bot.
-                Logger.SendErrorLog("Entered idle selector with an active FATE assigned, stopping the bot.");
+                Logger.SendErrorLog(
+                    "Entered idle selector with an active FATE assigned, stopping the bot."
+                    + " Please let Kataera know this occurred in Tarot's support thread.");
                 TreeRoot.Stop("Continuing could lead to undefined behaviour.");
             }
 
-            // Determine FATE selection strategy.
             switch (TarotSettings.Instance.FateIdleMode)
             {
                 case (int) FateIdleMode.ReturnToAetheryte:
@@ -72,9 +74,9 @@ namespace Tarot.Behaviour.Tasks.Utilities
                     break;
 
                 default:
-                    await ReturnToAetheryte();
                     Logger.SendDebugLog(
                         "Cannot determine idle selection strategy, defaulting to 'Return to Aetheryte'.");
+                    await ReturnToAetheryte();
                     break;
             }
 
@@ -90,24 +92,25 @@ namespace Tarot.Behaviour.Tasks.Utilities
             if (aetheryte == Vector3.Zero)
             {
                 // TODO: Add check for a wait location of the zone and try that.
-                // Default to no action for now.
                 Logger.SendLog("There are no Aetheryte crystals in this zone, defaulting to nothing.");
                 await WaitForFate();
                 return true;
             }
 
-            // Mount up if we're not already mounted.
-            // TODO: Check that CreateMountBehavior handles combat.
-            if (!Core.Player.IsMounted)
+            if (!IsFateActive())
             {
-                await CommonBehaviors.CreateMountBehavior().ExecuteCoroutine();
+                Logger.SendLog("Moving to the closest Aetheryte crystal to wait for the next FATE.");
+
+                if (!Core.Player.IsMounted)
+                {
+                    // TODO: Check that CreateMountBehavior handles combat.
+                    await CommonBehaviors.CreateMountBehavior().ExecuteCoroutine();
+                }
             }
 
-            // Move to the Aetheryte crystal.
-            Logger.SendLog("Moving to the closest Aetheryte crystal to wait for the next FATE.");
+            // Start moving.
             var result = Navigator.MoveToPointWithin(aetheryte, 15f, "Moving to Aetheryte");
 
-            // Keep polling the result until we're done.
             while (result != MoveResult.Done)
             {
                 // Check if a FATE popped while we're moving.
@@ -121,18 +124,14 @@ namespace Tarot.Behaviour.Tasks.Utilities
                     return true;
                 }
 
-                // Continue moving.
+                // This needs to be continually reassigned, no other way to check status.
                 result = Navigator.MoveToPointWithin(aetheryte, 15f, "Moving to Aetheryte");
-
-                // Make sure we yield control so we don't lock the bot.
                 await Coroutine.Yield();
             }
 
-            // Make sure we stop moving now we're there.
             Navigator.PlayerMover.MoveStop();
-
-            // Wait for FATE once we're there.
             await WaitForFate();
+
             return true;
         }
 
@@ -154,18 +153,15 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
         private static async Task<bool> WaitForFate()
         {
-            // Continually poll the FATE manager until we get a FATE.
-            while (true)
+            if (!IsFateActive())
             {
-                if (IsFateActive())
-                {
-                    Logger.SendLog("Found a FATE, exiting idle coroutine.");
-                    return true;
-                }
-
-                // Make sure we yield control so we don't lock the bot.
-                await Coroutine.Yield();
+                Logger.SendLog("Waiting for a FATE to activate.");
             }
+
+            await Coroutine.Wait(TimeSpan.MaxValue, IsFateActive);
+
+            Logger.SendLog("Found a FATE, exiting idle coroutine.");
+            return true;
         }
 
         private static Vector3 GetClosestAetheryteLocation()
@@ -174,27 +170,16 @@ namespace Tarot.Behaviour.Tasks.Utilities
             var playerLocation = Core.Player.Location;
             var location = Vector3.Zero;
 
-            // If there's no Aetheryte, return zeroed location and handle in task.
-            if (aetherytes == null)
-            {
-                return location;
-            }
-
-            if (aetherytes.Length == 0)
+            // Vectors are non-nullable, so return zeroed location and handle in task.
+            if (aetherytes == null || aetherytes.Length == 0)
             {
                 return location;
             }
 
             foreach (var aetheryte in aetherytes)
             {
-                // If this is the first Aetheryte we're processing, just set as closest.
-                if (location == Vector3.Zero)
-                {
-                    location = aetheryte.Item2;
-                }
-
-                // If distance to current Aetheryte is less than current closest, set it as closest.
-                if (playerLocation.Distance2D(location) > playerLocation.Distance2D(aetheryte.Item2))
+                if (location == Vector3.Zero
+                    || playerLocation.Distance2D(location) > playerLocation.Distance2D(aetheryte.Item2))
                 {
                     location = aetheryte.Item2;
                 }
@@ -205,13 +190,10 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
         private static bool IsFateActive()
         {
-            var activeFates = FateManager.ActiveFates as FateData[];
-            if (activeFates != null)
+            var activeFates = FateManager.ActiveFates;
+            if (activeFates != null && !activeFates.Any())
             {
-                if (activeFates.Length == 0)
-                {
-                    return true;
-                }
+                return true;
             }
 
             return false;
