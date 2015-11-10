@@ -33,6 +33,7 @@ namespace Tarot
     using ff14bot.Navigation;
 
     using global::Tarot.Behaviour;
+    using global::Tarot.Data;
     using global::Tarot.Forms;
     using global::Tarot.Helpers;
 
@@ -49,33 +50,6 @@ namespace Tarot
         private static Composite root;
 
         private static SettingsForm settingsForm;
-
-        private static Poi currentPoi;
-
-        public static Tarot Instance { get; set; }
-
-        public FateData CurrentFate { get; set; }
-
-        public Poi CurrentPoi
-        {
-            get
-            {
-                return currentPoi;
-            }
-
-            set
-            {
-                currentPoi = value;
-            }
-        }
-
-        public Version Version
-        {
-            get
-            {
-                return GetExecutingAssembly().GetName().Version;
-            }
-        }
 
         public override string Name
         {
@@ -130,6 +104,22 @@ namespace Tarot
             get
             {
                 return root;
+            }
+        }
+
+        internal static Tarot Instance { get; set; }
+
+        internal static FateData CurrentFate { get; set; }
+
+        internal static Poi CurrentPoi { get; set; }
+
+        internal static FateDatabase FateDatabase { get; set; }
+
+        internal static Version Version
+        {
+            get
+            {
+                return GetExecutingAssembly().GetName().Version;
             }
         }
 

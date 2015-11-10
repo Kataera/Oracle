@@ -45,7 +45,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
         public static async Task<bool> Task()
         {
             // Check if the current FATE isn't null.
-            if (Tarot.Instance.CurrentFate != null)
+            if (Tarot.CurrentFate != null)
             {
                 // If this occurs something is really wrong. Stop the bot.
                 Logger.SendErrorLog("Entered idle selector with an active FATE assigned, stopping the bot.");
@@ -179,6 +179,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             {
                 return location;
             }
+
             if (aetherytes.Length == 0)
             {
                 return location;

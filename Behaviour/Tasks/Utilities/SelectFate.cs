@@ -38,13 +38,19 @@ namespace Tarot.Behaviour.Tasks.Utilities
     {
         public static async Task<bool> Task()
         {
+            // Check the FATE database has been populated.
+            if (Tarot.FateDatabase == null)
+            {
+                await BuildFateDatabase.Task();
+            }
+
             // Check if we have a FATE already set.
             if (IsFateSet())
             {
                 // Check that the Poi has been set correctly.
                 if (!IsFatePoiSet())
                 {
-                    Poi.Current = new Poi(Tarot.Instance.CurrentFate, PoiType.Fate);
+                    Poi.Current = new Poi(Tarot.CurrentFate, PoiType.Fate);
                 }
 
                 return true;
@@ -125,14 +131,14 @@ namespace Tarot.Behaviour.Tasks.Utilities
             if (closestFate != null)
             {
                 Logger.SendLog("Selected FATE: '" + closestFate.Name + "'.");
-                Tarot.Instance.CurrentFate = closestFate;
+                Tarot.CurrentFate = closestFate;
                 Poi.Current = new Poi(closestFate, PoiType.Fate);
             }
         }
 
         private static bool IsFateSet()
         {
-            return Tarot.Instance.CurrentFate != null;
+            return Tarot.CurrentFate != null;
         }
 
         private static bool IsFatePoiSet()
@@ -150,7 +156,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             }
 
             // Check for current FATE Poi and Tarot FATE mismatch.
-            if (Poi.Current.Fate != Tarot.Instance.CurrentFate)
+            if (Poi.Current.Fate != Tarot.CurrentFate)
             {
                 return false;
             }

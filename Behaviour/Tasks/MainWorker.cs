@@ -26,11 +26,18 @@ namespace Tarot.Behaviour.Tasks
 {
     using System.Threading.Tasks;
 
+    using global::Tarot.Behaviour.Tasks.Utilities;
+
     internal static class MainWorker
     {
         public static async Task<bool> Task()
         {
-            // TODO: Implement.
+            // Check that the FATE database has been populated.
+            if (Tarot.FateDatabase == null)
+            {
+                await BuildFateDatabase.Task();
+            }
+
             return true;
         }
     }
