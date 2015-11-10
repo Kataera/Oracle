@@ -43,7 +43,7 @@ namespace Tarot.Behaviour.Hooks
             Composite[] composites =
             {
                 new HookExecutor("SetDeathPoi"), new HookExecutor("SetCombatPoi"),
-                SetFatePoi.Behaviour, SetIdlePoi.Behaviour
+                SetFatePoi.Behaviour
             };
 
             return new PrioritySelector(composites);

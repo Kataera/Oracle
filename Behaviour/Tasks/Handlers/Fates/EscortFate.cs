@@ -22,11 +22,11 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Fates
+namespace Tarot.Behaviour.Tasks.Handlers.Fates
 {
     using System.Threading.Tasks;
 
-    internal static class BossFate
+    internal static class EscortFate
     {
         public static async Task<bool> Task()
         {

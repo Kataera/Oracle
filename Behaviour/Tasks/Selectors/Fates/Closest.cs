@@ -22,7 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.FateSelection.Strategies
+namespace Tarot.Behaviour.Tasks.Selectors.Fates
 {
     using System.Threading.Tasks;
 

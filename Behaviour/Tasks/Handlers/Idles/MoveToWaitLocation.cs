@@ -22,7 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Idles.Strategies
+namespace Tarot.Behaviour.Tasks.Handlers.Idles
 {
     using System.Threading.Tasks;
 

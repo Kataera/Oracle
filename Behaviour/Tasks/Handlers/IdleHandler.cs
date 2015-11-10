@@ -22,13 +22,13 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Idles
+namespace Tarot.Behaviour.Tasks.Handlers
 {
     using System.Threading.Tasks;
 
     using ff14bot;
 
-    using global::Tarot.Behaviour.Tasks.Idles.Strategies;
+    using global::Tarot.Behaviour.Tasks.Handlers.Idles;
     using global::Tarot.Enumerations;
     using global::Tarot.Helpers;
     using global::Tarot.Settings;
@@ -41,7 +41,7 @@ namespace Tarot.Behaviour.Tasks.Idles
             {
                 // If this occurs something is really wrong. Stop the bot.
                 Logger.SendErrorLog(
-                    "Entered idle selector with an active FATE assigned, stopping the bot."
+                    "Entered idle handler with an active FATE assigned, stopping the bot."
                     + " Please let Kataera know this occurred in Tarot's support thread.");
                 TreeRoot.Stop("Continuing could lead to undefined behaviour.");
             }
@@ -66,7 +66,7 @@ namespace Tarot.Behaviour.Tasks.Idles
 
                 default:
                     Logger.SendDebugLog(
-                        "Cannot determine idle selection strategy, defaulting to 'Return to Aetheryte'.");
+                        "Cannot determine idle handler strategy, defaulting to 'Return to Aetheryte'.");
                     await ReturnToAetheryte.Task();
                     break;
             }

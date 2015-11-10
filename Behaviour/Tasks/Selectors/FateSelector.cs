@@ -22,13 +22,13 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.FateSelection
+namespace Tarot.Behaviour.Tasks.Selectors
 {
     using System.Threading.Tasks;
 
     using ff14bot.Helpers;
 
-    using global::Tarot.Behaviour.Tasks.FateSelection.Strategies;
+    using global::Tarot.Behaviour.Tasks.Selectors.Fates;
     using global::Tarot.Behaviour.Tasks.Utilities;
     using global::Tarot.Enumerations;
     using global::Tarot.Helpers;

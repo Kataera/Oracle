@@ -26,7 +26,8 @@ namespace Tarot.Behaviour.Hooks
 {
     using ff14bot.Behavior;
 
-    using global::Tarot.Behaviour.Tasks.FateSelection;
+    using global::Tarot.Behaviour.Tasks;
+    using global::Tarot.Behaviour.Tasks.Selectors;
 
     using TreeSharp;
 

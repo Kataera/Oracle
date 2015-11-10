@@ -22,15 +22,13 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Hooks
+namespace Tarot.Behaviour
 {
-    using ff14bot.Behavior;
-
-    using global::Tarot.Behaviour.Tasks.Idles;
+    using global::Tarot.Behaviour.Tasks;
 
     using TreeSharp;
 
-    internal static class SetIdlePoi
+    internal static class Root
     {
         public static Composite Behaviour
         {
@@ -42,11 +40,7 @@ namespace Tarot.Behaviour.Hooks
 
         private static Composite CreateBehaviour()
         {
-            Composite coroutineHook = new ActionRunCoroutine(coroutine => IdleSelector.Task());
-            return new HookExecutor(
-                "SetIdlePoi",
-                "Selects the idle action that the user has chosen in their settings.",
-                coroutineHook);
+            return new ActionRunCoroutine(coroutine => MainWorker.Task());
         }
     }
 }

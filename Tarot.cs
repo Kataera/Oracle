@@ -180,7 +180,7 @@ namespace Tarot
             TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
 
             // Set root behaviour.
-            root = Main.Behaviour;
+            root = Behaviour.Root.Behaviour;
         }
 
         public override void Stop()

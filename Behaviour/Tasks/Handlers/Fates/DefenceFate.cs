@@ -22,7 +22,16 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.FateSelection.Strategies
+namespace Tarot.Behaviour.Tasks.Handlers.Fates
 {
-    internal class TypePriority {}
+    using System.Threading.Tasks;
+
+    internal static class DefenceFate
+    {
+        public static async Task<bool> Task()
+        {
+            // TODO: Implement.
+            return true;
+        }
+    }
 }
