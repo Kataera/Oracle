@@ -26,11 +26,15 @@ namespace Tarot.Behaviour.Tasks.Idles
 {
     using System.Threading.Tasks;
 
-    internal static class ReturnToLocation
+    using global::Tarot.Helpers;
+
+    internal static class MoveToWaitLocation
     {
         public static async Task<bool> Task()
         {
             // TODO: Implement.
+            Logger.SendLog("'Return to location' is not yet implemented, defaulting to 'Return to Aetheryte'.");
+            await ReturnToAetheryte.Task();
             return true;
         }
     }

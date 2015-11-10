@@ -66,10 +66,10 @@
     <Compile Include="Behaviour\Hooks\SetIdlePoi.cs" />
     <Compile Include="Behaviour\Main.cs" />
     <Compile Include="Behaviour\Hooks\SelectPoiType.cs" />
-    <Compile Include="Behaviour\Tasks\Idles\DoNothing.cs" />
+    <Compile Include="Behaviour\Tasks\Idles\WaitForFates.cs" />
     <Compile Include="Behaviour\Tasks\Idles\GrindMobs.cs" />
     <Compile Include="Behaviour\Tasks\Idles\ReturnToAetheryte.cs" />
-    <Compile Include="Behaviour\Tasks\Idles\ReturnToLocation.cs" />
+    <Compile Include="Behaviour\Tasks\Idles\MoveToWaitLocation.cs" />
     <Compile Include="Behaviour\Tasks\MainWorker.cs" />
     <Compile Include="Behaviour\Tasks\Fates\BossFate.cs" />
     <Compile Include="Behaviour\Tasks\Fates\CollectFate.cs" />
