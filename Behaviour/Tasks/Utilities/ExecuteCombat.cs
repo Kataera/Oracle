@@ -26,20 +26,14 @@ namespace Tarot.Behaviour.Tasks.Utilities
 {
     using System.Threading.Tasks;
 
-    using Buddy.Coroutines;
+    using ff14bot.Behavior;
 
-    using ff14bot;
-    using ff14bot.RemoteWindows;
-
-    internal static class LevelSync
+    internal static class ExecuteCombat
     {
         public static async Task<bool> Task()
         {
-            while (!Core.Player.IsLevelSynced && Tarot.CurrentFate.Within2D(Core.Player.Location))
-            {
-                ToDoList.LevelSync();
-                await Coroutine.Yield();
-            }
+            await new HookExecutor("Pull").ExecuteCoroutine();
+            await new HookExecutor("RoutineCombat").ExecuteCoroutine();
 
             return true;
         }

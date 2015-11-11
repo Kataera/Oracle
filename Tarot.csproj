@@ -80,6 +80,7 @@
     <Compile Include="Behaviour\Tasks\Handlers\Fates\EscortFate.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Fates\KillFate.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BuildFateDatabase.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\ExecuteCombat.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LevelSync.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Fates\MegaBossFate.cs" />
     <Compile Include="Behaviour\Tasks\Selectors\FateSelector.cs" />

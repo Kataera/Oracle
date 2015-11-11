@@ -26,9 +26,11 @@ namespace Tarot.Behaviour.Tasks.Handlers
 {
     using System.Threading.Tasks;
 
+    using ff14bot;
     using ff14bot.Managers;
 
     using global::Tarot.Behaviour.Tasks.Handlers.Fates;
+    using global::Tarot.Behaviour.Tasks.Utilities;
     using global::Tarot.Enumerations;
     using global::Tarot.Helpers;
 
@@ -40,6 +42,12 @@ namespace Tarot.Behaviour.Tasks.Handlers
             {
                 Logger.SendErrorLog("Entered FATE handler without an active FATE assigned.");
                 return true;
+            }
+
+            // Check if we need to level sync.
+            if (Tarot.CurrentFate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced)
+            {
+                await LevelSync.Task();
             }
 
             var tarotFateData = Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id);

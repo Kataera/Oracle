@@ -40,8 +40,7 @@ namespace Tarot.Behaviour.Tasks
             // Handle combat.
             if (Poi.Current != null && Poi.Current.Type == PoiType.Kill)
             {
-                await new HookExecutor("Pull").ExecuteCoroutine();
-                await new HookExecutor("RoutineCombat").ExecuteCoroutine();
+                await ExecuteCombat.Task();
             }
 
             // Check that the FATE database has been populated.
