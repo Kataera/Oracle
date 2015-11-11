@@ -181,7 +181,6 @@ namespace Tarot
         public override void Stop()
         {
             // Clean up all botbase internal variables.
-            Instance = null;
             CurrentFate = null;
             FateDatabase = null;
             CurrentPoi = null;
