@@ -25,6 +25,7 @@
 namespace Tarot
 {
     using System;
+    using System.Reflection;
 
     using ff14bot.AClasses;
     using ff14bot.Behavior;
@@ -32,16 +33,13 @@ namespace Tarot
     using ff14bot.Managers;
     using ff14bot.Navigation;
 
+    using global::Tarot.Behaviour;
+    using global::Tarot.Behaviour.Tasks.Hooks;
     using global::Tarot.Data;
     using global::Tarot.Forms;
     using global::Tarot.Helpers;
 
     using TreeSharp;
-
-    using System.Reflection;
-
-    using global::Tarot.Behaviour;
-    using global::Tarot.Behaviour.Tasks.Hooks;
 
     public class Tarot : BotBase
     {

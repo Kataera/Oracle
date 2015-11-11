@@ -45,7 +45,8 @@ namespace Tarot.Behaviour.Tasks.Handlers
             }
 
             // Check if we need to level sync.
-            if (Tarot.CurrentFate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced)
+            if (Tarot.CurrentFate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced
+                && Tarot.CurrentFate.Within2D(Core.Player.Location))
             {
                 await LevelSync.Task();
             }

@@ -26,12 +26,10 @@ namespace Tarot.Behaviour.Tasks
 {
     using System.Threading.Tasks;
 
-    using ff14bot.Behavior;
     using ff14bot.Helpers;
 
     using global::Tarot.Behaviour.Tasks.Handlers;
     using global::Tarot.Behaviour.Tasks.Utilities;
-    using global::Tarot.Helpers;
 
     internal static class MainWorker
     {

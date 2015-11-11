@@ -46,7 +46,10 @@ namespace Tarot.Behaviour.Tasks.Hooks
             Composite[] composites =
             {
                 new HookExecutor("SetDeathPoi"), new HookExecutor("SetCombatPoi"),
-                new HookExecutor("SetFatePoi", "A hook that selects a viable FATE and assigns it as the Poi.", setFatePoi)
+                new HookExecutor(
+                    "SetFatePoi",
+                    "A hook that selects a viable FATE and assigns it as the Poi.",
+                    setFatePoi)
             };
 
             return new PrioritySelector(composites);
