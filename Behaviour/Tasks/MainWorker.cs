@@ -26,7 +26,10 @@ namespace Tarot.Behaviour.Tasks
 {
     using System.Threading.Tasks;
 
+    using ff14bot.Behavior;
+
     using global::Tarot.Behaviour.Tasks.Utilities;
+    using global::Tarot.Helpers;
 
     internal static class MainWorker
     {
@@ -38,7 +41,10 @@ namespace Tarot.Behaviour.Tasks
                 await BuildFateDatabase.Task();
             }
 
-            return true;
+            // Check we're entering the task.
+            Logger.SendDebugLog("Entered main worker task.");
+
+            return false;
         }
     }
 }

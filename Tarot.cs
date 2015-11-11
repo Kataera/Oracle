@@ -39,7 +39,9 @@ namespace Tarot
 
     using TreeSharp;
 
-    using static System.Reflection.Assembly;
+    using System.Reflection;
+
+    using global::Tarot.Behaviour;
 
     public class Tarot : BotBase
     {
@@ -115,16 +117,19 @@ namespace Tarot
 
         internal static FateDatabase FateDatabase { get; set; }
 
-        internal static Version Version
+        internal static string Version
         {
             get
             {
-                return GetExecutingAssembly().GetName().Version;
+                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
             }
         }
 
         public override void Initialize()
         {
+            // Set the botbase instance so we can access its data.
+            Instance = this;
+
             Logger.SendLog("Initialising " + this.Name + ".");
 
             // Check for updates
@@ -156,36 +161,33 @@ namespace Tarot
 
         public override void Start()
         {
-            Logger.SendLog("Starting " + this.Name + ".");
-
             // Set the botbase instance so we can access its data.
             Instance = this;
 
-            // Set navigator.
             Navigator.PlayerMover = new SlideMover();
             Navigator.NavigationProvider = new GaiaNavigator();
-
-            // Set target provider.
-            // TODO: Implement our own targeting provider.
             CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
 
-            // Make sure game settings are correct for botbase.
             playerFaceTargetOnAction = GameSettingsManager.FaceTargetOnAction;
             playerFlightMode = GameSettingsManager.FlightMode;
             GameSettingsManager.FaceTargetOnAction = true;
             GameSettingsManager.FlightMode = true;
 
-            // Replace the select Poi hook with our own.
+            root = BrainBehavior.CreateBrain();
             TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
+            TreeHooks.Instance.AddHook("TreeStart", Main.Behaviour);
 
-            // Set root behaviour.
-            root = Behaviour.Root.Behaviour;
+            Logger.SendLog("Starting " + this.Name + ".");
+
+            var list = TreeHooks.Instance.HookDescriptions;
+            foreach (var item in list)
+            {
+                Logger.SendDebugLog("Hook: '" + item.Name + "' | Description: '" + item.Description + "'.");
+            }
         }
 
         public override void Stop()
         {
-            Logger.SendLog("Stopping " + this.Name + ".");
-
             // Dispose of the navigator if it exists.
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
             if (navProvider != null)
@@ -201,6 +203,8 @@ namespace Tarot
             // Restore player's game settings.
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;
+
+            Logger.SendLog("Stopping " + this.Name + ".");
         }
     }
 }

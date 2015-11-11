@@ -28,7 +28,7 @@ namespace Tarot.Behaviour
 
     using TreeSharp;
 
-    internal static class Root
+    internal static class Main
     {
         public static Composite Behaviour
         {
