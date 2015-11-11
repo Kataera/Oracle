@@ -68,8 +68,9 @@ namespace Tarot.Behaviour.Tasks.Handlers.Idles
 
             // Set Poi and start moving.
             Poi.Current = new Poi(aetheryte, PoiType.Wait);
-            var result = Navigator.MoveToPointWithin(aetheryte, 15f, "Moving to Aetheryte");
+            Tarot.CurrentPoi = Poi.Current;
 
+            var result = Navigator.MoveToPointWithin(aetheryte, 15f, "Moving to Aetheryte");
             while (result != MoveResult.Done)
             {
                 // Check if a FATE popped while we're moving.

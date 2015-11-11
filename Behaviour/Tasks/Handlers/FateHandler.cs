@@ -25,11 +25,20 @@
 namespace Tarot.Behaviour.Tasks.Handlers
 {
     using System.Threading.Tasks;
+    using System.Windows.Forms;
+
+    using Buddy.Coroutines;
 
     using ff14bot;
+    using ff14bot.Behavior;
+    using ff14bot.Enums;
+    using ff14bot.Helpers;
     using ff14bot.Managers;
+    using ff14bot.Navigation;
+    using ff14bot.Settings;
 
     using global::Tarot.Behaviour.Tasks.Handlers.Fates;
+    using global::Tarot.Behaviour.Tasks.Handlers.Idles;
     using global::Tarot.Behaviour.Tasks.Utilities;
     using global::Tarot.Enumerations;
     using global::Tarot.Helpers;
@@ -42,6 +51,47 @@ namespace Tarot.Behaviour.Tasks.Handlers
             {
                 Logger.SendErrorLog("Entered FATE handler without an active FATE assigned.");
                 return true;
+            }
+
+            if (!WithinFate())
+            {
+                while (!WithinFate())
+                {
+                    // Check if the FATE ended while we're moving.
+                    if (!Tarot.CurrentFate.IsValid || Tarot.CurrentFate.Status == FateStatus.COMPLETE)
+                    {
+                        Logger.SendLog("'" + Tarot.CurrentFate.Name + "' is no longer active.");
+                        Navigator.Stop();
+                        Navigator.Clear();
+                        Navigator.PlayerMover.MoveStop();
+
+                        Poi.Clear("FATE is no longer active");
+                        Tarot.CurrentPoi = null;
+
+                        return true;
+                    }
+
+                    // Check we're still mounted.
+                    if (!Core.Player.IsMounted && Core.Player.Distance(Tarot.CurrentFate.Location) > CharacterSettings.Instance.MountDistance)
+                    {
+                        Navigator.PlayerMover.MoveStop();
+
+                        // Exit behaviour if we're in combat.
+                        if (Core.Player.InCombat)
+                        {
+                            return false;
+                        }
+
+                        await CommonBehaviors.CreateMountBehavior().ExecuteCoroutine();
+                    }
+
+                    Navigator.MoveToPointWithin(Tarot.CurrentFate.Location, 15f, Tarot.CurrentFate.Name);
+                    await Coroutine.Yield();
+                }
+
+                Navigator.Stop();
+                Navigator.Clear();
+                Navigator.PlayerMover.MoveStop();
             }
 
             if (LevelSyncNeeded() && WithinFate())
@@ -134,7 +184,7 @@ namespace Tarot.Behaviour.Tasks.Handlers
 
         private static bool WithinFate()
         {
-            return Tarot.CurrentFate.Location.Distance2D(Core.Player.Location) < Tarot.CurrentFate.Radius * 0.95f;
+            return Tarot.CurrentFate.Location.Distance(Core.Player.Location) < Tarot.CurrentFate.Radius * 0.75f;
         }
     }
 }

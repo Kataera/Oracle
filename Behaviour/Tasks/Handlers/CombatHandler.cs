@@ -55,6 +55,15 @@ namespace Tarot.Behaviour.Tasks.Handlers
             await new HookExecutor("Pull").ExecuteCoroutine();
             await new HookExecutor("RoutineCombat").ExecuteCoroutine();
 
+            if (Poi.Current.BattleCharacter.IsDead)
+            {
+                Poi.Clear("Targeted unit is dead, clearing Poi and carrying on!");
+                if (GameObjectManager.Attackers.Count >= 1)
+                {
+                    Poi.Current = new Poi(GameObjectManager.Attackers.FirstOrDefault(), PoiType.Kill);
+                }
+            }
+
             // Reset Poi back to what it was when we're done.
             if (GameObjectManager.Attackers.Count == 0 && Tarot.CurrentPoi != null)
             {
