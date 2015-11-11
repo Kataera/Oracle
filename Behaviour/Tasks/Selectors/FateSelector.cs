@@ -40,9 +40,6 @@ namespace Tarot.Behaviour.Tasks.Selectors
         {
             await BuildFateDatabase.Task();
 
-            // Check we're entering the task.
-            Logger.SendDebugLog("Entered FATE selection task.");
-
             if (IsFateSet())
             {
                 if (!IsFatePoiSet())

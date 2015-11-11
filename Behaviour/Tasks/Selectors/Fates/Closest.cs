@@ -24,6 +24,7 @@
 
 namespace Tarot.Behaviour.Tasks.Selectors.Fates
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ff14bot;
@@ -36,15 +37,12 @@ namespace Tarot.Behaviour.Tasks.Selectors.Fates
     {
         public static async Task<bool> Task()
         {
-            Logger.SendDebugLog("Entered closest FATE selection strategy.");
-
-            // Cast as an array to allow multiple enumeration.
-            var activeFates = FateManager.ActiveFates as FateData[];
+            var activeFates = FateManager.ActiveFates;
 
             var playerLocation = Core.Player.Location;
             FateData closestFate = null;
 
-            if (activeFates == null || activeFates.Length == 0)
+            if (activeFates == null || !activeFates.Any())
             {
                 return false;
             }
@@ -52,6 +50,7 @@ namespace Tarot.Behaviour.Tasks.Selectors.Fates
             Logger.SendLog("Selecting closest active FATE.");
             foreach (var fate in activeFates)
             {
+                Logger.SendDebugLog("Found FATE: '" + fate.Name + "'.");
                 if (closestFate == null
                     || playerLocation.Distance2D(closestFate.Location) > playerLocation.Distance2D(fate.Location))
                 {

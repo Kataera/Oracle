@@ -36,7 +36,7 @@ namespace Tarot.Helpers
 
         private static readonly Color LoggerErrorColour = Color.FromRgb(255, 25, 117);
 
-        private static readonly Color LoggerDebugColour = Color.FromRgb(255, 153, 0);
+        private static readonly Color LoggerDebugColour = Color.FromRgb(238, 223, 88);
 
         internal static void SendLog(string log)
         {
