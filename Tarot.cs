@@ -180,6 +180,12 @@ namespace Tarot
 
         public override void Stop()
         {
+            // Clean up all botbase internal variables.
+            Instance = null;
+            CurrentFate = null;
+            FateDatabase = null;
+            CurrentPoi = null;
+
             // Dispose of the navigator if it exists.
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
             if (navProvider != null)

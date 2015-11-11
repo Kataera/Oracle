@@ -44,8 +44,7 @@ namespace Tarot.Behaviour.Tasks.Handlers
                 return true;
             }
 
-            // Check if we need to level sync.
-            if (Tarot.CurrentFate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced)
+            if (LevelSyncNeeded() && WithinFate())
             {
                 await LevelSync.Task();
                 Logger.SendLog("Synced level to " + Tarot.CurrentFate.MaxLevel + " to participate in FATE.");
@@ -79,6 +78,10 @@ namespace Tarot.Behaviour.Tasks.Handlers
                 case FateType.MegaBoss:
                     await MegaBossFate.Task();
                     break;
+
+                case FateType.Null:
+                    Logger.SendErrorLog("Attempting to run a null FATE.");
+                    return false;
 
                 default:
                     Logger.SendDebugLog("Cannot determine FATE type, defaulting to Rebornbuddy's classification.");
@@ -122,6 +125,16 @@ namespace Tarot.Behaviour.Tasks.Handlers
             }
 
             return true;
+        }
+
+        private static bool LevelSyncNeeded()
+        {
+            return Tarot.CurrentFate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced;
+        }
+
+        private static bool WithinFate()
+        {
+            return Tarot.CurrentFate.Location.Distance2D(Core.Player.Location) < Tarot.CurrentFate.Radius * 0.95f;
         }
     }
 }
