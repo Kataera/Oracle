@@ -27,7 +27,9 @@ namespace Tarot.Behaviour.Tasks
     using System.Threading.Tasks;
 
     using ff14bot.Behavior;
+    using ff14bot.Helpers;
 
+    using global::Tarot.Behaviour.Tasks.Handlers;
     using global::Tarot.Behaviour.Tasks.Utilities;
     using global::Tarot.Helpers;
 
@@ -35,15 +37,32 @@ namespace Tarot.Behaviour.Tasks
     {
         public static async Task<bool> Task()
         {
+            // Handle combat.
+            if (Poi.Current != null && Poi.Current.Type == PoiType.Kill)
+            {
+                await new HookExecutor("Pull").ExecuteCoroutine();
+                await new HookExecutor("RoutineCombat").ExecuteCoroutine();
+            }
+
             // Check that the FATE database has been populated.
             if (Tarot.FateDatabase == null)
             {
                 await BuildFateDatabase.Task();
             }
 
-            // Check we're entering the task.
-            Logger.SendDebugLog("Entered main worker task.");
+            // Handle FATE.
+            if (Poi.Current != null && Poi.Current.Type == PoiType.Fate && Tarot.CurrentFate != null)
+            {
+                await FateHandler.Task();
+            }
 
+            // Handle idle.
+            if (Poi.Current != null && Poi.Current.Type == PoiType.Wait && Tarot.CurrentFate == null)
+            {
+                await IdleHandler.Task();
+            }
+
+            // Always return false to not block the tree.
             return false;
         }
     }

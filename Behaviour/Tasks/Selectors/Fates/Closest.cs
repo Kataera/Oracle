@@ -36,6 +36,8 @@ namespace Tarot.Behaviour.Tasks.Selectors.Fates
     {
         public static async Task<bool> Task()
         {
+            Logger.SendDebugLog("Entered closest FATE selection strategy.");
+
             // Cast as an array to allow multiple enumeration.
             var activeFates = FateManager.ActiveFates as FateData[];
 

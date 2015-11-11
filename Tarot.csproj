@@ -62,9 +62,8 @@
     <None Include="Resources\Fonts\Roboto-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviour\Hooks\SetFatePoi.cs" />
-    <Compile Include="Behaviour\Root.cs" />
-    <Compile Include="Behaviour\Hooks\SelectPoiType.cs" />
+    <Compile Include="Behaviour\Main.cs" />
+    <Compile Include="Behaviour\Tasks\Hooks\SelectPoiType.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\FateHandler.cs" />
     <Compile Include="Behaviour\Tasks\Selectors\Fates\ChainAndTypePriority.cs" />
     <Compile Include="Behaviour\Tasks\Selectors\Fates\ChainPriority.cs" />

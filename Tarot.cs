@@ -32,7 +32,6 @@ namespace Tarot
     using ff14bot.Managers;
     using ff14bot.Navigation;
 
-    using global::Tarot.Behaviour.Hooks;
     using global::Tarot.Data;
     using global::Tarot.Forms;
     using global::Tarot.Helpers;
@@ -42,6 +41,7 @@ namespace Tarot
     using System.Reflection;
 
     using global::Tarot.Behaviour;
+    using global::Tarot.Behaviour.Tasks.Hooks;
 
     public class Tarot : BotBase
     {
@@ -174,16 +174,10 @@ namespace Tarot
             GameSettingsManager.FlightMode = true;
 
             root = BrainBehavior.CreateBrain();
-            TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
             TreeHooks.Instance.AddHook("TreeStart", Main.Behaviour);
+            TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
 
             Logger.SendLog("Starting " + this.Name + ".");
-
-            var list = TreeHooks.Instance.HookDescriptions;
-            foreach (var item in list)
-            {
-                Logger.SendDebugLog("Hook: '" + item.Name + "' | Description: '" + item.Description + "'.");
-            }
         }
 
         public override void Stop()
