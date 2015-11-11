@@ -22,19 +22,41 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Utilities
+namespace Tarot.Behaviour.Tasks.Handlers
 {
     using System.Threading.Tasks;
 
-    using ff14bot.Behavior;
+    using Buddy.Coroutines;
 
-    internal static class ExecuteCombat
+    using ff14bot;
+    using ff14bot.Behavior;
+    using ff14bot.Helpers;
+    using ff14bot.Managers;
+
+    internal static class CombatHandler
     {
         public static async Task<bool> Task()
         {
+            if (Poi.Current.Type != PoiType.Kill)
+            {
+                Poi.Clear("Clearing Poi while in combat.");
+                await new HookExecutor("SetCombatPoi").ExecuteCoroutine();
+                await Coroutine.Sleep(500);
+            }
+
+            if (Core.Player.CurrentTarget != Poi.Current.Unit)
+            {
+                Poi.Current.Unit.Target();
+            }
+
             await new HookExecutor("Pull").ExecuteCoroutine();
             await new HookExecutor("RoutineCombat").ExecuteCoroutine();
 
+            // Reset Poi back to what it was when we're done.
+            if (GameObjectManager.Attackers.Count == 0 && Tarot.CurrentPoi != null)
+            {
+                Poi.Current = Tarot.CurrentPoi;
+            }
             return true;
         }
     }

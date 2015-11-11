@@ -24,7 +24,11 @@
 
 namespace Tarot.Behaviour
 {
+    using ff14bot.Managers;
+
     using global::Tarot.Behaviour.Tasks;
+    using global::Tarot.Behaviour.Tasks.Handlers;
+    using global::Tarot.Behaviour.Tasks.Utilities;
 
     using TreeSharp;
 
@@ -40,7 +44,14 @@ namespace Tarot.Behaviour
 
         private static Composite CreateBehaviour()
         {
-            return new ActionRunCoroutine(coroutine => MainWorker.Task());
+            Composite[] composites =
+            {
+                new Decorator(
+                    check => GameObjectManager.Attackers.Count >= 1,
+                    new ActionRunCoroutine(coroutine => CombatHandler.Task())),
+                new ActionRunCoroutine(coroutine => MainWorker.Task())
+            };
+            return new PrioritySelector(composites);
         }
     }
 }

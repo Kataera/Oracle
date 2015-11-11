@@ -35,12 +35,6 @@ namespace Tarot.Behaviour.Tasks
     {
         public static async Task<bool> Task()
         {
-            // Handle combat.
-            if (Poi.Current != null && Poi.Current.Type == PoiType.Kill)
-            {
-                await ExecuteCombat.Task();
-            }
-
             // Check that the FATE database has been populated.
             if (Tarot.FateDatabase == null)
             {

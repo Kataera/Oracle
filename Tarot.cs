@@ -130,7 +130,6 @@ namespace Tarot
 
             Logger.SendLog("Initialising " + this.Name + ".");
 
-            // Check for updates
             // TODO: Implement rest of Updater.
             if (Updater.UpdateIsAvailable())
             {
@@ -185,7 +184,6 @@ namespace Tarot
             FateDatabase = null;
             CurrentPoi = null;
 
-            // Dispose of the navigator if it exists.
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
             if (navProvider != null)
             {
@@ -193,11 +191,8 @@ namespace Tarot
             }
 
             Navigator.NavigationProvider = null;
-
-            // Reset the target provider.
             CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
 
-            // Restore player's game settings.
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;
 
