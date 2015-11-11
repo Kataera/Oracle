@@ -24,6 +24,7 @@
 
 namespace Tarot.Behaviour.Tasks.Handlers
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Buddy.Coroutines;
@@ -40,13 +41,15 @@ namespace Tarot.Behaviour.Tasks.Handlers
             if (Poi.Current.Type != PoiType.Kill)
             {
                 Poi.Clear("Clearing Poi while in combat.");
-                await new HookExecutor("SetCombatPoi").ExecuteCoroutine();
-                await Coroutine.Sleep(500);
+                Poi.Current = new Poi(GameObjectManager.Attackers.FirstOrDefault(), PoiType.Kill);
             }
 
             if (Core.Player.CurrentTarget != Poi.Current.Unit)
             {
                 Poi.Current.Unit.Target();
+
+                // Give time for the game to update.
+                await Coroutine.Sleep(100);
             }
 
             await new HookExecutor("Pull").ExecuteCoroutine();
