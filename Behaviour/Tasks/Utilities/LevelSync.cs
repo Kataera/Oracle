@@ -24,6 +24,7 @@
 
 namespace Tarot.Behaviour.Tasks.Utilities
 {
+    using System.Diagnostics;
     using System.Threading.Tasks;
 
     using Buddy.Coroutines;
@@ -31,16 +32,33 @@ namespace Tarot.Behaviour.Tasks.Utilities
     using ff14bot;
     using ff14bot.RemoteWindows;
 
+    using global::Tarot.Helpers;
+
     internal static class LevelSync
     {
+        private static Stopwatch levelSyncCooldown;
+
         public static async Task<bool> Task()
         {
             while (!Core.Player.IsLevelSynced && Tarot.CurrentFate.Within2D(Core.Player.Location))
             {
-                ToDoList.LevelSync();
+                if (levelSyncCooldown == null)
+                {
+                    ToDoList.LevelSync();
+                    levelSyncCooldown = new Stopwatch();
+                    levelSyncCooldown.Start();
+                }
+
+                if (levelSyncCooldown.ElapsedMilliseconds > 2000)
+                {
+                    ToDoList.LevelSync();
+                    levelSyncCooldown.Restart();
+                }
+
                 await Coroutine.Yield();
             }
 
+            Logger.SendLog("Synced level to " + Tarot.CurrentFate.MaxLevel + " to participate in FATE.");
             return true;
         }
     }
