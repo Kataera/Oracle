@@ -62,6 +62,7 @@ namespace Tarot.Behaviour.Tasks
                 await IdleHandler.Task();
             }
 
+
             // Always return false to not block the tree.
             return false;
         }
