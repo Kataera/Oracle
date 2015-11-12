@@ -29,10 +29,14 @@ namespace Tarot.Behaviour.Tasks.Handlers
 
     using Buddy.Coroutines;
 
+    using Clio.Utilities;
+
     using ff14bot;
     using ff14bot.Behavior;
     using ff14bot.Helpers;
     using ff14bot.Managers;
+
+    using global::Tarot.Helpers;
 
     internal static class CombatHandler
     {
@@ -52,12 +56,35 @@ namespace Tarot.Behaviour.Tasks.Handlers
                 await Coroutine.Sleep(100);
             }
 
-            await new HookExecutor("Pull").ExecuteCoroutine();
-            await new HookExecutor("RoutineCombat").ExecuteCoroutine();
+            // Support for Kupo, which will not move in range unless its pull behaviour is called.
+            if (RoutineManager.Current.Name.Equals("Kupo"))
+            {
+                if (MovementNeeded())
+                {
+                    await RoutineManager.Current.PullBehavior.ExecuteCoroutine();
+                }
+                else
+                {
+                    await RoutineManager.Current.CombatBehavior.ExecuteCoroutine();
+                }
+            }
+            else
+            {
+                await RoutineManager.Current.CombatBehavior.ExecuteCoroutine();
+            }
 
             if (Poi.Current.BattleCharacter.IsDead)
             {
                 Poi.Clear("Targeted unit is dead, clearing Poi and carrying on!");
+                if (GameObjectManager.Attackers.Count >= 1)
+                {
+                    Poi.Current = new Poi(GameObjectManager.Attackers.FirstOrDefault(), PoiType.Kill);
+                }
+            }
+
+            if (Poi.Current.BattleCharacter.IsFateGone)
+            {
+                Poi.Clear("Target is a FATE mob, and the FATE is gone.");
                 if (GameObjectManager.Attackers.Count >= 1)
                 {
                     Poi.Current = new Poi(GameObjectManager.Attackers.FirstOrDefault(), PoiType.Kill);
@@ -69,7 +96,19 @@ namespace Tarot.Behaviour.Tasks.Handlers
             {
                 Poi.Current = Tarot.CurrentPoi;
             }
+            else if(Tarot.CurrentPoi == null && Poi.Current.Type != PoiType.Kill)
+            {
+                Poi.Current = new Poi(Vector3.Zero, PoiType.None);
+            }
+
             return true;
+        }
+
+        private static bool MovementNeeded()
+        {
+            var minimumDistance = Core.Player.CombatReach + RoutineManager.Current.PullRange
+                                  + Poi.Current.BattleCharacter.CombatReach;
+            return Core.Player.Location.Distance(Poi.Current.BattleCharacter.Location) > minimumDistance;
         }
     }
 }
