@@ -26,12 +26,27 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
 {
     using System.Threading.Tasks;
 
+    using ff14bot.Enums;
+    using ff14bot.Helpers;
+
     internal static class MegaBossFate
     {
         public static async Task<bool> Task()
         {
+            if (IsFateComplete())
+            {
+                Poi.Clear("FATE is complete.");
+                Tarot.CurrentPoi = null;
+                Tarot.CurrentFate = null;
+            }
+
             // TODO: Implement.
             return true;
+        }
+
+        private static bool IsFateComplete()
+        {
+            return !Tarot.CurrentFate.IsValid || Tarot.CurrentFate.Status == FateStatus.COMPLETE;
         }
     }
 }

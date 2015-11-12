@@ -67,6 +67,7 @@ namespace Tarot.Behaviour.Tasks.Handlers
 
                         Poi.Clear("FATE is no longer active");
                         Tarot.CurrentPoi = null;
+                        Tarot.CurrentFate = null;
 
                         return true;
                     }
@@ -92,6 +93,7 @@ namespace Tarot.Behaviour.Tasks.Handlers
                 Navigator.Stop();
                 Navigator.Clear();
                 Navigator.PlayerMover.MoveStop();
+                await CommonBehaviors.Dismount().ExecuteCoroutine();
             }
 
             if (LevelSyncNeeded() && WithinFate())
