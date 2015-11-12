@@ -59,7 +59,6 @@ namespace Tarot.Behaviour.Tasks.Handlers
             // Support for Kupo, which will not move in range unless its pull behaviour is called.
             if (RoutineManager.Current.Name.Contains("Kupo"))
             {
-                Logger.SendDebugLog("Using Kupo, activating additional support.");
                 if (MovementNeeded())
                 {
                     await RoutineManager.Current.PullBehavior.ExecuteCoroutine();
@@ -108,7 +107,7 @@ namespace Tarot.Behaviour.Tasks.Handlers
         private static bool MovementNeeded()
         {
             var minimumDistance = Core.Player.CombatReach + RoutineManager.Current.PullRange
-                                  + Poi.Current.BattleCharacter.CombatReach;
+                                  + Poi.Current.BattleCharacter.CombatReach + 1;
             return Core.Player.Location.Distance(Poi.Current.BattleCharacter.Location) > minimumDistance;
         }
     }
