@@ -36,6 +36,7 @@ namespace Tarot
     using global::Tarot.Behaviour;
     using global::Tarot.Behaviour.Tasks.Hooks;
     using global::Tarot.Data;
+    using global::Tarot.Enumerations;
     using global::Tarot.Forms;
     using global::Tarot.Helpers;
 
@@ -110,6 +111,8 @@ namespace Tarot
         internal static Tarot Instance { get; set; }
 
         internal static FateData CurrentFate { get; set; }
+
+        internal static FateIdleMode CurrentIdle { get; set; }
 
         internal static Poi CurrentPoi { get; set; }
 
