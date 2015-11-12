@@ -24,6 +24,7 @@
 
 namespace Tarot.Behaviour.Tasks.Handlers
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -57,7 +58,7 @@ namespace Tarot.Behaviour.Tasks.Handlers
             }
 
             // Support for Kupo, which will not move in range unless its pull behaviour is called.
-            if (RoutineManager.Current.Name.Contains("Kupo"))
+            if (RoutineManager.Current.Name.StartsWith("Kupo", StringComparison.Ordinal))
             {
                 if (MovementNeeded())
                 {

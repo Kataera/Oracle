@@ -148,6 +148,12 @@ namespace Tarot.Behaviour.Tasks.Handlers
 
         private static async Task<bool> MoveToFate()
         {
+            // If we're inside a FATE, cancel.
+            if (Tarot.CurrentFate.Within2D(Core.Player.Location))
+            {
+                return false;
+            }
+
             while (!WithinFate())
             {
                 // Check if the FATE ended while we're moving.
