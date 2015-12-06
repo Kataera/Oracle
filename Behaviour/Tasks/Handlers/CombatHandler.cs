@@ -36,6 +36,7 @@ namespace Tarot.Behaviour.Tasks.Handlers
     using ff14bot.Behavior;
     using ff14bot.Helpers;
     using ff14bot.Managers;
+    using ff14bot.Objects;
 
     using global::Tarot.Helpers;
 
@@ -57,12 +58,12 @@ namespace Tarot.Behaviour.Tasks.Handlers
                 await Coroutine.Sleep(100);
             }
 
-            // Support for Kupo, which will not move in range unless its pull behaviour is called.
+            // Support for Kupo, which will not move in of mobs.
             if (RoutineManager.Current.Name.StartsWith("Kupo", StringComparison.Ordinal))
             {
                 if (MovementNeeded())
                 {
-                    await RoutineManager.Current.PullBehavior.ExecuteCoroutine();
+                    await CommonBehaviors.MoveAndStop(location => Poi.Current.BattleCharacter.Location, radius => Core.Player.CombatReach + RoutineManager.Current.PullRange + Poi.Current.BattleCharacter.CombatReach, true, "Moving to unit").ExecuteCoroutine();
                 }
                 else
                 {
@@ -108,8 +109,8 @@ namespace Tarot.Behaviour.Tasks.Handlers
         private static bool MovementNeeded()
         {
             var minimumDistance = Core.Player.CombatReach + RoutineManager.Current.PullRange
-                                  + Poi.Current.BattleCharacter.CombatReach + 1;
-            return Core.Player.Location.Distance(Poi.Current.BattleCharacter.Location) > minimumDistance;
+                                  + Poi.Current.BattleCharacter.CombatReach;
+            return Core.Player.Location.Distance2D(Poi.Current.BattleCharacter.Location) >= minimumDistance;
         }
     }
 }
