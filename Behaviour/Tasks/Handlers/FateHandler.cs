@@ -53,10 +53,18 @@ namespace Tarot.Behaviour.Tasks.Handlers
 
             await MoveToFate();
 
-            if (LevelSyncNeeded() && WithinFate())
+            if (WithinFate())
             {
-                await LevelSync.Task();
-                Logger.SendLog("Synced level to " + Tarot.CurrentFate.MaxLevel + " to participate in FATE.");
+                if (LevelSyncNeeded())
+                {
+                    await LevelSync.Task();
+                    Logger.SendLog("Synced level to " + Tarot.CurrentFate.MaxLevel + " to participate in FATE.");
+                }
+
+                if (Core.Player.IsMounted)
+                {
+                    Actionmanager.Dismount();
+                }
             }
 
             var tarotFateData = Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id);
@@ -143,18 +151,19 @@ namespace Tarot.Behaviour.Tasks.Handlers
 
         private static bool WithinFate()
         {
-            return Tarot.CurrentFate.Location.Distance(Core.Player.Location) < Tarot.CurrentFate.Radius * 0.75f;
+            return Tarot.CurrentFate.Location.Distance(Core.Player.Location) < Tarot.CurrentFate.Radius;
         }
 
         private static async Task<bool> MoveToFate()
         {
             // If we're inside a FATE, cancel.
-            if (Tarot.CurrentFate.Within2D(Core.Player.Location))
+            if (WithinFate())
             {
                 return false;
             }
 
-            while (!WithinFate())
+            // Not using WithinFate method as we want to be within 3/4 of the FATE radius.
+            while (Tarot.CurrentFate.Location.Distance(Core.Player.Location) < Tarot.CurrentFate.Radius * 0.75f)
             {
                 // Check if the FATE ended while we're moving.
                 if (!Tarot.CurrentFate.IsValid || Tarot.CurrentFate.Status == FateStatus.COMPLETE)
@@ -192,11 +201,6 @@ namespace Tarot.Behaviour.Tasks.Handlers
 
             Navigator.Stop();
             Navigator.PlayerMover.MoveStop();
-
-            if (Core.Player.IsMounted)
-            {
-                Actionmanager.Dismount();
-            }
 
             return true;
         }
