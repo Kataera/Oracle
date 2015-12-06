@@ -42,7 +42,7 @@ namespace Tarot.Behaviour.Tasks.Selectors
 
             if (IsFateSet())
             {
-                if (!IsFatePoiSet() && Tarot.CurrentFate.IsValid)
+                if (!IsFatePoiSet())
                 {
                     Poi.Current = new Poi(Tarot.CurrentFate, PoiType.Fate);
                 }
@@ -82,7 +82,7 @@ namespace Tarot.Behaviour.Tasks.Selectors
 
         private static bool IsFateSet()
         {
-            return Tarot.CurrentFate != null;
+            return Tarot.CurrentFate != null && Tarot.CurrentFate.IsValid;
         }
 
         private static bool IsFatePoiSet()
