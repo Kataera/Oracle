@@ -36,6 +36,7 @@ namespace Tarot.Behaviour.Tasks.Handlers
     using ff14bot.Behavior;
     using ff14bot.Helpers;
     using ff14bot.Managers;
+    using ff14bot.Navigation;
 
     internal static class CombatHandler
     {
@@ -67,45 +68,24 @@ namespace Tarot.Behaviour.Tasks.Handlers
             {
                 if (MovementNeeded())
                 {
-                    await
-                        CommonBehaviors.MoveAndStop(
-                            location => Poi.Current.BattleCharacter.Location,
-                            radius =>
+                    while (MovementNeeded())
+                    {
+                        Navigator.MoveToPointWithin(
+                            Poi.Current.BattleCharacter.Location,
                             Core.Player.CombatReach + RoutineManager.Current.PullRange
                             + Poi.Current.BattleCharacter.CombatReach,
-                            true,
-                            "Moving to unit").ExecuteCoroutine();
-                }
-                else
-                {
-                    await RoutineManager.Current.CombatBehavior.ExecuteCoroutine();
-                }
-            }
-            else
-            {
-                await RoutineManager.Current.CombatBehavior.ExecuteCoroutine();
-            }
-
-            // Check that the BattleCharacter isn't null.
-            if (Poi.Current.BattleCharacter == null)
-            {
-                Poi.Clear("Targeted unit no longer exists, clearing Poi and carrying on!");
-
-                if (GameObjectManager.Attackers.Count >= 1)
-                {
-                    foreach (var attacker in GameObjectManager.Attackers)
-                    {
-                        if (!attacker.IsFateGone)
-                        {
-                            Poi.Current = new Poi(attacker, PoiType.Kill);
-                            break;
-                        }
+                            "Moving to unit");
+                        await Coroutine.Yield();
                     }
+
+                    Navigator.Stop();
                 }
             }
+
+            await RoutineManager.Current.CombatBehavior.ExecuteCoroutine();
 
             // Check if current Poi is dead.
-            if (Poi.Current.BattleCharacter.IsDead)
+            if (Poi.Current.BattleCharacter != null && Poi.Current.BattleCharacter.IsDead)
             {
                 Poi.Clear("Targeted unit is dead, clearing Poi and carrying on!");
 
@@ -123,9 +103,27 @@ namespace Tarot.Behaviour.Tasks.Handlers
             }
 
             // Check if current Poi's FATE is gone.
-            if (Poi.Current.BattleCharacter.IsFateGone)
+            if (Poi.Current.BattleCharacter != null && Poi.Current.BattleCharacter.IsFateGone)
             {
                 Poi.Clear("Target is a FATE mob, and the FATE is gone.");
+
+                if (GameObjectManager.Attackers.Count >= 1)
+                {
+                    foreach (var attacker in GameObjectManager.Attackers)
+                    {
+                        if (!attacker.IsFateGone)
+                        {
+                            Poi.Current = new Poi(attacker, PoiType.Kill);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Check that the BattleCharacter isn't null.
+            if (Poi.Current.BattleCharacter == null)
+            {
+                Poi.Clear("Targeted unit no longer exists, clearing Poi and carrying on!");
 
                 if (GameObjectManager.Attackers.Count >= 1)
                 {
