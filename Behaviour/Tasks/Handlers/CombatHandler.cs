@@ -43,8 +43,15 @@ namespace Tarot.Behaviour.Tasks.Handlers
         {
             if (Poi.Current.Type != PoiType.Kill)
             {
-                Poi.Clear("Clearing Poi while in combat.");
-                Poi.Current = new Poi(GameObjectManager.Attackers.FirstOrDefault(), PoiType.Kill);
+                foreach (var attacker in GameObjectManager.Attackers)
+                {
+                    if (!attacker.IsFateGone)
+                    {
+                        Poi.Clear("Clearing Poi while in combat.");
+                        Poi.Current = new Poi(attacker, PoiType.Kill);
+                        break;
+                    }
+                }
             }
 
             if (Core.Player.CurrentTarget != Poi.Current.Unit)
@@ -79,21 +86,57 @@ namespace Tarot.Behaviour.Tasks.Handlers
                 await RoutineManager.Current.CombatBehavior.ExecuteCoroutine();
             }
 
-            if (Poi.Current.BattleCharacter.IsDead)
+            // Check that the BattleCharacter isn't null.
+            if (Poi.Current.BattleCharacter == null)
             {
-                Poi.Clear("Targeted unit is dead, clearing Poi and carrying on!");
+                Poi.Clear("Targeted unit no longer exists, clearing Poi and carrying on!");
+
                 if (GameObjectManager.Attackers.Count >= 1)
                 {
-                    Poi.Current = new Poi(GameObjectManager.Attackers.FirstOrDefault(), PoiType.Kill);
+                    foreach (var attacker in GameObjectManager.Attackers)
+                    {
+                        if (!attacker.IsFateGone)
+                        {
+                            Poi.Current = new Poi(attacker, PoiType.Kill);
+                            break;
+                        }
+                    }
                 }
             }
 
+            // Check if current Poi is dead.
+            if (Poi.Current.BattleCharacter.IsDead)
+            {
+                Poi.Clear("Targeted unit is dead, clearing Poi and carrying on!");
+
+                if (GameObjectManager.Attackers.Count >= 1)
+                {
+                    foreach (var attacker in GameObjectManager.Attackers)
+                    {
+                        if (!attacker.IsFateGone)
+                        {
+                            Poi.Current = new Poi(attacker, PoiType.Kill);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Check if current Poi's FATE is gone.
             if (Poi.Current.BattleCharacter.IsFateGone)
             {
                 Poi.Clear("Target is a FATE mob, and the FATE is gone.");
+
                 if (GameObjectManager.Attackers.Count >= 1)
                 {
-                    Poi.Current = new Poi(GameObjectManager.Attackers.FirstOrDefault(), PoiType.Kill);
+                    foreach (var attacker in GameObjectManager.Attackers)
+                    {
+                        if (!attacker.IsFateGone)
+                        {
+                            Poi.Current = new Poi(attacker, PoiType.Kill);
+                            break;
+                        }
+                    }
                 }
             }
 

@@ -29,12 +29,15 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
     using ff14bot.Enums;
     using ff14bot.Helpers;
 
+    using global::Tarot.Helpers;
+
     internal static class CollectFate
     {
         public static async Task<bool> Task()
         {
             if (IsFateComplete())
             {
+                Logger.SendLog(Tarot.CurrentFate.Name + " is complete!");
                 Poi.Clear("FATE is complete.");
                 Tarot.CurrentPoi = null;
                 Tarot.CurrentFate = null;

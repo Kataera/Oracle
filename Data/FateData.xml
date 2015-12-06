@@ -44,7 +44,7 @@
 ]>
 
 <Fates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="FateData.xsd">
+       xsi:noNamespaceSchemaLocation="FateData.xsd">
   <Fate>
     <ID>102</ID>
     <Name>aaaa</Name>

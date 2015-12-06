@@ -25,7 +25,6 @@
 namespace Tarot.Behaviour
 {
     using ff14bot;
-    using ff14bot.Helpers;
     using ff14bot.Managers;
 
     using global::Tarot.Behaviour.Tasks;
@@ -48,8 +47,7 @@ namespace Tarot.Behaviour
             Composite[] composites =
             {
                 new Decorator(
-                    check =>
-                    (GameObjectManager.NumberOfAttackers >= 1 && !Core.Player.IsMounted),
+                    check => GameObjectManager.NumberOfAttackers >= 1 && !Core.Player.IsMounted,
                     new ActionRunCoroutine(coroutine => CombatHandler.Task())),
                 new ActionRunCoroutine(coroutine => MainWorker.Task())
             };
