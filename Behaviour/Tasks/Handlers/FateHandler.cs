@@ -163,7 +163,7 @@ namespace Tarot.Behaviour.Tasks.Handlers
             }
 
             // Not using WithinFate method as we want to be within 3/4 of the FATE radius.
-            while (Tarot.CurrentFate.Location.Distance(Core.Player.Location) < Tarot.CurrentFate.Radius * 0.75f)
+            while (Tarot.CurrentFate.Location.Distance(Core.Player.Location) > Tarot.CurrentFate.Radius * 0.75f)
             {
                 // Check if the FATE ended while we're moving.
                 if (!Tarot.CurrentFate.IsValid || Tarot.CurrentFate.Status == FateStatus.COMPLETE)
