@@ -44,7 +44,7 @@
 ]>
 
 <Fates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="FateData.xsd">
+  xsi:noNamespaceSchemaLocation="FateData.xsd">
   <Fate>
     <ID>102</ID>
     <Name>aaaa</Name>
@@ -3772,7 +3772,7 @@
     <TarotSupport>&FullSupport;</TarotSupport>
   </Fate>
   <Fate>
-    <!--TODO: Find NPC id for this fate. -->
+    <!-- TODO: Find NPC id for this fate. -->
     <ID>821</ID>
     <Name>Birds of a Feather</Name>
     <Level>52</Level>
@@ -3971,7 +3971,7 @@
     <TarotSupport>&FullSupport;</TarotSupport>
   </Fate>
   <Fate>
-    <!--TODO: Find NPC id for this fate. -->
+    <!-- TODO: Find NPC id for this fate. -->
     <ID>852</ID>
     <Name>Obey their Thirst</Name>
     <Level>57</Level>
@@ -4419,5 +4419,93 @@
     <TarotSupport>&FullSupport;</TarotSupport>
     <CollectItemId>2001895</CollectItemId>
     <NpcId>4505</NpcId>
+  </Fate>
+  <Fate>
+    <ID>932</ID>
+    <Name>Our Favorite Pastime</Name>
+    <Level>30</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>933</ID>
+    <Name>The Way Of The Samurai</Name>
+    <Level>31</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>934</ID>
+    <Name>Serket Breaker</Name>
+    <Level>32</Level>
+    <Type>&Defence;</Type>
+    <TarotSupport>&FullSupport;</TarotSupport>
+  </Fate>
+  <Fate>
+    <ID>935</ID>
+    <Name>The Key To Amatsu Kyori</Name>
+    <Level>33</Level>
+    <Type>&Boss;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+  </Fate>
+  <Fate>
+    <!-- TODO: Find information for this FATE when the event activates. -->
+    <ID>936</ID>
+    <Name>Pounding Rice, Pounding Hearts</Name>
+    <Level>5</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+    <CollectItemId>0</CollectItemId>
+    <NpcId>0</NpcId>
+  </Fate>
+  <Fate>
+    <!-- TODO: Find information for this FATE when the event activates. -->
+    <ID>937</ID>
+    <Name>Pounding Rice, Pounding Hearts</Name>
+    <Level>13</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+    <CollectItemId>0</CollectItemId>
+    <NpcId>0</NpcId>
+  </Fate>
+  <Fate>
+    <!-- TODO: Find information for this FATE when the event activates. -->
+    <ID>938</ID>
+    <Name>Pounding Rice, Pounding Hearts</Name>
+    <Level>5</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+    <CollectItemId>0</CollectItemId>
+    <NpcId>0</NpcId>
+  </Fate>
+  <Fate>
+    <!-- TODO: Find information for this FATE when the event activates. -->
+    <ID>939</ID>
+    <Name>Pounding Rice, Pounding Hearts</Name>
+    <Level>15</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+    <CollectItemId>0</CollectItemId>
+    <NpcId>0</NpcId>
+  </Fate>
+  <Fate>
+    <!-- TODO: Find information for this FATE when the event activates. -->
+    <ID>940</ID>
+    <Name>Pounding Rice, Pounding Hearts</Name>
+    <Level>11</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+    <CollectItemId>0</CollectItemId>
+    <NpcId>0</NpcId>
+  </Fate>
+  <Fate>
+    <!-- TODO: Find information for this FATE when the event activates. -->
+    <ID>941</ID>
+    <Name>Pounding Rice, Pounding Hearts</Name>
+    <Level>6</Level>
+    <Type>&Collect;</Type>
+    <TarotSupport>&Unsupported;</TarotSupport>
+    <CollectItemId>0</CollectItemId>
+    <NpcId>0</NpcId>
   </Fate>
 </Fates>
