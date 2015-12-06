@@ -191,12 +191,11 @@ namespace Tarot.Behaviour.Tasks.Handlers
             }
 
             Navigator.Stop();
-            Navigator.Clear();
             Navigator.PlayerMover.MoveStop();
 
             if (Core.Player.IsMounted)
             {
-                await CommonBehaviors.Dismount().ExecuteCoroutine();
+                Actionmanager.Dismount();
             }
 
             return true;

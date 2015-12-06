@@ -63,7 +63,7 @@ namespace Tarot.Behaviour.Tasks.Handlers
                 await Coroutine.Sleep(100);
             }
 
-            // Support for Kupo, which will not move in of mobs.
+            // Support for Kupo, which will not move into range of mobs.
             if (RoutineManager.Current.Name.StartsWith("Kupo", StringComparison.Ordinal))
             {
                 if (MovementNeeded())
