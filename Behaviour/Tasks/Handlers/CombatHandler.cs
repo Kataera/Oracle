@@ -36,9 +36,6 @@ namespace Tarot.Behaviour.Tasks.Handlers
     using ff14bot.Behavior;
     using ff14bot.Helpers;
     using ff14bot.Managers;
-    using ff14bot.Objects;
-
-    using global::Tarot.Helpers;
 
     internal static class CombatHandler
     {
@@ -63,7 +60,14 @@ namespace Tarot.Behaviour.Tasks.Handlers
             {
                 if (MovementNeeded())
                 {
-                    await CommonBehaviors.MoveAndStop(location => Poi.Current.BattleCharacter.Location, radius => Core.Player.CombatReach + RoutineManager.Current.PullRange + Poi.Current.BattleCharacter.CombatReach, true, "Moving to unit").ExecuteCoroutine();
+                    await
+                        CommonBehaviors.MoveAndStop(
+                            location => Poi.Current.BattleCharacter.Location,
+                            radius =>
+                            Core.Player.CombatReach + RoutineManager.Current.PullRange
+                            + Poi.Current.BattleCharacter.CombatReach,
+                            true,
+                            "Moving to unit").ExecuteCoroutine();
                 }
                 else
                 {
@@ -98,7 +102,7 @@ namespace Tarot.Behaviour.Tasks.Handlers
             {
                 Poi.Current = Tarot.CurrentPoi;
             }
-            else if(Tarot.CurrentPoi == null && Poi.Current.Type != PoiType.Kill)
+            else if (Tarot.CurrentPoi == null && Poi.Current.Type != PoiType.Kill)
             {
                 Poi.Current = new Poi(Vector3.Zero, PoiType.None);
             }
