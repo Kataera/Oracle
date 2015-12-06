@@ -122,7 +122,10 @@ namespace Tarot
         {
             get
             {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                var versionString = Assembly.GetExecutingAssembly().GetName().Version.Major.ToString()
+                                    + "." + Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString()
+                                    + "." + Assembly.GetExecutingAssembly().GetName().Version.Revision.ToString();
+                return versionString;
             }
         }
 
