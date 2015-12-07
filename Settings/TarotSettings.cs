@@ -49,9 +49,9 @@ namespace Tarot.Settings
 
         public Dictionary<ushort, Vector3> FateWaitLocations;
 
-        private bool waitForChainFates;
-
         private bool listHooksOnStart;
+
+        private bool waitForChainFates;
 
         private TarotSettings()
             : base(Path.Combine(CharacterSettingsDirectory, "TarotSettings.json"))

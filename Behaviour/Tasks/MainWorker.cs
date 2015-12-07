@@ -26,9 +26,7 @@ namespace Tarot.Behaviour.Tasks
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using System.Windows.Forms;
 
-    using ff14bot;
     using ff14bot.Helpers;
     using ff14bot.Managers;
 

@@ -123,9 +123,9 @@ namespace Tarot
         {
             get
             {
-                var versionString = Assembly.GetExecutingAssembly().GetName().Version.Major.ToString()
-                                    + "." + Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString()
-                                    + "." + Assembly.GetExecutingAssembly().GetName().Version.Revision.ToString();
+                var versionString = Assembly.GetExecutingAssembly().GetName().Version.Major + "."
+                                    + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
+                                    + Assembly.GetExecutingAssembly().GetName().Version.Revision;
                 return versionString;
             }
         }
@@ -177,12 +177,12 @@ namespace Tarot
             GameSettingsManager.FaceTargetOnAction = true;
             GameSettingsManager.FlightMode = true;
 
-			TreeHooks.Instance.ClearAll();
+            TreeHooks.Instance.ClearAll();
             root = BrainBehavior.CreateBrain();
             TreeHooks.Instance.AddHook("TreeStart", Main.Behaviour);
             TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
 
-			// List hook structure.
+            // List hook structure.
             if (TarotSettings.Instance.ListHooksOnStart)
             {
                 Logger.SendDebugLog("Listing RebornBuddy hooks.");
@@ -193,7 +193,7 @@ namespace Tarot
                     foreach (var composite in hook.Value)
                     {
                         count++;
-                        Logger.SendDebugLog("\tComposite " + count + ": " + composite.ToString() + ".");
+                        Logger.SendDebugLog("\tComposite " + count + ": " + composite + ".");
                     }
                     Logger.SendDebugLog("");
                 }

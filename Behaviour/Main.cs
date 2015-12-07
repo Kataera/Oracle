@@ -24,11 +24,7 @@
 
 namespace Tarot.Behaviour
 {
-    using ff14bot;
-    using ff14bot.Managers;
-
     using global::Tarot.Behaviour.Tasks;
-    using global::Tarot.Behaviour.Tasks.Handlers;
 
     using TreeSharp;
 
