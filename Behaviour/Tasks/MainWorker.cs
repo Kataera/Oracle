@@ -35,6 +35,8 @@ namespace Tarot.Behaviour.Tasks
     {
         public static async Task<bool> Task()
         {
+			return false;
+			
             // Check that the FATE database has been populated.
             if (Tarot.FateDatabase == null)
             {

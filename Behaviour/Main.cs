@@ -46,9 +46,6 @@ namespace Tarot.Behaviour
         {
             Composite[] composites =
             {
-                new Decorator(
-                    check => GameObjectManager.NumberOfAttackers >= 1 && !Core.Player.IsMounted,
-                    new ActionRunCoroutine(coroutine => CombatHandler.Task())),
                 new ActionRunCoroutine(coroutine => MainWorker.Task())
             };
             return new PrioritySelector(composites);
