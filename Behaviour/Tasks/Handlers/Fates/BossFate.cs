@@ -37,7 +37,7 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
         {
             if (IsFateComplete())
             {
-                Logger.SendLog(Tarot.CurrentFate.Name + " is complete!");
+                Logger.SendLog("'" + Tarot.CurrentFate.Name + "' is complete!");
                 Poi.Clear("FATE is complete.");
                 Tarot.CurrentPoi = null;
                 Tarot.CurrentFate = null;

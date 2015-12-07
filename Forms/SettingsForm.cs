@@ -55,7 +55,7 @@ namespace Tarot.Forms
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
-                SendMessage(this.Handle, WmNclbuttondown, HtCaption, 0);
+                SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
 
