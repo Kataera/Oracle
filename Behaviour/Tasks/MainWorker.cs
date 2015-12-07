@@ -47,7 +47,7 @@ namespace Tarot.Behaviour.Tasks
             // Handle combat.
             if (GameObjectManager.Attackers.Any())
             {
-                if (Poi.Current != null && Poi.Current.Type != PoiType.Kill)
+                if (Poi.Current != null && (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait))
                 {
                     Logger.SendLog("Clearing the point of interest while we're in combat.");
                     Poi.Clear("Character is in combat.");
