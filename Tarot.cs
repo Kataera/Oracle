@@ -195,7 +195,8 @@ namespace Tarot
                         count++;
                         Logger.SendDebugLog("\tComposite " + count + ": " + composite + ".");
                     }
-                    Logger.SendDebugLog("");
+
+                    Logger.SendDebugLog(string.Empty);
                 }
             }
 

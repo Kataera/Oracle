@@ -24,6 +24,7 @@
 
 namespace Tarot.Behaviour.Tasks.Handlers.Fates
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -37,6 +38,8 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
 
     internal static class KillFate
     {
+        private static IEnumerable<BattleCharacter> currentFateMobs;
+
         public static async Task<bool> Task()
         {
             if (IsFateComplete())
@@ -47,27 +50,40 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
                 Tarot.CurrentFate = null;
             }
 
-            var currentFateMobs =
-                GameObjectManager.GetObjectsOfType<BattleCharacter>()
-                                 .Where(
-                                     b => b.IsFate && !b.IsFateGone && b.CanAttack && b.FateId == Tarot.CurrentFate.Id);
-            var closestMob =
-                currentFateMobs.OrderByDescending(mob => mob.MaxHealth)
-                               .ThenBy(mob => Core.Me.Distance(mob.Location))
-                               .FirstOrDefault();
-
+            var closestMob = GetClosestMob();
             if (closestMob != null)
             {
                 Poi.Current = new Poi(closestMob, PoiType.Kill);
             }
 
-            // TODO: Implement.
             return true;
         }
 
         private static bool IsFateComplete()
         {
             return !Tarot.CurrentFate.IsValid || Tarot.CurrentFate.Status == FateStatus.COMPLETE;
+        }
+
+        private static void PopulateTargetList()
+        {
+            currentFateMobs =
+                GameObjectManager.GetObjectsOfType<BattleCharacter>()
+                                 .Where(
+                                     mob =>
+                                     mob.IsFate && !mob.IsFateGone && mob.CanAttack
+                                     && mob.FateId == Tarot.CurrentFate.Id);
+        }
+
+        private static BattleCharacter GetClosestMob()
+        {
+            PopulateTargetList();
+
+            // Order by max hp, then the mobs' current hp, then finally by distance.
+            return
+                currentFateMobs.OrderByDescending(mob => mob.MaxHealth)
+                               .ThenByDescending(mob => mob.CurrentHealth)
+                               .ThenBy(mob => Core.Me.Distance(mob.Location))
+                               .FirstOrDefault();
         }
     }
 }

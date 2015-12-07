@@ -24,15 +24,22 @@
 
 namespace Tarot.Behaviour.Tasks.Handlers.Fates
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
+    using ff14bot;
     using ff14bot.Enums;
     using ff14bot.Helpers;
+    using ff14bot.Managers;
+    using ff14bot.Objects;
 
     using global::Tarot.Helpers;
 
     internal static class MegaBossFate
     {
+        private static IEnumerable<BattleCharacter> currentFateMobs;
+
         public static async Task<bool> Task()
         {
             if (IsFateComplete())
@@ -43,13 +50,40 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
                 Tarot.CurrentFate = null;
             }
 
-            // TODO: Implement.
+            var closestMob = GetClosestMob();
+            if (closestMob != null)
+            {
+                Poi.Current = new Poi(closestMob, PoiType.Kill);
+            }
+
             return true;
         }
 
         private static bool IsFateComplete()
         {
             return !Tarot.CurrentFate.IsValid || Tarot.CurrentFate.Status == FateStatus.COMPLETE;
+        }
+
+        private static void PopulateTargetList()
+        {
+            currentFateMobs =
+                GameObjectManager.GetObjectsOfType<BattleCharacter>()
+                                 .Where(
+                                     mob =>
+                                     mob.IsFate && !mob.IsFateGone && mob.CanAttack
+                                     && mob.FateId == Tarot.CurrentFate.Id);
+        }
+
+        private static BattleCharacter GetClosestMob()
+        {
+            PopulateTargetList();
+
+            // Order by max hp, then the mobs' current hp, then finally by distance.
+            return
+                currentFateMobs.OrderByDescending(mob => mob.MaxHealth)
+                               .ThenByDescending(mob => mob.CurrentHealth)
+                               .ThenBy(mob => Core.Me.Distance(mob.Location))
+                               .FirstOrDefault();
         }
     }
 }
