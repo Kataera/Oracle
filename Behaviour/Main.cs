@@ -44,11 +44,7 @@ namespace Tarot.Behaviour
 
         private static Composite CreateBehaviour()
         {
-            Composite[] composites =
-            {
-                new ActionRunCoroutine(coroutine => MainWorker.Task())
-            };
-            return new PrioritySelector(composites);
+            return new ActionRunCoroutine(coroutine => MainWorker.Task());
         }
     }
 }

@@ -24,23 +24,37 @@
 
 namespace Tarot.Behaviour.Tasks
 {
+    using System.Linq;
     using System.Threading.Tasks;
+    using System.Windows.Forms;
 
+    using ff14bot;
     using ff14bot.Helpers;
+    using ff14bot.Managers;
 
     using global::Tarot.Behaviour.Tasks.Handlers;
     using global::Tarot.Behaviour.Tasks.Utilities;
+    using global::Tarot.Helpers;
 
     internal static class MainWorker
     {
         public static async Task<bool> Task()
         {
-			return false;
-			
             // Check that the FATE database has been populated.
             if (Tarot.FateDatabase == null)
             {
                 await BuildFateDatabase.Task();
+            }
+
+            // Handle combat.
+            if (GameObjectManager.Attackers.Any())
+            {
+                if (Poi.Current != null && Poi.Current.Type != PoiType.Kill)
+                {
+                    Poi.Clear("In combat.");
+                }
+
+                return false;
             }
 
             // Handle FATE.

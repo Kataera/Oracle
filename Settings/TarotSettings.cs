@@ -51,6 +51,8 @@ namespace Tarot.Settings
 
         private bool waitForChainFates;
 
+        private bool listHooksOnStart;
+
         private TarotSettings()
             : base(Path.Combine(CharacterSettingsDirectory, "TarotSettings.json"))
         {
@@ -155,6 +157,22 @@ namespace Tarot.Settings
             set
             {
                 this.fateSelectMode = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool ListHooksOnStart
+        {
+            get
+            {
+                return this.listHooksOnStart;
+            }
+
+            set
+            {
+                this.listHooksOnStart = value;
                 this.Save();
             }
         }

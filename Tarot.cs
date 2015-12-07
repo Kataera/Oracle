@@ -39,6 +39,7 @@ namespace Tarot
     using global::Tarot.Enumerations;
     using global::Tarot.Forms;
     using global::Tarot.Helpers;
+    using global::Tarot.Settings;
 
     using TreeSharp;
 
@@ -180,18 +181,22 @@ namespace Tarot
             root = BrainBehavior.CreateBrain();
             TreeHooks.Instance.AddHook("TreeStart", Main.Behaviour);
             TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
-			
+
 			// List hook structure.
-            foreach (var hook in TreeHooks.Instance.Hooks)
+            if (TarotSettings.Instance.ListHooksOnStart)
             {
-                Logger.SendDebugLog(hook.Key + ": " + hook.Value.Count + " Composite(s).");
-                var count = 0;
-                foreach (var composite in hook.Value)
+                Logger.SendDebugLog("Listing RebornBuddy hooks.");
+                foreach (var hook in TreeHooks.Instance.Hooks)
                 {
-                    count++;
-                    Logger.SendDebugLog("\tComposite " + count + ": " + composite.ToString() + ".");
+                    Logger.SendDebugLog(hook.Key + ": " + hook.Value.Count + " Composite(s).");
+                    var count = 0;
+                    foreach (var composite in hook.Value)
+                    {
+                        count++;
+                        Logger.SendDebugLog("\tComposite " + count + ": " + composite.ToString() + ".");
+                    }
+                    Logger.SendDebugLog("");
                 }
-                Logger.SendDebugLog("");
             }
 
             Logger.SendLog("Starting " + this.Name + ".");
