@@ -26,6 +26,7 @@ namespace Tarot.Behaviour.Tasks.Selectors
 {
     using System.Threading.Tasks;
 
+    using ff14bot;
     using ff14bot.Helpers;
 
     using global::Tarot.Behaviour.Tasks.Selectors.Fates;
@@ -42,7 +43,7 @@ namespace Tarot.Behaviour.Tasks.Selectors
 
             if (IsFateSet())
             {
-                if (!IsFatePoiSet())
+                if (!IsFatePoiSet() && !Core.Player.InCombat)
                 {
                     Poi.Current = new Poi(Tarot.CurrentFate, PoiType.Fate);
                 }

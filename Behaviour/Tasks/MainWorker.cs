@@ -51,7 +51,8 @@ namespace Tarot.Behaviour.Tasks
             {
                 if (Poi.Current != null && Poi.Current.Type != PoiType.Kill)
                 {
-                    Poi.Clear("In combat.");
+                    Logger.SendLog("Clearing the point of interest while we're in combat.");
+                    Poi.Clear("Character is in combat.");
                 }
 
                 return false;
