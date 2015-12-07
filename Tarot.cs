@@ -170,7 +170,7 @@ namespace Tarot
 
             Navigator.PlayerMover = new SlideMover();
             Navigator.NavigationProvider = new GaiaNavigator();
-            CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
+            CombatTargeting.Instance.Provider = new FateCombatTargetingProvider();
 
             playerFaceTargetOnAction = GameSettingsManager.FaceTargetOnAction;
             playerFlightMode = GameSettingsManager.FlightMode;

@@ -24,10 +24,14 @@
 
 namespace Tarot.Behaviour.Tasks.Handlers.Fates
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
+    using ff14bot;
     using ff14bot.Enums;
     using ff14bot.Helpers;
+    using ff14bot.Managers;
+    using ff14bot.Objects;
 
     using global::Tarot.Helpers;
 
@@ -41,6 +45,20 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
                 Poi.Clear("FATE is complete.");
                 Tarot.CurrentPoi = null;
                 Tarot.CurrentFate = null;
+            }
+
+            var currentFateMobs =
+                GameObjectManager.GetObjectsOfType<BattleCharacter>()
+                                 .Where(
+                                     b => b.IsFate && !b.IsFateGone && b.CanAttack && b.FateId == Tarot.CurrentFate.Id);
+            var closestMob =
+                currentFateMobs.OrderByDescending(mob => mob.MaxHealth)
+                               .ThenBy(mob => Core.Me.Distance(mob.Location))
+                               .FirstOrDefault();
+
+            if (closestMob != null)
+            {
+                Poi.Current = new Poi(closestMob, PoiType.Kill);
             }
 
             // TODO: Implement.
