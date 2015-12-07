@@ -3822,6 +3822,7 @@
     <Level>52</Level>
     <Type>&Kill;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+	<ChainIDSuccess>828</ChainIDSuccess>
   </Fate>
   <Fate>
     <ID>828</ID>
