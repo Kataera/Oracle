@@ -82,6 +82,8 @@ namespace Tarot.Behaviour.Tasks.Handlers
                 }
             }
 
+            // Zekken support.
+            await new HookExecutor("PreCombatLogic").ExecuteCoroutine();
             await RoutineManager.Current.CombatBehavior.ExecuteCoroutine();
 
             // Check if current Poi is dead.
