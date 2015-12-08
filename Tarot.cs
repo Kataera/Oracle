@@ -221,6 +221,7 @@ namespace Tarot
 
             Navigator.NavigationProvider = null;
             CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
+            Blacklist.Flush();
 
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;

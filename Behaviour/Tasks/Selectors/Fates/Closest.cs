@@ -53,7 +53,7 @@ namespace Tarot.Behaviour.Tasks.Selectors.Fates
             }
 
             // Check if there are FATEs we can't navigate to.
-            if (!WorldManager.CanFly)
+            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
                 var navRequest =
                     activeFates.Select(
