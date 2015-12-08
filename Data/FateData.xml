@@ -3997,7 +3997,7 @@
     <ID>855</ID>
     <Name>On Dangerous Ground</Name>
     <Level>57</Level>
-    <Type>&Boss;</Type>
+    <Type>&MegaBoss;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
   </Fate>
   <Fate>
