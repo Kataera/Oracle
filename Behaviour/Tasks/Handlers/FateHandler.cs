@@ -193,7 +193,10 @@ namespace Tarot.Behaviour.Tasks.Handlers
 
             Navigator.Stop();
             Navigator.PlayerMover.MoveStop();
-            await CommonTasks.Land();
+            if (await CommonTasks.CanLand() == CanLandResult.Yes)
+            {
+                await CommonTasks.Land();
+            }
 
             return true;
         }
