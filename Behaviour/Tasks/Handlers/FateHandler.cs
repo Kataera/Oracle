@@ -193,6 +193,7 @@ namespace Tarot.Behaviour.Tasks.Handlers
 
             Navigator.Stop();
             Navigator.PlayerMover.MoveStop();
+            await CommonTasks.Land();
 
             return true;
         }

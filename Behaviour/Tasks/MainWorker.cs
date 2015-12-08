@@ -50,7 +50,7 @@ namespace Tarot.Behaviour.Tasks
             {
                 if (Poi.Current != null && (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait))
                 {
-                    Logger.SendLog("Clearing the point of interest while we're in combat.");
+                    Logger.SendLog("Clearing the non-kill point of interest while we're in combat.");
                     Poi.Clear("Character is in combat.");
                 }
 
@@ -61,8 +61,8 @@ namespace Tarot.Behaviour.Tasks
             if (Tarot.CurrentFate != null
                 && (!Tarot.CurrentFate.IsValid || Tarot.CurrentFate.Status == FateStatus.COMPLETE))
             {
-                Logger.SendLog("'" + Tarot.CurrentFate.Name + "' is complete!");
-                Poi.Clear("FATE is complete.");
+                Logger.SendLog("Current FATE is finished.");
+                Poi.Clear("Current FATE is finished.");
                 Tarot.PreviousFate = Tarot.CurrentFate;
                 Tarot.CurrentPoi = null;
                 Tarot.CurrentFate = null;
