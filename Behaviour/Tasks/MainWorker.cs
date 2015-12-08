@@ -27,6 +27,7 @@ namespace Tarot.Behaviour.Tasks
     using System.Linq;
     using System.Threading.Tasks;
 
+    using ff14bot;
     using ff14bot.Enums;
     using ff14bot.Helpers;
     using ff14bot.Managers;
@@ -48,6 +49,12 @@ namespace Tarot.Behaviour.Tasks
             // Handle combat.
             if (GameObjectManager.Attackers.Any())
             {
+                // Make sure we don't get stuck attacking a mob that requires us to be level synced.
+                if ((FateManager.GetFateById(Core.Player.TargetCharacter.FateId).MaxLevel < Core.Player.ClassLevel) && !Core.Player.IsLevelSynced)
+                {
+                    await LevelSync.Task();
+                }
+
                 if (Poi.Current != null && (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait))
                 {
                     Logger.SendLog("Clearing the non-kill point of interest while we're in combat.");
