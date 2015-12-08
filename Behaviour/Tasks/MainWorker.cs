@@ -96,6 +96,7 @@ namespace Tarot.Behaviour.Tasks
         private static bool LevelSyncNeeded()
         {
             return Poi.Current != null && Poi.Current.Type == PoiType.Kill && Poi.Current.BattleCharacter.FateId != 0
+                   && FateManager.GetFateById(Poi.Current.BattleCharacter.FateId).IsValid
                    && (FateManager.GetFateById(Poi.Current.BattleCharacter.FateId).MaxLevel < Core.Player.ClassLevel)
                    && !Core.Player.IsLevelSynced;
         }
