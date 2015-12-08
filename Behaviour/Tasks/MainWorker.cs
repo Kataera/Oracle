@@ -47,18 +47,18 @@ namespace Tarot.Behaviour.Tasks
             }
 
             // Handle combat.
-            if (GameObjectManager.Attackers.Any())
+            if (GameObjectManager.Attackers.Any() && Poi.Current != null)
             {
-                // Make sure we don't get stuck attacking a mob that requires us to be level synced.
-                if ((FateManager.GetFateById(Core.Player.TargetCharacter.FateId).MaxLevel < Core.Player.ClassLevel) && !Core.Player.IsLevelSynced)
-                {
-                    await LevelSync.Task();
-                }
-
-                if (Poi.Current != null && (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait))
+                if (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait)
                 {
                     Logger.SendLog("Clearing the non-kill point of interest while we're in combat.");
                     Poi.Clear("Character is in combat.");
+                }
+
+                // Make sure we don't get stuck attacking a mob that requires us to be level synced.
+                else if (LevelSyncNeeded())
+                {
+                    await LevelSync.Task();
                 }
 
                 return false;
@@ -91,6 +91,13 @@ namespace Tarot.Behaviour.Tasks
 
             // Always return false to not block the tree.
             return false;
+        }
+
+        private static bool LevelSyncNeeded()
+        {
+            return Poi.Current != null && Poi.Current.Type == PoiType.Kill && Poi.Current.BattleCharacter.FateId != 0
+                   && (FateManager.GetFateById(Poi.Current.BattleCharacter.FateId).MaxLevel < Core.Player.ClassLevel)
+                   && !Core.Player.IsLevelSynced;
         }
     }
 }
