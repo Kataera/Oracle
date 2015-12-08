@@ -3669,7 +3669,7 @@
     <Name>Sick Pack</Name>
     <Level>51</Level>
     <Type>&Kill;</Type>
-    <TarotSupport>&FullSupport;</TarotSupport>
+    <TarotSupport>&Problematic;</TarotSupport>
   </Fate>
   <Fate>
     <ID>805</ID>

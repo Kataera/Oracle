@@ -47,7 +47,7 @@ namespace Tarot.Behaviour.Tasks
             }
 
             // Handle combat.
-            if (GameObjectManager.Attackers.Any() && Poi.Current != null)
+            if (Poi.Current != null && GameObjectManager.Attackers.Any())
             {
                 if (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait)
                 {
