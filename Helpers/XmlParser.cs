@@ -45,19 +45,19 @@ namespace Tarot.Helpers
 
         private static uint fateId;
 
-        private static int fateLevel;
+        private static uint fateLevel;
 
         private static FateType fateType;
 
         private static FateSupportLevel fateSupportLevel;
 
-        private static int fateCollectItemId;
+        private static uint fateCollectItemId;
 
-        private static int fateNpcId;
+        private static uint fateNpcId;
 
-        private static int fateChainIdSuccess;
+        private static uint fateChainIdSuccess;
 
-        private static int fateChainIdFail;
+        private static uint fateChainIdFail;
 
         public static FateDatabase GetFateDatabase()
         {
@@ -187,7 +187,7 @@ namespace Tarot.Helpers
 
                         if (currentNode["Level"] != null)
                         {
-                            fateLevel = int.Parse(currentNode["Level"].InnerText);
+                            fateLevel = uint.Parse(currentNode["Level"].InnerText);
                         }
 
                         if (currentNode["Type"] != null)
@@ -202,22 +202,22 @@ namespace Tarot.Helpers
 
                         if (currentNode["CollectItemId"] != null)
                         {
-                            fateCollectItemId = int.Parse(currentNode["CollectItemId"].InnerText);
+                            fateCollectItemId = uint.Parse(currentNode["CollectItemId"].InnerText);
                         }
 
                         if (currentNode["NpcId"] != null)
                         {
-                            fateNpcId = int.Parse(currentNode["NpcId"].InnerText);
+                            fateNpcId = uint.Parse(currentNode["NpcId"].InnerText);
                         }
 
-                        if (currentNode["ChainIdSuccess"] != null)
+                        if (currentNode["ChainIDSuccess"] != null)
                         {
-                            fateChainIdSuccess = int.Parse(currentNode["ChainIdSuccess"].InnerText);
+                            fateChainIdSuccess = uint.Parse(currentNode["ChainIDSuccess"].InnerText);
                         }
 
-                        if (currentNode["ChainIdFailure"] != null)
+                        if (currentNode["ChainIDFailure"] != null)
                         {
-                            fateChainIdFail = int.Parse(currentNode["ChainIdFailure"].InnerText);
+                            fateChainIdFail = uint.Parse(currentNode["ChainIDFailure"].InnerText);
                         }
 
                         database.AddFateToDatabase(CreateFate());

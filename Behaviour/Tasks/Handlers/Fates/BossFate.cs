@@ -29,12 +29,9 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
     using System.Threading.Tasks;
 
     using ff14bot;
-    using ff14bot.Enums;
     using ff14bot.Helpers;
     using ff14bot.Managers;
     using ff14bot.Objects;
-
-    using global::Tarot.Helpers;
 
     internal static class BossFate
     {
@@ -42,14 +39,6 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
 
         public static async Task<bool> Task()
         {
-            if (IsFateComplete())
-            {
-                Logger.SendLog("'" + Tarot.CurrentFate.Name + "' is complete!");
-                Poi.Clear("FATE is complete.");
-                Tarot.CurrentPoi = null;
-                Tarot.CurrentFate = null;
-            }
-
             var closestMob = GetClosestMob();
             if (closestMob != null)
             {
@@ -57,11 +46,6 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
             }
 
             return true;
-        }
-
-        private static bool IsFateComplete()
-        {
-            return !Tarot.CurrentFate.IsValid || Tarot.CurrentFate.Status == FateStatus.COMPLETE;
         }
 
         private static void PopulateTargetList()
@@ -77,13 +61,17 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
         private static BattleCharacter GetClosestMob()
         {
             PopulateTargetList();
+            if (currentFateMobs == null)
+            {
+                return null;
+            }
 
             // Order by max hp, then the mobs' current hp, then finally by distance.
             return
                 currentFateMobs.OrderByDescending(mob => mob.MaxHealth)
                                .ThenByDescending(mob => mob.CurrentHealth)
                                .ThenBy(mob => Core.Me.Distance(mob.Location))
-                               .FirstOrDefault();
+                               .FirstOrDefault(mob => Tarot.CurrentFate.Within2D(mob.Location));
         }
     }
 }

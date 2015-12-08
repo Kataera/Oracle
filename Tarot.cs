@@ -113,6 +113,8 @@ namespace Tarot
 
         internal static FateData CurrentFate { get; set; }
 
+        internal static FateData PreviousFate { get; set; }
+
         internal static FateIdleMode CurrentIdle { get; set; }
 
         internal static Poi CurrentPoi { get; set; }
@@ -207,6 +209,7 @@ namespace Tarot
         {
             // Clean up all botbase internal variables.
             CurrentFate = null;
+            PreviousFate = null;
             FateDatabase = null;
             CurrentPoi = null;
 

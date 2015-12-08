@@ -67,7 +67,7 @@ namespace Tarot.Behaviour.Tasks.Selectors.Fates
 
                 foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
                 {
-                    var val = activeFates.FirstOrDefault(r => r.Id == navResult.Id);
+                    var val = activeFates.FirstOrDefault(result => result.Id == navResult.Id);
                     if (val != null)
                     {
                         Logger.SendDebugLog(

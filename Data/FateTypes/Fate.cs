@@ -41,19 +41,19 @@ namespace Tarot.Data.FateTypes
             this.Type = FateType.Null;
         }
 
-        public int ChainIdFailure { get; set; }
+        public uint ChainIdFailure { get; set; }
 
-        public int ChainIdSuccess { get; set; }
+        public uint ChainIdSuccess { get; set; }
 
         public uint Id { get; set; }
 
-        public int ItemId { get; set; }
+        public uint ItemId { get; set; }
 
-        public int Level { get; set; }
+        public uint Level { get; set; }
 
         public string Name { get; set; }
 
-        public int NpcId { get; set; }
+        public uint NpcId { get; set; }
 
         public FateSupportLevel SupportLevel { get; set; }
 

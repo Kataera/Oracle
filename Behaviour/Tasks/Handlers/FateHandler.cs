@@ -53,18 +53,10 @@ namespace Tarot.Behaviour.Tasks.Handlers
 
             await MoveToFate();
 
-            if (WithinFate())
+            if (WithinFate() && LevelSyncNeeded())
             {
-                if (LevelSyncNeeded())
-                {
-                    await LevelSync.Task();
-                    Logger.SendLog("Synced level to " + Tarot.CurrentFate.MaxLevel + " to participate in FATE.");
-                }
-
-                if (Core.Player.IsMounted)
-                {
-                    Actionmanager.Dismount();
-                }
+                await LevelSync.Task();
+                Logger.SendLog("Synced level to " + Tarot.CurrentFate.MaxLevel + " to participate in FATE.");
             }
 
             var tarotFateData = Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id);

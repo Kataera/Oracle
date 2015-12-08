@@ -3705,6 +3705,7 @@
     <Level>51</Level>
     <Type>&Kill;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>812</ChainIDSuccess>
   </Fate>
   <Fate>
     <ID>812</ID>

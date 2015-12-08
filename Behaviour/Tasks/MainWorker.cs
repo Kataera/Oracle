@@ -27,6 +27,7 @@ namespace Tarot.Behaviour.Tasks
     using System.Linq;
     using System.Threading.Tasks;
 
+    using ff14bot.Enums;
     using ff14bot.Helpers;
     using ff14bot.Managers;
 
@@ -52,6 +53,19 @@ namespace Tarot.Behaviour.Tasks
                     Logger.SendLog("Clearing the point of interest while we're in combat.");
                     Poi.Clear("Character is in combat.");
                 }
+
+                return false;
+            }
+
+            // Clear FATE if it's complete.
+            if (Tarot.CurrentFate != null
+                && (!Tarot.CurrentFate.IsValid || Tarot.CurrentFate.Status == FateStatus.COMPLETE))
+            {
+                Logger.SendLog("'" + Tarot.CurrentFate.Name + "' is complete!");
+                Poi.Clear("FATE is complete.");
+                Tarot.PreviousFate = Tarot.CurrentFate;
+                Tarot.CurrentPoi = null;
+                Tarot.CurrentFate = null;
 
                 return false;
             }

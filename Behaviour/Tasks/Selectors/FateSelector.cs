@@ -52,6 +52,69 @@ namespace Tarot.Behaviour.Tasks.Selectors
                 return true;
             }
 
+            // Check if previous FATE chained.
+            if (Tarot.PreviousFate != null)
+            {
+                var chainSuccessId = Tarot.FateDatabase.GetFateWithId(Tarot.PreviousFate.Id).ChainIdSuccess;
+                var chainFailId = Tarot.FateDatabase.GetFateWithId(Tarot.PreviousFate.Id).ChainIdFailure;
+
+                // If there's a success chain only.
+                if (chainSuccessId != 0 && chainFailId == 0)
+                {
+                    Logger.SendLog("Waiting for the follow up FATE.");
+                    var chainSuccess = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainSuccessId);
+
+                    if (chainSuccess == null)
+                    {
+                        return false;
+                    }
+
+                    Tarot.CurrentFate = chainSuccess;
+                    Poi.Current = new Poi(chainSuccess, PoiType.Fate);
+                    return true;
+                }
+
+                // If there's a fail chain only.
+                if (chainSuccessId == 0 && chainFailId != 0)
+                {
+                    Logger.SendLog("Waiting for the follow up FATE.");
+                    var chainFail = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainFailId);
+
+                    if (chainFail == null)
+                    {
+                        return false;
+                    }
+
+                    Tarot.CurrentFate = chainFail;
+                    Poi.Current = new Poi(chainFail, PoiType.Fate);
+                    return true;
+                }
+
+                // If there's both.
+                if (chainSuccessId != 0 && chainFailId != 0)
+                {
+                    Logger.SendLog("Waiting for the follow up FATE.");
+                    var chainSuccess = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainSuccessId);
+                    var chainFail = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainFailId);
+
+                    if (chainSuccess == null && chainFail == null)
+                    {
+                        return false;
+                    }
+
+                    if (chainSuccess != null && chainFail == null)
+                    {
+                        Tarot.CurrentFate = chainSuccess;
+                        Poi.Current = new Poi(chainSuccess, PoiType.Fate);
+                        return true;
+                    }
+
+                    Tarot.CurrentFate = chainFail;
+                    Poi.Current = new Poi(chainFail, PoiType.Fate);
+                    return true;
+                }
+            }
+
             switch (TarotSettings.Instance.FateSelectMode)
             {
                 case (int) FateSelectMode.Closest:
