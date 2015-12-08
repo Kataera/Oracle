@@ -24,7 +24,6 @@
 
 namespace Tarot.Behaviour.Tasks.Selectors.Fates
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -71,12 +70,9 @@ namespace Tarot.Behaviour.Tasks.Selectors.Fates
                     var val = activeFates.FirstOrDefault(r => r.Id == navResult.Id);
                     if (val != null)
                     {
-                        Logger.SendDebugLog("'" + val.Name + "' cannot be navigated to, blacklisting for 20 minutes.");
-                        Blacklist.Add(
-                            val.Id,
-                            BlacklistFlags.Node,
-                            val.TimeLeft,
-                            "Cannot navigate to object.");
+                        Logger.SendDebugLog(
+                            "'" + val.Name + "' cannot be navigated to, blacklisting for its remaining duration.");
+                        Blacklist.Add(val.Id, BlacklistFlags.Node, val.TimeLeft, "Cannot navigate to FATE.");
                     }
                 }
             }
