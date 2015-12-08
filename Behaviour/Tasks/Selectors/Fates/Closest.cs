@@ -31,7 +31,9 @@ namespace Tarot.Behaviour.Tasks.Selectors.Fates
     using ff14bot.Helpers;
     using ff14bot.Managers;
 
+    using global::Tarot.Enumerations;
     using global::Tarot.Helpers;
+    using global::Tarot.Settings;
 
     internal static class Closest
     {
@@ -50,9 +52,39 @@ namespace Tarot.Behaviour.Tasks.Selectors.Fates
             Logger.SendLog("Selecting closest active FATE.");
             foreach (var fate in activeFates)
             {
+                var tarotFate = Tarot.FateDatabase.GetFateWithId(fate.Id);
                 Logger.SendDebugLog("Found FATE: '" + fate.Name + "'.");
-                if (closestFate == null
-                    || playerLocation.Distance2D(closestFate.Location) > playerLocation.Distance2D(fate.Location))
+                if (closestFate == null)
+                {
+                    closestFate = fate;
+                }
+
+                // TODO: Convert below to switch statement.
+                if (tarotFate.SupportLevel == FateSupportLevel.Unsupported)
+                {
+                    Logger.SendDebugLog("'" + fate.Name + "' has been flagged as unsupported, ignoring.");
+                }
+
+                else if (tarotFate.SupportLevel == FateSupportLevel.Problematic
+                         && !TarotSettings.Instance.RunProblematicFates)
+                {
+                    Logger.SendDebugLog(
+                        "'" + fate.Name + "' has been flagged as problematic, ignoring due to user settings.");
+                }
+
+                // Sanity check.
+                else if (tarotFate.SupportLevel == FateSupportLevel.NotInGame)
+                {
+                    Logger.SendErrorLog(
+                        "'" + fate.Name
+                        + "' has been flagged as not in game, yet Tarot has found it. Please inform Kataera on the RebornBuddy forums and include this log.");
+                    Logger.SendErrorLog("Fate Name: " + fate.Name);
+                    Logger.SendErrorLog("Fate ID: " + fate.Id);
+                    Logger.SendErrorLog("Fate Location: " + fate.Location);
+                    Logger.SendErrorLog("Fate Zone: " + WorldManager.ZoneId);
+                }
+
+                else if (playerLocation.Distance2D(closestFate.Location) > playerLocation.Distance2D(fate.Location))
                 {
                     closestFate = fate;
                 }

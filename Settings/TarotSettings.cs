@@ -51,6 +51,8 @@ namespace Tarot.Settings
 
         private bool listHooksOnStart;
 
+        private bool runProblematicFates;
+
         private bool waitForChainFates;
 
         private TarotSettings()
@@ -173,6 +175,22 @@ namespace Tarot.Settings
             set
             {
                 this.listHooksOnStart = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool RunProblematicFates
+        {
+            get
+            {
+                return this.runProblematicFates;
+            }
+
+            set
+            {
+                this.runProblematicFates = value;
                 this.Save();
             }
         }
