@@ -81,47 +81,19 @@ namespace Tarot.Behaviour.Tasks.Selectors.Fates
             Logger.SendLog("Selecting closest active FATE.");
             foreach (var fate in activeFates)
             {
-                var tarotFate = Tarot.FateDatabase.GetFateWithId(fate.Id);
                 Logger.SendDebugLog("Found FATE: '" + fate.Name + "'.");
 
-                // TODO: Convert below to switch statement.
-                if (Blacklist.Contains(fate.Id))
+                if (IsFateViable(fate))
                 {
-                    Logger.SendDebugLog("'" + fate.Name + "' has been blacklisted by Tarot, ignoring.");
-                }
+                    if (closestFate == null)
+                    {
+                        closestFate = fate;
+                    }
 
-                else if (tarotFate.SupportLevel == FateSupportLevel.Unsupported)
-                {
-                    Logger.SendDebugLog("'" + fate.Name + "' has been flagged as unsupported, ignoring.");
-                }
-
-                else if (tarotFate.SupportLevel == FateSupportLevel.Problematic
-                         && !TarotSettings.Instance.RunProblematicFates)
-                {
-                    Logger.SendDebugLog(
-                        "'" + fate.Name + "' has been flagged as problematic, ignoring due to user settings.");
-                }
-
-                // Sanity check.
-                else if (tarotFate.SupportLevel == FateSupportLevel.NotInGame)
-                {
-                    Logger.SendErrorLog(
-                        "'" + fate.Name
-                        + "' has been flagged as not in game, yet Tarot has found it. Please inform Kataera on the RebornBuddy forums and include this log.");
-                    Logger.SendErrorLog("Fate Name: " + fate.Name);
-                    Logger.SendErrorLog("Fate ID: " + fate.Id);
-                    Logger.SendErrorLog("Fate Location: " + fate.Location);
-                    Logger.SendErrorLog("Fate Zone: " + WorldManager.ZoneId);
-                }
-
-                else if (closestFate == null)
-                {
-                    closestFate = fate;
-                }
-
-                else if (playerLocation.Distance2D(closestFate.Location) > playerLocation.Distance2D(fate.Location))
-                {
-                    closestFate = fate;
+                    else if (playerLocation.Distance2D(closestFate.Location) > playerLocation.Distance2D(fate.Location))
+                    {
+                        closestFate = fate;
+                    }
                 }
             }
 
@@ -131,6 +103,78 @@ namespace Tarot.Behaviour.Tasks.Selectors.Fates
             // Set FATE in Tarot and the Poi.
             Tarot.CurrentFate = closestFate;
             Poi.Current = new Poi(closestFate, PoiType.Fate);
+
+            return true;
+        }
+
+        private static bool IsFateViable(FateData fate)
+        {
+            var tarotFate = Tarot.FateDatabase.GetFateWithId(fate.Id);
+            if (Blacklist.Contains(fate.Id))
+            {
+                Logger.SendDebugLog("'" + fate.Name + "' has been blacklisted by Tarot, ignoring.");
+                return false;
+            }
+
+            if (tarotFate.SupportLevel == FateSupportLevel.Unsupported)
+            {
+                Logger.SendDebugLog("'" + fate.Name + "' has been flagged as unsupported, ignoring.");
+                return false;
+            }
+
+            if (tarotFate.SupportLevel == FateSupportLevel.Problematic && !TarotSettings.Instance.RunProblematicFates)
+            {
+                Logger.SendDebugLog(
+                    "'" + fate.Name + "' has been flagged as problematic, ignoring due to user settings.");
+                return false;
+            }
+
+            // Sanity check.
+            if (tarotFate.SupportLevel == FateSupportLevel.NotInGame)
+            {
+                Logger.SendErrorLog(
+                    "'" + fate.Name
+                    + "' has been flagged as not in game, yet Tarot has found it. Please inform Kataera on the RebornBuddy forums and include this log.");
+                Logger.SendErrorLog("Fate Name: " + fate.Name);
+                Logger.SendErrorLog("Fate ID: " + fate.Id);
+                Logger.SendErrorLog("Fate Location: " + fate.Location);
+                Logger.SendErrorLog("Fate Zone: " + WorldManager.ZoneId);
+                return false;
+            }
+
+            if (NotEnoughProgress(fate))
+            {
+                Logger.SendDebugLog("'" + fate.Name + "' is below the minimum level of progress required, ignoring.");
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool NotEnoughProgress(FateData fate)
+        {
+            if (TarotSettings.Instance.WaitAtFateForProgress)
+            {
+                return false;
+            }
+
+            if (Tarot.FateDatabase.GetFateWithId(fate.Id).Type != FateType.Boss
+                && Tarot.FateDatabase.GetFateWithId(fate.Id).Type != FateType.MegaBoss)
+            {
+                return false;
+            }
+
+            if (Tarot.FateDatabase.GetFateWithId(fate.Id).Type == FateType.Boss
+                && fate.Progress >= TarotSettings.Instance.BossEngagePercentage)
+            {
+                return false;
+            }
+
+            if (Tarot.FateDatabase.GetFateWithId(fate.Id).Type == FateType.MegaBoss
+                && fate.Progress >= TarotSettings.Instance.MegaBossEngagePercentage)
+            {
+                return false;
+            }
 
             return true;
         }

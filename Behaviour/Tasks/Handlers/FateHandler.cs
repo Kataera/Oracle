@@ -41,6 +41,7 @@ namespace Tarot.Behaviour.Tasks.Handlers
     using global::Tarot.Behaviour.Tasks.Utilities;
     using global::Tarot.Enumerations;
     using global::Tarot.Helpers;
+    using global::Tarot.Settings;
 
     internal static class FateHandler
     {
@@ -139,6 +140,23 @@ namespace Tarot.Behaviour.Tasks.Handlers
             return true;
         }
 
+        private static bool FateHasEnoughProgress()
+        {
+            if (Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id).Type == FateType.Boss
+                && Tarot.CurrentFate.Progress < TarotSettings.Instance.BossEngagePercentage)
+            {
+                return false;
+            }
+
+            if (Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id).Type == FateType.MegaBoss
+                && Tarot.CurrentFate.Progress < TarotSettings.Instance.MegaBossEngagePercentage)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private static bool LevelSyncNeeded()
         {
             return Tarot.CurrentFate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced;
@@ -196,20 +214,29 @@ namespace Tarot.Behaviour.Tasks.Handlers
 
             Navigator.Stop();
             Navigator.PlayerMover.MoveStop();
+            await Land();
 
-            if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            return true;
+        }
+
+        private static async Task<bool> Land()
+        {
+            if (FateHasEnoughProgress())
             {
-                if (await CommonTasks.CanLand() == CanLandResult.Yes)
+                if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
                 {
-                    await CommonTasks.Land();
-                }
-                else
-                {
-                    var moveResult = Navigator.MoveTo(Tarot.CurrentFate.Location, "FATE centre.");
-                    while (moveResult != MoveResult.Done)
+                    if (await CommonTasks.CanLand() == CanLandResult.Yes)
                     {
-                        moveResult = Navigator.MoveTo(Tarot.CurrentFate.Location, "FATE centre.");
-                        await Coroutine.Yield();
+                        await CommonTasks.Land();
+                    }
+                    else
+                    {
+                        var moveResult = Navigator.MoveTo(Tarot.CurrentFate.Location, "FATE centre.");
+                        while (moveResult != MoveResult.Done)
+                        {
+                            moveResult = Navigator.MoveTo(Tarot.CurrentFate.Location, "FATE centre.");
+                            await Coroutine.Yield();
+                        }
                     }
                 }
             }

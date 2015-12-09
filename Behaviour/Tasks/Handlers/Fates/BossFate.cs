@@ -33,12 +33,35 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
     using ff14bot.Managers;
     using ff14bot.Objects;
 
+    using global::Tarot.Helpers;
+    using global::Tarot.Settings;
+
     internal static class BossFate
     {
         private static IEnumerable<BattleCharacter> currentFateMobs;
 
         public static async Task<bool> Main()
         {
+            if (Tarot.CurrentFate.Progress < TarotSettings.Instance.BossEngagePercentage)
+            {
+                if (!TarotSettings.Instance.WaitAtFateForProgress)
+                {
+                    Logger.SendLog("Current FATE progress reset below minimum level, clearing it and choosing another.");
+
+                    Tarot.CurrentFate = null;
+                    Tarot.CurrentPoi = null;
+                    Poi.Clear("Current FATE progress reset below minimum level.");
+                }
+                else
+                {
+                    Logger.SendLog(
+                        "Current FATE progress is too low, waiting for it to reach "
+                        + TarotSettings.Instance.BossEngagePercentage + "%.");
+                }
+
+                return true;
+            }
+
             var closestMob = GetClosestMob();
             if (closestMob != null)
             {

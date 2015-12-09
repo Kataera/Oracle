@@ -39,6 +39,8 @@ namespace Tarot.Settings
 
         private static volatile TarotSettings instance;
 
+        private int bossEngagePercentage;
+
         private bool debugEnabled;
 
         private bool exBuddyFlightEnabled;
@@ -51,7 +53,11 @@ namespace Tarot.Settings
 
         private bool listHooksOnStart;
 
+        private int megaBossEngagePercentage;
+
         private bool runProblematicFates;
+
+        private bool waitAtFateForProgress;
 
         private bool waitForChainFates;
 
@@ -191,6 +197,54 @@ namespace Tarot.Settings
             set
             {
                 this.runProblematicFates = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(10)]
+        [Setting]
+        public int BossEngagePercentage
+        {
+            get
+            {
+                return this.bossEngagePercentage;
+            }
+
+            set
+            {
+                this.bossEngagePercentage = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(20)]
+        [Setting]
+        public int MegaBossEngagePercentage
+        {
+            get
+            {
+                return this.megaBossEngagePercentage;
+            }
+
+            set
+            {
+                this.megaBossEngagePercentage = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool WaitAtFateForProgress
+        {
+            get
+            {
+                return this.waitAtFateForProgress;
+            }
+
+            set
+            {
+                this.waitAtFateForProgress = value;
                 this.Save();
             }
         }
