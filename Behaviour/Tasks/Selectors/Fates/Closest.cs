@@ -97,12 +97,14 @@ namespace Tarot.Behaviour.Tasks.Selectors.Fates
                 }
             }
 
-            // ReSharper disable once PossibleNullReferenceException
-            Logger.SendLog("Selected FATE: '" + closestFate.Name + "'.");
+            if (closestFate != null)
+            {
+                Logger.SendLog("Selected FATE: '" + closestFate.Name + "'.");
 
-            // Set FATE in Tarot and the Poi.
-            Tarot.CurrentFate = closestFate;
-            Poi.Current = new Poi(closestFate, PoiType.Fate);
+                // Set FATE in Tarot and the Poi.
+                Tarot.CurrentFate = closestFate;
+                Poi.Current = new Poi(closestFate, PoiType.Fate);
+            }
 
             return true;
         }

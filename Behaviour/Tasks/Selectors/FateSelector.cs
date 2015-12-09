@@ -52,7 +52,44 @@ namespace Tarot.Behaviour.Tasks.Selectors
                 return true;
             }
 
-            // Check if previous FATE chained.
+            // Check if previous FATE had a chain.
+            if (await ChainFate())
+            {
+                return true;
+            }
+
+            switch (TarotSettings.Instance.FateSelectMode)
+            {
+                case (int) FateSelectMode.Closest:
+                    await Closest.Main();
+                    break;
+
+                case (int) FateSelectMode.TypePriority:
+                    // TODO: Implement.
+                    await Closest.Main();
+                    break;
+
+                case (int) FateSelectMode.ChainPriority:
+                    // TODO: Implement.
+                    await Closest.Main();
+                    break;
+
+                case (int) FateSelectMode.TypeAndChainPriority:
+                    // TODO: Implement.
+                    await Closest.Main();
+                    break;
+
+                default:
+                    Logger.SendDebugLog("Cannot determine FATE selection strategy, defaulting to closest FATE.");
+                    await Closest.Main();
+                    break;
+            }
+
+            return IsFateSet() && IsFatePoiSet();
+        }
+
+        private static async Task<bool> ChainFate()
+        {
             if (Tarot.PreviousFate != null)
             {
                 var chainSuccessId = Tarot.FateDatabase.GetFateWithId(Tarot.PreviousFate.Id).ChainIdSuccess;
@@ -118,34 +155,7 @@ namespace Tarot.Behaviour.Tasks.Selectors
                 }
             }
 
-            switch (TarotSettings.Instance.FateSelectMode)
-            {
-                case (int) FateSelectMode.Closest:
-                    await Closest.Main();
-                    break;
-
-                case (int) FateSelectMode.TypePriority:
-                    // TODO: Implement.
-                    await Closest.Main();
-                    break;
-
-                case (int) FateSelectMode.ChainPriority:
-                    // TODO: Implement.
-                    await Closest.Main();
-                    break;
-
-                case (int) FateSelectMode.TypeAndChainPriority:
-                    // TODO: Implement.
-                    await Closest.Main();
-                    break;
-
-                default:
-                    Logger.SendDebugLog("Cannot determine FATE selection strategy, defaulting to closest FATE.");
-                    await Closest.Main();
-                    break;
-            }
-
-            return IsFateSet() && IsFatePoiSet();
+            return false;
         }
 
         private static bool IsFateSet()
