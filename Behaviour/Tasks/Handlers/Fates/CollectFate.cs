@@ -37,7 +37,7 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
     {
         private static IEnumerable<BattleCharacter> currentFateMobs;
 
-        public static async Task<bool> Task()
+        public static async Task<bool> Main()
         {
             var closestMob = GetClosestMob();
             if (closestMob != null)

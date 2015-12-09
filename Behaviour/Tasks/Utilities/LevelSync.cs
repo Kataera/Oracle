@@ -30,19 +30,19 @@ namespace Tarot.Behaviour.Tasks.Utilities
     using Buddy.Coroutines;
 
     using ff14bot;
+    using ff14bot.Managers;
     using ff14bot.RemoteWindows;
 
     internal static class LevelSync
     {
         private static Stopwatch levelSyncCooldown;
 
-        public static async Task<bool> Task()
+        public static async Task<bool> Main()
         {
             // Reset cooldown if the task has been recalled.
             levelSyncCooldown = null;
 
-            while (!Core.Player.IsLevelSynced
-                   && Tarot.CurrentFate.Location.Distance2D(Core.Player.Location) < Tarot.CurrentFate.Radius * 0.95f)
+            while (!Core.Player.IsLevelSynced && FateManager.WithinFate)
             {
                 if (levelSyncCooldown == null)
                 {

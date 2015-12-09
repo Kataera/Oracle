@@ -22,31 +22,26 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks
+namespace Tarot.Behaviour.Tasks.Handlers
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Buddy.Coroutines;
+
     using ff14bot;
-    using ff14bot.Enums;
     using ff14bot.Helpers;
     using ff14bot.Managers;
+    using ff14bot.Navigation;
 
-    using global::Tarot.Behaviour.Tasks.Handlers;
     using global::Tarot.Behaviour.Tasks.Utilities;
     using global::Tarot.Helpers;
 
-    internal static class MainWorker
+    public class CombatHandler
     {
-        public static async Task<bool> Task()
+        public static async Task<bool> Main()
         {
-            // Check that the FATE database has been populated.
-            if (Tarot.FateDatabase == null)
-            {
-                await BuildFateDatabase.Task();
-            }
-
-            // Handle combat.
             if (Poi.Current != null && GameObjectManager.Attackers.Any())
             {
                 if (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait)
@@ -58,39 +53,47 @@ namespace Tarot.Behaviour.Tasks
                 // Make sure we don't get stuck attacking a mob that requires us to be level synced.
                 else if (LevelSyncNeeded())
                 {
-                    await LevelSync.Task();
+                    if (!FateManager.WithinFate)
+                    {
+                        await MoveIntoFateArea();
+                    }
+
+                    await LevelSync.Main();
                 }
-
-                return false;
             }
 
-            // Clear FATE if it's complete.
-            if (Tarot.CurrentFate != null
-                && (!Tarot.CurrentFate.IsValid || Tarot.CurrentFate.Status == FateStatus.COMPLETE))
+            return true;
+        }
+
+        private static async Task<bool> MoveIntoFateArea()
+        {
+            var attacker = Poi.Current.BattleCharacter;
+            Poi.Clear("Moving back into FATE area.");
+
+            while (Core.Player.Distance2D(FateManager.GetFateById(attacker.FateId).Location)
+                   > FateManager.GetFateById(attacker.FateId).Radius * 0.75f)
             {
-                Logger.SendLog("Current FATE is finished.");
-                Poi.Clear("Current FATE is finished.");
-                Tarot.PreviousFate = Tarot.CurrentFate;
-                Tarot.CurrentPoi = null;
-                Tarot.CurrentFate = null;
-
-                return false;
+                Navigator.MoveTo(FateManager.GetFateById(attacker.FateId).Location);
+                await Coroutine.Yield();
             }
 
-            // Handle FATE.
-            if (Poi.Current != null && Poi.Current.Type == PoiType.Fate && Tarot.CurrentFate != null)
+            Navigator.Stop();
+            await
+                Coroutine.Wait(
+                    TimeSpan.FromSeconds(5),
+                    () => FateManager.GetFateById(attacker.FateId).Within2D(attacker.Location));
+
+            // Blacklist the mob if we timed out while waiting.
+            if (!FateManager.GetFateById(attacker.FateId).Within2D(attacker.Location))
             {
-                await FateHandler.Task();
+                Blacklist.Add(
+                    attacker,
+                    BlacklistFlags.Combat,
+                    TimeSpan.FromSeconds(60),
+                    "FATE mob is stuck outside FATE area.");
             }
 
-            // Handle idle.
-            if (Poi.Current != null && Poi.Current.Type == PoiType.Wait && Tarot.CurrentFate == null)
-            {
-                await IdleHandler.Task();
-            }
-
-            // Always return false to not block the tree.
-            return false;
+            return true;
         }
 
         private static bool LevelSyncNeeded()

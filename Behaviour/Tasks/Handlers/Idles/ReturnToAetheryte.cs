@@ -42,7 +42,7 @@ namespace Tarot.Behaviour.Tasks.Handlers.Idles
 
     internal static class ReturnToAetheryte
     {
-        public static async Task<bool> Task()
+        public static async Task<bool> Main()
         {
             var aetheryte = GetClosestAetheryteLocation();
 
@@ -51,7 +51,7 @@ namespace Tarot.Behaviour.Tasks.Handlers.Idles
             {
                 // TODO: Add check for a wait location of the zone and try that.
                 Logger.SendLog("There are no Aetheryte crystals in this zone, defaulting to nothing.");
-                await WaitForFates.Task();
+                await WaitForFates.Main();
                 return true;
             }
 
@@ -90,7 +90,7 @@ namespace Tarot.Behaviour.Tasks.Handlers.Idles
             }
 
             Navigator.PlayerMover.MoveStop();
-            await WaitForFates.Task();
+            await WaitForFates.Main();
 
             return true;
         }

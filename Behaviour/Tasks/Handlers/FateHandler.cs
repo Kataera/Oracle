@@ -43,96 +43,98 @@ namespace Tarot.Behaviour.Tasks.Handlers
 
     internal static class FateHandler
     {
-        public static async Task<bool> Task()
+        public static async Task<bool> Main()
         {
-            if (Tarot.CurrentFate == null)
+            if (Poi.Current != null && Poi.Current.Type == PoiType.Fate && Tarot.CurrentFate != null)
             {
-                Logger.SendErrorLog("Entered FATE handler without an active FATE assigned.");
-                return true;
-            }
-
-            await MoveToFate();
-
-            if (WithinFate() && LevelSyncNeeded())
-            {
-                await LevelSync.Task();
-                Logger.SendLog("Synced level to " + Tarot.CurrentFate.MaxLevel + " to participate in FATE.");
-            }
-
-            var tarotFateData = Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id);
-            var fateTypeNotListed = false;
-
-            switch (tarotFateData.Type)
-            {
-                case FateType.Kill:
-                    await KillFate.Task();
-                    break;
-
-                case FateType.Collect:
-                    await CollectFate.Task();
-                    break;
-
-                case FateType.Escort:
-                    await EscortFate.Task();
-                    break;
-
-                case FateType.Defence:
-                    await DefenceFate.Task();
-                    break;
-
-                case FateType.Boss:
-                    await BossFate.Task();
-                    break;
-
-                case FateType.MegaBoss:
-                    await MegaBossFate.Task();
-                    break;
-
-                case FateType.Null:
-                    Logger.SendErrorLog("Attempting to run a null FATE.");
-                    return false;
-
-                default:
-                    Logger.SendDebugLog("Cannot determine FATE type, defaulting to Rebornbuddy's classification.");
-                    fateTypeNotListed = true;
-                    break;
-            }
-
-            // Only check FATE icon if there is no listing of the FATE in the database.
-            if (fateTypeNotListed)
-            {
-                switch (Tarot.CurrentFate.Icon)
+                if (Tarot.CurrentFate == null)
                 {
-                    case FateIconType.Battle:
-                        await KillFate.Task();
+                    Logger.SendErrorLog("Entered FATE handler without an active FATE assigned.");
+                    return true;
+                }
+
+                await MoveToFate();
+
+                if (WithinFate() && LevelSyncNeeded())
+                {
+                    await LevelSync.Main();
+                    Logger.SendLog("Synced level to " + Tarot.CurrentFate.MaxLevel + " to participate in FATE.");
+                }
+
+                var tarotFateData = Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id);
+                var fateTypeNotListed = false;
+
+                switch (tarotFateData.Type)
+                {
+                    case FateType.Kill:
+                        await KillFate.Main();
                         break;
 
-                    case FateIconType.KillHandIn:
-                        await CollectFate.Task();
+                    case FateType.Collect:
+                        await CollectFate.Main();
                         break;
 
-                    case FateIconType.ProtectNPC:
-                        // TODO: Check this is the right way around.
-                        await EscortFate.Task();
+                    case FateType.Escort:
+                        await EscortFate.Main();
                         break;
 
-                    case FateIconType.ProtectNPC2:
-                        // TODO: Check this is the right way around.
-                        await DefenceFate.Task();
+                    case FateType.Defence:
+                        await DefenceFate.Main();
                         break;
 
-                    case FateIconType.Boss:
-                        await BossFate.Task();
+                    case FateType.Boss:
+                        await BossFate.Main();
                         break;
+
+                    case FateType.MegaBoss:
+                        await MegaBossFate.Main();
+                        break;
+
+                    case FateType.Null:
+                        Logger.SendErrorLog("Attempting to run a null FATE.");
+                        return false;
 
                     default:
-                        // TODO: Implement blacklist.
-                        Logger.SendErrorLog(
-                            "FATE has no icon data, it is impossible to determine its type. Blacklisting and moving on.");
+                        Logger.SendDebugLog("Cannot determine FATE type, defaulting to Rebornbuddy's classification.");
+                        fateTypeNotListed = true;
                         break;
                 }
-            }
 
+                // Only check FATE icon if there is no listing of the FATE in the database.
+                if (fateTypeNotListed)
+                {
+                    switch (Tarot.CurrentFate.Icon)
+                    {
+                        case FateIconType.Battle:
+                            await KillFate.Main();
+                            break;
+
+                        case FateIconType.KillHandIn:
+                            await CollectFate.Main();
+                            break;
+
+                        case FateIconType.ProtectNPC:
+                            // TODO: Check this is the right way around.
+                            await EscortFate.Main();
+                            break;
+
+                        case FateIconType.ProtectNPC2:
+                            // TODO: Check this is the right way around.
+                            await DefenceFate.Main();
+                            break;
+
+                        case FateIconType.Boss:
+                            await BossFate.Main();
+                            break;
+
+                        default:
+                            // TODO: Implement blacklist.
+                            Logger.SendErrorLog(
+                                "FATE has no icon data, it is impossible to determine its type. Blacklisting and moving on.");
+                            break;
+                    }
+                }
+            }
             return true;
         }
 

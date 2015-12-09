@@ -38,9 +38,9 @@ namespace Tarot.Behaviour.Tasks.Selectors
 
     internal static class FateSelector
     {
-        public static async Task<bool> Task()
+        public static async Task<bool> Main()
         {
-            await BuildFateDatabase.Task();
+            await BuildFateDatabase.Main();
 
             if (IsFateSet())
             {
@@ -111,40 +111,37 @@ namespace Tarot.Behaviour.Tasks.Selectors
                         Poi.Current = new Poi(chainSuccess, PoiType.Fate);
                         return true;
                     }
-                    else
-                    {
-                        Logger.SendLog("Selected FATE: '" + chainFail.Name + "'.");
-                        Tarot.CurrentFate = chainFail;
-                        Poi.Current = new Poi(chainFail, PoiType.Fate);
-                        return true;
-                    }
+                    Logger.SendLog("Selected FATE: '" + chainFail.Name + "'.");
+                    Tarot.CurrentFate = chainFail;
+                    Poi.Current = new Poi(chainFail, PoiType.Fate);
+                    return true;
                 }
             }
 
             switch (TarotSettings.Instance.FateSelectMode)
             {
                 case (int) FateSelectMode.Closest:
-                    await Closest.Task();
+                    await Closest.Main();
                     break;
 
                 case (int) FateSelectMode.TypePriority:
                     // TODO: Implement.
-                    await Closest.Task();
+                    await Closest.Main();
                     break;
 
                 case (int) FateSelectMode.ChainPriority:
                     // TODO: Implement.
-                    await Closest.Task();
+                    await Closest.Main();
                     break;
 
                 case (int) FateSelectMode.TypeAndChainPriority:
                     // TODO: Implement.
-                    await Closest.Task();
+                    await Closest.Main();
                     break;
 
                 default:
                     Logger.SendDebugLog("Cannot determine FATE selection strategy, defaulting to closest FATE.");
-                    await Closest.Task();
+                    await Closest.Main();
                     break;
             }
 

@@ -181,7 +181,7 @@ namespace Tarot
 
             TreeHooks.Instance.ClearAll();
             root = BrainBehavior.CreateBrain();
-            TreeHooks.Instance.AddHook("TreeStart", Main.Behaviour);
+            TreeHooks.Instance.AddHook("TreeStart", TarotBehaviour.Behaviour);
             TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
 
             // List hook structure.

@@ -36,8 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
-    <Reference Include="RebornBuddy">
-      <HintPath>..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\RebornBuddy.exe</HintPath>
+    <Reference Include="RebornBuddy, Version=1.0.345.0, Culture=neutral, PublicKeyToken=48d7174f8a943034, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RebornBuddy.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -62,7 +63,8 @@
     <None Include="Resources\Fonts\Roboto-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviour\Main.cs" />
+    <Compile Include="Behaviour\TarotBehaviour.cs" />
+    <Compile Include="Behaviour\Tasks\Handlers\CombatHandler.cs" />
     <Compile Include="Behaviour\Tasks\Hooks\SelectPoiType.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\FateHandler.cs" />
     <Compile Include="Behaviour\Tasks\Selectors\Fates\ChainAndTypePriority.cs" />
@@ -73,13 +75,13 @@
     <Compile Include="Behaviour\Tasks\Handlers\Idles\GrindMobs.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Idles\ReturnToAetheryte.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Idles\MoveToWaitLocation.cs" />
-    <Compile Include="Behaviour\Tasks\MainWorker.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Fates\BossFate.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Fates\CollectFate.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Fates\DefenceFate.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Fates\EscortFate.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Fates\KillFate.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BuildFateDatabase.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\ClearFateIfFinished.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LevelSync.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Fates\MegaBossFate.cs" />
     <Compile Include="Behaviour\Tasks\Selectors\FateSelector.cs" />

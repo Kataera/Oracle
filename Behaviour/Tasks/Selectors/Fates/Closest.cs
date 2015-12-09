@@ -40,7 +40,7 @@ namespace Tarot.Behaviour.Tasks.Selectors.Fates
 
     internal static class Closest
     {
-        public static async Task<bool> Task()
+        public static async Task<bool> Main()
         {
             var activeFates = FateManager.ActiveFates;
 

@@ -38,7 +38,7 @@ namespace Tarot.Behaviour.Tasks.Handlers.Idles
 
     internal static class WaitForFates
     {
-        public static async Task<bool> Task()
+        public static async Task<bool> Main()
         {
             if (!IsFateActive())
             {

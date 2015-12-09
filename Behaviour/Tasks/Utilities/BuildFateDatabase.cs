@@ -30,7 +30,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
     internal static class BuildFateDatabase
     {
-        public static async Task<bool> Task()
+        public static async Task<bool> Main()
         {
             // Make sure we actually need to populate the data, since XML parsing is very expensive.
             if (Tarot.FateDatabase != null)
@@ -39,7 +39,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             }
 
             Logger.SendLog("Building " + Tarot.Instance.Name + "'s FATE database, this may take a few seconds.");
-            Tarot.FateDatabase = XmlParser.GetFateDatabase();
+            Tarot.FateDatabase = XmlParser.GetFateDatabase(true);
             Logger.SendLog(Tarot.Instance.Name + "'s FATE database has been built successfully.");
 
             return true;

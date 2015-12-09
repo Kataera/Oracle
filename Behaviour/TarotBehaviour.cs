@@ -24,11 +24,14 @@
 
 namespace Tarot.Behaviour
 {
-    using global::Tarot.Behaviour.Tasks;
+    using System.Threading.Tasks;
+
+    using global::Tarot.Behaviour.Tasks.Handlers;
+    using global::Tarot.Behaviour.Tasks.Utilities;
 
     using TreeSharp;
 
-    internal static class Main
+    internal static class TarotBehaviour
     {
         public static Composite Behaviour
         {
@@ -40,7 +43,24 @@ namespace Tarot.Behaviour
 
         private static Composite CreateBehaviour()
         {
-            return new ActionRunCoroutine(coroutine => MainWorker.Task());
+            return new ActionRunCoroutine(coroutine => Main());
+        }
+
+        private static async Task<bool> Main()
+        {
+            // Check that the FATE database has been populated.
+            if (Tarot.FateDatabase == null)
+            {
+                await BuildFateDatabase.Main();
+            }
+
+            await CombatHandler.Main();
+            await ClearFateIfFinished.Main();
+            await FateHandler.Main();
+            await IdleHandler.Main();
+
+            // Always return false to not block the tree.
+            return false;
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Tarot.Behaviour.Tasks.Hooks
 
         private static Composite CreateBehaviour()
         {
-            var setFatePoi = new ActionRunCoroutine(coroutine => FateSelector.Task());
+            var setFatePoi = new ActionRunCoroutine(coroutine => FateSelector.Main());
             Composite[] composites =
             {
                 new HookExecutor("SetDeathPoi"), new HookExecutor("SetCombatPoi"),

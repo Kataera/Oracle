@@ -30,11 +30,11 @@ namespace Tarot.Behaviour.Tasks.Handlers.Idles
 
     internal static class GrindMobs
     {
-        public static async Task<bool> Task()
+        public static async Task<bool> Main()
         {
             // TODO: Implement.
             Logger.SendLog("'Grind mobs' is not yet implemented, defaulting to 'Return to Aetheryte'.");
-            await ReturnToAetheryte.Task();
+            await ReturnToAetheryte.Main();
             return true;
         }
     }
