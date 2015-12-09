@@ -22,17 +22,15 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Diagnostics;
+using System.Threading.Tasks;
+using Buddy.Coroutines;
+using ff14bot;
+using ff14bot.Managers;
+using ff14bot.RemoteWindows;
+
 namespace Tarot.Behaviour.Tasks.Utilities
 {
-    using System.Diagnostics;
-    using System.Threading.Tasks;
-
-    using Buddy.Coroutines;
-
-    using ff14bot;
-    using ff14bot.Managers;
-    using ff14bot.RemoteWindows;
-
     internal static class LevelSync
     {
         private static Stopwatch levelSyncCooldown;

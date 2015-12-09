@@ -22,12 +22,11 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Threading.Tasks;
+using Tarot.Helpers;
+
 namespace Tarot.Behaviour.Tasks.Idles
 {
-    using System.Threading.Tasks;
-
-    using global::Tarot.Helpers;
-
     internal static class MoveToWaitLocation
     {
         public static async Task<bool> Main()

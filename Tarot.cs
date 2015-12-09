@@ -22,27 +22,24 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
+using System.Reflection;
+using ff14bot.AClasses;
+using ff14bot.Behavior;
+using ff14bot.Helpers;
+using ff14bot.Managers;
+using ff14bot.Navigation;
+using Tarot.Behaviour;
+using Tarot.Behaviour.PoiHooks;
+using Tarot.Data;
+using Tarot.Enumerations;
+using Tarot.Forms;
+using Tarot.Helpers;
+using Tarot.Settings;
+using TreeSharp;
+
 namespace Tarot
 {
-    using System;
-    using System.Reflection;
-
-    using ff14bot.AClasses;
-    using ff14bot.Behavior;
-    using ff14bot.Helpers;
-    using ff14bot.Managers;
-    using ff14bot.Navigation;
-
-    using global::Tarot.Behaviour;
-    using global::Tarot.Behaviour.PoiHooks;
-    using global::Tarot.Data;
-    using global::Tarot.Enumerations;
-    using global::Tarot.Forms;
-    using global::Tarot.Helpers;
-    using global::Tarot.Settings;
-
-    using TreeSharp;
-
     public class Tarot : BotBase
     {
         private static bool playerFaceTargetOnAction;
@@ -52,6 +49,41 @@ namespace Tarot
         private static Composite root;
 
         private static SettingsForm settingsForm;
+
+        public override string EnglishName
+        {
+            get { return "Tarot"; }
+        }
+
+        public override bool IsAutonomous
+        {
+            get { return true; }
+        }
+
+        public override string Name
+        {
+            get { return "Tarot"; }
+        }
+
+        public override PulseFlags PulseFlags
+        {
+            get { return PulseFlags.All; }
+        }
+
+        public override bool RequiresProfile
+        {
+            get { return false; }
+        }
+
+        public override Composite Root
+        {
+            get { return root; }
+        }
+
+        public override bool WantButton
+        {
+            get { return true; }
+        }
 
         internal static FateData CurrentFate { get; set; }
 
@@ -76,73 +108,17 @@ namespace Tarot
             }
         }
 
-        public override string EnglishName
-        {
-            get
-            {
-                return "Tarot";
-            }
-        }
-
-        public override bool IsAutonomous
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        public override string Name
-        {
-            get
-            {
-                return "Tarot";
-            }
-        }
-
-        public override PulseFlags PulseFlags
-        {
-            get
-            {
-                return PulseFlags.All;
-            }
-        }
-
-        public override bool RequiresProfile
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public override Composite Root
-        {
-            get
-            {
-                return root;
-            }
-        }
-
-        public override bool WantButton
-        {
-            get
-            {
-                return true;
-            }
-        }
-
         public override void Initialize()
         {
             // Set the botbase instance so we can access its data.
             Instance = this;
 
-            Logger.SendLog("Initialising " + this.Name + ".");
+            Logger.SendLog("Initialising " + Name + ".");
 
             // TODO: Implement rest of Updater.
             if (Updater.UpdateIsAvailable())
             {
-                Logger.SendLog("An update for " + this.Name + " is available.");
+                Logger.SendLog("An update for " + Name + " is available.");
             }
         }
 
@@ -202,7 +178,7 @@ namespace Tarot
                 }
             }
 
-            Logger.SendLog("Starting " + this.Name + ".");
+            Logger.SendLog("Starting " + Name + ".");
         }
 
         public override void Stop()
@@ -226,7 +202,7 @@ namespace Tarot
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;
 
-            Logger.SendLog("Stopping " + this.Name + ".");
+            Logger.SendLog("Stopping " + Name + ".");
         }
     }
 }

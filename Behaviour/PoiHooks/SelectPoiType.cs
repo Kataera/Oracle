@@ -22,20 +22,16 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using ff14bot.Behavior;
+using TreeSharp;
+
 namespace Tarot.Behaviour.PoiHooks
 {
-    using ff14bot.Behavior;
-
-    using TreeSharp;
-
     internal static class SelectPoiType
     {
         public static Composite Behaviour
         {
-            get
-            {
-                return CreateBehaviour();
-            }
+            get { return CreateBehaviour(); }
         }
 
         private static Composite CreateBehaviour()

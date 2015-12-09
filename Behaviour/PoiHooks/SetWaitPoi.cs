@@ -22,15 +22,14 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Threading.Tasks;
+using Tarot.Behaviour.PoiHooks.WaitSelect;
+using Tarot.Enumerations;
+using Tarot.Helpers;
+using Tarot.Settings;
+
 namespace Tarot.Behaviour.PoiHooks
 {
-    using System.Threading.Tasks;
-
-    using global::Tarot.Behaviour.PoiHooks.WaitSelect;
-    using global::Tarot.Enumerations;
-    using global::Tarot.Helpers;
-    using global::Tarot.Settings;
-
     internal static class SetWaitPoi
     {
         public static async Task<bool> Main()

@@ -1,8 +1,10 @@
-﻿namespace Tarot.Forms.MaterialSkin
+﻿using System.Drawing;
+
+namespace Tarot.Forms.MaterialSkin
 {
     #region Using Directives
 
-    using System.Drawing;
+    
 
     #endregion
 
@@ -42,38 +44,39 @@
             TextShade textShade)
         {
             // Color
-            this.PrimaryColor = ((int) primary).ToColor();
-            this.DarkPrimaryColor = ((int) darkPrimary).ToColor();
-            this.LightPrimaryColor = ((int) lightPrimary).ToColor();
-            this.AccentColor = ((int) accent).ToColor();
-            this.TextColor = ((int) textShade).ToColor();
+            PrimaryColor = ((int) primary).ToColor();
+            DarkPrimaryColor = ((int) darkPrimary).ToColor();
+            LightPrimaryColor = ((int) lightPrimary).ToColor();
+            AccentColor = ((int) accent).ToColor();
+            TextColor = ((int) textShade).ToColor();
 
             // Pen
-            this.PrimaryPen = new Pen(this.PrimaryColor);
-            this.DarkPrimaryPen = new Pen(this.DarkPrimaryColor);
-            this.LightPrimaryPen = new Pen(this.LightPrimaryColor);
-            this.AccentPen = new Pen(this.AccentColor);
-            this.TextPen = new Pen(this.TextColor);
+            PrimaryPen = new Pen(PrimaryColor);
+            DarkPrimaryPen = new Pen(DarkPrimaryColor);
+            LightPrimaryPen = new Pen(LightPrimaryColor);
+            AccentPen = new Pen(AccentColor);
+            TextPen = new Pen(TextColor);
 
             // Brush
-            this.PrimaryBrush = new SolidBrush(this.PrimaryColor);
-            this.DarkPrimaryBrush = new SolidBrush(this.DarkPrimaryColor);
-            this.LightPrimaryBrush = new SolidBrush(this.LightPrimaryColor);
-            this.AccentBrush = new SolidBrush(this.AccentColor);
-            this.TextBrush = new SolidBrush(this.TextColor);
+            PrimaryBrush = new SolidBrush(PrimaryColor);
+            DarkPrimaryBrush = new SolidBrush(DarkPrimaryColor);
+            LightPrimaryBrush = new SolidBrush(LightPrimaryColor);
+            AccentBrush = new SolidBrush(AccentColor);
+            TextBrush = new SolidBrush(TextColor);
         }
     }
 
     public static class ColorExtension
     {
         /// <summary>
-        ///     Convert an integer number to a Color.
+        ///     Converts a 0-100 integer to a 0-255 color component.
         /// </summary>
+        /// <param name="percentage"></param>
         /// <returns>
         /// </returns>
-        public static Color ToColor(this int argb)
+        public static int PercentageToColorComponent(this int percentage)
         {
-            return Color.FromArgb((argb & 0xff0000) >> 16, (argb & 0xff00) >> 8, argb & 0xff);
+            return (int) (percentage/100d*255d);
         }
 
         /// <summary>
@@ -88,14 +91,13 @@
         }
 
         /// <summary>
-        ///     Converts a 0-100 integer to a 0-255 color component.
+        ///     Convert an integer number to a Color.
         /// </summary>
-        /// <param name="percentage"></param>
         /// <returns>
         /// </returns>
-        public static int PercentageToColorComponent(this int percentage)
+        public static Color ToColor(this int argb)
         {
-            return (int) (percentage / 100d * 255d);
+            return Color.FromArgb((argb & 0xff0000) >> 16, (argb & 0xff00) >> 8, argb & 0xff);
         }
     }
 

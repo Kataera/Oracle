@@ -1,14 +1,15 @@
-﻿namespace Tarot.Forms.MaterialSkin.Controls
+﻿using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
+using System.Windows.Forms;
+using Tarot.Forms.MaterialSkin.Animations;
+
+namespace Tarot.Forms.MaterialSkin.Controls
 {
     #region Using Directives
 
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.Drawing.Drawing2D;
-    using System.Drawing.Text;
-    using System.Windows.Forms;
-
-    using global::Tarot.Forms.MaterialSkin.Animations;
+    
 
     #endregion
 
@@ -18,38 +19,35 @@
 
         public MaterialRaisedButton()
         {
-            this.Primary = true;
+            Primary = true;
 
-            this.animationManager = new AnimationManager(false)
-                                    {
-                                        Increment = 0.03,
-                                        AnimationType = AnimationType.EaseOut
-                                    };
-            this.animationManager.OnAnimationProgress += sender => this.Invalidate();
+            animationManager = new AnimationManager(false)
+            {
+                Increment = 0.03,
+                AnimationType = AnimationType.EaseOut
+            };
+            animationManager.OnAnimationProgress += sender => Invalidate();
         }
-
-        public bool Primary { get; set; }
 
         [Browsable(false)]
         public int Depth { get; set; }
 
         [Browsable(false)]
-        public MaterialSkinManager SkinManager
-        {
-            get
-            {
-                return MaterialSkinManager.Instance;
-            }
-        }
+        public MouseState MouseState { get; set; }
+
+        public bool Primary { get; set; }
 
         [Browsable(false)]
-        public MouseState MouseState { get; set; }
+        public MaterialSkinManager SkinManager
+        {
+            get { return MaterialSkinManager.Instance; }
+        }
 
         protected override void OnMouseUp(MouseEventArgs mevent)
         {
             base.OnMouseUp(mevent);
 
-            this.animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
+            animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -58,47 +56,47 @@
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-            g.Clear(this.Parent.BackColor);
+            g.Clear(Parent.BackColor);
 
             using (
                 var backgroundPath = DrawHelper.CreateRoundRect(
-                    this.ClientRectangle.X,
-                    this.ClientRectangle.Y,
-                    this.ClientRectangle.Width - 1,
-                    this.ClientRectangle.Height - 1,
+                    ClientRectangle.X,
+                    ClientRectangle.Y,
+                    ClientRectangle.Width - 1,
+                    ClientRectangle.Height - 1,
                     1f))
             {
                 g.FillPath(
-                    this.Primary
-                        ? this.SkinManager.ColorScheme.PrimaryBrush
-                        : this.SkinManager.GetRaisedButtonBackgroundBrush(),
+                    Primary
+                        ? SkinManager.ColorScheme.PrimaryBrush
+                        : SkinManager.GetRaisedButtonBackgroundBrush(),
                     backgroundPath);
             }
 
-            if (this.animationManager.IsAnimating())
+            if (animationManager.IsAnimating())
             {
-                for (var i = 0; i < this.animationManager.GetAnimationCount(); i++)
+                for (var i = 0; i < animationManager.GetAnimationCount(); i++)
                 {
-                    var animationValue = this.animationManager.GetProgress(i);
-                    var animationSource = this.animationManager.GetSource(i);
-                    var rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - animationValue * 50), Color.White));
-                    var rippleSize = (int) (animationValue * this.Width * 2);
+                    var animationValue = animationManager.GetProgress(i);
+                    var animationSource = animationManager.GetSource(i);
+                    var rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - animationValue*50), Color.White));
+                    var rippleSize = (int) (animationValue*Width*2);
                     g.FillEllipse(
                         rippleBrush,
                         new Rectangle(
-                            animationSource.X - rippleSize / 2,
-                            animationSource.Y - rippleSize / 2,
+                            animationSource.X - rippleSize/2,
+                            animationSource.Y - rippleSize/2,
                             rippleSize,
                             rippleSize));
                 }
             }
 
             g.DrawString(
-                this.Text.ToUpper(),
-                this.SkinManager.RobotoMedium10,
-                this.SkinManager.GetRaisedButtonTextBrush(this.Primary),
-                this.ClientRectangle,
-                new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+                Text.ToUpper(),
+                SkinManager.RobotoMedium10,
+                SkinManager.GetRaisedButtonTextBrush(Primary),
+                ClientRectangle,
+                new StringFormat {Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center});
         }
     }
 }

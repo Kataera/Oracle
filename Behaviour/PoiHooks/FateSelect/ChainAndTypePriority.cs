@@ -24,5 +24,7 @@
 
 namespace Tarot.Behaviour.PoiHooks.FateSelect
 {
-    internal class ChainAndTypePriority {}
+    internal class ChainAndTypePriority
+    {
+    }
 }

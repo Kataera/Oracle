@@ -22,24 +22,22 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
+using System.IO;
+using Clio.Utilities;
+using ff14bot.Helpers;
+using Tarot.Enumerations;
+
 namespace Tarot.Settings
 {
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Configuration;
-    using System.IO;
-
-    using Clio.Utilities;
-
-    using ff14bot.Helpers;
-
-    using global::Tarot.Enumerations;
-
     internal sealed class TarotSettings : JsonSettings
     {
+        private static readonly object SyncRoot = new object();
         private static volatile TarotSettings instance;
 
-        private static readonly object SyncRoot = new object();
+        public Dictionary<uint, Vector3> FateWaitLocations;
 
         private int bossEngagePercentage;
 
@@ -48,8 +46,6 @@ namespace Tarot.Settings
         private FateIdleMode fateIdleMode;
 
         private FateSelectMode fateSelectMode;
-
-        public Dictionary<uint, Vector3> FateWaitLocations;
 
         private bool listHooksOnStart;
 
@@ -64,9 +60,9 @@ namespace Tarot.Settings
         private TarotSettings()
             : base(Path.Combine(CharacterSettingsDirectory, "TarotSettings.json"))
         {
-            if (this.FateWaitLocations == null)
+            if (FateWaitLocations == null)
             {
-                this.FateWaitLocations = new Dictionary<uint, Vector3>();
+                FateWaitLocations = new Dictionary<uint, Vector3>();
             }
         }
 
@@ -93,15 +89,12 @@ namespace Tarot.Settings
         [Setting]
         public int BossEngagePercentage
         {
-            get
-            {
-                return this.bossEngagePercentage;
-            }
+            get { return bossEngagePercentage; }
 
             set
             {
-                this.bossEngagePercentage = value;
-                this.Save();
+                bossEngagePercentage = value;
+                Save();
             }
         }
 
@@ -109,15 +102,12 @@ namespace Tarot.Settings
         [Setting]
         public bool DebugEnabled
         {
-            get
-            {
-                return this.debugEnabled;
-            }
+            get { return debugEnabled; }
 
             set
             {
-                this.debugEnabled = value;
-                this.Save();
+                debugEnabled = value;
+                Save();
             }
         }
 
@@ -125,15 +115,12 @@ namespace Tarot.Settings
         [Setting]
         public FateIdleMode FateIdleMode
         {
-            get
-            {
-                return this.fateIdleMode;
-            }
+            get { return fateIdleMode; }
 
             set
             {
-                this.fateIdleMode = value;
-                this.Save();
+                fateIdleMode = value;
+                Save();
             }
         }
 
@@ -141,15 +128,12 @@ namespace Tarot.Settings
         [Setting]
         public FateSelectMode FateSelectMode
         {
-            get
-            {
-                return this.fateSelectMode;
-            }
+            get { return fateSelectMode; }
 
             set
             {
-                this.fateSelectMode = value;
-                this.Save();
+                fateSelectMode = value;
+                Save();
             }
         }
 
@@ -157,15 +141,12 @@ namespace Tarot.Settings
         [Setting]
         public bool ListHooksOnStart
         {
-            get
-            {
-                return this.listHooksOnStart;
-            }
+            get { return listHooksOnStart; }
 
             set
             {
-                this.listHooksOnStart = value;
-                this.Save();
+                listHooksOnStart = value;
+                Save();
             }
         }
 
@@ -173,15 +154,12 @@ namespace Tarot.Settings
         [Setting]
         public int MegaBossEngagePercentage
         {
-            get
-            {
-                return this.megaBossEngagePercentage;
-            }
+            get { return megaBossEngagePercentage; }
 
             set
             {
-                this.megaBossEngagePercentage = value;
-                this.Save();
+                megaBossEngagePercentage = value;
+                Save();
             }
         }
 
@@ -189,15 +167,12 @@ namespace Tarot.Settings
         [Setting]
         public bool RunProblematicFates
         {
-            get
-            {
-                return this.runProblematicFates;
-            }
+            get { return runProblematicFates; }
 
             set
             {
-                this.runProblematicFates = value;
-                this.Save();
+                runProblematicFates = value;
+                Save();
             }
         }
 
@@ -205,15 +180,12 @@ namespace Tarot.Settings
         [Setting]
         public bool WaitAtFateForProgress
         {
-            get
-            {
-                return this.waitAtFateForProgress;
-            }
+            get { return waitAtFateForProgress; }
 
             set
             {
-                this.waitAtFateForProgress = value;
-                this.Save();
+                waitAtFateForProgress = value;
+                Save();
             }
         }
 
@@ -221,15 +193,12 @@ namespace Tarot.Settings
         [Setting]
         public bool WaitForChainFates
         {
-            get
-            {
-                return this.waitForChainFates;
-            }
+            get { return waitForChainFates; }
 
             set
             {
-                this.waitForChainFates = value;
-                this.Save();
+                waitForChainFates = value;
+                Save();
             }
         }
     }

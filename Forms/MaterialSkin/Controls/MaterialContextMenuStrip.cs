@@ -1,21 +1,20 @@
-﻿namespace Tarot.Forms.MaterialSkin.Controls
+﻿using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
+using System.Windows.Forms;
+using Tarot.Forms.MaterialSkin.Animations;
+
+namespace Tarot.Forms.MaterialSkin.Controls
 {
     #region Using Directives
 
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.Drawing.Drawing2D;
-    using System.Drawing.Text;
-    using System.Windows.Forms;
-
-    using global::Tarot.Forms.MaterialSkin.Animations;
+    
 
     #endregion
 
     public class MaterialContextMenuStrip : ContextMenuStrip, IMaterialControl
     {
-        public delegate void ItemClickStart(object sender, ToolStripItemClickedEventArgs e);
-
         internal AnimationManager AnimationManager;
 
         internal Point AnimationSource;
@@ -24,49 +23,41 @@
 
         public MaterialContextMenuStrip()
         {
-            this.Renderer = new MaterialToolStripRender();
+            Renderer = new MaterialToolStripRender();
 
-            this.AnimationManager = new AnimationManager(false)
-                                    {
-                                        Increment = 0.07,
-                                        AnimationType = AnimationType.Linear
-                                    };
-            this.AnimationManager.OnAnimationProgress += sender => this.Invalidate();
-            this.AnimationManager.OnAnimationFinished += sender => this.OnItemClicked(this.delayesArgs);
+            AnimationManager = new AnimationManager(false)
+            {
+                Increment = 0.07,
+                AnimationType = AnimationType.Linear
+            };
+            AnimationManager.OnAnimationProgress += sender => Invalidate();
+            AnimationManager.OnAnimationFinished += sender => OnItemClicked(delayesArgs);
 
-            this.BackColor = this.SkinManager.GetApplicationBackgroundColor();
+            BackColor = SkinManager.GetApplicationBackgroundColor();
         }
+
+        public delegate void ItemClickStart(object sender, ToolStripItemClickedEventArgs e);
+
+        public event ItemClickStart OnItemClickStart;
 
         //Properties for managing the material design properties
         [Browsable(false)]
         public int Depth { get; set; }
 
         [Browsable(false)]
-        public MaterialSkinManager SkinManager
-        {
-            get
-            {
-                return MaterialSkinManager.Instance;
-            }
-        }
-
-        [Browsable(false)]
         public MouseState MouseState { get; set; }
 
-        public event ItemClickStart OnItemClickStart;
-
-        protected override void OnMouseUp(MouseEventArgs mea)
+        [Browsable(false)]
+        public MaterialSkinManager SkinManager
         {
-            base.OnMouseUp(mea);
-
-            this.AnimationSource = mea.Location;
+            get { return MaterialSkinManager.Instance; }
         }
 
         protected override void OnItemClicked(ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem != null && !(e.ClickedItem is ToolStripSeparator))
             {
-                if (e == this.delayesArgs)
+                if (e == delayesArgs)
                 {
                     //The event has been fired manualy because the args are the ones we saved for delay
                     base.OnItemClicked(e);
@@ -74,18 +65,25 @@
                 else
                 {
                     //Interrupt the default on click, saving the args for the delay which is needed to display the animaton
-                    this.delayesArgs = e;
+                    delayesArgs = e;
 
                     //Fire custom event to trigger actions directly but keep cms open
-                    if (this.OnItemClickStart != null)
+                    if (OnItemClickStart != null)
                     {
-                        this.OnItemClickStart(this, e);
+                        OnItemClickStart(this, e);
                     }
 
                     //Start animation
-                    this.AnimationManager.StartNewAnimation(AnimationDirection.In);
+                    AnimationManager.StartNewAnimation(AnimationDirection.In);
                 }
             }
+        }
+
+        protected override void OnMouseUp(MouseEventArgs mea)
+        {
+            base.OnMouseUp(mea);
+
+            AnimationSource = mea.Location;
         }
     }
 
@@ -93,14 +91,14 @@
     {
         public MaterialToolStripMenuItem()
         {
-            this.AutoSize = false;
-            this.Size = new Size(120, 30);
+            AutoSize = false;
+            Size = new Size(120, 30);
         }
 
         protected override ToolStripDropDown CreateDefaultDropDown()
         {
             var baseDropDown = base.CreateDefaultDropDown();
-            if (this.DesignMode)
+            if (DesignMode)
             {
                 return baseDropDown;
             }
@@ -117,96 +115,11 @@
         //Properties for managing the material design properties
         public int Depth { get; set; }
 
-        public MaterialSkinManager SkinManager
-        {
-            get
-            {
-                return MaterialSkinManager.Instance;
-            }
-        }
-
         public MouseState MouseState { get; set; }
 
-        protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
+        public MaterialSkinManager SkinManager
         {
-            var g = e.Graphics;
-            g.TextRenderingHint = TextRenderingHint.AntiAlias;
-
-            var itemRect = this.GetItemRect(e.Item);
-            var textRect = new Rectangle(24, itemRect.Y, itemRect.Width - (24 + 16), itemRect.Height);
-            g.DrawString(
-                e.Text,
-                this.SkinManager.RobotoMedium10,
-                e.Item.Enabled ? this.SkinManager.GetPrimaryTextBrush() : this.SkinManager.GetDisabledOrHintBrush(),
-                textRect,
-                new StringFormat { LineAlignment = StringAlignment.Center });
-        }
-
-        protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
-        {
-            var g = e.Graphics;
-            g.Clear(this.SkinManager.GetApplicationBackgroundColor());
-
-            //Draw background
-            var itemRect = this.GetItemRect(e.Item);
-            g.FillRectangle(
-                e.Item.Selected && e.Item.Enabled
-                    ? this.SkinManager.GetCmsSelectedItemBrush()
-                    : new SolidBrush(this.SkinManager.GetApplicationBackgroundColor()),
-                itemRect);
-
-            //Ripple animation
-            var toolStrip = e.ToolStrip as MaterialContextMenuStrip;
-            if (toolStrip != null)
-            {
-                var animationManager = toolStrip.AnimationManager;
-                var animationSource = toolStrip.AnimationSource;
-                if (toolStrip.AnimationManager.IsAnimating() && e.Item.Bounds.Contains(animationSource))
-                {
-                    for (var i = 0; i < animationManager.GetAnimationCount(); i++)
-                    {
-                        var animationValue = animationManager.GetProgress(i);
-                        var rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - animationValue * 50), Color.Black));
-                        var rippleSize = (int) (animationValue * itemRect.Width * 2.5);
-                        g.FillEllipse(
-                            rippleBrush,
-                            new Rectangle(
-                                animationSource.X - rippleSize / 2,
-                                itemRect.Y - itemRect.Height,
-                                rippleSize,
-                                itemRect.Height * 3));
-                    }
-                }
-            }
-        }
-
-        protected override void OnRenderImageMargin(ToolStripRenderEventArgs e)
-        {
-            //base.OnRenderImageMargin(e);
-        }
-
-        protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
-        {
-            var g = e.Graphics;
-
-            g.FillRectangle(new SolidBrush(this.SkinManager.GetApplicationBackgroundColor()), e.Item.Bounds);
-            g.DrawLine(
-                new Pen(this.SkinManager.GetDividersColor()),
-                new Point(e.Item.Bounds.Left, e.Item.Bounds.Height / 2),
-                new Point(e.Item.Bounds.Right, e.Item.Bounds.Height / 2));
-        }
-
-        protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
-        {
-            var g = e.Graphics;
-
-            g.DrawRectangle(
-                new Pen(this.SkinManager.GetDividersColor()),
-                new Rectangle(
-                    e.AffectedBounds.X,
-                    e.AffectedBounds.Y,
-                    e.AffectedBounds.Width - 1,
-                    e.AffectedBounds.Height - 1));
+            get { return MaterialSkinManager.Instance; }
         }
 
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
@@ -215,11 +128,11 @@
             const int ArrowSize = 4;
 
             var arrowMiddle = new Point(
-                e.ArrowRectangle.X + e.ArrowRectangle.Width / 2,
-                e.ArrowRectangle.Y + e.ArrowRectangle.Height / 2);
+                e.ArrowRectangle.X + e.ArrowRectangle.Width/2,
+                e.ArrowRectangle.Y + e.ArrowRectangle.Height/2);
             var arrowBrush = e.Item.Enabled
-                                 ? this.SkinManager.GetPrimaryTextBrush()
-                                 : this.SkinManager.GetDisabledOrHintBrush();
+                ? SkinManager.GetPrimaryTextBrush()
+                : SkinManager.GetDisabledOrHintBrush();
             using (var arrowPath = new GraphicsPath())
             {
                 arrowPath.AddLines(
@@ -233,6 +146,88 @@
 
                 g.FillPath(arrowBrush, arrowPath);
             }
+        }
+
+        protected override void OnRenderImageMargin(ToolStripRenderEventArgs e)
+        {
+            //base.OnRenderImageMargin(e);
+        }
+
+        protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
+        {
+            var g = e.Graphics;
+            g.TextRenderingHint = TextRenderingHint.AntiAlias;
+
+            var itemRect = GetItemRect(e.Item);
+            var textRect = new Rectangle(24, itemRect.Y, itemRect.Width - (24 + 16), itemRect.Height);
+            g.DrawString(
+                e.Text,
+                SkinManager.RobotoMedium10,
+                e.Item.Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(),
+                textRect,
+                new StringFormat {LineAlignment = StringAlignment.Center});
+        }
+
+        protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
+        {
+            var g = e.Graphics;
+            g.Clear(SkinManager.GetApplicationBackgroundColor());
+
+            //Draw background
+            var itemRect = GetItemRect(e.Item);
+            g.FillRectangle(
+                e.Item.Selected && e.Item.Enabled
+                    ? SkinManager.GetCmsSelectedItemBrush()
+                    : new SolidBrush(SkinManager.GetApplicationBackgroundColor()),
+                itemRect);
+
+            //Ripple animation
+            var toolStrip = e.ToolStrip as MaterialContextMenuStrip;
+            if (toolStrip != null)
+            {
+                var animationManager = toolStrip.AnimationManager;
+                var animationSource = toolStrip.AnimationSource;
+                if (toolStrip.AnimationManager.IsAnimating() && e.Item.Bounds.Contains(animationSource))
+                {
+                    for (var i = 0; i < animationManager.GetAnimationCount(); i++)
+                    {
+                        var animationValue = animationManager.GetProgress(i);
+                        var rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - animationValue*50), Color.Black));
+                        var rippleSize = (int) (animationValue*itemRect.Width*2.5);
+                        g.FillEllipse(
+                            rippleBrush,
+                            new Rectangle(
+                                animationSource.X - rippleSize/2,
+                                itemRect.Y - itemRect.Height,
+                                rippleSize,
+                                itemRect.Height*3));
+                    }
+                }
+            }
+        }
+
+        protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
+        {
+            var g = e.Graphics;
+
+            g.FillRectangle(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), e.Item.Bounds);
+            g.DrawLine(
+                new Pen(SkinManager.GetDividersColor()),
+                new Point(e.Item.Bounds.Left, e.Item.Bounds.Height/2),
+                new Point(e.Item.Bounds.Right, e.Item.Bounds.Height/2));
+        }
+
+        protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
+        {
+            var g = e.Graphics;
+
+            g.DrawRectangle(
+                new Pen(SkinManager.GetDividersColor()),
+                new Rectangle(
+                    e.AffectedBounds.X,
+                    e.AffectedBounds.Y,
+                    e.AffectedBounds.Width - 1,
+                    e.AffectedBounds.Height - 1));
         }
 
         private Rectangle GetItemRect(ToolStripItem item)

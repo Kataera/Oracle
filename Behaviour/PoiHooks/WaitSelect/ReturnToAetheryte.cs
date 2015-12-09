@@ -22,25 +22,42 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Clio.Utilities;
+using ff14bot;
+using ff14bot.Helpers;
+using ff14bot.Managers;
+using ff14bot.Navigation;
+using NeoGaia.ConnectionHandler;
+using Tarot.Helpers;
+
 namespace Tarot.Behaviour.PoiHooks.WaitSelect
 {
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
-
-    using Clio.Utilities;
-
-    using ff14bot;
-    using ff14bot.Helpers;
-    using ff14bot.Managers;
-    using ff14bot.Navigation;
-
-    using global::Tarot.Helpers;
-
-    using NeoGaia.ConnectionHandler;
-
     internal static class ReturnToAetheryte
     {
+        public static async Task<bool> Main()
+        {
+            await BlacklistUnnavigableAetherytes();
+            var aetheryteLocation = GetClosestAetheryteLocation();
+
+            // If there's no viable aetheryte, wait where we are.
+            if (aetheryteLocation == Vector3.Zero)
+            {
+                Logger.SendLog(
+                    "There's no Aetheryte crystal in this zone that is reachable, waiting at current location.");
+                Poi.Current = new Poi(Core.Player.Location, PoiType.Wait);
+            }
+            else
+            {
+                Logger.SendLog("Moving to closest reachable Aetheryte crystal.");
+                Poi.Current = new Poi(aetheryteLocation, PoiType.Wait);
+            }
+
+            return true;
+        }
+
         private static async Task<bool> BlacklistUnnavigableAetherytes()
         {
             if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
@@ -48,13 +65,13 @@ namespace Tarot.Behaviour.PoiHooks.WaitSelect
                 var aetherytes = WorldManager.AetheryteIdsForZone(WorldManager.ZoneId);
                 var navRequest =
                     aetherytes.Select(
-                        target => new CanFullyNavigateTarget { Id = target.Item1, Position = target.Item2 });
+                        target => new CanFullyNavigateTarget {Id = target.Item1, Position = target.Item2});
                 var navResults =
                     await
-                    Navigator.NavigationProvider.CanFullyNavigateToAsync(
-                        navRequest,
-                        Core.Player.Location,
-                        WorldManager.ZoneId);
+                        Navigator.NavigationProvider.CanFullyNavigateToAsync(
+                            navRequest,
+                            Core.Player.Location,
+                            WorldManager.ZoneId);
 
                 foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
                 {
@@ -87,7 +104,7 @@ namespace Tarot.Behaviour.PoiHooks.WaitSelect
 
             foreach (var aetheryte in aetherytes)
             {
-                if (Blacklist.Contains(aetheryte.Item1)
+                if (!Blacklist.Contains(aetheryte.Item1)
                     && (location == Vector3.Zero
                         || playerLocation.Distance2D(location) > playerLocation.Distance2D(aetheryte.Item2)))
                 {
@@ -96,27 +113,6 @@ namespace Tarot.Behaviour.PoiHooks.WaitSelect
             }
 
             return location;
-        }
-
-        public static async Task<bool> Main()
-        {
-            await BlacklistUnnavigableAetherytes();
-            var aetheryteLocation = GetClosestAetheryteLocation();
-
-            // If there's no viable aetheryte, wait where we are.
-            if (aetheryteLocation == Vector3.Zero)
-            {
-                Logger.SendLog(
-                    "There's no Aetheryte crystal in this zone that is reachable, waiting at current location.");
-                Poi.Current = new Poi(Core.Player.Location, PoiType.Wait);
-            }
-            else
-            {
-                Logger.SendLog("Moving to closest reachable Aetheryte crystal.");
-                Poi.Current = new Poi(aetheryteLocation, PoiType.Wait);
-            }
-
-            return true;
         }
     }
 }

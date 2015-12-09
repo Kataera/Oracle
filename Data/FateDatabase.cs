@@ -22,22 +22,21 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
+using System.Collections.Generic;
+using Tarot.Data.FateTypes;
+using Tarot.Enumerations;
+using Tarot.Helpers;
+
 namespace Tarot.Data
 {
-    using System;
-    using System.Collections.Generic;
-
-    using global::Tarot.Data.FateTypes;
-    using global::Tarot.Enumerations;
-    using global::Tarot.Helpers;
-
     internal class FateDatabase
     {
         private readonly Dictionary<uint, Fate> fateDatabase;
 
         public FateDatabase()
         {
-            this.fateDatabase = new Dictionary<uint, Fate>();
+            fateDatabase = new Dictionary<uint, Fate>();
         }
 
         public FateDatabase(Dictionary<uint, Fate> fateDatabase)
@@ -55,7 +54,7 @@ namespace Tarot.Data
 
             try
             {
-                this.fateDatabase.Add(fate.Id, fate);
+                fateDatabase.Add(fate.Id, fate);
             }
             catch (ArgumentNullException exception)
             {
@@ -74,7 +73,7 @@ namespace Tarot.Data
             Fate fate;
             try
             {
-                if (this.fateDatabase.TryGetValue(id, out fate))
+                if (fateDatabase.TryGetValue(id, out fate))
                 {
                     return fate;
                 }
@@ -86,7 +85,7 @@ namespace Tarot.Data
             }
 
             // Create a null fate with Unsupported flag if we can't find it.
-            fate = new NullFate { SupportLevel = FateSupportLevel.Unsupported };
+            fate = new NullFate {SupportLevel = FateSupportLevel.Unsupported};
             Logger.SendDebugLog("Fate with id: '" + id + "' not found, flagging as unsupported.");
 
             return fate;

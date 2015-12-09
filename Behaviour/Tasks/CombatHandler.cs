@@ -22,32 +22,21 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Buddy.Coroutines;
+using ff14bot;
+using ff14bot.Helpers;
+using ff14bot.Managers;
+using ff14bot.Navigation;
+using Tarot.Behaviour.Tasks.Utilities;
+using Tarot.Helpers;
+
 namespace Tarot.Behaviour.Tasks
 {
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
-
-    using Buddy.Coroutines;
-
-    using ff14bot;
-    using ff14bot.Helpers;
-    using ff14bot.Managers;
-    using ff14bot.Navigation;
-
-    using global::Tarot.Behaviour.Tasks.Utilities;
-    using global::Tarot.Helpers;
-
     internal static class CombatHandler
     {
-        private static bool LevelSyncNeeded()
-        {
-            return Poi.Current != null && Poi.Current.Type == PoiType.Kill && Poi.Current.BattleCharacter.FateId != 0
-                   && FateManager.GetFateById(Poi.Current.BattleCharacter.FateId).IsValid
-                   && (FateManager.GetFateById(Poi.Current.BattleCharacter.FateId).MaxLevel < Core.Player.ClassLevel)
-                   && !Core.Player.IsLevelSynced;
-        }
-
         public static async Task<bool> Main()
         {
             if (Poi.Current != null && GameObjectManager.Attackers.Any())
@@ -73,13 +62,21 @@ namespace Tarot.Behaviour.Tasks
             return true;
         }
 
+        private static bool LevelSyncNeeded()
+        {
+            return Poi.Current != null && Poi.Current.Type == PoiType.Kill && Poi.Current.BattleCharacter.FateId != 0
+                   && FateManager.GetFateById(Poi.Current.BattleCharacter.FateId).IsValid
+                   && (FateManager.GetFateById(Poi.Current.BattleCharacter.FateId).MaxLevel < Core.Player.ClassLevel)
+                   && !Core.Player.IsLevelSynced;
+        }
+
         private static async Task<bool> MoveIntoFateArea()
         {
             var attacker = Poi.Current.BattleCharacter;
             Poi.Clear("Moving back into FATE area.");
 
             while (Core.Player.Distance2D(FateManager.GetFateById(attacker.FateId).Location)
-                   > FateManager.GetFateById(attacker.FateId).Radius * 0.75f)
+                   > FateManager.GetFateById(attacker.FateId).Radius*0.75f)
             {
                 Navigator.MoveTo(FateManager.GetFateById(attacker.FateId).Location);
                 await Coroutine.Yield();

@@ -22,20 +22,19 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
+using System.Diagnostics;
+using System.Windows.Forms;
+using Tarot.Forms.MaterialSkin;
+using Tarot.Forms.MaterialSkin.Controls;
+
 namespace Tarot.Forms
 {
-    using System;
-    using System.Diagnostics;
-    using System.Windows.Forms;
-
-    using global::Tarot.Forms.MaterialSkin;
-    using global::Tarot.Forms.MaterialSkin.Controls;
-
     public partial class SettingsForm : MaterialForm
     {
         public SettingsForm()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             // Initialize MaterialSkinManager
             var skinManager = MaterialSkinManager.Instance;
@@ -55,13 +54,13 @@ namespace Tarot.Forms
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
-                SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
 
         private void OnCloseButtonClick(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void OnDonatePictureBoxClick(object sender, EventArgs e)

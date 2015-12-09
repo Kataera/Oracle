@@ -22,17 +22,16 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
+using System.IO;
+using System.Xml;
+using System.Xml.Schema;
+using Tarot.Data;
+using Tarot.Data.FateTypes;
+using Tarot.Enumerations;
+
 namespace Tarot.Helpers
 {
-    using System;
-    using System.IO;
-    using System.Xml;
-    using System.Xml.Schema;
-
-    using global::Tarot.Data;
-    using global::Tarot.Data.FateTypes;
-    using global::Tarot.Enumerations;
-
     internal static class XmlParser
     {
         private static FateDatabase database;
@@ -58,6 +57,26 @@ namespace Tarot.Helpers
         private static FateSupportLevel fateSupportLevel;
 
         private static FateType fateType;
+
+        public static FateDatabase GetFateDatabase()
+        {
+            if (database == null)
+            {
+                ParseFateData();
+            }
+
+            return database;
+        }
+
+        public static FateDatabase GetFateDatabase(bool forceReparse)
+        {
+            if (forceReparse || database == null)
+            {
+                ParseFateData();
+            }
+
+            return database;
+        }
 
         private static Fate CreateFate()
         {
@@ -104,26 +123,6 @@ namespace Tarot.Helpers
             fate.SupportLevel = fateSupportLevel;
             fate.Type = fateType;
             return fate;
-        }
-
-        public static FateDatabase GetFateDatabase()
-        {
-            if (database == null)
-            {
-                ParseFateData();
-            }
-
-            return database;
-        }
-
-        public static FateDatabase GetFateDatabase(bool forceReparse)
-        {
-            if (forceReparse || database == null)
-            {
-                ParseFateData();
-            }
-
-            return database;
         }
 
         private static XmlDocument GetXmlDocument()

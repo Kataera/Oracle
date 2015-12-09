@@ -22,23 +22,18 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Threading.Tasks;
+using Tarot.Behaviour.Tasks;
+using Tarot.Behaviour.Tasks.Utilities;
+using TreeSharp;
+
 namespace Tarot.Behaviour
 {
-    using System.Threading.Tasks;
-
-    using global::Tarot.Behaviour.Tasks;
-    using global::Tarot.Behaviour.Tasks.Utilities;
-
-    using TreeSharp;
-
     internal static class TarotBehaviour
     {
         public static Composite Behaviour
         {
-            get
-            {
-                return CreateBehaviour();
-            }
+            get { return CreateBehaviour(); }
         }
 
         private static Composite CreateBehaviour()

@@ -22,14 +22,12 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Windows.Media;
+using ff14bot.Helpers;
+using Tarot.Settings;
+
 namespace Tarot.Helpers
 {
-    using System.Windows.Media;
-
-    using ff14bot.Helpers;
-
-    using global::Tarot.Settings;
-
     internal static class Logger
     {
         private static readonly Color LoggerDebugColour = Color.FromRgb(238, 223, 88);

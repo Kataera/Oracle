@@ -22,15 +22,13 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Threading.Tasks;
+using ff14bot.Enums;
+using ff14bot.Helpers;
+using Tarot.Helpers;
+
 namespace Tarot.Behaviour.Tasks.Utilities
 {
-    using System.Threading.Tasks;
-
-    using ff14bot.Enums;
-    using ff14bot.Helpers;
-
-    using global::Tarot.Helpers;
-
     public class ClearFateIfFinished
     {
         public static async Task<bool> Main()

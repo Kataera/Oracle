@@ -1,9 +1,11 @@
-﻿namespace Tarot.Forms.MaterialSkin.Controls
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace Tarot.Forms.MaterialSkin.Controls
 {
     #region Using Directives
 
-    using System.ComponentModel;
-    using System.Windows.Forms;
+    
 
     #endregion
 
@@ -11,24 +13,21 @@
     {
         public MaterialDivider()
         {
-            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            this.Height = 1;
-            this.BackColor = this.SkinManager.GetDividersColor();
+            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            Height = 1;
+            BackColor = SkinManager.GetDividersColor();
         }
 
         [Browsable(false)]
         public int Depth { get; set; }
 
         [Browsable(false)]
-        public MaterialSkinManager SkinManager
-        {
-            get
-            {
-                return MaterialSkinManager.Instance;
-            }
-        }
+        public MouseState MouseState { get; set; }
 
         [Browsable(false)]
-        public MouseState MouseState { get; set; }
+        public MaterialSkinManager SkinManager
+        {
+            get { return MaterialSkinManager.Instance; }
+        }
     }
 }

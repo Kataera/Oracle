@@ -22,76 +22,26 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Linq;
+using System.Threading.Tasks;
+using Buddy.Coroutines;
+using ff14bot;
+using ff14bot.Behavior;
+using ff14bot.Enums;
+using ff14bot.Helpers;
+using ff14bot.Managers;
+using ff14bot.Navigation;
+using ff14bot.Settings;
+using Tarot.Behaviour.Tasks.Fates;
+using Tarot.Behaviour.Tasks.Utilities;
+using Tarot.Enumerations;
+using Tarot.Helpers;
+using Tarot.Settings;
+
 namespace Tarot.Behaviour.Tasks
 {
-    using System.Linq;
-    using System.Threading.Tasks;
-
-    using Buddy.Coroutines;
-
-    using ff14bot;
-    using ff14bot.Behavior;
-    using ff14bot.Enums;
-    using ff14bot.Helpers;
-    using ff14bot.Managers;
-    using ff14bot.Navigation;
-    using ff14bot.Settings;
-
-    using global::Tarot.Behaviour.Tasks.Fates;
-    using global::Tarot.Behaviour.Tasks.Utilities;
-    using global::Tarot.Enumerations;
-    using global::Tarot.Helpers;
-    using global::Tarot.Settings;
-
     internal static class FateHandler
     {
-        private static bool FateHasEnoughProgress()
-        {
-            if (Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id).Type == FateType.Boss
-                && Tarot.CurrentFate.Progress < TarotSettings.Instance.BossEngagePercentage)
-            {
-                return false;
-            }
-
-            if (Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id).Type == FateType.MegaBoss
-                && Tarot.CurrentFate.Progress < TarotSettings.Instance.MegaBossEngagePercentage)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private static async Task<bool> Land()
-        {
-            if (FateHasEnoughProgress())
-            {
-                if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
-                {
-                    if (await CommonTasks.CanLand() == CanLandResult.Yes)
-                    {
-                        await CommonTasks.Land();
-                    }
-                    else
-                    {
-                        var moveResult = Navigator.MoveTo(Tarot.CurrentFate.Location, "FATE centre.");
-                        while (moveResult != MoveResult.Done)
-                        {
-                            moveResult = Navigator.MoveTo(Tarot.CurrentFate.Location, "FATE centre.");
-                            await Coroutine.Yield();
-                        }
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        private static bool LevelSyncNeeded()
-        {
-            return Tarot.CurrentFate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced;
-        }
-
         public static async Task<bool> Main()
         {
             if (Poi.Current != null && Poi.Current.Type == PoiType.Fate && Tarot.CurrentFate != null)
@@ -187,6 +137,53 @@ namespace Tarot.Behaviour.Tasks
             return true;
         }
 
+        private static bool FateHasEnoughProgress()
+        {
+            if (Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id).Type == FateType.Boss
+                && Tarot.CurrentFate.Progress < TarotSettings.Instance.BossEngagePercentage)
+            {
+                return false;
+            }
+
+            if (Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id).Type == FateType.MegaBoss
+                && Tarot.CurrentFate.Progress < TarotSettings.Instance.MegaBossEngagePercentage)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static async Task<bool> Land()
+        {
+            if (FateHasEnoughProgress())
+            {
+                if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+                {
+                    if (await CommonTasks.CanLand() == CanLandResult.Yes)
+                    {
+                        await CommonTasks.Land();
+                    }
+                    else
+                    {
+                        var moveResult = Navigator.MoveTo(Tarot.CurrentFate.Location, "FATE centre.");
+                        while (moveResult != MoveResult.Done)
+                        {
+                            moveResult = Navigator.MoveTo(Tarot.CurrentFate.Location, "FATE centre.");
+                            await Coroutine.Yield();
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private static bool LevelSyncNeeded()
+        {
+            return Tarot.CurrentFate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced;
+        }
+
         private static async Task<bool> MoveToFate()
         {
             // If we're inside a FATE, cancel.
@@ -196,7 +193,7 @@ namespace Tarot.Behaviour.Tasks
             }
 
             // Not using WithinFate method as we want to be within 3/4 of the FATE radius.
-            while (Tarot.CurrentFate.Location.Distance(Core.Player.Location) > Tarot.CurrentFate.Radius * 0.75f)
+            while (Tarot.CurrentFate.Location.Distance(Core.Player.Location) > Tarot.CurrentFate.Radius*0.75f)
             {
                 // Check if the FATE ended while we're moving.
                 if (!Tarot.CurrentFate.IsValid || Tarot.CurrentFate.Status == FateStatus.COMPLETE)
