@@ -47,8 +47,9 @@ namespace Tarot.Behaviour.Tasks.Selectors.Fates
             var playerLocation = Core.Player.Location;
             FateData closestFate = null;
 
-            if (activeFates == null || !activeFates.Any())
+            if (activeFates == null || !activeFates.Any() || FateManager.ActiveFates.All(NotEnoughProgress))
             {
+                Logger.SendLog("No viable FATEs found.");
                 return false;
             }
 
