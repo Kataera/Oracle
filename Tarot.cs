@@ -24,11 +24,13 @@
 
 using System;
 using System.Reflection;
+
 using ff14bot.AClasses;
 using ff14bot.Behavior;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+
 using Tarot.Behaviour;
 using Tarot.Behaviour.PoiHooks;
 using Tarot.Data;
@@ -36,6 +38,7 @@ using Tarot.Enumerations;
 using Tarot.Forms;
 using Tarot.Helpers;
 using Tarot.Settings;
+
 using TreeSharp;
 
 namespace Tarot

@@ -24,7 +24,9 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+
 using Buddy.Coroutines;
+
 using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Enums;
@@ -32,6 +34,7 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Settings;
+
 using Tarot.Behaviour.Tasks.Fates;
 using Tarot.Behaviour.Tasks.Utilities;
 using Tarot.Enumerations;
@@ -125,11 +128,13 @@ namespace Tarot.Behaviour.Tasks
                     break;
 
                 case FateIconType.ProtectNPC:
+
                     // TODO: Check this is the right way around.
                     await EscortFate.Main();
                     break;
 
                 case FateIconType.ProtectNPC2:
+
                     // TODO: Check this is the right way around.
                     await DefenceFate.Main();
                     break;
@@ -139,6 +144,7 @@ namespace Tarot.Behaviour.Tasks
                     break;
 
                 default:
+
                     // TODO: Implement blacklist.
                     Logger.SendErrorLog(
                         "FATE has no icon data, it is impossible to determine its type. Blacklisting and moving on.");
@@ -203,7 +209,7 @@ namespace Tarot.Behaviour.Tasks
             }
 
             // Not using WithinFate method as we want to be within 3/4 of the FATE radius.
-            while (Tarot.CurrentFate.Location.Distance(Core.Player.Location) > Tarot.CurrentFate.Radius*0.75f)
+            while (Tarot.CurrentFate.Location.Distance(Core.Player.Location) > Tarot.CurrentFate.Radius * 0.75f)
             {
                 // Check if the FATE ended while we're moving.
                 if (!Tarot.CurrentFate.IsValid || Tarot.CurrentFate.Status == FateStatus.COMPLETE)

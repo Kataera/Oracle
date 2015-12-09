@@ -26,8 +26,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.IO;
+
 using Clio.Utilities;
+
 using ff14bot.Helpers;
+
 using Tarot.Enumerations;
 
 namespace Tarot.Settings
@@ -60,9 +63,9 @@ namespace Tarot.Settings
         private TarotSettings()
             : base(Path.Combine(CharacterSettingsDirectory, "TarotSettings.json"))
         {
-            if (FateWaitLocations == null)
+            if (this.FateWaitLocations == null)
             {
-                FateWaitLocations = new Dictionary<uint, Vector3>();
+                this.FateWaitLocations = new Dictionary<uint, Vector3>();
             }
         }
 
@@ -89,11 +92,11 @@ namespace Tarot.Settings
         [Setting]
         public int BossEngagePercentage
         {
-            get { return bossEngagePercentage; }
+            get { return this.bossEngagePercentage; }
 
             set
             {
-                bossEngagePercentage = value;
+                this.bossEngagePercentage = value;
                 Save();
             }
         }
@@ -102,11 +105,11 @@ namespace Tarot.Settings
         [Setting]
         public bool DebugEnabled
         {
-            get { return debugEnabled; }
+            get { return this.debugEnabled; }
 
             set
             {
-                debugEnabled = value;
+                this.debugEnabled = value;
                 Save();
             }
         }
@@ -115,11 +118,11 @@ namespace Tarot.Settings
         [Setting]
         public FateIdleMode FateIdleMode
         {
-            get { return fateIdleMode; }
+            get { return this.fateIdleMode; }
 
             set
             {
-                fateIdleMode = value;
+                this.fateIdleMode = value;
                 Save();
             }
         }
@@ -128,11 +131,11 @@ namespace Tarot.Settings
         [Setting]
         public FateSelectMode FateSelectMode
         {
-            get { return fateSelectMode; }
+            get { return this.fateSelectMode; }
 
             set
             {
-                fateSelectMode = value;
+                this.fateSelectMode = value;
                 Save();
             }
         }
@@ -141,11 +144,11 @@ namespace Tarot.Settings
         [Setting]
         public bool ListHooksOnStart
         {
-            get { return listHooksOnStart; }
+            get { return this.listHooksOnStart; }
 
             set
             {
-                listHooksOnStart = value;
+                this.listHooksOnStart = value;
                 Save();
             }
         }
@@ -154,11 +157,11 @@ namespace Tarot.Settings
         [Setting]
         public int MegaBossEngagePercentage
         {
-            get { return megaBossEngagePercentage; }
+            get { return this.megaBossEngagePercentage; }
 
             set
             {
-                megaBossEngagePercentage = value;
+                this.megaBossEngagePercentage = value;
                 Save();
             }
         }
@@ -167,11 +170,11 @@ namespace Tarot.Settings
         [Setting]
         public bool RunProblematicFates
         {
-            get { return runProblematicFates; }
+            get { return this.runProblematicFates; }
 
             set
             {
-                runProblematicFates = value;
+                this.runProblematicFates = value;
                 Save();
             }
         }
@@ -180,11 +183,11 @@ namespace Tarot.Settings
         [Setting]
         public bool WaitAtFateForProgress
         {
-            get { return waitAtFateForProgress; }
+            get { return this.waitAtFateForProgress; }
 
             set
             {
-                waitAtFateForProgress = value;
+                this.waitAtFateForProgress = value;
                 Save();
             }
         }
@@ -193,11 +196,11 @@ namespace Tarot.Settings
         [Setting]
         public bool WaitForChainFates
         {
-            get { return waitForChainFates; }
+            get { return this.waitForChainFates; }
 
             set
             {
-                waitForChainFates = value;
+                this.waitForChainFates = value;
                 Save();
             }
         }

@@ -3,13 +3,13 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
+
 using Tarot.Forms.MaterialSkin.Animations;
 
 namespace Tarot.Forms.MaterialSkin.Controls
 {
-    #region Using Directives
 
-    
+    #region Using Directives
 
     #endregion
 
@@ -34,30 +34,30 @@ namespace Tarot.Forms.MaterialSkin.Controls
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
             Height = 48;
 
-            animationManager = new AnimationManager {AnimationType = AnimationType.EaseOut, Increment = 0.04};
-            animationManager.OnAnimationProgress += sender => Invalidate();
+            this.animationManager = new AnimationManager {AnimationType = AnimationType.EaseOut, Increment = 0.04};
+            this.animationManager.OnAnimationProgress += sender => Invalidate();
         }
 
         public MaterialTabControl BaseTabControl
         {
-            get { return baseTabControl; }
+            get { return this.baseTabControl; }
             set
             {
-                baseTabControl = value;
-                if (baseTabControl == null)
+                this.baseTabControl = value;
+                if (this.baseTabControl == null)
                 {
                     return;
                 }
-                previousSelectedTabIndex = baseTabControl.SelectedIndex;
-                baseTabControl.Deselected +=
-                    (sender, args) => { previousSelectedTabIndex = baseTabControl.SelectedIndex; };
-                baseTabControl.SelectedIndexChanged += (sender, args) =>
+                this.previousSelectedTabIndex = this.baseTabControl.SelectedIndex;
+                this.baseTabControl.Deselected +=
+                    (sender, args) => { this.previousSelectedTabIndex = this.baseTabControl.SelectedIndex; };
+                this.baseTabControl.SelectedIndexChanged += (sender, args) =>
                 {
-                    animationManager.SetProgress(0);
-                    animationManager.StartNewAnimation(AnimationDirection.In);
+                    this.animationManager.SetProgress(0);
+                    this.animationManager.StartNewAnimation(AnimationDirection.In);
                 };
-                baseTabControl.ControlAdded += delegate { Invalidate(); };
-                baseTabControl.ControlRemoved += delegate { Invalidate(); };
+                this.baseTabControl.ControlAdded += delegate { Invalidate(); };
+                this.baseTabControl.ControlRemoved += delegate { Invalidate(); };
             }
         }
 
@@ -77,19 +77,19 @@ namespace Tarot.Forms.MaterialSkin.Controls
         {
             base.OnMouseUp(e);
 
-            if (tabRects == null)
+            if (this.tabRects == null)
             {
                 UpdateTabRects();
             }
-            for (var i = 0; i < tabRects.Count; i++)
+            for (var i = 0; i < this.tabRects.Count; i++)
             {
-                if (tabRects[i].Contains(e.Location))
+                if (this.tabRects[i].Contains(e.Location))
                 {
-                    baseTabControl.SelectedIndex = i;
+                    this.baseTabControl.SelectedIndex = i;
                 }
             }
 
-            animationSource = e.Location;
+            this.animationSource = e.Location;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -99,32 +99,30 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
             g.Clear(SkinManager.ColorScheme.PrimaryColor);
 
-            if (baseTabControl == null)
+            if (this.baseTabControl == null)
             {
                 return;
             }
 
-            if (!animationManager.IsAnimating() || tabRects == null
-                || tabRects.Count != baseTabControl.TabCount)
+            if (!this.animationManager.IsAnimating() || this.tabRects == null
+                || this.tabRects.Count != this.baseTabControl.TabCount)
             {
                 UpdateTabRects();
             }
 
-            var animationProgress = animationManager.GetProgress();
+            var animationProgress = this.animationManager.GetProgress();
 
             //Click feedback
-            if (animationManager.IsAnimating())
+            if (this.animationManager.IsAnimating())
             {
-                var rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - animationProgress*50), Color.White));
+                var rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - animationProgress * 50), Color.White));
                 var rippleSize =
-                    (int) (animationProgress*tabRects[baseTabControl.SelectedIndex].Width*1.75);
+                    (int) (animationProgress * this.tabRects[this.baseTabControl.SelectedIndex].Width * 1.75);
 
-                g.SetClip(tabRects[baseTabControl.SelectedIndex]);
+                g.SetClip(this.tabRects[this.baseTabControl.SelectedIndex]);
                 g.FillEllipse(
                     rippleBrush,
-                    new Rectangle(
-                        animationSource.X - rippleSize/2,
-                        animationSource.Y - rippleSize/2,
+                    new Rectangle(this.animationSource.X - rippleSize / 2, this.animationSource.Y - rippleSize / 2,
                         rippleSize,
                         rippleSize));
                 g.ResetClip();
@@ -132,7 +130,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
             }
 
             //Draw tab headers
-            foreach (TabPage tabPage in baseTabControl.TabPages)
+            foreach (TabPage tabPage in this.baseTabControl.TabPages)
             {
                 var currentTabIndex = tabPage.TabIndex;
                 Brush textBrush =
@@ -144,24 +142,23 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 g.DrawString(
                     tabPage.Text.ToUpper(),
                     SkinManager.RobotoMedium10,
-                    textBrush,
-                    tabRects[currentTabIndex],
+                    textBrush, this.tabRects[currentTabIndex],
                     new StringFormat {Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center});
                 textBrush.Dispose();
             }
 
             //Animate tab indicator
-            var previousSelectedTabIndexIfHasOne = previousSelectedTabIndex == -1
-                ? baseTabControl.SelectedIndex
-                : previousSelectedTabIndex;
-            var previousActiveTabRect = tabRects[previousSelectedTabIndexIfHasOne];
-            var activeTabPageRect = tabRects[baseTabControl.SelectedIndex];
+            var previousSelectedTabIndexIfHasOne = this.previousSelectedTabIndex == -1
+                ? this.baseTabControl.SelectedIndex
+                : this.previousSelectedTabIndex;
+            var previousActiveTabRect = this.tabRects[previousSelectedTabIndexIfHasOne];
+            var activeTabPageRect = this.tabRects[this.baseTabControl.SelectedIndex];
 
             var x = activeTabPageRect.Right - 4;
             var y = previousActiveTabRect.Y
-                    + (int) ((activeTabPageRect.Y - previousActiveTabRect.Y)*animationProgress);
+                    + (int) ((activeTabPageRect.Y - previousActiveTabRect.Y) * animationProgress);
             var height = previousActiveTabRect.Height
-                         + (int) ((activeTabPageRect.Height - previousActiveTabRect.Height)*animationProgress);
+                         + (int) ((activeTabPageRect.Height - previousActiveTabRect.Height) * animationProgress);
 
             g.FillRectangle(SkinManager.ColorScheme.AccentBrush, x, y, TabIndicatorWidth, height);
         }
@@ -171,28 +168,28 @@ namespace Tarot.Forms.MaterialSkin.Controls
             int primaryA = SkinManager.ActionBarText.A;
             int secondaryA = SkinManager.ActionBarTextSecondary.A;
 
-            if (tabIndex == baseTabControl.SelectedIndex && !animationManager.IsAnimating())
+            if (tabIndex == this.baseTabControl.SelectedIndex && !this.animationManager.IsAnimating())
             {
                 return primaryA;
             }
-            if (tabIndex != previousSelectedTabIndex && tabIndex != baseTabControl.SelectedIndex)
+            if (tabIndex != this.previousSelectedTabIndex && tabIndex != this.baseTabControl.SelectedIndex)
             {
                 return secondaryA;
             }
-            if (tabIndex == previousSelectedTabIndex)
+            if (tabIndex == this.previousSelectedTabIndex)
             {
-                return primaryA - (int) ((primaryA - secondaryA)*animationProgress);
+                return primaryA - (int) ((primaryA - secondaryA) * animationProgress);
             }
-            return secondaryA + (int) ((primaryA - secondaryA)*animationProgress);
+            return secondaryA + (int) ((primaryA - secondaryA) * animationProgress);
         }
 
         private void UpdateTabRects()
         {
-            tabRects = new List<Rectangle>();
+            this.tabRects = new List<Rectangle>();
 
             //If there isn't a base tab control, the rects shouldn't be calculated
             //If there aren't tab pages in the base tab control, the list should just be empty which has been set already; exit the void
-            if (baseTabControl == null || baseTabControl.TabCount == 0)
+            if (this.baseTabControl == null || this.baseTabControl.TabCount == 0)
             {
                 return;
             }
@@ -202,26 +199,25 @@ namespace Tarot.Forms.MaterialSkin.Controls
             {
                 using (var g = Graphics.FromImage(b))
                 {
-                    tabRects.Add(
+                    this.tabRects.Add(
                         new Rectangle(
                             0,
                             0,
                             Width,
-                            TabHeaderPadding*2
+                            TabHeaderPadding * 2
                             + (int)
-                                g.MeasureString(baseTabControl.TabPages[0].Text, SkinManager.RobotoMedium10)
-                                    .Height));
-                    for (var i = 1; i < baseTabControl.TabPages.Count; i++)
+                                g.MeasureString(this.baseTabControl.TabPages[0].Text, SkinManager.RobotoMedium10)
+                                 .Height));
+                    for (var i = 1; i < this.baseTabControl.TabPages.Count; i++)
                     {
-                        tabRects.Add(
+                        this.tabRects.Add(
                             new Rectangle(
-                                0,
-                                tabRects[i - 1].Bottom,
+                                0, this.tabRects[i - 1].Bottom,
                                 Width,
-                                TabHeaderPadding*2
+                                TabHeaderPadding * 2
                                 + (int)
-                                    g.MeasureString(baseTabControl.TabPages[0].Text, SkinManager.RobotoMedium10)
-                                        .Height));
+                                    g.MeasureString(this.baseTabControl.TabPages[0].Text, SkinManager.RobotoMedium10)
+                                     .Height));
                     }
                 }
             }

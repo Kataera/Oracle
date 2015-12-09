@@ -23,6 +23,7 @@
 */
 
 using ff14bot.Behavior;
+
 using TreeSharp;
 
 namespace Tarot.Behaviour.PoiHooks

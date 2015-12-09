@@ -3,13 +3,13 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
+
 using Tarot.Forms.MaterialSkin.Animations;
 
 namespace Tarot.Forms.MaterialSkin.Controls
 {
-    #region Using Directives
 
-    
+    #region Using Directives
 
     #endregion
 
@@ -21,12 +21,12 @@ namespace Tarot.Forms.MaterialSkin.Controls
         {
             Primary = true;
 
-            animationManager = new AnimationManager(false)
+            this.animationManager = new AnimationManager(false)
             {
                 Increment = 0.03,
                 AnimationType = AnimationType.EaseOut
             };
-            animationManager.OnAnimationProgress += sender => Invalidate();
+            this.animationManager.OnAnimationProgress += sender => Invalidate();
         }
 
         [Browsable(false)]
@@ -47,7 +47,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
         {
             base.OnMouseUp(mevent);
 
-            animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
+            this.animationManager.StartNewAnimation(AnimationDirection.In, mevent.Location);
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -73,19 +73,19 @@ namespace Tarot.Forms.MaterialSkin.Controls
                     backgroundPath);
             }
 
-            if (animationManager.IsAnimating())
+            if (this.animationManager.IsAnimating())
             {
-                for (var i = 0; i < animationManager.GetAnimationCount(); i++)
+                for (var i = 0; i < this.animationManager.GetAnimationCount(); i++)
                 {
-                    var animationValue = animationManager.GetProgress(i);
-                    var animationSource = animationManager.GetSource(i);
-                    var rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - animationValue*50), Color.White));
-                    var rippleSize = (int) (animationValue*Width*2);
+                    var animationValue = this.animationManager.GetProgress(i);
+                    var animationSource = this.animationManager.GetSource(i);
+                    var rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - animationValue * 50), Color.White));
+                    var rippleSize = (int) (animationValue * Width * 2);
                     g.FillEllipse(
                         rippleBrush,
                         new Rectangle(
-                            animationSource.X - rippleSize/2,
-                            animationSource.Y - rippleSize/2,
+                            animationSource.X - rippleSize / 2,
+                            animationSource.Y - rippleSize / 2,
                             rippleSize,
                             rippleSize));
                 }

@@ -3,13 +3,13 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
+
 using Tarot.Forms.MaterialSkin.Animations;
 
 namespace Tarot.Forms.MaterialSkin.Controls
 {
-    #region Using Directives
 
-    
+    #region Using Directives
 
     #endregion
 
@@ -25,13 +25,13 @@ namespace Tarot.Forms.MaterialSkin.Controls
         {
             Renderer = new MaterialToolStripRender();
 
-            AnimationManager = new AnimationManager(false)
+            this.AnimationManager = new AnimationManager(false)
             {
                 Increment = 0.07,
                 AnimationType = AnimationType.Linear
             };
-            AnimationManager.OnAnimationProgress += sender => Invalidate();
-            AnimationManager.OnAnimationFinished += sender => OnItemClicked(delayesArgs);
+            this.AnimationManager.OnAnimationProgress += sender => Invalidate();
+            this.AnimationManager.OnAnimationFinished += sender => OnItemClicked(this.delayesArgs);
 
             BackColor = SkinManager.GetApplicationBackgroundColor();
         }
@@ -57,7 +57,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
         {
             if (e.ClickedItem != null && !(e.ClickedItem is ToolStripSeparator))
             {
-                if (e == delayesArgs)
+                if (e == this.delayesArgs)
                 {
                     //The event has been fired manualy because the args are the ones we saved for delay
                     base.OnItemClicked(e);
@@ -65,7 +65,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 else
                 {
                     //Interrupt the default on click, saving the args for the delay which is needed to display the animaton
-                    delayesArgs = e;
+                    this.delayesArgs = e;
 
                     //Fire custom event to trigger actions directly but keep cms open
                     if (OnItemClickStart != null)
@@ -74,7 +74,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
                     }
 
                     //Start animation
-                    AnimationManager.StartNewAnimation(AnimationDirection.In);
+                    this.AnimationManager.StartNewAnimation(AnimationDirection.In);
                 }
             }
         }
@@ -83,7 +83,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
         {
             base.OnMouseUp(mea);
 
-            AnimationSource = mea.Location;
+            this.AnimationSource = mea.Location;
         }
     }
 
@@ -125,11 +125,11 @@ namespace Tarot.Forms.MaterialSkin.Controls
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
         {
             var g = e.Graphics;
-            const int ArrowSize = 4;
+            const int arrowSize = 4;
 
             var arrowMiddle = new Point(
-                e.ArrowRectangle.X + e.ArrowRectangle.Width/2,
-                e.ArrowRectangle.Y + e.ArrowRectangle.Height/2);
+                e.ArrowRectangle.X + e.ArrowRectangle.Width / 2,
+                e.ArrowRectangle.Y + e.ArrowRectangle.Height / 2);
             var arrowBrush = e.Item.Enabled
                 ? SkinManager.GetPrimaryTextBrush()
                 : SkinManager.GetDisabledOrHintBrush();
@@ -138,9 +138,9 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 arrowPath.AddLines(
                     new[]
                     {
-                        new Point(arrowMiddle.X - ArrowSize, arrowMiddle.Y - ArrowSize),
+                        new Point(arrowMiddle.X - arrowSize, arrowMiddle.Y - arrowSize),
                         new Point(arrowMiddle.X, arrowMiddle.Y),
-                        new Point(arrowMiddle.X - ArrowSize, arrowMiddle.Y + ArrowSize)
+                        new Point(arrowMiddle.X - arrowSize, arrowMiddle.Y + arrowSize)
                     });
                 arrowPath.CloseFigure();
 
@@ -192,15 +192,15 @@ namespace Tarot.Forms.MaterialSkin.Controls
                     for (var i = 0; i < animationManager.GetAnimationCount(); i++)
                     {
                         var animationValue = animationManager.GetProgress(i);
-                        var rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - animationValue*50), Color.Black));
-                        var rippleSize = (int) (animationValue*itemRect.Width*2.5);
+                        var rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - animationValue * 50), Color.Black));
+                        var rippleSize = (int) (animationValue * itemRect.Width * 2.5);
                         g.FillEllipse(
                             rippleBrush,
                             new Rectangle(
-                                animationSource.X - rippleSize/2,
+                                animationSource.X - rippleSize / 2,
                                 itemRect.Y - itemRect.Height,
                                 rippleSize,
-                                itemRect.Height*3));
+                                itemRect.Height * 3));
                     }
                 }
             }
@@ -213,8 +213,8 @@ namespace Tarot.Forms.MaterialSkin.Controls
             g.FillRectangle(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), e.Item.Bounds);
             g.DrawLine(
                 new Pen(SkinManager.GetDividersColor()),
-                new Point(e.Item.Bounds.Left, e.Item.Bounds.Height/2),
-                new Point(e.Item.Bounds.Right, e.Item.Bounds.Height/2));
+                new Point(e.Item.Bounds.Left, e.Item.Bounds.Height / 2),
+                new Point(e.Item.Bounds.Right, e.Item.Bounds.Height / 2));
         }
 
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)

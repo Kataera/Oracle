@@ -23,8 +23,10 @@
 */
 
 using System.Threading.Tasks;
+
 using ff14bot.Enums;
 using ff14bot.Helpers;
+
 using Tarot.Helpers;
 
 namespace Tarot.Behaviour.Tasks.Utilities

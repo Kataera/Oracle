@@ -24,14 +24,18 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+
 using Buddy.Coroutines;
+
 using Clio.Utilities;
+
 using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+
 using Tarot.Helpers;
 
 namespace Tarot.Behaviour.Tasks.Idles

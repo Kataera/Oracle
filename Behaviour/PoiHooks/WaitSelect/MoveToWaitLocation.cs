@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Clio.Utilities;
+
 using ff14bot;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+
 using NeoGaia.ConnectionHandler;
+
 using Tarot.Helpers;
 using Tarot.Settings;
 
@@ -49,7 +53,7 @@ namespace Tarot.Behaviour.PoiHooks.WaitSelect
                 var locations = TarotSettings.Instance.FateWaitLocations;
                 var navRequest =
                     locations.Select(target => new CanFullyNavigateTarget {Id = target.Key, Position = target.Value})
-                        .Where(target => target.Id == WorldManager.ZoneId);
+                             .Where(target => target.Id == WorldManager.ZoneId);
                 ;
                 var navResults =
                     await
@@ -86,7 +90,7 @@ namespace Tarot.Behaviour.PoiHooks.WaitSelect
             {
                 location =
                     TarotSettings.Instance.FateWaitLocations.FirstOrDefault(result => result.Key == WorldManager.ZoneId)
-                        .Value;
+                                 .Value;
             }
 
             return location;

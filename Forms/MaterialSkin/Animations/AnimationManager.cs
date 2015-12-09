@@ -5,9 +5,8 @@ using System.Windows.Forms;
 
 namespace Tarot.Forms.MaterialSkin.Animations
 {
-    #region Using Directives
 
-    
+    #region Using Directives
 
     #endregion
 
@@ -37,10 +36,10 @@ namespace Tarot.Forms.MaterialSkin.Animations
         /// </param>
         public AnimationManager(bool singular = true)
         {
-            animationProgresses = new List<double>();
-            animationSources = new List<Point>();
-            animationDirections = new List<AnimationDirection>();
-            animationDatas = new List<object[]>();
+            this.animationProgresses = new List<double>();
+            this.animationSources = new List<Point>();
+            this.animationDirections = new List<AnimationDirection>();
+            this.animationDatas = new List<object[]>();
 
             Increment = 0.03;
             SecondaryIncrement = 0.03;
@@ -50,12 +49,12 @@ namespace Tarot.Forms.MaterialSkin.Animations
 
             if (Singular)
             {
-                animationProgresses.Add(0);
-                animationSources.Add(new Point(0, 0));
-                animationDirections.Add(AnimationDirection.In);
+                this.animationProgresses.Add(0);
+                this.animationSources.Add(new Point(0, 0));
+                this.animationDirections.Add(AnimationDirection.In);
             }
 
-            animationTimer.Tick += AnimationTimerOnTick;
+            this.animationTimer.Tick += AnimationTimerOnTick;
         }
 
         public delegate void AnimationFinished(object sender);
@@ -78,7 +77,7 @@ namespace Tarot.Forms.MaterialSkin.Animations
 
         public int GetAnimationCount()
         {
-            return animationProgresses.Count;
+            return this.animationProgresses.Count;
         }
 
         public object[] GetData()
@@ -88,22 +87,22 @@ namespace Tarot.Forms.MaterialSkin.Animations
                 throw new Exception("Animation is not set to Singular.");
             }
 
-            if (animationDatas.Count == 0)
+            if (this.animationDatas.Count == 0)
             {
                 throw new Exception("Invalid animation");
             }
 
-            return animationDatas[0];
+            return this.animationDatas[0];
         }
 
         public object[] GetData(int index)
         {
-            if (!(index < animationDatas.Count))
+            if (!(index < this.animationDatas.Count))
             {
                 throw new IndexOutOfRangeException("Invalid animation index");
             }
 
-            return animationDatas[index];
+            return this.animationDatas[index];
         }
 
         public AnimationDirection GetDirection()
@@ -113,22 +112,22 @@ namespace Tarot.Forms.MaterialSkin.Animations
                 throw new Exception("Animation is not set to Singular.");
             }
 
-            if (animationDirections.Count == 0)
+            if (this.animationDirections.Count == 0)
             {
                 throw new Exception("Invalid animation");
             }
 
-            return animationDirections[0];
+            return this.animationDirections[0];
         }
 
         public AnimationDirection GetDirection(int index)
         {
-            if (!(index < animationDirections.Count))
+            if (!(index < this.animationDirections.Count))
             {
                 throw new IndexOutOfRangeException("Invalid animation index");
             }
 
-            return animationDirections[index];
+            return this.animationDirections[index];
         }
 
         public double GetProgress()
@@ -138,7 +137,7 @@ namespace Tarot.Forms.MaterialSkin.Animations
                 throw new Exception("Animation is not set to Singular.");
             }
 
-            if (animationProgresses.Count == 0)
+            if (this.animationProgresses.Count == 0)
             {
                 throw new Exception("Invalid animation");
             }
@@ -156,13 +155,13 @@ namespace Tarot.Forms.MaterialSkin.Animations
             switch (AnimationType)
             {
                 case AnimationType.Linear:
-                    return AnimationLinear.CalculateProgress(animationProgresses[index]);
+                    return AnimationLinear.CalculateProgress(this.animationProgresses[index]);
                 case AnimationType.EaseInOut:
-                    return AnimationEaseInOut.CalculateProgress(animationProgresses[index]);
+                    return AnimationEaseInOut.CalculateProgress(this.animationProgresses[index]);
                 case AnimationType.EaseOut:
-                    return AnimationEaseOut.CalculateProgress(animationProgresses[index]);
+                    return AnimationEaseOut.CalculateProgress(this.animationProgresses[index]);
                 case AnimationType.CustomQuadratic:
-                    return AnimationCustomQuadratic.CalculateProgress(animationProgresses[index]);
+                    return AnimationCustomQuadratic.CalculateProgress(this.animationProgresses[index]);
                 default:
                     throw new NotImplementedException("The given AnimationType is not implemented");
             }
@@ -175,7 +174,7 @@ namespace Tarot.Forms.MaterialSkin.Animations
                 throw new IndexOutOfRangeException("Invalid animation index");
             }
 
-            return animationSources[index];
+            return this.animationSources[index];
         }
 
         public Point GetSource()
@@ -185,17 +184,17 @@ namespace Tarot.Forms.MaterialSkin.Animations
                 throw new Exception("Animation is not set to Singular.");
             }
 
-            if (animationSources.Count == 0)
+            if (this.animationSources.Count == 0)
             {
                 throw new Exception("Invalid animation");
             }
 
-            return animationSources[0];
+            return this.animationSources[0];
         }
 
         public bool IsAnimating()
         {
-            return animationTimer.Enabled;
+            return this.animationTimer.Enabled;
         }
 
         public void SetData(object[] data)
@@ -205,12 +204,12 @@ namespace Tarot.Forms.MaterialSkin.Animations
                 throw new Exception("Animation is not set to Singular.");
             }
 
-            if (animationDatas.Count == 0)
+            if (this.animationDatas.Count == 0)
             {
                 throw new Exception("Invalid animation");
             }
 
-            animationDatas[0] = data;
+            this.animationDatas[0] = data;
         }
 
         public void SetDirection(AnimationDirection direction)
@@ -220,12 +219,12 @@ namespace Tarot.Forms.MaterialSkin.Animations
                 throw new Exception("Animation is not set to Singular.");
             }
 
-            if (animationProgresses.Count == 0)
+            if (this.animationProgresses.Count == 0)
             {
                 throw new Exception("Invalid animation");
             }
 
-            animationDirections[0] = direction;
+            this.animationDirections[0] = direction;
         }
 
         public void SetProgress(double progress)
@@ -235,12 +234,12 @@ namespace Tarot.Forms.MaterialSkin.Animations
                 throw new Exception("Animation is not set to Singular.");
             }
 
-            if (animationProgresses.Count == 0)
+            if (this.animationProgresses.Count == 0)
             {
                 throw new Exception("Invalid animation");
             }
 
-            animationProgresses[0] = progress;
+            this.animationProgresses[0] = progress;
         }
 
         public void StartNewAnimation(AnimationDirection animationDirection, object[] data = null)
@@ -255,59 +254,59 @@ namespace Tarot.Forms.MaterialSkin.Animations
         {
             if (!IsAnimating() || InterruptAnimation)
             {
-                if (Singular && animationDirections.Count > 0)
+                if (Singular && this.animationDirections.Count > 0)
                 {
-                    animationDirections[0] = animationDirection;
+                    this.animationDirections[0] = animationDirection;
                 }
                 else
                 {
-                    animationDirections.Add(animationDirection);
+                    this.animationDirections.Add(animationDirection);
                 }
 
-                if (Singular && animationSources.Count > 0)
+                if (Singular && this.animationSources.Count > 0)
                 {
-                    animationSources[0] = animationSource;
+                    this.animationSources[0] = animationSource;
                 }
                 else
                 {
-                    animationSources.Add(animationSource);
+                    this.animationSources.Add(animationSource);
                 }
 
-                if (!(Singular && animationProgresses.Count > 0))
+                if (!(Singular && this.animationProgresses.Count > 0))
                 {
-                    switch (animationDirections[animationDirections.Count - 1])
+                    switch (this.animationDirections[this.animationDirections.Count - 1])
                     {
                         case AnimationDirection.InOutRepeatingIn:
                         case AnimationDirection.InOutIn:
                         case AnimationDirection.In:
-                            animationProgresses.Add(MinValue);
+                            this.animationProgresses.Add(MinValue);
                             break;
                         case AnimationDirection.InOutRepeatingOut:
                         case AnimationDirection.InOutOut:
                         case AnimationDirection.Out:
-                            animationProgresses.Add(MaxValue);
+                            this.animationProgresses.Add(MaxValue);
                             break;
                         default:
                             throw new Exception("Invalid AnimationDirection");
                     }
                 }
 
-                if (Singular && animationDatas.Count > 0)
+                if (Singular && this.animationDatas.Count > 0)
                 {
-                    animationDatas[0] = data ?? new object[] {};
+                    this.animationDatas[0] = data ?? new object[] {};
                 }
                 else
                 {
-                    animationDatas.Add(data ?? new object[] {});
+                    this.animationDatas.Add(data ?? new object[] {});
                 }
             }
 
-            animationTimer.Start();
+            this.animationTimer.Start();
         }
 
         public void UpdateProgress(int index)
         {
-            switch (animationDirections[index])
+            switch (this.animationDirections[index])
             {
                 case AnimationDirection.InOutRepeatingIn:
                 case AnimationDirection.InOutIn:
@@ -326,56 +325,56 @@ namespace Tarot.Forms.MaterialSkin.Animations
 
         private void AnimationTimerOnTick(object sender, EventArgs eventArgs)
         {
-            for (var i = 0; i < animationProgresses.Count; i++)
+            for (var i = 0; i < this.animationProgresses.Count; i++)
             {
                 UpdateProgress(i);
 
                 if (!Singular)
                 {
-                    if (animationDirections[i] == AnimationDirection.InOutIn
-                        && animationProgresses[i] == MaxValue)
+                    if (this.animationDirections[i] == AnimationDirection.InOutIn
+                        && this.animationProgresses[i] == MaxValue)
                     {
-                        animationDirections[i] = AnimationDirection.InOutOut;
+                        this.animationDirections[i] = AnimationDirection.InOutOut;
                     }
-                    else if (animationDirections[i] == AnimationDirection.InOutRepeatingIn
-                             && animationProgresses[i] == MinValue)
+                    else if (this.animationDirections[i] == AnimationDirection.InOutRepeatingIn
+                             && this.animationProgresses[i] == MinValue)
                     {
-                        animationDirections[i] = AnimationDirection.InOutRepeatingOut;
+                        this.animationDirections[i] = AnimationDirection.InOutRepeatingOut;
                     }
-                    else if (animationDirections[i] == AnimationDirection.InOutRepeatingOut
-                             && animationProgresses[i] == MinValue)
+                    else if (this.animationDirections[i] == AnimationDirection.InOutRepeatingOut
+                             && this.animationProgresses[i] == MinValue)
                     {
-                        animationDirections[i] = AnimationDirection.InOutRepeatingIn;
+                        this.animationDirections[i] = AnimationDirection.InOutRepeatingIn;
                     }
-                    else if ((animationDirections[i] == AnimationDirection.In
-                              && animationProgresses[i] == MaxValue)
-                             || (animationDirections[i] == AnimationDirection.Out
-                                 && animationProgresses[i] == MinValue)
-                             || (animationDirections[i] == AnimationDirection.InOutOut
-                                 && animationProgresses[i] == MinValue))
+                    else if ((this.animationDirections[i] == AnimationDirection.In
+                              && this.animationProgresses[i] == MaxValue)
+                             || (this.animationDirections[i] == AnimationDirection.Out
+                                 && this.animationProgresses[i] == MinValue)
+                             || (this.animationDirections[i] == AnimationDirection.InOutOut
+                                 && this.animationProgresses[i] == MinValue))
                     {
-                        animationProgresses.RemoveAt(i);
-                        animationSources.RemoveAt(i);
-                        animationDirections.RemoveAt(i);
-                        animationDatas.RemoveAt(i);
+                        this.animationProgresses.RemoveAt(i);
+                        this.animationSources.RemoveAt(i);
+                        this.animationDirections.RemoveAt(i);
+                        this.animationDatas.RemoveAt(i);
                     }
                 }
                 else
                 {
-                    if (animationDirections[i] == AnimationDirection.InOutIn
-                        && animationProgresses[i] == MaxValue)
+                    if (this.animationDirections[i] == AnimationDirection.InOutIn
+                        && this.animationProgresses[i] == MaxValue)
                     {
-                        animationDirections[i] = AnimationDirection.InOutOut;
+                        this.animationDirections[i] = AnimationDirection.InOutOut;
                     }
-                    else if (animationDirections[i] == AnimationDirection.InOutRepeatingIn
-                             && animationProgresses[i] == MaxValue)
+                    else if (this.animationDirections[i] == AnimationDirection.InOutRepeatingIn
+                             && this.animationProgresses[i] == MaxValue)
                     {
-                        animationDirections[i] = AnimationDirection.InOutRepeatingOut;
+                        this.animationDirections[i] = AnimationDirection.InOutRepeatingOut;
                     }
-                    else if (animationDirections[i] == AnimationDirection.InOutRepeatingOut
-                             && animationProgresses[i] == MinValue)
+                    else if (this.animationDirections[i] == AnimationDirection.InOutRepeatingOut
+                             && this.animationProgresses[i] == MinValue)
                     {
-                        animationDirections[i] = AnimationDirection.InOutRepeatingIn;
+                        this.animationDirections[i] = AnimationDirection.InOutRepeatingIn;
                     }
                 }
             }
@@ -388,41 +387,41 @@ namespace Tarot.Forms.MaterialSkin.Animations
 
         private void DecrementProgress(int index)
         {
-            animationProgresses[index] -= animationDirections[index] == AnimationDirection.InOutOut
-                                          || animationDirections[index]
-                                          == AnimationDirection.InOutRepeatingOut
+            this.animationProgresses[index] -= this.animationDirections[index] == AnimationDirection.InOutOut
+                                               || this.animationDirections[index]
+                                               == AnimationDirection.InOutRepeatingOut
                 ? SecondaryIncrement
                 : Increment;
-            if (animationProgresses[index] < MinValue)
+            if (this.animationProgresses[index] < MinValue)
             {
-                animationProgresses[index] = MinValue;
+                this.animationProgresses[index] = MinValue;
 
                 for (var i = 0; i < GetAnimationCount(); i++)
                 {
-                    if (animationDirections[i] == AnimationDirection.InOutIn)
+                    if (this.animationDirections[i] == AnimationDirection.InOutIn)
                     {
                         return;
                     }
-                    if (animationDirections[i] == AnimationDirection.InOutRepeatingIn)
+                    if (this.animationDirections[i] == AnimationDirection.InOutRepeatingIn)
                     {
                         return;
                     }
-                    if (animationDirections[i] == AnimationDirection.InOutRepeatingOut)
+                    if (this.animationDirections[i] == AnimationDirection.InOutRepeatingOut)
                     {
                         return;
                     }
-                    if (animationDirections[i] == AnimationDirection.InOutOut
-                        && animationProgresses[i] != MinValue)
+                    if (this.animationDirections[i] == AnimationDirection.InOutOut
+                        && this.animationProgresses[i] != MinValue)
                     {
                         return;
                     }
-                    if (animationDirections[i] == AnimationDirection.Out && animationProgresses[i] != MinValue)
+                    if (this.animationDirections[i] == AnimationDirection.Out && this.animationProgresses[i] != MinValue)
                     {
                         return;
                     }
                 }
 
-                animationTimer.Stop();
+                this.animationTimer.Stop();
                 if (OnAnimationFinished != null)
                 {
                     OnAnimationFinished(this);
@@ -432,37 +431,37 @@ namespace Tarot.Forms.MaterialSkin.Animations
 
         private void IncrementProgress(int index)
         {
-            animationProgresses[index] += Increment;
-            if (animationProgresses[index] > MaxValue)
+            this.animationProgresses[index] += Increment;
+            if (this.animationProgresses[index] > MaxValue)
             {
-                animationProgresses[index] = MaxValue;
+                this.animationProgresses[index] = MaxValue;
 
                 for (var i = 0; i < GetAnimationCount(); i++)
                 {
-                    if (animationDirections[i] == AnimationDirection.InOutIn)
+                    if (this.animationDirections[i] == AnimationDirection.InOutIn)
                     {
                         return;
                     }
-                    if (animationDirections[i] == AnimationDirection.InOutRepeatingIn)
+                    if (this.animationDirections[i] == AnimationDirection.InOutRepeatingIn)
                     {
                         return;
                     }
-                    if (animationDirections[i] == AnimationDirection.InOutRepeatingOut)
+                    if (this.animationDirections[i] == AnimationDirection.InOutRepeatingOut)
                     {
                         return;
                     }
-                    if (animationDirections[i] == AnimationDirection.InOutOut
-                        && animationProgresses[i] != MaxValue)
+                    if (this.animationDirections[i] == AnimationDirection.InOutOut
+                        && this.animationProgresses[i] != MaxValue)
                     {
                         return;
                     }
-                    if (animationDirections[i] == AnimationDirection.In && animationProgresses[i] != MaxValue)
+                    if (this.animationDirections[i] == AnimationDirection.In && this.animationProgresses[i] != MaxValue)
                     {
                         return;
                     }
                 }
 
-                animationTimer.Stop();
+                this.animationTimer.Stop();
                 if (OnAnimationFinished != null)
                 {
                     OnAnimationFinished(this);

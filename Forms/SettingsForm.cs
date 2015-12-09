@@ -25,6 +25,7 @@
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+
 using Tarot.Forms.MaterialSkin;
 using Tarot.Forms.MaterialSkin.Controls;
 
@@ -54,7 +55,7 @@ namespace Tarot.Forms
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                SendMessage(Handle, WmNclbuttondown, HtCaption, 0);
             }
         }
 

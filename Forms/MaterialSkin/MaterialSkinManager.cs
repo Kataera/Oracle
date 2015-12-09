@@ -5,14 +5,14 @@ using System.Drawing.Text;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+
 using Tarot.Forms.MaterialSkin.Controls;
 using Tarot.Properties;
 
 namespace Tarot.Forms.MaterialSkin
 {
-    #region Using Directives
 
-    
+    #region Using Directives
 
     #endregion
 
@@ -51,10 +51,8 @@ namespace Tarot.Forms.MaterialSkin
         private static readonly Color CmsBackgroundDarkHover = Color.FromArgb(38, 204, 204, 204);
 
         private static readonly Brush CmsBackgroundHoverDarkBrush = new SolidBrush(CmsBackgroundDarkHover);
-
         private static readonly Color CmsBackgroundLightHover = Color.FromArgb(255, 238, 238, 238);
         private static readonly Brush CmsBackgroundHoverLightBrush = new SolidBrush(CmsBackgroundLightHover);
-
 
         //ContextMenuStrip
 
@@ -176,10 +174,10 @@ namespace Tarot.Forms.MaterialSkin
 
         private MaterialSkinManager()
         {
-            RobotoMedium12 = new Font(LoadFont(Resources.Roboto_Medium), 12f);
-            RobotoMedium10 = new Font(LoadFont(Resources.Roboto_Medium), 10f);
-            RobotoRegular11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);
-            RobotoMedium11 = new Font(LoadFont(Resources.Roboto_Medium), 11f);
+            this.RobotoMedium12 = new Font(LoadFont(Resources.Roboto_Medium), 12f);
+            this.RobotoMedium10 = new Font(LoadFont(Resources.Roboto_Medium), 10f);
+            this.RobotoRegular11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);
+            this.RobotoMedium11 = new Font(LoadFont(Resources.Roboto_Medium), 11f);
             Theme = Themes.Light;
             ColorScheme = new ColorScheme(
                 Primary.BlueGrey800,
@@ -203,27 +201,27 @@ namespace Tarot.Forms.MaterialSkin
 
         public ColorScheme ColorScheme
         {
-            get { return colorScheme; }
+            get { return this.colorScheme; }
             set
             {
-                colorScheme = value;
+                this.colorScheme = value;
                 UpdateBackgrounds();
             }
         }
 
         public Themes Theme
         {
-            get { return theme; }
+            get { return this.theme; }
             set
             {
-                theme = value;
+                this.theme = value;
                 UpdateBackgrounds();
             }
         }
 
         public void AddFormToManage(MaterialForm materialForm)
         {
-            formsToManage.Add(materialForm);
+            this.formsToManage.Add(materialForm);
             UpdateBackgrounds();
         }
 
@@ -336,7 +334,7 @@ namespace Tarot.Forms.MaterialSkin
 
         public void RemoveFormToManage(MaterialForm materialForm)
         {
-            formsToManage.Remove(materialForm);
+            this.formsToManage.Remove(materialForm);
         }
 
         [DllImport("gdi32.dll")]
@@ -350,15 +348,15 @@ namespace Tarot.Forms.MaterialSkin
 
             uint cFonts = 0;
             AddFontMemResourceEx(fontPtr, (uint) fontResource.Length, IntPtr.Zero, ref cFonts);
-            privateFontCollection.AddMemoryFont(fontPtr, dataLength);
+            this.privateFontCollection.AddMemoryFont(fontPtr, dataLength);
 
-            return privateFontCollection.Families.Last();
+            return this.privateFontCollection.Families.Last();
         }
 
         private void UpdateBackgrounds()
         {
             var newBackColor = GetApplicationBackgroundColor();
-            foreach (var materialForm in formsToManage)
+            foreach (var materialForm in this.formsToManage)
             {
                 materialForm.BackColor = newBackColor;
                 UpdateControl(materialForm, newBackColor);

@@ -3,13 +3,13 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
+
 using Tarot.Forms.MaterialSkin.Animations;
 
 namespace Tarot.Forms.MaterialSkin.Controls
 {
-    #region Using Directives
 
-    
+    #region Using Directives
 
     #endregion
 
@@ -25,17 +25,18 @@ namespace Tarot.Forms.MaterialSkin.Controls
         {
             Primary = false;
 
-            animationManager = new AnimationManager(false)
+            this.animationManager = new AnimationManager(false)
             {
                 Increment = 0.03,
                 AnimationType = AnimationType.EaseOut
             };
-            hoverAnimationManager = new AnimationManager {Increment = 0.07, AnimationType = AnimationType.Linear};
+            this.hoverAnimationManager = new AnimationManager {Increment = 0.07, AnimationType = AnimationType.Linear};
 
-            hoverAnimationManager.OnAnimationProgress += sender => Invalidate();
-            animationManager.OnAnimationProgress += sender => Invalidate();
+            this.hoverAnimationManager.OnAnimationProgress += sender => Invalidate();
+            this.animationManager.OnAnimationProgress += sender => Invalidate();
 
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
+
             //AutoSize = true;
             Margin = new Padding(4, 6, 4, 6);
             Padding = new Padding(0);
@@ -61,7 +62,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
             set
             {
                 base.Text = value;
-                textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.RobotoMedium10);
+                this.textSize = CreateGraphics().MeasureString(value.ToUpper(), SkinManager.RobotoMedium10);
                 if (AutoSize)
                 {
                     Size = GetPreferredSize();
@@ -72,7 +73,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
         public override Size GetPreferredSize(Size proposedSize)
         {
-            return new Size((int) textSize.Width + 8, 36);
+            return new Size((int) this.textSize.Width + 8, 36);
         }
 
         protected override void OnCreateControl()
@@ -87,13 +88,13 @@ namespace Tarot.Forms.MaterialSkin.Controls
             MouseEnter += (sender, args) =>
             {
                 MouseState = MouseState.Hover;
-                hoverAnimationManager.StartNewAnimation(AnimationDirection.In);
+                this.hoverAnimationManager.StartNewAnimation(AnimationDirection.In);
                 Invalidate();
             };
             MouseLeave += (sender, args) =>
             {
                 MouseState = MouseState.Out;
-                hoverAnimationManager.StartNewAnimation(AnimationDirection.Out);
+                this.hoverAnimationManager.StartNewAnimation(AnimationDirection.Out);
                 Invalidate();
             };
             MouseDown += (sender, args) =>
@@ -102,7 +103,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 {
                     MouseState = MouseState.Down;
 
-                    animationManager.StartNewAnimation(AnimationDirection.In, args.Location);
+                    this.animationManager.StartNewAnimation(AnimationDirection.In, args.Location);
                     Invalidate();
                 }
             };
@@ -126,30 +127,30 @@ namespace Tarot.Forms.MaterialSkin.Controls
             using (
                 Brush b =
                     new SolidBrush(
-                        Color.FromArgb((int) (hoverAnimationManager.GetProgress()*c.A), c.RemoveAlpha())))
+                        Color.FromArgb((int) (this.hoverAnimationManager.GetProgress() * c.A), c.RemoveAlpha())))
             {
                 g.FillRectangle(b, ClientRectangle);
             }
 
             //Ripple
-            if (animationManager.IsAnimating())
+            if (this.animationManager.IsAnimating())
             {
                 g.SmoothingMode = SmoothingMode.AntiAlias;
-                for (var i = 0; i < animationManager.GetAnimationCount(); i++)
+                for (var i = 0; i < this.animationManager.GetAnimationCount(); i++)
                 {
-                    var animationValue = animationManager.GetProgress(i);
-                    var animationSource = animationManager.GetSource(i);
+                    var animationValue = this.animationManager.GetProgress(i);
+                    var animationSource = this.animationManager.GetSource(i);
 
                     using (
                         Brush rippleBrush =
-                            new SolidBrush(Color.FromArgb((int) (101 - animationValue*100), Color.Black)))
+                            new SolidBrush(Color.FromArgb((int) (101 - animationValue * 100), Color.Black)))
                     {
-                        var rippleSize = (int) (animationValue*Width*2);
+                        var rippleSize = (int) (animationValue * Width * 2);
                         g.FillEllipse(
                             rippleBrush,
                             new Rectangle(
-                                animationSource.X - rippleSize/2,
-                                animationSource.Y - rippleSize/2,
+                                animationSource.X - rippleSize / 2,
+                                animationSource.Y - rippleSize / 2,
                                 rippleSize,
                                 rippleSize));
                     }

@@ -25,11 +25,14 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Buddy.Coroutines;
+
 using ff14bot;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+
 using Tarot.Behaviour.Tasks.Utilities;
 using Tarot.Helpers;
 
@@ -76,7 +79,7 @@ namespace Tarot.Behaviour.Tasks
             Poi.Clear("Moving back into FATE area.");
 
             while (Core.Player.Distance2D(FateManager.GetFateById(attacker.FateId).Location)
-                   > FateManager.GetFateById(attacker.FateId).Radius*0.75f)
+                   > FateManager.GetFateById(attacker.FateId).Radius * 0.75f)
             {
                 Navigator.MoveTo(FateManager.GetFateById(attacker.FateId).Location);
                 await Coroutine.Yield();

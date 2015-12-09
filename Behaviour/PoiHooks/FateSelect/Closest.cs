@@ -24,11 +24,14 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+
 using ff14bot;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+
 using NeoGaia.ConnectionHandler;
+
 using Tarot.Enumerations;
 using Tarot.Helpers;
 using Tarot.Settings;

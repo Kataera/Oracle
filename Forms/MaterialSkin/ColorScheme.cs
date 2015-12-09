@@ -2,9 +2,8 @@
 
 namespace Tarot.Forms.MaterialSkin
 {
-    #region Using Directives
 
-    
+    #region Using Directives
 
     #endregion
 
@@ -44,25 +43,25 @@ namespace Tarot.Forms.MaterialSkin
             TextShade textShade)
         {
             // Color
-            PrimaryColor = ((int) primary).ToColor();
-            DarkPrimaryColor = ((int) darkPrimary).ToColor();
-            LightPrimaryColor = ((int) lightPrimary).ToColor();
-            AccentColor = ((int) accent).ToColor();
-            TextColor = ((int) textShade).ToColor();
+            this.PrimaryColor = ((int) primary).ToColor();
+            this.DarkPrimaryColor = ((int) darkPrimary).ToColor();
+            this.LightPrimaryColor = ((int) lightPrimary).ToColor();
+            this.AccentColor = ((int) accent).ToColor();
+            this.TextColor = ((int) textShade).ToColor();
 
             // Pen
-            PrimaryPen = new Pen(PrimaryColor);
-            DarkPrimaryPen = new Pen(DarkPrimaryColor);
-            LightPrimaryPen = new Pen(LightPrimaryColor);
-            AccentPen = new Pen(AccentColor);
-            TextPen = new Pen(TextColor);
+            this.PrimaryPen = new Pen(this.PrimaryColor);
+            this.DarkPrimaryPen = new Pen(this.DarkPrimaryColor);
+            this.LightPrimaryPen = new Pen(this.LightPrimaryColor);
+            this.AccentPen = new Pen(this.AccentColor);
+            this.TextPen = new Pen(this.TextColor);
 
             // Brush
-            PrimaryBrush = new SolidBrush(PrimaryColor);
-            DarkPrimaryBrush = new SolidBrush(DarkPrimaryColor);
-            LightPrimaryBrush = new SolidBrush(LightPrimaryColor);
-            AccentBrush = new SolidBrush(AccentColor);
-            TextBrush = new SolidBrush(TextColor);
+            this.PrimaryBrush = new SolidBrush(this.PrimaryColor);
+            this.DarkPrimaryBrush = new SolidBrush(this.DarkPrimaryColor);
+            this.LightPrimaryBrush = new SolidBrush(this.LightPrimaryColor);
+            this.AccentBrush = new SolidBrush(this.AccentColor);
+            this.TextBrush = new SolidBrush(this.TextColor);
         }
     }
 
@@ -76,7 +75,7 @@ namespace Tarot.Forms.MaterialSkin
         /// </returns>
         public static int PercentageToColorComponent(this int percentage)
         {
-            return (int) (percentage/100d*255d);
+            return (int) (percentage / 100d * 255d);
         }
 
         /// <summary>

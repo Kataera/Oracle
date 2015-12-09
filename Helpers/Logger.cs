@@ -23,7 +23,9 @@
 */
 
 using System.Windows.Media;
+
 using ff14bot.Helpers;
+
 using Tarot.Settings;
 
 namespace Tarot.Helpers

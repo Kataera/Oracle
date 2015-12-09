@@ -24,6 +24,7 @@
 
 using System;
 using System.Collections.Generic;
+
 using Tarot.Data.FateTypes;
 using Tarot.Enumerations;
 using Tarot.Helpers;
@@ -36,7 +37,7 @@ namespace Tarot.Data
 
         public FateDatabase()
         {
-            fateDatabase = new Dictionary<uint, Fate>();
+            this.fateDatabase = new Dictionary<uint, Fate>();
         }
 
         public FateDatabase(Dictionary<uint, Fate> fateDatabase)
@@ -54,7 +55,7 @@ namespace Tarot.Data
 
             try
             {
-                fateDatabase.Add(fate.Id, fate);
+                this.fateDatabase.Add(fate.Id, fate);
             }
             catch (ArgumentNullException exception)
             {
@@ -73,7 +74,7 @@ namespace Tarot.Data
             Fate fate;
             try
             {
-                if (fateDatabase.TryGetValue(id, out fate))
+                if (this.fateDatabase.TryGetValue(id, out fate))
                 {
                     return fate;
                 }

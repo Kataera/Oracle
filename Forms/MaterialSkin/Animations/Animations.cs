@@ -2,9 +2,8 @@
 
 namespace Tarot.Forms.MaterialSkin.Animations
 {
-    #region Using Directives
 
-    
+    #region Using Directives
 
     #endregion
 
@@ -31,7 +30,7 @@ namespace Tarot.Forms.MaterialSkin.Animations
     {
         public static double Pi = Math.PI;
 
-        public static double PiHalf = Math.PI/2;
+        public static double PiHalf = Math.PI / 2;
 
         public static double CalculateProgress(double progress)
         {
@@ -40,7 +39,7 @@ namespace Tarot.Forms.MaterialSkin.Animations
 
         private static double EaseInOut(double s)
         {
-            return s - Math.Sin(s*2*Pi)/(2*Pi);
+            return s - Math.Sin(s * 2 * Pi) / (2 * Pi);
         }
     }
 
@@ -48,7 +47,7 @@ namespace Tarot.Forms.MaterialSkin.Animations
     {
         public static double CalculateProgress(double progress)
         {
-            return -1*progress*(progress - 2);
+            return -1 * progress * (progress - 2);
         }
     }
 
@@ -57,7 +56,7 @@ namespace Tarot.Forms.MaterialSkin.Animations
         public static double CalculateProgress(double progress)
         {
             var kickoff = 0.6;
-            return 1 - Math.Cos((Math.Max(progress, kickoff) - kickoff)*Math.PI/(2 - 2*kickoff));
+            return 1 - Math.Cos((Math.Max(progress, kickoff) - kickoff) * Math.PI / (2 - 2 * kickoff));
         }
     }
 }

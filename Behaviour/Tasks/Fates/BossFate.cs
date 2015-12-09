@@ -25,10 +25,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using ff14bot;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Objects;
+
 using Tarot.Helpers;
 using Tarot.Settings;
 
@@ -80,19 +82,19 @@ namespace Tarot.Behaviour.Tasks.Fates
             // Order by max hp, then the mobs' current hp, then finally by distance.
             return
                 currentFateMobs.OrderByDescending(mob => mob.MaxHealth)
-                    .ThenByDescending(mob => mob.CurrentHealth)
-                    .ThenBy(mob => Core.Me.Distance(mob.Location))
-                    .FirstOrDefault(mob => Tarot.CurrentFate.Within2D(mob.Location));
+                               .ThenByDescending(mob => mob.CurrentHealth)
+                               .ThenBy(mob => Core.Me.Distance(mob.Location))
+                               .FirstOrDefault(mob => Tarot.CurrentFate.Within2D(mob.Location));
         }
 
         private static void PopulateTargetList()
         {
             currentFateMobs =
                 GameObjectManager.GetObjectsOfType<BattleCharacter>()
-                    .Where(
-                        mob =>
-                            mob.IsFate && !mob.IsFateGone && mob.CanAttack
-                            && mob.FateId == Tarot.CurrentFate.Id);
+                                 .Where(
+                                     mob =>
+                                         mob.IsFate && !mob.IsFateGone && mob.CanAttack
+                                         && mob.FateId == Tarot.CurrentFate.Id);
         }
     }
 }

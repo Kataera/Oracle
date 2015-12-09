@@ -23,6 +23,7 @@
 */
 
 using System.Threading.Tasks;
+
 using Tarot.Behaviour.PoiHooks.WaitSelect;
 using Tarot.Enumerations;
 using Tarot.Helpers;
@@ -46,10 +47,12 @@ namespace Tarot.Behaviour.PoiHooks
                     break;
 
                 case FateIdleMode.GrindMobs:
+
                     //await GrindMobs.Main();
                     break;
 
                 case FateIdleMode.WaitForFates:
+
                     //await WaitForFates.Main();
                     break;
 

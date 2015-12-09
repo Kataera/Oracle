@@ -4,9 +4,8 @@ using System.Windows.Forms;
 
 namespace Tarot.Forms.MaterialSkin.Controls
 {
-    #region Using Directives
 
-    
+    #region Using Directives
 
     #endregion
 
@@ -82,8 +81,8 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 new Rectangle(
                     e.Bounds.X + ItemPadding,
                     e.Bounds.Y + ItemPadding,
-                    e.Bounds.Width - ItemPadding*2,
-                    e.Bounds.Height - ItemPadding*2),
+                    e.Bounds.Width - ItemPadding * 2,
+                    e.Bounds.Height - ItemPadding * 2),
                 GetStringFormat());
         }
 
@@ -126,8 +125,8 @@ namespace Tarot.Forms.MaterialSkin.Controls
                     new Rectangle(
                         subItem.Bounds.Location.X + ItemPadding,
                         ItemPadding,
-                        subItem.Bounds.Width - 2*ItemPadding,
-                        subItem.Bounds.Height - 2*ItemPadding),
+                        subItem.Bounds.Width - 2 * ItemPadding,
+                        subItem.Bounds.Height - 2 * ItemPadding),
                     GetStringFormat());
             }
 

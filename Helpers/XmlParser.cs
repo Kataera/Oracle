@@ -26,6 +26,7 @@ using System;
 using System.IO;
 using System.Xml;
 using System.Xml.Schema;
+
 using Tarot.Data;
 using Tarot.Data.FateTypes;
 using Tarot.Enumerations;

@@ -23,7 +23,9 @@
 */
 
 using System.Threading.Tasks;
+
 using ff14bot.Helpers;
+
 using Tarot.Behaviour.Tasks.Idles;
 using Tarot.Enumerations;
 using Tarot.Helpers;

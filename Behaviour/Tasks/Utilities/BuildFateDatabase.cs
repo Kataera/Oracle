@@ -23,6 +23,7 @@
 */
 
 using System.Threading.Tasks;
+
 using Tarot.Helpers;
 
 namespace Tarot.Behaviour.Tasks.Utilities

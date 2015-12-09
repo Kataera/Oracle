@@ -24,8 +24,10 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+
 using ff14bot.Helpers;
 using ff14bot.Managers;
+
 using Tarot.Behaviour.PoiHooks.FateSelect;
 using Tarot.Enumerations;
 using Tarot.Helpers;
@@ -60,16 +62,19 @@ namespace Tarot.Behaviour.PoiHooks
                     break;
 
                 case FateSelectMode.TypePriority:
+
                     // TODO: Implement.
                     await Closest.Main();
                     break;
 
                 case FateSelectMode.ChainPriority:
+
                     // TODO: Implement.
                     await Closest.Main();
                     break;
 
                 case FateSelectMode.TypeAndChainPriority:
+
                     // TODO: Implement.
                     await Closest.Main();
                     break;
@@ -105,14 +110,14 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static bool PreviousFateChainedOnFailure()
         {
-            if (Tarot.PreviousFate != null)
+            if (Tarot.PreviousFate == null)
             {
-                var chainIdFailure = Tarot.FateDatabase.GetFateWithId(Tarot.PreviousFate.Id).ChainIdFailure;
+                return false;
+            }
 
-                if (chainIdFailure != 0)
-                {
-                    return true;
-                }
+            if (Tarot.FateDatabase.GetFateWithId(Tarot.PreviousFate.Id).ChainIdFailure != 0)
+            {
+                return true;
             }
 
             return false;
@@ -120,14 +125,14 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static bool PreviousFateChainedOnSuccess()
         {
-            if (Tarot.PreviousFate != null)
+            if (Tarot.PreviousFate == null)
             {
-                var chainIdSuccess = Tarot.FateDatabase.GetFateWithId(Tarot.PreviousFate.Id).ChainIdSuccess;
+                return false;
+            }
 
-                if (chainIdSuccess != 0)
-                {
-                    return true;
-                }
+            if (Tarot.FateDatabase.GetFateWithId(Tarot.PreviousFate.Id).ChainIdSuccess != 0)
+            {
+                return true;
             }
 
             return false;
@@ -135,69 +140,72 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static async Task<bool> SelectChainFate()
         {
-            if (Tarot.PreviousFate != null)
+            if (Tarot.PreviousFate == null)
             {
-                var chainIdSuccess = Tarot.FateDatabase.GetFateWithId(Tarot.PreviousFate.Id).ChainIdSuccess;
-                var chainIdFailure = Tarot.FateDatabase.GetFateWithId(Tarot.PreviousFate.Id).ChainIdFailure;
+                return false;
+            }
 
-                // If there's a success chain only.
-                if (chainIdSuccess != 0 && chainIdFailure == 0)
+            var chainIdSuccess = Tarot.FateDatabase.GetFateWithId(Tarot.PreviousFate.Id).ChainIdSuccess;
+            var chainIdFailure = Tarot.FateDatabase.GetFateWithId(Tarot.PreviousFate.Id).ChainIdFailure;
+
+            // If there's a success chain only.
+            if (chainIdSuccess != 0 && chainIdFailure == 0)
+            {
+                Logger.SendLog("Waiting for the follow up FATE.");
+                var chainSuccess = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainIdSuccess);
+
+                if (chainSuccess == null)
                 {
-                    Logger.SendLog("Waiting for the follow up FATE.");
-                    var chainSuccess = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainIdSuccess);
+                    return false;
+                }
 
-                    if (chainSuccess == null)
-                    {
-                        return false;
-                    }
+                Logger.SendLog("Selected FATE: '" + chainSuccess.Name + "'.");
+                Tarot.CurrentFate = chainSuccess;
+                Poi.Current = new Poi(chainSuccess, PoiType.Fate);
+                return true;
+            }
 
+            // If there's a fail chain only.
+            if (chainIdSuccess == 0 && chainIdFailure != 0)
+            {
+                Logger.SendLog("Waiting for the follow up FATE.");
+                var chainFail = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainIdFailure);
+
+                if (chainFail == null)
+                {
+                    return false;
+                }
+
+                Logger.SendLog("Selected FATE: '" + chainFail.Name + "'.");
+                Tarot.CurrentFate = chainFail;
+                Poi.Current = new Poi(chainFail, PoiType.Fate);
+                return true;
+            }
+
+            // If there's both.
+            if (chainIdSuccess != 0 && chainIdFailure != 0)
+            {
+                Logger.SendLog("Waiting for the follow up FATE.");
+                var chainSuccess = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainIdSuccess);
+                var chainFail = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainIdFailure);
+
+                if (chainSuccess == null && chainFail == null)
+                {
+                    return false;
+                }
+
+                if (chainSuccess != null && chainFail == null)
+                {
                     Logger.SendLog("Selected FATE: '" + chainSuccess.Name + "'.");
                     Tarot.CurrentFate = chainSuccess;
                     Poi.Current = new Poi(chainSuccess, PoiType.Fate);
                     return true;
                 }
 
-                // If there's a fail chain only.
-                if (chainIdSuccess == 0 && chainIdFailure != 0)
-                {
-                    Logger.SendLog("Waiting for the follow up FATE.");
-                    var chainFail = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainIdFailure);
-
-                    if (chainFail == null)
-                    {
-                        return false;
-                    }
-
-                    Logger.SendLog("Selected FATE: '" + chainFail.Name + "'.");
-                    Tarot.CurrentFate = chainFail;
-                    Poi.Current = new Poi(chainFail, PoiType.Fate);
-                    return true;
-                }
-
-                // If there's both.
-                if (chainIdSuccess != 0 && chainIdFailure != 0)
-                {
-                    Logger.SendLog("Waiting for the follow up FATE.");
-                    var chainSuccess = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainIdSuccess);
-                    var chainFail = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainIdFailure);
-
-                    if (chainSuccess == null && chainFail == null)
-                    {
-                        return false;
-                    }
-
-                    if (chainSuccess != null && chainFail == null)
-                    {
-                        Logger.SendLog("Selected FATE: '" + chainSuccess.Name + "'.");
-                        Tarot.CurrentFate = chainSuccess;
-                        Poi.Current = new Poi(chainSuccess, PoiType.Fate);
-                        return true;
-                    }
-                    Logger.SendLog("Selected FATE: '" + chainFail.Name + "'.");
-                    Tarot.CurrentFate = chainFail;
-                    Poi.Current = new Poi(chainFail, PoiType.Fate);
-                    return true;
-                }
+                Logger.SendLog("Selected FATE: '" + chainFail.Name + "'.");
+                Tarot.CurrentFate = chainFail;
+                Poi.Current = new Poi(chainFail, PoiType.Fate);
+                return true;
             }
 
             return false;

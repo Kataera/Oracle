@@ -23,8 +23,10 @@
 */
 
 using System.Threading.Tasks;
+
 using Tarot.Behaviour.Tasks;
 using Tarot.Behaviour.Tasks.Utilities;
+
 using TreeSharp;
 
 namespace Tarot.Behaviour
