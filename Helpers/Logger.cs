@@ -22,45 +22,41 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Windows.Media;
+
+using ff14bot.Helpers;
+
+using Tarot.Settings;
+
 namespace Tarot.Helpers
 {
-    using System;
-    using System.Reflection;
-    using System.Windows.Media;
-
-    using ff14bot.Helpers;
-
-    using global::Tarot.Settings;
-
     internal static class Logger
     {
-        private static readonly Color LoggerRegularColour = Color.FromRgb(179, 179, 255);
+        private static readonly Color LoggerDebugColour = Color.FromRgb(238, 223, 88);
 
         private static readonly Color LoggerErrorColour = Color.FromRgb(255, 25, 117);
 
-        private static readonly Color LoggerDebugColour = Color.FromRgb(255, 153, 0);
-
-        private static readonly Version Version = Assembly.GetExecutingAssembly().GetName().Version;
-
-        internal static void SendLog(string log)
-        {
-            var prefix = "[" + Tarot.BotName + " v" + Version + "]: ";
-            Logging.Write(LoggerRegularColour, prefix + log);
-        }
-
-        internal static void SendErrorLog(string log)
-        {
-            var prefix = "[" + Tarot.BotName + " v" + Version + "] [ERROR]: ";
-            Logging.Write(LoggerErrorColour, prefix + log);
-        }
+        private static readonly Color LoggerRegularColour = Color.FromRgb(179, 179, 255);
 
         internal static void SendDebugLog(string log)
         {
             if (TarotSettings.Instance.DebugEnabled)
             {
-                var prefix = "[" + Tarot.BotName + " v" + Version + "] [DEBUG]: ";
+                var prefix = "[" + Tarot.Instance.Name + " v" + Tarot.Version + "] [DEBUG]: ";
                 Logging.Write(LoggerDebugColour, prefix + log);
             }
+        }
+
+        internal static void SendErrorLog(string log)
+        {
+            var prefix = "[" + Tarot.Instance.Name + " v" + Tarot.Version + "] [ERROR]: ";
+            Logging.Write(LoggerErrorColour, prefix + log);
+        }
+
+        internal static void SendLog(string log)
+        {
+            var prefix = "[" + Tarot.Instance.Name + " v" + Tarot.Version + "]: ";
+            Logging.Write(LoggerRegularColour, prefix + log);
         }
     }
 }

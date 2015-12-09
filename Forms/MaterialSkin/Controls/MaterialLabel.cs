@@ -1,9 +1,10 @@
-﻿namespace MaterialSkin.Controls
-{
-    #region Using Directives
+﻿using System.ComponentModel;
+using System.Windows.Forms;
 
-    using System.ComponentModel;
-    using System.Windows.Forms;
+namespace Tarot.Forms.MaterialSkin.Controls
+{
+
+    #region Using Directives
 
     #endregion
 
@@ -13,25 +14,22 @@
         public int Depth { get; set; }
 
         [Browsable(false)]
-        public MaterialSkinManager SkinManager
-        {
-            get
-            {
-                return MaterialSkinManager.Instance;
-            }
-        }
+        public MouseState MouseState { get; set; }
 
         [Browsable(false)]
-        public MouseState MouseState { get; set; }
+        public MaterialSkinManager SkinManager
+        {
+            get { return MaterialSkinManager.Instance; }
+        }
 
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
 
-            this.ForeColor = this.SkinManager.GetPrimaryTextColor();
-            this.Font = this.SkinManager.RobotoRegular11;
+            ForeColor = SkinManager.GetPrimaryTextColor();
+            Font = SkinManager.RobotoRegular11;
 
-            this.BackColorChanged += (sender, args) => this.ForeColor = this.SkinManager.GetPrimaryTextColor();
+            BackColorChanged += (sender, args) => ForeColor = SkinManager.GetPrimaryTextColor();
         }
     }
 }

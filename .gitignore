@@ -244,3 +244,5 @@ TarotTest/
 
 # Tarot solution
 Tarot.sln
+Properties/AssemblyInfo.cs
+Known Issues.txt

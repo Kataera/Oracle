@@ -1,14 +1,30 @@
-﻿namespace MaterialSkin
-{
-    #region Using Directives
+﻿using System.Drawing;
+using System.Drawing.Drawing2D;
 
-    using System.Drawing;
-    using System.Drawing.Drawing2D;
+namespace Tarot.Forms.MaterialSkin
+{
+
+    #region Using Directives
 
     #endregion
 
     internal static class DrawHelper
     {
+        public static Color BlendColor(Color backgroundColor, Color frontColor, double blend)
+        {
+            var ratio = blend / 255d;
+            var invRatio = 1d - ratio;
+            var r = (int) (backgroundColor.R * invRatio + frontColor.R * ratio);
+            var g = (int) (backgroundColor.G * invRatio + frontColor.G * ratio);
+            var b = (int) (backgroundColor.B * invRatio + frontColor.B * ratio);
+            return Color.FromArgb(r, g, b);
+        }
+
+        public static Color BlendColor(Color backgroundColor, Color frontColor)
+        {
+            return BlendColor(backgroundColor, frontColor, frontColor.A);
+        }
+
         public static GraphicsPath CreateRoundRect(float x, float y, float width, float height, float radius)
         {
             var gp = new GraphicsPath();
@@ -27,21 +43,6 @@
         public static GraphicsPath CreateRoundRect(Rectangle rect, float radius)
         {
             return CreateRoundRect(rect.X, rect.Y, rect.Width, rect.Height, radius);
-        }
-
-        public static Color BlendColor(Color backgroundColor, Color frontColor, double blend)
-        {
-            var ratio = blend / 255d;
-            var invRatio = 1d - ratio;
-            var r = (int) (backgroundColor.R * invRatio + frontColor.R * ratio);
-            var g = (int) (backgroundColor.G * invRatio + frontColor.G * ratio);
-            var b = (int) (backgroundColor.B * invRatio + frontColor.B * ratio);
-            return Color.FromArgb(r, g, b);
-        }
-
-        public static Color BlendColor(Color backgroundColor, Color frontColor)
-        {
-            return BlendColor(backgroundColor, frontColor, frontColor.A);
         }
     }
 }

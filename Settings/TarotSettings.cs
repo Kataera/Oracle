@@ -22,32 +22,41 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
+using System.IO;
+
+using Clio.Utilities;
+
+using ff14bot.Helpers;
+
+using Tarot.Enumerations;
+
 namespace Tarot.Settings
 {
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Configuration;
-    using System.IO;
-
-    using Clio.Utilities;
-
-    using ff14bot.Helpers;
-
-    using global::Tarot.Enumerations;
-
     internal sealed class TarotSettings : JsonSettings
     {
-        private static readonly object SyncRootObject = new object();
-
+        private static readonly object SyncRoot = new object();
         private static volatile TarotSettings instance;
 
-        public Dictionary<ushort, Vector3> FateWaitLocations;
+        public Dictionary<uint, Vector3> FateWaitLocations;
+
+        private int bossEngagePercentage;
 
         private bool debugEnabled;
 
-        private bool exBuddyFlightEnabled;
+        private FateIdleMode fateIdleMode;
 
-        private int fateIdleMode;
+        private FateSelectMode fateSelectMode;
+
+        private bool listHooksOnStart;
+
+        private int megaBossEngagePercentage;
+
+        private bool runProblematicFates;
+
+        private bool waitAtFateForProgress;
 
         private bool waitForChainFates;
 
@@ -56,7 +65,7 @@ namespace Tarot.Settings
         {
             if (this.FateWaitLocations == null)
             {
-                this.FateWaitLocations = new Dictionary<ushort, Vector3>();
+                this.FateWaitLocations = new Dictionary<uint, Vector3>();
             }
         }
 
@@ -66,7 +75,7 @@ namespace Tarot.Settings
             {
                 if (instance == null)
                 {
-                    lock (SyncRootObject)
+                    lock (SyncRoot)
                     {
                         if (instance == null)
                         {
@@ -79,35 +88,107 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(true)]
+        [DefaultValue(0)]
         [Setting]
-        public bool DebugEnabled
+        public int BossEngagePercentage
         {
-            get
-            {
-                return this.debugEnabled;
-            }
+            get { return this.bossEngagePercentage; }
 
             set
             {
-                this.debugEnabled = value;
-                this.Save();
+                this.bossEngagePercentage = value;
+                Save();
             }
         }
 
         [DefaultValue(true)]
         [Setting]
-        public bool ExBuddyFlightEnabled
+        public bool DebugEnabled
         {
-            get
-            {
-                return this.exBuddyFlightEnabled;
-            }
+            get { return this.debugEnabled; }
 
             set
             {
-                this.exBuddyFlightEnabled = value;
-                this.Save();
+                this.debugEnabled = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(FateIdleMode.ReturnToAetheryte)]
+        [Setting]
+        public FateIdleMode FateIdleMode
+        {
+            get { return this.fateIdleMode; }
+
+            set
+            {
+                this.fateIdleMode = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(FateSelectMode.Closest)]
+        [Setting]
+        public FateSelectMode FateSelectMode
+        {
+            get { return this.fateSelectMode; }
+
+            set
+            {
+                this.fateSelectMode = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool ListHooksOnStart
+        {
+            get { return this.listHooksOnStart; }
+
+            set
+            {
+                this.listHooksOnStart = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(20)]
+        [Setting]
+        public int MegaBossEngagePercentage
+        {
+            get { return this.megaBossEngagePercentage; }
+
+            set
+            {
+                this.megaBossEngagePercentage = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool RunProblematicFates
+        {
+            get { return this.runProblematicFates; }
+
+            set
+            {
+                this.runProblematicFates = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool WaitAtFateForProgress
+        {
+            get { return this.waitAtFateForProgress; }
+
+            set
+            {
+                this.waitAtFateForProgress = value;
+                Save();
             }
         }
 
@@ -115,31 +196,12 @@ namespace Tarot.Settings
         [Setting]
         public bool WaitForChainFates
         {
-            get
-            {
-                return this.waitForChainFates;
-            }
+            get { return this.waitForChainFates; }
 
             set
             {
                 this.waitForChainFates = value;
-                this.Save();
-            }
-        }
-
-        [DefaultValue(FateIdle.ReturnToAetheryte)]
-        [Setting]
-        public int FateIdleMode
-        {
-            get
-            {
-                return this.fateIdleMode;
-            }
-
-            set
-            {
-                this.fateIdleMode = value;
-                this.Save();
+                Save();
             }
         }
     }

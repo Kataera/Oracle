@@ -22,31 +22,27 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Coroutines
+using System.Threading.Tasks;
+
+using Tarot.Helpers;
+
+namespace Tarot.Behaviour.Tasks.Utilities
 {
-    using System.Threading.Tasks;
-
-    using TreeSharp;
-
-    internal static class KillFate
+    internal static class BuildFateDatabase
     {
-        public static ActionRunCoroutine Coroutine
+        public static async Task<bool> Main()
         {
-            get
+            // Make sure we actually need to populate the data, since XML parsing is very expensive.
+            if (Tarot.FateDatabase != null)
             {
-                return CreateCoroutine();
+                return true;
             }
-        }
 
-        private static async Task<bool> KillFateTask()
-        {
-            // TODO: Write fate task.
+            Logger.SendLog("Building " + Tarot.Instance.Name + "'s FATE database, this may take a few seconds.");
+            Tarot.FateDatabase = XmlParser.GetFateDatabase(true);
+            Logger.SendLog(Tarot.Instance.Name + "'s FATE database has been built successfully.");
+
             return true;
-        }
-
-        private static ActionRunCoroutine CreateCoroutine()
-        {
-            return new ActionRunCoroutine(coroutine => KillFateTask());
         }
     }
 }

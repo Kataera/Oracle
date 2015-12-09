@@ -22,31 +22,42 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Coroutines
+using System.Threading.Tasks;
+
+using Tarot.Behaviour.Tasks;
+using Tarot.Behaviour.Tasks.Utilities;
+
+using TreeSharp;
+
+namespace Tarot.Behaviour
 {
-    using System.Threading.Tasks;
-
-    using TreeSharp;
-
-    internal static class MegaBossFate
+    internal static class TarotBehaviour
     {
-        public static ActionRunCoroutine Coroutine
+        public static Composite Behaviour
         {
-            get
+            get { return CreateBehaviour(); }
+        }
+
+        private static Composite CreateBehaviour()
+        {
+            return new ActionRunCoroutine(coroutine => Main());
+        }
+
+        private static async Task<bool> Main()
+        {
+            // Check that the FATE database has been populated.
+            if (Tarot.FateDatabase == null)
             {
-                return CreateCoroutine();
+                await BuildFateDatabase.Main();
             }
-        }
 
-        private static async Task<bool> MegaBossFateTask()
-        {
-            // TODO: Write fate task.
-            return true;
-        }
+            await CombatHandler.Main();
+            await ClearFateIfFinished.Main();
+            await FateHandler.Main();
+            await IdleHandler.Main();
 
-        private static ActionRunCoroutine CreateCoroutine()
-        {
-            return new ActionRunCoroutine(coroutine => MegaBossFateTask());
+            // Always return false to not block the tree.
+            return false;
         }
     }
 }

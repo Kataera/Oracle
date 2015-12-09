@@ -22,16 +22,9 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Enumerations
+namespace Tarot.Behaviour.PoiHooks.FateSelect
 {
-    internal enum FateIdle
+    internal static class ChainAndTypePriority
     {
-        ReturnToAetheryte,
-
-        MoveToWaitLocation,
-
-        Patrol,
-
-        Nothing
     }
 }
