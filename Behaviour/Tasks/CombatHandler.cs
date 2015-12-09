@@ -42,7 +42,7 @@ namespace Tarot.Behaviour.Tasks
     {
         public static async Task<bool> Main()
         {
-            if (Poi.Current != null && GameObjectManager.Attackers.Any())
+            if (Poi.Current != null && GameObjectManager.Attackers.Any(check => !check.IsFateGone))
             {
                 if (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait)
                 {
