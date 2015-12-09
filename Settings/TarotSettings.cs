@@ -43,8 +43,6 @@ namespace Tarot.Settings
 
         private bool debugEnabled;
 
-        private bool exBuddyFlightEnabled;
-
         private int fateIdleMode;
 
         private int fateSelectMode;
@@ -101,22 +99,6 @@ namespace Tarot.Settings
             set
             {
                 this.debugEnabled = value;
-                this.Save();
-            }
-        }
-
-        [DefaultValue(true)]
-        [Setting]
-        public bool ExBuddyFlightEnabled
-        {
-            get
-            {
-                return this.exBuddyFlightEnabled;
-            }
-
-            set
-            {
-                this.exBuddyFlightEnabled = value;
                 this.Save();
             }
         }
@@ -201,7 +183,7 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(10)]
+        [DefaultValue(0)]
         [Setting]
         public int BossEngagePercentage
         {
@@ -233,7 +215,7 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         [Setting]
         public bool WaitAtFateForProgress
         {
