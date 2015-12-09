@@ -67,6 +67,11 @@ namespace Tarot.Behaviour.Tasks
 
         private static bool LevelSyncNeeded()
         {
+            if (Poi.Current == null)
+            {
+                return false;
+            }
+
             var fateId = Poi.Current.BattleCharacter.FateId;
             var fate = FateManager.GetFateById(fateId);
 
