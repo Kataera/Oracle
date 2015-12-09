@@ -22,11 +22,11 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Poi
+namespace Tarot.Behaviour.PoiHooks
 {
     using System.Threading.Tasks;
 
-    using global::Tarot.Behaviour.Tasks.Idles;
+    using global::Tarot.Behaviour.PoiHooks.WaitSelect;
     using global::Tarot.Enumerations;
     using global::Tarot.Helpers;
     using global::Tarot.Settings;
@@ -35,6 +35,7 @@ namespace Tarot.Behaviour.Poi
     {
         public static async Task<bool> Main()
         {
+            Logger.SendLog("No active FATEs, activating wait mode.");
             switch (TarotSettings.Instance.FateIdleMode)
             {
                 case FateIdleMode.ReturnToAetheryte:
@@ -46,11 +47,11 @@ namespace Tarot.Behaviour.Poi
                     break;
 
                 case FateIdleMode.GrindMobs:
-                    await GrindMobs.Main();
+                    //await GrindMobs.Main();
                     break;
 
                 case FateIdleMode.WaitForFates:
-                    await WaitForFates.Main();
+                    //await WaitForFates.Main();
                     break;
 
                 default:

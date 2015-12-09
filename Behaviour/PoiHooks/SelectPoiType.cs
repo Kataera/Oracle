@@ -22,7 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Poi
+namespace Tarot.Behaviour.PoiHooks
 {
     using ff14bot.Behavior;
 
@@ -41,13 +41,19 @@ namespace Tarot.Behaviour.Poi
         private static Composite CreateBehaviour()
         {
             var setFatePoi = new ActionRunCoroutine(coroutine => SetFatePoi.Main());
+            var setWaitPoi = new ActionRunCoroutine(coroutine => SetWaitPoi.Main());
+
             Composite[] composites =
             {
                 new HookExecutor("SetDeathPoi"), new HookExecutor("SetCombatPoi"),
                 new HookExecutor(
                     "SetFatePoi",
-                    "A hook that selects a viable FATE and assigns it as the Poi.",
-                    setFatePoi)
+                    "A hook that selects a viable FATE based in user settings and assigns it as the Poi.",
+                    setFatePoi),
+                new HookExecutor(
+                    "SetWaitPoi",
+                    "A hook that sets the correct wait Poi based on user settings.",
+                    setWaitPoi)
             };
 
             return new PrioritySelector(composites);

@@ -49,7 +49,7 @@ namespace Tarot.Settings
 
         private FateSelectMode fateSelectMode;
 
-        public Dictionary<ushort, Vector3> FateWaitLocations;
+        public Dictionary<uint, Vector3> FateWaitLocations;
 
         private bool listHooksOnStart;
 
@@ -66,7 +66,7 @@ namespace Tarot.Settings
         {
             if (this.FateWaitLocations == null)
             {
-                this.FateWaitLocations = new Dictionary<ushort, Vector3>();
+                this.FateWaitLocations = new Dictionary<uint, Vector3>();
             }
         }
 

@@ -22,7 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Poi.Fates
+namespace Tarot.Behaviour.PoiHooks.FateSelect
 {
     internal class ChainPriority {}
 }
