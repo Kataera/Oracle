@@ -31,7 +31,7 @@ using Tarot.Helpers;
 
 namespace Tarot.Behaviour.Tasks.Utilities
 {
-    public class ClearFateIfFinished
+    internal static class ClearFateIfFinished
     {
         public static async Task<bool> Main()
         {
