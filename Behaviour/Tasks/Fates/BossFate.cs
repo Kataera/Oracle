@@ -71,6 +71,7 @@ namespace Tarot.Behaviour.Tasks.Fates
             return true;
         }
 
+
         private static BattleCharacter GetClosestMob()
         {
             PopulateTargetList();
