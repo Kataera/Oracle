@@ -24,6 +24,7 @@
 
 namespace Tarot.Behaviour.Tasks.Handlers
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Buddy.Coroutines;
@@ -195,9 +196,24 @@ namespace Tarot.Behaviour.Tasks.Handlers
 
             Navigator.Stop();
             Navigator.PlayerMover.MoveStop();
-            if (await CommonTasks.CanLand() == CanLandResult.Yes)
+
+            if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
-                await CommonTasks.Land();
+                await CommonTasks.DescendTo(20f);
+
+                if (await CommonTasks.CanLand() == CanLandResult.Yes)
+                {
+                    await CommonTasks.Land();
+                }
+                else
+                {
+                    var moveResult = Navigator.MoveTo(Tarot.CurrentFate.Location, "FATE centre.");
+                    while (moveResult != MoveResult.Done)
+                    {
+                        moveResult = Navigator.MoveTo(Tarot.CurrentFate.Location, "FATE centre.");
+                        await Coroutine.Yield();
+                    }
+                }
             }
 
             return true;
