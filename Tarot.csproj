@@ -65,12 +65,12 @@
   <ItemGroup>
     <Compile Include="Behaviour\TarotBehaviour.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\CombatHandler.cs" />
-    <Compile Include="Behaviour\Tasks\Hooks\SelectPoiType.cs" />
+    <Compile Include="Behaviour\Tasks\Poi\SelectPoiType.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\FateHandler.cs" />
-    <Compile Include="Behaviour\Tasks\Selectors\Fates\ChainAndTypePriority.cs" />
-    <Compile Include="Behaviour\Tasks\Selectors\Fates\ChainPriority.cs" />
-    <Compile Include="Behaviour\Tasks\Selectors\Fates\Closest.cs" />
-    <Compile Include="Behaviour\Tasks\Selectors\Fates\TypePriority.cs" />
+    <Compile Include="Behaviour\Tasks\Poi\Fates\ChainAndTypePriority.cs" />
+    <Compile Include="Behaviour\Tasks\Poi\Fates\ChainPriority.cs" />
+    <Compile Include="Behaviour\Tasks\Poi\Fates\Closest.cs" />
+    <Compile Include="Behaviour\Tasks\Poi\Fates\TypePriority.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Idles\WaitForFates.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Idles\GrindMobs.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Idles\ReturnToAetheryte.cs" />
@@ -80,11 +80,13 @@
     <Compile Include="Behaviour\Tasks\Handlers\Fates\DefenceFate.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Fates\EscortFate.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Fates\KillFate.cs" />
+    <Compile Include="Behaviour\Tasks\Poi\SetWaitPoi.cs" />
+    <Compile Include="Behaviour\Tasks\Poi\Idles\ReturnToAetheryte.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BuildFateDatabase.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\ClearFateIfFinished.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LevelSync.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\Fates\MegaBossFate.cs" />
-    <Compile Include="Behaviour\Tasks\Selectors\FateSelector.cs" />
+    <Compile Include="Behaviour\Tasks\Poi\SetFatePoi.cs" />
     <Compile Include="Behaviour\Tasks\Handlers\IdleHandler.cs" />
     <Compile Include="Data\FateDatabase.cs" />
     <Compile Include="Data\FateTypes\Boss.cs" />

@@ -22,11 +22,9 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Hooks
+namespace Tarot.Behaviour.Tasks.Poi
 {
     using ff14bot.Behavior;
-
-    using global::Tarot.Behaviour.Tasks.Selectors;
 
     using TreeSharp;
 
@@ -42,7 +40,7 @@ namespace Tarot.Behaviour.Tasks.Hooks
 
         private static Composite CreateBehaviour()
         {
-            var setFatePoi = new ActionRunCoroutine(coroutine => FateSelector.Main());
+            var setFatePoi = new ActionRunCoroutine(coroutine => SetFatePoi.Main());
             Composite[] composites =
             {
                 new HookExecutor("SetDeathPoi"), new HookExecutor("SetCombatPoi"),

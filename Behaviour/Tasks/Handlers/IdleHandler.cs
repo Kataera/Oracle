@@ -51,15 +51,15 @@ namespace Tarot.Behaviour.Tasks.Handlers
                         await ReturnToAetheryte.Main();
                         break;
 
-                    case (int) FateIdleMode.MoveToWaitLocation:
+                    case FateIdleMode.MoveToWaitLocation:
                         await MoveToWaitLocation.Main();
                         break;
 
-                    case (int) FateIdleMode.GrindMobs:
+                    case FateIdleMode.GrindMobs:
                         await GrindMobs.Main();
                         break;
 
-                    case (int) FateIdleMode.WaitForFates:
+                    case FateIdleMode.WaitForFates:
                         await WaitForFates.Main();
                         break;
 

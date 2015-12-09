@@ -34,7 +34,7 @@ namespace Tarot
     using ff14bot.Navigation;
 
     using global::Tarot.Behaviour;
-    using global::Tarot.Behaviour.Tasks.Hooks;
+    using global::Tarot.Behaviour.Tasks.Poi;
     using global::Tarot.Data;
     using global::Tarot.Enumerations;
     using global::Tarot.Forms;

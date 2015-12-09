@@ -33,6 +33,8 @@ namespace Tarot.Settings
 
     using ff14bot.Helpers;
 
+    using global::Tarot.Enumerations;
+
     internal sealed class TarotSettings : JsonSettings
     {
         private static readonly object SyncRoot = new object();
@@ -43,9 +45,9 @@ namespace Tarot.Settings
 
         private bool debugEnabled;
 
-        private int fateIdleMode;
+        private FateIdleMode fateIdleMode;
 
-        private int fateSelectMode;
+        private FateSelectMode fateSelectMode;
 
         public Dictionary<ushort, Vector3> FateWaitLocations;
 
@@ -119,9 +121,9 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(Enumerations.FateIdleMode.ReturnToAetheryte)]
+        [DefaultValue(FateIdleMode.ReturnToAetheryte)]
         [Setting]
-        public int FateIdleMode
+        public FateIdleMode FateIdleMode
         {
             get
             {
@@ -135,9 +137,9 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(Enumerations.FateSelectMode.Closest)]
+        [DefaultValue(FateSelectMode.Closest)]
         [Setting]
-        public int FateSelectMode
+        public FateSelectMode FateSelectMode
         {
             get
             {

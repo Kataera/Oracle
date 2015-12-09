@@ -22,7 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Selectors
+namespace Tarot.Behaviour.Tasks.Poi
 {
     using System.Linq;
     using System.Threading.Tasks;
@@ -30,64 +30,13 @@ namespace Tarot.Behaviour.Tasks.Selectors
     using ff14bot.Helpers;
     using ff14bot.Managers;
 
-    using global::Tarot.Behaviour.Tasks.Selectors.Fates;
-    using global::Tarot.Behaviour.Tasks.Utilities;
+    using global::Tarot.Behaviour.Tasks.Poi.Fates;
     using global::Tarot.Enumerations;
     using global::Tarot.Helpers;
     using global::Tarot.Settings;
 
-    internal static class FateSelector
+    internal static class SetFatePoi
     {
-        public static async Task<bool> Main()
-        {
-            await BuildFateDatabase.Main();
-
-            if (IsFateSet())
-            {
-                if (!IsFatePoiSet() && !GameObjectManager.Attackers.Any())
-                {
-                    Poi.Current = new Poi(Tarot.CurrentFate, PoiType.Fate);
-                }
-
-                return true;
-            }
-
-            // Check if previous FATE had a chain.
-            if (await ChainFate())
-            {
-                return true;
-            }
-
-            switch (TarotSettings.Instance.FateSelectMode)
-            {
-                case (int) FateSelectMode.Closest:
-                    await Closest.Main();
-                    break;
-
-                case (int) FateSelectMode.TypePriority:
-                    // TODO: Implement.
-                    await Closest.Main();
-                    break;
-
-                case (int) FateSelectMode.ChainPriority:
-                    // TODO: Implement.
-                    await Closest.Main();
-                    break;
-
-                case (int) FateSelectMode.TypeAndChainPriority:
-                    // TODO: Implement.
-                    await Closest.Main();
-                    break;
-
-                default:
-                    Logger.SendDebugLog("Cannot determine FATE selection strategy, defaulting to closest FATE.");
-                    await Closest.Main();
-                    break;
-            }
-
-            return IsFateSet() && IsFatePoiSet();
-        }
-
         private static async Task<bool> ChainFate()
         {
             if (Tarot.PreviousFate != null)
@@ -158,11 +107,6 @@ namespace Tarot.Behaviour.Tasks.Selectors
             return false;
         }
 
-        private static bool IsFateSet()
-        {
-            return Tarot.CurrentFate != null && Tarot.CurrentFate.IsValid;
-        }
-
         private static bool IsFatePoiSet()
         {
             if (Poi.Current == null || Poi.Current.Type != PoiType.Fate || Poi.Current.Fate != Tarot.CurrentFate)
@@ -171,6 +115,59 @@ namespace Tarot.Behaviour.Tasks.Selectors
             }
 
             return true;
+        }
+
+        private static bool IsFateSet()
+        {
+            return Tarot.CurrentFate != null && Tarot.CurrentFate.IsValid;
+        }
+
+        public static async Task<bool> Main()
+        {
+            if (IsFateSet())
+            {
+                if (!IsFatePoiSet() && !GameObjectManager.Attackers.Any())
+                {
+                    Poi.Current = new Poi(Tarot.CurrentFate, PoiType.Fate);
+                }
+
+                return true;
+            }
+
+            // Check if previous FATE had a chain.
+            if (await ChainFate())
+            {
+                return true;
+            }
+
+            switch (TarotSettings.Instance.FateSelectMode)
+            {
+                case FateSelectMode.Closest:
+                    await Closest.Main();
+                    break;
+
+                case FateSelectMode.TypePriority:
+                    // TODO: Implement.
+                    await Closest.Main();
+                    break;
+
+                case FateSelectMode.ChainPriority:
+                    // TODO: Implement.
+                    await Closest.Main();
+                    break;
+
+                case FateSelectMode.TypeAndChainPriority:
+                    // TODO: Implement.
+                    await Closest.Main();
+                    break;
+
+                default:
+                    Logger.SendDebugLog("Cannot determine FATE selection strategy, defaulting to closest FATE.");
+                    await Closest.Main();
+                    break;
+            }
+
+            return IsFateSet() && IsFatePoiSet();
         }
     }
 }

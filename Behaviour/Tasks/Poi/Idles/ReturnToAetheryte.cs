@@ -22,9 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Selectors
+namespace Tarot.Behaviour.Tasks.Poi.Idles
 {
-    internal static class IdleSelector
-    {
-    }
+    internal static class ReturnToAetheryte {}
 }
