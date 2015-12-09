@@ -42,24 +42,31 @@ namespace Tarot.Behaviour.Tasks
     {
         public static async Task<bool> Main()
         {
-            if (Poi.Current != null && GameObjectManager.Attackers.Any(check => !check.IsFateGone))
+            if (Poi.Current == null)
             {
-                if (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait)
+                return false;
+            }
+
+            if (GameObjectManager.Attackers.All(check => check.IsFateGone) && Poi.Current.Type != PoiType.Kill)
+            {
+                return true;
+            }
+
+            if (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait)
+            {
+                Logger.SendLog("Clearing the non-kill point of interest while we're in combat.");
+                Poi.Clear("Character is in combat.");
+            }
+
+            // Make sure we don't get stuck attacking a mob that requires us to be level synced.
+            else if (LevelSyncNeeded())
+            {
+                if (!FateManager.WithinFate)
                 {
-                    Logger.SendLog("Clearing the non-kill point of interest while we're in combat.");
-                    Poi.Clear("Character is in combat.");
+                    await MoveIntoFateArea();
                 }
 
-                // Make sure we don't get stuck attacking a mob that requires us to be level synced.
-                else if (LevelSyncNeeded())
-                {
-                    if (!FateManager.WithinFate)
-                    {
-                        await MoveIntoFateArea();
-                    }
-
-                    await LevelSync.Main();
-                }
+                await LevelSync.Main();
             }
 
             return true;
