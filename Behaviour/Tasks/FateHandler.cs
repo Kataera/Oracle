@@ -216,10 +216,9 @@ namespace Tarot.Behaviour.Tasks
                 {
                     Logger.SendLog("'" + Tarot.CurrentFate.Name + "' is no longer active.");
                     Navigator.Stop();
-                    Navigator.Clear();
-                    Navigator.PlayerMover.MoveStop();
 
                     Poi.Clear("FATE is no longer active");
+                    Tarot.PreviousFate = Tarot.CurrentFate;
                     Tarot.CurrentPoi = null;
                     Tarot.CurrentFate = null;
 
@@ -246,7 +245,6 @@ namespace Tarot.Behaviour.Tasks
             }
 
             Navigator.Stop();
-            Navigator.PlayerMover.MoveStop();
             await Land();
 
             return true;
