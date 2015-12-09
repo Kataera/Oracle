@@ -22,42 +22,42 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
+using System.IO;
+using System.Xml;
+using System.Xml.Schema;
+
+using Tarot.Data;
+using Tarot.Data.FateTypes;
+using Tarot.Enumerations;
+
 namespace Tarot.Helpers
 {
-    using System;
-    using System.IO;
-    using System.Xml;
-    using System.Xml.Schema;
-
-    using global::Tarot.Data;
-    using global::Tarot.Data.FateTypes;
-    using global::Tarot.Enumerations;
-
     internal static class XmlParser
     {
-        private static bool fateDataInvalidFlag;
-
         private static FateDatabase database;
+
+        private static uint fateChainIdFail;
+
+        private static uint fateChainIdSuccess;
+
+        private static uint fateCollectItemId;
+
+        private static bool fateDataInvalidFlag;
 
         private static XmlDocument fateDataXml;
 
+        private static uint fateId;
+
+        private static uint fateLevel;
+
         private static string fateName;
 
-        private static int fateId;
+        private static uint fateNpcId;
 
-        private static int fateLevel;
+        private static FateSupportLevel fateSupportLevel;
 
-        private static int fateType;
-
-        private static int fateSupportLevel;
-
-        private static int fateCollectItemId;
-
-        private static int fateNpcId;
-
-        private static int fateChainIdSuccess;
-
-        private static int fateChainIdFail;
+        private static FateType fateType;
 
         public static FateDatabase GetFateDatabase()
         {
@@ -84,27 +84,27 @@ namespace Tarot.Helpers
             Fate fate;
             switch (fateType)
             {
-                case (int) FateType.Kill:
+                case FateType.Kill:
                     fate = new Kill();
                     break;
 
-                case (int) FateType.Collect:
+                case FateType.Collect:
                     fate = new Collect();
                     break;
 
-                case (int) FateType.Escort:
+                case FateType.Escort:
                     fate = new Escort();
                     break;
 
-                case (int) FateType.Defence:
+                case FateType.Defence:
                     fate = new Defence();
                     break;
 
-                case (int) FateType.Boss:
+                case FateType.Boss:
                     fate = new Boss();
                     break;
 
-                case (int) FateType.MegaBoss:
+                case FateType.MegaBoss:
                     fate = new MegaBoss();
                     break;
 
@@ -168,8 +168,8 @@ namespace Tarot.Helpers
                         fateId = 0;
                         fateName = string.Empty;
                         fateLevel = 0;
-                        fateType = -1;
-                        fateSupportLevel = (int) FateSupportLevel.Unsupported;
+                        fateType = FateType.Null;
+                        fateSupportLevel = FateSupportLevel.Unsupported;
                         fateCollectItemId = 0;
                         fateNpcId = 0;
                         fateChainIdSuccess = 0;
@@ -177,7 +177,7 @@ namespace Tarot.Helpers
 
                         if (currentNode["ID"] != null)
                         {
-                            fateId = int.Parse(currentNode["ID"].InnerText);
+                            fateId = uint.Parse(currentNode["ID"].InnerText);
                         }
 
                         if (currentNode["Name"] != null)
@@ -187,37 +187,37 @@ namespace Tarot.Helpers
 
                         if (currentNode["Level"] != null)
                         {
-                            fateLevel = int.Parse(currentNode["Level"].InnerText);
+                            fateLevel = uint.Parse(currentNode["Level"].InnerText);
                         }
 
                         if (currentNode["Type"] != null)
                         {
-                            fateType = int.Parse(currentNode["Type"].InnerText);
+                            fateType = (FateType) int.Parse(currentNode["Type"].InnerText);
                         }
 
                         if (currentNode["TarotSupport"] != null)
                         {
-                            fateSupportLevel = int.Parse(currentNode["TarotSupport"].InnerText);
+                            fateSupportLevel = (FateSupportLevel) int.Parse(currentNode["TarotSupport"].InnerText);
                         }
 
                         if (currentNode["CollectItemId"] != null)
                         {
-                            fateCollectItemId = int.Parse(currentNode["CollectItemId"].InnerText);
+                            fateCollectItemId = uint.Parse(currentNode["CollectItemId"].InnerText);
                         }
 
                         if (currentNode["NpcId"] != null)
                         {
-                            fateNpcId = int.Parse(currentNode["NpcId"].InnerText);
+                            fateNpcId = uint.Parse(currentNode["NpcId"].InnerText);
                         }
 
-                        if (currentNode["ChainIdSuccess"] != null)
+                        if (currentNode["ChainIDSuccess"] != null)
                         {
-                            fateChainIdSuccess = int.Parse(currentNode["ChainIdSuccess"].InnerText);
+                            fateChainIdSuccess = uint.Parse(currentNode["ChainIDSuccess"].InnerText);
                         }
 
-                        if (currentNode["ChainIdFailure"] != null)
+                        if (currentNode["ChainIDFailure"] != null)
                         {
-                            fateChainIdFail = int.Parse(currentNode["ChainIdFailure"].InnerText);
+                            fateChainIdFail = uint.Parse(currentNode["ChainIDFailure"].InnerText);
                         }
 
                         database.AddFateToDatabase(CreateFate());

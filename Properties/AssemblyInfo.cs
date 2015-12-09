@@ -10,8 +10,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("An improved FATE botbase for RebornBuddy.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Tarot.Properties")]
-[assembly: AssemblyCopyright("Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)")]
+[assembly: AssemblyProduct("Tarot")]
+[assembly: AssemblyCopyright("Caitlin Howarth (a.k.a. Kataera)")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,6 +33,6 @@ using System.Runtime.InteropServices;
 //      Revision
 //
 
-[assembly: AssemblyVersion("0.1.0.19")]
-[assembly: AssemblyFileVersion("0.1.0.19")]
+[assembly: AssemblyVersion("0.1.0.118")]
+[assembly: AssemblyFileVersion("0.1.0.118")]
 [assembly: NeutralResourcesLanguage("en-GB")]

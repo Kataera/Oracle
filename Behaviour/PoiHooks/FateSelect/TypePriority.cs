@@ -22,31 +22,9 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Coroutines
+namespace Tarot.Behaviour.PoiHooks.FateSelect
 {
-    using System.Threading.Tasks;
-
-    using TreeSharp;
-
-    internal static class CollectFate
+    internal static class TypePriority
     {
-        public static ActionRunCoroutine Coroutine
-        {
-            get
-            {
-                return CreateCoroutine();
-            }
-        }
-
-        private static async Task<bool> CollectFateTask()
-        {
-            // TODO: Write fate task.
-            return true;
-        }
-
-        private static ActionRunCoroutine CreateCoroutine()
-        {
-            return new ActionRunCoroutine(coroutine => CollectFateTask());
-        }
     }
 }

@@ -1,8 +1,9 @@
-﻿namespace MaterialSkin
-{
-    #region Using Directives
+﻿using System.Drawing;
 
-    using System.Drawing;
+namespace Tarot.Forms.MaterialSkin
+{
+
+    #region Using Directives
 
     #endregion
 
@@ -67,13 +68,14 @@
     public static class ColorExtension
     {
         /// <summary>
-        ///     Convert an integer number to a Color.
+        ///     Converts a 0-100 integer to a 0-255 color component.
         /// </summary>
+        /// <param name="percentage"></param>
         /// <returns>
         /// </returns>
-        public static Color ToColor(this int argb)
+        public static int PercentageToColorComponent(this int percentage)
         {
-            return Color.FromArgb((argb & 0xff0000) >> 16, (argb & 0xff00) >> 8, argb & 0xff);
+            return (int) (percentage / 100d * 255d);
         }
 
         /// <summary>
@@ -88,14 +90,13 @@
         }
 
         /// <summary>
-        ///     Converts a 0-100 integer to a 0-255 color component.
+        ///     Convert an integer number to a Color.
         /// </summary>
-        /// <param name="percentage"></param>
         /// <returns>
         /// </returns>
-        public static int PercentageToColorComponent(this int percentage)
+        public static Color ToColor(this int argb)
         {
-            return (int) (percentage / 100d * 255d);
+            return Color.FromArgb((argb & 0xff0000) >> 16, (argb & 0xff00) >> 8, argb & 0xff);
         }
     }
 

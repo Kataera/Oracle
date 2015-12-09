@@ -22,31 +22,20 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Coroutines
+using System.Threading.Tasks;
+
+using Tarot.Helpers;
+
+namespace Tarot.Behaviour.Tasks.Idles
 {
-    using System.Threading.Tasks;
-
-    using TreeSharp;
-
-    internal static class EscortFate
+    internal static class GrindMobs
     {
-        public static ActionRunCoroutine Coroutine
+        public static async Task<bool> Main()
         {
-            get
-            {
-                return CreateCoroutine();
-            }
-        }
-
-        private static async Task<bool> EscortFateTask()
-        {
-            // TODO: Write fate task.
+            // TODO: Implement.
+            Logger.SendLog("'Grind mobs' is not yet implemented, defaulting to 'Return to Aetheryte'.");
+            await ReturnToAetheryte.Main();
             return true;
-        }
-
-        private static ActionRunCoroutine CreateCoroutine()
-        {
-            return new ActionRunCoroutine(coroutine => EscortFateTask());
         }
     }
 }

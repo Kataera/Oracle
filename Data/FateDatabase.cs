@@ -22,50 +22,27 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
+using System.Collections.Generic;
+
+using Tarot.Data.FateTypes;
+using Tarot.Enumerations;
+using Tarot.Helpers;
+
 namespace Tarot.Data
 {
-    using System;
-    using System.Collections.Generic;
-
-    using global::Tarot.Data.FateTypes;
-    using global::Tarot.Enumerations;
-    using global::Tarot.Helpers;
-
     internal class FateDatabase
     {
-        private readonly Dictionary<int, Fate> fateDatabase;
+        private readonly Dictionary<uint, Fate> fateDatabase;
 
         public FateDatabase()
         {
-            this.fateDatabase = new Dictionary<int, Fate>();
+            this.fateDatabase = new Dictionary<uint, Fate>();
         }
 
-        public FateDatabase(Dictionary<int, Fate> fateDatabase)
+        public FateDatabase(Dictionary<uint, Fate> fateDatabase)
         {
             this.fateDatabase = fateDatabase;
-        }
-
-        public Fate GetFateWithId(int id)
-        {
-            Fate fate;
-            try
-            {
-                if (this.fateDatabase.TryGetValue(id, out fate))
-                {
-                    return fate;
-                }
-            }
-            catch (ArgumentNullException exception)
-            {
-                Logger.SendErrorLog("Error looking up FATE in the database.");
-                Logger.SendDebugLog("ArgumentNullException thrown:\n\n" + exception + "\n");
-            }
-
-            // Create empty kill fate with Unsupported flag.
-            fate = new Kill { SupportLevel = (int) FateSupportLevel.Unsupported };
-            Logger.SendDebugLog("Fate with id: '" + id + "' not found, flagging as unsupported.");
-
-            return fate;
         }
 
         public void AddFateToDatabase(Fate fate)
@@ -90,6 +67,29 @@ namespace Tarot.Data
                 Logger.SendErrorLog("Error adding FATE to the database.");
                 Logger.SendDebugLog("ArgumentException thrown:\n\n" + exception + "\n");
             }
+        }
+
+        public Fate GetFateWithId(uint id)
+        {
+            Fate fate;
+            try
+            {
+                if (this.fateDatabase.TryGetValue(id, out fate))
+                {
+                    return fate;
+                }
+            }
+            catch (ArgumentNullException exception)
+            {
+                Logger.SendErrorLog("Error looking up FATE in the database.");
+                Logger.SendDebugLog("ArgumentNullException thrown:\n\n" + exception + "\n");
+            }
+
+            // Create a null fate with Unsupported flag if we can't find it.
+            fate = new NullFate {SupportLevel = FateSupportLevel.Unsupported};
+            Logger.SendDebugLog("Fate with id: '" + id + "' not found, flagging as unsupported.");
+
+            return fate;
         }
     }
 }

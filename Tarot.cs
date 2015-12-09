@@ -22,116 +22,120 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
+using System.Reflection;
+
+using ff14bot.AClasses;
+using ff14bot.Behavior;
+using ff14bot.Helpers;
+using ff14bot.Managers;
+using ff14bot.Navigation;
+
+using Tarot.Behaviour;
+using Tarot.Behaviour.PoiHooks;
+using Tarot.Data;
+using Tarot.Enumerations;
+using Tarot.Forms;
+using Tarot.Helpers;
+using Tarot.Settings;
+
+using TreeSharp;
+
 namespace Tarot
 {
-    using System;
-    using System.Runtime.CompilerServices;
-
-    using ff14bot;
-    using ff14bot.AClasses;
-    using ff14bot.Behavior;
-    using ff14bot.Helpers;
-    using ff14bot.Managers;
-    using ff14bot.Navigation;
-    using ff14bot.Objects;
-
-    using global::Tarot.Behaviour;
-    using global::Tarot.Behaviour.Handlers;
-    using global::Tarot.Forms;
-    using global::Tarot.Helpers;
-
-    using TreeSharp;
-
     public class Tarot : BotBase
     {
-        internal const string BotName = "Tarot";
+        private static bool playerFaceTargetOnAction;
 
-        private bool playerFaceTargetOnAction;
+        private static bool playerFlightMode;
 
-        private bool playerFlightMode;
+        private static Composite root;
 
-        private Composite root;
-
-        private SettingsForm settingsForm;
-
-        public static Tarot Instance { get; set; }
-
-        public static Poi CurrentPoi { get; set; }
-
-        public override string Name
-        {
-            get
-            {
-                return BotName;
-            }
-        }
+        private static SettingsForm settingsForm;
 
         public override string EnglishName
         {
-            get
-            {
-                return BotName;
-            }
-        }
-
-        public override PulseFlags PulseFlags
-        {
-            get
-            {
-                return PulseFlags.All;
-            }
+            get { return "Tarot"; }
         }
 
         public override bool IsAutonomous
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
 
-        public override bool WantButton
+        public override string Name
         {
-            get
-            {
-                return true;
-            }
+            get { return "Tarot"; }
+        }
+
+        public override PulseFlags PulseFlags
+        {
+            get { return PulseFlags.All; }
         }
 
         public override bool RequiresProfile
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
 
         public override Composite Root
         {
+            get { return root; }
+        }
+
+        public override bool WantButton
+        {
+            get { return true; }
+        }
+
+        internal static FateData CurrentFate { get; set; }
+
+        internal static FateIdleMode CurrentIdle { get; set; }
+
+        internal static Poi CurrentPoi { get; set; }
+
+        internal static FateDatabase FateDatabase { get; set; }
+
+        internal static Tarot Instance { get; set; }
+
+        internal static FateData PreviousFate { get; set; }
+
+        internal static string Version
+        {
             get
             {
-                return this.root;
+                var versionString = Assembly.GetExecutingAssembly().GetName().Version.Major + "."
+                                    + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
+                                    + Assembly.GetExecutingAssembly().GetName().Version.Revision;
+                return versionString;
             }
         }
 
         public override void Initialize()
         {
-            Logger.SendLog("Initialising " + BotName + ".");
+            // Set the botbase instance so we can access its data.
             Instance = this;
-            Updater.CheckForUpdates();
+
+            Logger.SendLog("Initialising " + Name + ".");
+
+            // TODO: Implement rest of Updater.
+            if (Updater.UpdateIsAvailable())
+            {
+                Logger.SendLog("An update for " + Name + " is available.");
+            }
         }
 
         public override void OnButtonPress()
         {
-            if (this.settingsForm == null || this.settingsForm.IsDisposed)
+            if (settingsForm == null || settingsForm.IsDisposed)
             {
-                this.settingsForm = new SettingsForm();
+                settingsForm = new SettingsForm();
             }
 
             try
             {
-                this.settingsForm.Show();
-                this.settingsForm.Activate();
+                settingsForm.Show();
+                settingsForm.Activate();
             }
             catch (ArgumentOutOfRangeException exception)
             {
@@ -142,38 +146,52 @@ namespace Tarot
 
         public override void Start()
         {
-            Logger.SendLog("Starting " + BotName + ".");
+            // Set the botbase instance so we can access its data.
+            Instance = this;
 
-            // Set navigator.
             Navigator.PlayerMover = new SlideMover();
             Navigator.NavigationProvider = new GaiaNavigator();
+            CombatTargeting.Instance.Provider = new FateCombatTargetingProvider();
 
-            // Set target provider.
-            CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
-
-            // Make sure game settings are correct for botbase.
-            this.playerFaceTargetOnAction = GameSettingsManager.FaceTargetOnAction;
-            this.playerFlightMode = GameSettingsManager.FlightMode;
+            playerFaceTargetOnAction = GameSettingsManager.FaceTargetOnAction;
+            playerFlightMode = GameSettingsManager.FlightMode;
             GameSettingsManager.FaceTargetOnAction = true;
             GameSettingsManager.FlightMode = true;
 
-            // Set default root behaviour.
             TreeHooks.Instance.ClearAll();
-            TreeHooks.Instance.AddHook("TreeStart", MainBehaviour.Behaviour);
-            this.root = BrainBehavior.CreateBrain();
+            root = BrainBehavior.CreateBrain();
+            TreeHooks.Instance.AddHook("TreeStart", TarotBehaviour.Behaviour);
+            TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
 
-            // Ensure Poi is set if bot was stopped/started.
-            if (Poi.Current == null)
+            // List hook structure.
+            if (TarotSettings.Instance.ListHooksOnStart)
             {
-                Poi.Current = new Poi(Core.Player.Location, PoiType.Wait);
+                Logger.SendDebugLog("Listing RebornBuddy hooks.");
+                foreach (var hook in TreeHooks.Instance.Hooks)
+                {
+                    Logger.SendDebugLog(hook.Key + ": " + hook.Value.Count + " Composite(s).");
+                    var count = 0;
+                    foreach (var composite in hook.Value)
+                    {
+                        count++;
+                        Logger.SendDebugLog("\tComposite " + count + ": " + composite + ".");
+                    }
+
+                    Logger.SendDebugLog(string.Empty);
+                }
             }
+
+            Logger.SendLog("Starting " + Name + ".");
         }
 
         public override void Stop()
         {
-            Logger.SendLog("Stopping " + BotName + ".");
+            // Clean up all botbase internal variables.
+            CurrentFate = null;
+            PreviousFate = null;
+            FateDatabase = null;
+            CurrentPoi = null;
 
-            // Dispose of the navigator if it exists.
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
             if (navProvider != null)
             {
@@ -181,13 +199,13 @@ namespace Tarot
             }
 
             Navigator.NavigationProvider = null;
+            CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
+            Blacklist.Flush();
 
-            // Clear current fate.
-            MainBehaviour.SetCurrentFate(null, null);
+            GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
+            GameSettingsManager.FlightMode = playerFlightMode;
 
-            // Restore player's game settings.
-            GameSettingsManager.FaceTargetOnAction = this.playerFaceTargetOnAction;
-            GameSettingsManager.FlightMode = this.playerFlightMode;
+            Logger.SendLog("Stopping " + Name + ".");
         }
     }
 }

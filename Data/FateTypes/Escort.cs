@@ -22,23 +22,23 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using Tarot.Enumerations;
+
 namespace Tarot.Data.FateTypes
 {
-    using global::Tarot.Enumerations;
-
     internal class Escort : Fate
     {
         public Escort()
         {
-            this.ChainIdFailure = 0;
-            this.ChainIdSuccess = 0;
-            this.Id = 0;
-            this.ItemId = 0;
-            this.Level = 0;
-            this.Name = string.Empty;
-            this.NpcId = 0;
-            this.SupportLevel = (int) FateSupportLevel.Unsupported;
-            this.Type = (int) FateType.Escort;
+            ChainIdFailure = 0;
+            ChainIdSuccess = 0;
+            Id = 0;
+            ItemId = 0;
+            Level = 0;
+            Name = string.Empty;
+            NpcId = 0;
+            SupportLevel = FateSupportLevel.FullSupport;
+            Type = FateType.Escort;
         }
     }
 }

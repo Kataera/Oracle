@@ -22,41 +22,41 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using Tarot.Enumerations;
+
 namespace Tarot.Data.FateTypes
 {
-    using global::Tarot.Enumerations;
-
     internal abstract class Fate
     {
         protected Fate()
         {
-            this.ChainIdFailure = 0;
-            this.ChainIdSuccess = 0;
-            this.Id = 0;
-            this.ItemId = 0;
-            this.Level = 0;
-            this.Name = string.Empty;
-            this.NpcId = 0;
-            this.SupportLevel = (int) FateSupportLevel.Unsupported;
-            this.Type = -1;
+            ChainIdFailure = 0;
+            ChainIdSuccess = 0;
+            Id = 0;
+            ItemId = 0;
+            Level = 0;
+            Name = string.Empty;
+            NpcId = 0;
+            SupportLevel = FateSupportLevel.Unsupported;
+            Type = FateType.Null;
         }
 
-        public int ChainIdFailure { get; set; }
+        public uint ChainIdFailure { get; set; }
 
-        public int ChainIdSuccess { get; set; }
+        public uint ChainIdSuccess { get; set; }
 
-        public int Id { get; set; }
+        public uint Id { get; set; }
 
-        public int ItemId { get; set; }
+        public uint ItemId { get; set; }
 
-        public int Level { get; set; }
+        public uint Level { get; set; }
 
         public string Name { get; set; }
 
-        public int NpcId { get; set; }
+        public uint NpcId { get; set; }
 
-        public int SupportLevel { get; set; }
+        public FateSupportLevel SupportLevel { get; set; }
 
-        public int Type { get; set; }
+        public FateType Type { get; set; }
     }
 }

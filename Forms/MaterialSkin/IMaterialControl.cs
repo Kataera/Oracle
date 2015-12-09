@@ -1,12 +1,12 @@
-﻿namespace MaterialSkin
+﻿namespace Tarot.Forms.MaterialSkin
 {
     internal interface IMaterialControl
     {
         int Depth { get; set; }
 
-        MaterialSkinManager SkinManager { get; }
-
         MouseState MouseState { get; set; }
+
+        MaterialSkinManager SkinManager { get; }
     }
 
     public enum MouseState

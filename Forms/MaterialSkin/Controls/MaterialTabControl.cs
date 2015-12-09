@@ -1,10 +1,11 @@
-﻿namespace MaterialSkin.Controls
-{
-    #region Using Directives
+﻿using System;
+using System.ComponentModel;
+using System.Windows.Forms;
 
-    using System;
-    using System.ComponentModel;
-    using System.Windows.Forms;
+namespace Tarot.Forms.MaterialSkin.Controls
+{
+
+    #region Using Directives
 
     #endregion
 
@@ -14,20 +15,17 @@
         public int Depth { get; set; }
 
         [Browsable(false)]
-        public MaterialSkinManager SkinManager
-        {
-            get
-            {
-                return MaterialSkinManager.Instance;
-            }
-        }
+        public MouseState MouseState { get; set; }
 
         [Browsable(false)]
-        public MouseState MouseState { get; set; }
+        public MaterialSkinManager SkinManager
+        {
+            get { return MaterialSkinManager.Instance; }
+        }
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == 0x1328 && !this.DesignMode)
+            if (m.Msg == 0x1328 && !DesignMode)
             {
                 m.Result = (IntPtr) 1;
             }

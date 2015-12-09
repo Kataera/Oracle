@@ -22,31 +22,16 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Coroutines
+namespace Tarot.Enumerations
 {
-    using System.Threading.Tasks;
-
-    using TreeSharp;
-
-    internal static class BossFate
+    internal enum FateSelectMode
     {
-        public static ActionRunCoroutine Coroutine
-        {
-            get
-            {
-                return CreateCoroutine();
-            }
-        }
+        Closest = 0,
 
-        private static async Task<bool> BossFateTask()
-        {
-            // TODO: Write fate task.
-            return true;
-        }
+        TypePriority = 1,
 
-        private static ActionRunCoroutine CreateCoroutine()
-        {
-            return new ActionRunCoroutine(coroutine => BossFateTask());
-        }
+        ChainPriority = 2,
+
+        TypeAndChainPriority = TypePriority + ChainPriority
     }
 }
