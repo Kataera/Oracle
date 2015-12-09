@@ -67,7 +67,8 @@ namespace Tarot.Behaviour.Tasks
 
         private static bool LevelSyncNeeded()
         {
-            if (Poi.Current == null || Poi.Current.BattleCharacter.IsDead || Poi.Current.BattleCharacter.FateId == 0)
+            if (Poi.Current == null || Poi.Current.BattleCharacter == null || Poi.Current.BattleCharacter.IsDead
+                || Poi.Current.BattleCharacter.FateId == 0)
             {
                 return false;
             }
