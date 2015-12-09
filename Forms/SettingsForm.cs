@@ -64,17 +64,17 @@ namespace Tarot.Forms
             this.Close();
         }
 
-        private void OnFullLicenseLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            var startInfo = new ProcessStartInfo("http://www.gnu.org/licenses/gpl-3.0.en.html");
-            Process.Start(startInfo);
-        }
-
         private void OnDonatePictureBoxClick(object sender, EventArgs e)
         {
             var startInfo =
                 new ProcessStartInfo(
                     "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CK2TD9J572T34");
+            Process.Start(startInfo);
+        }
+
+        private void OnFullLicenseLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var startInfo = new ProcessStartInfo("http://www.gnu.org/licenses/gpl-3.0.en.html");
             Process.Start(startInfo);
         }
     }

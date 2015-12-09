@@ -89,6 +89,22 @@ namespace Tarot.Settings
             }
         }
 
+        [DefaultValue(0)]
+        [Setting]
+        public int BossEngagePercentage
+        {
+            get
+            {
+                return this.bossEngagePercentage;
+            }
+
+            set
+            {
+                this.bossEngagePercentage = value;
+                this.Save();
+            }
+        }
+
         [DefaultValue(true)]
         [Setting]
         public bool DebugEnabled
@@ -101,22 +117,6 @@ namespace Tarot.Settings
             set
             {
                 this.debugEnabled = value;
-                this.Save();
-            }
-        }
-
-        [DefaultValue(true)]
-        [Setting]
-        public bool WaitForChainFates
-        {
-            get
-            {
-                return this.waitForChainFates;
-            }
-
-            set
-            {
-                this.waitForChainFates = value;
                 this.Save();
             }
         }
@@ -169,38 +169,6 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(false)]
-        [Setting]
-        public bool RunProblematicFates
-        {
-            get
-            {
-                return this.runProblematicFates;
-            }
-
-            set
-            {
-                this.runProblematicFates = value;
-                this.Save();
-            }
-        }
-
-        [DefaultValue(0)]
-        [Setting]
-        public int BossEngagePercentage
-        {
-            get
-            {
-                return this.bossEngagePercentage;
-            }
-
-            set
-            {
-                this.bossEngagePercentage = value;
-                this.Save();
-            }
-        }
-
         [DefaultValue(20)]
         [Setting]
         public int MegaBossEngagePercentage
@@ -219,6 +187,22 @@ namespace Tarot.Settings
 
         [DefaultValue(false)]
         [Setting]
+        public bool RunProblematicFates
+        {
+            get
+            {
+                return this.runProblematicFates;
+            }
+
+            set
+            {
+                this.runProblematicFates = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
         public bool WaitAtFateForProgress
         {
             get
@@ -229,6 +213,22 @@ namespace Tarot.Settings
             set
             {
                 this.waitAtFateForProgress = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool WaitForChainFates
+        {
+            get
+            {
+                return this.waitForChainFates;
+            }
+
+            set
+            {
+                this.waitForChainFates = value;
                 this.Save();
             }
         }
