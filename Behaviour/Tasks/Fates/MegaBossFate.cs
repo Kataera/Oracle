@@ -22,7 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Handlers.Fates
+namespace Tarot.Behaviour.Tasks.Fates
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -33,7 +33,10 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
     using ff14bot.Managers;
     using ff14bot.Objects;
 
-    internal static class EscortFate
+    using global::Tarot.Helpers;
+    using global::Tarot.Settings;
+
+    internal static class MegaBossFate
     {
         private static IEnumerable<BattleCharacter> currentFateMobs;
 
@@ -55,6 +58,26 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
 
         public static async Task<bool> Main()
         {
+            if (Tarot.CurrentFate.Progress < TarotSettings.Instance.MegaBossEngagePercentage)
+            {
+                if (!TarotSettings.Instance.WaitAtFateForProgress)
+                {
+                    Logger.SendLog("Current FATE progress reset below minimum level, clearing it and choosing another.");
+
+                    Tarot.CurrentFate = null;
+                    Tarot.CurrentPoi = null;
+                    Poi.Clear("Current FATE progress reset below minimum level.");
+                }
+                else
+                {
+                    Logger.SendLog(
+                        "Current FATE progress is too low, waiting for it to reach "
+                        + TarotSettings.Instance.MegaBossEngagePercentage + "%.");
+                }
+
+                return true;
+            }
+
             var closestMob = GetClosestMob();
             if (closestMob != null)
             {

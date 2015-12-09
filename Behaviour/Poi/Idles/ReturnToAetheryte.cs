@@ -22,7 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Poi.Idles
+namespace Tarot.Behaviour.Poi.Idles
 {
     internal static class ReturnToAetheryte {}
 }

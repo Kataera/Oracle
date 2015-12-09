@@ -22,7 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Handlers.Fates
+namespace Tarot.Behaviour.Tasks.Fates
 {
     using System.Collections.Generic;
     using System.Linq;

@@ -22,7 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Handlers.Fates
+namespace Tarot.Behaviour.Tasks.Fates
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -33,7 +33,7 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
     using ff14bot.Managers;
     using ff14bot.Objects;
 
-    internal static class KillFate
+    internal static class DefenceFate
     {
         private static IEnumerable<BattleCharacter> currentFateMobs;
 

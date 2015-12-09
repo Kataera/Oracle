@@ -22,7 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Handlers
+namespace Tarot.Behaviour.Tasks
 {
     using System.Linq;
     using System.Threading.Tasks;
@@ -37,7 +37,7 @@ namespace Tarot.Behaviour.Tasks.Handlers
     using ff14bot.Navigation;
     using ff14bot.Settings;
 
-    using global::Tarot.Behaviour.Tasks.Handlers.Fates;
+    using global::Tarot.Behaviour.Tasks.Fates;
     using global::Tarot.Behaviour.Tasks.Utilities;
     using global::Tarot.Enumerations;
     using global::Tarot.Helpers;

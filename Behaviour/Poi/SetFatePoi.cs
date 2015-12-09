@@ -22,7 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Poi
+namespace Tarot.Behaviour.Poi
 {
     using System.Linq;
     using System.Threading.Tasks;
@@ -30,7 +30,7 @@ namespace Tarot.Behaviour.Tasks.Poi
     using ff14bot.Helpers;
     using ff14bot.Managers;
 
-    using global::Tarot.Behaviour.Tasks.Poi.Fates;
+    using global::Tarot.Behaviour.Poi.Fates;
     using global::Tarot.Enumerations;
     using global::Tarot.Helpers;
     using global::Tarot.Settings;

@@ -22,11 +22,11 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Poi
+namespace Tarot.Behaviour.Poi
 {
     using System.Threading.Tasks;
 
-    using global::Tarot.Behaviour.Tasks.Handlers.Idles;
+    using global::Tarot.Behaviour.Tasks.Idles;
     using global::Tarot.Enumerations;
     using global::Tarot.Helpers;
     using global::Tarot.Settings;

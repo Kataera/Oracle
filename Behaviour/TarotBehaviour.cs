@@ -26,7 +26,7 @@ namespace Tarot.Behaviour
 {
     using System.Threading.Tasks;
 
-    using global::Tarot.Behaviour.Tasks.Handlers;
+    using global::Tarot.Behaviour.Tasks;
     using global::Tarot.Behaviour.Tasks.Utilities;
 
     using TreeSharp;

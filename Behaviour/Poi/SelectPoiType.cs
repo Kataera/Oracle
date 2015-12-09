@@ -22,44 +22,35 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Handlers.Idles
+namespace Tarot.Behaviour.Poi
 {
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
+    using ff14bot.Behavior;
 
-    using Buddy.Coroutines;
+    using TreeSharp;
 
-    using ff14bot;
-    using ff14bot.Helpers;
-    using ff14bot.Managers;
-
-    using global::Tarot.Helpers;
-
-    internal static class WaitForFates
+    internal static class SelectPoiType
     {
-        private static bool IsFateActive()
+        public static Composite Behaviour
         {
-            var activeFates = FateManager.ActiveFates;
-            if (activeFates != null && !activeFates.Any())
+            get
             {
-                return true;
+                return CreateBehaviour();
             }
-
-            return false;
         }
 
-        public static async Task<bool> Main()
+        private static Composite CreateBehaviour()
         {
-            if (!IsFateActive())
+            var setFatePoi = new ActionRunCoroutine(coroutine => SetFatePoi.Main());
+            Composite[] composites =
             {
-                Logger.SendLog("Waiting for a FATE to activate.");
-                Poi.Current = new Poi(Core.Player.Location, PoiType.Wait);
-                await Coroutine.Wait(TimeSpan.MaxValue, IsFateActive);
-            }
+                new HookExecutor("SetDeathPoi"), new HookExecutor("SetCombatPoi"),
+                new HookExecutor(
+                    "SetFatePoi",
+                    "A hook that selects a viable FATE and assigns it as the Poi.",
+                    setFatePoi)
+            };
 
-            Logger.SendLog("Found a FATE, exiting idle coroutine.");
-            return true;
+            return new PrioritySelector(composites);
         }
     }
 }

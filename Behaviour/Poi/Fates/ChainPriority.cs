@@ -22,20 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Behaviour.Tasks.Handlers.Idles
+namespace Tarot.Behaviour.Poi.Fates
 {
-    using System.Threading.Tasks;
-
-    using global::Tarot.Helpers;
-
-    internal static class GrindMobs
-    {
-        public static async Task<bool> Main()
-        {
-            // TODO: Implement.
-            Logger.SendLog("'Grind mobs' is not yet implemented, defaulting to 'Return to Aetheryte'.");
-            await ReturnToAetheryte.Main();
-            return true;
-        }
-    }
+    internal class ChainPriority {}
 }
