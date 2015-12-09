@@ -72,10 +72,8 @@ namespace Tarot.Behaviour.Tasks.Idles
                 // Check if a FATE popped while we're moving.
                 if (IsFateActive())
                 {
-                    Logger.SendLog("Found a FATE, exiting idle coroutine.");
                     Navigator.Stop();
-                    Navigator.Clear();
-                    Navigator.PlayerMover.MoveStop();
+                    Poi.Clear("Found a FATE.");
 
                     return true;
                 }
@@ -86,7 +84,6 @@ namespace Tarot.Behaviour.Tasks.Idles
             }
 
             Navigator.PlayerMover.MoveStop();
-            await WaitForFates.Main();
 
             return true;
         }

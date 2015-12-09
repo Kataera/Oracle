@@ -60,30 +60,32 @@ namespace Tarot.Behaviour.PoiHooks.WaitSelect
 
         private static async Task<bool> BlacklistUnnavigableAetherytes()
         {
-            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
-                var aetherytes = WorldManager.AetheryteIdsForZone(WorldManager.ZoneId);
-                var navRequest =
-                    aetherytes.Select(
-                        target => new CanFullyNavigateTarget {Id = target.Item1, Position = target.Item2});
-                var navResults =
-                    await
-                        Navigator.NavigationProvider.CanFullyNavigateToAsync(
-                            navRequest,
-                            Core.Player.Location,
-                            WorldManager.ZoneId);
+                return true;
+            }
 
-                foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
+            var aetherytes = WorldManager.AetheryteIdsForZone(WorldManager.ZoneId);
+            var navRequest =
+                aetherytes.Select(
+                    target => new CanFullyNavigateTarget {Id = target.Item1, Position = target.Item2});
+            var navResults =
+                await
+                    Navigator.NavigationProvider.CanFullyNavigateToAsync(
+                        navRequest,
+                        Core.Player.Location,
+                        WorldManager.ZoneId);
+
+            foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
+            {
+                var val = aetherytes.FirstOrDefault(result => result.Item1 == navResult.Id);
+                if (val != null)
                 {
-                    var val = aetherytes.FirstOrDefault(result => result.Item1 == navResult.Id);
-                    if (val != null)
-                    {
-                        Blacklist.Add(
-                            val.Item1,
-                            BlacklistFlags.Node,
-                            TimeSpan.FromMinutes(10),
-                            "Cannot navigate to Aetheryte.");
-                    }
+                    Blacklist.Add(
+                        val.Item1,
+                        BlacklistFlags.Node,
+                        TimeSpan.FromMinutes(10),
+                        "Cannot navigate to Aetheryte.");
                 }
             }
 
