@@ -49,7 +49,6 @@ namespace Tarot.Behaviour.PoiHooks.FateSelect
 
             if (activeFates == null || !activeFates.Any() || FateManager.ActiveFates.All(NotEnoughProgress))
             {
-                Logger.SendLog("No viable FATEs found.");
                 return false;
             }
 
@@ -69,12 +68,15 @@ namespace Tarot.Behaviour.PoiHooks.FateSelect
                 foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
                 {
                     var val = activeFates.FirstOrDefault(result => result.Id == navResult.Id);
-                    if (val != null)
+
+                    if (val == null)
                     {
-                        Logger.SendDebugLog(
-                            "'" + val.Name + "' cannot be navigated to, blacklisting for its remaining duration.");
-                        Blacklist.Add(val.Id, BlacklistFlags.Node, val.TimeLeft, "Cannot navigate to FATE.");
+                        continue;
                     }
+
+                    Logger.SendDebugLog(
+                        "'" + val.Name + "' cannot be navigated to, blacklisting for its remaining duration.");
+                    Blacklist.Add(val.Id, BlacklistFlags.Node, val.TimeLeft, "Cannot navigate to FATE.");
                 }
             }
 
@@ -84,28 +86,30 @@ namespace Tarot.Behaviour.PoiHooks.FateSelect
             {
                 Logger.SendDebugLog("Found FATE: '" + fate.Name + "'.");
 
-                if (IsFateViable(fate))
+                if (!IsFateViable(fate))
                 {
-                    if (closestFate == null)
-                    {
-                        closestFate = fate;
-                    }
+                    continue;
+                }
 
-                    else if (playerLocation.Distance2D(closestFate.Location) > playerLocation.Distance2D(fate.Location))
-                    {
-                        closestFate = fate;
-                    }
+                if (closestFate == null)
+                {
+                    closestFate = fate;
+                }
+
+                else if (playerLocation.Distance2D(closestFate.Location) > playerLocation.Distance2D(fate.Location))
+                {
+                    closestFate = fate;
                 }
             }
 
-            if (closestFate != null)
+            if (closestFate == null)
             {
-                Logger.SendLog("Selected FATE: '" + closestFate.Name + "'.");
-
-                // Set FATE in Tarot and the Poi.
-                Tarot.CurrentFate = closestFate;
-                Poi.Current = new Poi(closestFate, PoiType.Fate);
+                return true;
             }
+
+            Logger.SendLog("Selected FATE: '" + closestFate.Name + "'.");
+            Tarot.CurrentFate = closestFate;
+            Poi.Current = new Poi(closestFate, PoiType.Fate);
 
             return true;
         }

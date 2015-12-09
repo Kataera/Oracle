@@ -35,7 +35,8 @@ namespace Tarot.Behaviour.PoiHooks
     {
         public static async Task<bool> Main()
         {
-            Logger.SendLog("No active FATEs, activating wait mode.");
+            Logger.SendLog("No viable FATEs, activating wait mode.");
+
             switch (TarotSettings.Instance.FateIdleMode)
             {
                 case FateIdleMode.ReturnToAetheryte:

@@ -27,16 +27,15 @@ using System.Threading.Tasks;
 
 using Buddy.Coroutines;
 
-using Clio.Utilities;
-
 using ff14bot;
 using ff14bot.Behavior;
-using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+using ff14bot.Settings;
 
-using Tarot.Helpers;
+using Tarot.Enumerations;
+using Tarot.Settings;
 
 namespace Tarot.Behaviour.Tasks.Idles
 {
@@ -44,46 +43,48 @@ namespace Tarot.Behaviour.Tasks.Idles
     {
         public static async Task<bool> Main()
         {
-            var aetheryte = GetClosestAetheryteLocation();
-
-            // Check if there were no Aetherytes in the zone.
-            if (aetheryte == Vector3.Zero)
+            if (Poi.Current == null)
             {
-                // TODO: Add check for a wait location of the zone and try that.
-                Logger.SendLog("There are no Aetheryte crystals in this zone, defaulting to nothing.");
-                await WaitForFates.Main();
+                return false;
+            }
+
+            if (FateManager.ActiveFates.Any(ProgressedEnough))
+            {
+                Poi.Clear("Found a FATE.");
                 return true;
             }
 
-            if (!IsFateActive())
+            if (!(Core.Player.Distance2D(Poi.Current.Location) > 15f))
             {
-                Logger.SendLog("Moving to the closest Aetheryte crystal to wait for the next FATE.");
-
-                if (!Core.Player.IsMounted)
-                {
-                    // TODO: Check that CreateMountBehavior handles combat.
-                    await CommonBehaviors.CreateMountBehavior().ExecuteCoroutine();
-                }
+                return true;
             }
 
-            // Set Poi and start moving.
-            Poi.Current = new Poi(aetheryte, PoiType.Wait);
-            Tarot.CurrentPoi = Poi.Current;
-
-            var result = Navigator.MoveToPointWithin(aetheryte, 15f, "Moving to Aetheryte");
-            while (result != MoveResult.Done)
+            while (Core.Player.Distance2D(Poi.Current.Location) > 15f)
             {
                 // Check if a FATE popped while we're moving.
-                if (IsFateActive())
+                if (FateManager.ActiveFates.Any(ProgressedEnough))
                 {
                     Navigator.Stop();
                     Poi.Clear("Found a FATE.");
-
                     return true;
                 }
 
-                // This needs to be continually reassigned, no other way to check status.
-                result = Navigator.MoveToPointWithin(aetheryte, 15f, "Moving to Aetheryte");
+                // Check we're still mounted.
+                if (!Core.Player.IsMounted
+                    && Core.Player.Distance(Poi.Current.Location) > CharacterSettings.Instance.MountDistance)
+                {
+                    Navigator.PlayerMover.MoveStop();
+
+                    // Exit behaviour if we're in combat.
+                    if (Core.Player.InCombat)
+                    {
+                        return false;
+                    }
+
+                    await CommonBehaviors.CreateMountBehavior().ExecuteCoroutine();
+                }
+
+                Navigator.MoveToPointWithin(Poi.Current.Location, 15f, "Moving to Aetheryte");
                 await Coroutine.Yield();
             }
 
@@ -92,35 +93,27 @@ namespace Tarot.Behaviour.Tasks.Idles
             return true;
         }
 
-        private static Vector3 GetClosestAetheryteLocation()
+        private static bool ProgressedEnough(FateData fate)
         {
-            var aetherytes = WorldManager.AetheryteIdsForZone(WorldManager.ZoneId);
-            var playerLocation = Core.Player.Location;
-            var location = Vector3.Zero;
-
-            // Vectors are non-nullable, so return zeroed location and handle in task.
-            if (aetherytes == null || aetherytes.Length == 0)
+            if (TarotSettings.Instance.WaitAtFateForProgress)
             {
-                return location;
+                return true;
             }
 
-            foreach (var aetheryte in aetherytes)
+            if (Tarot.FateDatabase.GetFateWithId(fate.Id).Type != FateType.Boss
+                && Tarot.FateDatabase.GetFateWithId(fate.Id).Type != FateType.MegaBoss)
             {
-                // TODO: Check the Aetheryte is navigable first.
-                if (location == Vector3.Zero
-                    || playerLocation.Distance2D(location) > playerLocation.Distance2D(aetheryte.Item2))
-                {
-                    location = aetheryte.Item2;
-                }
+                return true;
             }
 
-            return location;
-        }
+            if (Tarot.FateDatabase.GetFateWithId(fate.Id).Type == FateType.Boss
+                && fate.Progress >= TarotSettings.Instance.BossEngagePercentage)
+            {
+                return true;
+            }
 
-        private static bool IsFateActive()
-        {
-            var activeFates = FateManager.ActiveFates;
-            if (activeFates != null && activeFates.Any())
+            if (Tarot.FateDatabase.GetFateWithId(fate.Id).Type == FateType.MegaBoss
+                && fate.Progress >= TarotSettings.Instance.MegaBossEngagePercentage)
             {
                 return true;
             }
