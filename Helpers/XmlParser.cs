@@ -59,26 +59,6 @@ namespace Tarot.Helpers
 
         private static uint fateChainIdFail;
 
-        public static FateDatabase GetFateDatabase()
-        {
-            if (database == null)
-            {
-                ParseFateData();
-            }
-
-            return database;
-        }
-
-        public static FateDatabase GetFateDatabase(bool forceReparse)
-        {
-            if (forceReparse || database == null)
-            {
-                ParseFateData();
-            }
-
-            return database;
-        }
-
         private static Fate CreateFate()
         {
             Fate fate;
@@ -124,6 +104,26 @@ namespace Tarot.Helpers
             fate.SupportLevel = fateSupportLevel;
             fate.Type = fateType;
             return fate;
+        }
+
+        public static FateDatabase GetFateDatabase()
+        {
+            if (database == null)
+            {
+                ParseFateData();
+            }
+
+            return database;
+        }
+
+        public static FateDatabase GetFateDatabase(bool forceReparse)
+        {
+            if (forceReparse || database == null)
+            {
+                ParseFateData();
+            }
+
+            return database;
         }
 
         private static XmlDocument GetXmlDocument()

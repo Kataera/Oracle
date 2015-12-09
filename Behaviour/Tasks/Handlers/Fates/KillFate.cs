@@ -37,6 +37,22 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
     {
         private static IEnumerable<BattleCharacter> currentFateMobs;
 
+        private static BattleCharacter GetClosestMob()
+        {
+            PopulateTargetList();
+            if (currentFateMobs == null)
+            {
+                return null;
+            }
+
+            // Order by max hp, then the mobs' current hp, then finally by distance.
+            return
+                currentFateMobs.OrderByDescending(mob => mob.MaxHealth)
+                               .ThenByDescending(mob => mob.CurrentHealth)
+                               .ThenBy(mob => Core.Me.Distance(mob.Location))
+                               .FirstOrDefault(mob => Tarot.CurrentFate.Within2D(mob.Location));
+        }
+
         public static async Task<bool> Main()
         {
             var closestMob = GetClosestMob();
@@ -56,22 +72,6 @@ namespace Tarot.Behaviour.Tasks.Handlers.Fates
                                      mob =>
                                      mob.IsFate && !mob.IsFateGone && mob.CanAttack
                                      && mob.FateId == Tarot.CurrentFate.Id);
-        }
-
-        private static BattleCharacter GetClosestMob()
-        {
-            PopulateTargetList();
-            if (currentFateMobs == null)
-            {
-                return null;
-            }
-
-            // Order by max hp, then the mobs' current hp, then finally by distance.
-            return
-                currentFateMobs.OrderByDescending(mob => mob.MaxHealth)
-                               .ThenByDescending(mob => mob.CurrentHealth)
-                               .ThenBy(mob => Core.Me.Distance(mob.Location))
-                               .FirstOrDefault(mob => Tarot.CurrentFate.Within2D(mob.Location));
         }
     }
 }

@@ -42,6 +42,42 @@ namespace Tarot.Behaviour.Tasks.Handlers.Idles
 
     internal static class ReturnToAetheryte
     {
+        private static Vector3 GetClosestAetheryteLocation()
+        {
+            var aetherytes = WorldManager.AetheryteIdsForZone(WorldManager.ZoneId);
+            var playerLocation = Core.Player.Location;
+            var location = Vector3.Zero;
+
+            // Vectors are non-nullable, so return zeroed location and handle in task.
+            if (aetherytes == null || aetherytes.Length == 0)
+            {
+                return location;
+            }
+
+            foreach (var aetheryte in aetherytes)
+            {
+                // TODO: Check the Aetheryte is navigable first.
+                if (location == Vector3.Zero
+                    || playerLocation.Distance2D(location) > playerLocation.Distance2D(aetheryte.Item2))
+                {
+                    location = aetheryte.Item2;
+                }
+            }
+
+            return location;
+        }
+
+        private static bool IsFateActive()
+        {
+            var activeFates = FateManager.ActiveFates;
+            if (activeFates != null && !activeFates.Any())
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static async Task<bool> Main()
         {
             var aetheryte = GetClosestAetheryteLocation();
@@ -93,42 +129,6 @@ namespace Tarot.Behaviour.Tasks.Handlers.Idles
             await WaitForFates.Main();
 
             return true;
-        }
-
-        private static Vector3 GetClosestAetheryteLocation()
-        {
-            var aetherytes = WorldManager.AetheryteIdsForZone(WorldManager.ZoneId);
-            var playerLocation = Core.Player.Location;
-            var location = Vector3.Zero;
-
-            // Vectors are non-nullable, so return zeroed location and handle in task.
-            if (aetherytes == null || aetherytes.Length == 0)
-            {
-                return location;
-            }
-
-            foreach (var aetheryte in aetherytes)
-            {
-                // TODO: Check the Aetheryte is navigable first.
-                if (location == Vector3.Zero
-                    || playerLocation.Distance2D(location) > playerLocation.Distance2D(aetheryte.Item2))
-                {
-                    location = aetheryte.Item2;
-                }
-            }
-
-            return location;
-        }
-
-        private static bool IsFateActive()
-        {
-            var activeFates = FateManager.ActiveFates;
-            if (activeFates != null && !activeFates.Any())
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 }

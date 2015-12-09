@@ -38,6 +38,17 @@ namespace Tarot.Behaviour.Tasks.Handlers.Idles
 
     internal static class WaitForFates
     {
+        private static bool IsFateActive()
+        {
+            var activeFates = FateManager.ActiveFates;
+            if (activeFates != null && !activeFates.Any())
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static async Task<bool> Main()
         {
             if (!IsFateActive())
@@ -49,17 +60,6 @@ namespace Tarot.Behaviour.Tasks.Handlers.Idles
 
             Logger.SendLog("Found a FATE, exiting idle coroutine.");
             return true;
-        }
-
-        private static bool IsFateActive()
-        {
-            var activeFates = FateManager.ActiveFates;
-            if (activeFates != null && !activeFates.Any())
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 }

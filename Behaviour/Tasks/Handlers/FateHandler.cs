@@ -45,6 +45,53 @@ namespace Tarot.Behaviour.Tasks.Handlers
 
     internal static class FateHandler
     {
+        private static bool FateHasEnoughProgress()
+        {
+            if (Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id).Type == FateType.Boss
+                && Tarot.CurrentFate.Progress < TarotSettings.Instance.BossEngagePercentage)
+            {
+                return false;
+            }
+
+            if (Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id).Type == FateType.MegaBoss
+                && Tarot.CurrentFate.Progress < TarotSettings.Instance.MegaBossEngagePercentage)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static async Task<bool> Land()
+        {
+            if (FateHasEnoughProgress())
+            {
+                if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+                {
+                    if (await CommonTasks.CanLand() == CanLandResult.Yes)
+                    {
+                        await CommonTasks.Land();
+                    }
+                    else
+                    {
+                        var moveResult = Navigator.MoveTo(Tarot.CurrentFate.Location, "FATE centre.");
+                        while (moveResult != MoveResult.Done)
+                        {
+                            moveResult = Navigator.MoveTo(Tarot.CurrentFate.Location, "FATE centre.");
+                            await Coroutine.Yield();
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private static bool LevelSyncNeeded()
+        {
+            return Tarot.CurrentFate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced;
+        }
+
         public static async Task<bool> Main()
         {
             if (Poi.Current != null && Poi.Current.Type == PoiType.Fate && Tarot.CurrentFate != null)
@@ -140,33 +187,6 @@ namespace Tarot.Behaviour.Tasks.Handlers
             return true;
         }
 
-        private static bool FateHasEnoughProgress()
-        {
-            if (Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id).Type == FateType.Boss
-                && Tarot.CurrentFate.Progress < TarotSettings.Instance.BossEngagePercentage)
-            {
-                return false;
-            }
-
-            if (Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id).Type == FateType.MegaBoss
-                && Tarot.CurrentFate.Progress < TarotSettings.Instance.MegaBossEngagePercentage)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private static bool LevelSyncNeeded()
-        {
-            return Tarot.CurrentFate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced;
-        }
-
-        private static bool WithinFate()
-        {
-            return Tarot.CurrentFate.Location.Distance(Core.Player.Location) < Tarot.CurrentFate.Radius;
-        }
-
         private static async Task<bool> MoveToFate()
         {
             // If we're inside a FATE, cancel.
@@ -219,29 +239,9 @@ namespace Tarot.Behaviour.Tasks.Handlers
             return true;
         }
 
-        private static async Task<bool> Land()
+        private static bool WithinFate()
         {
-            if (FateHasEnoughProgress())
-            {
-                if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
-                {
-                    if (await CommonTasks.CanLand() == CanLandResult.Yes)
-                    {
-                        await CommonTasks.Land();
-                    }
-                    else
-                    {
-                        var moveResult = Navigator.MoveTo(Tarot.CurrentFate.Location, "FATE centre.");
-                        while (moveResult != MoveResult.Done)
-                        {
-                            moveResult = Navigator.MoveTo(Tarot.CurrentFate.Location, "FATE centre.");
-                            await Coroutine.Yield();
-                        }
-                    }
-                }
-            }
-
-            return true;
+            return Tarot.CurrentFate.Location.Distance(Core.Player.Location) < Tarot.CurrentFate.Radius;
         }
     }
 }

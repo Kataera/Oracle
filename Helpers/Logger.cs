@@ -38,10 +38,13 @@ namespace Tarot.Helpers
 
         private static readonly Color LoggerDebugColour = Color.FromRgb(238, 223, 88);
 
-        internal static void SendLog(string log)
+        internal static void SendDebugLog(string log)
         {
-            var prefix = "[" + Tarot.Instance.Name + " v" + Tarot.Version + "]: ";
-            Logging.Write(LoggerRegularColour, prefix + log);
+            if (TarotSettings.Instance.DebugEnabled)
+            {
+                var prefix = "[" + Tarot.Instance.Name + " v" + Tarot.Version + "] [DEBUG]: ";
+                Logging.Write(LoggerDebugColour, prefix + log);
+            }
         }
 
         internal static void SendErrorLog(string log)
@@ -50,13 +53,10 @@ namespace Tarot.Helpers
             Logging.Write(LoggerErrorColour, prefix + log);
         }
 
-        internal static void SendDebugLog(string log)
+        internal static void SendLog(string log)
         {
-            if (TarotSettings.Instance.DebugEnabled)
-            {
-                var prefix = "[" + Tarot.Instance.Name + " v" + Tarot.Version + "] [DEBUG]: ";
-                Logging.Write(LoggerDebugColour, prefix + log);
-            }
+            var prefix = "[" + Tarot.Instance.Name + " v" + Tarot.Version + "]: ";
+            Logging.Write(LoggerRegularColour, prefix + log);
         }
     }
 }
