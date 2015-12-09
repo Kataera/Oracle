@@ -53,7 +53,30 @@ namespace Tarot
 
         private static SettingsForm settingsForm;
 
-        public override string Name
+        internal static FateData CurrentFate { get; set; }
+
+        internal static FateIdleMode CurrentIdle { get; set; }
+
+        internal static Poi CurrentPoi { get; set; }
+
+        internal static FateDatabase FateDatabase { get; set; }
+
+        internal static Tarot Instance { get; set; }
+
+        internal static FateData PreviousFate { get; set; }
+
+        internal static string Version
+        {
+            get
+            {
+                var versionString = Assembly.GetExecutingAssembly().GetName().Version.Major + "."
+                                    + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
+                                    + Assembly.GetExecutingAssembly().GetName().Version.Revision;
+                return versionString;
+            }
+        }
+
+        public override string EnglishName
         {
             get
             {
@@ -61,7 +84,15 @@ namespace Tarot
             }
         }
 
-        public override string EnglishName
+        public override bool IsAutonomous
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public override string Name
         {
             get
             {
@@ -74,22 +105,6 @@ namespace Tarot
             get
             {
                 return PulseFlags.All;
-            }
-        }
-
-        public override bool IsAutonomous
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        public override bool WantButton
-        {
-            get
-            {
-                return true;
             }
         }
 
@@ -109,26 +124,11 @@ namespace Tarot
             }
         }
 
-        internal static Tarot Instance { get; set; }
-
-        internal static FateData CurrentFate { get; set; }
-
-        internal static FateData PreviousFate { get; set; }
-
-        internal static FateIdleMode CurrentIdle { get; set; }
-
-        internal static Poi CurrentPoi { get; set; }
-
-        internal static FateDatabase FateDatabase { get; set; }
-
-        internal static string Version
+        public override bool WantButton
         {
             get
             {
-                var versionString = Assembly.GetExecutingAssembly().GetName().Version.Major + "."
-                                    + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
-                                    + Assembly.GetExecutingAssembly().GetName().Version.Revision;
-                return versionString;
+                return true;
             }
         }
 

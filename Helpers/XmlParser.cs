@@ -35,29 +35,29 @@ namespace Tarot.Helpers
 
     internal static class XmlParser
     {
-        private static bool fateDataInvalidFlag;
-
         private static FateDatabase database;
 
-        private static XmlDocument fateDataXml;
+        private static uint fateChainIdFail;
 
-        private static string fateName;
+        private static uint fateChainIdSuccess;
+
+        private static uint fateCollectItemId;
+
+        private static bool fateDataInvalidFlag;
+
+        private static XmlDocument fateDataXml;
 
         private static uint fateId;
 
         private static uint fateLevel;
 
-        private static FateType fateType;
-
-        private static FateSupportLevel fateSupportLevel;
-
-        private static uint fateCollectItemId;
+        private static string fateName;
 
         private static uint fateNpcId;
 
-        private static uint fateChainIdSuccess;
+        private static FateSupportLevel fateSupportLevel;
 
-        private static uint fateChainIdFail;
+        private static FateType fateType;
 
         private static Fate CreateFate()
         {

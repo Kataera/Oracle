@@ -37,9 +37,9 @@ namespace Tarot.Settings
 
     internal sealed class TarotSettings : JsonSettings
     {
-        private static readonly object SyncRoot = new object();
-
         private static volatile TarotSettings instance;
+
+        private static readonly object SyncRoot = new object();
 
         private int bossEngagePercentage;
 
