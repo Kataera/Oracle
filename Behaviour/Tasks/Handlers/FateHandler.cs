@@ -199,8 +199,6 @@ namespace Tarot.Behaviour.Tasks.Handlers
 
             if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
-                await CommonTasks.DescendTo(20f);
-
                 if (await CommonTasks.CanLand() == CanLandResult.Yes)
                 {
                     await CommonTasks.Land();
