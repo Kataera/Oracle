@@ -44,48 +44,76 @@ namespace Tarot.Behaviour.Tasks.Fates
     {
         public static async Task<bool> Main()
         {
-            var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
-            if (target != null)
+            if (AnyViableTargets())
             {
-                Poi.Current = new Poi(target, PoiType.Kill);
-                return true;
-            }
-
-            // Stay close to the NPC.
-            var npc = GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
-            if (npc == null)
-            {
-                Logger.SendDebugLog("Cannot find escort NPC, defaulting to staying within the centre of the FATE.");
-                return true;
-            }
-
-            if (Core.Player.Distance2D(npc.Location) > 10f)
-            {
-                // Find random point within 3 yards of NPC.
-                const float radius = 3f;
-                const float radiusSquared = radius * radius;
-                var xOffset = Convert.ToSingle(((2 * new Random().NextDouble()) - 1.0) * radius);
-                var yOffset = Convert.ToSingle(((2 * new Random().NextDouble()) - 1.0) * Math.Sqrt(radiusSquared - (xOffset * xOffset)));
-                var location = new Vector3(npc.Location.X + xOffset, npc.Location.Y + yOffset, npc.Location.Z);
-
-                Logger.SendDebugLog("X offset: " + xOffset + ", Y offset: " + yOffset);
-                Logger.SendDebugLog("NPC Location: " + npc.Location + ", Moving to: " + location);
-
-                while (Core.Player.Distance2D(location) > 2f)
+                var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
+                if (target != null)
                 {
-                    Navigator.PlayerMover.MoveTowards(location);
-                    await Coroutine.Yield();
+                    Poi.Current = new Poi(target, PoiType.Kill);
+                }
+            }
+            else
+            {
+                var escortNpc = GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
+                if (escortNpc == null)
+                {
+                    Logger.SendDebugLog("Cannot find escort NPC, defaulting to staying within the centre of the FATE.");
+                    while (Core.Player.Distance2D(Tarot.CurrentFate.Location) > Tarot.CurrentFate.Radius * 0.2f)
+                    {
+                        Navigator.MoveToPointWithin(Tarot.CurrentFate.Location, Tarot.CurrentFate.Radius * 0.2f, "FATE centre.");
+                        await Coroutine.Yield();
+                    }
+
+                    return true;
                 }
 
-                Navigator.PlayerMover.MoveStop();
+                if (!(Core.Player.Distance2D(escortNpc.Location) > 7f))
+                {
+                    return true;
+                }
+
+                await MoveToEscortNpc(escortNpc);
             }
 
             return true;
         }
 
+        private static bool AnyViableTargets()
+        {
+            return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableTarget).Any();
+        }
+
         private static bool IsEscortNpc(BattleCharacter battleCharacter)
         {
             return battleCharacter.IsFate && !battleCharacter.CanAttack && battleCharacter.FateId == Tarot.CurrentFate.Id;
+        }
+
+        private static bool IsViableTarget(BattleCharacter target)
+        {
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == Tarot.CurrentFate.Id;
+        }
+
+        private static async Task<bool> MoveToEscortNpc(GameObject npc)
+        {
+            // Find random point within 3 yards of NPC.
+            const float radius = 3f;
+            const float radiusSquared = radius * radius;
+            var xOffset = Convert.ToSingle(((2 * new Random().NextDouble()) - 1.0) * radius);
+            var yOffset = Convert.ToSingle(((2 * new Random().NextDouble()) - 1.0) * Math.Sqrt(radiusSquared - (xOffset * xOffset)));
+            var location = new Vector3(npc.Location.X + xOffset, npc.Location.Y + yOffset, npc.Location.Z);
+
+            Logger.SendDebugLog("X offset: " + xOffset + ", Y offset: " + yOffset);
+            Logger.SendDebugLog("NPC Location: " + npc.Location + ", Moving to: " + location);
+
+            while (Core.Player.Distance2D(location) > 2f)
+            {
+                Navigator.PlayerMover.MoveTowards(location);
+                await Coroutine.Yield();
+            }
+
+            Navigator.PlayerMover.MoveStop();
+
+            return true;
         }
     }
 }
