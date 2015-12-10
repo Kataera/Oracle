@@ -47,9 +47,14 @@ namespace Tarot.Behaviour.Tasks
     {
         public static async Task<bool> Main()
         {
-            if (Poi.Current == null || Poi.Current.Type != PoiType.Fate || Tarot.CurrentFate == null)
+            if (Poi.Current == null || Tarot.CurrentFate == null)
             {
                 return true;
+            }
+
+            if (Poi.Current.Type != PoiType.Kill && Poi.Current.Type != PoiType.Fate && Tarot.CurrentFate != null)
+            {
+                Poi.Current = new Poi(Tarot.CurrentFate, PoiType.Fate);
             }
 
             await MoveToFate();
