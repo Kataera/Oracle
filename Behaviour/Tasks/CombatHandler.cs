@@ -94,6 +94,12 @@ namespace Tarot.Behaviour.Tasks
 
         private static async Task<bool> CheckForBlacklist()
         {
+            // If we can mount up and reach the target, no need to blacklist.
+            if (!Core.Player.InCombat && WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            {
+                return false;
+            }
+
             if (blacklistCheckTimer == null)
             {
                 blacklistCheckTimer = Stopwatch.StartNew();
