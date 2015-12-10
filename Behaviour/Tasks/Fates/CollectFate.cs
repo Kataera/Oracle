@@ -67,6 +67,7 @@ namespace Tarot.Behaviour.Tasks.Fates
             {
                 if (fateItemBagSlot != null && fateItemBagSlot.Count >= 1)
                 {
+                    Logger.SendLog("FATE is complete, turning in remaining items.");
                     await TurnInFateItems(GameObjectManager.GetObjectByNPCId(fate.NpcId));
                 }
 

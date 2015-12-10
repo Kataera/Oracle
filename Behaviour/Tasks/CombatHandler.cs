@@ -62,7 +62,7 @@ namespace Tarot.Behaviour.Tasks
                 }
 
                 if (GameObjectManager.Attackers.Any()
-                    && (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait || Poi.Current.Type == PoiType.None))
+                    && (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait))
                 {
                     Logger.SendLog("Clearing the non-kill point of interest while we're in combat.");
                     Poi.Clear("Character is in combat.");
@@ -99,8 +99,8 @@ namespace Tarot.Behaviour.Tasks
                 blacklistCheckTimer = Stopwatch.StartNew();
             }
 
-            // Limit checks to every 10 seconds to not send too many requests.
-            else if (blacklistCheckTimer.Elapsed > TimeSpan.FromSeconds(10))
+            // Limit checks to every 5 seconds to not send too many requests.
+            else if (blacklistCheckTimer.Elapsed > TimeSpan.FromSeconds(5))
             {
                 if (Poi.Current == null || Poi.Current.Type != PoiType.Kill)
                 {
