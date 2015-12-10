@@ -138,8 +138,13 @@ namespace Tarot.Behaviour.Tasks
 
         private static bool LevelSyncNeeded()
         {
-            if (Poi.Current == null || Poi.Current.BattleCharacter == null || Poi.Current.BattleCharacter.IsDead
-                || Poi.Current.BattleCharacter.FateId == 0 || Poi.Current.BattleCharacter.IsFateGone)
+
+            if (Poi.Current == null || Poi.Current.Type == PoiType.None)
+            {
+                return false;
+            }
+
+            if (Poi.Current.BattleCharacter == null || !Poi.Current.BattleCharacter.IsValid || Poi.Current.BattleCharacter.IsFateGone)
             {
                 return false;
             }
@@ -147,10 +152,12 @@ namespace Tarot.Behaviour.Tasks
             var fateId = Poi.Current.BattleCharacter.FateId;
             var fate = FateManager.GetFateById(fateId);
 
-            return Poi.Current != null && Poi.Current.Type == PoiType.Kill && fateId != 0
-                   && fate.IsValid
-                   && (fate.MaxLevel < Core.Player.ClassLevel)
-                   && !Core.Player.IsLevelSynced;
+            if (fate == null)
+            {
+                return false;
+            }
+
+            return fate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced;
         }
 
         private static async Task<bool> MoveIntoFateArea()

@@ -257,6 +257,11 @@ namespace Tarot.Behaviour.Tasks
 
         private static bool WithinFate()
         {
+            if (!Tarot.CurrentFate.IsValid)
+            {
+                return false;
+            }
+
             return Tarot.CurrentFate.Location.Distance(Core.Player.Location) < Tarot.CurrentFate.Radius;
         }
     }
