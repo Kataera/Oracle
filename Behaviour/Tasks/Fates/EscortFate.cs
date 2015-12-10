@@ -26,13 +26,13 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Timers;
 
 using Buddy.Coroutines;
 
 using Clio.Utilities;
 
 using ff14bot;
+using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
@@ -44,11 +44,17 @@ namespace Tarot.Behaviour.Tasks.Fates
 {
     internal static class EscortFate
     {
-        private static Stopwatch movementTimer;
         private static int movementCooldown;
+        private static Stopwatch movementTimer;
 
         public static async Task<bool> Main()
         {
+            if (Tarot.CurrentFate.Status == FateStatus.COMPLETE)
+            {
+                ClearFate();
+                return true;
+            }
+
             if (movementTimer == null)
             {
                 movementTimer = Stopwatch.StartNew();
@@ -105,6 +111,15 @@ namespace Tarot.Behaviour.Tasks.Fates
         private static bool AnyViableTargets()
         {
             return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableTarget).Any();
+        }
+
+        private static void ClearFate()
+        {
+            Logger.SendLog("Current FATE is finished.");
+            Poi.Clear("Current FATE is finished.");
+            Tarot.PreviousFate = Tarot.CurrentFate;
+            Tarot.CurrentPoi = null;
+            Tarot.CurrentFate = null;
         }
 
         private static bool IsEscortNpc(BattleCharacter battleCharacter)

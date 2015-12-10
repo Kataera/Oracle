@@ -52,7 +52,6 @@ namespace Tarot.Behaviour
             }
 
             await CombatHandler.Main();
-            await ClearFateIfFinished.Main();
             await FateHandler.Main();
             await IdleHandler.Main();
 

@@ -43,6 +43,7 @@ namespace Tarot.Settings
         public Dictionary<uint, Vector3> FateWaitLocations;
 
         private int bossEngagePercentage;
+        private int collectFateTurnInAtAmount;
 
         private bool debugEnabled;
 
@@ -59,7 +60,6 @@ namespace Tarot.Settings
         private bool waitAtFateForProgress;
 
         private bool waitForChainFates;
-        private int collectFateTurnInAtAmount;
 
         private TarotSettings()
             : base(Path.Combine(CharacterSettingsDirectory, "TarotSettings.json"))
@@ -98,6 +98,19 @@ namespace Tarot.Settings
             set
             {
                 this.bossEngagePercentage = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(5)]
+        [Setting]
+        public int CollectFateTurnInAtAmount
+        {
+            get { return this.collectFateTurnInAtAmount; }
+
+            set
+            {
+                this.collectFateTurnInAtAmount = value;
                 this.Save();
             }
         }
@@ -202,19 +215,6 @@ namespace Tarot.Settings
             set
             {
                 this.waitForChainFates = value;
-                this.Save();
-            }
-        }
-
-        [DefaultValue(5)]
-        [Setting]
-        public int CollectFateTurnInAtAmount
-        {
-            get { return this.collectFateTurnInAtAmount; }
-
-            set
-            {
-                this.collectFateTurnInAtAmount = value;
                 this.Save();
             }
         }

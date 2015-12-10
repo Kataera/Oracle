@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,6 +34,8 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 
+using NeoGaia.ConnectionHandler;
+
 using Tarot.Behaviour.Tasks.Utilities;
 using Tarot.Helpers;
 
@@ -42,53 +45,36 @@ namespace Tarot.Behaviour.Tasks
     {
         public static async Task<bool> Main()
         {
-            if (Poi.Current == null)
-            {
-                return false;
-            }
-
-            if (GameObjectManager.Attackers.All(check => check.IsFateGone) && Poi.Current.Type != PoiType.Kill)
-            {
-                return true;
-            }
-
-            if (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait)
-            {
-                Logger.SendLog("Clearing the non-kill point of interest while we're in combat.");
-                Poi.Clear("Character is in combat.");
-            }
-
-            // Make sure we don't get stuck attacking a mob that requires us to be level synced.
-            else if (LevelSyncNeeded())
-            {
-                if (!FateManager.WithinFate)
-                {
-                    await MoveIntoFateArea();
-                }
-
-                await LevelSync.Main();
-            }
-
-            return true;
-        }
-
-        private static bool LevelSyncNeeded()
-        {
             try
             {
-                if (Poi.Current == null || Poi.Current.BattleCharacter == null || Poi.Current.BattleCharacter.IsDead
-                    || Poi.Current.BattleCharacter.FateId == 0 || Poi.Current.BattleCharacter.IsFateGone)
+                if (Poi.Current == null)
                 {
                     return false;
                 }
 
-                var fateId = Poi.Current.BattleCharacter.FateId;
-                var fate = FateManager.GetFateById(fateId);
+                if (GameObjectManager.Attackers.All(check => check.IsFateGone) && Poi.Current.Type != PoiType.Kill)
+                {
+                    return true;
+                }
 
-                return Poi.Current != null && Poi.Current.Type == PoiType.Kill && fateId != 0
-                       && fate.IsValid
-                       && (fate.MaxLevel < Core.Player.ClassLevel)
-                       && !Core.Player.IsLevelSynced;
+                if (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait)
+                {
+                    Logger.SendLog("Clearing the non-kill point of interest while we're in combat.");
+                    Poi.Clear("Character is in combat.");
+                }
+
+                // Make sure we don't get stuck attacking a mob that requires us to be level synced.
+                else if (LevelSyncNeeded())
+                {
+                    if (!FateManager.WithinFate)
+                    {
+                        await MoveIntoFateArea();
+                    }
+
+                    await LevelSync.Main();
+                }
+
+                return true;
             }
             catch (Exception exception)
             {
@@ -98,6 +84,51 @@ namespace Tarot.Behaviour.Tasks
 
                 return false;
             }
+        }
+
+        private static async Task<bool> CheckForBlacklist()
+        {
+            if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            {
+                return true;
+            }
+
+            var currentBc = Poi.Current.BattleCharacter;
+            var navRequest = new List<CanFullyNavigateTarget>
+            {
+                new CanFullyNavigateTarget {Id = currentBc.ObjectId, Position = currentBc.Location}
+            };
+
+            var navResults =
+                await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+
+            if (navResults.FirstOrDefault(result => result.CanNavigate == 0) == null)
+            {
+                return true;
+            }
+
+            Logger.SendDebugLog("Cannot navigate to mob, blacklisting.");
+            Blacklist.Add(Poi.Current.BattleCharacter.ObjectId, BlacklistFlags.Combat, TimeSpan.FromSeconds(60),
+                "Cannot navigate to mob.");
+
+            return true;
+        }
+
+        private static bool LevelSyncNeeded()
+        {
+            if (Poi.Current == null || Poi.Current.BattleCharacter == null || Poi.Current.BattleCharacter.IsDead
+                || Poi.Current.BattleCharacter.FateId == 0 || Poi.Current.BattleCharacter.IsFateGone)
+            {
+                return false;
+            }
+
+            var fateId = Poi.Current.BattleCharacter.FateId;
+            var fate = FateManager.GetFateById(fateId);
+
+            return Poi.Current != null && Poi.Current.Type == PoiType.Kill && fateId != 0
+                   && fate.IsValid
+                   && (fate.MaxLevel < Core.Player.ClassLevel)
+                   && !Core.Player.IsLevelSynced;
         }
 
         private static async Task<bool> MoveIntoFateArea()

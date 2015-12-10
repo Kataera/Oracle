@@ -25,9 +25,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Objects;
+
+using Tarot.Helpers;
 
 namespace Tarot.Behaviour.Tasks.Fates
 {
@@ -35,6 +38,12 @@ namespace Tarot.Behaviour.Tasks.Fates
     {
         public static async Task<bool> Main()
         {
+            if (Tarot.CurrentFate.Status == FateStatus.COMPLETE)
+            {
+                ClearFate();
+                return true;
+            }
+
             if (AnyViableTargets())
             {
                 var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
@@ -50,6 +59,15 @@ namespace Tarot.Behaviour.Tasks.Fates
         private static bool AnyViableTargets()
         {
             return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableTarget).Any();
+        }
+
+        private static void ClearFate()
+        {
+            Logger.SendLog("Current FATE is finished.");
+            Poi.Clear("Current FATE is finished.");
+            Tarot.PreviousFate = Tarot.CurrentFate;
+            Tarot.CurrentPoi = null;
+            Tarot.CurrentFate = null;
         }
 
         private static bool IsViableTarget(BattleCharacter target)

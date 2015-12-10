@@ -28,7 +28,6 @@ using System.Threading.Tasks;
 
 using Buddy.Coroutines;
 
-using ff14bot;
 using ff14bot.Managers;
 using ff14bot.RemoteWindows;
 

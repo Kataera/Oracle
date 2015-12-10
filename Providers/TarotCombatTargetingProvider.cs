@@ -33,14 +33,14 @@ using ff14bot.Objects;
 
 namespace Tarot.Providers
 {
-    public struct BattleCharacterWeight
+    internal struct BattleCharacterWeight
     {
         public BattleCharacter BattleCharacter;
 
         public double Weight;
     }
 
-    public class TarotCombatTargetingProvider : ITargetingProvider
+    internal class TarotCombatTargetingProvider : ITargetingProvider
     {
         private BattleCharacter[] attackers;
 
@@ -53,8 +53,8 @@ namespace Tarot.Providers
 
         public List<BattleCharacter> GetObjectsByWeight()
         {
-            var allBattleCharacters = GameObjectManager.GetObjectsOfType<BattleCharacter>().ToArray();
             this.attackers = GameObjectManager.Attackers.ToArray();
+            var allBattleCharacters = GameObjectManager.GetObjectsOfType<BattleCharacter>().ToArray();
             var inCombat = Core.Player.InCombat;
 
             var battleChars = allBattleCharacters.Where(bc => this.Filter(inCombat, bc)).OrderByDescending(this.GetWeight).ToList();
