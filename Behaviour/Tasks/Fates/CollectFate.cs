@@ -22,6 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,15 +46,21 @@ namespace Tarot.Behaviour.Tasks.Fates
         public static async Task<bool> Main()
         {
             var fate = Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id);
-            var fateItemId = fate.ItemId;
-            var fateItemBagSlot = GetBagSlotFromItemId(fateItemId);
-            var turnInNpc = GameObjectManager.GetObjectByNPCId(fate.NpcId);
+            var fateItemBagSlot = GetBagSlotFromItemId(fate.ItemId);
 
-            if (fateItemBagSlot != null && turnInNpc != null)
+            // Wait for potential inventory update.
+            if (fateItemBagSlot != null)
             {
-                if (fateItemBagSlot.Count >= TarotSettings.Instance.CollectFateTurnInAtAmount || Tarot.CurrentFate.Status == FateStatus.COMPLETE)
+                var fateItemCount = fateItemBagSlot.Count;
+                await Coroutine.Wait(TimeSpan.FromSeconds(2), () => fateItemCount < fateItemBagSlot.Count);
+
+                if (GameObjectManager.GetObjectByNPCId(fate.NpcId) != null)
                 {
-                    await TurnInFateItems(turnInNpc);
+                    if (fateItemBagSlot.Count >= TarotSettings.Instance.CollectFateTurnInAtAmount
+                        || Tarot.CurrentFate.Status == FateStatus.COMPLETE)
+                    {
+                        await TurnInFateItems(GameObjectManager.GetObjectByNPCId(fate.NpcId));
+                    }
                 }
             }
 
@@ -102,7 +109,7 @@ namespace Tarot.Behaviour.Tasks.Fates
                 await MoveToTurnInNpc(turnInNpc);
             }
 
-            if (Core.Player.InCombat)
+            if (GameObjectManager.Attackers.Any())
             {
                 return false;
             }
@@ -122,7 +129,7 @@ namespace Tarot.Behaviour.Tasks.Fates
 
             while (Core.Player.Distance2D(turnInNpc.Location) > 5f)
             {
-                if (Core.Player.InCombat)
+                if (GameObjectManager.Attackers.Any())
                 {
                     break;
                 }

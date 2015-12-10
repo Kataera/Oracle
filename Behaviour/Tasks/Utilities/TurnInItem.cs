@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Buddy.Coroutines;
@@ -44,7 +45,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            if (Core.Player.InCombat)
+            if (GameObjectManager.Attackers.Any())
             {
                 return false;
             }

@@ -43,8 +43,15 @@ namespace Tarot.Behaviour.Tasks.Fates
 {
     internal static class DefenceFate
     {
+        private static Stopwatch movementTimer;
+
         public static async Task<bool> Main()
         {
+            if (movementTimer == null)
+            {
+                movementTimer = Stopwatch.StartNew();
+            }
+
             if (AnyViableTargets())
             {
                 var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
@@ -68,7 +75,13 @@ namespace Tarot.Behaviour.Tasks.Fates
                     return true;
                 }
 
-                if (!(Core.Player.Distance2D(escortNpc.Location) > 7f))
+                // Don't spam movement.
+                if (movementTimer.Elapsed < TimeSpan.FromMilliseconds(1500))
+                {
+                    return true;
+                }
+
+                if (!(Core.Player.Distance2D(escortNpc.Location) > 5f))
                 {
                     return true;
                 }
@@ -103,15 +116,13 @@ namespace Tarot.Behaviour.Tasks.Fates
             var yOffset = Convert.ToSingle(((2 * new Random().NextDouble()) - 1.0) * Math.Sqrt(radiusSquared - (xOffset * xOffset)));
             var location = new Vector3(npc.Location.X + xOffset, npc.Location.Y + yOffset, npc.Location.Z);
 
-            Logger.SendDebugLog("X offset: " + xOffset + ", Y offset: " + yOffset);
             Logger.SendDebugLog("NPC Location: " + npc.Location + ", Moving to: " + location);
-
             var timeout = new Stopwatch();
             timeout.Start();
 
             while (Core.Player.Distance2D(location) > 1f)
             {
-                if (timeout.ElapsedMilliseconds > 5000)
+                if (timeout.Elapsed > TimeSpan.FromSeconds(5))
                 {
                     timeout.Reset();
                     await MoveToNpc(npc);
@@ -124,6 +135,7 @@ namespace Tarot.Behaviour.Tasks.Fates
             }
 
             Navigator.PlayerMover.MoveStop();
+            movementTimer.Restart();
 
             return true;
         }

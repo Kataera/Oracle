@@ -22,11 +22,13 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Linq;
 using System.Threading.Tasks;
 
 using Buddy.Coroutines;
 
 using ff14bot;
+using ff14bot.Managers;
 using ff14bot.RemoteWindows;
 
 using Tarot.Helpers;
@@ -45,7 +47,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             Logger.SendLog("Skipping dialogue.");
             while (Talk.DialogOpen)
             {
-                if (Core.Player.InCombat)
+                if (GameObjectManager.Attackers.Any())
                 {
                     return false;
                 }
