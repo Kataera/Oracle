@@ -140,12 +140,12 @@ namespace Tarot.Helpers
             catch (DirectoryNotFoundException exception)
             {
                 Logger.SendErrorLog("Directory structure is incorrect, did you place Tarot in the correct place?");
-                Logger.SendDebugLog("DirectoryNotFoundException thrown.\n\n" + exception + "\n");
+                Logger.SendDebugLog("DirectoryNotFoundException thrown.\n\n" + exception);
             }
             catch (IOException exception)
             {
                 Logger.SendErrorLog("Cannot find xml data, did you place Tarot in the correct place?");
-                Logger.SendDebugLog("IOException thrown.\n\n" + exception + "\n");
+                Logger.SendDebugLog("IOException thrown.\n\n" + exception);
             }
 
             return xmlDocument;
@@ -231,7 +231,7 @@ namespace Tarot.Helpers
                 catch (OverflowException exception)
                 {
                     Logger.SendErrorLog("Numerical conversion resulted in overflow.");
-                    Logger.SendDebugLog("OverflowException thrown.\n\n" + exception + "\n");
+                    Logger.SendDebugLog("OverflowException thrown.\n\n" + exception);
                 }
             }
         }

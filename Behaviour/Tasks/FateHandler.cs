@@ -52,12 +52,6 @@ namespace Tarot.Behaviour.Tasks
                 return true;
             }
 
-            if (Tarot.CurrentFate == null)
-            {
-                Logger.SendErrorLog("Entered FATE handler without an active FATE assigned.");
-                return true;
-            }
-
             await MoveToFate();
 
             // Check that FATE didn't expire while moving.

@@ -140,7 +140,7 @@ namespace Tarot
             catch (ArgumentOutOfRangeException exception)
             {
                 Logger.SendErrorLog("Error opening the settings window.");
-                Logger.SendDebugLog("ArgumentOutOfRangeException thrown.\n\n" + exception + "\n");
+                Logger.SendDebugLog("ArgumentOutOfRangeException thrown.\n\n" + exception);
             }
         }
 

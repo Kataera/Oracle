@@ -74,19 +74,30 @@ namespace Tarot.Behaviour.Tasks
 
         private static bool LevelSyncNeeded()
         {
-            if (Poi.Current == null || Poi.Current.BattleCharacter == null || Poi.Current.BattleCharacter.IsDead
-                || Poi.Current.BattleCharacter.FateId == 0)
+            try
             {
+                if (Poi.Current == null || Poi.Current.BattleCharacter == null || Poi.Current.BattleCharacter.IsDead
+                    || Poi.Current.BattleCharacter.FateId == 0 || Poi.Current.BattleCharacter.IsFateGone)
+                {
+                    return false;
+                }
+
+                var fateId = Poi.Current.BattleCharacter.FateId;
+                var fate = FateManager.GetFateById(fateId);
+
+                return Poi.Current != null && Poi.Current.Type == PoiType.Kill && fateId != 0
+                       && fate.IsValid
+                       && (fate.MaxLevel < Core.Player.ClassLevel)
+                       && !Core.Player.IsLevelSynced;
+            }
+            catch (Exception exception)
+            {
+                Logger.SendErrorLog("Memory read error, attempting to mitigate by clearing current Poi.");
+                Logger.SendDebugLog("Exception thrown.\n\n" + exception);
+                Poi.Clear("Memory read error.");
+
                 return false;
             }
-
-            var fateId = Poi.Current.BattleCharacter.FateId;
-            var fate = FateManager.GetFateById(fateId);
-
-            return Poi.Current != null && Poi.Current.Type == PoiType.Kill && fateId != 0
-                   && fate.IsValid
-                   && (fate.MaxLevel < Core.Player.ClassLevel)
-                   && !Core.Player.IsLevelSynced;
         }
 
         private static async Task<bool> MoveIntoFateArea()
