@@ -66,6 +66,11 @@ namespace Tarot.Behaviour.Tasks.Fates
 
             if (Tarot.CurrentFate.Status == FateStatus.COMPLETE)
             {
+                if (Core.Player.InCombat)
+                {
+                    return false;
+                }
+
                 if (fateItemBagSlot != null && fateItemBagSlot.Count >= 1)
                 {
                     Logger.SendLog("FATE is complete, turning in remaining items.");

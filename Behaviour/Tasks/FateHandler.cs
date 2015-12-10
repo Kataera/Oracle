@@ -206,11 +206,6 @@ namespace Tarot.Behaviour.Tasks
 
         private static async Task<bool> MoveToFate()
         {
-            if (Tarot.CurrentFate == null)
-            {
-                return false;
-            }
-
             // If we're inside a FATE, cancel.
             if (WithinFate())
             {
@@ -218,7 +213,8 @@ namespace Tarot.Behaviour.Tasks
             }
 
             // Not using WithinFate method as we want to be within 3/4 of the FATE radius.
-            while (Tarot.CurrentFate.Location.Distance(Core.Player.Location) > Tarot.CurrentFate.Radius * 0.75f)
+            var fate = Tarot.CurrentFate;
+            while (fate.Location.Distance(Core.Player.Location) > fate.Radius * 0.75f)
             {
                 // Check if the FATE ended while we're moving.
                 if (!Tarot.CurrentFate.IsValid || Tarot.CurrentFate.Status == FateStatus.COMPLETE)
@@ -235,14 +231,14 @@ namespace Tarot.Behaviour.Tasks
                 }
 
                 // Check we're still mounted.
-                if (!Core.Player.IsMounted
-                    && Core.Player.Distance(Tarot.CurrentFate.Location) > CharacterSettings.Instance.MountDistance)
+                if (!Core.Player.IsMounted && Core.Player.Distance(fate.Location) > CharacterSettings.Instance.MountDistance)
                 {
                     Navigator.PlayerMover.MoveStop();
 
                     // Exit behaviour if we're in combat.
-                    if (Core.Player.InCombat)
+                    if (GameObjectManager.Attackers.Any())
                     {
+                        Poi.Clear("In combat and need to mount.");
                         return false;
                     }
 
