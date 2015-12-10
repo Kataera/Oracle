@@ -103,7 +103,7 @@ namespace Tarot.Behaviour.Tasks
                 return false;
             }
 
-            if (Poi.Current == null)
+            if (Poi.Current == null || Poi.Current.Type != PoiType.Kill)
             {
                 return false;
             }
@@ -124,6 +124,7 @@ namespace Tarot.Behaviour.Tasks
             Logger.SendDebugLog("Cannot navigate to mob, blacklisting.");
             Blacklist.Add(Poi.Current.BattleCharacter.ObjectId, BlacklistFlags.Combat, TimeSpan.FromSeconds(60),
                 "Cannot navigate to mob.");
+            Poi.Clear("Mob is blacklisted.");
 
             blacklistCheckTimer.Restart();
             return true;
