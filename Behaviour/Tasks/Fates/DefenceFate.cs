@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -105,8 +106,19 @@ namespace Tarot.Behaviour.Tasks.Fates
             Logger.SendDebugLog("X offset: " + xOffset + ", Y offset: " + yOffset);
             Logger.SendDebugLog("NPC Location: " + npc.Location + ", Moving to: " + location);
 
+            var timeout = new Stopwatch();
+            timeout.Start();
+
             while (Core.Player.Distance2D(location) > 1f)
             {
+                if (timeout.ElapsedMilliseconds > 5000)
+                {
+                    timeout.Reset();
+                    await MoveToNpc(npc);
+
+                    return true;
+                }
+
                 Navigator.PlayerMover.MoveTowards(location);
                 await Coroutine.Yield();
             }

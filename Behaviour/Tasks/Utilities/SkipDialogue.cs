@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 
 using Buddy.Coroutines;
 
+using ff14bot;
 using ff14bot.RemoteWindows;
 
 using Tarot.Helpers;
@@ -42,12 +43,18 @@ namespace Tarot.Behaviour.Tasks.Utilities
             }
 
             Logger.SendLog("Skipping dialogue.");
-            while (Talk.ConvoLock || Talk.DialogOpen)
+            while (Talk.DialogOpen)
             {
+                if (Core.Player.InCombat)
+                {
+                    return false;
+                }
+
                 Talk.Next();
                 await Coroutine.Yield();
             }
 
+            await Coroutine.Sleep(200);
             return true;
         }
     }

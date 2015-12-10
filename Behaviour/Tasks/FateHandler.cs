@@ -228,6 +228,7 @@ namespace Tarot.Behaviour.Tasks
                     // Exit behaviour if we're in combat.
                     if (Core.Player.InCombat)
                     {
+                        Poi.Clear("We're in combat and need to mount.");
                         return false;
                     }
 

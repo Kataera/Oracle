@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 
 using Buddy.Coroutines;
 
+using ff14bot;
 using ff14bot.Managers;
 using ff14bot.RemoteWindows;
 
@@ -43,6 +44,11 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 return false;
             }
 
+            if (Core.Player.InCombat)
+            {
+                return false;
+            }
+
             var itemId = Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id).ItemId;
             var turnInBagSlot = GetBagSlotFromItemId(itemId);
 
@@ -54,7 +60,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             Logger.SendLog("Attempting to hand over " + turnInBagSlot.Count + " of the item '" + turnInBagSlot.Name + "'.");
             turnInBagSlot.Handover();
 
-            await Coroutine.Sleep(TimeSpan.FromMilliseconds(1000));
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
             if (!Request.HandOverButtonClickable)
             {
                 Logger.SendErrorLog("Hand over failed.");
@@ -65,6 +71,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
             Logger.SendLog("Pressing 'Hand Over' button.");
             Request.HandOver();
+            await Coroutine.Sleep(500);
 
             return true;
         }

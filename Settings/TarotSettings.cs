@@ -59,6 +59,7 @@ namespace Tarot.Settings
         private bool waitAtFateForProgress;
 
         private bool waitForChainFates;
+        private int collectFateTurnInAtAmount;
 
         private TarotSettings()
             : base(Path.Combine(CharacterSettingsDirectory, "TarotSettings.json"))
@@ -201,6 +202,19 @@ namespace Tarot.Settings
             set
             {
                 this.waitForChainFates = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(5)]
+        [Setting]
+        public int CollectFateTurnInAtAmount
+        {
+            get { return this.collectFateTurnInAtAmount; }
+
+            set
+            {
+                this.collectFateTurnInAtAmount = value;
                 this.Save();
             }
         }

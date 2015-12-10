@@ -25,8 +25,18 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using Buddy.Coroutines;
+
+using ff14bot;
+using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
+using ff14bot.Navigation;
+using ff14bot.Objects;
+
+using Tarot.Behaviour.Tasks.Utilities;
+using Tarot.Helpers;
+using Tarot.Settings;
 
 namespace Tarot.Behaviour.Tasks.Fates
 {
@@ -34,12 +44,94 @@ namespace Tarot.Behaviour.Tasks.Fates
     {
         public static async Task<bool> Main()
         {
-            var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
-            if (target != null)
+            var fate = Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id);
+            var fateItemId = fate.ItemId;
+            var fateItemBagSlot = GetBagSlotFromItemId(fateItemId);
+            var turnInNpc = GameObjectManager.GetObjectByNPCId(fate.NpcId);
+
+            if (fateItemBagSlot != null && turnInNpc != null)
             {
-                Poi.Current = new Poi(target, PoiType.Kill);
+                if (fateItemBagSlot.Count >= TarotSettings.Instance.CollectFateTurnInAtAmount || Tarot.CurrentFate.Status == FateStatus.COMPLETE)
+                {
+                    await TurnInFateItems(turnInNpc);
+                }
             }
 
+            if (AnyViableTargets())
+            {
+                var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
+                if (target != null)
+                {
+                    Poi.Current = new Poi(target, PoiType.Kill);
+                }
+            }
+
+            return true;
+        }
+
+        private static bool AnyViableTargets()
+        {
+            return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableTarget).Any();
+        }
+
+        private static BagSlot GetBagSlotFromItemId(uint itemId)
+        {
+            BagSlot bagSlot = null;
+            foreach (var bagslot in InventoryManager.FilledSlots)
+            {
+                if (bagslot.TrueItemId == itemId)
+                {
+                    bagSlot = bagslot;
+                }
+            }
+
+            return bagSlot;
+        }
+
+        private static bool IsViableTarget(BattleCharacter target)
+        {
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == Tarot.CurrentFate.Id;
+        }
+
+        private static async Task<bool> TurnInFateItems(GameObject turnInNpc)
+        {
+            Logger.SendLog("Going to turn in our items.");
+
+            if (Core.Player.Distance2D(turnInNpc.Location) > 5f)
+            {
+                await MoveToTurnInNpc(turnInNpc);
+            }
+
+            if (Core.Player.InCombat)
+            {
+                return false;
+            }
+
+            turnInNpc.Interact();
+            await Coroutine.Sleep(500);
+            await SkipDialogue.Main();
+            await TurnInItem.Main();
+            await SkipDialogue.Main();
+
+            return true;
+        }
+
+        private static async Task<bool> MoveToTurnInNpc(GameObject turnInNpc)
+        {
+            Logger.SendLog("Moving to interact with " + turnInNpc.Name + ".");
+
+            while (Core.Player.Distance2D(turnInNpc.Location) > 5f)
+            {
+                if (Core.Player.InCombat)
+                {
+                    break;
+                }
+
+                Navigator.MoveToPointWithin(turnInNpc.Location, 5f, "Moving to NPC.");
+                await Coroutine.Yield();
+            }
+
+            Navigator.Stop();
             return true;
         }
     }
