@@ -22,14 +22,21 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Buddy.Coroutines;
+
+using Clio.Utilities;
 
 using ff14bot;
 using ff14bot.Helpers;
 using ff14bot.Managers;
+using ff14bot.Navigation;
 using ff14bot.Objects;
+
+using Tarot.Helpers;
 
 namespace Tarot.Behaviour.Tasks.Fates
 {
@@ -41,9 +48,44 @@ namespace Tarot.Behaviour.Tasks.Fates
             if (target != null)
             {
                 Poi.Current = new Poi(target, PoiType.Kill);
+                return true;
+            }
+
+            // Stay close to the NPC.
+            var npc = GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
+            if (npc == null)
+            {
+                Logger.SendDebugLog("Cannot find escort NPC, defaulting to staying within the centre of the FATE.");
+                return true;
+            }
+
+            if (Core.Player.Distance2D(npc.Location) > 10f)
+            {
+                // Find random point within 3 yards of NPC.
+                const float radius = 3f;
+                const float radiusSquared = radius * radius;
+                var xOffset = Convert.ToSingle(((2 * new Random().NextDouble()) - 1.0) * radius);
+                var yOffset = Convert.ToSingle(((2 * new Random().NextDouble()) - 1.0) * Math.Sqrt(radiusSquared - (xOffset * xOffset)));
+                var location = new Vector3(npc.Location.X + xOffset, npc.Location.Y + yOffset, npc.Location.Z);
+
+                Logger.SendDebugLog("X offset: " + xOffset + ", Y offset: " + yOffset);
+                Logger.SendDebugLog("NPC Location: " + npc.Location + ", Moving to: " + location);
+
+                while (Core.Player.Distance2D(location) > 2f)
+                {
+                    Navigator.PlayerMover.MoveTowards(location);
+                    await Coroutine.Yield();
+                }
+
+                Navigator.PlayerMover.MoveStop();
             }
 
             return true;
+        }
+
+        private static bool IsEscortNpc(BattleCharacter battleCharacter)
+        {
+            return battleCharacter.IsFate && !battleCharacter.CanAttack && battleCharacter.FateId == Tarot.CurrentFate.Id;
         }
     }
 }
