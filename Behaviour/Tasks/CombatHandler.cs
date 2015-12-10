@@ -55,12 +55,14 @@ namespace Tarot.Behaviour.Tasks
                     return false;
                 }
 
+                // If all attackers are mobs whose FATE has gone, don't bother clearing Poi.
                 if (GameObjectManager.Attackers.All(check => check.IsFateGone) && Poi.Current.Type != PoiType.Kill)
                 {
                     return true;
                 }
 
-                if (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait)
+                if (GameObjectManager.Attackers.Any()
+                    && (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait || Poi.Current.Type == PoiType.None))
                 {
                     Logger.SendLog("Clearing the non-kill point of interest while we're in combat.");
                     Poi.Clear("Character is in combat.");
@@ -97,36 +99,34 @@ namespace Tarot.Behaviour.Tasks
                 blacklistCheckTimer = Stopwatch.StartNew();
             }
 
-            // Limit checks to every 15 seconds to not send too many requests.
-            else if (blacklistCheckTimer.Elapsed < TimeSpan.FromSeconds(15))
+            // Limit checks to every 10 seconds to not send too many requests.
+            else if (blacklistCheckTimer.Elapsed > TimeSpan.FromSeconds(10))
             {
-                return false;
+                if (Poi.Current == null || Poi.Current.Type != PoiType.Kill)
+                {
+                    return false;
+                }
+
+                blacklistCheckTimer.Restart();
+                var currentBc = Poi.Current.BattleCharacter;
+                var navRequest = new List<CanFullyNavigateTarget>
+                {
+                    new CanFullyNavigateTarget {Id = currentBc.ObjectId, Position = currentBc.Location}
+                };
+                var navResults =
+                    await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+
+                if (navResults.FirstOrDefault(result => result.CanNavigate == 0) == null)
+                {
+                    return false;
+                }
+
+                Logger.SendDebugLog("Cannot navigate to mob, blacklisting.");
+                Blacklist.Add(Poi.Current.BattleCharacter.ObjectId, BlacklistFlags.Combat, TimeSpan.FromSeconds(60),
+                    "Cannot navigate to mob.");
+                Poi.Clear("Mob is blacklisted.");
             }
 
-            if (Poi.Current == null || Poi.Current.Type != PoiType.Kill)
-            {
-                return false;
-            }
-
-            var currentBc = Poi.Current.BattleCharacter;
-            var navRequest = new List<CanFullyNavigateTarget>
-            {
-                new CanFullyNavigateTarget {Id = currentBc.ObjectId, Position = currentBc.Location}
-            };
-            var navResults =
-                await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
-
-            if (navResults.FirstOrDefault(result => result.CanNavigate == 0) == null)
-            {
-                return false;
-            }
-
-            Logger.SendDebugLog("Cannot navigate to mob, blacklisting.");
-            Blacklist.Add(Poi.Current.BattleCharacter.ObjectId, BlacklistFlags.Combat, TimeSpan.FromSeconds(60),
-                "Cannot navigate to mob.");
-            Poi.Clear("Mob is blacklisted.");
-
-            blacklistCheckTimer.Restart();
             return true;
         }
 
