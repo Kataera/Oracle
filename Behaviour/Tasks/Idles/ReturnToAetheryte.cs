@@ -43,7 +43,7 @@ namespace Tarot.Behaviour.Tasks.Idles
     {
         public static async Task<bool> Main()
         {
-            if (Poi.Current == null)
+            if (Poi.Current.Type != PoiType.Wait)
             {
                 return false;
             }

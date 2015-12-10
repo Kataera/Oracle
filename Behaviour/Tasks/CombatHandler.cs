@@ -31,6 +31,7 @@ using System.Threading.Tasks;
 using Buddy.Coroutines;
 
 using ff14bot;
+using ff14bot.Behavior;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
@@ -50,7 +51,7 @@ namespace Tarot.Behaviour.Tasks
         {
             try
             {
-                if (Poi.Current == null)
+                if (Poi.Current.Type == PoiType.None)
                 {
                     return false;
                 }
@@ -64,8 +65,8 @@ namespace Tarot.Behaviour.Tasks
                 if (GameObjectManager.Attackers.Any()
                     && (Poi.Current.Type == PoiType.Fate || Poi.Current.Type == PoiType.Wait))
                 {
-                    Logger.SendLog("Clearing the non-kill point of interest while we're in combat.");
                     Poi.Clear("Character is in combat.");
+                    await new HookExecutor("SetCombatPoi").ExecuteCoroutine();
                 }
 
                 // Make sure we don't get stuck attacking a mob that requires us to be level synced.
@@ -105,14 +106,14 @@ namespace Tarot.Behaviour.Tasks
                 blacklistCheckTimer = Stopwatch.StartNew();
             }
 
+            if (Poi.Current.Type != PoiType.Kill)
+            {
+                return false;
+            }
+
             // Limit checks to every 5 seconds to not send too many requests.
             else if (blacklistCheckTimer.Elapsed > TimeSpan.FromSeconds(5))
             {
-                if (Poi.Current == null || Poi.Current.Type != PoiType.Kill)
-                {
-                    return false;
-                }
-
                 blacklistCheckTimer.Restart();
                 var currentBc = Poi.Current.BattleCharacter;
                 var navRequest = new List<CanFullyNavigateTarget>
@@ -139,7 +140,7 @@ namespace Tarot.Behaviour.Tasks
         private static bool LevelSyncNeeded()
         {
 
-            if (Poi.Current == null || Poi.Current.Type == PoiType.None)
+            if (Poi.Current.Type == PoiType.None)
             {
                 return false;
             }

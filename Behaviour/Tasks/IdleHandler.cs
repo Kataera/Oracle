@@ -37,38 +37,40 @@ namespace Tarot.Behaviour.Tasks
     {
         public static async Task<bool> Main()
         {
-            if (Poi.Current != null && Poi.Current.Type == PoiType.Wait && Tarot.CurrentFate == null)
+            if (Poi.Current.Type != PoiType.Wait || Tarot.CurrentFate != null)
             {
-                if (Tarot.CurrentFate != null)
-                {
-                    Logger.SendErrorLog("Entered idle handler with an active FATE assigned.");
-                    return true;
-                }
+                return true;
+            }
 
-                switch (TarotSettings.Instance.FateIdleMode)
-                {
-                    case (int) FateIdleMode.ReturnToAetheryte:
-                        await ReturnToAetheryte.Main();
-                        break;
+            if (Tarot.CurrentFate != null)
+            {
+                Logger.SendErrorLog("Entered idle handler with an active FATE assigned.");
+                return true;
+            }
 
-                    case FateIdleMode.MoveToWaitLocation:
-                        await MoveToWaitLocation.Main();
-                        break;
+            switch (TarotSettings.Instance.FateIdleMode)
+            {
+                case (int) FateIdleMode.ReturnToAetheryte:
+                    await ReturnToAetheryte.Main();
+                    break;
 
-                    case FateIdleMode.GrindMobs:
-                        await GrindMobs.Main();
-                        break;
+                case FateIdleMode.MoveToWaitLocation:
+                    await MoveToWaitLocation.Main();
+                    break;
 
-                    case FateIdleMode.WaitForFates:
-                        await WaitForFates.Main();
-                        break;
+                case FateIdleMode.GrindMobs:
+                    await GrindMobs.Main();
+                    break;
 
-                    default:
-                        Logger.SendDebugLog(
-                            "Cannot determine idle handler strategy, defaulting to 'Return to Aetheryte'.");
-                        await ReturnToAetheryte.Main();
-                        break;
-                }
+                case FateIdleMode.WaitForFates:
+                    await WaitForFates.Main();
+                    break;
+
+                default:
+                    Logger.SendDebugLog(
+                        "Cannot determine idle handler strategy, defaulting to 'Return to Aetheryte'.");
+                    await ReturnToAetheryte.Main();
+                    break;
             }
 
             return true;

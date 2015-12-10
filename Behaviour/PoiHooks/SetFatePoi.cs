@@ -90,7 +90,7 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static bool IsFatePoiSet()
         {
-            if (Poi.Current == null || Poi.Current.Type != PoiType.Fate || Poi.Current.Fate != Tarot.CurrentFate)
+            if (Poi.Current.Type != PoiType.Fate || Poi.Current.Fate != Tarot.CurrentFate)
             {
                 return false;
             }

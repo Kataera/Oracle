@@ -47,7 +47,7 @@ namespace Tarot.Behaviour.Tasks
     {
         public static async Task<bool> Main()
         {
-            if (Poi.Current == null || Tarot.CurrentFate == null)
+            if (Tarot.CurrentFate == null)
             {
                 return true;
             }
