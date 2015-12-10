@@ -45,12 +45,18 @@ namespace Tarot.Behaviour.Tasks.Fates
     internal static class EscortFate
     {
         private static Stopwatch movementTimer;
+        private static int movementCooldown;
 
         public static async Task<bool> Main()
         {
             if (movementTimer == null)
             {
                 movementTimer = Stopwatch.StartNew();
+            }
+
+            if (movementCooldown == 0)
+            {
+                movementCooldown = new Random().Next(500, 1500);
             }
 
             if (AnyViableTargets())
@@ -77,17 +83,20 @@ namespace Tarot.Behaviour.Tasks.Fates
                 }
 
                 // Don't spam movement.
-                if (movementTimer.Elapsed < TimeSpan.FromMilliseconds(1500))
+                if (movementTimer.Elapsed < TimeSpan.FromMilliseconds(Convert.ToDouble(movementCooldown)))
                 {
                     return true;
                 }
 
-                if (!(Core.Player.Distance2D(escortNpc.Location) > 5f))
+                if (!(Core.Player.Distance2D(escortNpc.Location) > 7f))
                 {
                     return true;
                 }
 
                 await MoveToNpc(escortNpc);
+
+                movementCooldown = new Random().Next(500, 1500);
+                Logger.SendDebugLog("Movement successful, waiting " + movementCooldown + "ms before moving again.");
             }
 
             return true;
