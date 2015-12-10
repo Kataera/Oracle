@@ -35,8 +35,6 @@ namespace Tarot.Behaviour.Tasks.Fates
 {
     internal static class KillFate
     {
-        private static IEnumerable<BattleCharacter> currentFateMobs;
-
         public static async Task<bool> Main()
         {
             var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
@@ -46,32 +44,6 @@ namespace Tarot.Behaviour.Tasks.Fates
             }
 
             return true;
-        }
-
-        private static BattleCharacter GetClosestMob()
-        {
-            PopulateTargetList();
-            if (currentFateMobs == null)
-            {
-                return null;
-            }
-
-            // Order by max hp, then the mobs' current hp, then finally by distance.
-            return
-                currentFateMobs.OrderByDescending(mob => mob.MaxHealth)
-                               .ThenBy(mob => mob.CurrentHealth)
-                               .ThenBy(mob => Core.Me.Distance(mob.Location))
-                               .FirstOrDefault(mob => Tarot.CurrentFate.Within2D(mob.Location));
-        }
-
-        private static void PopulateTargetList()
-        {
-            currentFateMobs =
-                GameObjectManager.GetObjectsOfType<BattleCharacter>()
-                                 .Where(
-                                     mob =>
-                                         mob.IsFate && !mob.IsFateGone && mob.CanAttack
-                                         && mob.FateId == Tarot.CurrentFate.Id);
         }
     }
 }

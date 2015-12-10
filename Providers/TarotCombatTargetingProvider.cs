@@ -90,7 +90,7 @@ namespace Tarot.Providers
                 return false;
             }
 
-            if (this.IsLevelSyncNeeded(battleCharacter)
+            if (IsLevelSyncNeeded(battleCharacter)
                 && !FateManager.GetFateById(battleCharacter.FateId).Within2D(battleCharacter.Location))
             {
                 return false;
@@ -156,7 +156,7 @@ namespace Tarot.Providers
             return weight;
         }
 
-        private bool IsLevelSyncNeeded(GameObject battleCharacter)
+        private static bool IsLevelSyncNeeded(GameObject battleCharacter)
         {
             if (battleCharacter.FateId == 0)
             {
