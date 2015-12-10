@@ -37,6 +37,7 @@ using Tarot.Data;
 using Tarot.Enumerations;
 using Tarot.Forms;
 using Tarot.Helpers;
+using Tarot.Providers;
 using Tarot.Settings;
 
 using TreeSharp;
@@ -104,10 +105,9 @@ namespace Tarot
         {
             get
             {
-                var versionString = Assembly.GetExecutingAssembly().GetName().Version.Major + "."
-                                    + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
-                                    + Assembly.GetExecutingAssembly().GetName().Version.Revision;
-                return versionString;
+                return Assembly.GetExecutingAssembly().GetName().Version.Major + "."
+                       + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
+                       + Assembly.GetExecutingAssembly().GetName().Version.Revision;
             }
         }
 
@@ -151,7 +151,7 @@ namespace Tarot
 
             Navigator.PlayerMover = new SlideMover();
             Navigator.NavigationProvider = new GaiaNavigator();
-            CombatTargeting.Instance.Provider = new FateCombatTargetingProvider();
+            CombatTargeting.Instance.Provider = new TarotCombatTargetingProvider();
 
             playerFaceTargetOnAction = GameSettingsManager.FaceTargetOnAction;
             playerFlightMode = GameSettingsManager.FlightMode;

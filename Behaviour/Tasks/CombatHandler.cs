@@ -122,7 +122,7 @@ namespace Tarot.Behaviour.Tasks
             if (!FateManager.GetFateById(attacker.FateId).Within2D(attacker.Location))
             {
                 Blacklist.Add(
-                    attacker,
+                    attacker.ObjectId,
                     BlacklistFlags.Combat,
                     TimeSpan.FromSeconds(60),
                     "FATE mob is stuck outside FATE area.");

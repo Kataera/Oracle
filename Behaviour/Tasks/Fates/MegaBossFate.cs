@@ -62,10 +62,10 @@ namespace Tarot.Behaviour.Tasks.Fates
                 return true;
             }
 
-            var closestMob = GetClosestMob();
-            if (closestMob != null)
+            var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
+            if (target != null)
             {
-                Poi.Current = new Poi(closestMob, PoiType.Kill);
+                Poi.Current = new Poi(target, PoiType.Kill);
             }
 
             return true;
@@ -82,7 +82,7 @@ namespace Tarot.Behaviour.Tasks.Fates
             // Order by max hp, then the mobs' current hp, then finally by distance.
             return
                 currentFateMobs.OrderByDescending(mob => mob.MaxHealth)
-                               .ThenByDescending(mob => mob.CurrentHealth)
+                               .ThenBy(mob => mob.CurrentHealth)
                                .ThenBy(mob => Core.Me.Distance(mob.Location))
                                .FirstOrDefault(mob => Tarot.CurrentFate.Within2D(mob.Location));
         }
