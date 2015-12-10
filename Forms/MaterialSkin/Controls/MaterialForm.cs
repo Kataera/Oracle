@@ -85,14 +85,14 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
         public MaterialForm()
         {
-            FormBorderStyle = FormBorderStyle.None;
-            Sizable = true;
-            DoubleBuffered = true;
-            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.Sizable = true;
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
             // This enables the form to trigger the MouseMove event even when mouse is over another control
             Application.AddMessageFilter(new MouseMessageFilter());
-            MouseMessageFilter.MouseMove += OnGlobalMouseMove;
+            MouseMessageFilter.MouseMove += this.OnGlobalMouseMove;
         }
 
         private enum ButtonState
@@ -169,26 +169,26 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
         protected void OnGlobalMouseMove(object sender, MouseEventArgs e)
         {
-            if (!IsDisposed)
+            if (!this.IsDisposed)
             {
                 // Convert to client position and pass to Form.MouseMove
-                var clientCursorPos = PointToClient(e.Location);
+                var clientCursorPos = this.PointToClient(e.Location);
                 var newE = new MouseEventArgs(MouseButtons.None, 0, clientCursorPos.X, clientCursorPos.Y, 0);
-                OnMouseMove(newE);
+                this.OnMouseMove(newE);
             }
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (DesignMode)
+            if (this.DesignMode)
             {
                 return;
             }
-            UpdateButtons(e);
+            this.UpdateButtons(e);
 
             if (e.Button == MouseButtons.Left && !this.maximized)
             {
-                ResizeForm(this.resizeDir);
+                this.ResizeForm(this.resizeDir);
             }
             base.OnMouseDown(e);
         }
@@ -196,77 +196,77 @@ namespace Tarot.Forms.MaterialSkin.Controls
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
-            if (DesignMode)
+            if (this.DesignMode)
             {
                 return;
             }
             this.buttonState = ButtonState.None;
-            Invalidate();
+            this.Invalidate();
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
 
-            if (DesignMode)
+            if (this.DesignMode)
             {
                 return;
             }
 
-            if (Sizable)
+            if (this.Sizable)
             {
                 //True if the mouse is hovering over a child control
-                var isChildUnderMouse = GetChildAtPoint(e.Location) != null;
+                var isChildUnderMouse = this.GetChildAtPoint(e.Location) != null;
 
-                if (e.Location.X < BorderWidth && e.Location.Y > Height - BorderWidth && !isChildUnderMouse &&
+                if (e.Location.X < BorderWidth && e.Location.Y > this.Height - BorderWidth && !isChildUnderMouse &&
                     !this.maximized)
                 {
                     this.resizeDir = ResizeDirection.BottomLeft;
-                    Cursor = Cursors.SizeNESW;
+                    this.Cursor = Cursors.SizeNESW;
                 }
                 else if (e.Location.X < BorderWidth && !isChildUnderMouse && !this.maximized)
                 {
                     this.resizeDir = ResizeDirection.Left;
-                    Cursor = Cursors.SizeWE;
+                    this.Cursor = Cursors.SizeWE;
                 }
-                else if (e.Location.X > Width - BorderWidth && e.Location.Y > Height - BorderWidth &&
+                else if (e.Location.X > this.Width - BorderWidth && e.Location.Y > this.Height - BorderWidth &&
                          !isChildUnderMouse && !this.maximized)
                 {
                     this.resizeDir = ResizeDirection.BottomRight;
-                    Cursor = Cursors.SizeNWSE;
+                    this.Cursor = Cursors.SizeNWSE;
                 }
-                else if (e.Location.X > Width - BorderWidth && !isChildUnderMouse && !this.maximized)
+                else if (e.Location.X > this.Width - BorderWidth && !isChildUnderMouse && !this.maximized)
                 {
                     this.resizeDir = ResizeDirection.Right;
-                    Cursor = Cursors.SizeWE;
+                    this.Cursor = Cursors.SizeWE;
                 }
-                else if (e.Location.Y > Height - BorderWidth && !isChildUnderMouse && !this.maximized)
+                else if (e.Location.Y > this.Height - BorderWidth && !isChildUnderMouse && !this.maximized)
                 {
                     this.resizeDir = ResizeDirection.Bottom;
-                    Cursor = Cursors.SizeNS;
+                    this.Cursor = Cursors.SizeNS;
                 }
                 else
                 {
                     this.resizeDir = ResizeDirection.None;
 
                     //Only reset the cursor when needed, this prevents it from flickering when a child control changes the cursor to its own needs
-                    if (this.resizeCursors.Contains(Cursor))
+                    if (this.resizeCursors.Contains(this.Cursor))
                     {
-                        Cursor = Cursors.Default;
+                        this.Cursor = Cursors.Default;
                     }
                 }
             }
 
-            UpdateButtons(e);
+            this.UpdateButtons(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (DesignMode)
+            if (this.DesignMode)
             {
                 return;
             }
-            UpdateButtons(e, true);
+            this.UpdateButtons(e, true);
 
             base.OnMouseUp(e);
             ReleaseCapture();
@@ -277,24 +277,24 @@ namespace Tarot.Forms.MaterialSkin.Controls
             var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-            g.Clear(SkinManager.GetApplicationBackgroundColor());
-            g.FillRectangle(SkinManager.ColorScheme.DarkPrimaryBrush, this.statusBarBounds);
-            g.FillRectangle(SkinManager.ColorScheme.PrimaryBrush, this.actionBarBounds);
+            g.Clear(this.SkinManager.GetApplicationBackgroundColor());
+            g.FillRectangle(this.SkinManager.ColorScheme.DarkPrimaryBrush, this.statusBarBounds);
+            g.FillRectangle(this.SkinManager.ColorScheme.PrimaryBrush, this.actionBarBounds);
 
             //Draw border
-            using (var borderPen = new Pen(SkinManager.GetDividersColor(), 1))
+            using (var borderPen = new Pen(this.SkinManager.GetDividersColor(), 1))
             {
-                g.DrawLine(borderPen, new Point(0, this.actionBarBounds.Bottom), new Point(0, Height - 2));
-                g.DrawLine(borderPen, new Point(Width - 1, this.actionBarBounds.Bottom),
-                    new Point(Width - 1, Height - 2));
-                g.DrawLine(borderPen, new Point(0, Height - 1), new Point(Width - 1, Height - 1));
+                g.DrawLine(borderPen, new Point(0, this.actionBarBounds.Bottom), new Point(0, this.Height - 2));
+                g.DrawLine(borderPen, new Point(this.Width - 1, this.actionBarBounds.Bottom),
+                    new Point(this.Width - 1, this.Height - 2));
+                g.DrawLine(borderPen, new Point(0, this.Height - 1), new Point(this.Width - 1, this.Height - 1));
             }
 
             // Determine whether or not we even should be drawing the buttons.
-            var showMin = MinimizeBox && ControlBox;
-            var showMax = MaximizeBox && ControlBox;
-            var hoverBrush = SkinManager.GetFlatButtonHoverBackgroundBrush();
-            var downBrush = SkinManager.GetFlatButtonPressedBackgroundBrush();
+            var showMin = this.MinimizeBox && this.ControlBox;
+            var showMax = this.MaximizeBox && this.ControlBox;
+            var hoverBrush = this.SkinManager.GetFlatButtonHoverBackgroundBrush();
+            var downBrush = this.SkinManager.GetFlatButtonPressedBackgroundBrush();
 
             // When MaximizeButton == false, the minimize button will be painted in its place
             if (this.buttonState == ButtonState.MinOver && showMin)
@@ -317,17 +317,17 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 g.FillRectangle(downBrush, this.maxButtonBounds);
             }
 
-            if (this.buttonState == ButtonState.XOver && ControlBox)
+            if (this.buttonState == ButtonState.XOver && this.ControlBox)
             {
                 g.FillRectangle(hoverBrush, this.xButtonBounds);
             }
 
-            if (this.buttonState == ButtonState.XDown && ControlBox)
+            if (this.buttonState == ButtonState.XDown && this.ControlBox)
             {
                 g.FillRectangle(downBrush, this.xButtonBounds);
             }
 
-            using (var formButtonsPen = new Pen(SkinManager.ActionBarTextSecondary, 2))
+            using (var formButtonsPen = new Pen(this.SkinManager.ActionBarTextSecondary, 2))
             {
                 // Minimize button.
                 if (showMin)
@@ -356,7 +356,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 }
 
                 // Close button
-                if (ControlBox)
+                if (this.ControlBox)
                 {
                     g.DrawLine(
                         formButtonsPen, this.xButtonBounds.X + (int) (this.xButtonBounds.Width * 0.33),
@@ -381,73 +381,73 @@ namespace Tarot.Forms.MaterialSkin.Controls
         {
             base.OnResize(e);
 
-            this.minButtonBounds = new Rectangle(Width - SkinManager.FormPadding / 2 - 3 * StatusBarButtonWidth, 0,
+            this.minButtonBounds = new Rectangle(this.Width - this.SkinManager.FormPadding / 2 - 3 * StatusBarButtonWidth, 0,
                 StatusBarButtonWidth, StatusBarHeight);
-            this.maxButtonBounds = new Rectangle(Width - SkinManager.FormPadding / 2 - 2 * StatusBarButtonWidth, 0,
+            this.maxButtonBounds = new Rectangle(this.Width - this.SkinManager.FormPadding / 2 - 2 * StatusBarButtonWidth, 0,
                 StatusBarButtonWidth, StatusBarHeight);
-            this.xButtonBounds = new Rectangle(Width - SkinManager.FormPadding / 2 - StatusBarButtonWidth, 0,
+            this.xButtonBounds = new Rectangle(this.Width - this.SkinManager.FormPadding / 2 - StatusBarButtonWidth, 0,
                 StatusBarButtonWidth, StatusBarHeight);
-            this.statusBarBounds = new Rectangle(0, 0, Width, StatusBarHeight);
-            this.actionBarBounds = new Rectangle(0, StatusBarHeight, Width, ActionBarHeight);
+            this.statusBarBounds = new Rectangle(0, 0, this.Width, StatusBarHeight);
+            this.actionBarBounds = new Rectangle(0, StatusBarHeight, this.Width, ActionBarHeight);
         }
 
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
-            if (DesignMode || IsDisposed)
+            if (this.DesignMode || this.IsDisposed)
             {
                 return;
             }
 
             if (m.Msg == WmLbuttondblclk)
             {
-                MaximizeWindow(!this.maximized);
+                this.MaximizeWindow(!this.maximized);
             }
             else if (m.Msg == WmMousemove && this.maximized &&
-                     (this.statusBarBounds.Contains(PointToClient(Cursor.Position))
-                      || this.actionBarBounds.Contains(PointToClient(Cursor.Position))) &&
-                     !(this.minButtonBounds.Contains(PointToClient(Cursor.Position))
-                       || this.maxButtonBounds.Contains(PointToClient(Cursor.Position))
-                       || this.xButtonBounds.Contains(PointToClient(Cursor.Position))))
+                     (this.statusBarBounds.Contains(this.PointToClient(Cursor.Position))
+                      || this.actionBarBounds.Contains(this.PointToClient(Cursor.Position))) &&
+                     !(this.minButtonBounds.Contains(this.PointToClient(Cursor.Position))
+                       || this.maxButtonBounds.Contains(this.PointToClient(Cursor.Position))
+                       || this.xButtonBounds.Contains(this.PointToClient(Cursor.Position))))
             {
                 if (this.headerMouseDown)
                 {
                     this.maximized = false;
                     this.headerMouseDown = false;
 
-                    var mousePoint = PointToClient(Cursor.Position);
-                    if (mousePoint.X < Width / 2)
+                    var mousePoint = this.PointToClient(Cursor.Position);
+                    if (mousePoint.X < this.Width / 2)
                     {
-                        Location = mousePoint.X < this.previousSize.Width / 2
+                        this.Location = mousePoint.X < this.previousSize.Width / 2
                             ? new Point(Cursor.Position.X - mousePoint.X, Cursor.Position.Y - mousePoint.Y)
                             : new Point(Cursor.Position.X - this.previousSize.Width / 2,
                                 Cursor.Position.Y - mousePoint.Y);
                     }
                     else
                     {
-                        Location = Width - mousePoint.X < this.previousSize.Width / 2
-                            ? new Point(Cursor.Position.X - this.previousSize.Width + Width - mousePoint.X,
+                        this.Location = this.Width - mousePoint.X < this.previousSize.Width / 2
+                            ? new Point(Cursor.Position.X - this.previousSize.Width + this.Width - mousePoint.X,
                                 Cursor.Position.Y - mousePoint.Y)
                             : new Point(Cursor.Position.X - this.previousSize.Width / 2,
                                 Cursor.Position.Y - mousePoint.Y);
                     }
 
-                    Size = this.previousSize;
+                    this.Size = this.previousSize;
                     ReleaseCapture();
-                    SendMessage(Handle, WmNclbuttondown, HtCaption, 0);
+                    SendMessage(this.Handle, WmNclbuttondown, HtCaption, 0);
                 }
             }
             else if (m.Msg == WmLbuttondown &&
-                     (this.statusBarBounds.Contains(PointToClient(Cursor.Position))
-                      || this.actionBarBounds.Contains(PointToClient(Cursor.Position))) &&
-                     !(this.minButtonBounds.Contains(PointToClient(Cursor.Position))
-                       || this.maxButtonBounds.Contains(PointToClient(Cursor.Position))
-                       || this.xButtonBounds.Contains(PointToClient(Cursor.Position))))
+                     (this.statusBarBounds.Contains(this.PointToClient(Cursor.Position))
+                      || this.actionBarBounds.Contains(this.PointToClient(Cursor.Position))) &&
+                     !(this.minButtonBounds.Contains(this.PointToClient(Cursor.Position))
+                       || this.maxButtonBounds.Contains(this.PointToClient(Cursor.Position))
+                       || this.xButtonBounds.Contains(this.PointToClient(Cursor.Position))))
             {
                 if (!this.maximized)
                 {
                     ReleaseCapture();
-                    SendMessage(Handle, WmNclbuttondown, HtCaption, 0);
+                    SendMessage(this.Handle, WmNclbuttondown, HtCaption, 0);
                 }
                 else
                 {
@@ -456,26 +456,26 @@ namespace Tarot.Forms.MaterialSkin.Controls
             }
             else if (m.Msg == WmRbuttondown)
             {
-                var cursorPos = PointToClient(Cursor.Position);
+                var cursorPos = this.PointToClient(Cursor.Position);
 
                 if (this.statusBarBounds.Contains(cursorPos) && !this.minButtonBounds.Contains(cursorPos) &&
                     !this.maxButtonBounds.Contains(cursorPos) && !this.xButtonBounds.Contains(cursorPos))
                 {
                     // Show default system menu when right clicking titlebar
                     var id = TrackPopupMenuEx(
-                        GetSystemMenu(Handle, false),
+                        GetSystemMenu(this.Handle, false),
                         TpmLeftalign | TpmReturncmd,
-                        Cursor.Position.X, Cursor.Position.Y, Handle, IntPtr.Zero);
+                        Cursor.Position.X, Cursor.Position.Y, this.Handle, IntPtr.Zero);
 
                     // Pass the command as a WM_SYSCOMMAND message
-                    SendMessage(Handle, WmSyscommand, id, 0);
+                    SendMessage(this.Handle, WmSyscommand, id, 0);
                 }
             }
             else if (m.Msg == WmNclbuttondown)
             {
                 // This re-enables resizing by letting the application know when the
                 // user is trying to resize a side. This is disabled by default when using WS_SYSMENU.
-                if (!Sizable)
+                if (!this.Sizable)
                 {
                     return;
                 }
@@ -490,7 +490,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
                 if (bFlag != 0)
                 {
-                    SendMessage(Handle, WmSyscommand, 0xF000 | bFlag, (int) m.LParam);
+                    SendMessage(this.Handle, WmSyscommand, 0xF000 | bFlag, (int) m.LParam);
                 }
             }
             else if (m.Msg == WmLbuttonup)
@@ -501,7 +501,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
         private void MaximizeWindow(bool maximize)
         {
-            if (!MaximizeBox || !ControlBox)
+            if (!this.MaximizeBox || !this.ControlBox)
             {
                 return;
             }
@@ -510,24 +510,24 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
             if (maximize)
             {
-                var monitorHandle = MonitorFromWindow(Handle, MonitorDefaulttonearest);
+                var monitorHandle = MonitorFromWindow(this.Handle, MonitorDefaulttonearest);
                 var monitorInfo = new Monitorinfoex();
                 GetMonitorInfo(new HandleRef(null, monitorHandle), monitorInfo);
-                this.previousSize = Size;
-                this.previousLocation = Location;
-                Size = new Size(monitorInfo.rcWork.Width(), monitorInfo.rcWork.Height());
-                Location = new Point(monitorInfo.rcWork.left, monitorInfo.rcWork.top);
+                this.previousSize = this.Size;
+                this.previousLocation = this.Location;
+                this.Size = new Size(monitorInfo.rcWork.Width(), monitorInfo.rcWork.Height());
+                this.Location = new Point(monitorInfo.rcWork.left, monitorInfo.rcWork.top);
             }
             else
             {
-                Size = this.previousSize;
-                Location = this.previousLocation;
+                this.Size = this.previousSize;
+                this.Location = this.previousLocation;
             }
         }
 
         private void ResizeForm(ResizeDirection direction)
         {
-            if (DesignMode)
+            if (this.DesignMode)
             {
                 return;
             }
@@ -554,19 +554,19 @@ namespace Tarot.Forms.MaterialSkin.Controls
             ReleaseCapture();
             if (dir != -1)
             {
-                SendMessage(Handle, WmNclbuttondown, dir, 0);
+                SendMessage(this.Handle, WmNclbuttondown, dir, 0);
             }
         }
 
         private void UpdateButtons(MouseEventArgs e, bool up = false)
         {
-            if (DesignMode)
+            if (this.DesignMode)
             {
                 return;
             }
             var oldState = this.buttonState;
-            var showMin = MinimizeBox && ControlBox;
-            var showMax = MaximizeBox && ControlBox;
+            var showMin = this.MinimizeBox && this.ControlBox;
+            var showMax = this.MaximizeBox && this.ControlBox;
 
             if (e.Button == MouseButtons.Left && !up)
             {
@@ -582,7 +582,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 {
                     this.buttonState = ButtonState.MaxDown;
                 }
-                else if (ControlBox && this.xButtonBounds.Contains(e.Location))
+                else if (this.ControlBox && this.xButtonBounds.Contains(e.Location))
                 {
                     this.buttonState = ButtonState.XDown;
                 }
@@ -599,7 +599,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
                     if (oldState == ButtonState.MinDown)
                     {
-                        WindowState = FormWindowState.Minimized;
+                        this.WindowState = FormWindowState.Minimized;
                     }
                 }
                 else if (showMin && showMax && this.minButtonBounds.Contains(e.Location))
@@ -608,25 +608,25 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
                     if (oldState == ButtonState.MinDown)
                     {
-                        WindowState = FormWindowState.Minimized;
+                        this.WindowState = FormWindowState.Minimized;
                     }
                 }
-                else if (MaximizeBox && ControlBox && this.maxButtonBounds.Contains(e.Location))
+                else if (this.MaximizeBox && this.ControlBox && this.maxButtonBounds.Contains(e.Location))
                 {
                     this.buttonState = ButtonState.MaxOver;
 
                     if (oldState == ButtonState.MaxDown)
                     {
-                        MaximizeWindow(!this.maximized);
+                        this.MaximizeWindow(!this.maximized);
                     }
                 }
-                else if (ControlBox && this.xButtonBounds.Contains(e.Location))
+                else if (this.ControlBox && this.xButtonBounds.Contains(e.Location))
                 {
                     this.buttonState = ButtonState.XOver;
 
                     if (oldState == ButtonState.XDown)
                     {
-                        Close();
+                        this.Close();
                     }
                 }
                 else
@@ -637,7 +637,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
             if (oldState != this.buttonState)
             {
-                Invalidate();
+                this.Invalidate();
             }
         }
 

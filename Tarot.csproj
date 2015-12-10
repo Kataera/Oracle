@@ -189,6 +189,7 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="Providers\TarotCombatTargetingProvider.cs" />
     <Compile Include="Settings\TarotSettings.cs" />
     <Compile Include="Tarot.cs" />
   </ItemGroup>

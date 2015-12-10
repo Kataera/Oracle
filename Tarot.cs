@@ -116,12 +116,12 @@ namespace Tarot
             // Set the botbase instance so we can access its data.
             Instance = this;
 
-            Logger.SendLog("Initialising " + Name + ".");
+            Logger.SendLog("Initialising " + this.Name + ".");
 
             // TODO: Implement rest of Updater.
             if (Updater.UpdateIsAvailable())
             {
-                Logger.SendLog("An update for " + Name + " is available.");
+                Logger.SendLog("An update for " + this.Name + " is available.");
             }
         }
 
@@ -181,7 +181,7 @@ namespace Tarot
                 }
             }
 
-            Logger.SendLog("Starting " + Name + ".");
+            Logger.SendLog("Starting " + this.Name + ".");
         }
 
         public override void Stop()
@@ -205,7 +205,7 @@ namespace Tarot
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;
 
-            Logger.SendLog("Stopping " + Name + ".");
+            Logger.SendLog("Stopping " + this.Name + ".");
         }
     }
 }

@@ -26,10 +26,10 @@ namespace Tarot.Forms.MaterialSkin.Controls
         {
             base.OnCreateControl();
 
-            ForeColor = SkinManager.GetPrimaryTextColor();
-            Font = SkinManager.RobotoRegular11;
+            this.ForeColor = this.SkinManager.GetPrimaryTextColor();
+            this.Font = this.SkinManager.RobotoRegular11;
 
-            BackColorChanged += (sender, args) => ForeColor = SkinManager.GetPrimaryTextColor();
+            this.BackColorChanged += (sender, args) => this.ForeColor = this.SkinManager.GetPrimaryTextColor();
         }
     }
 }

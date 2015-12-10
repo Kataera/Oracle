@@ -97,7 +97,7 @@ namespace Tarot.Settings
             set
             {
                 this.bossEngagePercentage = value;
-                Save();
+                this.Save();
             }
         }
 
@@ -110,7 +110,7 @@ namespace Tarot.Settings
             set
             {
                 this.debugEnabled = value;
-                Save();
+                this.Save();
             }
         }
 
@@ -123,7 +123,7 @@ namespace Tarot.Settings
             set
             {
                 this.fateIdleMode = value;
-                Save();
+                this.Save();
             }
         }
 
@@ -136,7 +136,7 @@ namespace Tarot.Settings
             set
             {
                 this.fateSelectMode = value;
-                Save();
+                this.Save();
             }
         }
 
@@ -149,7 +149,7 @@ namespace Tarot.Settings
             set
             {
                 this.listHooksOnStart = value;
-                Save();
+                this.Save();
             }
         }
 
@@ -162,7 +162,7 @@ namespace Tarot.Settings
             set
             {
                 this.megaBossEngagePercentage = value;
-                Save();
+                this.Save();
             }
         }
 
@@ -175,7 +175,7 @@ namespace Tarot.Settings
             set
             {
                 this.runProblematicFates = value;
-                Save();
+                this.Save();
             }
         }
 
@@ -188,7 +188,7 @@ namespace Tarot.Settings
             set
             {
                 this.waitAtFateForProgress = value;
-                Save();
+                this.Save();
             }
         }
 
@@ -201,7 +201,7 @@ namespace Tarot.Settings
             set
             {
                 this.waitForChainFates = value;
-                Save();
+                this.Save();
             }
         }
     }
