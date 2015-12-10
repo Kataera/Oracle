@@ -22,22 +22,30 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-using System.Linq;
 using System.Threading.Tasks;
 
-using ff14bot.Helpers;
-using ff14bot.Managers;
+using Buddy.Coroutines;
 
-namespace Tarot.Behaviour.Tasks.Fates
+using ff14bot.RemoteWindows;
+
+using Tarot.Helpers;
+
+namespace Tarot.Behaviour.Tasks.Utilities
 {
-    internal static class KillFate
+    internal static class SkipDialogue
     {
         public static async Task<bool> Main()
         {
-            var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
-            if (target != null)
+            if (!Talk.DialogOpen && !Talk.ConvoLock)
             {
-                Poi.Current = new Poi(target, PoiType.Kill);
+                return true;
+            }
+
+            Logger.SendLog("Skipping dialogue.");
+            while (Talk.ConvoLock || Talk.DialogOpen)
+            {
+                Talk.Next();
+                await Coroutine.Yield();
             }
 
             return true;

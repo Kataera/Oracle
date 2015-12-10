@@ -89,6 +89,7 @@
     <Compile Include="Behaviour\Tasks\Fates\MegaBossFate.cs" />
     <Compile Include="Behaviour\PoiHooks\SetFatePoi.cs" />
     <Compile Include="Behaviour\Tasks\IdleHandler.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\SkipDialogue.cs" />
     <Compile Include="Data\FateDatabase.cs" />
     <Compile Include="Data\FateTypes\Boss.cs" />
     <Compile Include="Data\FateTypes\Collect.cs" />

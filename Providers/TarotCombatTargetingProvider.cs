@@ -62,6 +62,16 @@ namespace Tarot.Providers
             return battleChars;
         }
 
+        private static bool IsLevelSyncNeeded(GameObject battleCharacter)
+        {
+            if (battleCharacter.FateId == 0)
+            {
+                return false;
+            }
+
+            return FateManager.GetFateById(battleCharacter.FateId).MaxLevel < Core.Player.ClassLevel;
+        }
+
         private bool Filter(bool inCombat, BattleCharacter battleCharacter)
         {
             if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible
@@ -154,16 +164,6 @@ namespace Tarot.Providers
             }
 
             return weight;
-        }
-
-        private static bool IsLevelSyncNeeded(GameObject battleCharacter)
-        {
-            if (battleCharacter.FateId == 0)
-            {
-                return false;
-            }
-
-            return FateManager.GetFateById(battleCharacter.FateId).MaxLevel < Core.Player.ClassLevel;
         }
     }
 }
