@@ -57,7 +57,7 @@ namespace Tarot.Behaviour.Tasks
                 return true;
             }
 
-            if (Poi.Current.Type != PoiType.Fate)
+            if (Poi.Current.Type != PoiType.Fate && Tarot.CurrentFate.IsValid)
             {
                 Poi.Current = new Poi(Tarot.CurrentFate, PoiType.Fate);
             }

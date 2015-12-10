@@ -24,6 +24,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,6 +44,8 @@ namespace Tarot.Behaviour.Tasks
 {
     internal static class CombatHandler
     {
+        private static Stopwatch blacklistCheckTimer;
+
         public static async Task<bool> Main()
         {
             try
@@ -89,24 +92,40 @@ namespace Tarot.Behaviour.Tasks
 
         private static async Task<bool> CheckForBlacklist()
         {
+            if (blacklistCheckTimer == null)
+            {
+                blacklistCheckTimer = Stopwatch.StartNew();
+            }
+
+            // Limit checks to every 15 seconds to not send too many requests.
+            else if (blacklistCheckTimer.Elapsed < TimeSpan.FromSeconds(15))
+            {
+                return false;
+            }
+
+            if (Poi.Current == null)
+            {
+                return false;
+            }
+
             var currentBc = Poi.Current.BattleCharacter;
             var navRequest = new List<CanFullyNavigateTarget>
             {
                 new CanFullyNavigateTarget {Id = currentBc.ObjectId, Position = currentBc.Location}
             };
-
             var navResults =
                 await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
 
             if (navResults.FirstOrDefault(result => result.CanNavigate == 0) == null)
             {
-                return true;
+                return false;
             }
 
             Logger.SendDebugLog("Cannot navigate to mob, blacklisting.");
             Blacklist.Add(Poi.Current.BattleCharacter.ObjectId, BlacklistFlags.Combat, TimeSpan.FromSeconds(60),
                 "Cannot navigate to mob.");
 
+            blacklistCheckTimer.Restart();
             return true;
         }
 
