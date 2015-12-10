@@ -206,6 +206,11 @@ namespace Tarot.Behaviour.Tasks
 
         private static async Task<bool> MoveToFate()
         {
+            if (Tarot.CurrentFate == null)
+            {
+                return false;
+            }
+
             // If we're inside a FATE, cancel.
             if (WithinFate())
             {

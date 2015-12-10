@@ -58,6 +58,7 @@ namespace Tarot.Behaviour.Tasks.Fates
                 {
                     if (fateItemBagSlot.Count >= TarotSettings.Instance.CollectFateTurnInAtAmount)
                     {
+                        Logger.SendLog("Turning in what we've collected.");
                         await TurnInFateItems(GameObjectManager.GetObjectByNPCId(fate.NpcId));
                     }
                 }
@@ -141,8 +142,6 @@ namespace Tarot.Behaviour.Tasks.Fates
 
         private static async Task<bool> TurnInFateItems(GameObject turnInNpc)
         {
-            Logger.SendLog("Going to turn in our items.");
-
             if (Core.Player.Distance2D(turnInNpc.Location) > 5f)
             {
                 await MoveToTurnInNpc(turnInNpc);
@@ -159,6 +158,7 @@ namespace Tarot.Behaviour.Tasks.Fates
             await TurnInItem.Main();
             await SkipDialogue.Main();
 
+            Logger.SendLog("Items have been handed over to " + turnInNpc.Name + ".");
             return true;
         }
     }

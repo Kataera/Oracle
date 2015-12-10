@@ -69,7 +69,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            Logger.SendLog("Pressing 'Hand Over' button.");
+            Logger.SendDebugLog("Pressing 'Hand Over' button.");
             Request.HandOver();
             await Coroutine.Sleep(500);
 

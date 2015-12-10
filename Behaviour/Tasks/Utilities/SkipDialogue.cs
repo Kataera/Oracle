@@ -43,7 +43,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 return true;
             }
 
-            Logger.SendLog("Skipping dialogue.");
+            Logger.SendDebugLog("Skipping dialogue.");
             while (Talk.DialogOpen)
             {
                 if (GameObjectManager.Attackers.Any())
