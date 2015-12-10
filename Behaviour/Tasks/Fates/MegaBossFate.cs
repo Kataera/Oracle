@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 
 using ff14bot.Helpers;
 using ff14bot.Managers;
+using ff14bot.Objects;
 
 using Tarot.Helpers;
 using Tarot.Settings;
@@ -57,13 +58,26 @@ namespace Tarot.Behaviour.Tasks.Fates
                 return true;
             }
 
-            var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
-            if (target != null)
+            if (AnyViableTargets())
             {
-                Poi.Current = new Poi(target, PoiType.Kill);
+                var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
+                if (target != null)
+                {
+                    Poi.Current = new Poi(target, PoiType.Kill);
+                }
             }
 
             return true;
+        }
+
+        private static bool AnyViableTargets()
+        {
+            return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableTarget).Any();
+        }
+
+        private static bool IsViableTarget(BattleCharacter target)
+        {
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == Tarot.CurrentFate.Id;
         }
     }
 }

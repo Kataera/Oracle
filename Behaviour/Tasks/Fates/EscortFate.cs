@@ -72,7 +72,7 @@ namespace Tarot.Behaviour.Tasks.Fates
                     return true;
                 }
 
-                await MoveToEscortNpc(escortNpc);
+                await MoveToNpc(escortNpc);
             }
 
             return true;
@@ -93,7 +93,7 @@ namespace Tarot.Behaviour.Tasks.Fates
             return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == Tarot.CurrentFate.Id;
         }
 
-        private static async Task<bool> MoveToEscortNpc(GameObject npc)
+        private static async Task<bool> MoveToNpc(GameObject npc)
         {
             // Find random point within 3 yards of NPC.
             const float radius = 3f;
@@ -105,7 +105,7 @@ namespace Tarot.Behaviour.Tasks.Fates
             Logger.SendDebugLog("X offset: " + xOffset + ", Y offset: " + yOffset);
             Logger.SendDebugLog("NPC Location: " + npc.Location + ", Moving to: " + location);
 
-            while (Core.Player.Distance2D(location) > 2f)
+            while (Core.Player.Distance2D(location) > 1f)
             {
                 Navigator.PlayerMover.MoveTowards(location);
                 await Coroutine.Yield();
