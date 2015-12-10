@@ -52,7 +52,12 @@ namespace Tarot.Behaviour.Tasks
                 return true;
             }
 
-            if (Poi.Current.Type != PoiType.Kill && Poi.Current.Type != PoiType.Fate && Tarot.CurrentFate != null)
+            if (Poi.Current.Type == PoiType.Kill || Poi.Current.Type == PoiType.Wait)
+            {
+                return true;
+            }
+
+            if (Poi.Current.Type != PoiType.Fate)
             {
                 Poi.Current = new Poi(Tarot.CurrentFate, PoiType.Fate);
             }

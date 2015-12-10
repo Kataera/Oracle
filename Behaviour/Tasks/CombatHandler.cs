@@ -74,6 +74,7 @@ namespace Tarot.Behaviour.Tasks
                     await LevelSync.Main();
                 }
 
+                await CheckForBlacklist();
                 return true;
             }
             catch (Exception exception)
@@ -88,11 +89,6 @@ namespace Tarot.Behaviour.Tasks
 
         private static async Task<bool> CheckForBlacklist()
         {
-            if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
-            {
-                return true;
-            }
-
             var currentBc = Poi.Current.BattleCharacter;
             var navRequest = new List<CanFullyNavigateTarget>
             {
