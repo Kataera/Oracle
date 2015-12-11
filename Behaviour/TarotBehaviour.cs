@@ -85,6 +85,12 @@ namespace Tarot.Behaviour
             if (Poi.Current.BattleCharacter.IsFate)
             {
                 var fate = FateManager.GetFateById(Poi.Current.BattleCharacter.FateId);
+
+                if (fate == null)
+                {
+                    return false;
+                }
+
                 if (!LevelSync.IsLevelSyncNeeded(fate))
                 {
                     return true;
