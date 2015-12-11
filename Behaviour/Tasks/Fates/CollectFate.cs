@@ -56,7 +56,7 @@ namespace Tarot.Behaviour.Tasks.Fates
 
                 if (GameObjectManager.GetObjectByNPCId(fate.NpcId) != null)
                 {
-                    if (fateItemBagSlot.Count >= TarotSettings.Instance.CollectFateTurnInAtAmount)
+                    if (fateItemBagSlot.Count >= TarotSettings.Instance.CollectFateTurnInAtAmount && !Core.Player.InCombat)
                     {
                         Logger.SendLog("Turning in what we've collected.");
                         await TurnInFateItems(GameObjectManager.GetObjectByNPCId(fate.NpcId));

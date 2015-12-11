@@ -24,56 +24,12 @@
 
 using System.Threading.Tasks;
 
-using ff14bot.Helpers;
-
-using Tarot.Behaviour.Tasks.Idles;
-using Tarot.Enumerations;
-using Tarot.Helpers;
-using Tarot.Settings;
-
 namespace Tarot.Behaviour.Tasks
 {
     internal static class IdleHandler
     {
-        public static async Task<bool> Main()
+        public static async Task Main()
         {
-            if (Poi.Current.Type != PoiType.Wait || Tarot.CurrentFate != null)
-            {
-                return true;
-            }
-
-            if (Tarot.CurrentFate != null)
-            {
-                Logger.SendErrorLog("Entered idle handler with an active FATE assigned.");
-                return true;
-            }
-
-            switch (TarotSettings.Instance.FateIdleMode)
-            {
-                case (int) FateIdleMode.ReturnToAetheryte:
-                    await ReturnToAetheryte.Main();
-                    break;
-
-                case FateIdleMode.MoveToWaitLocation:
-                    await MoveToWaitLocation.Main();
-                    break;
-
-                case FateIdleMode.GrindMobs:
-                    await GrindMobs.Main();
-                    break;
-
-                case FateIdleMode.WaitForFates:
-                    await WaitForFates.Main();
-                    break;
-
-                default:
-                    Logger.SendDebugLog(
-                        "Cannot determine idle handler strategy, defaulting to 'Return to Aetheryte'.");
-                    await ReturnToAetheryte.Main();
-                    break;
-            }
-
-            return true;
         }
     }
 }
