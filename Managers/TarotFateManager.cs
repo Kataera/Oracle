@@ -65,7 +65,7 @@ namespace Tarot.Managers
         public static void ClearCurrentFate(string reason)
         {
             var tarotFateData = FateDatabase.GetFateWithId(CurrentFate.Id);
-            var wasFateAChain = tarotFateData.ChainIdFailure != 0 && tarotFateData.ChainIdSuccess != 0;
+            var wasFateAChain = tarotFateData.ChainIdFailure != 0 || tarotFateData.ChainIdSuccess != 0;
 
             PreviousFate = wasFateAChain ? CurrentFate : null;
             CurrentFate = null;
