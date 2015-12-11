@@ -39,10 +39,10 @@ namespace Tarot.Behaviour.Tasks.Utilities
     {
         public static async Task<bool> Main()
         {
-            var levelSyncCooldown = Stopwatch.StartNew();
+            var levelSyncCooldown = new Stopwatch();
             while (!Core.Player.IsLevelSynced && FateManager.WithinFate)
             {
-                if (levelSyncCooldown.ElapsedMilliseconds > 2000)
+                if (!levelSyncCooldown.IsRunning || levelSyncCooldown.ElapsedMilliseconds > 2000)
                 {
                     ToDoList.LevelSync();
                     levelSyncCooldown.Restart();
