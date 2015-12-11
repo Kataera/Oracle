@@ -3270,6 +3270,7 @@
     <Level>54</Level>
     <Type>&Kill;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+	<ChainIDSuccess>737</ChainIDSuccess>
   </Fate>
   <Fate>
     <ID>737</ID>
