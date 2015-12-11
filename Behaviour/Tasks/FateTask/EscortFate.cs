@@ -122,7 +122,39 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
         private static bool IsEscortNpc(BattleCharacter battleCharacter)
         {
-            return battleCharacter.IsFate && !battleCharacter.CanAttack && battleCharacter.FateId == TarotFateManager.CurrentFate.Id;
+            var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id);
+
+            if (tarotFate.NpcId == battleCharacter.NpcId)
+            {
+                return true;
+            }
+
+            if (!battleCharacter.IsFate)
+            {
+                return false;
+            }
+
+            if (battleCharacter.CanAttack)
+            {
+                return false;
+            }
+
+            if (battleCharacter.FateId != TarotFateManager.CurrentFate.Id)
+            {
+                return false;
+            }
+
+            if (!battleCharacter.IsVisible)
+            {
+                return false;
+            }
+
+            if (!battleCharacter.IsTargetable)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private static bool IsViableTarget(BattleCharacter target)
@@ -156,6 +188,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                 {
                     Navigator.PlayerMover.MoveStop();
                     timeout.Reset();
+                    ClearFate();
                     return true;
                 }
 
