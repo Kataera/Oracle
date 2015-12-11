@@ -40,14 +40,14 @@ namespace Tarot.Behaviour.Tasks.Utilities
 {
     internal static class MoveToFate
     {
-        public static async Task<bool> Main()
+        public static async Task<bool> Main(bool ignoreCombat)
         {
-            if (GameObjectManager.Attackers.Any() && !Core.Player.IsMounted)
+            if (!ignoreCombat && GameObjectManager.Attackers.Any() && !Core.Player.IsMounted)
             {
                 return false;
             }
 
-            if (IsMountNeeded() && !Core.Player.IsMounted)
+            if (!ignoreCombat && IsMountNeeded() && !Core.Player.IsMounted)
             {
                 if (!await MountUp())
                 {

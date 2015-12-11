@@ -82,6 +82,28 @@ namespace Tarot.Behaviour
                 ClearPoi("Current Poi is not a FATE mob or attacking us.");
             }
 
+            if (Poi.Current.BattleCharacter.IsFate)
+            {
+                var fate = FateManager.GetFateById(Poi.Current.BattleCharacter.FateId);
+                if (!LevelSync.IsLevelSyncNeeded(fate))
+                {
+                    return true;
+                }
+
+                if (fate.IsValid)
+                {
+                    if (fate.Within2D(Core.Player.Location))
+                    {
+                        await LevelSync.Main(fate);
+                    }
+                    else
+                    {
+                        await MoveToFate.Main(true);
+                        await LevelSync.Main(fate);
+                    }
+                }
+            }
+
             return true;
         }
 
@@ -89,7 +111,7 @@ namespace Tarot.Behaviour
         {
             if (Core.Player.Distance(TarotFateManager.CurrentFate.Location) > TarotFateManager.CurrentFate.Radius)
             {
-                await MoveToFate.Main();
+                await MoveToFate.Main(false);
             }
 
             if (TarotFateManager.CurrentFate == null)
