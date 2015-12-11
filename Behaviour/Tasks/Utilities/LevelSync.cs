@@ -31,26 +31,17 @@ using ff14bot;
 using ff14bot.Managers;
 using ff14bot.RemoteWindows;
 
+using Tarot.Managers;
+
 namespace Tarot.Behaviour.Tasks.Utilities
 {
     internal static class LevelSync
     {
-        private static Stopwatch levelSyncCooldown;
-
         public static async Task<bool> Main()
         {
-            // Reset cooldown if the task has been recalled.
-            levelSyncCooldown = null;
-
+            var levelSyncCooldown = Stopwatch.StartNew();
             while (!Core.Player.IsLevelSynced && FateManager.WithinFate)
             {
-                if (levelSyncCooldown == null)
-                {
-                    ToDoList.LevelSync();
-                    levelSyncCooldown = new Stopwatch();
-                    levelSyncCooldown.Start();
-                }
-
                 if (levelSyncCooldown.ElapsedMilliseconds > 2000)
                 {
                     ToDoList.LevelSync();
@@ -60,6 +51,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 await Coroutine.Yield();
             }
 
+            levelSyncCooldown.Stop();
             return true;
         }
     }

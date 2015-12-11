@@ -89,6 +89,11 @@ namespace Tarot.Behaviour
                 return true;
             }
 
+            if (TarotFateManager.CurrentFate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced)
+            {
+                await LevelSync.Main();
+            }
+
             return await FateRunner.Main();
         }
 

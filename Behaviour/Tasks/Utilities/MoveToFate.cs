@@ -100,6 +100,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 await Coroutine.Yield();
             }
 
+            Navigator.Stop();
             return true;
         }
     }

@@ -48,7 +48,7 @@ namespace Tarot.Managers
 
         public static async Task<bool> AnyViableFates()
         {
-            if (ActiveFates.Any(FateFilter))
+            if (!ActiveFates.Any(FateFilter))
             {
                 return false;
             }
