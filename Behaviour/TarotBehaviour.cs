@@ -24,7 +24,8 @@
 
 using System.Threading.Tasks;
 
-using Tarot.Behaviour.Tasks;
+using ff14bot.Helpers;
+
 using Tarot.Behaviour.Tasks.Utilities;
 
 using TreeSharp;
@@ -43,17 +44,48 @@ namespace Tarot.Behaviour
             return new ActionRunCoroutine(coroutine => Main());
         }
 
+        private static async Task<bool> HandleCombat()
+        {
+            return true;
+        }
+
+        private static async Task<bool> HandleFate()
+        {
+            return true;
+        }
+
+        private static async Task<bool> HandleWait()
+        {
+            return true;
+        }
+
         private static async Task<bool> Main()
         {
-            // Check that the FATE database has been populated.
             if (Tarot.FateDatabase == null)
             {
                 await BuildFateDatabase.Main();
             }
 
-            await CombatHandler.Main();
-            await FateHandler.Main();
-            await IdleHandler.Main();
+            // Safety check.
+            if (Poi.Current == null)
+            {
+                return false;
+            }
+
+            switch (Poi.Current.Type)
+            {
+                case PoiType.Kill:
+                    await HandleCombat();
+                    break;
+
+                case PoiType.Fate:
+                    await HandleFate();
+                    break;
+
+                case PoiType.Wait:
+                    await HandleWait();
+                    break;
+            }
 
             // Always return false to not block the tree.
             return false;

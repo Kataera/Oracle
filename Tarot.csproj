@@ -65,9 +65,7 @@
   <ItemGroup>
     <Compile Include="Behaviour\PoiHooks\WaitSelect\MoveToWaitLocation.cs" />
     <Compile Include="Behaviour\TarotBehaviour.cs" />
-    <Compile Include="Behaviour\Tasks\CombatHandler.cs" />
     <Compile Include="Behaviour\PoiHooks\SelectPoiType.cs" />
-    <Compile Include="Behaviour\Tasks\FateHandler.cs" />
     <Compile Include="Behaviour\PoiHooks\FateSelect\ChainAndTypePriority.cs" />
     <Compile Include="Behaviour\PoiHooks\FateSelect\ChainPriority.cs" />
     <Compile Include="Behaviour\PoiHooks\FateSelect\Closest.cs" />
@@ -87,7 +85,6 @@
     <Compile Include="Behaviour\Tasks\Utilities\LevelSync.cs" />
     <Compile Include="Behaviour\Tasks\Fates\MegaBossFate.cs" />
     <Compile Include="Behaviour\PoiHooks\SetFatePoi.cs" />
-    <Compile Include="Behaviour\Tasks\IdleHandler.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SkipDialogue.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\TurnInItem.cs" />
     <Compile Include="Data\FateDatabase.cs" />
