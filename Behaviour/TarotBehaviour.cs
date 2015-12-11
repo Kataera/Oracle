@@ -22,11 +22,16 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Linq;
 using System.Threading.Tasks;
 
+using ff14bot;
 using ff14bot.Helpers;
+using ff14bot.Managers;
 
 using Tarot.Behaviour.Tasks.Utilities;
+using Tarot.Helpers;
+using Tarot.Managers;
 
 using TreeSharp;
 
@@ -51,11 +56,35 @@ namespace Tarot.Behaviour
 
         private static async Task<bool> HandleFate()
         {
+            if (GameObjectManager.Attackers.Any() && !Core.Player.IsMounted)
+            {
+                Logger.SendDebugLog("Clearing FATE point of interest while we're in combat.");
+                Poi.Clear("We're being attacked.");
+
+                return true;
+            }
+
             return true;
         }
 
         private static async Task<bool> HandleWait()
         {
+            if (GameObjectManager.Attackers.Any() && !Core.Player.IsMounted)
+            {
+                Logger.SendDebugLog("Clearing wait point of interest while we're in combat.");
+                Poi.Clear("We're being attacked.");
+
+                return true;
+            }
+
+            if (await TarotFateManager.AnyViableFates())
+            {
+                Logger.SendLog("Detected a viable FATE, exiting wait behaviour.");
+                Poi.Clear("Viable FATE detected.");
+
+                return true;
+            }
+
             return true;
         }
 
