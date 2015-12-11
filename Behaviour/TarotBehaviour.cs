@@ -31,6 +31,7 @@ using ff14bot.Managers;
 
 using Tarot.Behaviour.Tasks;
 using Tarot.Behaviour.Tasks.Utilities;
+using Tarot.Enumerations;
 using Tarot.Helpers;
 using Tarot.Managers;
 
@@ -70,7 +71,10 @@ namespace Tarot.Behaviour
         {
             if (TarotFateManager.CurrentFate != null && !TarotFateManager.CurrentFate.IsValid)
             {
-                TarotFateManager.ClearCurrentFate("Current FATE is finished.");
+                if (TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id).Type != FateType.Collect)
+                {
+                    TarotFateManager.ClearCurrentFate("Current FATE is finished.");
+                }
             }
 
             return true;

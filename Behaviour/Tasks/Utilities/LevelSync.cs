@@ -33,12 +33,16 @@ using ff14bot.Managers;
 using ff14bot.RemoteWindows;
 
 using Tarot.Helpers;
-using Tarot.Managers;
 
 namespace Tarot.Behaviour.Tasks.Utilities
 {
     internal static class LevelSync
     {
+        public static bool IsLevelSyncNeeded(FateData fate)
+        {
+            return fate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced;
+        }
+
         public static async Task<bool> Main(FateData fate)
         {
             if (!IsLevelSyncNeeded(fate))
@@ -61,11 +65,6 @@ namespace Tarot.Behaviour.Tasks.Utilities
             Logger.SendLog("Synced to level " + fate.MaxLevel + " to participate in FATE.");
             levelSyncCooldown.Stop();
             return true;
-        }
-
-        public static bool IsLevelSyncNeeded(FateData fate)
-        {
-            return fate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced;
         }
     }
 }

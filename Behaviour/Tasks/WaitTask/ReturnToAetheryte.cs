@@ -22,7 +22,6 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-using System.Linq;
 using System.Threading.Tasks;
 
 using Buddy.Coroutines;

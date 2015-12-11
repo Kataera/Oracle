@@ -74,7 +74,10 @@ namespace Tarot.Behaviour.Tasks.Utilities
                     return false;
                 }
 
-                Actionmanager.Mount();
+                if (Actionmanager.CanMount == 0)
+                {
+                    Actionmanager.Mount();
+                }
                 await Coroutine.Yield();
             }
 

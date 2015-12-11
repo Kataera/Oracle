@@ -30,7 +30,6 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Objects;
 
-using Tarot.Helpers;
 using Tarot.Managers;
 
 namespace Tarot.Behaviour.Tasks.FateTask
