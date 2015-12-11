@@ -49,9 +49,9 @@ namespace Tarot.Behaviour.Tasks.WaitTask
                 return false;
             }
 
-            if (FateManager.ActiveFates.Any(ProgressedEnough))
+            if (await TarotFateManager.AnyViableFates())
             {
-                Poi.Clear("Found a FATE.");
+                TarotBehaviour.ClearPoi("Found a FATE.");
                 return true;
             }
 
@@ -63,10 +63,10 @@ namespace Tarot.Behaviour.Tasks.WaitTask
             while (Core.Player.Distance2D(Poi.Current.Location) > 15f)
             {
                 // Check if a FATE popped while we're moving.
-                if (FateManager.ActiveFates.Any(ProgressedEnough))
+                if (await TarotFateManager.AnyViableFates())
                 {
                     Navigator.Stop();
-                    Poi.Clear("Found a FATE.");
+                    TarotBehaviour.ClearPoi("Found a FATE.");
                     return true;
                 }
 

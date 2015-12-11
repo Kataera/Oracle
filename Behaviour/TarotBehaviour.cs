@@ -45,7 +45,7 @@ namespace Tarot.Behaviour
             get { return CreateBehaviour(); }
         }
 
-        private static void ClearPoi(string reason)
+        public static void ClearPoi(string reason)
         {
             Logger.SendLog(reason);
             Poi.Clear(reason);
@@ -126,13 +126,13 @@ namespace Tarot.Behaviour
             {
                 case PoiType.Kill:
                     await HandleCombat();
-                    break;
+                    return false;
                 case PoiType.Fate:
                     await HandleFate();
-                    break;
+                    return false;
                 case PoiType.Wait:
                     await HandleWait();
-                    break;
+                    return false;
             }
 
             // Always return false to not block the tree.

@@ -50,10 +50,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
             {
                 if (!TarotSettings.Instance.WaitAtFateForProgress)
                 {
-                    Logger.SendLog("Current FATE progress reset below minimum level, clearing it and choosing another.");
-
-                    TarotFateManager.CurrentFate = null;
-                    Poi.Clear("Current FATE progress reset below minimum level.");
+                    TarotFateManager.ClearCurrentFate("Current FATE progress reset below minimum level.", false);
                 }
                 else
                 {
@@ -84,10 +81,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
         private static void ClearFate()
         {
-            Logger.SendLog("Current FATE is finished.");
-            Poi.Clear("Current FATE is finished.");
-            TarotFateManager.PreviousFate = TarotFateManager.CurrentFate;
-            TarotFateManager.CurrentFate = null;
+            TarotFateManager.ClearCurrentFate("Current FATE is finished.");
         }
 
         private static bool IsViableTarget(BattleCharacter target)

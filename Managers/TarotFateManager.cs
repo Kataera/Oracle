@@ -32,6 +32,7 @@ using ff14bot.Navigation;
 
 using NeoGaia.ConnectionHandler;
 
+using Tarot.Behaviour;
 using Tarot.Data;
 using Tarot.Enumerations;
 using Tarot.Helpers;
@@ -65,14 +66,14 @@ namespace Tarot.Managers
         {
             PreviousFate = CurrentFate;
             CurrentFate = null;
-            Poi.Clear(reason);
+            TarotBehaviour.ClearPoi(reason);
         }
 
         public static void ClearCurrentFate(string reason, bool setAsPrevious)
         {
             PreviousFate = setAsPrevious ? CurrentFate : null;
             CurrentFate = null;
-            Poi.Clear(reason);
+            TarotBehaviour.ClearPoi(reason);
         }
 
         private static async Task BlacklistBadFates()
