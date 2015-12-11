@@ -78,13 +78,14 @@ namespace Tarot.Behaviour
                 }
             }
 
-            if (!Poi.Current.BattleCharacter.IsFate && !GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
+            if (Poi.Current.BattleCharacter != null && Poi.Current.BattleCharacter.IsValid && !Poi.Current.BattleCharacter.IsFate
+                && !GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
             {
                 ClearPoi("Current Poi is not a FATE mob or attacking us.");
                 return true;
             }
 
-            if (Poi.Current.BattleCharacter.IsFate)
+            if (Poi.Current.BattleCharacter != null && Poi.Current.BattleCharacter.IsValid && Poi.Current.BattleCharacter.IsFate)
             {
                 var fate = FateManager.GetFateById(Poi.Current.BattleCharacter.FateId);
 
