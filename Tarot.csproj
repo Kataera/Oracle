@@ -82,6 +82,7 @@
     <Compile Include="Behaviour\PoiHooks\SetWaitPoi.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\ReturnToAetheryte.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BuildFateDatabase.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\MoveToFate.cs" />
     <Compile Include="Managers\TarotFateManager.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LevelSync.cs" />
     <Compile Include="Behaviour\Tasks\Fates\MegaBossFate.cs" />

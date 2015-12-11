@@ -25,6 +25,7 @@
 using System.Threading.Tasks;
 
 using Tarot.Helpers;
+using Tarot.Managers;
 
 namespace Tarot.Behaviour.Tasks.Utilities
 {
@@ -33,14 +34,14 @@ namespace Tarot.Behaviour.Tasks.Utilities
         public static async Task<bool> Main()
         {
             // Make sure we actually need to populate the data, since XML parsing is very expensive.
-            if (Tarot.FateDatabase != null)
+            if (TarotFateManager.FateDatabase != null)
             {
                 return true;
             }
 
-            Logger.SendLog("Building " + Tarot.Instance.Name + "'s FATE database, this may take a few seconds.");
-            Tarot.FateDatabase = XmlParser.GetFateDatabase(true);
-            Logger.SendLog(Tarot.Instance.Name + "'s FATE database has been built successfully.");
+            Logger.SendLog("Building Tarot's FATE database, this may take a few seconds.");
+            TarotFateManager.FateDatabase = XmlParser.GetFateDatabase(true);
+            Logger.SendLog("Tarot's FATE database has been built successfully.");
 
             return true;
         }

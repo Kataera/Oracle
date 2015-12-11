@@ -32,6 +32,7 @@ using ff14bot.Managers;
 using ff14bot.RemoteWindows;
 
 using Tarot.Helpers;
+using Tarot.Managers;
 
 namespace Tarot.Behaviour.Tasks.Utilities
 {
@@ -49,7 +50,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            var itemId = Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id).ItemId;
+            var itemId = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id).ItemId;
             var turnInBagSlot = GetBagSlotFromItemId(itemId);
 
             if (turnInBagSlot == null)

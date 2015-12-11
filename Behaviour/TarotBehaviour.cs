@@ -26,8 +26,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Buddy.Coroutines;
-
 using ff14bot;
 using ff14bot.Helpers;
 using ff14bot.Managers;
@@ -49,19 +47,30 @@ namespace Tarot.Behaviour
             get { return CreateBehaviour(); }
         }
 
+        private static void ClearPoi(string reason)
+        {
+            Logger.SendLog(reason);
+            Poi.Clear(reason);
+        }
+
+        private static void ClearPoi(string reason, bool sendLog)
+        {
+            if (sendLog)
+            {
+                Logger.SendLog(reason);
+            }
+
+            Poi.Clear(reason);
+        }
+
         private static Composite CreateBehaviour()
         {
             return new ActionRunCoroutine(coroutine => Main());
         }
 
-        private static async Task<bool> HandleCombat()
-        {
-            return true;
-        }
-
         private static async Task<bool> FateRunner()
         {
-            switch (Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id).Type)
+            switch (TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id).Type)
             {
                 case FateType.Kill:
                     await KillFate.Main();
@@ -86,7 +95,7 @@ namespace Tarot.Behaviour
                     break;
             }
 
-            switch (Tarot.CurrentFate.Icon)
+            switch (TarotFateManager.CurrentFate.Icon)
             {
                 case FateIconType.Battle:
                     await KillFate.Main();
@@ -107,31 +116,34 @@ namespace Tarot.Behaviour
             }
 
             Logger.SendDebugLog("Cannot determine FATE type, blacklisting.");
-            Blacklist.Add(Tarot.CurrentFate.ObjectId, BlacklistFlags.Node, TimeSpan.MaxValue, "Cannot determine FATE type");
+            Blacklist.Add(TarotFateManager.CurrentFate.ObjectId, BlacklistFlags.Node, TimeSpan.MaxValue, "Cannot determine FATE type");
             return false;
+        }
+
+        private static async Task<bool> HandleCombat()
+        {
+            return true;
         }
 
         private static async Task<bool> HandleFate()
         {
+            if (Core.Player.Distance(TarotFateManager.CurrentFate.Location) > TarotFateManager.CurrentFate.Radius)
+            {
+                await MoveToFate.Main();
+            }
+
+            if (TarotFateManager.CurrentFate == null)
+            {
+                return false;
+            }
+
             if (GameObjectManager.Attackers.Any() && !Core.Player.IsMounted)
             {
                 ClearPoi("We're being attacked.", false);
                 return true;
             }
 
-            if (Core.Player.Distance(Tarot.CurrentFate.Location) > Tarot.CurrentFate.Radius)
-            {
-                await MoveToFate.Main();
-
-                if (GameObjectManager.Attackers.Any())
-                {
-                    ClearPoi("We're being attacked.", false);
-                    return true;
-                }
-            }
-
-            await FateRunner();
-            return true;
+            return await FateRunner();
         }
 
         private static async Task<bool> HandleWait()
@@ -151,25 +163,9 @@ namespace Tarot.Behaviour
             return true;
         }
 
-        private static void ClearPoi(string reason)
-        {
-            Logger.SendLog(reason);
-            Poi.Clear(reason);
-        }
-
-        private static void ClearPoi(string reason, bool sendLog)
-        {
-            if (sendLog)
-            {
-                Logger.SendLog(reason);
-            }
-
-            Poi.Clear(reason);
-        }
-
         private static async Task<bool> Main()
         {
-            if (Tarot.FateDatabase == null)
+            if (TarotFateManager.FateDatabase == null)
             {
                 await BuildFateDatabase.Main();
             }

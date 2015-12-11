@@ -32,6 +32,7 @@ using ff14bot.Navigation;
 
 using NeoGaia.ConnectionHandler;
 
+using Tarot.Data;
 using Tarot.Enumerations;
 using Tarot.Helpers;
 using Tarot.Settings;
@@ -40,6 +41,10 @@ namespace Tarot.Managers
 {
     internal class TarotFateManager : FateManager
     {
+        internal static FateData CurrentFate { get; set; }
+        internal static FateDatabase FateDatabase { get; set; }
+        internal static FateData PreviousFate { get; set; }
+
         public static async Task<bool> AnyViableFates()
         {
             if (ActiveFates.Any(FateFilter))
@@ -54,6 +59,20 @@ namespace Tarot.Managers
             }
 
             return false;
+        }
+
+        public static void ClearCurrentFate(string reason)
+        {
+            PreviousFate = CurrentFate;
+            CurrentFate = null;
+            Poi.Clear(reason);
+        }
+
+        public static void ClearCurrentFate(string reason, bool setAsPrevious)
+        {
+            PreviousFate = setAsPrevious ? CurrentFate : null;
+            CurrentFate = null;
+            Poi.Clear(reason);
         }
 
         private static async Task BlacklistBadFates()
@@ -80,7 +99,7 @@ namespace Tarot.Managers
 
         private static bool FateFilter(FateData fate)
         {
-            var tarotFateData = Tarot.FateDatabase.GetFateWithId(fate.Id);
+            var tarotFateData = FateDatabase.GetFateWithId(fate.Id);
 
             if (Blacklist.Contains(fate.ObjectId, BlacklistFlags.Node))
             {
@@ -117,39 +136,25 @@ namespace Tarot.Managers
                 return true;
             }
 
-            if (Tarot.FateDatabase.GetFateWithId(fate.Id).Type != FateType.Boss
-                && Tarot.FateDatabase.GetFateWithId(fate.Id).Type != FateType.MegaBoss)
+            if (FateDatabase.GetFateWithId(fate.Id).Type != FateType.Boss
+                && FateDatabase.GetFateWithId(fate.Id).Type != FateType.MegaBoss)
             {
                 return true;
             }
 
-            if (Tarot.FateDatabase.GetFateWithId(fate.Id).Type == FateType.Boss
+            if (FateDatabase.GetFateWithId(fate.Id).Type == FateType.Boss
                 && fate.Progress >= TarotSettings.Instance.BossEngagePercentage)
             {
                 return true;
             }
 
-            if (Tarot.FateDatabase.GetFateWithId(fate.Id).Type == FateType.MegaBoss
+            if (FateDatabase.GetFateWithId(fate.Id).Type == FateType.MegaBoss
                 && fate.Progress >= TarotSettings.Instance.MegaBossEngagePercentage)
             {
                 return true;
             }
 
             return false;
-        }
-
-        public static void ClearCurrentFate(string reason)
-        {
-            Tarot.PreviousFate = Tarot.CurrentFate;
-            Tarot.CurrentFate = null;
-            Poi.Clear(reason);
-        }
-
-        public static void ClearCurrentFate(string reason, bool setAsPrevious)
-        {
-            Tarot.PreviousFate = setAsPrevious ? Tarot.CurrentFate : null;
-            Tarot.CurrentFate = null;
-            Poi.Clear(reason);
         }
     }
 }

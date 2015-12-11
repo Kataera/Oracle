@@ -37,6 +37,7 @@ using ff14bot.Objects;
 
 using Tarot.Behaviour.Tasks.Utilities;
 using Tarot.Helpers;
+using Tarot.Managers;
 using Tarot.Settings;
 
 namespace Tarot.Behaviour.Tasks.Fates
@@ -45,7 +46,7 @@ namespace Tarot.Behaviour.Tasks.Fates
     {
         public static async Task<bool> Main()
         {
-            var fate = Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id);
+            var fate = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id);
             var fateItemBagSlot = GetBagSlotFromItemId(fate.ItemId);
 
             if (fateItemBagSlot != null)
@@ -64,7 +65,7 @@ namespace Tarot.Behaviour.Tasks.Fates
                 }
             }
 
-            if (Tarot.CurrentFate.Status == FateStatus.COMPLETE)
+            if (TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
             {
                 if (Core.Player.InCombat)
                 {
@@ -102,9 +103,8 @@ namespace Tarot.Behaviour.Tasks.Fates
         {
             Logger.SendLog("Current FATE is finished.");
             Poi.Clear("Current FATE is finished.");
-            Tarot.PreviousFate = Tarot.CurrentFate;
-            Tarot.CurrentPoi = null;
-            Tarot.CurrentFate = null;
+            TarotFateManager.PreviousFate = TarotFateManager.CurrentFate;
+            TarotFateManager.CurrentFate = null;
         }
 
         private static BagSlot GetBagSlotFromItemId(uint itemId)
@@ -123,7 +123,7 @@ namespace Tarot.Behaviour.Tasks.Fates
 
         private static bool IsViableTarget(BattleCharacter target)
         {
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == Tarot.CurrentFate.Id;
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == TarotFateManager.CurrentFate.Id;
         }
 
         private static async Task<bool> MoveToTurnInNpc(GameObject turnInNpc)

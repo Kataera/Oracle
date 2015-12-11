@@ -61,7 +61,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
         private static bool IsMountNeeded()
         {
-            var distanceToFateBoundary = Core.Player.Distance(Tarot.CurrentFate.Location) - Tarot.CurrentFate.Radius;
+            var distanceToFateBoundary = Core.Player.Distance(TarotFateManager.CurrentFate.Location) - TarotFateManager.CurrentFate.Radius;
             return distanceToFateBoundary > CharacterSettings.Instance.MountDistance;
         }
 
@@ -83,7 +83,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
         private static async Task<bool> Move()
         {
-            var fate = Tarot.CurrentFate;
+            var fate = TarotFateManager.CurrentFate;
 
             while (Core.Player.Distance(fate.Location) > fate.Radius * 0.75f)
             {

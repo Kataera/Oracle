@@ -39,6 +39,7 @@ using ff14bot.Navigation;
 using ff14bot.Objects;
 
 using Tarot.Helpers;
+using Tarot.Managers;
 
 namespace Tarot.Behaviour.Tasks.Fates
 {
@@ -49,7 +50,7 @@ namespace Tarot.Behaviour.Tasks.Fates
 
         public static async Task<bool> Main()
         {
-            if (Tarot.CurrentFate.Status == FateStatus.COMPLETE)
+            if (TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
             {
                 ClearFate();
                 return true;
@@ -79,9 +80,10 @@ namespace Tarot.Behaviour.Tasks.Fates
                 if (escortNpc == null)
                 {
                     Logger.SendDebugLog("Cannot find any defence NPC, defaulting to staying within the centre of the FATE.");
-                    while (Core.Player.Distance2D(Tarot.CurrentFate.Location) > Tarot.CurrentFate.Radius * 0.2f)
+                    while (Core.Player.Distance2D(TarotFateManager.CurrentFate.Location) > TarotFateManager.CurrentFate.Radius * 0.2f)
                     {
-                        Navigator.MoveToPointWithin(Tarot.CurrentFate.Location, Tarot.CurrentFate.Radius * 0.2f, "FATE centre.");
+                        Navigator.MoveToPointWithin(TarotFateManager.CurrentFate.Location, TarotFateManager.CurrentFate.Radius * 0.2f,
+                            "FATE centre.");
                         await Coroutine.Yield();
                     }
 
@@ -117,19 +119,18 @@ namespace Tarot.Behaviour.Tasks.Fates
         {
             Logger.SendLog("Current FATE is finished.");
             Poi.Clear("Current FATE is finished.");
-            Tarot.PreviousFate = Tarot.CurrentFate;
-            Tarot.CurrentPoi = null;
-            Tarot.CurrentFate = null;
+            TarotFateManager.PreviousFate = TarotFateManager.CurrentFate;
+            TarotFateManager.CurrentFate = null;
         }
 
         private static bool IsDefenceNpc(BattleCharacter battleCharacter)
         {
-            return battleCharacter.IsFate && !battleCharacter.CanAttack && battleCharacter.FateId == Tarot.CurrentFate.Id;
+            return battleCharacter.IsFate && !battleCharacter.CanAttack && battleCharacter.FateId == TarotFateManager.CurrentFate.Id;
         }
 
         private static bool IsViableTarget(BattleCharacter target)
         {
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == Tarot.CurrentFate.Id;
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == TarotFateManager.CurrentFate.Id;
         }
 
         private static async Task<bool> MoveToNpc(GameObject npc)
