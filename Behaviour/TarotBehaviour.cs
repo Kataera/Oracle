@@ -68,6 +68,11 @@ namespace Tarot.Behaviour
 
         private static async Task<bool> HandleCombat()
         {
+            if (TarotFateManager.CurrentFate != null && !TarotFateManager.CurrentFate.IsValid)
+            {
+                TarotFateManager.ClearCurrentFate("Current FATE is finished.");
+            }
+
             return true;
         }
 

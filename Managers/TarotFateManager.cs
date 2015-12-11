@@ -64,16 +64,27 @@ namespace Tarot.Managers
 
         public static void ClearCurrentFate(string reason)
         {
-            PreviousFate = CurrentFate;
+            var tarotFateData = FateDatabase.GetFateWithId(CurrentFate.Id);
+            var wasFateAChain = tarotFateData.ChainIdFailure != 0 && tarotFateData.ChainIdSuccess != 0;
+
+            PreviousFate = wasFateAChain ? CurrentFate : null;
             CurrentFate = null;
-            TarotBehaviour.ClearPoi(reason);
+
+            if (Poi.Current.Type == PoiType.Fate)
+            {
+                TarotBehaviour.ClearPoi(reason);
+            }
         }
 
         public static void ClearCurrentFate(string reason, bool setAsPrevious)
         {
             PreviousFate = setAsPrevious ? CurrentFate : null;
             CurrentFate = null;
-            TarotBehaviour.ClearPoi(reason);
+
+            if (Poi.Current.Type == PoiType.Fate)
+            {
+                TarotBehaviour.ClearPoi(reason);
+            }
         }
 
         private static async Task BlacklistBadFates()
