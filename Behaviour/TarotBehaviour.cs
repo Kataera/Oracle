@@ -30,9 +30,7 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 
 using Tarot.Behaviour.Tasks;
-using Tarot.Behaviour.Tasks.FateTask;
 using Tarot.Behaviour.Tasks.Utilities;
-using Tarot.Enumerations;
 using Tarot.Helpers;
 using Tarot.Managers;
 
@@ -108,7 +106,7 @@ namespace Tarot.Behaviour
                 return true;
             }
 
-            return true;
+            return await WaitRunner.Main();
         }
 
         private static async Task<bool> Main()
