@@ -152,6 +152,13 @@ namespace Tarot.Behaviour.Tasks.FateTask
                     return true;
                 }
 
+                if (!TarotFateManager.CurrentFate.IsValid || TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
+                {
+                    Navigator.PlayerMover.MoveStop();
+                    timeout.Reset();
+                    return true;
+                }
+
                 Navigator.PlayerMover.MoveTowards(location);
                 await Coroutine.Yield();
             }
