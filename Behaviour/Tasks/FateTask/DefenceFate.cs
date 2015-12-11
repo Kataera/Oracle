@@ -41,7 +41,7 @@ using ff14bot.Objects;
 using Tarot.Helpers;
 using Tarot.Managers;
 
-namespace Tarot.Behaviour.Tasks.Fates
+namespace Tarot.Behaviour.Tasks.FateTask
 {
     internal static class DefenceFate
     {

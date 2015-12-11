@@ -26,14 +26,14 @@ using System.Threading.Tasks;
 
 using Tarot.Helpers;
 
-namespace Tarot.Behaviour.Tasks.Idles
+namespace Tarot.Behaviour.Tasks.WaitTask
 {
-    internal static class MoveToWaitLocation
+    internal static class GrindMobs
     {
         public static async Task<bool> Main()
         {
             // TODO: Implement.
-            Logger.SendLog("'Return to location' is not yet implemented, defaulting to 'Return to Aetheryte'.");
+            Logger.SendLog("'Grind mobs' is not yet implemented, defaulting to 'Return to Aetheryte'.");
             await ReturnToAetheryte.Main();
             return true;
         }

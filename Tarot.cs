@@ -100,14 +100,12 @@ namespace Tarot
 
         public override void Initialize()
         {
-            // Set the botbase instance so we can access its data.
-
-            Logger.SendLog("Initialising " + this.Name + ".");
+            Logger.SendLog("Initialising Tarot.");
 
             // TODO: Implement rest of Updater.
             if (Updater.UpdateIsAvailable())
             {
-                Logger.SendLog("An update for " + this.Name + " is available.");
+                Logger.SendLog("An update for Tarot is available.");
             }
         }
 
@@ -132,8 +130,6 @@ namespace Tarot
 
         public override void Start()
         {
-            // Set the botbase instance so we can access its data.
-
             Navigator.PlayerMover = new SlideMover();
             Navigator.NavigationProvider = new GaiaNavigator();
             CombatTargeting.Instance.Provider = new TarotCombatTargetingProvider();
@@ -148,22 +144,9 @@ namespace Tarot
             TreeHooks.Instance.AddHook("TreeStart", TarotBehaviour.Behaviour);
             TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
 
-            // List hook structure.
-            if (TarotSettings.Instance.ListHooksOnStart)
+            if (TarotSettings.Instance.ListHooksOnStart && TarotSettings.Instance.DebugEnabled)
             {
-                Logger.SendDebugLog("Listing RebornBuddy hooks.");
-                foreach (var hook in TreeHooks.Instance.Hooks)
-                {
-                    Logger.SendDebugLog(hook.Key + ": " + hook.Value.Count + " Composite(s).");
-                    var count = 0;
-                    foreach (var composite in hook.Value)
-                    {
-                        count++;
-                        Logger.SendDebugLog("\tComposite " + count + ": " + composite + ".");
-                    }
-
-                    Logger.SendDebugLog(string.Empty);
-                }
+                ListHooks();
             }
 
             Logger.SendLog("Starting " + this.Name + ".");
@@ -190,6 +173,23 @@ namespace Tarot
             GameSettingsManager.FlightMode = playerFlightMode;
 
             Logger.SendLog("Stopping " + this.Name + ".");
+        }
+
+        private static void ListHooks()
+        {
+            Logger.SendDebugLog("Listing RebornBuddy hooks.");
+            foreach (var hook in TreeHooks.Instance.Hooks)
+            {
+                Logger.SendDebugLog(hook.Key + ": " + hook.Value.Count + " Composite(s).");
+                var count = 0;
+                foreach (var composite in hook.Value)
+                {
+                    count++;
+                    Logger.SendDebugLog("\tComposite " + count + ": " + composite + ".");
+                }
+
+                Logger.SendDebugLog(string.Empty);
+            }
         }
     }
 }

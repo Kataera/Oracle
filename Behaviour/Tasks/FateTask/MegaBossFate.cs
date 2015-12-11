@@ -34,7 +34,7 @@ using Tarot.Helpers;
 using Tarot.Managers;
 using Tarot.Settings;
 
-namespace Tarot.Behaviour.Tasks.Fates
+namespace Tarot.Behaviour.Tasks.FateTask
 {
     internal static class MegaBossFate
     {

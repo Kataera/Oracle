@@ -22,45 +22,41 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
-using Tarot.Behaviour.PoiHooks.WaitSelect;
-using Tarot.Enumerations;
-using Tarot.Helpers;
-using Tarot.Settings;
+using Buddy.Coroutines;
 
-namespace Tarot.Behaviour.PoiHooks
+using ff14bot;
+using ff14bot.Helpers;
+using ff14bot.Managers;
+
+using Tarot.Helpers;
+
+namespace Tarot.Behaviour.Tasks.WaitTask
 {
-    internal static class SetWaitPoi
+    internal static class WaitForFates
     {
         public static async Task<bool> Main()
         {
-            Logger.SendLog("No viable FATEs, activating wait mode.");
-
-            switch (TarotSettings.Instance.FateWaitMode)
+            if (!IsFateActive())
             {
-                case FateWaitMode.ReturnToAetheryte:
-                    await ReturnToAetheryte.Main();
-                    break;
+                Logger.SendLog("Waiting for a FATE to activate.");
+                Poi.Current = new Poi(Core.Player.Location, PoiType.Wait);
+                await Coroutine.Wait(TimeSpan.MaxValue, IsFateActive);
+            }
 
-                case FateWaitMode.MoveToWaitLocation:
-                    await MoveToWaitLocation.Main();
-                    break;
+            Logger.SendLog("Found a FATE, exiting idle coroutine.");
+            return true;
+        }
 
-                case FateWaitMode.GrindMobs:
-
-                    //await GrindMobs.Main();
-                    break;
-
-                case FateWaitMode.WaitForFates:
-
-                    //await WaitForFates.Main();
-                    break;
-
-                default:
-                    Logger.SendDebugLog("Cannot determine idle strategy, defaulting to 'Return to Aetheryte'.");
-                    await ReturnToAetheryte.Main();
-                    break;
+        private static bool IsFateActive()
+        {
+            var activeFates = FateManager.ActiveFates;
+            if (activeFates != null && !activeFates.Any())
+            {
+                return true;
             }
 
             return false;

@@ -38,7 +38,7 @@ using Tarot.Enumerations;
 using Tarot.Managers;
 using Tarot.Settings;
 
-namespace Tarot.Behaviour.Tasks.Idles
+namespace Tarot.Behaviour.Tasks.WaitTask
 {
     internal static class ReturnToAetheryte
     {

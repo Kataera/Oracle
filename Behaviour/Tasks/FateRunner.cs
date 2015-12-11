@@ -28,11 +28,12 @@ using System.Threading.Tasks;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 
+using Tarot.Behaviour.Tasks.FateTask;
 using Tarot.Enumerations;
 using Tarot.Helpers;
 using Tarot.Managers;
 
-namespace Tarot.Behaviour.Tasks.Fates
+namespace Tarot.Behaviour.Tasks
 {
     internal static class FateRunner
     {

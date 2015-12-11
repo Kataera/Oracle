@@ -32,36 +32,16 @@ using ff14bot.Objects;
 
 using Tarot.Helpers;
 using Tarot.Managers;
-using Tarot.Settings;
 
-namespace Tarot.Behaviour.Tasks.Fates
+namespace Tarot.Behaviour.Tasks.FateTask
 {
-    internal static class BossFate
+    internal static class KillFate
     {
         public static async Task<bool> Main()
         {
             if (TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
             {
                 ClearFate();
-                return true;
-            }
-
-            if (TarotFateManager.CurrentFate.Progress < TarotSettings.Instance.BossEngagePercentage)
-            {
-                if (!TarotSettings.Instance.WaitAtFateForProgress)
-                {
-                    Logger.SendLog("Current FATE progress reset below minimum level, clearing it and choosing another.");
-
-                    TarotFateManager.CurrentFate = null;
-                    Poi.Clear("Current FATE progress reset below minimum level.");
-                }
-                else
-                {
-                    Logger.SendLog(
-                        "Current FATE progress is too low, waiting for it to reach "
-                        + TarotSettings.Instance.BossEngagePercentage + "%.");
-                }
-
                 return true;
             }
 

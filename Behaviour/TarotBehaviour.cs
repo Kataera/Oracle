@@ -29,7 +29,8 @@ using ff14bot;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 
-using Tarot.Behaviour.Tasks.Fates;
+using Tarot.Behaviour.Tasks;
+using Tarot.Behaviour.Tasks.FateTask;
 using Tarot.Behaviour.Tasks.Utilities;
 using Tarot.Enumerations;
 using Tarot.Helpers;
