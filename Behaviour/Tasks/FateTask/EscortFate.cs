@@ -148,6 +148,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                 if (timeout.Elapsed > TimeSpan.FromSeconds(5))
                 {
                     Navigator.PlayerMover.MoveStop();
+                    timeout.Reset();
                     return true;
                 }
 
