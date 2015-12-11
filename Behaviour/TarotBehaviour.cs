@@ -77,6 +77,11 @@ namespace Tarot.Behaviour
                 }
             }
 
+            if (!Poi.Current.BattleCharacter.IsFate && !GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
+            {
+                ClearPoi("Current Poi is not a FATE mob or attacking us.");
+            }
+
             return true;
         }
 
@@ -130,7 +135,6 @@ namespace Tarot.Behaviour
                 await BuildFateDatabase.Main();
             }
 
-            // Safety check.
             if (Poi.Current == null)
             {
                 return false;

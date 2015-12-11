@@ -42,7 +42,7 @@ namespace Tarot.Behaviour.PoiHooks
         {
             if (IsFateSet())
             {
-                if (!IsFatePoiSet() && !GameObjectManager.Attackers.Any())
+                if (!IsFatePoiSet() && Poi.Current.Type != PoiType.Death && !GameObjectManager.Attackers.Any())
                 {
                     Poi.Current = new Poi(TarotFateManager.CurrentFate, PoiType.Fate);
                 }
