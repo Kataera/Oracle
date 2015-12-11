@@ -88,19 +88,39 @@ namespace Tarot.Behaviour.Tasks.Utilities
         {
             var fate = TarotFateManager.CurrentFate;
 
-            while (Core.Player.Distance(fate.Location) > fate.Radius * 0.75f)
+            if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
-                if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
+                while (!FateManager.WithinFate)
                 {
-                    Logger.SendLog("'" + fate.Name + "' ended before we got there.");
-                    TarotFateManager.ClearCurrentFate("FATE has ended.", false);
+                    if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
+                    {
+                        Logger.SendLog("'" + fate.Name + "' ended before we got there.");
+                        TarotFateManager.ClearCurrentFate("FATE has ended.", false);
 
-                    Navigator.Stop();
-                    return true;
+                        Navigator.Stop();
+                        return true;
+                    }
+
+                    Navigator.MoveToPointWithin(fate.Location, fate.Radius * 0.5f, fate.Name);
+                    await Coroutine.Yield();
                 }
+            }
+            else
+            {
+                while (Core.Player.Distance(fate.Location) > fate.Radius * 0.75f)
+                {
+                    if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
+                    {
+                        Logger.SendLog("'" + fate.Name + "' ended before we got there.");
+                        TarotFateManager.ClearCurrentFate("FATE has ended.", false);
 
-                Navigator.MoveToPointWithin(fate.Location, fate.Radius * 0.5f, fate.Name);
-                await Coroutine.Yield();
+                        Navigator.Stop();
+                        return true;
+                    }
+
+                    Navigator.MoveToPointWithin(fate.Location, fate.Radius * 0.5f, fate.Name);
+                    await Coroutine.Yield();
+                }
             }
 
             Navigator.Stop();
