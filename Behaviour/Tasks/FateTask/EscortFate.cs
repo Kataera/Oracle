@@ -104,7 +104,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                 await MoveToNpc(escortNpc);
 
                 movementCooldown = new Random().Next(500, 1500);
-                Logger.SendDebugLog("Movement successful, waiting " + movementCooldown + "ms before moving again.");
+                Logger.SendDebugLog("Waiting " + movementCooldown + "ms before moving again.");
             }
 
             return true;
@@ -147,9 +147,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
             {
                 if (timeout.Elapsed > TimeSpan.FromSeconds(5))
                 {
-                    timeout.Reset();
-                    await MoveToNpc(npc);
-
+                    Navigator.PlayerMover.MoveStop();
                     return true;
                 }
 
