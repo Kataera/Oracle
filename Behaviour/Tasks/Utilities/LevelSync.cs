@@ -28,19 +28,26 @@ using System.Threading.Tasks;
 using Buddy.Coroutines;
 
 using ff14bot;
+using ff14bot.Enums;
 using ff14bot.Managers;
 using ff14bot.RemoteWindows;
 
+using Tarot.Helpers;
 using Tarot.Managers;
 
 namespace Tarot.Behaviour.Tasks.Utilities
 {
     internal static class LevelSync
     {
-        public static async Task<bool> Main()
+        public static async Task<bool> Main(FateData fate)
         {
+            if (!IsLevelSyncNeeded(fate))
+            {
+                return false;
+            }
+
             var levelSyncCooldown = new Stopwatch();
-            while (!Core.Player.IsLevelSynced && FateManager.WithinFate)
+            while (!Core.Player.IsLevelSynced && FateManager.WithinFate && fate.IsValid && fate.Status != FateStatus.COMPLETE)
             {
                 if (!levelSyncCooldown.IsRunning || levelSyncCooldown.ElapsedMilliseconds > 2000)
                 {
@@ -51,8 +58,14 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 await Coroutine.Yield();
             }
 
+            Logger.SendLog("Synced to level " + fate.MaxLevel + " to participate in FATE.");
             levelSyncCooldown.Stop();
             return true;
+        }
+
+        public static bool IsLevelSyncNeeded(FateData fate)
+        {
+            return fate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced;
         }
     }
 }
