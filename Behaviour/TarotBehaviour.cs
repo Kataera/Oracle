@@ -74,12 +74,14 @@ namespace Tarot.Behaviour
                 if (TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id).Type != FateType.Collect)
                 {
                     TarotFateManager.ClearCurrentFate("Current FATE is finished.");
+                    return true;
                 }
             }
 
             if (!Poi.Current.BattleCharacter.IsFate && !GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
             {
                 ClearPoi("Current Poi is not a FATE mob or attacking us.");
+                return true;
             }
 
             if (Poi.Current.BattleCharacter.IsFate)
