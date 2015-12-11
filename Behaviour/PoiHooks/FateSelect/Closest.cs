@@ -34,6 +34,7 @@ using NeoGaia.ConnectionHandler;
 
 using Tarot.Enumerations;
 using Tarot.Helpers;
+using Tarot.Managers;
 using Tarot.Settings;
 
 namespace Tarot.Behaviour.PoiHooks.FateSelect
@@ -108,7 +109,7 @@ namespace Tarot.Behaviour.PoiHooks.FateSelect
             }
 
             Logger.SendLog("Selected FATE: '" + closestFate.Name + "'.");
-            Tarot.CurrentFate = closestFate;
+            TarotFateManager.CurrentFate = closestFate;
             Poi.Current = new Poi(closestFate, PoiType.Fate);
 
             return true;
@@ -116,7 +117,7 @@ namespace Tarot.Behaviour.PoiHooks.FateSelect
 
         private static bool IsFateViable(FateData fate)
         {
-            var tarotFate = Tarot.FateDatabase.GetFateWithId(fate.Id);
+            var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(fate.Id);
             if (Blacklist.Contains(fate.Id))
             {
                 Logger.SendDebugLog("'" + fate.Name + "' has been blacklisted by Tarot, ignoring.");
@@ -166,19 +167,19 @@ namespace Tarot.Behaviour.PoiHooks.FateSelect
                 return false;
             }
 
-            if (Tarot.FateDatabase.GetFateWithId(fate.Id).Type != FateType.Boss
-                && Tarot.FateDatabase.GetFateWithId(fate.Id).Type != FateType.MegaBoss)
+            if (TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type != FateType.Boss
+                && TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type != FateType.MegaBoss)
             {
                 return false;
             }
 
-            if (Tarot.FateDatabase.GetFateWithId(fate.Id).Type == FateType.Boss
+            if (TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type == FateType.Boss
                 && fate.Progress >= TarotSettings.Instance.BossEngagePercentage)
             {
                 return false;
             }
 
-            if (Tarot.FateDatabase.GetFateWithId(fate.Id).Type == FateType.MegaBoss
+            if (TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type == FateType.MegaBoss
                 && fate.Progress >= TarotSettings.Instance.MegaBossEngagePercentage)
             {
                 return false;

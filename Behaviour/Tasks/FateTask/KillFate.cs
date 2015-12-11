@@ -30,38 +30,17 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Objects;
 
-using Tarot.Helpers;
-using Tarot.Settings;
+using Tarot.Managers;
 
-namespace Tarot.Behaviour.Tasks.Fates
+namespace Tarot.Behaviour.Tasks.FateTask
 {
-    internal static class MegaBossFate
+    internal static class KillFate
     {
         public static async Task<bool> Main()
         {
-            if (Tarot.CurrentFate.Status == FateStatus.COMPLETE)
+            if (TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
             {
                 ClearFate();
-                return true;
-            }
-
-            if (Tarot.CurrentFate.Progress < TarotSettings.Instance.MegaBossEngagePercentage)
-            {
-                if (!TarotSettings.Instance.WaitAtFateForProgress)
-                {
-                    Logger.SendLog("Current FATE progress reset below minimum level, clearing it and choosing another.");
-
-                    Tarot.CurrentFate = null;
-                    Tarot.CurrentPoi = null;
-                    Poi.Clear("Current FATE progress reset below minimum level.");
-                }
-                else
-                {
-                    Logger.SendLog(
-                        "Current FATE progress is too low, waiting for it to reach "
-                        + TarotSettings.Instance.MegaBossEngagePercentage + "%.");
-                }
-
                 return true;
             }
 
@@ -84,16 +63,12 @@ namespace Tarot.Behaviour.Tasks.Fates
 
         private static void ClearFate()
         {
-            Logger.SendLog("Current FATE is finished.");
-            Poi.Clear("Current FATE is finished.");
-            Tarot.PreviousFate = Tarot.CurrentFate;
-            Tarot.CurrentPoi = null;
-            Tarot.CurrentFate = null;
+            TarotFateManager.ClearCurrentFate("Current FATE is finished.");
         }
 
         private static bool IsViableTarget(BattleCharacter target)
         {
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == Tarot.CurrentFate.Id;
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == TarotFateManager.CurrentFate.Id;
         }
     }
 }

@@ -31,6 +31,8 @@ using ff14bot.Managers;
 using ff14bot.NeoProfiles;
 using ff14bot.Objects;
 
+using Tarot.Managers;
+
 namespace Tarot.Providers
 {
     internal struct BattleCharacterWeight
@@ -111,17 +113,17 @@ namespace Tarot.Providers
                 return true;
             }
 
-            if (!battleCharacter.IsFate && Tarot.CurrentFate != null)
+            if (!battleCharacter.IsFate && TarotFateManager.CurrentFate != null)
             {
                 return false;
             }
 
-            if (Tarot.CurrentFate != null && battleCharacter.FateId != Tarot.CurrentFate.Id)
+            if (TarotFateManager.CurrentFate != null && battleCharacter.FateId != TarotFateManager.CurrentFate.Id)
             {
                 return false;
             }
 
-            if (Tarot.CurrentFate == null || !Tarot.CurrentFate.IsValid)
+            if (TarotFateManager.CurrentFate == null || !TarotFateManager.CurrentFate.IsValid)
             {
                 return false;
             }
@@ -143,7 +145,7 @@ namespace Tarot.Providers
                 weight += 50;
             }
 
-            if (Tarot.CurrentFate != null && battleCharacter.FateId == Tarot.CurrentFate.Id)
+            if (TarotFateManager.CurrentFate != null && battleCharacter.FateId == TarotFateManager.CurrentFate.Id)
             {
                 weight += 210;
             }

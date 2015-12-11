@@ -24,18 +24,33 @@
 
 using System.Threading.Tasks;
 
-using Tarot.Helpers;
+using Tarot.Behaviour.Tasks.WaitTask;
+using Tarot.Enumerations;
+using Tarot.Settings;
 
-namespace Tarot.Behaviour.Tasks.Idles
+namespace Tarot.Behaviour.Tasks
 {
-    internal static class GrindMobs
+    internal static class WaitRunner
     {
         public static async Task<bool> Main()
         {
-            // TODO: Implement.
-            Logger.SendLog("'Grind mobs' is not yet implemented, defaulting to 'Return to Aetheryte'.");
-            await ReturnToAetheryte.Main();
-            return true;
+            switch (TarotSettings.Instance.FateWaitMode)
+            {
+                case FateWaitMode.ReturnToAetheryte:
+                    await ReturnToAetheryte.Main();
+                    return true;
+                case FateWaitMode.MoveToWaitLocation:
+                    await MoveToWaitLocation.Main();
+                    return true;
+                case FateWaitMode.GrindMobs:
+                    await GrindMobs.Main();
+                    return true;
+                case FateWaitMode.WaitForFates:
+                    await WaitForFates.Main();
+                    return true;
+            }
+
+            return false;
         }
     }
 }

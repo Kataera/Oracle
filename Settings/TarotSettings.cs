@@ -47,9 +47,9 @@ namespace Tarot.Settings
 
         private bool debugEnabled;
 
-        private FateIdleMode fateIdleMode;
-
         private FateSelectMode fateSelectMode;
+
+        private FateWaitMode fateWaitMode;
 
         private bool listHooksOnStart;
 
@@ -128,19 +128,6 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(FateIdleMode.ReturnToAetheryte)]
-        [Setting]
-        public FateIdleMode FateIdleMode
-        {
-            get { return this.fateIdleMode; }
-
-            set
-            {
-                this.fateIdleMode = value;
-                this.Save();
-            }
-        }
-
         [DefaultValue(FateSelectMode.Closest)]
         [Setting]
         public FateSelectMode FateSelectMode
@@ -150,6 +137,19 @@ namespace Tarot.Settings
             set
             {
                 this.fateSelectMode = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(FateWaitMode.ReturnToAetheryte)]
+        [Setting]
+        public FateWaitMode FateWaitMode
+        {
+            get { return this.fateWaitMode; }
+
+            set
+            {
+                this.fateWaitMode = value;
                 this.Save();
             }
         }

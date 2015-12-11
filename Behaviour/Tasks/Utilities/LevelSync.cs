@@ -28,30 +28,32 @@ using System.Threading.Tasks;
 using Buddy.Coroutines;
 
 using ff14bot;
+using ff14bot.Enums;
 using ff14bot.Managers;
 using ff14bot.RemoteWindows;
+
+using Tarot.Helpers;
 
 namespace Tarot.Behaviour.Tasks.Utilities
 {
     internal static class LevelSync
     {
-        private static Stopwatch levelSyncCooldown;
-
-        public static async Task<bool> Main()
+        public static bool IsLevelSyncNeeded(FateData fate)
         {
-            // Reset cooldown if the task has been recalled.
-            levelSyncCooldown = null;
+            return fate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced;
+        }
 
-            while (!Core.Player.IsLevelSynced && FateManager.WithinFate)
+        public static async Task<bool> Main(FateData fate)
+        {
+            if (!IsLevelSyncNeeded(fate))
             {
-                if (levelSyncCooldown == null)
-                {
-                    ToDoList.LevelSync();
-                    levelSyncCooldown = new Stopwatch();
-                    levelSyncCooldown.Start();
-                }
+                return false;
+            }
 
-                if (levelSyncCooldown.ElapsedMilliseconds > 2000)
+            var levelSyncCooldown = new Stopwatch();
+            while (!Core.Player.IsLevelSynced && FateManager.WithinFate && fate.IsValid && fate.Status != FateStatus.COMPLETE)
+            {
+                if (!levelSyncCooldown.IsRunning || levelSyncCooldown.ElapsedMilliseconds > 2000)
                 {
                     ToDoList.LevelSync();
                     levelSyncCooldown.Restart();
@@ -60,6 +62,8 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 await Coroutine.Yield();
             }
 
+            Logger.SendLog("Synced to level " + fate.MaxLevel + " to participate in FATE.");
+            levelSyncCooldown.Stop();
             return true;
         }
     }

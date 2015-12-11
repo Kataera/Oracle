@@ -22,20 +22,16 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-using System.Threading.Tasks;
-
-using Tarot.Helpers;
-
-namespace Tarot.Behaviour.Tasks.Idles
+namespace Tarot.Enumerations
 {
-    internal static class MoveToWaitLocation
+    internal enum FateWaitMode
     {
-        public static async Task<bool> Main()
-        {
-            // TODO: Implement.
-            Logger.SendLog("'Return to location' is not yet implemented, defaulting to 'Return to Aetheryte'.");
-            await ReturnToAetheryte.Main();
-            return true;
-        }
+        ReturnToAetheryte,
+
+        MoveToWaitLocation,
+
+        GrindMobs,
+
+        WaitForFates
     }
 }

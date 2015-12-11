@@ -37,15 +37,16 @@ using ff14bot.Objects;
 
 using Tarot.Behaviour.Tasks.Utilities;
 using Tarot.Helpers;
+using Tarot.Managers;
 using Tarot.Settings;
 
-namespace Tarot.Behaviour.Tasks.Fates
+namespace Tarot.Behaviour.Tasks.FateTask
 {
     internal static class CollectFate
     {
         public static async Task<bool> Main()
         {
-            var fate = Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id);
+            var fate = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id);
             var fateItemBagSlot = GetBagSlotFromItemId(fate.ItemId);
 
             if (fateItemBagSlot != null)
@@ -56,7 +57,7 @@ namespace Tarot.Behaviour.Tasks.Fates
 
                 if (GameObjectManager.GetObjectByNPCId(fate.NpcId) != null)
                 {
-                    if (fateItemBagSlot.Count >= TarotSettings.Instance.CollectFateTurnInAtAmount)
+                    if (fateItemBagSlot.Count >= TarotSettings.Instance.CollectFateTurnInAtAmount && !Core.Player.InCombat)
                     {
                         Logger.SendLog("Turning in what we've collected.");
                         await TurnInFateItems(GameObjectManager.GetObjectByNPCId(fate.NpcId));
@@ -64,7 +65,7 @@ namespace Tarot.Behaviour.Tasks.Fates
                 }
             }
 
-            if (Tarot.CurrentFate.Status == FateStatus.COMPLETE)
+            if (TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
             {
                 if (Core.Player.InCombat)
                 {
@@ -100,11 +101,7 @@ namespace Tarot.Behaviour.Tasks.Fates
 
         private static void ClearFate()
         {
-            Logger.SendLog("Current FATE is finished.");
-            Poi.Clear("Current FATE is finished.");
-            Tarot.PreviousFate = Tarot.CurrentFate;
-            Tarot.CurrentPoi = null;
-            Tarot.CurrentFate = null;
+            TarotFateManager.ClearCurrentFate("Current FATE is finished.");
         }
 
         private static BagSlot GetBagSlotFromItemId(uint itemId)
@@ -123,7 +120,7 @@ namespace Tarot.Behaviour.Tasks.Fates
 
         private static bool IsViableTarget(BattleCharacter target)
         {
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == Tarot.CurrentFate.Id;
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == TarotFateManager.CurrentFate.Id;
         }
 
         private static async Task<bool> MoveToTurnInNpc(GameObject turnInNpc)

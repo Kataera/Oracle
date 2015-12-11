@@ -22,16 +22,20 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Enumerations
+using System.Threading.Tasks;
+
+using Tarot.Helpers;
+
+namespace Tarot.Behaviour.Tasks.WaitTask
 {
-    internal enum FateIdleMode
+    internal static class GrindMobs
     {
-        ReturnToAetheryte,
-
-        MoveToWaitLocation,
-
-        GrindMobs,
-
-        WaitForFates
+        public static async Task<bool> Main()
+        {
+            // TODO: Implement.
+            Logger.SendLog("'Grind mobs' is not yet implemented, defaulting to 'Return to Aetheryte'.");
+            await ReturnToAetheryte.Main();
+            return true;
+        }
     }
 }

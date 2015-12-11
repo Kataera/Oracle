@@ -33,10 +33,9 @@ using ff14bot.Navigation;
 
 using Tarot.Behaviour;
 using Tarot.Behaviour.PoiHooks;
-using Tarot.Data;
-using Tarot.Enumerations;
 using Tarot.Forms;
 using Tarot.Helpers;
+using Tarot.Managers;
 using Tarot.Providers;
 using Tarot.Settings;
 
@@ -89,18 +88,6 @@ namespace Tarot
             get { return true; }
         }
 
-        internal static FateData CurrentFate { get; set; }
-
-        internal static FateIdleMode CurrentIdle { get; set; }
-
-        internal static Poi CurrentPoi { get; set; }
-
-        internal static FateDatabase FateDatabase { get; set; }
-
-        internal static Tarot Instance { get; set; }
-
-        internal static FateData PreviousFate { get; set; }
-
         internal static string Version
         {
             get
@@ -113,15 +100,12 @@ namespace Tarot
 
         public override void Initialize()
         {
-            // Set the botbase instance so we can access its data.
-            Instance = this;
-
-            Logger.SendLog("Initialising " + this.Name + ".");
+            Logger.SendLog("Initialising Tarot.");
 
             // TODO: Implement rest of Updater.
             if (Updater.UpdateIsAvailable())
             {
-                Logger.SendLog("An update for " + this.Name + " is available.");
+                Logger.SendLog("An update for Tarot is available.");
             }
         }
 
@@ -146,9 +130,6 @@ namespace Tarot
 
         public override void Start()
         {
-            // Set the botbase instance so we can access its data.
-            Instance = this;
-
             Navigator.PlayerMover = new SlideMover();
             Navigator.NavigationProvider = new GaiaNavigator();
             CombatTargeting.Instance.Provider = new TarotCombatTargetingProvider();
@@ -163,22 +144,9 @@ namespace Tarot
             TreeHooks.Instance.AddHook("TreeStart", TarotBehaviour.Behaviour);
             TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
 
-            // List hook structure.
-            if (TarotSettings.Instance.ListHooksOnStart)
+            if (TarotSettings.Instance.ListHooksOnStart && TarotSettings.Instance.DebugEnabled)
             {
-                Logger.SendDebugLog("Listing RebornBuddy hooks.");
-                foreach (var hook in TreeHooks.Instance.Hooks)
-                {
-                    Logger.SendDebugLog(hook.Key + ": " + hook.Value.Count + " Composite(s).");
-                    var count = 0;
-                    foreach (var composite in hook.Value)
-                    {
-                        count++;
-                        Logger.SendDebugLog("\tComposite " + count + ": " + composite + ".");
-                    }
-
-                    Logger.SendDebugLog(string.Empty);
-                }
+                ListHooks();
             }
 
             Logger.SendLog("Starting " + this.Name + ".");
@@ -187,10 +155,9 @@ namespace Tarot
         public override void Stop()
         {
             // Clean up all botbase internal variables.
-            CurrentFate = null;
-            PreviousFate = null;
-            FateDatabase = null;
-            CurrentPoi = null;
+            TarotFateManager.CurrentFate = null;
+            TarotFateManager.PreviousFate = null;
+            TarotFateManager.FateDatabase = null;
 
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
             if (navProvider != null)
@@ -206,6 +173,23 @@ namespace Tarot
             GameSettingsManager.FlightMode = playerFlightMode;
 
             Logger.SendLog("Stopping " + this.Name + ".");
+        }
+
+        private static void ListHooks()
+        {
+            Logger.SendDebugLog("Listing RebornBuddy hooks.");
+            foreach (var hook in TreeHooks.Instance.Hooks)
+            {
+                Logger.SendDebugLog(hook.Key + ": " + hook.Value.Count + " Composite(s).");
+                var count = 0;
+                foreach (var composite in hook.Value)
+                {
+                    count++;
+                    Logger.SendDebugLog("\tComposite " + count + ": " + composite + ".");
+                }
+
+                Logger.SendDebugLog(string.Empty);
+            }
         }
     }
 }
