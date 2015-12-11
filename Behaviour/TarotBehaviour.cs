@@ -22,14 +22,19 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Buddy.Coroutines;
 
 using ff14bot;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 
+using Tarot.Behaviour.Tasks.Fates;
 using Tarot.Behaviour.Tasks.Utilities;
+using Tarot.Enumerations;
 using Tarot.Helpers;
 using Tarot.Managers;
 
@@ -54,16 +59,78 @@ namespace Tarot.Behaviour
             return true;
         }
 
+        private static async Task<bool> FateRunner()
+        {
+            switch (Tarot.FateDatabase.GetFateWithId(Tarot.CurrentFate.Id).Type)
+            {
+                case FateType.Kill:
+                    await KillFate.Main();
+                    return true;
+                case FateType.Collect:
+                    await CollectFate.Main();
+                    return true;
+                case FateType.Escort:
+                    await EscortFate.Main();
+                    return true;
+                case FateType.Defence:
+                    await DefenceFate.Main();
+                    return true;
+                case FateType.Boss:
+                    await BossFate.Main();
+                    return true;
+                case FateType.MegaBoss:
+                    await MegaBossFate.Main();
+                    return true;
+                case FateType.Null:
+                    Logger.SendDebugLog("Cannot find FATE in database, using Rebornbuddy's FATE type identifier.");
+                    break;
+            }
+
+            switch (Tarot.CurrentFate.Icon)
+            {
+                case FateIconType.Battle:
+                    await KillFate.Main();
+                    return true;
+                case FateIconType.Boss:
+                    Logger.SendDebugLog("Cannot determine if FATE is a regular or mega-boss, assuming regular.");
+                    await BossFate.Main();
+                    return true;
+                case FateIconType.KillHandIn:
+                    await CollectFate.Main();
+                    return true;
+                case FateIconType.ProtectNPC:
+                    await EscortFate.Main();
+                    return true;
+                case FateIconType.ProtectNPC2:
+                    await DefenceFate.Main();
+                    return true;
+            }
+
+            Logger.SendDebugLog("Cannot determine FATE type, blacklisting.");
+            Blacklist.Add(Tarot.CurrentFate.ObjectId, BlacklistFlags.Node, TimeSpan.MaxValue, "Cannot determine FATE type");
+            return false;
+        }
+
         private static async Task<bool> HandleFate()
         {
             if (GameObjectManager.Attackers.Any() && !Core.Player.IsMounted)
             {
-                Logger.SendDebugLog("Clearing FATE point of interest while we're in combat.");
-                Poi.Clear("We're being attacked.");
-
+                ClearPoi("We're being attacked.", false);
                 return true;
             }
 
+            if (Core.Player.Distance(Tarot.CurrentFate.Location) > Tarot.CurrentFate.Radius)
+            {
+                await MoveToFate.Main();
+
+                if (GameObjectManager.Attackers.Any())
+                {
+                    ClearPoi("We're being attacked.", false);
+                    return true;
+                }
+            }
+
+            await FateRunner();
             return true;
         }
 
@@ -71,21 +138,33 @@ namespace Tarot.Behaviour
         {
             if (GameObjectManager.Attackers.Any() && !Core.Player.IsMounted)
             {
-                Logger.SendDebugLog("Clearing wait point of interest while we're in combat.");
-                Poi.Clear("We're being attacked.");
-
+                ClearPoi("We're being attacked.", false);
                 return true;
             }
 
             if (await TarotFateManager.AnyViableFates())
             {
-                Logger.SendLog("Detected a viable FATE, exiting wait behaviour.");
-                Poi.Clear("Viable FATE detected.");
-
+                ClearPoi("Viable FATE detected.");
                 return true;
             }
 
             return true;
+        }
+
+        private static void ClearPoi(string reason)
+        {
+            Logger.SendLog(reason);
+            Poi.Clear(reason);
+        }
+
+        private static void ClearPoi(string reason, bool sendLog)
+        {
+            if (sendLog)
+            {
+                Logger.SendLog(reason);
+            }
+
+            Poi.Clear(reason);
         }
 
         private static async Task<bool> Main()
@@ -106,11 +185,9 @@ namespace Tarot.Behaviour
                 case PoiType.Kill:
                     await HandleCombat();
                     break;
-
                 case PoiType.Fate:
                     await HandleFate();
                     break;
-
                 case PoiType.Wait:
                     await HandleWait();
                     break;

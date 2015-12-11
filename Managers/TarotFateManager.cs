@@ -137,5 +137,19 @@ namespace Tarot.Managers
 
             return false;
         }
+
+        public static void ClearCurrentFate(string reason)
+        {
+            Tarot.PreviousFate = Tarot.CurrentFate;
+            Tarot.CurrentFate = null;
+            Poi.Clear(reason);
+        }
+
+        public static void ClearCurrentFate(string reason, bool setAsPrevious)
+        {
+            Tarot.PreviousFate = setAsPrevious ? Tarot.CurrentFate : null;
+            Tarot.CurrentFate = null;
+            Poi.Clear(reason);
+        }
     }
 }
