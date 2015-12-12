@@ -1643,7 +1643,6 @@
     <NpcId>1276</NpcId>
   </Fate>
   <Fate>
-    <!--Check this is correct -->
     <ID>434</ID>
     <Name>Run Like a Flame</Name>
     <Level>26</Level>
