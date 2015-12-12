@@ -76,7 +76,20 @@ namespace Tarot.Behaviour.Tasks.FateTask
             }
             else
             {
-                var escortNpc = GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
+                // TODO: Refactor this.
+                GameObject escortNpc;
+                if (GameObjectManager.GetObjectByNPCId(TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id).NpcId)
+                    != null)
+                {
+                    escortNpc =
+                        GameObjectManager.GetObjectByNPCId(
+                            TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id).NpcId);
+                }
+                else
+                {
+                    escortNpc = GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
+                }
+
                 if (escortNpc == null)
                 {
                     Logger.SendDebugLog("Cannot find escort NPC, defaulting to staying within the centre of the FATE.");

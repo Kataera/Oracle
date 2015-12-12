@@ -1635,7 +1635,6 @@
     <TarotSupport>&FullSupport;</TarotSupport>
   </Fate>
   <Fate>
-    <!--Check this is correct -->
     <ID>432</ID>
     <Name>From Point A</Name>
     <Level>32</Level>

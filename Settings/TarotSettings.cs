@@ -155,7 +155,7 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         [Setting]
         public bool ListHooksOnStart
         {

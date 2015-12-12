@@ -128,7 +128,7 @@ namespace Tarot.Behaviour
                 return false;
             }
 
-            if (GameObjectManager.Attackers.Any() && !Core.Player.IsMounted)
+            if (GameObjectManager.Attackers.Any(mob => !mob.IsFateGone) && !Core.Player.IsMounted)
             {
                 ClearPoi("We're being attacked.", false);
                 return true;
@@ -144,7 +144,7 @@ namespace Tarot.Behaviour
 
         private static async Task<bool> HandleWait()
         {
-            if (GameObjectManager.Attackers.Any() && !Core.Player.IsMounted)
+            if (GameObjectManager.Attackers.Any(mob => !mob.IsFateGone) && !Core.Player.IsMounted)
             {
                 ClearPoi("We're being attacked.", false);
                 return true;
