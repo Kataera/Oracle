@@ -194,7 +194,7 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(750)]
+        [DefaultValue(1500)]
         [Setting]
         public int TurnInActionDelay
         {
