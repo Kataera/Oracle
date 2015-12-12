@@ -22,7 +22,6 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -57,11 +56,11 @@ namespace Tarot.Settings
         private int megaBossEngagePercentage;
 
         private bool runProblematicFates;
+        private int turnInActionDelay;
 
         private bool waitAtFateForProgress;
 
         private bool waitForChainFates;
-        private int turnInActionDelay;
 
         private TarotSettings()
             : base(Path.Combine(CharacterSettingsDirectory, "TarotSettings.json"))
@@ -195,6 +194,19 @@ namespace Tarot.Settings
             }
         }
 
+        [DefaultValue(750)]
+        [Setting]
+        public int TurnInActionDelay
+        {
+            get { return this.turnInActionDelay; }
+
+            set
+            {
+                this.turnInActionDelay = value;
+                this.Save();
+            }
+        }
+
         [DefaultValue(false)]
         [Setting]
         public bool WaitAtFateForProgress
@@ -217,19 +229,6 @@ namespace Tarot.Settings
             set
             {
                 this.waitForChainFates = value;
-                this.Save();
-            }
-        }
-
-        [DefaultValue(750)]
-        [Setting]
-        public int TurnInActionDelay
-        {
-            get { return this.turnInActionDelay; }
-
-            set
-            {
-                this.turnInActionDelay = value;
                 this.Save();
             }
         }
