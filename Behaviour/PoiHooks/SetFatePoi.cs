@@ -101,12 +101,12 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static bool IsFateSet()
         {
-            var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id);
             if (TarotFateManager.CurrentFate == null)
             {
                 return false;
             }
 
+            var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id);
             if (!TarotFateManager.CurrentFate.IsValid && tarotFate.Type != FateType.Collect)
             {
                 return false;
