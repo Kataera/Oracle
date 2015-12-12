@@ -33,6 +33,7 @@ using ff14bot.RemoteWindows;
 
 using Tarot.Helpers;
 using Tarot.Managers;
+using Tarot.Settings;
 
 namespace Tarot.Behaviour.Tasks.Utilities
 {
@@ -61,7 +62,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             Logger.SendLog("Attempting to hand over " + turnInBagSlot.Count + " of the item '" + turnInBagSlot.Name + "'.");
             turnInBagSlot.Handover();
 
-            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
+            await Coroutine.Sleep(TarotSettings.Instance.TurnInActionDelay);
             if (!Request.HandOverButtonClickable)
             {
                 Logger.SendErrorLog("Hand over failed.");
@@ -72,7 +73,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
             Logger.SendDebugLog("Pressing 'Hand Over' button.");
             Request.HandOver();
-            await Coroutine.Sleep(500);
+            await Coroutine.Sleep(TarotSettings.Instance.TurnInActionDelay);
 
             return true;
         }

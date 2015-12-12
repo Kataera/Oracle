@@ -31,6 +31,7 @@ using ff14bot.Managers;
 using ff14bot.RemoteWindows;
 
 using Tarot.Helpers;
+using Tarot.Settings;
 
 namespace Tarot.Behaviour.Tasks.Utilities
 {
@@ -55,7 +56,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 await Coroutine.Yield();
             }
 
-            await Coroutine.Sleep(200);
+            await Coroutine.Sleep(TarotSettings.Instance.TurnInActionDelay);
             return true;
         }
     }
