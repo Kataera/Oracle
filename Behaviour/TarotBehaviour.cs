@@ -81,7 +81,7 @@ namespace Tarot.Behaviour
             if (Poi.Current.BattleCharacter != null && Poi.Current.BattleCharacter.IsValid && !Poi.Current.BattleCharacter.IsFate
                 && !GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
             {
-                ClearPoi("Current Poi is not a FATE mob or attacking us.");
+                ClearPoi("Current Poi is not a FATE mob, nor attacking us.");
                 return true;
             }
 
