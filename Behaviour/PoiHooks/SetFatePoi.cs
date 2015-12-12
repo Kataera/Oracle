@@ -101,7 +101,18 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static bool IsFateSet()
         {
-            return TarotFateManager.CurrentFate != null && TarotFateManager.CurrentFate.IsValid;
+            var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id);
+            if (TarotFateManager.CurrentFate == null)
+            {
+                return false;
+            }
+
+            if (!TarotFateManager.CurrentFate.IsValid && tarotFate.Type != FateType.Collect)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private static bool PreviousFateChained()
