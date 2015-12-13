@@ -55,7 +55,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             Logger.SendDebugLog("Distance difference is " + Math.Abs(aetheryte.Distance - distanceFromPlayer) + " yalms.");
             Logger.SendDebugLog("Minimum distance difference to teleport is " + TarotSettings.Instance.TeleportMinimumDistanceDelta + " yalms.");
 
-            if (Math.Abs(aetheryte.Distance - distanceFromPlayer) > TarotSettings.Instance.TeleportMinimumDistanceDelta)
+            if (aetheryte.Distance - distanceFromPlayer > TarotSettings.Instance.TeleportMinimumDistanceDelta)
             {
                 return true;
             }
