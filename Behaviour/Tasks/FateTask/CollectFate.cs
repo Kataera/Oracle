@@ -57,7 +57,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
                 if (GameObjectManager.GetObjectByNPCId(fate.NpcId) != null)
                 {
-                    if (fateItemBagSlot.Count >= TarotSettings.Instance.CollectFateTurnInAtAmount && !Core.Player.InCombat)
+                    if (fateItemBagSlot.Count >= TarotSettings.Instance.CollectFateTurnInAtAmount)
                     {
                         Logger.SendLog("Turning in what we've collected.");
                         await TurnInFateItems(GameObjectManager.GetObjectByNPCId(fate.NpcId));
@@ -129,11 +129,6 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
             while (Core.Player.Distance2D(turnInNpc.Location) > 5f)
             {
-                if (GameObjectManager.Attackers.Any())
-                {
-                    break;
-                }
-
                 Navigator.MoveToPointWithin(turnInNpc.Location, 5f, "Moving to NPC.");
                 await Coroutine.Yield();
             }
