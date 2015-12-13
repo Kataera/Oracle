@@ -55,6 +55,7 @@ namespace Tarot.Settings
         private FateSelectMode fateSelectMode;
 
         private FateWaitMode fateWaitMode;
+        private int grindMobRadius;
 
         private bool listHooksOnStart;
 
@@ -223,6 +224,19 @@ namespace Tarot.Settings
             set
             {
                 this.fateWaitMode = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(150)]
+        [Setting]
+        public int GrindMobRadius
+        {
+            get { return this.grindMobRadius; }
+
+            set
+            {
+                this.grindMobRadius = value;
                 this.Save();
             }
         }

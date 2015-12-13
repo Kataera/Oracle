@@ -50,8 +50,7 @@ namespace Tarot.Behaviour.PoiHooks
                     break;
 
                 case FateWaitMode.GrindMobs:
-
-                    //await GrindMobs.Main();
+                    await GrindMobs.Main();
                     break;
 
                 case FateWaitMode.WaitInPlace:

@@ -64,6 +64,7 @@
     <None Include="Resources\Fonts\Roboto-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviour\PoiHooks\WaitSelect\GrindMobs.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\MoveToWaitLocation.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\WaitInPlace.cs" />
     <Compile Include="Behaviour\TarotBehaviour.cs" />

@@ -29,13 +29,10 @@ using Buddy.Coroutines;
 using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Helpers;
-using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Settings;
 
-using Tarot.Enumerations;
 using Tarot.Managers;
-using Tarot.Settings;
 
 namespace Tarot.Behaviour.Tasks.WaitTask
 {

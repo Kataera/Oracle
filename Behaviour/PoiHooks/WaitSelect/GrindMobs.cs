@@ -24,26 +24,17 @@
 
 using System.Threading.Tasks;
 
+using ff14bot;
 using ff14bot.Helpers;
+using ff14bot.Navigation;
 
-using Tarot.Managers;
-
-namespace Tarot.Behaviour.Tasks.WaitTask
+namespace Tarot.Behaviour.PoiHooks.WaitSelect
 {
-    internal static class WaitInPlace
+    internal static class GrindMobs
     {
         public static async Task<bool> Main()
         {
-            if (Poi.Current.Type != PoiType.Wait)
-            {
-                return false;
-            }
-
-            if (await TarotFateManager.AnyViableFates())
-            {
-                TarotBehaviour.ClearPoi("Found a FATE.");
-            }
-
+            Poi.Current = new Poi(new HotSpot(Core.Player.Location, 200f), PoiType.Hotspot);
             return true;
         }
     }

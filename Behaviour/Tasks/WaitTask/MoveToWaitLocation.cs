@@ -33,7 +33,7 @@ namespace Tarot.Behaviour.Tasks.WaitTask
         public static async Task<bool> Main()
         {
             // TODO: Implement.
-            Logger.SendLog("'Return to location' is not yet implemented, defaulting to 'Return to Aetheryte'.");
+            Logger.SendLog("'Move to location' is not yet implemented, defaulting to 'Return to Aetheryte'.");
             await ReturnToAetheryte.Main();
             return true;
         }

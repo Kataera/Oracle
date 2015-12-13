@@ -91,7 +91,8 @@ namespace Tarot.Behaviour.PoiHooks
                     break;
             }
 
-            if (TarotFateManager.CurrentFate != null && TarotSettings.Instance.FateDelayMovement && !TarotFateManager.DoNotWaitBeforeMovingFlag)
+            if (TarotFateManager.CurrentFate != null && TarotSettings.Instance.FateDelayMovement
+                && !TarotFateManager.DoNotWaitBeforeMovingFlag)
             {
                 await WaitBeforeMoving();
             }
