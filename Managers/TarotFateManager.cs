@@ -76,7 +76,7 @@ namespace Tarot.Managers
                 foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
                 {
                     var fate = ActiveFates.FirstOrDefault(result => result.Id == navResult.Id);
-                    if (fate == null)
+                    if (fate == null || Blacklist.Contains(fate.Id))
                     {
                         continue;
                     }
@@ -137,6 +137,16 @@ namespace Tarot.Managers
             }
 
             if (!FateProgressionMet(fate))
+            {
+                return false;
+            }
+
+            if (fate.Level > Core.Player.ClassLevel + TarotSettings.Instance.FateMaxLevelsAbove)
+            {
+                return false;
+            }
+
+            if (fate.Level < Core.Player.ClassLevel - TarotSettings.Instance.FateMaxLevelsBelow)
             {
                 return false;
             }

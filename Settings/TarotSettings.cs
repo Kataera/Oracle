@@ -46,6 +46,8 @@ namespace Tarot.Settings
         private int collectFateTurnInAtAmount;
 
         private bool debugEnabled;
+        private int fateMaxLevelsAbove;
+        private int fateMaxLevelsBelow;
 
         private FateSelectMode fateSelectMode;
 
@@ -127,6 +129,32 @@ namespace Tarot.Settings
             set
             {
                 this.debugEnabled = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(4)]
+        [Setting]
+        public int FateMaxLevelsAbove
+        {
+            get { return this.fateMaxLevelsAbove; }
+
+            set
+            {
+                this.fateMaxLevelsAbove = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(8)]
+        [Setting]
+        public int FateMaxLevelsBelow
+        {
+            get { return this.fateMaxLevelsBelow; }
+
+            set
+            {
+                this.fateMaxLevelsBelow = value;
                 this.Save();
             }
         }
