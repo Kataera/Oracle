@@ -22,7 +22,6 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -62,7 +61,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             {
                 while (!await MountUp())
                 {
-                   await Coroutine.Yield();
+                    await Coroutine.Yield();
                 }
             }
 

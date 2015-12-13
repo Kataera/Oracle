@@ -97,18 +97,6 @@ namespace Tarot.Behaviour.PoiHooks
             return IsFateSet() && IsFatePoiSet();
         }
 
-        private static async Task<bool> WaitBeforeMoving()
-        {
-            var minTime = TarotSettings.Instance.FateDelayMovementMinimum * 1000;
-            var maxTime = TarotSettings.Instance.FateDelayMovementMaximum * 1000;
-            var randomWaitTime = new Random().Next(minTime, maxTime);
-
-            Logger.SendLog("Waiting " + Math.Round(randomWaitTime / 1000f, 2) + " seconds before moving to FATE.");
-            await Coroutine.Sleep(randomWaitTime);
-
-            return true;
-        }
-
         private static bool IsFatePoiSet()
         {
             if (Poi.Current.Type != PoiType.Fate || Poi.Current.Fate != TarotFateManager.CurrentFate)
@@ -241,6 +229,18 @@ namespace Tarot.Behaviour.PoiHooks
             }
 
             return false;
+        }
+
+        private static async Task<bool> WaitBeforeMoving()
+        {
+            var minTime = TarotSettings.Instance.FateDelayMovementMinimum * 1000;
+            var maxTime = TarotSettings.Instance.FateDelayMovementMaximum * 1000;
+            var randomWaitTime = new Random().Next(minTime, maxTime);
+
+            Logger.SendLog("Waiting " + Math.Round(randomWaitTime / 1000f, 2) + " seconds before moving to FATE.");
+            await Coroutine.Sleep(randomWaitTime);
+
+            return true;
         }
     }
 }
