@@ -125,7 +125,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 foreach (var navResult in navResults.Where(result => result.CanNavigate == 1))
                 {
                     var aetheryte = allAetherytes.FirstOrDefault(result => result.Item1 == navResult.Id);
-                    viableAetherytes[viableAetherytes.Length] = aetheryte;
+                    viableAetherytes[viableAetherytes.Length - 1] = aetheryte;
 
                     await Coroutine.Yield();
                 }
