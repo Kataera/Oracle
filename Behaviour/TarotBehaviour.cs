@@ -182,6 +182,16 @@ namespace Tarot.Behaviour
                 return false;
             }
 
+            if (Poi.Current.Type == PoiType.Death)
+            {
+                if (TarotFateManager.CurrentFate != null)
+                {
+                    TarotFateManager.ClearCurrentFate("We died.", false);
+                }
+
+                return false;
+            }
+
             switch (Poi.Current.Type)
             {
                 case PoiType.Kill:
