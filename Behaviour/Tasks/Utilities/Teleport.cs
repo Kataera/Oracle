@@ -80,27 +80,11 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
         public static async Task<bool> TeleportToAetheryte(uint aetheryteId)
         {
-            if (!WorldManager.CanTeleport())
-            {
-                return false;
-            }
+            await CommonBehaviors.CreateTeleportBehavior(vr => aetheryteId, vr => WorldManager.GetZoneForAetheryteId(aetheryteId)).ExecuteCoroutine();
+            await Coroutine.Wait(TimeSpan.FromSeconds(10), () => !Core.Player.IsCasting);
+            await Coroutine.Sleep(TimeSpan.FromSeconds(5));
+            await Coroutine.Wait(TimeSpan.FromSeconds(20), () => !CommonBehaviors.IsLoading);
 
-            while (!Core.Player.IsDead && !Core.Player.InCombat && WorldManager.ZoneId != WorldManager.GetZoneForAetheryteId(aetheryteId))
-            {
-                if (Core.Me.IsMounted)
-                {
-                    await CommonTasks.StopAndDismount();
-                }
-
-                if (!Core.Me.IsCasting && !CommonBehaviors.IsLoading)
-                {
-                    WorldManager.TeleportById(aetheryteId);
-                }
-
-                await Coroutine.Yield();
-            }
-
-            await Coroutine.Wait(TimeSpan.MaxValue, () => CommonBehaviors.IsLoading);
             return true;
         }
 

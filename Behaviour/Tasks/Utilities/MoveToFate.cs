@@ -22,12 +22,14 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 using Buddy.Coroutines;
 
 using ff14bot;
+using ff14bot.Behavior;
 using ff14bot.Enums;
 using ff14bot.Managers;
 using ff14bot.Navigation;
@@ -48,21 +50,21 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            if (!ignoreCombat && IsMountNeeded() && !Core.Player.IsMounted)
-            {
-                if (!await MountUp())
-                {
-                    return false;
-                }
-            }
-
-            if (TarotSettings.Instance.TeleportIfQuicker)
+            if (!ignoreCombat && TarotSettings.Instance.TeleportIfQuicker)
             {
                 var location = TarotFateManager.CurrentFate.Location;
                 if (await Teleport.FasterToTeleport(location))
                 {
                     Logger.SendLog("Teleporting to the closest Aetheryte crystal to the FATE.");
                     await Teleport.TeleportToClosestAetheryte(location);
+                }
+            }
+
+            if (!ignoreCombat && IsMountNeeded() && !Core.Player.IsMounted)
+            {
+                if (!await MountUp())
+                {
+                    return false;
                 }
             }
 
