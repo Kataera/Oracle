@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using Buddy.Coroutines;
 
 using ff14bot.Behavior;
+using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 
@@ -117,7 +118,12 @@ namespace Tarot.Behaviour.PoiHooks
             }
 
             var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id);
-            if (!TarotFateManager.CurrentFate.IsValid && tarotFate.Type != FateType.Collect)
+            if (TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE && tarotFate.Type != FateType.Collect)
+            {
+                return false;
+            }
+
+            if (!TarotFateManager.CurrentFate.IsValid)
             {
                 return false;
             }
