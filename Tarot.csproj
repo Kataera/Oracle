@@ -72,6 +72,7 @@
     <Compile Include="Behaviour\PoiHooks\FateSelect\Closest.cs" />
     <Compile Include="Behaviour\PoiHooks\FateSelect\TypePriority.cs" />
     <Compile Include="Behaviour\Tasks\FateRunner.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\BlacklistMob.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\Teleport.cs" />
     <Compile Include="Behaviour\Tasks\WaitRunner.cs" />
     <Compile Include="Behaviour\Tasks\WaitTask\WaitForFates.cs" />

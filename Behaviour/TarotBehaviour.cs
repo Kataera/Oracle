@@ -78,6 +78,11 @@ namespace Tarot.Behaviour
                 }
             }
 
+            if (await BlacklistMob.IsBlacklistNeeded())
+            {
+                return true;
+            }
+
             if (Poi.Current.BattleCharacter != null && Poi.Current.BattleCharacter.IsValid && !Poi.Current.BattleCharacter.IsFate
                 && !GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
             {
