@@ -52,10 +52,10 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
             Logger.SendDebugLog("Distance to navigate to '" + fate.Name + "' from player location is " + distanceFromPlayer + " yalms.");
             Logger.SendDebugLog("Distance to navigate to '" + fate.Name + "' from Aetheryte location is " + aetheryte.Distance + " yalms.");
-            Logger.SendDebugLog("Distance difference is " + Math.Abs(aetheryte.Distance - distanceFromPlayer) + " yalms.");
+            Logger.SendDebugLog("Distance difference is " + Math.Abs(distanceFromPlayer - aetheryte.Distance) + " yalms.");
             Logger.SendDebugLog("Minimum distance difference to teleport is " + TarotSettings.Instance.TeleportMinimumDistanceDelta + " yalms.");
 
-            if (aetheryte.Distance - distanceFromPlayer > TarotSettings.Instance.TeleportMinimumDistanceDelta)
+            if (distanceFromPlayer - aetheryte.Distance > TarotSettings.Instance.TeleportMinimumDistanceDelta)
             {
                 return true;
             }
