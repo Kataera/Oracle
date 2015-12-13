@@ -240,7 +240,7 @@ namespace Tarot.Behaviour.PoiHooks
             var randomWaitTime = new Random().Next(minTime, maxTime);
 
             Logger.SendLog("Waiting " + Math.Round(randomWaitTime / 1000f, 2) + " seconds before moving to FATE.");
-            await Coroutine.Sleep(randomWaitTime);
+            await Coroutine.Wait(randomWaitTime, () => !TarotFateManager.CurrentFate.IsValid);
 
             return true;
         }

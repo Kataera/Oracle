@@ -137,12 +137,12 @@ namespace Tarot.Providers
 
             if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)
             {
-                weight += 750;
+                weight += 150;
             }
 
             if (battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Core.Player.ObjectId)
             {
-                weight += 50;
+                weight += 750;
             }
 
             if (TarotFateManager.CurrentFate != null && battleCharacter.FateId == TarotFateManager.CurrentFate.Id)
