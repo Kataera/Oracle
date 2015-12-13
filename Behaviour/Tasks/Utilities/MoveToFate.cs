@@ -65,9 +65,9 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
             if (!ignoreCombat && IsMountNeeded() && !Core.Player.IsMounted)
             {
-                if (!await MountUp())
+                while (!await MountUp())
                 {
-                    return false;
+                   await Coroutine.Yield();
                 }
             }
 
@@ -83,6 +83,12 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
         private static async Task<bool> MountUp()
         {
+            if (!Actionmanager.AvailableMounts.Any())
+            {
+                Logger.SendDebugLog("Character does not have any mount available, skipping mount task.");
+                return true;
+            }
+
             while (!Core.Player.IsMounted)
             {
                 if (GameObjectManager.Attackers.Any())
