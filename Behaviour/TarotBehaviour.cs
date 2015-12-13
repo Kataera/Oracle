@@ -128,6 +128,12 @@ namespace Tarot.Behaviour
                 await MoveToFate.Main(false);
             }
 
+            // Check again since Move to FATE task can clear the current FATE.
+            if (TarotFateManager.CurrentFate == null)
+            {
+                return false;
+            }
+
             if (GameObjectManager.Attackers.Any(mob => !mob.IsFateGone) && !Core.Player.IsMounted)
             {
                 ClearPoi("We're being attacked.", false);
