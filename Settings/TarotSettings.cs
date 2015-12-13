@@ -43,18 +43,22 @@ namespace Tarot.Settings
         public Dictionary<uint, Vector3> FateWaitLocations;
 
         private int bossEngagePercentage;
+        private int collectFateTurnInAtAmount;
 
         private bool debugEnabled;
 
-        private FateIdleMode fateIdleMode;
-
         private FateSelectMode fateSelectMode;
+
+        private FateWaitMode fateWaitMode;
 
         private bool listHooksOnStart;
 
         private int megaBossEngagePercentage;
 
         private bool runProblematicFates;
+        private bool teleportIfQuicker;
+        private int teleportMinimumDistanceDelta;
+        private int turnInActionDelay;
 
         private bool waitAtFateForProgress;
 
@@ -97,7 +101,20 @@ namespace Tarot.Settings
             set
             {
                 this.bossEngagePercentage = value;
-                Save();
+                this.Save();
+            }
+        }
+
+        [DefaultValue(5)]
+        [Setting]
+        public int CollectFateTurnInAtAmount
+        {
+            get { return this.collectFateTurnInAtAmount; }
+
+            set
+            {
+                this.collectFateTurnInAtAmount = value;
+                this.Save();
             }
         }
 
@@ -110,20 +127,7 @@ namespace Tarot.Settings
             set
             {
                 this.debugEnabled = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(FateIdleMode.ReturnToAetheryte)]
-        [Setting]
-        public FateIdleMode FateIdleMode
-        {
-            get { return this.fateIdleMode; }
-
-            set
-            {
-                this.fateIdleMode = value;
-                Save();
+                this.Save();
             }
         }
 
@@ -136,11 +140,24 @@ namespace Tarot.Settings
             set
             {
                 this.fateSelectMode = value;
-                Save();
+                this.Save();
             }
         }
 
-        [DefaultValue(true)]
+        [DefaultValue(FateWaitMode.ReturnToAetheryte)]
+        [Setting]
+        public FateWaitMode FateWaitMode
+        {
+            get { return this.fateWaitMode; }
+
+            set
+            {
+                this.fateWaitMode = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(false)]
         [Setting]
         public bool ListHooksOnStart
         {
@@ -149,7 +166,7 @@ namespace Tarot.Settings
             set
             {
                 this.listHooksOnStart = value;
-                Save();
+                this.Save();
             }
         }
 
@@ -162,7 +179,7 @@ namespace Tarot.Settings
             set
             {
                 this.megaBossEngagePercentage = value;
-                Save();
+                this.Save();
             }
         }
 
@@ -175,7 +192,46 @@ namespace Tarot.Settings
             set
             {
                 this.runProblematicFates = value;
-                Save();
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool TeleportIfQuicker
+        {
+            get { return this.teleportIfQuicker; }
+
+            set
+            {
+                this.teleportIfQuicker = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(500)]
+        [Setting]
+        public int TeleportMinimumDistanceDelta
+        {
+            get { return this.teleportMinimumDistanceDelta; }
+
+            set
+            {
+                this.teleportMinimumDistanceDelta = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(1500)]
+        [Setting]
+        public int TurnInActionDelay
+        {
+            get { return this.turnInActionDelay; }
+
+            set
+            {
+                this.turnInActionDelay = value;
+                this.Save();
             }
         }
 
@@ -188,7 +244,7 @@ namespace Tarot.Settings
             set
             {
                 this.waitAtFateForProgress = value;
-                Save();
+                this.Save();
             }
         }
 
@@ -201,7 +257,7 @@ namespace Tarot.Settings
             set
             {
                 this.waitForChainFates = value;
-                Save();
+                this.Save();
             }
         }
     }

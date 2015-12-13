@@ -35,15 +35,15 @@ namespace Tarot.Data.FateTypes
     {
         public NullFate()
         {
-            ChainIdFailure = 0;
-            ChainIdSuccess = 0;
-            Id = 0;
-            ItemId = 0;
-            Level = 0;
-            Name = string.Empty;
-            NpcId = 0;
-            SupportLevel = FateSupportLevel.Unsupported;
-            Type = FateType.Null;
+            this.ChainIdFailure = 0;
+            this.ChainIdSuccess = 0;
+            this.Id = 0;
+            this.ItemId = 0;
+            this.Level = 0;
+            this.Name = string.Empty;
+            this.NpcId = 0;
+            this.SupportLevel = FateSupportLevel.Unsupported;
+            this.Type = FateType.Null;
         }
     }
 }

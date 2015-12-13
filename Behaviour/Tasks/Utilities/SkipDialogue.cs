@@ -22,16 +22,42 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Tarot.Enumerations
+using System.Linq;
+using System.Threading.Tasks;
+
+using Buddy.Coroutines;
+
+using ff14bot.Managers;
+using ff14bot.RemoteWindows;
+
+using Tarot.Helpers;
+using Tarot.Settings;
+
+namespace Tarot.Behaviour.Tasks.Utilities
 {
-    internal enum FateIdleMode
+    internal static class SkipDialogue
     {
-        ReturnToAetheryte,
+        public static async Task<bool> Main()
+        {
+            if (!Talk.DialogOpen && !Talk.ConvoLock)
+            {
+                return true;
+            }
 
-        MoveToWaitLocation,
+            Logger.SendDebugLog("Skipping dialogue.");
+            while (Talk.DialogOpen)
+            {
+                if (GameObjectManager.Attackers.Any())
+                {
+                    return false;
+                }
 
-        GrindMobs,
+                Talk.Next();
+                await Coroutine.Yield();
+            }
 
-        WaitForFates
+            await Coroutine.Sleep(TarotSettings.Instance.TurnInActionDelay);
+            return true;
+        }
     }
 }

@@ -19,14 +19,14 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
         public MaterialRaisedButton()
         {
-            Primary = true;
+            this.Primary = true;
 
             this.animationManager = new AnimationManager(false)
             {
                 Increment = 0.03,
                 AnimationType = AnimationType.EaseOut
             };
-            this.animationManager.OnAnimationProgress += sender => Invalidate();
+            this.animationManager.OnAnimationProgress += sender => this.Invalidate();
         }
 
         [Browsable(false)]
@@ -56,20 +56,16 @@ namespace Tarot.Forms.MaterialSkin.Controls
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-            g.Clear(Parent.BackColor);
+            g.Clear(this.Parent.BackColor);
 
             using (
-                var backgroundPath = DrawHelper.CreateRoundRect(
-                    ClientRectangle.X,
-                    ClientRectangle.Y,
-                    ClientRectangle.Width - 1,
-                    ClientRectangle.Height - 1,
+                var backgroundPath = DrawHelper.CreateRoundRect(this.ClientRectangle.X, this.ClientRectangle.Y,
+                    this.ClientRectangle.Width - 1, this.ClientRectangle.Height - 1,
                     1f))
             {
-                g.FillPath(
-                    Primary
-                        ? SkinManager.ColorScheme.PrimaryBrush
-                        : SkinManager.GetRaisedButtonBackgroundBrush(),
+                g.FillPath(this.Primary
+                    ? this.SkinManager.ColorScheme.PrimaryBrush
+                    : this.SkinManager.GetRaisedButtonBackgroundBrush(),
                     backgroundPath);
             }
 
@@ -80,7 +76,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
                     var animationValue = this.animationManager.GetProgress(i);
                     var animationSource = this.animationManager.GetSource(i);
                     var rippleBrush = new SolidBrush(Color.FromArgb((int) (51 - animationValue * 50), Color.White));
-                    var rippleSize = (int) (animationValue * Width * 2);
+                    var rippleSize = (int) (animationValue * this.Width * 2);
                     g.FillEllipse(
                         rippleBrush,
                         new Rectangle(
@@ -91,11 +87,8 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 }
             }
 
-            g.DrawString(
-                Text.ToUpper(),
-                SkinManager.RobotoMedium10,
-                SkinManager.GetRaisedButtonTextBrush(Primary),
-                ClientRectangle,
+            g.DrawString(this.Text.ToUpper(), this.SkinManager.RobotoMedium10, this.SkinManager.GetRaisedButtonTextBrush(this.Primary),
+                this.ClientRectangle,
                 new StringFormat {Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center});
         }
     }

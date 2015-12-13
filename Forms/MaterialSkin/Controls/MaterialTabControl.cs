@@ -25,7 +25,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == 0x1328 && !DesignMode)
+            if (m.Msg == 0x1328 && !this.DesignMode)
             {
                 m.Result = (IntPtr) 1;
             }

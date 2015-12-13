@@ -22,7 +22,6 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-using System.Linq;
 using System.Threading.Tasks;
 
 using Buddy.Coroutines;
@@ -35,22 +34,23 @@ using ff14bot.Navigation;
 using ff14bot.Settings;
 
 using Tarot.Enumerations;
+using Tarot.Managers;
 using Tarot.Settings;
 
-namespace Tarot.Behaviour.Tasks.Idles
+namespace Tarot.Behaviour.Tasks.WaitTask
 {
     internal static class ReturnToAetheryte
     {
         public static async Task<bool> Main()
         {
-            if (Poi.Current == null)
+            if (Poi.Current.Type != PoiType.Wait)
             {
                 return false;
             }
 
-            if (FateManager.ActiveFates.Any(ProgressedEnough))
+            if (await TarotFateManager.AnyViableFates())
             {
-                Poi.Clear("Found a FATE.");
+                TarotBehaviour.ClearPoi("Found a FATE.");
                 return true;
             }
 
@@ -62,10 +62,10 @@ namespace Tarot.Behaviour.Tasks.Idles
             while (Core.Player.Distance2D(Poi.Current.Location) > 15f)
             {
                 // Check if a FATE popped while we're moving.
-                if (FateManager.ActiveFates.Any(ProgressedEnough))
+                if (await TarotFateManager.AnyViableFates())
                 {
                     Navigator.Stop();
-                    Poi.Clear("Found a FATE.");
+                    TarotBehaviour.ClearPoi("Found a FATE.");
                     return true;
                 }
 
@@ -100,19 +100,19 @@ namespace Tarot.Behaviour.Tasks.Idles
                 return true;
             }
 
-            if (Tarot.FateDatabase.GetFateWithId(fate.Id).Type != FateType.Boss
-                && Tarot.FateDatabase.GetFateWithId(fate.Id).Type != FateType.MegaBoss)
+            if (TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type != FateType.Boss
+                && TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type != FateType.MegaBoss)
             {
                 return true;
             }
 
-            if (Tarot.FateDatabase.GetFateWithId(fate.Id).Type == FateType.Boss
+            if (TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type == FateType.Boss
                 && fate.Progress >= TarotSettings.Instance.BossEngagePercentage)
             {
                 return true;
             }
 
-            if (Tarot.FateDatabase.GetFateWithId(fate.Id).Type == FateType.MegaBoss
+            if (TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type == FateType.MegaBoss
                 && fate.Progress >= TarotSettings.Instance.MegaBossEngagePercentage)
             {
                 return true;

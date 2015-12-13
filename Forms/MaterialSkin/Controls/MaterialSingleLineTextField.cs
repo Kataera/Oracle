@@ -21,7 +21,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
         public MaterialSingleLineTextField()
         {
-            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
 
             this.animationManager = new AnimationManager
             {
@@ -29,36 +29,36 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 AnimationType = AnimationType.EaseInOut,
                 InterruptAnimation = false
             };
-            this.animationManager.OnAnimationProgress += sender => Invalidate();
+            this.animationManager.OnAnimationProgress += sender => this.Invalidate();
 
             this.baseTextBox = new BaseTextBox
             {
                 BorderStyle = BorderStyle.None,
-                Font = SkinManager.RobotoRegular11,
-                ForeColor = SkinManager.GetPrimaryTextColor(),
+                Font = this.SkinManager.RobotoRegular11,
+                ForeColor = this.SkinManager.GetPrimaryTextColor(),
                 Location = new Point(0, 0),
-                Width = Width,
-                Height = Height - 5
+                Width = this.Width,
+                Height = this.Height - 5
             };
 
-            if (!Controls.Contains(this.baseTextBox) && !DesignMode)
+            if (!this.Controls.Contains(this.baseTextBox) && !this.DesignMode)
             {
-                Controls.Add(this.baseTextBox);
+                this.Controls.Add(this.baseTextBox);
             }
 
             this.baseTextBox.GotFocus +=
                 (sender, args) => this.animationManager.StartNewAnimation(AnimationDirection.In);
             this.baseTextBox.LostFocus +=
                 (sender, args) => this.animationManager.StartNewAnimation(AnimationDirection.Out);
-            BackColorChanged += (sender, args) =>
+            this.BackColorChanged += (sender, args) =>
             {
-                this.baseTextBox.BackColor = BackColor;
-                this.baseTextBox.ForeColor = SkinManager.GetPrimaryTextColor();
+                this.baseTextBox.BackColor = this.BackColor;
+                this.baseTextBox.ForeColor = this.SkinManager.GetPrimaryTextColor();
             };
 
             //Fix for tabstop
             this.baseTextBox.TabStop = true;
-            TabStop = false;
+            this.TabStop = false;
         }
 
         public event EventHandler AcceptsTabChanged
@@ -597,14 +597,14 @@ namespace Tarot.Forms.MaterialSkin.Controls
         {
             base.OnCreateControl();
 
-            this.baseTextBox.BackColor = Parent.BackColor;
-            this.baseTextBox.ForeColor = SkinManager.GetPrimaryTextColor();
+            this.baseTextBox.BackColor = this.Parent.BackColor;
+            this.baseTextBox.ForeColor = this.SkinManager.GetPrimaryTextColor();
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
             var g = pevent.Graphics;
-            g.Clear(Parent.BackColor);
+            g.Clear(this.Parent.BackColor);
 
             var lineY = this.baseTextBox.Bottom + 3;
 
@@ -612,8 +612,8 @@ namespace Tarot.Forms.MaterialSkin.Controls
             {
                 //No animation
                 g.FillRectangle(this.baseTextBox.Focused
-                    ? SkinManager.ColorScheme.PrimaryBrush
-                    : SkinManager.GetDividersBrush(), this.baseTextBox.Location.X,
+                    ? this.SkinManager.ColorScheme.PrimaryBrush
+                    : this.SkinManager.GetDividersBrush(), this.baseTextBox.Location.X,
                     lineY, this.baseTextBox.Width, this.baseTextBox.Focused ? 2 : 1);
             }
             else
@@ -624,14 +624,12 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 var animationStart = this.baseTextBox.Location.X + this.baseTextBox.Width / 2;
 
                 //Unfocused background
-                g.FillRectangle(
-                    SkinManager.GetDividersBrush(), this.baseTextBox.Location.X,
+                g.FillRectangle(this.SkinManager.GetDividersBrush(), this.baseTextBox.Location.X,
                     lineY, this.baseTextBox.Width,
                     1);
 
                 //Animated focus transition
-                g.FillRectangle(
-                    SkinManager.ColorScheme.PrimaryBrush,
+                g.FillRectangle(this.SkinManager.ColorScheme.PrimaryBrush,
                     animationStart - halfAnimationWidth,
                     lineY,
                     animationWidth,
@@ -644,9 +642,9 @@ namespace Tarot.Forms.MaterialSkin.Controls
             base.OnResize(e);
 
             this.baseTextBox.Location = new Point(0, 0);
-            this.baseTextBox.Width = Width;
+            this.baseTextBox.Width = this.Width;
 
-            Height = this.baseTextBox.Height + 5;
+            this.Height = this.baseTextBox.Height + 5;
         }
 
         private class BaseTextBox : TextBox
@@ -668,10 +666,10 @@ namespace Tarot.Forms.MaterialSkin.Controls
             public BaseTextBox()
             {
                 MaterialContextMenuStrip cms = new TextBoxContextMenuStrip();
-                cms.Opening += ContextMenuStripOnOpening;
-                cms.OnItemClickStart += ContextMenuStripOnItemClickStart;
+                cms.Opening += this.ContextMenuStripOnOpening;
+                cms.OnItemClickStart += this.ContextMenuStripOnItemClickStart;
 
-                ContextMenuStrip = cms;
+                this.ContextMenuStrip = cms;
             }
 
             public string Hint
@@ -680,7 +678,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 set
                 {
                     this.hint = value;
-                    SendMessage(Handle, EmSetcuebanner, (int) IntPtr.Zero, Hint);
+                    SendMessage(this.Handle, EmSetcuebanner, (int) IntPtr.Zero, this.Hint);
                 }
             }
 
@@ -690,7 +688,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 set
                 {
                     this.passwordChar = value;
-                    SetBasePasswordChar();
+                    this.SetBasePasswordChar();
                 }
             }
 
@@ -710,16 +708,16 @@ namespace Tarot.Forms.MaterialSkin.Controls
                         this.useSystemPasswordChar = EmptyChar;
                     }
 
-                    SetBasePasswordChar();
+                    this.SetBasePasswordChar();
                 }
             }
 
             public new void SelectAll()
             {
-                BeginInvoke(
+                this.BeginInvoke(
                     (MethodInvoker) delegate
                     {
-                        Focus();
+                        this.Focus();
                         base.SelectAll();
                     });
             }
@@ -734,22 +732,22 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 switch (toolStripItemClickedEventArgs.ClickedItem.Text)
                 {
                     case "Undo":
-                        Undo();
+                        this.Undo();
                         break;
                     case "Cut":
-                        Cut();
+                        this.Cut();
                         break;
                     case "Copy":
-                        Copy();
+                        this.Copy();
                         break;
                     case "Paste":
-                        Paste();
+                        this.Paste();
                         break;
                     case "Delete":
-                        SelectedText = string.Empty;
+                        this.SelectedText = string.Empty;
                         break;
                     case "Select All":
-                        SelectAll();
+                        this.SelectAll();
                         break;
                 }
             }
@@ -759,18 +757,18 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 var strip = sender as TextBoxContextMenuStrip;
                 if (strip != null)
                 {
-                    strip.Undo.Enabled = CanUndo;
-                    strip.Cut.Enabled = !string.IsNullOrEmpty(SelectedText);
-                    strip.Copy.Enabled = !string.IsNullOrEmpty(SelectedText);
+                    strip.Undo.Enabled = this.CanUndo;
+                    strip.Cut.Enabled = !string.IsNullOrEmpty(this.SelectedText);
+                    strip.Copy.Enabled = !string.IsNullOrEmpty(this.SelectedText);
                     strip.Paste.Enabled = Clipboard.ContainsText();
-                    strip.Delete.Enabled = !string.IsNullOrEmpty(SelectedText);
-                    strip.selectAll.Enabled = !string.IsNullOrEmpty(Text);
+                    strip.Delete.Enabled = !string.IsNullOrEmpty(this.SelectedText);
+                    strip.selectAll.Enabled = !string.IsNullOrEmpty(this.Text);
                 }
             }
 
             private void SetBasePasswordChar()
             {
-                base.PasswordChar = UseSystemPasswordChar ? this.useSystemPasswordChar : this.passwordChar;
+                base.PasswordChar = this.UseSystemPasswordChar ? this.useSystemPasswordChar : this.passwordChar;
             }
         }
 
@@ -794,7 +792,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
             public TextBoxContextMenuStrip()
             {
-                Items.AddRange(
+                this.Items.AddRange(
                     new[]
                     {
                         this.Undo, this.Seperator1, this.Cut, this.Copy, this.Paste, this.Delete, this.Seperator2,

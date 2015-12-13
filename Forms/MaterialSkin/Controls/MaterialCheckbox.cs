@@ -45,18 +45,17 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 Increment = 0.10,
                 SecondaryIncrement = 0.08
             };
-            this.animationManager.OnAnimationProgress += sender => Invalidate();
-            this.rippleAnimationManager.OnAnimationProgress += sender => Invalidate();
+            this.animationManager.OnAnimationProgress += sender => this.Invalidate();
+            this.rippleAnimationManager.OnAnimationProgress += sender => this.Invalidate();
 
-            CheckedChanged +=
+            this.CheckedChanged +=
                 (sender, args) =>
                 {
-                    this.animationManager.StartNewAnimation(
-                        Checked ? AnimationDirection.In : AnimationDirection.Out);
+                    this.animationManager.StartNewAnimation(this.Checked ? AnimationDirection.In : AnimationDirection.Out);
                 };
 
-            Ripple = true;
-            MouseLocation = new Point(-1, -1);
+            this.Ripple = true;
+            this.MouseLocation = new Point(-1, -1);
         }
 
         public override bool AutoSize
@@ -67,7 +66,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 base.AutoSize = value;
                 if (value)
                 {
-                    Size = new Size(10, 10);
+                    this.Size = new Size(10, 10);
                 }
             }
         }
@@ -88,14 +87,14 @@ namespace Tarot.Forms.MaterialSkin.Controls
             set
             {
                 this.ripple = value;
-                AutoSize = AutoSize; //Make AutoSize directly set the bounds.
+                this.AutoSize = this.AutoSize; //Make AutoSize directly set the bounds.
 
                 if (value)
                 {
-                    Margin = new Padding(0);
+                    this.Margin = new Padding(0);
                 }
 
-                Invalidate();
+                this.Invalidate();
             }
         }
 
@@ -108,48 +107,48 @@ namespace Tarot.Forms.MaterialSkin.Controls
         public override Size GetPreferredSize(Size proposedSize)
         {
             var w = this.boxOffset + CheckboxSize + 2
-                    + (int) CreateGraphics().MeasureString(Text, SkinManager.RobotoMedium10).Width;
-            return Ripple ? new Size(w, 30) : new Size(w, 20);
+                    + (int) this.CreateGraphics().MeasureString(this.Text, this.SkinManager.RobotoMedium10).Width;
+            return this.Ripple ? new Size(w, 30) : new Size(w, 20);
         }
 
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            Font = SkinManager.RobotoMedium10;
+            this.Font = this.SkinManager.RobotoMedium10;
 
-            if (DesignMode)
+            if (this.DesignMode)
             {
                 return;
             }
 
-            MouseState = MouseState.Out;
-            MouseEnter += (sender, args) => { MouseState = MouseState.Hover; };
-            MouseLeave += (sender, args) =>
+            this.MouseState = MouseState.Out;
+            this.MouseEnter += (sender, args) => { this.MouseState = MouseState.Hover; };
+            this.MouseLeave += (sender, args) =>
             {
-                MouseLocation = new Point(-1, -1);
-                MouseState = MouseState.Out;
+                this.MouseLocation = new Point(-1, -1);
+                this.MouseState = MouseState.Out;
             };
-            MouseDown += (sender, args) =>
+            this.MouseDown += (sender, args) =>
             {
-                MouseState = MouseState.Down;
+                this.MouseState = MouseState.Down;
 
-                if (Ripple && args.Button == MouseButtons.Left && IsMouseInCheckArea())
+                if (this.Ripple && args.Button == MouseButtons.Left && this.IsMouseInCheckArea())
                 {
                     this.rippleAnimationManager.SecondaryIncrement = 0;
                     this.rippleAnimationManager.StartNewAnimation(
                         AnimationDirection.InOutIn,
-                        new object[] {Checked});
+                        new object[] {this.Checked});
                 }
             };
-            MouseUp += (sender, args) =>
+            this.MouseUp += (sender, args) =>
             {
-                MouseState = MouseState.Hover;
+                this.MouseState = MouseState.Hover;
                 this.rippleAnimationManager.SecondaryIncrement = 0.08;
             };
-            MouseMove += (sender, args) =>
+            this.MouseMove += (sender, args) =>
             {
-                MouseLocation = args.Location;
-                Cursor = IsMouseInCheckArea() ? Cursors.Hand : Cursors.Default;
+                this.MouseLocation = args.Location;
+                this.Cursor = this.IsMouseInCheckArea() ? Cursors.Hand : Cursors.Default;
             };
         }
 
@@ -160,35 +159,33 @@ namespace Tarot.Forms.MaterialSkin.Controls
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             // clear the control
-            g.Clear(Parent.BackColor);
+            g.Clear(this.Parent.BackColor);
 
             var checkboxCenter = this.boxOffset + CheckboxSizeHalf - 1;
 
             var animationProgress = this.animationManager.GetProgress();
 
-            var colorAlpha = Enabled
+            var colorAlpha = this.Enabled
                 ? (int) (animationProgress * 255.0)
-                : SkinManager.GetCheckBoxOffDisabledColor().A;
-            var backgroundAlpha = Enabled
-                ? (int) (SkinManager.GetCheckboxOffColor().A * (1.0 - animationProgress))
-                : SkinManager.GetCheckBoxOffDisabledColor().A;
+                : this.SkinManager.GetCheckBoxOffDisabledColor().A;
+            var backgroundAlpha = this.Enabled
+                ? (int) (this.SkinManager.GetCheckboxOffColor().A * (1.0 - animationProgress))
+                : this.SkinManager.GetCheckBoxOffDisabledColor().A;
 
             var brush =
                 new SolidBrush(
                     Color.FromArgb(
-                        colorAlpha,
-                        Enabled
-                            ? SkinManager.ColorScheme.AccentColor
-                            : SkinManager.GetCheckBoxOffDisabledColor()));
+                        colorAlpha, this.Enabled
+                            ? this.SkinManager.ColorScheme.AccentColor
+                            : this.SkinManager.GetCheckBoxOffDisabledColor()));
             var brush3 =
-                new SolidBrush(
-                    Enabled
-                        ? SkinManager.ColorScheme.AccentColor
-                        : SkinManager.GetCheckBoxOffDisabledColor());
+                new SolidBrush(this.Enabled
+                    ? this.SkinManager.ColorScheme.AccentColor
+                    : this.SkinManager.GetCheckBoxOffDisabledColor());
             var pen = new Pen(brush.Color);
 
             // draw ripple animation
-            if (Ripple && this.rippleAnimationManager.IsAnimating())
+            if (this.Ripple && this.rippleAnimationManager.IsAnimating())
             {
                 for (var i = 0; i < this.rippleAnimationManager.GetAnimationCount(); i++)
                 {
@@ -199,7 +196,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
                             Color.FromArgb(
                                 (int) (animationValue * 40),
                                 (bool) this.rippleAnimationManager.GetData(i)[0] ? Color.Black : brush.Color));
-                    var rippleHeight = Height % 2 == 0 ? Height - 3 : Height - 2;
+                    var rippleHeight = this.Height % 2 == 0 ? this.Height - 3 : this.Height - 2;
                     var rippleSize = this.rippleAnimationManager.GetDirection(i) == AnimationDirection.InOutIn
                         ? (int) (rippleHeight * (0.8d + 0.2d * animationValue))
                         : rippleHeight;
@@ -225,34 +222,32 @@ namespace Tarot.Forms.MaterialSkin.Controls
             {
                 var brush2 =
                     new SolidBrush(
-                        DrawHelper.BlendColor(
-                            Parent.BackColor,
-                            Enabled
-                                ? SkinManager.GetCheckboxOffColor()
-                                : SkinManager.GetCheckBoxOffDisabledColor(),
+                        DrawHelper.BlendColor(this.Parent.BackColor, this.Enabled
+                            ? this.SkinManager.GetCheckboxOffColor()
+                            : this.SkinManager.GetCheckBoxOffDisabledColor(),
                             backgroundAlpha));
                 var pen2 = new Pen(brush2.Color);
                 g.FillPath(brush2, checkmarkPath);
                 g.DrawPath(pen2, checkmarkPath);
 
                 g.FillRectangle(
-                    new SolidBrush(Parent.BackColor), this.boxOffset + 2, this.boxOffset + 2,
+                    new SolidBrush(this.Parent.BackColor), this.boxOffset + 2, this.boxOffset + 2,
                     CheckboxInnerBoxSize - 1,
                     CheckboxInnerBoxSize - 1);
                 g.DrawRectangle(
-                    new Pen(Parent.BackColor), this.boxOffset + 2, this.boxOffset + 2,
+                    new Pen(this.Parent.BackColor), this.boxOffset + 2, this.boxOffset + 2,
                     CheckboxInnerBoxSize - 1,
                     CheckboxInnerBoxSize - 1);
 
                 brush2.Dispose();
                 pen2.Dispose();
 
-                if (Enabled)
+                if (this.Enabled)
                 {
                     g.FillPath(brush, checkmarkPath);
                     g.DrawPath(pen, checkmarkPath);
                 }
-                else if (Checked)
+                else if (this.Checked)
                 {
                     g.SmoothingMode = SmoothingMode.None;
                     g.FillRectangle(
@@ -262,17 +257,14 @@ namespace Tarot.Forms.MaterialSkin.Controls
                     g.SmoothingMode = SmoothingMode.AntiAlias;
                 }
 
-                g.DrawImageUnscaledAndClipped(DrawCheckMarkBitmap(), checkMarkLineFill);
+                g.DrawImageUnscaledAndClipped(this.DrawCheckMarkBitmap(), checkMarkLineFill);
             }
 
             // draw checkbox text
-            var stringSize = g.MeasureString(Text, SkinManager.RobotoMedium10);
-            g.DrawString(
-                Text,
-                SkinManager.RobotoMedium10,
-                Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(),
-                this.boxOffset + TextOffset,
-                Height / 2 - stringSize.Height / 2);
+            var stringSize = g.MeasureString(this.Text, this.SkinManager.RobotoMedium10);
+            g.DrawString(this.Text, this.SkinManager.RobotoMedium10,
+                this.Enabled ? this.SkinManager.GetPrimaryTextBrush() : this.SkinManager.GetDisabledOrHintBrush(),
+                this.boxOffset + TextOffset, this.Height / 2 - stringSize.Height / 2);
 
             // dispose used paint objects
             pen.Dispose();
@@ -283,7 +275,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
         {
             base.OnSizeChanged(e);
 
-            this.boxOffset = Height / 2 - 9;
+            this.boxOffset = this.Height / 2 - 9;
             this.boxRectangle = new Rectangle(this.boxOffset, this.boxOffset, CheckboxSize - 1, CheckboxSize - 1);
         }
 
@@ -296,7 +288,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
             g.Clear(Color.Transparent);
 
             // draw the checkmark lines
-            using (var pen = new Pen(Parent.BackColor, 2))
+            using (var pen = new Pen(this.Parent.BackColor, 2))
             {
                 g.DrawLines(pen, CheckmarkLine);
             }
@@ -306,7 +298,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
         private bool IsMouseInCheckArea()
         {
-            return this.boxRectangle.Contains(MouseLocation);
+            return this.boxRectangle.Contains(this.MouseLocation);
         }
     }
 }

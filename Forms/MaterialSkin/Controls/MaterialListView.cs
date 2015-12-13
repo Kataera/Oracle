@@ -15,32 +15,32 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
         public MaterialListView()
         {
-            GridLines = false;
-            FullRowSelect = true;
-            HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            View = View.Details;
-            OwnerDraw = true;
-            ResizeRedraw = true;
-            BorderStyle = BorderStyle.None;
-            SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
+            this.GridLines = false;
+            this.FullRowSelect = true;
+            this.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            this.View = View.Details;
+            this.OwnerDraw = true;
+            this.ResizeRedraw = true;
+            this.BorderStyle = BorderStyle.None;
+            this.SetStyle(ControlStyles.DoubleBuffer | ControlStyles.OptimizedDoubleBuffer, true);
 
             //Fix for hovers, by default it doesn't redraw
             //TODO: should only redraw when the hovered line changed, this to reduce unnecessary redraws
-            MouseLocation = new Point(-1, -1);
-            MouseState = MouseState.Out;
-            MouseEnter += delegate { MouseState = MouseState.Hover; };
-            MouseLeave += delegate
+            this.MouseLocation = new Point(-1, -1);
+            this.MouseState = MouseState.Out;
+            this.MouseEnter += delegate { this.MouseState = MouseState.Hover; };
+            this.MouseLeave += delegate
             {
-                MouseState = MouseState.Out;
-                MouseLocation = new Point(-1, -1);
-                Invalidate();
+                this.MouseState = MouseState.Out;
+                this.MouseLocation = new Point(-1, -1);
+                this.Invalidate();
             };
-            MouseDown += delegate { MouseState = MouseState.Down; };
-            MouseUp += delegate { MouseState = MouseState.Hover; };
-            MouseMove += delegate(object sender, MouseEventArgs args)
+            this.MouseDown += delegate { this.MouseState = MouseState.Down; };
+            this.MouseUp += delegate { this.MouseState = MouseState.Hover; };
+            this.MouseMove += delegate(object sender, MouseEventArgs args)
             {
-                MouseLocation = args.Location;
-                Invalidate();
+                this.MouseLocation = args.Location;
+                this.Invalidate();
             };
         }
 
@@ -66,24 +66,21 @@ namespace Tarot.Forms.MaterialSkin.Controls
             //This is a hax for the needed padding.
             //Another way would be intercepting all ListViewItems and changing the sizes, but really, that will be a lot of work
             //This will do for now.
-            Font = new Font(SkinManager.RobotoMedium12.FontFamily, 24);
+            this.Font = new Font(this.SkinManager.RobotoMedium12.FontFamily, 24);
         }
 
         protected override void OnDrawColumnHeader(DrawListViewColumnHeaderEventArgs e)
         {
             e.Graphics.FillRectangle(
-                new SolidBrush(SkinManager.GetApplicationBackgroundColor()),
-                new Rectangle(e.Bounds.X, e.Bounds.Y, Width, e.Bounds.Height));
+                new SolidBrush(this.SkinManager.GetApplicationBackgroundColor()),
+                new Rectangle(e.Bounds.X, e.Bounds.Y, this.Width, e.Bounds.Height));
             e.Graphics.DrawString(
-                e.Header.Text,
-                SkinManager.RobotoMedium10,
-                SkinManager.GetSecondaryTextBrush(),
+                e.Header.Text, this.SkinManager.RobotoMedium10, this.SkinManager.GetSecondaryTextBrush(),
                 new Rectangle(
                     e.Bounds.X + ItemPadding,
                     e.Bounds.Y + ItemPadding,
                     e.Bounds.Width - ItemPadding * 2,
-                    e.Bounds.Height - ItemPadding * 2),
-                GetStringFormat());
+                    e.Bounds.Height - ItemPadding * 2), this.GetStringFormat());
         }
 
         protected override void OnDrawItem(DrawListViewItemEventArgs e)
@@ -94,40 +91,35 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
             //always draw default background
             g.FillRectangle(
-                new SolidBrush(SkinManager.GetApplicationBackgroundColor()),
+                new SolidBrush(this.SkinManager.GetApplicationBackgroundColor()),
                 new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));
 
             if (e.State.HasFlag(ListViewItemStates.Selected))
             {
                 //selected background
-                g.FillRectangle(
-                    SkinManager.GetFlatButtonPressedBackgroundBrush(),
+                g.FillRectangle(this.SkinManager.GetFlatButtonPressedBackgroundBrush(),
                     new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));
             }
-            else if (e.Bounds.Contains(MouseLocation) && MouseState == MouseState.Hover)
+            else if (e.Bounds.Contains(this.MouseLocation) && this.MouseState == MouseState.Hover)
             {
                 //hover background
-                g.FillRectangle(
-                    SkinManager.GetFlatButtonHoverBackgroundBrush(),
+                g.FillRectangle(this.SkinManager.GetFlatButtonHoverBackgroundBrush(),
                     new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));
             }
 
             //Draw seperator
-            g.DrawLine(new Pen(SkinManager.GetDividersColor()), e.Bounds.Left, 0, e.Bounds.Right, 0);
+            g.DrawLine(new Pen(this.SkinManager.GetDividersColor()), e.Bounds.Left, 0, e.Bounds.Right, 0);
 
             foreach (ListViewItem.ListViewSubItem subItem in e.Item.SubItems)
             {
                 //Draw text
                 g.DrawString(
-                    subItem.Text,
-                    SkinManager.RobotoMedium10,
-                    SkinManager.GetPrimaryTextBrush(),
+                    subItem.Text, this.SkinManager.RobotoMedium10, this.SkinManager.GetPrimaryTextBrush(),
                     new Rectangle(
                         subItem.Bounds.Location.X + ItemPadding,
                         ItemPadding,
                         subItem.Bounds.Width - 2 * ItemPadding,
-                        subItem.Bounds.Height - 2 * ItemPadding),
-                    GetStringFormat());
+                        subItem.Bounds.Height - 2 * ItemPadding), this.GetStringFormat());
             }
 
             e.Graphics.DrawImage((Image) b.Clone(), e.Item.Bounds.Location);

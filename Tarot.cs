@@ -33,10 +33,10 @@ using ff14bot.Navigation;
 
 using Tarot.Behaviour;
 using Tarot.Behaviour.PoiHooks;
-using Tarot.Data;
-using Tarot.Enumerations;
 using Tarot.Forms;
 using Tarot.Helpers;
+using Tarot.Managers;
+using Tarot.Providers;
 using Tarot.Settings;
 
 using TreeSharp;
@@ -88,40 +88,24 @@ namespace Tarot
             get { return true; }
         }
 
-        internal static FateData CurrentFate { get; set; }
-
-        internal static FateIdleMode CurrentIdle { get; set; }
-
-        internal static Poi CurrentPoi { get; set; }
-
-        internal static FateDatabase FateDatabase { get; set; }
-
-        internal static Tarot Instance { get; set; }
-
-        internal static FateData PreviousFate { get; set; }
-
         internal static string Version
         {
             get
             {
-                var versionString = Assembly.GetExecutingAssembly().GetName().Version.Major + "."
-                                    + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
-                                    + Assembly.GetExecutingAssembly().GetName().Version.Revision;
-                return versionString;
+                return Assembly.GetExecutingAssembly().GetName().Version.Major + "."
+                       + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
+                       + Assembly.GetExecutingAssembly().GetName().Version.Revision;
             }
         }
 
         public override void Initialize()
         {
-            // Set the botbase instance so we can access its data.
-            Instance = this;
-
-            Logger.SendLog("Initialising " + Name + ".");
+            Logger.SendLog("Initialising Tarot.");
 
             // TODO: Implement rest of Updater.
             if (Updater.UpdateIsAvailable())
             {
-                Logger.SendLog("An update for " + Name + " is available.");
+                Logger.SendLog("An update for Tarot is available.");
             }
         }
 
@@ -140,18 +124,15 @@ namespace Tarot
             catch (ArgumentOutOfRangeException exception)
             {
                 Logger.SendErrorLog("Error opening the settings window.");
-                Logger.SendDebugLog("ArgumentOutOfRangeException thrown.\n\n" + exception + "\n");
+                Logger.SendDebugLog("ArgumentOutOfRangeException thrown.\n\n" + exception);
             }
         }
 
         public override void Start()
         {
-            // Set the botbase instance so we can access its data.
-            Instance = this;
-
             Navigator.PlayerMover = new SlideMover();
             Navigator.NavigationProvider = new GaiaNavigator();
-            CombatTargeting.Instance.Provider = new FateCombatTargetingProvider();
+            CombatTargeting.Instance.Provider = new TarotCombatTargetingProvider();
 
             playerFaceTargetOnAction = GameSettingsManager.FaceTargetOnAction;
             playerFlightMode = GameSettingsManager.FlightMode;
@@ -163,34 +144,20 @@ namespace Tarot
             TreeHooks.Instance.AddHook("TreeStart", TarotBehaviour.Behaviour);
             TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
 
-            // List hook structure.
-            if (TarotSettings.Instance.ListHooksOnStart)
+            if (TarotSettings.Instance.ListHooksOnStart && TarotSettings.Instance.DebugEnabled)
             {
-                Logger.SendDebugLog("Listing RebornBuddy hooks.");
-                foreach (var hook in TreeHooks.Instance.Hooks)
-                {
-                    Logger.SendDebugLog(hook.Key + ": " + hook.Value.Count + " Composite(s).");
-                    var count = 0;
-                    foreach (var composite in hook.Value)
-                    {
-                        count++;
-                        Logger.SendDebugLog("\tComposite " + count + ": " + composite + ".");
-                    }
-
-                    Logger.SendDebugLog(string.Empty);
-                }
+                ListHooks();
             }
 
-            Logger.SendLog("Starting " + Name + ".");
+            Logger.SendLog("Starting " + this.Name + ".");
         }
 
         public override void Stop()
         {
             // Clean up all botbase internal variables.
-            CurrentFate = null;
-            PreviousFate = null;
-            FateDatabase = null;
-            CurrentPoi = null;
+            TarotFateManager.CurrentFate = null;
+            TarotFateManager.PreviousFate = null;
+            TarotFateManager.FateDatabase = null;
 
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
             if (navProvider != null)
@@ -205,7 +172,24 @@ namespace Tarot
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;
 
-            Logger.SendLog("Stopping " + Name + ".");
+            Logger.SendLog("Stopping " + this.Name + ".");
+        }
+
+        private static void ListHooks()
+        {
+            Logger.SendDebugLog("Listing RebornBuddy hooks.");
+            foreach (var hook in TreeHooks.Instance.Hooks)
+            {
+                Logger.SendDebugLog(hook.Key + ": " + hook.Value.Count + " Composite(s).");
+                var count = 0;
+                foreach (var composite in hook.Value)
+                {
+                    count++;
+                    Logger.SendDebugLog("\tComposite " + count + ": " + composite + ".");
+                }
+
+                Logger.SendDebugLog(string.Empty);
+            }
         }
     }
 }

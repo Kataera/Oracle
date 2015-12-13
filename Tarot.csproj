@@ -65,30 +65,33 @@
   <ItemGroup>
     <Compile Include="Behaviour\PoiHooks\WaitSelect\MoveToWaitLocation.cs" />
     <Compile Include="Behaviour\TarotBehaviour.cs" />
-    <Compile Include="Behaviour\Tasks\CombatHandler.cs" />
     <Compile Include="Behaviour\PoiHooks\SelectPoiType.cs" />
-    <Compile Include="Behaviour\Tasks\FateHandler.cs" />
     <Compile Include="Behaviour\PoiHooks\FateSelect\ChainAndTypePriority.cs" />
     <Compile Include="Behaviour\PoiHooks\FateSelect\ChainPriority.cs" />
     <Compile Include="Behaviour\PoiHooks\FateSelect\Closest.cs" />
     <Compile Include="Behaviour\PoiHooks\FateSelect\TypePriority.cs" />
-    <Compile Include="Behaviour\Tasks\Idles\WaitForFates.cs" />
-    <Compile Include="Behaviour\Tasks\Idles\GrindMobs.cs" />
-    <Compile Include="Behaviour\Tasks\Idles\ReturnToAetheryte.cs" />
-    <Compile Include="Behaviour\Tasks\Idles\MoveToWaitLocation.cs" />
-    <Compile Include="Behaviour\Tasks\Fates\BossFate.cs" />
-    <Compile Include="Behaviour\Tasks\Fates\CollectFate.cs" />
-    <Compile Include="Behaviour\Tasks\Fates\DefenceFate.cs" />
-    <Compile Include="Behaviour\Tasks\Fates\EscortFate.cs" />
-    <Compile Include="Behaviour\Tasks\Fates\KillFate.cs" />
+    <Compile Include="Behaviour\Tasks\FateRunner.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\Teleport.cs" />
+    <Compile Include="Behaviour\Tasks\WaitRunner.cs" />
+    <Compile Include="Behaviour\Tasks\WaitTask\WaitForFates.cs" />
+    <Compile Include="Behaviour\Tasks\WaitTask\GrindMobs.cs" />
+    <Compile Include="Behaviour\Tasks\WaitTask\ReturnToAetheryte.cs" />
+    <Compile Include="Behaviour\Tasks\WaitTask\MoveToWaitLocation.cs" />
+    <Compile Include="Behaviour\Tasks\FateTask\BossFate.cs" />
+    <Compile Include="Behaviour\Tasks\FateTask\CollectFate.cs" />
+    <Compile Include="Behaviour\Tasks\FateTask\DefenceFate.cs" />
+    <Compile Include="Behaviour\Tasks\FateTask\EscortFate.cs" />
+    <Compile Include="Behaviour\Tasks\FateTask\KillFate.cs" />
     <Compile Include="Behaviour\PoiHooks\SetWaitPoi.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\ReturnToAetheryte.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BuildFateDatabase.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\ClearFateIfFinished.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\MoveToFate.cs" />
+    <Compile Include="Managers\TarotFateManager.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LevelSync.cs" />
-    <Compile Include="Behaviour\Tasks\Fates\MegaBossFate.cs" />
+    <Compile Include="Behaviour\Tasks\FateTask\MegaBossFate.cs" />
     <Compile Include="Behaviour\PoiHooks\SetFatePoi.cs" />
-    <Compile Include="Behaviour\Tasks\IdleHandler.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\SkipDialogue.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\TurnInItem.cs" />
     <Compile Include="Data\FateDatabase.cs" />
     <Compile Include="Data\FateTypes\Boss.cs" />
     <Compile Include="Data\FateTypes\Collect.cs" />
@@ -98,7 +101,7 @@
     <Compile Include="Data\FateTypes\Kill.cs" />
     <Compile Include="Data\FateTypes\MegaBoss.cs" />
     <Compile Include="Data\FateTypes\NullFate.cs" />
-    <Compile Include="Enumerations\FateIdleMode.cs" />
+    <Compile Include="Enumerations\FateWaitMode.cs" />
     <Compile Include="Enumerations\FateSelectMode.cs" />
     <Compile Include="Enumerations\FateSupportLevel.cs" />
     <Compile Include="Enumerations\FateType.cs" />
@@ -189,6 +192,7 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="Providers\TarotCombatTargetingProvider.cs" />
     <Compile Include="Settings\TarotSettings.cs" />
     <Compile Include="Tarot.cs" />
   </ItemGroup>

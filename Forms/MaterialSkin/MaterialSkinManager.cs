@@ -174,12 +174,12 @@ namespace Tarot.Forms.MaterialSkin
 
         private MaterialSkinManager()
         {
-            this.RobotoMedium12 = new Font(LoadFont(Resources.Roboto_Medium), 12f);
-            this.RobotoMedium10 = new Font(LoadFont(Resources.Roboto_Medium), 10f);
-            this.RobotoRegular11 = new Font(LoadFont(Resources.Roboto_Regular), 11f);
-            this.RobotoMedium11 = new Font(LoadFont(Resources.Roboto_Medium), 11f);
-            Theme = Themes.Light;
-            ColorScheme = new ColorScheme(
+            this.RobotoMedium12 = new Font(this.LoadFont(Resources.Roboto_Medium), 12f);
+            this.RobotoMedium10 = new Font(this.LoadFont(Resources.Roboto_Medium), 10f);
+            this.RobotoRegular11 = new Font(this.LoadFont(Resources.Roboto_Regular), 11f);
+            this.RobotoMedium11 = new Font(this.LoadFont(Resources.Roboto_Medium), 11f);
+            this.Theme = Themes.Light;
+            this.ColorScheme = new ColorScheme(
                 Primary.BlueGrey800,
                 Primary.BlueGrey900,
                 Primary.BlueGrey500,
@@ -205,7 +205,7 @@ namespace Tarot.Forms.MaterialSkin
             set
             {
                 this.colorScheme = value;
-                UpdateBackgrounds();
+                this.UpdateBackgrounds();
             }
         }
 
@@ -215,101 +215,101 @@ namespace Tarot.Forms.MaterialSkin
             set
             {
                 this.theme = value;
-                UpdateBackgrounds();
+                this.UpdateBackgrounds();
             }
         }
 
         public void AddFormToManage(MaterialForm materialForm)
         {
             this.formsToManage.Add(materialForm);
-            UpdateBackgrounds();
+            this.UpdateBackgrounds();
         }
 
         public Color GetApplicationBackgroundColor()
         {
-            return Theme == Themes.Light ? BackgroundLight : BackgroundDark;
+            return this.Theme == Themes.Light ? BackgroundLight : BackgroundDark;
         }
 
         public Brush GetCheckboxOffBrush()
         {
-            return Theme == Themes.Light ? CheckboxOffLightBrush : CheckboxOffDarkBrush;
+            return this.Theme == Themes.Light ? CheckboxOffLightBrush : CheckboxOffDarkBrush;
         }
 
         public Color GetCheckboxOffColor()
         {
-            return Theme == Themes.Light ? CheckboxOffLight : CheckboxOffDark;
+            return this.Theme == Themes.Light ? CheckboxOffLight : CheckboxOffDark;
         }
 
         public Brush GetCheckBoxOffDisabledBrush()
         {
-            return Theme == Themes.Light ? CheckboxOffDisabledLightBrush : CheckboxOffDisabledDarkBrush;
+            return this.Theme == Themes.Light ? CheckboxOffDisabledLightBrush : CheckboxOffDisabledDarkBrush;
         }
 
         public Color GetCheckBoxOffDisabledColor()
         {
-            return Theme == Themes.Light ? CheckboxOffDisabledLight : CheckboxOffDisabledDark;
+            return this.Theme == Themes.Light ? CheckboxOffDisabledLight : CheckboxOffDisabledDark;
         }
 
         public Brush GetCmsSelectedItemBrush()
         {
-            return Theme == Themes.Light ? CmsBackgroundHoverLightBrush : CmsBackgroundHoverDarkBrush;
+            return this.Theme == Themes.Light ? CmsBackgroundHoverLightBrush : CmsBackgroundHoverDarkBrush;
         }
 
         public Brush GetDisabledOrHintBrush()
         {
-            return Theme == Themes.Light ? DisabledOrHintTextBlackBrush : DisabledOrHintTextWhiteBrush;
+            return this.Theme == Themes.Light ? DisabledOrHintTextBlackBrush : DisabledOrHintTextWhiteBrush;
         }
 
         public Color GetDisabledOrHintColor()
         {
-            return Theme == Themes.Light ? DisabledOrHintTextBlack : DisabledOrHintTextWhite;
+            return this.Theme == Themes.Light ? DisabledOrHintTextBlack : DisabledOrHintTextWhite;
         }
 
         public Brush GetDividersBrush()
         {
-            return Theme == Themes.Light ? DividersBlackBrush : DividersWhiteBrush;
+            return this.Theme == Themes.Light ? DividersBlackBrush : DividersWhiteBrush;
         }
 
         public Color GetDividersColor()
         {
-            return Theme == Themes.Light ? DividersBlack : DividersWhite;
+            return this.Theme == Themes.Light ? DividersBlack : DividersWhite;
         }
 
         public Brush GetFlatButtonDisabledTextBrush()
         {
-            return Theme == Themes.Light ? FlatButtonDisabledtextLightBrush : FlatButtonDisabledtextDarkBrush;
+            return this.Theme == Themes.Light ? FlatButtonDisabledtextLightBrush : FlatButtonDisabledtextDarkBrush;
         }
 
         public Brush GetFlatButtonHoverBackgroundBrush()
         {
-            return Theme == Themes.Light ? FlatButtonBackgroundHoverLightBrush : FlatButtonBackgroundHoverDarkBrush;
+            return this.Theme == Themes.Light ? FlatButtonBackgroundHoverLightBrush : FlatButtonBackgroundHoverDarkBrush;
         }
 
         public Color GetFlatButtonHoverBackgroundColor()
         {
-            return Theme == Themes.Light ? FlatButtonBackgroundHoverLight : FlatButtonBackgroundHoverDark;
+            return this.Theme == Themes.Light ? FlatButtonBackgroundHoverLight : FlatButtonBackgroundHoverDark;
         }
 
         public Brush GetFlatButtonPressedBackgroundBrush()
         {
-            return Theme == Themes.Light
+            return this.Theme == Themes.Light
                 ? FlatButtonBackgroundPressedLightBrush
                 : FlatButtonBackgroundPressedDarkBrush;
         }
 
         public Color GetFlatButtonPressedBackgroundColor()
         {
-            return Theme == Themes.Light ? FlatButtonBackgroundPressedLight : FlatButtonBackgroundPressedDark;
+            return this.Theme == Themes.Light ? FlatButtonBackgroundPressedLight : FlatButtonBackgroundPressedDark;
         }
 
         public Brush GetPrimaryTextBrush()
         {
-            return Theme == Themes.Light ? PrimaryTextBlackBrush : PrimaryTextWhiteBrush;
+            return this.Theme == Themes.Light ? PrimaryTextBlackBrush : PrimaryTextWhiteBrush;
         }
 
         public Color GetPrimaryTextColor()
         {
-            return Theme == Themes.Light ? PrimaryTextBlack : PrimaryTextWhite;
+            return this.Theme == Themes.Light ? PrimaryTextBlack : PrimaryTextWhite;
         }
 
         public Brush GetRaisedButtonBackgroundBrush()
@@ -324,12 +324,12 @@ namespace Tarot.Forms.MaterialSkin
 
         public Brush GetSecondaryTextBrush()
         {
-            return Theme == Themes.Light ? SecondaryTextBlackBrush : SecondaryTextWhiteBrush;
+            return this.Theme == Themes.Light ? SecondaryTextBlackBrush : SecondaryTextWhiteBrush;
         }
 
         public Color GetSecondaryTextColor()
         {
-            return Theme == Themes.Light ? SecondaryTextBlack : SecondaryTextWhite;
+            return this.Theme == Themes.Light ? SecondaryTextBlack : SecondaryTextWhite;
         }
 
         public void RemoveFormToManage(MaterialForm materialForm)
@@ -355,11 +355,11 @@ namespace Tarot.Forms.MaterialSkin
 
         private void UpdateBackgrounds()
         {
-            var newBackColor = GetApplicationBackgroundColor();
+            var newBackColor = this.GetApplicationBackgroundColor();
             foreach (var materialForm in this.formsToManage)
             {
                 materialForm.BackColor = newBackColor;
-                UpdateControl(materialForm, newBackColor);
+                this.UpdateControl(materialForm, newBackColor);
             }
         }
 
@@ -372,7 +372,7 @@ namespace Tarot.Forms.MaterialSkin
 
             if (controlToUpdate.ContextMenuStrip != null)
             {
-                UpdateToolStrip(controlToUpdate.ContextMenuStrip, newBackColor);
+                this.UpdateToolStrip(controlToUpdate.ContextMenuStrip, newBackColor);
             }
             var tabControl = controlToUpdate as MaterialTabControl;
             if (tabControl != null)
@@ -385,7 +385,7 @@ namespace Tarot.Forms.MaterialSkin
 
             if (controlToUpdate is MaterialDivider)
             {
-                controlToUpdate.BackColor = GetDividersColor();
+                controlToUpdate.BackColor = this.GetDividersColor();
             }
 
             if (controlToUpdate is MaterialListView)
@@ -396,7 +396,7 @@ namespace Tarot.Forms.MaterialSkin
             //recursive call
             foreach (Control control in controlToUpdate.Controls)
             {
-                UpdateControl(control, newBackColor);
+                this.UpdateControl(control, newBackColor);
             }
 
             controlToUpdate.Invalidate();
@@ -416,7 +416,7 @@ namespace Tarot.Forms.MaterialSkin
                 if (control is MaterialToolStripMenuItem && (control as MaterialToolStripMenuItem).HasDropDownItems)
                 {
                     //recursive call
-                    UpdateToolStrip((control as MaterialToolStripMenuItem).DropDown, newBackColor);
+                    this.UpdateToolStrip((control as MaterialToolStripMenuItem).DropDown, newBackColor);
                 }
             }
         }

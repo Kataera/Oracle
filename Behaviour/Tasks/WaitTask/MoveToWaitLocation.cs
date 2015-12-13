@@ -24,27 +24,17 @@
 
 using System.Threading.Tasks;
 
-using ff14bot.Enums;
-using ff14bot.Helpers;
-
 using Tarot.Helpers;
 
-namespace Tarot.Behaviour.Tasks.Utilities
+namespace Tarot.Behaviour.Tasks.WaitTask
 {
-    internal static class ClearFateIfFinished
+    internal static class MoveToWaitLocation
     {
         public static async Task<bool> Main()
         {
-            if (Tarot.CurrentFate != null
-                && (!Tarot.CurrentFate.IsValid || Tarot.CurrentFate.Status == FateStatus.COMPLETE))
-            {
-                Logger.SendLog("Current FATE is finished.");
-                Poi.Clear("Current FATE is finished.");
-                Tarot.PreviousFate = Tarot.CurrentFate;
-                Tarot.CurrentPoi = null;
-                Tarot.CurrentFate = null;
-            }
-
+            // TODO: Implement.
+            Logger.SendLog("'Return to location' is not yet implemented, defaulting to 'Return to Aetheryte'.");
+            await ReturnToAetheryte.Main();
             return true;
         }
     }

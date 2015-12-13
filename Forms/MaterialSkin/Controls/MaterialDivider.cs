@@ -12,9 +12,9 @@ namespace Tarot.Forms.MaterialSkin.Controls
     {
         public MaterialDivider()
         {
-            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-            Height = 1;
-            BackColor = SkinManager.GetDividersColor();
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            this.Height = 1;
+            this.BackColor = this.SkinManager.GetDividersColor();
         }
 
         [Browsable(false)]

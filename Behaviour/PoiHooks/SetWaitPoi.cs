@@ -37,22 +37,22 @@ namespace Tarot.Behaviour.PoiHooks
         {
             Logger.SendLog("No viable FATEs, activating wait mode.");
 
-            switch (TarotSettings.Instance.FateIdleMode)
+            switch (TarotSettings.Instance.FateWaitMode)
             {
-                case FateIdleMode.ReturnToAetheryte:
+                case FateWaitMode.ReturnToAetheryte:
                     await ReturnToAetheryte.Main();
                     break;
 
-                case FateIdleMode.MoveToWaitLocation:
+                case FateWaitMode.MoveToWaitLocation:
                     await MoveToWaitLocation.Main();
                     break;
 
-                case FateIdleMode.GrindMobs:
+                case FateWaitMode.GrindMobs:
 
                     //await GrindMobs.Main();
                     break;
 
-                case FateIdleMode.WaitForFates:
+                case FateWaitMode.WaitForFates:
 
                     //await WaitForFates.Main();
                     break;

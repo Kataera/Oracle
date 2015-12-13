@@ -22,44 +22,53 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Buddy.Coroutines;
-
-using ff14bot;
+using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
+using ff14bot.Objects;
 
-using Tarot.Helpers;
+using Tarot.Managers;
 
-namespace Tarot.Behaviour.Tasks.Idles
+namespace Tarot.Behaviour.Tasks.FateTask
 {
-    internal static class WaitForFates
+    internal static class DefenceFate
     {
         public static async Task<bool> Main()
         {
-            if (!IsFateActive())
+            if (TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
             {
-                Logger.SendLog("Waiting for a FATE to activate.");
-                Poi.Current = new Poi(Core.Player.Location, PoiType.Wait);
-                await Coroutine.Wait(TimeSpan.MaxValue, IsFateActive);
-            }
-
-            Logger.SendLog("Found a FATE, exiting idle coroutine.");
-            return true;
-        }
-
-        private static bool IsFateActive()
-        {
-            var activeFates = FateManager.ActiveFates;
-            if (activeFates != null && !activeFates.Any())
-            {
+                ClearFate();
                 return true;
             }
 
-            return false;
+            if (AnyViableTargets())
+            {
+                var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
+                if (target != null)
+                {
+                    Poi.Current = new Poi(target, PoiType.Kill);
+                }
+            }
+
+            return true;
+        }
+
+        private static bool AnyViableTargets()
+        {
+            return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableTarget).Any();
+        }
+
+        private static void ClearFate()
+        {
+            TarotFateManager.ClearCurrentFate("Current FATE is finished.");
+        }
+
+        private static bool IsViableTarget(BattleCharacter target)
+        {
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == TarotFateManager.CurrentFate.Id;
         }
     }
 }

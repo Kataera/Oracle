@@ -794,6 +794,7 @@
     <Level>21</Level>
     <Type>&Escort;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <NpcId>1330</NpcId>
   </Fate>
   <Fate>
     <ID>218</ID>
@@ -1073,6 +1074,7 @@
     <Level>16</Level>
     <Type>&Escort;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <NpcId>1346</NpcId>
   </Fate>
   <Fate>
     <ID>290</ID>
@@ -1236,6 +1238,7 @@
     <Level>33</Level>
     <Type>&Escort;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <NpcId>891</NpcId>
   </Fate>
   <Fate>
     <ID>335</ID>
@@ -1336,6 +1339,7 @@
     <Level>22</Level>
     <Type>&Escort;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <NpcId>1347</NpcId>
   </Fate>
   <Fate>
     <ID>355</ID>
@@ -1636,6 +1640,7 @@
     <Level>32</Level>
     <Type>&Escort;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <NpcId>1276</NpcId>
   </Fate>
   <Fate>
     <ID>434</ID>
@@ -1643,6 +1648,7 @@
     <Level>26</Level>
     <Type>&Escort;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <NpcId>1343</NpcId>
   </Fate>
   <Fate>
     <ID>436</ID>
@@ -1894,11 +1900,13 @@
     <TarotSupport>&FullSupport;</TarotSupport>
   </Fate>
   <Fate>
+    <!--Check this is correct -->
     <ID>491</ID>
     <Name>Wish Upon a Star</Name>
     <Level>36</Level>
     <Type>&Escort;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <NpcId>1716</NpcId>
   </Fate>
   <Fate>
     <ID>493</ID>
@@ -1955,6 +1963,7 @@
     <Level>38</Level>
     <Type>&Escort;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <NpcId>1862</NpcId>
     <ChainIDSuccess>502</ChainIDSuccess>
   </Fate>
   <Fate>
@@ -2098,6 +2107,7 @@
     <Level>45</Level>
     <Type>&Escort;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <NpcId>1707</NpcId>
   </Fate>
   <Fate>
     <ID>530</ID>
@@ -2713,6 +2723,7 @@
     <Level>49</Level>
     <Type>&Escort;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <NpcId>1718</NpcId>
   </Fate>
   <Fate>
     <ID>643</ID>
@@ -3177,6 +3188,7 @@
     <Level>1</Level>
     <Type>&Escort;</Type>
     <TarotSupport>&Unsupported;</TarotSupport>
+    <NpcId>3025</NpcId>
   </Fate>
   <Fate>
     <ID>717</ID>
@@ -3270,6 +3282,7 @@
     <Level>54</Level>
     <Type>&Kill;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <ChainIDSuccess>737</ChainIDSuccess>
   </Fate>
   <Fate>
     <ID>737</ID>
@@ -3347,6 +3360,7 @@
     <Level>54</Level>
     <Type>&Escort;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <NpcId>3952</NpcId>
   </Fate>
   <Fate>
     <ID>753</ID>
@@ -3513,6 +3527,7 @@
     <Level>59</Level>
     <Type>&Escort;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <NpcId>3938</NpcId>
   </Fate>
   <Fate>
     <ID>778</ID>
@@ -3981,6 +3996,7 @@
     <NpcId>0</NpcId>
   </Fate>
   <Fate>
+    <!--Find out in game -->
     <ID>853</ID>
     <Name>The Fugitive</Name>
     <Level>57</Level>

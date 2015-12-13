@@ -23,17 +23,17 @@ namespace Tarot.Forms.MaterialSkin.Controls
 
         public MaterialContextMenuStrip()
         {
-            Renderer = new MaterialToolStripRender();
+            this.Renderer = new MaterialToolStripRender();
 
             this.AnimationManager = new AnimationManager(false)
             {
                 Increment = 0.07,
                 AnimationType = AnimationType.Linear
             };
-            this.AnimationManager.OnAnimationProgress += sender => Invalidate();
-            this.AnimationManager.OnAnimationFinished += sender => OnItemClicked(this.delayesArgs);
+            this.AnimationManager.OnAnimationProgress += sender => this.Invalidate();
+            this.AnimationManager.OnAnimationFinished += sender => this.OnItemClicked(this.delayesArgs);
 
-            BackColor = SkinManager.GetApplicationBackgroundColor();
+            this.BackColor = this.SkinManager.GetApplicationBackgroundColor();
         }
 
         public delegate void ItemClickStart(object sender, ToolStripItemClickedEventArgs e);
@@ -68,9 +68,9 @@ namespace Tarot.Forms.MaterialSkin.Controls
                     this.delayesArgs = e;
 
                     //Fire custom event to trigger actions directly but keep cms open
-                    if (OnItemClickStart != null)
+                    if (this.OnItemClickStart != null)
                     {
-                        OnItemClickStart(this, e);
+                        this.OnItemClickStart(this, e);
                     }
 
                     //Start animation
@@ -91,14 +91,14 @@ namespace Tarot.Forms.MaterialSkin.Controls
     {
         public MaterialToolStripMenuItem()
         {
-            AutoSize = false;
-            Size = new Size(120, 30);
+            this.AutoSize = false;
+            this.Size = new Size(120, 30);
         }
 
         protected override ToolStripDropDown CreateDefaultDropDown()
         {
             var baseDropDown = base.CreateDefaultDropDown();
-            if (DesignMode)
+            if (this.DesignMode)
             {
                 return baseDropDown;
             }
@@ -131,8 +131,8 @@ namespace Tarot.Forms.MaterialSkin.Controls
                 e.ArrowRectangle.X + e.ArrowRectangle.Width / 2,
                 e.ArrowRectangle.Y + e.ArrowRectangle.Height / 2);
             var arrowBrush = e.Item.Enabled
-                ? SkinManager.GetPrimaryTextBrush()
-                : SkinManager.GetDisabledOrHintBrush();
+                ? this.SkinManager.GetPrimaryTextBrush()
+                : this.SkinManager.GetDisabledOrHintBrush();
             using (var arrowPath = new GraphicsPath())
             {
                 arrowPath.AddLines(
@@ -158,12 +158,11 @@ namespace Tarot.Forms.MaterialSkin.Controls
             var g = e.Graphics;
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-            var itemRect = GetItemRect(e.Item);
+            var itemRect = this.GetItemRect(e.Item);
             var textRect = new Rectangle(24, itemRect.Y, itemRect.Width - (24 + 16), itemRect.Height);
             g.DrawString(
-                e.Text,
-                SkinManager.RobotoMedium10,
-                e.Item.Enabled ? SkinManager.GetPrimaryTextBrush() : SkinManager.GetDisabledOrHintBrush(),
+                e.Text, this.SkinManager.RobotoMedium10,
+                e.Item.Enabled ? this.SkinManager.GetPrimaryTextBrush() : this.SkinManager.GetDisabledOrHintBrush(),
                 textRect,
                 new StringFormat {LineAlignment = StringAlignment.Center});
         }
@@ -171,14 +170,14 @@ namespace Tarot.Forms.MaterialSkin.Controls
         protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
         {
             var g = e.Graphics;
-            g.Clear(SkinManager.GetApplicationBackgroundColor());
+            g.Clear(this.SkinManager.GetApplicationBackgroundColor());
 
             //Draw background
-            var itemRect = GetItemRect(e.Item);
+            var itemRect = this.GetItemRect(e.Item);
             g.FillRectangle(
                 e.Item.Selected && e.Item.Enabled
-                    ? SkinManager.GetCmsSelectedItemBrush()
-                    : new SolidBrush(SkinManager.GetApplicationBackgroundColor()),
+                    ? this.SkinManager.GetCmsSelectedItemBrush()
+                    : new SolidBrush(this.SkinManager.GetApplicationBackgroundColor()),
                 itemRect);
 
             //Ripple animation
@@ -210,9 +209,9 @@ namespace Tarot.Forms.MaterialSkin.Controls
         {
             var g = e.Graphics;
 
-            g.FillRectangle(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), e.Item.Bounds);
+            g.FillRectangle(new SolidBrush(this.SkinManager.GetApplicationBackgroundColor()), e.Item.Bounds);
             g.DrawLine(
-                new Pen(SkinManager.GetDividersColor()),
+                new Pen(this.SkinManager.GetDividersColor()),
                 new Point(e.Item.Bounds.Left, e.Item.Bounds.Height / 2),
                 new Point(e.Item.Bounds.Right, e.Item.Bounds.Height / 2));
         }
@@ -222,7 +221,7 @@ namespace Tarot.Forms.MaterialSkin.Controls
             var g = e.Graphics;
 
             g.DrawRectangle(
-                new Pen(SkinManager.GetDividersColor()),
+                new Pen(this.SkinManager.GetDividersColor()),
                 new Rectangle(
                     e.AffectedBounds.X,
                     e.AffectedBounds.Y,

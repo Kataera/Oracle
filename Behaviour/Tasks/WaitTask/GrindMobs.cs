@@ -22,23 +22,20 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-using Tarot.Enumerations;
+using System.Threading.Tasks;
 
-namespace Tarot.Data.FateTypes
+using Tarot.Helpers;
+
+namespace Tarot.Behaviour.Tasks.WaitTask
 {
-    internal class Escort : Fate
+    internal static class GrindMobs
     {
-        public Escort()
+        public static async Task<bool> Main()
         {
-            this.ChainIdFailure = 0;
-            this.ChainIdSuccess = 0;
-            this.Id = 0;
-            this.ItemId = 0;
-            this.Level = 0;
-            this.Name = string.Empty;
-            this.NpcId = 0;
-            this.SupportLevel = FateSupportLevel.FullSupport;
-            this.Type = FateType.Escort;
+            // TODO: Implement.
+            Logger.SendLog("'Grind mobs' is not yet implemented, defaulting to 'Return to Aetheryte'.");
+            await ReturnToAetheryte.Main();
+            return true;
         }
     }
 }

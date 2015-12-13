@@ -35,7 +35,7 @@ namespace Tarot.Forms
     {
         public SettingsForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             // Initialize MaterialSkinManager
             var skinManager = MaterialSkinManager.Instance;
@@ -55,13 +55,13 @@ namespace Tarot.Forms
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
-                SendMessage(Handle, WmNclbuttondown, HtCaption, 0);
+                SendMessage(this.Handle, WmNclbuttondown, HtCaption, 0);
             }
         }
 
         private void OnCloseButtonClick(object sender, EventArgs e)
         {
-            Close();
+            this.Close();
         }
 
         private void OnDonatePictureBoxClick(object sender, EventArgs e)
