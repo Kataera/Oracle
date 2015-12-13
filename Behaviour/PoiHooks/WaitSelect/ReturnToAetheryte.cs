@@ -50,12 +50,12 @@ namespace Tarot.Behaviour.PoiHooks.WaitSelect
             if (aetheryteLocation == Vector3.Zero)
             {
                 Logger.SendLog(
-                    "There's no Aetheryte crystal in this zone that is reachable, waiting at current location.");
+                    "There's no aetheryte crystal in this zone that is reachable, waiting at current location.");
                 Poi.Current = new Poi(Core.Player.Location, PoiType.Wait);
             }
             else
             {
-                Logger.SendLog("Moving to closest reachable Aetheryte crystal.");
+                Logger.SendLog("Moving to closest reachable aetheryte crystal.");
                 Poi.Current = new Poi(aetheryteLocation, PoiType.Wait);
             }
 
@@ -89,7 +89,7 @@ namespace Tarot.Behaviour.PoiHooks.WaitSelect
                         val.Item1,
                         BlacklistFlags.Node,
                         TimeSpan.FromMinutes(10),
-                        "Cannot navigate to Aetheryte.");
+                        "Cannot navigate to aetheryte crystal.");
                 }
             }
 

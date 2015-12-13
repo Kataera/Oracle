@@ -60,7 +60,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             {
                 if (await Teleport.FasterToTeleport(TarotFateManager.CurrentFate))
                 {
-                    Logger.SendLog("Teleporting to the closest Aetheryte crystal to the FATE.");
+                    Logger.SendLog("Teleporting to the closest aetheryte crystal to the FATE.");
                     await Teleport.TeleportToClosestAetheryte(TarotFateManager.CurrentFate);
                 }
             }
