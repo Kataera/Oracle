@@ -22,8 +22,11 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Buddy.Coroutines;
 
 using ff14bot.Helpers;
 using ff14bot.Managers;
@@ -86,7 +89,24 @@ namespace Tarot.Behaviour.PoiHooks
                     break;
             }
 
+            if (TarotFateManager.CurrentFate != null && TarotSettings.Instance.FateDelayMovement)
+            {
+                await WaitBeforeMoving();
+            }
+
             return IsFateSet() && IsFatePoiSet();
+        }
+
+        private static async Task<bool> WaitBeforeMoving()
+        {
+            var minTime = TarotSettings.Instance.FateDelayMovementMinimum * 1000;
+            var maxTime = TarotSettings.Instance.FateDelayMovementMaximum * 1000;
+            var randomWaitTime = new Random().Next(minTime, maxTime);
+
+            Logger.SendLog("Waiting " + Math.Round(randomWaitTime / 1000f, 2) + " seconds before moving to FATE.");
+            await Coroutine.Sleep(randomWaitTime);
+
+            return true;
         }
 
         private static bool IsFatePoiSet()

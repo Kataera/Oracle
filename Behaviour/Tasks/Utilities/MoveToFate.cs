@@ -42,18 +42,11 @@ namespace Tarot.Behaviour.Tasks.Utilities
 {
     internal static class MoveToFate
     {
-        private static bool previousFateExpired;
-
         public static async Task<bool> Main(bool ignoreCombat)
         {
             if (!ignoreCombat && GameObjectManager.Attackers.Any() && !Core.Player.IsMounted)
             {
                 return false;
-            }
-
-            if (!previousFateExpired && !ignoreCombat && TarotSettings.Instance.FateDelayMovement)
-            {
-                await WaitBeforeMoving();
             }
 
             if (!ignoreCombat && TarotSettings.Instance.TeleportIfQuicker)
@@ -73,13 +66,17 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 }
             }
 
-            previousFateExpired = false;
             await Move();
             return true;
         }
 
         private static bool IsMountNeeded()
         {
+            if (TarotFateManager.CurrentFate == null || !TarotFateManager.CurrentFate.IsValid)
+            {
+                return false;
+            }
+
             var distanceToFateBoundary = Core.Player.Distance(TarotFateManager.CurrentFate.Location) - TarotFateManager.CurrentFate.Radius;
             return distanceToFateBoundary > CharacterSettings.Instance.MountDistance;
         }
@@ -123,7 +120,6 @@ namespace Tarot.Behaviour.Tasks.Utilities
                         TarotFateManager.ClearCurrentFate("FATE has ended.", false);
 
                         Navigator.Stop();
-                        previousFateExpired = true;
                         return true;
                     }
 
@@ -150,18 +146,6 @@ namespace Tarot.Behaviour.Tasks.Utilities
             }
 
             Navigator.Stop();
-            return true;
-        }
-
-        private static async Task<bool> WaitBeforeMoving()
-        {
-            var minTime = TarotSettings.Instance.FateDelayMovementMinimum * 1000;
-            var maxTime = TarotSettings.Instance.FateDelayMovementMaximum * 1000;
-            var randomWaitTime = new Random().Next(minTime, maxTime);
-
-            Logger.SendLog("Waiting " + Math.Round(randomWaitTime / 1000f, 2) + " seconds before moving to FATE.");
-            await Coroutine.Sleep(randomWaitTime);
-
             return true;
         }
     }
