@@ -84,7 +84,7 @@ namespace Tarot.Behaviour
             }
 
             if (Poi.Current.BattleCharacter != null && Poi.Current.BattleCharacter.IsValid && !Poi.Current.BattleCharacter.IsFate
-                && !GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
+                && !GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter) && TarotFateManager.CurrentFate != null)
             {
                 ClearPoi("Targeted unit is not valid.", false);
                 return true;

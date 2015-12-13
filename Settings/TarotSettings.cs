@@ -215,7 +215,7 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(FateWaitMode.ReturnToAetheryte)]
+        [DefaultValue(FateWaitMode.GrindMobs)]
         [Setting]
         public FateWaitMode FateWaitMode
         {
