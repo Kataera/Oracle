@@ -22,14 +22,12 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 using Buddy.Coroutines;
 
 using ff14bot;
-using ff14bot.Behavior;
 using ff14bot.Enums;
 using ff14bot.Managers;
 using ff14bot.Navigation;

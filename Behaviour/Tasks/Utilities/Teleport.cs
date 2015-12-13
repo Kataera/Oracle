@@ -51,17 +51,20 @@ namespace Tarot.Behaviour.Tasks.Utilities
             var distanceFromPlayer = await GetDistanceFromPlayer(fate);
             var teleportMinDistance = TarotSettings.Instance.TeleportMinimumDistanceDelta;
 
-            Logger.SendDebugLog("Distance to navigate to '" + fate.Name + "' from player location is " + distanceFromPlayer + " yalms.");
-            Logger.SendDebugLog("Distance to navigate to '" + fate.Name + "' from Aetheryte location is " + aetheryte.Distance + " yalms.");
-            Logger.SendDebugLog("Minimum distance difference to teleport is " + teleportMinDistance + " yalms.");
+            Logger.SendDebugLog("Distance to navigate to '" + fate.Name + "' from player location is " + Math.Round(distanceFromPlayer, 0)
+                                + " yalms.");
+            Logger.SendDebugLog("Distance to navigate to '" + fate.Name + "' from Aetheryte location is "
+                                + Math.Round(aetheryte.Distance, 0) + " yalms.");
+            Logger.SendDebugLog("Minimum distance needed to be saved to teleport is " + teleportMinDistance + " yalms.");
 
             if (distanceFromPlayer - aetheryte.Distance <= 0)
             {
-                Logger.SendDebugLog("Distance saved by teleporting is 0 yalms.");
+                Logger.SendDebugLog("No distance is saved by teleporting.");
             }
             else
             {
-                Logger.SendDebugLog("Distance saved by teleporting is " + (distanceFromPlayer - aetheryte.Distance) + " yalms.");
+                Logger.SendDebugLog("The distance saved by teleporting is " + Math.Round(distanceFromPlayer - aetheryte.Distance, 0)
+                                    + " yalms.");
             }
 
             if (distanceFromPlayer - aetheryte.Distance > teleportMinDistance)
@@ -77,7 +80,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             var aetherytes = await GetNavigableAetherytes(location);
             var closestToFate = new Aetheryte
             {
-                Distance = 0,
+                Distance = float.MaxValue,
                 Id = 0,
                 Location = Vector3.Zero
             };
@@ -130,9 +133,9 @@ namespace Tarot.Behaviour.Tasks.Utilities
         private static Aetheryte[] AllTuplesToAetherytes(Tuple<uint, Vector3>[] tuples, Vector3 location)
         {
             var results = new Aetheryte[tuples.Length];
-            foreach (var tuple in tuples)
+            for (var i = 0; i < tuples.Length; i++)
             {
-                results[results.Length - 1] = TupleToAetheryte(tuple, location);
+                results[i] = TupleToAetheryte(tuples[i], location);
             }
 
             return results;
@@ -167,22 +170,25 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
         private static async Task<Aetheryte[]> GetNavigableAetherytes(Vector3 location)
         {
+            Aetheryte[] viableAetherytes;
+
             var allAetherytes = AllTuplesToAetherytes(WorldManager.AetheryteIdsForZone(WorldManager.ZoneId), location);
-            var viableAetherytes = new Aetheryte[allAetherytes.Length];
+            var viableAetheryteList = new List<Aetheryte>();
 
             if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
                 var navRequest = allAetherytes.Select(target => new CanFullyNavigateTarget {Id = target.Id, Position = target.Location});
                 var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, location, WorldManager.ZoneId);
 
-                foreach (var navResult in navResults.Where(result => result.CanNavigate == 1))
+                foreach (var navResult in navResults.Where(result => result.CanNavigate != 0))
                 {
                     var aetheryte = allAetherytes.FirstOrDefault(result => result.Id == navResult.Id);
                     aetheryte.Distance = navResult.PathLength;
-                    viableAetherytes[viableAetherytes.Length - 1] = aetheryte;
-
+                    viableAetheryteList.Add(aetheryte);
                     await Coroutine.Yield();
                 }
+
+                viableAetherytes = viableAetheryteList.ToArray();
             }
             else
             {

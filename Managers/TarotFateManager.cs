@@ -22,8 +22,11 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Buddy.Coroutines;
 
 using ff14bot;
 using ff14bot.Helpers;
@@ -62,6 +65,28 @@ namespace Tarot.Managers
             return false;
         }
 
+        public static async Task BlacklistBadFates()
+        {
+            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            {
+                var navRequest = ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
+                var navResults =
+                    await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+
+                foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
+                {
+                    var fate = ActiveFates.FirstOrDefault(result => result.Id == navResult.Id);
+                    if (fate == null)
+                    {
+                        continue;
+                    }
+
+                    Logger.SendDebugLog("'" + fate.Name + "' cannot be navigated to, blacklisting for its remaining duration.");
+                    Blacklist.Add(fate.Id, BlacklistFlags.Node, fate.TimeLeft, "Cannot navigate to FATE.");
+                }
+            }
+        }
+
         public static void ClearCurrentFate(string reason)
         {
             var tarotFateData = FateDatabase.GetFateWithId(CurrentFate.Id);
@@ -87,33 +112,11 @@ namespace Tarot.Managers
             }
         }
 
-        private static async Task BlacklistBadFates()
-        {
-            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
-            {
-                var navRequest = ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
-                var navResults =
-                    await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
-
-                foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
-                {
-                    var fate = ActiveFates.FirstOrDefault(result => result.Id == navResult.Id);
-                    if (fate == null)
-                    {
-                        continue;
-                    }
-
-                    Logger.SendDebugLog("'" + fate.Name + "' cannot be navigated to, blacklisting for its remaining duration.");
-                    Blacklist.Add(fate.ObjectId, BlacklistFlags.Node, fate.TimeLeft, "Cannot navigate to FATE.");
-                }
-            }
-        }
-
-        private static bool FateFilter(FateData fate)
+        public static bool FateFilter(FateData fate)
         {
             var tarotFateData = FateDatabase.GetFateWithId(fate.Id);
 
-            if (Blacklist.Contains(fate.ObjectId, BlacklistFlags.Node))
+            if (Blacklist.Contains(fate.Id, BlacklistFlags.Node))
             {
                 return false;
             }
@@ -139,6 +142,22 @@ namespace Tarot.Managers
             }
 
             return true;
+        }
+
+        public static async Task<Dictionary<FateData, float>> GetActiveFateDistances()
+        {
+            var navRequest = ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
+            var navResults =
+                await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+
+            var activeFates = new Dictionary<FateData, float>();
+            foreach (var result in navResults)
+            {
+                activeFates.Add(GetFateById(result.Id), result.PathLength);
+                await Coroutine.Yield();
+            }
+
+            return activeFates;
         }
 
         private static bool FateProgressionMet(FateData fate)
