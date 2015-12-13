@@ -60,6 +60,8 @@ namespace Tarot.Settings
         private bool listHooksOnStart;
 
         private int megaBossEngagePercentage;
+        private int mobMaximumLevelAbove;
+        private int mobMinumumLevelBelow;
 
         private bool runProblematicFates;
         private bool teleportIfQuicker;
@@ -263,6 +265,32 @@ namespace Tarot.Settings
             set
             {
                 this.megaBossEngagePercentage = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(6)]
+        [Setting]
+        public int MobMaximumLevelAbove
+        {
+            get { return this.mobMaximumLevelAbove; }
+
+            set
+            {
+                this.mobMaximumLevelAbove = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(6)]
+        [Setting]
+        public int MobMinimumLevelBelow
+        {
+            get { return this.mobMinumumLevelBelow; }
+
+            set
+            {
+                this.mobMinumumLevelBelow = value;
                 this.Save();
             }
         }

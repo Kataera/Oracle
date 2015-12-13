@@ -43,9 +43,7 @@ namespace Tarot.Behaviour.PoiHooks
                 return false;
             }
 
-            Logger.SendLog("No viable FATEs, activating wait mode.");
             TarotFateManager.SetDoNotWaitFlag(false);
-
             switch (TarotSettings.Instance.FateWaitMode)
             {
                 case FateWaitMode.ReturnToAetheryte:

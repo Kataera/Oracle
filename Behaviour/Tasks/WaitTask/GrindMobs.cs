@@ -95,6 +95,16 @@ namespace Tarot.Behaviour.Tasks.WaitTask
                 return false;
             }
 
+            if (Core.Player.ClassLevel - TarotSettings.Instance.MobMinimumLevelBelow > battleCharacter.ClassLevel)
+            {
+                return false;
+            }
+
+            if (Core.Player.ClassLevel + TarotSettings.Instance.MobMaximumLevelAbove < battleCharacter.ClassLevel)
+            {
+                return false;
+            }
+
             if (!battleCharacter.CanAttack)
             {
                 return false;
