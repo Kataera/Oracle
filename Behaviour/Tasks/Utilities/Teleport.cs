@@ -49,9 +49,11 @@ namespace Tarot.Behaviour.Tasks.Utilities
         {
             var aetheryte = await GetClosestAetheryte(fate.Location);
             var distanceFromPlayer = await GetDistanceFromPlayer(fate);
+            var teleportMinDistance = TarotSettings.Instance.TeleportMinimumDistanceDelta;
 
             Logger.SendDebugLog("Distance to navigate to '" + fate.Name + "' from player location is " + distanceFromPlayer + " yalms.");
             Logger.SendDebugLog("Distance to navigate to '" + fate.Name + "' from Aetheryte location is " + aetheryte.Distance + " yalms.");
+            Logger.SendDebugLog("Minimum distance difference to teleport is " + teleportMinDistance + " yalms.");
 
             if (distanceFromPlayer - aetheryte.Distance <= 0)
             {
@@ -62,9 +64,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 Logger.SendDebugLog("Distance saved by teleporting is " + (distanceFromPlayer - aetheryte.Distance) + " yalms.");
             }
 
-            Logger.SendDebugLog("Minimum distance difference to teleport is " + TarotSettings.Instance.TeleportMinimumDistanceDelta + " yalms.");
-
-            if (distanceFromPlayer - aetheryte.Distance > TarotSettings.Instance.TeleportMinimumDistanceDelta)
+            if (distanceFromPlayer - aetheryte.Distance > teleportMinDistance)
             {
                 return true;
             }
