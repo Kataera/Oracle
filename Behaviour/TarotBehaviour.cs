@@ -118,14 +118,14 @@ namespace Tarot.Behaviour
 
         private static async Task<bool> HandleFate()
         {
-            if (Core.Player.Distance(TarotFateManager.CurrentFate.Location) > TarotFateManager.CurrentFate.Radius)
-            {
-                await MoveToFate.Main(false);
-            }
-
             if (TarotFateManager.CurrentFate == null)
             {
                 return false;
+            }
+
+            if (Core.Player.Distance(TarotFateManager.CurrentFate.Location) > TarotFateManager.CurrentFate.Radius)
+            {
+                await MoveToFate.Main(false);
             }
 
             if (GameObjectManager.Attackers.Any(mob => !mob.IsFateGone) && !Core.Player.IsMounted)
