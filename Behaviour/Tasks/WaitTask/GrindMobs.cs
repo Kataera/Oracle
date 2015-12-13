@@ -60,6 +60,10 @@ namespace Tarot.Behaviour.Tasks.WaitTask
         private static async Task<BattleCharacter> GetViableTarget()
         {
             var targets = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(MobFilter).Where(MobWithinRadius);
+            if (!targets.Any())
+            {
+                return null;
+            }
 
             var navRequest = targets.Select(target => new CanFullyNavigateTarget {Id = target.ObjectId, Position = target.Location});
             var navResults =
