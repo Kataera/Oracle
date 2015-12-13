@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 
 using Buddy.Coroutines;
 
+using ff14bot.Behavior;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 
@@ -45,7 +46,7 @@ namespace Tarot.Behaviour.PoiHooks
         {
             if (IsFateSet())
             {
-                if (!IsFatePoiSet() && Poi.Current.Type != PoiType.Death && !GameObjectManager.Attackers.Any())
+                if (!IsFatePoiSet() && Poi.Current.Type != PoiType.Death && !GameObjectManager.Attackers.Any() && !CommonBehaviors.IsLoading)
                 {
                     Poi.Current = new Poi(TarotFateManager.CurrentFate, PoiType.Fate);
                 }
@@ -89,11 +90,12 @@ namespace Tarot.Behaviour.PoiHooks
                     break;
             }
 
-            if (TarotFateManager.CurrentFate != null && TarotSettings.Instance.FateDelayMovement)
+            if (TarotFateManager.CurrentFate != null && TarotSettings.Instance.FateDelayMovement && !TarotFateManager.DoNotWaitBeforeMoving)
             {
                 await WaitBeforeMoving();
             }
 
+            TarotFateManager.DoNotWaitBeforeMoving = false;
             return IsFateSet() && IsFatePoiSet();
         }
 
