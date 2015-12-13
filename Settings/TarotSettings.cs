@@ -56,6 +56,7 @@ namespace Tarot.Settings
         private int megaBossEngagePercentage;
 
         private bool runProblematicFates;
+        private bool teleportIfQuicker;
         private int teleportMinimumDistanceDelta;
         private int turnInActionDelay;
 
@@ -191,6 +192,19 @@ namespace Tarot.Settings
             set
             {
                 this.runProblematicFates = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool TeleportIfQuicker
+        {
+            get { return this.teleportIfQuicker; }
+
+            set
+            {
+                this.teleportIfQuicker = value;
                 this.Save();
             }
         }

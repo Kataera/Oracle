@@ -56,7 +56,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             return false;
         }
 
-        public static async Task<Tuple<uint, Vector3>> GetBestAetheryte(Vector3 location)
+        public static async Task<Tuple<uint, Vector3>> GetClosestAetheryte(Vector3 location)
         {
             var aetherytes = await GetNavigableAetherytes(location);
             var closestToFate = new Tuple<uint, Vector3>(0, Vector3.Zero);
@@ -101,6 +101,14 @@ namespace Tarot.Behaviour.Tasks.Utilities
             }
 
             await Coroutine.Wait(TimeSpan.MaxValue, () => CommonBehaviors.IsLoading);
+            return true;
+        }
+
+        public static async Task<bool> TeleportToClosestAetheryte(Vector3 location)
+        {
+            var aetheryte = await GetClosestAetheryte(location);
+            await TeleportToAetheryte(aetheryte.Item1);
+
             return true;
         }
 

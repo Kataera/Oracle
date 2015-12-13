@@ -35,6 +35,7 @@ using ff14bot.Settings;
 
 using Tarot.Helpers;
 using Tarot.Managers;
+using Tarot.Settings;
 
 namespace Tarot.Behaviour.Tasks.Utilities
 {
@@ -52,6 +53,16 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 if (!await MountUp())
                 {
                     return false;
+                }
+            }
+
+            if (TarotSettings.Instance.TeleportIfQuicker)
+            {
+                var location = TarotFateManager.CurrentFate.Location;
+                if (await Teleport.FasterToTeleport(location))
+                {
+                    Logger.SendLog("Teleporting to the closest Aetheryte crystal to the FATE.");
+                    await Teleport.TeleportToClosestAetheryte(location);
                 }
             }
 
