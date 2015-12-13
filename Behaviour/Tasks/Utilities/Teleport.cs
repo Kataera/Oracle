@@ -71,6 +71,8 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 {
                     closestToFate = aetheryte;
                 }
+
+                await Coroutine.Yield();
             }
 
             return closestToFate;
@@ -116,6 +118,8 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 {
                     var aetheryte = allAetherytes.FirstOrDefault(result => result.Item1 == navResult.Id);
                     viableAetherytes[viableAetherytes.Length] = aetheryte;
+
+                    await Coroutine.Yield();
                 }
             }
             else
