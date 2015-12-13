@@ -36,7 +36,7 @@ using Tarot.Helpers;
 
 namespace Tarot.Behaviour.Tasks.WaitTask
 {
-    internal static class WaitForFates
+    internal static class WaitInPlace
     {
         public static async Task<bool> Main()
         {

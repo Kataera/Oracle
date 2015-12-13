@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviour\PoiHooks\WaitSelect\MoveToWaitLocation.cs" />
+    <Compile Include="Behaviour\PoiHooks\WaitSelect\WaitInPlace.cs" />
     <Compile Include="Behaviour\TarotBehaviour.cs" />
     <Compile Include="Behaviour\PoiHooks\SelectPoiType.cs" />
     <Compile Include="Behaviour\PoiHooks\FateSelect\ChainAndTypePriority.cs" />
@@ -75,7 +76,7 @@
     <Compile Include="Behaviour\Tasks\Utilities\BlacklistMob.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\Teleport.cs" />
     <Compile Include="Behaviour\Tasks\WaitRunner.cs" />
-    <Compile Include="Behaviour\Tasks\WaitTask\WaitForFates.cs" />
+    <Compile Include="Behaviour\Tasks\WaitTask\WaitInPlace.cs" />
     <Compile Include="Behaviour\Tasks\WaitTask\GrindMobs.cs" />
     <Compile Include="Behaviour\Tasks\WaitTask\ReturnToAetheryte.cs" />
     <Compile Include="Behaviour\Tasks\WaitTask\MoveToWaitLocation.cs" />
