@@ -46,6 +46,7 @@ namespace Tarot.Managers
     internal class TarotFateManager : FateManager
     {
         internal static FateData CurrentFate { get; set; }
+        internal static bool DoNotWaitBeforeMovingFlag { get; set; }
         internal static FateDatabase FateDatabase { get; set; }
         internal static FateData PreviousFate { get; set; }
 
@@ -76,7 +77,7 @@ namespace Tarot.Managers
                 foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
                 {
                     var fate = ActiveFates.FirstOrDefault(result => result.Id == navResult.Id);
-                    if (fate == null)
+                    if (fate == null || Blacklist.Contains(fate.Id))
                     {
                         continue;
                     }
@@ -141,6 +142,16 @@ namespace Tarot.Managers
                 return false;
             }
 
+            if (fate.Level > Core.Player.ClassLevel + TarotSettings.Instance.FateMaxLevelsAbove)
+            {
+                return false;
+            }
+
+            if (fate.Level < Core.Player.ClassLevel - TarotSettings.Instance.FateMaxLevelsBelow)
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -158,6 +169,11 @@ namespace Tarot.Managers
             }
 
             return activeFates;
+        }
+
+        public static void SetDoNotWaitFlag(bool flag)
+        {
+            DoNotWaitBeforeMovingFlag = flag;
         }
 
         private static bool FateProgressionMet(FateData fate)

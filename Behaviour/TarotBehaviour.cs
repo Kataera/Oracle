@@ -78,10 +78,15 @@ namespace Tarot.Behaviour
                 }
             }
 
-            if (Poi.Current.BattleCharacter != null && Poi.Current.BattleCharacter.IsValid && !Poi.Current.BattleCharacter.IsFate
-                && !GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
+            if (await BlacklistMob.IsBlacklistNeeded())
             {
-                ClearPoi("Current Poi is not a FATE mob, nor attacking us.");
+                return true;
+            }
+
+            if (Poi.Current.BattleCharacter != null && Poi.Current.BattleCharacter.IsValid && !Poi.Current.BattleCharacter.IsFate
+                && !GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter) && TarotFateManager.CurrentFate != null)
+            {
+                ClearPoi("Targeted unit is not valid.", false);
                 return true;
             }
 
@@ -105,7 +110,7 @@ namespace Tarot.Behaviour
                     {
                         await LevelSync.Main(fate);
                     }
-                    else
+                    else if (GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
                     {
                         await MoveToFate.Main(true);
                         await LevelSync.Main(fate);
@@ -118,11 +123,17 @@ namespace Tarot.Behaviour
 
         private static async Task<bool> HandleFate()
         {
+            if (TarotFateManager.CurrentFate == null)
+            {
+                return false;
+            }
+
             if (Core.Player.Distance(TarotFateManager.CurrentFate.Location) > TarotFateManager.CurrentFate.Radius)
             {
                 await MoveToFate.Main(false);
             }
 
+            // Check again since Move to FATE task can clear the current FATE.
             if (TarotFateManager.CurrentFate == null)
             {
                 return false;

@@ -46,14 +46,22 @@ namespace Tarot.Settings
         private int collectFateTurnInAtAmount;
 
         private bool debugEnabled;
+        private bool fateDelayMovement;
+        private int fateDelayMovementMaximum;
+        private int fateDelayMovementMinimum;
+        private int fateMaxLevelsAbove;
+        private int fateMaxLevelsBelow;
 
         private FateSelectMode fateSelectMode;
 
         private FateWaitMode fateWaitMode;
+        private int grindMobRadius;
 
         private bool listHooksOnStart;
 
         private int megaBossEngagePercentage;
+        private int mobMaximumLevelAbove;
+        private int mobMinumumLevelBelow;
 
         private bool runProblematicFates;
         private bool teleportIfQuicker;
@@ -131,6 +139,71 @@ namespace Tarot.Settings
             }
         }
 
+        [DefaultValue(true)]
+        [Setting]
+        public bool FateDelayMovement
+        {
+            get { return this.fateDelayMovement; }
+
+            set
+            {
+                this.fateDelayMovement = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(3)]
+        [Setting]
+        public int FateDelayMovementMaximum
+        {
+            get { return this.fateDelayMovementMaximum; }
+
+            set
+            {
+                this.fateDelayMovementMaximum = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int FateDelayMovementMinimum
+        {
+            get { return this.fateDelayMovementMinimum; }
+
+            set
+            {
+                this.fateDelayMovementMinimum = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(4)]
+        [Setting]
+        public int FateMaxLevelsAbove
+        {
+            get { return this.fateMaxLevelsAbove; }
+
+            set
+            {
+                this.fateMaxLevelsAbove = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(8)]
+        [Setting]
+        public int FateMaxLevelsBelow
+        {
+            get { return this.fateMaxLevelsBelow; }
+
+            set
+            {
+                this.fateMaxLevelsBelow = value;
+                this.Save();
+            }
+        }
+
         [DefaultValue(FateSelectMode.Closest)]
         [Setting]
         public FateSelectMode FateSelectMode
@@ -144,7 +217,7 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(FateWaitMode.ReturnToAetheryte)]
+        [DefaultValue(FateWaitMode.GrindMobs)]
         [Setting]
         public FateWaitMode FateWaitMode
         {
@@ -153,6 +226,19 @@ namespace Tarot.Settings
             set
             {
                 this.fateWaitMode = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(150)]
+        [Setting]
+        public int GrindMobRadius
+        {
+            get { return this.grindMobRadius; }
+
+            set
+            {
+                this.grindMobRadius = value;
                 this.Save();
             }
         }
@@ -179,6 +265,32 @@ namespace Tarot.Settings
             set
             {
                 this.megaBossEngagePercentage = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(6)]
+        [Setting]
+        public int MobMaximumLevelAbove
+        {
+            get { return this.mobMaximumLevelAbove; }
+
+            set
+            {
+                this.mobMaximumLevelAbove = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(6)]
+        [Setting]
+        public int MobMinimumLevelBelow
+        {
+            get { return this.mobMinumumLevelBelow; }
+
+            set
+            {
+                this.mobMinumumLevelBelow = value;
                 this.Save();
             }
         }

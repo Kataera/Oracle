@@ -24,33 +24,20 @@
 
 using System.Threading.Tasks;
 
-using Tarot.Behaviour.Tasks.WaitTask;
-using Tarot.Enumerations;
+using ff14bot;
+using ff14bot.Helpers;
+using ff14bot.Navigation;
+
 using Tarot.Settings;
 
-namespace Tarot.Behaviour.Tasks
+namespace Tarot.Behaviour.PoiHooks.WaitSelect
 {
-    internal static class WaitRunner
+    internal static class GrindMobs
     {
         public static async Task<bool> Main()
         {
-            switch (TarotSettings.Instance.FateWaitMode)
-            {
-                case FateWaitMode.ReturnToAetheryte:
-                    await ReturnToAetheryte.Main();
-                    return true;
-                case FateWaitMode.MoveToWaitLocation:
-                    await MoveToWaitLocation.Main();
-                    return true;
-                case FateWaitMode.GrindMobs:
-                    await GrindMobs.Main();
-                    return true;
-                case FateWaitMode.WaitInPlace:
-                    await WaitInPlace.Main();
-                    return true;
-            }
-
-            return false;
+            Poi.Current = new Poi(Core.Player.Location, PoiType.Wait);
+            return true;
         }
     }
 }

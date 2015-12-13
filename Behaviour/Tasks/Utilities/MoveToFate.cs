@@ -52,16 +52,16 @@ namespace Tarot.Behaviour.Tasks.Utilities
             {
                 if (await Teleport.FasterToTeleport(TarotFateManager.CurrentFate))
                 {
-                    Logger.SendLog("Teleporting to the closest Aetheryte crystal to the FATE.");
+                    Logger.SendLog("Teleporting to the closest aetheryte crystal to the FATE.");
                     await Teleport.TeleportToClosestAetheryte(TarotFateManager.CurrentFate);
                 }
             }
 
             if (!ignoreCombat && IsMountNeeded() && !Core.Player.IsMounted)
             {
-                if (!await MountUp())
+                while (!await MountUp())
                 {
-                    return false;
+                    await Coroutine.Yield();
                 }
             }
 
@@ -71,12 +71,23 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
         private static bool IsMountNeeded()
         {
+            if (TarotFateManager.CurrentFate == null || !TarotFateManager.CurrentFate.IsValid)
+            {
+                return false;
+            }
+
             var distanceToFateBoundary = Core.Player.Distance(TarotFateManager.CurrentFate.Location) - TarotFateManager.CurrentFate.Radius;
             return distanceToFateBoundary > CharacterSettings.Instance.MountDistance;
         }
 
         private static async Task<bool> MountUp()
         {
+            if (!Actionmanager.AvailableMounts.Any())
+            {
+                Logger.SendDebugLog("Character does not have any mount available, skipping mount task.");
+                return true;
+            }
+
             while (!Core.Player.IsMounted)
             {
                 if (GameObjectManager.Attackers.Any())
@@ -104,6 +115,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 {
                     if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
                     {
+                        TarotFateManager.SetDoNotWaitFlag(true);
                         Logger.SendLog("'" + fate.Name + "' ended before we got there.");
                         TarotFateManager.ClearCurrentFate("FATE has ended.", false);
 

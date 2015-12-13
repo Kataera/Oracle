@@ -24,9 +24,12 @@
 
 using System.Threading.Tasks;
 
+using ff14bot.Behavior;
+
 using Tarot.Behaviour.PoiHooks.WaitSelect;
 using Tarot.Enumerations;
 using Tarot.Helpers;
+using Tarot.Managers;
 using Tarot.Settings;
 
 namespace Tarot.Behaviour.PoiHooks
@@ -35,8 +38,12 @@ namespace Tarot.Behaviour.PoiHooks
     {
         public static async Task<bool> Main()
         {
-            Logger.SendLog("No viable FATEs, activating wait mode.");
+            if (CommonBehaviors.IsLoading)
+            {
+                return false;
+            }
 
+            TarotFateManager.SetDoNotWaitFlag(false);
             switch (TarotSettings.Instance.FateWaitMode)
             {
                 case FateWaitMode.ReturnToAetheryte:
@@ -48,13 +55,11 @@ namespace Tarot.Behaviour.PoiHooks
                     break;
 
                 case FateWaitMode.GrindMobs:
-
-                    //await GrindMobs.Main();
+                    await GrindMobs.Main();
                     break;
 
-                case FateWaitMode.WaitForFates:
-
-                    //await WaitForFates.Main();
+                case FateWaitMode.WaitInPlace:
+                    await WaitInPlace.Main();
                     break;
 
                 default:

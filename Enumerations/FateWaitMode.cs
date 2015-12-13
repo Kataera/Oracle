@@ -32,6 +32,6 @@ namespace Tarot.Enumerations
 
         GrindMobs,
 
-        WaitForFates
+        WaitInPlace
     }
 }

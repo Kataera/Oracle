@@ -29,13 +29,10 @@ using Buddy.Coroutines;
 using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Helpers;
-using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Settings;
 
-using Tarot.Enumerations;
 using Tarot.Managers;
-using Tarot.Settings;
 
 namespace Tarot.Behaviour.Tasks.WaitTask
 {
@@ -91,34 +88,6 @@ namespace Tarot.Behaviour.Tasks.WaitTask
             Navigator.PlayerMover.MoveStop();
 
             return true;
-        }
-
-        private static bool ProgressedEnough(FateData fate)
-        {
-            if (TarotSettings.Instance.WaitAtFateForProgress)
-            {
-                return true;
-            }
-
-            if (TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type != FateType.Boss
-                && TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type != FateType.MegaBoss)
-            {
-                return true;
-            }
-
-            if (TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type == FateType.Boss
-                && fate.Progress >= TarotSettings.Instance.BossEngagePercentage)
-            {
-                return true;
-            }
-
-            if (TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type == FateType.MegaBoss
-                && fate.Progress >= TarotSettings.Instance.MegaBossEngagePercentage)
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 }

@@ -53,7 +53,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
             Logger.SendDebugLog("Distance to navigate to '" + fate.Name + "' from player location is " + Math.Round(distanceFromPlayer, 0)
                                 + " yalms.");
-            Logger.SendDebugLog("Distance to navigate to '" + fate.Name + "' from Aetheryte location is "
+            Logger.SendDebugLog("Distance to navigate to '" + fate.Name + "' from aetheryte location is "
                                 + Math.Round(aetheryte.Distance, 0) + " yalms.");
             Logger.SendDebugLog("Minimum distance needed to be saved to teleport is " + teleportMinDistance + " yalms.");
 

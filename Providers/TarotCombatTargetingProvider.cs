@@ -142,7 +142,7 @@ namespace Tarot.Providers
 
             if (battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Core.Player.ObjectId)
             {
-                weight += 50;
+                weight += 750;
             }
 
             if (TarotFateManager.CurrentFate != null && battleCharacter.FateId == TarotFateManager.CurrentFate.Id)
