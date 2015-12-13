@@ -22,6 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -46,6 +47,11 @@ namespace Tarot.Behaviour.Tasks.Utilities
             if (!ignoreCombat && GameObjectManager.Attackers.Any() && !Core.Player.IsMounted)
             {
                 return false;
+            }
+
+            if (!ignoreCombat && TarotSettings.Instance.FateDelayMovement)
+            {
+                await WaitBeforeMoving();
             }
 
             if (!ignoreCombat && TarotSettings.Instance.TeleportIfQuicker)
@@ -134,6 +140,18 @@ namespace Tarot.Behaviour.Tasks.Utilities
             }
 
             Navigator.Stop();
+            return true;
+        }
+
+        private static async Task<bool> WaitBeforeMoving()
+        {
+            var minTime = TarotSettings.Instance.FateDelayMovementMinimum * 1000;
+            var maxTime = TarotSettings.Instance.FateDelayMovementMaximum * 1000;
+            var randomWaitTime = new Random().Next(minTime, maxTime);
+
+            Logger.SendLog("Waiting " + Math.Round(randomWaitTime / 1000f, 2) + " seconds before moving to FATE.");
+            await Coroutine.Sleep(randomWaitTime);
+
             return true;
         }
     }

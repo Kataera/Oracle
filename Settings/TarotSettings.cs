@@ -46,6 +46,9 @@ namespace Tarot.Settings
         private int collectFateTurnInAtAmount;
 
         private bool debugEnabled;
+        private bool fateDelayMovement;
+        private int fateDelayMovementMaximum;
+        private int fateDelayMovementMinimum;
         private int fateMaxLevelsAbove;
         private int fateMaxLevelsBelow;
 
@@ -129,6 +132,45 @@ namespace Tarot.Settings
             set
             {
                 this.debugEnabled = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool FateDelayMovement
+        {
+            get { return this.fateDelayMovement; }
+
+            set
+            {
+                this.fateDelayMovement = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(6)]
+        [Setting]
+        public int FateDelayMovementMaximum
+        {
+            get { return this.fateDelayMovementMaximum; }
+
+            set
+            {
+                this.fateDelayMovementMaximum = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(3)]
+        [Setting]
+        public int FateDelayMovementMinimum
+        {
+            get { return this.fateDelayMovementMinimum; }
+
+            set
+            {
+                this.fateDelayMovementMinimum = value;
                 this.Save();
             }
         }

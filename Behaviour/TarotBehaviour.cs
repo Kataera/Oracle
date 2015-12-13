@@ -105,7 +105,7 @@ namespace Tarot.Behaviour
                     {
                         await LevelSync.Main(fate);
                     }
-                    else
+                    else if (GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
                     {
                         await MoveToFate.Main(true);
                         await LevelSync.Main(fate);
