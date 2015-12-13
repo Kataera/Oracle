@@ -92,33 +92,5 @@ namespace Tarot.Behaviour.Tasks.WaitTask
 
             return true;
         }
-
-        private static bool ProgressedEnough(FateData fate)
-        {
-            if (TarotSettings.Instance.WaitAtFateForProgress)
-            {
-                return true;
-            }
-
-            if (TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type != FateType.Boss
-                && TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type != FateType.MegaBoss)
-            {
-                return true;
-            }
-
-            if (TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type == FateType.Boss
-                && fate.Progress >= TarotSettings.Instance.BossEngagePercentage)
-            {
-                return true;
-            }
-
-            if (TarotFateManager.FateDatabase.GetFateWithId(fate.Id).Type == FateType.MegaBoss
-                && fate.Progress >= TarotSettings.Instance.MegaBossEngagePercentage)
-            {
-                return true;
-            }
-
-            return false;
-        }
     }
 }
