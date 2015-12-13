@@ -45,9 +45,14 @@ namespace Tarot.Behaviour.PoiHooks
     {
         public static async Task<bool> Main()
         {
+            if (CommonBehaviors.IsLoading)
+            {
+                return false;
+            }
+
             if (IsFateSet())
             {
-                if (!IsFatePoiSet() && Poi.Current.Type != PoiType.Death && !GameObjectManager.Attackers.Any() && !CommonBehaviors.IsLoading)
+                if (!IsFatePoiSet() && Poi.Current.Type != PoiType.Death && !GameObjectManager.Attackers.Any())
                 {
                     Poi.Current = new Poi(TarotFateManager.CurrentFate, PoiType.Fate);
                 }
