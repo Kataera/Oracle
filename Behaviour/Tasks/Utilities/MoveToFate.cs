@@ -52,11 +52,10 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
             if (!ignoreCombat && TarotSettings.Instance.TeleportIfQuicker)
             {
-                var location = TarotFateManager.CurrentFate.Location;
-                if (await Teleport.FasterToTeleport(location))
+                if (await Teleport.FasterToTeleport(TarotFateManager.CurrentFate))
                 {
                     Logger.SendLog("Teleporting to the closest Aetheryte crystal to the FATE.");
-                    await Teleport.TeleportToClosestAetheryte(location);
+                    await Teleport.TeleportToClosestAetheryte(TarotFateManager.CurrentFate);
                 }
             }
 
