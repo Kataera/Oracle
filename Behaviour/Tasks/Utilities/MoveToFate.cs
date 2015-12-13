@@ -115,9 +115,9 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 {
                     if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
                     {
+                        TarotFateManager.SetDoNotWaitFlag(true);
                         Logger.SendLog("'" + fate.Name + "' ended before we got there.");
                         TarotFateManager.ClearCurrentFate("FATE has ended.", false);
-                        TarotFateManager.DoNotWaitBeforeMoving = true;
 
                         Navigator.Stop();
                         return true;

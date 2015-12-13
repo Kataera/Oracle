@@ -46,7 +46,7 @@ namespace Tarot.Managers
     internal class TarotFateManager : FateManager
     {
         internal static FateData CurrentFate { get; set; }
-        internal static bool DoNotWaitBeforeMoving { get; set; }
+        internal static bool DoNotWaitBeforeMovingFlag { get; set; }
         internal static FateDatabase FateDatabase { get; set; }
         internal static FateData PreviousFate { get; set; }
 
@@ -169,6 +169,11 @@ namespace Tarot.Managers
             }
 
             return activeFates;
+        }
+
+        public static void SetDoNotWaitFlag(bool flag)
+        {
+            DoNotWaitBeforeMovingFlag = flag;
         }
 
         private static bool FateProgressionMet(FateData fate)

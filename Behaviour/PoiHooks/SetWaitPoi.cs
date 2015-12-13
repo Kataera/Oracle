@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using Tarot.Behaviour.PoiHooks.WaitSelect;
 using Tarot.Enumerations;
 using Tarot.Helpers;
+using Tarot.Managers;
 using Tarot.Settings;
 
 namespace Tarot.Behaviour.PoiHooks
@@ -36,6 +37,7 @@ namespace Tarot.Behaviour.PoiHooks
         public static async Task<bool> Main()
         {
             Logger.SendLog("No viable FATEs, activating wait mode.");
+            TarotFateManager.SetDoNotWaitFlag(false);
 
             switch (TarotSettings.Instance.FateWaitMode)
             {

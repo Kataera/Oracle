@@ -90,12 +90,12 @@ namespace Tarot.Behaviour.PoiHooks
                     break;
             }
 
-            if (TarotFateManager.CurrentFate != null && TarotSettings.Instance.FateDelayMovement && !TarotFateManager.DoNotWaitBeforeMoving)
+            if (TarotFateManager.CurrentFate != null && TarotSettings.Instance.FateDelayMovement && !TarotFateManager.DoNotWaitBeforeMovingFlag)
             {
                 await WaitBeforeMoving();
             }
 
-            TarotFateManager.DoNotWaitBeforeMoving = false;
+            TarotFateManager.SetDoNotWaitFlag(false);
             return IsFateSet() && IsFatePoiSet();
         }
 

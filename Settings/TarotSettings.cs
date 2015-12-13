@@ -149,7 +149,7 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(6)]
+        [DefaultValue(3)]
         [Setting]
         public int FateDelayMovementMaximum
         {
@@ -162,7 +162,7 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(3)]
+        [DefaultValue(1)]
         [Setting]
         public int FateDelayMovementMinimum
         {
