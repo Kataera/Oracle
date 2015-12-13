@@ -90,16 +90,6 @@ namespace Tarot.Behaviour
                 return true;
             }
 
-            // Set better target as Poi if one exists.
-            /*
-            if (Poi.Current.BattleCharacter != null
-                && CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault() != Poi.Current.BattleCharacter)
-            {
-                Core.Player.ClearTarget();
-                Poi.Current = new Poi(CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault(), PoiType.Kill);
-            }
-            */
-
             if (Poi.Current.BattleCharacter != null && Poi.Current.BattleCharacter.IsValid && Poi.Current.BattleCharacter.IsFate)
             {
                 var fate = FateManager.GetFateById(Poi.Current.BattleCharacter.FateId);

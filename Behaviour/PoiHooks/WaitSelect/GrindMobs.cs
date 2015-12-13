@@ -28,13 +28,15 @@ using ff14bot;
 using ff14bot.Helpers;
 using ff14bot.Navigation;
 
+using Tarot.Settings;
+
 namespace Tarot.Behaviour.PoiHooks.WaitSelect
 {
     internal static class GrindMobs
     {
         public static async Task<bool> Main()
         {
-            Poi.Current = new Poi(new HotSpot(Core.Player.Location, 200f), PoiType.Hotspot);
+            Poi.Current = new Poi(Core.Player.Location, PoiType.Wait);
             return true;
         }
     }
