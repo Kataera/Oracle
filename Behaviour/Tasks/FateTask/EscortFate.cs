@@ -95,6 +95,12 @@ namespace Tarot.Behaviour.Tasks.FateTask
                     Logger.SendDebugLog("Cannot find escort NPC, defaulting to staying within the centre of the FATE.");
                     while (Core.Player.Distance2D(TarotFateManager.CurrentFate.Location) > TarotFateManager.CurrentFate.Radius * 0.2f)
                     {
+                        if (!TarotFateManager.CurrentFate.IsValid || TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
+                        {
+                            Navigator.Stop();
+                            return true;
+                        }
+
                         Navigator.MoveToPointWithin(TarotFateManager.CurrentFate.Location, TarotFateManager.CurrentFate.Radius * 0.2f,
                             "FATE centre.");
                         await Coroutine.Yield();
