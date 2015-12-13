@@ -42,6 +42,8 @@ namespace Tarot.Behaviour.Tasks.Utilities
 {
     internal static class MoveToFate
     {
+        private static bool previousFateExpired;
+
         public static async Task<bool> Main(bool ignoreCombat)
         {
             if (!ignoreCombat && GameObjectManager.Attackers.Any() && !Core.Player.IsMounted)
@@ -49,7 +51,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            if (!ignoreCombat && TarotSettings.Instance.FateDelayMovement)
+            if (!previousFateExpired && !ignoreCombat && TarotSettings.Instance.FateDelayMovement)
             {
                 await WaitBeforeMoving();
             }
@@ -71,6 +73,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 }
             }
 
+            previousFateExpired = false;
             await Move();
             return true;
         }
@@ -120,6 +123,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                         TarotFateManager.ClearCurrentFate("FATE has ended.", false);
 
                         Navigator.Stop();
+                        previousFateExpired = true;
                         return true;
                     }
 
