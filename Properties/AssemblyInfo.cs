@@ -34,15 +34,24 @@ using System.Runtime.InteropServices;
 //
 
 <<<<<<< HEAD
-[assembly: AssemblyVersion("0.1.0.237")]
-[assembly: AssemblyFileVersion("0.1.0.237")]
+<<<<<<< HEAD
+[assembly: AssemblyVersion("0.1.0.238")]
+[assembly: AssemblyFileVersion("0.1.0.238")]
 =======
 <<<<<<< HEAD
-[assembly: AssemblyVersion("0.1.0.237")]
-[assembly: AssemblyFileVersion("0.1.0.237")]
+[assembly: AssemblyVersion("0.1.0.238")]
+[assembly: AssemblyFileVersion("0.1.0.238")]
 =======
-[assembly: AssemblyVersion("0.1.0.237")]
-[assembly: AssemblyFileVersion("0.1.0.237")]
+[assembly: AssemblyVersion("0.1.0.238")]
+[assembly: AssemblyFileVersion("0.1.0.238")]
+>>>>>>> refs/remotes/origin/refactoring
+>>>>>>> refs/remotes/origin/development
+=======
+[assembly: AssemblyVersion("0.1.0.238")]
+[assembly: AssemblyFileVersion("0.1.0.238")]
+=======
+[assembly: AssemblyVersion("0.1.0.238")]
+[assembly: AssemblyFileVersion("0.1.0.238")]
 >>>>>>> refs/remotes/origin/refactoring
 >>>>>>> refs/remotes/origin/development
 [assembly: NeutralResourcesLanguage("en-GB")]
