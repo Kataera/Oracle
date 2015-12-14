@@ -51,11 +51,10 @@ namespace Tarot.Behaviour.Tasks.Utilities
             var distanceFromPlayer = await GetDistanceFromPlayer(fate);
             var teleportMinDistance = TarotSettings.Instance.TeleportMinimumDistanceDelta;
 
-            Logger.SendDebugLog("Distance to navigate to '" + fate.Name + "' from player location is ~" + Math.Round(distanceFromPlayer, 0)
+            Logger.SendDebugLog("Distance to navigate to FATE from player location is ~" + Math.Round(distanceFromPlayer, 0) + " yalms.");
+            Logger.SendDebugLog("Distance to navigate to FATE from closest aetheryte location is ~" + Math.Round(aetheryte.Distance, 0)
                                 + " yalms.");
-            Logger.SendDebugLog("Distance to navigate to '" + fate.Name + "' from aetheryte location is ~"
-                                + Math.Round(aetheryte.Distance, 0) + " yalms.");
-            Logger.SendDebugLog("Minimum reduction in distance required to use teleport is " + teleportMinDistance + " yalms.");
+            Logger.SendDebugLog("Minimum reduction in distance to use teleport is " + teleportMinDistance + " yalms.");
 
             if (distanceFromPlayer - aetheryte.Distance <= 0)
             {
