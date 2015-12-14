@@ -51,11 +51,10 @@ namespace Tarot.Behaviour.Tasks.Utilities
             var distanceFromPlayer = await GetDistanceFromPlayer(fate);
             var teleportMinDistance = TarotSettings.Instance.TeleportMinimumDistanceDelta;
 
-            Logger.SendDebugLog("Distance to navigate to '" + fate.Name + "' from player location is ~" + Math.Round(distanceFromPlayer, 0)
+            Logger.SendDebugLog("Distance to navigate to FATE from player location is ~" + Math.Round(distanceFromPlayer, 0) + " yalms.");
+            Logger.SendDebugLog("Distance to navigate to FATE from closest aetheryte location is ~" + Math.Round(aetheryte.Distance, 0)
                                 + " yalms.");
-            Logger.SendDebugLog("Distance to navigate to '" + fate.Name + "' from aetheryte location is ~"
-                                + Math.Round(aetheryte.Distance, 0) + " yalms.");
-            Logger.SendDebugLog("Minimum reduction in distance required to use teleport is " + teleportMinDistance + " yalms.");
+            Logger.SendDebugLog("Minimum reduction in distance to use teleport is " + teleportMinDistance + " yalms.");
 
             if (distanceFromPlayer - aetheryte.Distance <= 0)
             {
@@ -78,28 +77,9 @@ namespace Tarot.Behaviour.Tasks.Utilities
         public static async Task<Aetheryte> GetClosestAetheryte(FateData fate)
         {
             var aetherytes = await GetNavigableAetherytes(fate);
-            var closestToFate = new Aetheryte
-            {
-                Distance = float.MaxValue,
-                Id = 0,
-                Location = Vector3.Zero
-            };
+            var closestAetheryte = aetherytes.OrderBy(node => node.Distance).FirstOrDefault();
 
-            foreach (var aetheryte in aetherytes)
-            {
-                if (closestToFate.Id == 0)
-                {
-                    closestToFate = aetheryte;
-                }
-                else if (closestToFate.Distance > aetheryte.Distance)
-                {
-                    closestToFate = aetheryte;
-                }
-
-                await Coroutine.Yield();
-            }
-
-            return closestToFate;
+            return closestAetheryte;
         }
 
         public static async Task<bool> TeleportToAetheryte(uint aetheryteId)
@@ -150,13 +130,11 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 if (navResult != null)
                 {
                     distanceFromPlayer = navResult.PathLength - (fate.Radius * 0.75f);
-                    ;
                 }
             }
             else
             {
                 distanceFromPlayer = fate.Location.Distance(Core.Player.Location) - (fate.Radius * 0.75f);
-                ;
             }
 
             return distanceFromPlayer;

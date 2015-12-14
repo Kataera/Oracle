@@ -53,7 +53,7 @@ namespace Tarot.Behaviour.PoiHooks.FateSelect
             var closestFate = closestFates.FirstOrDefault().Key;
 
             Logger.SendLog("Selected FATE: '" + closestFate.Name + "'.");
-            TarotFateManager.CurrentFate = closestFate;
+            TarotFateManager.CurrentFateId = closestFate.Id;
             Poi.Current = new Poi(closestFate, PoiType.Fate);
 
             return true;

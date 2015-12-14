@@ -43,21 +43,23 @@ namespace Tarot.Behaviour.Tasks.Utilities
     {
         public static async Task<bool> Main(bool ignoreCombat)
         {
+            var currentFate = TarotFateManager.GetCurrentFateData();
+
             if (!ignoreCombat && GameObjectManager.Attackers.Any() && !Core.Player.IsMounted)
             {
                 return false;
             }
 
-            if (!ignoreCombat && TarotSettings.Instance.TeleportIfQuicker && TarotFateManager.CurrentFate.IsValid)
+            if (!ignoreCombat && TarotSettings.Instance.TeleportIfQuicker && currentFate.IsValid)
             {
-                if (await Teleport.FasterToTeleport(TarotFateManager.CurrentFate))
+                if (await Teleport.FasterToTeleport(currentFate))
                 {
                     Logger.SendLog("Teleporting to the closest aetheryte crystal to the FATE.");
-                    await Teleport.TeleportToClosestAetheryte(TarotFateManager.CurrentFate);
+                    await Teleport.TeleportToClosestAetheryte(currentFate);
                 }
             }
 
-            if (!ignoreCombat && IsMountNeeded() && !Core.Player.IsMounted && TarotFateManager.CurrentFate.IsValid)
+            if (!ignoreCombat && IsMountNeeded() && !Core.Player.IsMounted && currentFate.IsValid)
             {
                 while (!await MountUp())
                 {
@@ -79,12 +81,14 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
         private static bool IsMountNeeded()
         {
-            if (TarotFateManager.CurrentFate == null || !TarotFateManager.CurrentFate.IsValid)
+            var currentFate = TarotFateManager.GetCurrentFateData();
+
+            if (currentFate == null || !currentFate.IsValid)
             {
                 return false;
             }
 
-            var distanceToFateBoundary = Core.Player.Distance(TarotFateManager.CurrentFate.Location) - TarotFateManager.CurrentFate.Radius;
+            var distanceToFateBoundary = Core.Player.Distance(currentFate.Location) - currentFate.Radius;
             return distanceToFateBoundary > CharacterSettings.Instance.MountDistance;
         }
 
@@ -115,11 +119,11 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
         private static async Task<bool> Move()
         {
-            var fate = TarotFateManager.CurrentFate;
+            var currentFate = TarotFateManager.GetCurrentFateData();
 
-            if (!fate.IsValid || fate.Status == FateStatus.COMPLETE || fate.Status == FateStatus.NOTACTIVE)
+            if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
             {
-                ClearFate(fate);
+                ClearFate(currentFate);
                 return true;
             }
 
@@ -127,27 +131,27 @@ namespace Tarot.Behaviour.Tasks.Utilities
             {
                 while (!FateManager.WithinFate)
                 {
-                    if (!fate.IsValid || fate.Status == FateStatus.COMPLETE || fate.Status == FateStatus.NOTACTIVE)
+                    if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
-                        ClearFate(fate);
+                        ClearFate(currentFate);
                         return true;
                     }
 
-                    Navigator.MoveToPointWithin(fate.Location, fate.Radius * 0.5f, fate.Name);
+                    Navigator.MoveToPointWithin(currentFate.Location, currentFate.Radius * 0.5f, currentFate.Name);
                     await Coroutine.Yield();
                 }
             }
             else
             {
-                while (Core.Player.Distance(fate.Location) > fate.Radius * 0.75f)
+                while (Core.Player.Distance(currentFate.Location) > currentFate.Radius * 0.75f)
                 {
-                    if (!fate.IsValid || fate.Status == FateStatus.COMPLETE || fate.Status == FateStatus.NOTACTIVE)
+                    if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
-                        ClearFate(fate);
+                        ClearFate(currentFate);
                         return true;
                     }
 
-                    Navigator.MoveToPointWithin(fate.Location, fate.Radius * 0.5f, fate.Name);
+                    Navigator.MoveToPointWithin(currentFate.Location, currentFate.Radius * 0.5f, currentFate.Name);
                     await Coroutine.Yield();
                 }
             }

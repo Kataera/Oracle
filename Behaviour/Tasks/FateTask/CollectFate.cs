@@ -46,11 +46,11 @@ namespace Tarot.Behaviour.Tasks.FateTask
     {
         public static async Task<bool> Main()
         {
-            var fate = TarotFateManager.CurrentFate;
-            var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(fate.Id);
+            var currentFate = TarotFateManager.GetCurrentFateData();
+            var tarotFate = TarotFateManager.FateDatabase.GetFateFromId(currentFate.Id);
             var fateItemBagSlot = GetBagSlotFromItemId(tarotFate.ItemId);
 
-            if (fate.Status != FateStatus.NOTACTIVE && fateItemBagSlot != null)
+            if (currentFate.Status != FateStatus.NOTACTIVE && fateItemBagSlot != null)
             {
                 // Wait for potential inventory update.
                 var fateItemCount = fateItemBagSlot.Count;
@@ -66,7 +66,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                 }
             }
 
-            if (fate.Status != FateStatus.NOTACTIVE && fate.Status == FateStatus.COMPLETE)
+            if (currentFate.Status != FateStatus.NOTACTIVE && currentFate.Status == FateStatus.COMPLETE)
             {
                 if (Core.Player.InCombat)
                 {
@@ -83,7 +83,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                 return true;
             }
 
-            if (fate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
+            if (currentFate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
             {
                 var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
                 if (target != null)
@@ -121,7 +121,8 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
         private static bool IsViableTarget(BattleCharacter target)
         {
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == TarotFateManager.CurrentFate.Id;
+            var currentFate = TarotFateManager.GetCurrentFateData();
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == currentFate.Id;
         }
 
         private static async Task<bool> MoveToTurnInNpc(GameObject turnInNpc)

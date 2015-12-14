@@ -50,10 +50,10 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
         public static async Task<bool> Main()
         {
-            var fate = TarotFateManager.CurrentFate;
-            var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(fate.Id);
+            var currentFate = TarotFateManager.GetCurrentFateData();
+            var tarotFate = TarotFateManager.FateDatabase.GetFateFromFateData(currentFate);
 
-            if (fate.Status == FateStatus.NOTACTIVE || fate.Status == FateStatus.COMPLETE)
+            if (currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
             {
                 ClearFate();
                 return true;
@@ -69,7 +69,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                 movementCooldown = GetRandomTimeSpan();
             }
 
-            if (fate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
+            if (currentFate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
             {
                 var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
                 if (target != null)
@@ -77,7 +77,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                     Poi.Current = new Poi(target, PoiType.Kill);
                 }
             }
-            else if (fate.Status != FateStatus.NOTACTIVE)
+            else if (currentFate.Status != FateStatus.NOTACTIVE)
             {
                 var escortNpc = GameObjectManager.GetObjectByNPCId(tarotFate.NpcId)
                                 ?? GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
@@ -110,7 +110,8 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
         private static bool IsEscortNpc(BattleCharacter battleCharacter)
         {
-            var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id);
+            var currentFate = TarotFateManager.GetCurrentFateData();
+            var tarotFate = TarotFateManager.FateDatabase.GetFateFromFateData(currentFate);
 
             if (tarotFate.NpcId == battleCharacter.NpcId)
             {
@@ -127,7 +128,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                 return false;
             }
 
-            if (battleCharacter.FateId != TarotFateManager.CurrentFate.Id)
+            if (battleCharacter.FateId != currentFate.Id)
             {
                 return false;
             }
@@ -147,22 +148,23 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
         private static bool IsViableTarget(BattleCharacter target)
         {
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == TarotFateManager.CurrentFate.Id;
+            var currentFate = TarotFateManager.GetCurrentFateData();
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == currentFate.Id;
         }
 
         private static async Task<bool> MoveToFateCentre()
         {
-            var fate = TarotFateManager.CurrentFate;
-            while (Core.Player.Distance2D(fate.Location) > fate.Radius * 0.2f)
+            var currentFate = TarotFateManager.GetCurrentFateData();
+            while (Core.Player.Distance2D(currentFate.Location) > currentFate.Radius * 0.2f)
             {
-                if (fate.Status == FateStatus.NOTACTIVE || fate.Status == FateStatus.COMPLETE)
+                if (currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
                 {
                     Navigator.Stop();
                     ClearFate();
                     return true;
                 }
 
-                Navigator.MoveToPointWithin(fate.Location, fate.Radius * 0.2f, "FATE centre");
+                Navigator.MoveToPointWithin(currentFate.Location, currentFate.Radius * 0.2f, "FATE centre");
                 await Coroutine.Yield();
             }
 
@@ -194,6 +196,8 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
             while (Core.Player.Distance2D(location) > 1f)
             {
+                var currentFate = TarotFateManager.GetCurrentFateData();
+
                 if (timeout.Elapsed > TimeSpan.FromSeconds(5))
                 {
                     Navigator.PlayerMover.MoveStop();
@@ -201,7 +205,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                     return true;
                 }
 
-                if (TarotFateManager.CurrentFate.Status == FateStatus.NOTACTIVE || TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
+                if (currentFate == null || currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
                 {
                     Navigator.PlayerMover.MoveStop();
                     timeout.Reset();

@@ -97,14 +97,7 @@
     <Compile Include="Behaviour\Tasks\Utilities\SkipDialogue.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\TurnInItem.cs" />
     <Compile Include="Data\FateDatabase.cs" />
-    <Compile Include="Data\FateTypes\Boss.cs" />
-    <Compile Include="Data\FateTypes\Collect.cs" />
-    <Compile Include="Data\FateTypes\Defence.cs" />
-    <Compile Include="Data\FateTypes\Escort.cs" />
-    <Compile Include="Data\FateTypes\Fate.cs" />
-    <Compile Include="Data\FateTypes\Kill.cs" />
-    <Compile Include="Data\FateTypes\MegaBoss.cs" />
-    <Compile Include="Data\FateTypes\NullFate.cs" />
+    <Compile Include="Data\Fate.cs" />
     <Compile Include="Enumerations\FateWaitMode.cs" />
     <Compile Include="Enumerations\FateSelectMode.cs" />
     <Compile Include="Enumerations\FateSupportLevel.cs" />

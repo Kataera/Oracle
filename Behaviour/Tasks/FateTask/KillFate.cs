@@ -38,15 +38,15 @@ namespace Tarot.Behaviour.Tasks.FateTask
     {
         public static async Task<bool> Main()
         {
-            var fate = TarotFateManager.CurrentFate;
+            var currentFate = TarotFateManager.GetCurrentFateData();
 
-            if (fate.Status == FateStatus.NOTACTIVE || fate.Status == FateStatus.COMPLETE)
+            if (currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
             {
                 ClearFate();
                 return true;
             }
 
-            if (fate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
+            if (currentFate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
             {
                 var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
                 if (target != null)
@@ -70,7 +70,8 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
         private static bool IsViableTarget(BattleCharacter target)
         {
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == TarotFateManager.CurrentFate.Id;
+            var currentFate = TarotFateManager.GetCurrentFateData();
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == currentFate.Id;
         }
     }
 }
