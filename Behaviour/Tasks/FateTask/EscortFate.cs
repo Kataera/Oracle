@@ -77,20 +77,17 @@ namespace Tarot.Behaviour.Tasks.FateTask
                     Poi.Current = new Poi(target, PoiType.Kill);
                 }
             }
-            else if(fate.IsValid)
+            else if (fate.IsValid)
             {
                 var escortNpc = GameObjectManager.GetObjectByNPCId(tarotFate.NpcId)
-                                       ?? GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
+                                ?? GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
 
                 if (escortNpc == null)
                 {
                     await MoveToFateCentre();
                     return true;
                 }
-                else
-                {
-                    await MoveToNpc(escortNpc);
-                }
+                await MoveToNpc(escortNpc);
             }
 
             return true;
@@ -104,6 +101,11 @@ namespace Tarot.Behaviour.Tasks.FateTask
         private static void ClearFate()
         {
             TarotFateManager.ClearCurrentFate("Current FATE is finished.");
+        }
+
+        private static TimeSpan GetRandomTimeSpan()
+        {
+            return TimeSpan.FromMilliseconds(new Random().Next(500, 1500));
         }
 
         private static bool IsEscortNpc(BattleCharacter battleCharacter)
@@ -146,6 +148,25 @@ namespace Tarot.Behaviour.Tasks.FateTask
         private static bool IsViableTarget(BattleCharacter target)
         {
             return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == TarotFateManager.CurrentFate.Id;
+        }
+
+        private static async Task<bool> MoveToFateCentre()
+        {
+            var fate = TarotFateManager.CurrentFate;
+            while (Core.Player.Distance2D(fate.Location) > fate.Radius * 0.2f)
+            {
+                if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
+                {
+                    Navigator.Stop();
+                    ClearFate();
+                    return true;
+                }
+
+                Navigator.MoveToPointWithin(fate.Location, fate.Radius * 0.2f, "FATE centre");
+                await Coroutine.Yield();
+            }
+
+            return true;
         }
 
         private static async Task<bool> MoveToNpc(GameObject npc)
@@ -198,30 +219,6 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
             Logger.SendDebugLog("Waiting " + movementCooldown.Value.TotalMilliseconds + "ms before moving again.");
             return true;
-        }
-
-        private static async Task<bool> MoveToFateCentre()
-        {
-            var fate = TarotFateManager.CurrentFate;
-            while (Core.Player.Distance2D(fate.Location) > fate.Radius * 0.2f)
-            {
-                if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
-                {
-                    Navigator.Stop();
-                    ClearFate();
-                    return true;
-                }
-
-                Navigator.MoveToPointWithin(fate.Location, fate.Radius * 0.2f, "FATE centre");
-                await Coroutine.Yield();
-            }
-
-            return true;
-        }
-
-        private static TimeSpan GetRandomTimeSpan()
-        {
-            return TimeSpan.FromMilliseconds(new Random().Next(500, 1500));
         }
     }
 }
