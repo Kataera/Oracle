@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 
 using Buddy.Coroutines;
 
+using ff14bot;
 using ff14bot.Managers;
 using ff14bot.RemoteWindows;
 
@@ -48,6 +49,11 @@ namespace Tarot.Behaviour.Tasks.Utilities
             while (Talk.DialogOpen)
             {
                 if (GameObjectManager.Attackers.Any())
+                {
+                    return false;
+                }
+
+                if (!Core.Player.HasTarget)
                 {
                     return false;
                 }

@@ -24,6 +24,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -44,6 +45,8 @@ namespace Tarot.Behaviour.Tasks.WaitTask
 {
     internal static class GrindMobs
     {
+        private static Stopwatch checkForTargetCooldown;
+
         public static async Task<bool> Main()
         {
             var target = await GetViableTarget();
@@ -59,32 +62,49 @@ namespace Tarot.Behaviour.Tasks.WaitTask
 
         private static async Task<BattleCharacter> GetViableTarget()
         {
-            var targets = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(MobFilter).Where(MobWithinRadius);
-
-            var navRequest = targets.Select(target => new CanFullyNavigateTarget {Id = target.ObjectId, Position = target.Location});
-            var navResults =
-                await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
-
-            var viableTargets = new Dictionary<BattleCharacter, float>();
-            foreach (var result in navResults)
+            if (checkForTargetCooldown == null)
             {
-                if (result.CanNavigate == 0)
+                checkForTargetCooldown = Stopwatch.StartNew();
+            }
+            else if (checkForTargetCooldown.Elapsed > TimeSpan.FromSeconds(1))
+            {
+                var targets = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(MobFilter).Where(MobWithinRadius);
+                if (!targets.Any())
                 {
-                    Blacklist.Add(result.Id, BlacklistFlags.Combat, TimeSpan.FromMinutes(15), "Can't navigate to mob.");
-                }
-                else
-                {
-                    var battleCharacter = targets.FirstOrDefault(target => target.ObjectId == result.Id);
-                    if (battleCharacter != null)
-                    {
-                        viableTargets.Add(battleCharacter, result.PathLength);
-                    }
+                    return null;
                 }
 
-                await Coroutine.Yield();
+                var navRequest = targets.Select(target => new CanFullyNavigateTarget {Id = target.ObjectId, Position = target.Location});
+                var navResults =
+                    await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+
+                var viableTargets = new Dictionary<BattleCharacter, float>();
+                foreach (var result in navResults)
+                {
+                    if (result.CanNavigate == 0)
+                    {
+                        if (!Blacklist.Contains(result.Id))
+                        {
+                            Blacklist.Add(result.Id, BlacklistFlags.Combat, TimeSpan.FromMinutes(15), "Can't navigate to mob.");
+                        }
+                    }
+                    else
+                    {
+                        var battleCharacter = targets.FirstOrDefault(target => target.ObjectId == result.Id);
+                        if (battleCharacter != null)
+                        {
+                            viableTargets.Add(battleCharacter, result.PathLength);
+                        }
+                    }
+
+                    await Coroutine.Yield();
+                }
+
+                checkForTargetCooldown.Restart();
+                return viableTargets.OrderBy(order => order.Value).FirstOrDefault().Key;
             }
 
-            return viableTargets.OrderBy(order => order.Value).FirstOrDefault().Key;
+            return null;
         }
 
         private static bool MobFilter(BattleCharacter battleCharacter)

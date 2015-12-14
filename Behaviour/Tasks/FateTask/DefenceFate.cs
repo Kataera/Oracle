@@ -38,13 +38,15 @@ namespace Tarot.Behaviour.Tasks.FateTask
     {
         public static async Task<bool> Main()
         {
-            if (TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
+            var fate = TarotFateManager.CurrentFate;
+
+            if (fate.Status == FateStatus.NOTACTIVE || fate.Status == FateStatus.COMPLETE)
             {
                 ClearFate();
                 return true;
             }
 
-            if (AnyViableTargets())
+            if (fate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
             {
                 var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
                 if (target != null)

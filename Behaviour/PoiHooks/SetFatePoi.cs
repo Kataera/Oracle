@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,6 +44,8 @@ namespace Tarot.Behaviour.PoiHooks
 {
     internal static class SetFatePoi
     {
+        private static Stopwatch chainFateTimer;
+
         public static async Task<bool> Main()
         {
             if (CommonBehaviors.IsLoading)
@@ -123,13 +126,13 @@ namespace Tarot.Behaviour.PoiHooks
                 return false;
             }
 
-            var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id);
-            if (TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE && tarotFate.Type != FateType.Collect)
+            if (TarotFateManager.CurrentFate.Status == FateStatus.NOTACTIVE)
             {
                 return false;
             }
 
-            if (!TarotFateManager.CurrentFate.IsValid)
+            var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id);
+            if (TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE && tarotFate.Type != FateType.Collect)
             {
                 return false;
             }
@@ -177,6 +180,17 @@ namespace Tarot.Behaviour.PoiHooks
             if (TarotFateManager.PreviousFate == null)
             {
                 return false;
+            }
+
+            if (chainFateTimer == null || !chainFateTimer.IsRunning)
+            {
+                chainFateTimer = Stopwatch.StartNew();
+            }
+            else if (chainFateTimer.Elapsed > TimeSpan.FromSeconds(TarotSettings.Instance.ChainFateWaitTimeout))
+            {
+                Logger.SendLog("Timed out waiting for the next FATE in the chain to appear.");
+                TarotFateManager.PreviousFate = null;
+                chainFateTimer.Reset();
             }
 
             var chainIdSuccess = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.PreviousFate.Id).ChainIdSuccess;
@@ -252,7 +266,7 @@ namespace Tarot.Behaviour.PoiHooks
             var randomWaitTime = new Random().Next(minTime, maxTime);
 
             Logger.SendLog("Waiting " + Math.Round(randomWaitTime / 1000f, 2) + " seconds before moving to FATE.");
-            await Coroutine.Wait(randomWaitTime, () => !TarotFateManager.CurrentFate.IsValid);
+            await Coroutine.Wait(randomWaitTime, () => TarotFateManager.CurrentFate.Status == FateStatus.NOTACTIVE);
 
             return true;
         }

@@ -46,26 +46,27 @@ namespace Tarot.Behaviour.Tasks.FateTask
     {
         public static async Task<bool> Main()
         {
-            var fate = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id);
-            var fateItemBagSlot = GetBagSlotFromItemId(fate.ItemId);
+            var fate = TarotFateManager.CurrentFate;
+            var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(fate.Id);
+            var fateItemBagSlot = GetBagSlotFromItemId(tarotFate.ItemId);
 
-            if (fateItemBagSlot != null)
+            if (fate.Status != FateStatus.NOTACTIVE && fateItemBagSlot != null)
             {
                 // Wait for potential inventory update.
                 var fateItemCount = fateItemBagSlot.Count;
                 await Coroutine.Wait(TimeSpan.FromSeconds(2), () => fateItemCount < fateItemBagSlot.Count);
 
-                if (GameObjectManager.GetObjectByNPCId(fate.NpcId) != null)
+                if (GameObjectManager.GetObjectByNPCId(tarotFate.NpcId) != null)
                 {
                     if (fateItemBagSlot.Count >= TarotSettings.Instance.CollectFateTurnInAtAmount)
                     {
                         Logger.SendLog("Turning in what we've collected.");
-                        await TurnInFateItems(GameObjectManager.GetObjectByNPCId(fate.NpcId));
+                        await TurnInFateItems(GameObjectManager.GetObjectByNPCId(tarotFate.NpcId));
                     }
                 }
             }
 
-            if (TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
+            if (fate.Status != FateStatus.NOTACTIVE && fate.Status == FateStatus.COMPLETE)
             {
                 if (Core.Player.InCombat)
                 {
@@ -75,14 +76,14 @@ namespace Tarot.Behaviour.Tasks.FateTask
                 if (fateItemBagSlot != null && fateItemBagSlot.Count >= 1)
                 {
                     Logger.SendLog("FATE is complete, turning in remaining items.");
-                    await TurnInFateItems(GameObjectManager.GetObjectByNPCId(fate.NpcId));
+                    await TurnInFateItems(GameObjectManager.GetObjectByNPCId(tarotFate.NpcId));
                 }
 
                 ClearFate();
                 return true;
             }
 
-            if (AnyViableTargets())
+            if (fate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
             {
                 var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
                 if (target != null)

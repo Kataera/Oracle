@@ -85,7 +85,9 @@ namespace Tarot.Behaviour.Tasks
             }
 
             Logger.SendDebugLog("Cannot determine FATE type, blacklisting.");
-            Blacklist.Add(TarotFateManager.CurrentFate.ObjectId, BlacklistFlags.Node, TimeSpan.MaxValue, "Cannot determine FATE type");
+            Blacklist.Add(TarotFateManager.CurrentFate.Id, BlacklistFlags.Node, TimeSpan.MaxValue, "Cannot determine FATE type.");
+            TarotFateManager.ClearCurrentFate("Cannot determine FATE type.");
+
             return false;
         }
     }

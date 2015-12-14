@@ -62,7 +62,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             turnInBagSlot.Handover();
 
             await Coroutine.Sleep(TarotSettings.Instance.TurnInActionDelay);
-            if (!Request.HandOverButtonClickable)
+            if (!Request.IsOpen || !Request.HandOverButtonClickable)
             {
                 Logger.SendErrorLog("Hand over failed.");
                 Request.Cancel();
