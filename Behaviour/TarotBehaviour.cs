@@ -81,7 +81,7 @@ namespace Tarot.Behaviour
             {
                 if (TarotFateManager.FateDatabase.GetFateFromFateData(currentFate).Type != FateType.Collect)
                 {
-                    TarotFateManager.ClearCurrentFate("Current FATE is finished.");
+                    TarotFateManager.ClearCurrentFate("FATE is no longer active.");
                     return true;
                 }
             }

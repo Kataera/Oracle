@@ -90,10 +90,7 @@ namespace Tarot.Managers
 
         public static void ClearCurrentFate(string reason)
         {
-            var tarotFateData = FateDatabase.GetFateFromId(CurrentFateId);
-            var wasFateAChain = tarotFateData.ChainIdFailure != 0 || tarotFateData.ChainIdSuccess != 0;
-
-            PreviousFateId = wasFateAChain ? CurrentFateId : 0;
+            PreviousFateId = CurrentFateId;
             CurrentFateId = 0;
 
             if (Poi.Current.Type == PoiType.Fate)
