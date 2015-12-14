@@ -78,28 +78,9 @@ namespace Tarot.Behaviour.Tasks.Utilities
         public static async Task<Aetheryte> GetClosestAetheryte(FateData fate)
         {
             var aetherytes = await GetNavigableAetherytes(fate);
-            var closestToFate = new Aetheryte
-            {
-                Distance = float.MaxValue,
-                Id = 0,
-                Location = Vector3.Zero
-            };
+            var closestAetheryte = aetherytes.OrderBy(node => node.Distance).FirstOrDefault();
 
-            foreach (var aetheryte in aetherytes)
-            {
-                if (closestToFate.Id == 0)
-                {
-                    closestToFate = aetheryte;
-                }
-                else if (closestToFate.Distance > aetheryte.Distance)
-                {
-                    closestToFate = aetheryte;
-                }
-
-                await Coroutine.Yield();
-            }
-
-            return closestToFate;
+            return closestAetheryte;
         }
 
         public static async Task<bool> TeleportToAetheryte(uint aetheryteId)

@@ -45,32 +45,24 @@ namespace Tarot.Settings
         private int bossEngagePercentage;
         private int chainFateWaitTimeout;
         private int collectFateTurnInAtAmount;
-
         private bool debugEnabled;
         private bool fateDelayMovement;
         private int fateDelayMovementMaximum;
         private int fateDelayMovementMinimum;
         private int fateMaxLevelsAbove;
         private int fateMaxLevelsBelow;
-
         private FateSelectMode fateSelectMode;
-
         private FateWaitMode fateWaitMode;
         private int grindMobRadius;
-
         private bool listHooksOnStart;
-
         private int megaBossEngagePercentage;
         private int mobMaximumLevelAbove;
-        private int mobMinumumLevelBelow;
-
+        private int mobMinimumLevelBelow;
         private bool runProblematicFates;
         private bool teleportIfQuicker;
         private int teleportMinimumDistanceDelta;
         private int turnInActionDelay;
-
         private bool waitAtFateForProgress;
-
         private bool waitForChainFates;
 
         private TarotSettings()
@@ -300,11 +292,11 @@ namespace Tarot.Settings
         [Setting]
         public int MobMinimumLevelBelow
         {
-            get { return this.mobMinumumLevelBelow; }
+            get { return this.mobMinimumLevelBelow; }
 
             set
             {
-                this.mobMinumumLevelBelow = value;
+                this.mobMinimumLevelBelow = value;
                 this.Save();
             }
         }
