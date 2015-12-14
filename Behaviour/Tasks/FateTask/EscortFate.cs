@@ -45,12 +45,15 @@ namespace Tarot.Behaviour.Tasks.FateTask
 {
     internal static class EscortFate
     {
-        private static int movementCooldown;
+        private static TimeSpan? movementCooldown;
         private static Stopwatch movementTimer;
 
         public static async Task<bool> Main()
         {
-            if (TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
+            var fate = TarotFateManager.CurrentFate;
+            var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(fate.Id);
+
+            if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
             {
                 ClearFate();
                 return true;
@@ -61,12 +64,12 @@ namespace Tarot.Behaviour.Tasks.FateTask
                 movementTimer = Stopwatch.StartNew();
             }
 
-            if (movementCooldown == 0)
+            if (movementCooldown == null)
             {
-                movementCooldown = new Random().Next(500, 1500);
+                movementCooldown = GetRandomTimeSpan();
             }
 
-            if (AnyViableTargets())
+            if (fate.IsValid && AnyViableTargets())
             {
                 var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
                 if (target != null)
@@ -74,56 +77,20 @@ namespace Tarot.Behaviour.Tasks.FateTask
                     Poi.Current = new Poi(target, PoiType.Kill);
                 }
             }
-            else
+            else if(fate.IsValid)
             {
-                // TODO: Refactor this.
-                GameObject escortNpc;
-                if (GameObjectManager.GetObjectByNPCId(TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id).NpcId)
-                    != null)
-                {
-                    escortNpc =
-                        GameObjectManager.GetObjectByNPCId(
-                            TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id).NpcId);
-                }
-                else
-                {
-                    escortNpc = GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
-                }
+                var escortNpc = GameObjectManager.GetObjectByNPCId(tarotFate.NpcId)
+                                       ?? GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
 
                 if (escortNpc == null)
                 {
-                    Logger.SendDebugLog("Cannot find escort NPC, defaulting to staying within the centre of the FATE.");
-                    while (Core.Player.Distance2D(TarotFateManager.CurrentFate.Location) > TarotFateManager.CurrentFate.Radius * 0.2f)
-                    {
-                        if (!TarotFateManager.CurrentFate.IsValid || TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
-                        {
-                            Navigator.Stop();
-                            return true;
-                        }
-
-                        Navigator.MoveToPointWithin(TarotFateManager.CurrentFate.Location, TarotFateManager.CurrentFate.Radius * 0.2f,
-                            "FATE centre.");
-                        await Coroutine.Yield();
-                    }
-
+                    await MoveToFateCentre();
                     return true;
                 }
-
-                // Don't spam movement.
-                if (movementTimer.Elapsed < TimeSpan.FromMilliseconds(Convert.ToDouble(movementCooldown)))
+                else
                 {
-                    return true;
+                    await MoveToNpc(escortNpc);
                 }
-
-                if (!(Core.Player.Distance2D(escortNpc.Location) > 7f))
-                {
-                    return true;
-                }
-
-                await MoveToNpc(escortNpc);
-
-                movementCooldown = new Random().Next(500, 1500);
-                Logger.SendDebugLog("Waiting " + movementCooldown + "ms before moving again.");
             }
 
             return true;
@@ -183,6 +150,16 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
         private static async Task<bool> MoveToNpc(GameObject npc)
         {
+            if (movementTimer.Elapsed < movementCooldown)
+            {
+                return true;
+            }
+
+            if (!(Core.Player.Distance2D(npc.Location) > 7f))
+            {
+                return true;
+            }
+
             // Find random point within 3 yards of NPC.
             const float radius = 3f;
             const float radiusSquared = radius * radius;
@@ -217,8 +194,34 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
             Navigator.PlayerMover.MoveStop();
             movementTimer.Restart();
+            movementCooldown = GetRandomTimeSpan();
+
+            Logger.SendDebugLog("Waiting " + movementCooldown.Value.TotalMilliseconds + "ms before moving again.");
+            return true;
+        }
+
+        private static async Task<bool> MoveToFateCentre()
+        {
+            var fate = TarotFateManager.CurrentFate;
+            while (Core.Player.Distance2D(fate.Location) > fate.Radius * 0.2f)
+            {
+                if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
+                {
+                    Navigator.Stop();
+                    ClearFate();
+                    return true;
+                }
+
+                Navigator.MoveToPointWithin(fate.Location, fate.Radius * 0.2f, "FATE centre");
+                await Coroutine.Yield();
+            }
 
             return true;
+        }
+
+        private static TimeSpan GetRandomTimeSpan()
+        {
+            return TimeSpan.FromMilliseconds(new Random().Next(500, 1500));
         }
     }
 }

@@ -128,6 +128,12 @@ namespace Tarot.Behaviour
                 return false;
             }
 
+            if (!TarotFateManager.CurrentFate.IsValid)
+            {
+                TarotFateManager.ClearCurrentFate("FATE is no longer valid.");
+                return false;
+            }
+
             if (Core.Player.Distance(TarotFateManager.CurrentFate.Location) > TarotFateManager.CurrentFate.Radius)
             {
                 await MoveToFate.Main(false);
@@ -145,7 +151,7 @@ namespace Tarot.Behaviour
                 return true;
             }
 
-            if (LevelSync.IsLevelSyncNeeded(TarotFateManager.CurrentFate))
+            if (TarotFateManager.CurrentFate.IsValid && LevelSync.IsLevelSyncNeeded(TarotFateManager.CurrentFate))
             {
                 await LevelSync.Main(TarotFateManager.CurrentFate);
             }
