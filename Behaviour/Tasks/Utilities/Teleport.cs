@@ -149,12 +149,14 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
                 if (navResult != null)
                 {
-                    distanceFromPlayer = navResult.PathLength - fate.Radius;
+                    distanceFromPlayer = navResult.PathLength - (fate.Radius * 0.75f);
+                    ;
                 }
             }
             else
             {
-                distanceFromPlayer = fate.Location.Distance(Core.Player.Location) - fate.Radius;
+                distanceFromPlayer = fate.Location.Distance(Core.Player.Location) - (fate.Radius * 0.75f);
+                ;
             }
 
             return distanceFromPlayer;
@@ -175,7 +177,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 foreach (var navResult in navResults.Where(result => result.CanNavigate != 0))
                 {
                     var aetheryte = allAetherytes.FirstOrDefault(result => result.Id == navResult.Id);
-                    aetheryte.Distance = navResult.PathLength - fate.Radius;
+                    aetheryte.Distance = navResult.PathLength - (fate.Radius * 0.75f);
                     viableAetheryteList.Add(aetheryte);
                     await Coroutine.Yield();
                 }

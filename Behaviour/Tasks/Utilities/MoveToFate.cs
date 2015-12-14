@@ -48,7 +48,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            if (!ignoreCombat && TarotSettings.Instance.TeleportIfQuicker)
+            if (!ignoreCombat && TarotSettings.Instance.TeleportIfQuicker && TarotFateManager.CurrentFate.IsValid)
             {
                 if (await Teleport.FasterToTeleport(TarotFateManager.CurrentFate))
                 {
@@ -57,7 +57,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 }
             }
 
-            if (!ignoreCombat && IsMountNeeded() && !Core.Player.IsMounted)
+            if (!ignoreCombat && IsMountNeeded() && !Core.Player.IsMounted && TarotFateManager.CurrentFate.IsValid)
             {
                 while (!await MountUp())
                 {
@@ -67,6 +67,14 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
             await Move();
             return true;
+        }
+
+        private static void ClearFate(FateData fate)
+        {
+            TarotFateManager.SetDoNotWaitFlag(true);
+            Logger.SendLog("'" + fate.Name + "' ended before we got there.");
+            TarotFateManager.ClearCurrentFate("FATE has ended.", false);
+            Navigator.Stop();
         }
 
         private static bool IsMountNeeded()
@@ -109,17 +117,19 @@ namespace Tarot.Behaviour.Tasks.Utilities
         {
             var fate = TarotFateManager.CurrentFate;
 
+            if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
+            {
+                ClearFate(fate);
+                return true;
+            }
+
             if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
                 while (!FateManager.WithinFate)
                 {
                     if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
                     {
-                        TarotFateManager.SetDoNotWaitFlag(true);
-                        Logger.SendLog("'" + fate.Name + "' ended before we got there.");
-                        TarotFateManager.ClearCurrentFate("FATE has ended.", false);
-
-                        Navigator.Stop();
+                        ClearFate(fate);
                         return true;
                     }
 
@@ -133,10 +143,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 {
                     if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
                     {
-                        Logger.SendLog("'" + fate.Name + "' ended before we got there.");
-                        TarotFateManager.ClearCurrentFate("FATE has ended.", false);
-
-                        Navigator.Stop();
+                        ClearFate(fate);
                         return true;
                     }
 

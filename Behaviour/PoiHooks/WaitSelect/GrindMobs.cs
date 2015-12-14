@@ -26,9 +26,6 @@ using System.Threading.Tasks;
 
 using ff14bot;
 using ff14bot.Helpers;
-using ff14bot.Navigation;
-
-using Tarot.Settings;
 
 namespace Tarot.Behaviour.PoiHooks.WaitSelect
 {
