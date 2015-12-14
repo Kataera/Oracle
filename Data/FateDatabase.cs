@@ -25,7 +25,8 @@
 using System;
 using System.Collections.Generic;
 
-using Tarot.Data.FateTypes;
+using ff14bot.Managers;
+
 using Tarot.Enumerations;
 using Tarot.Helpers;
 
@@ -47,12 +48,6 @@ namespace Tarot.Data
 
         public void AddFateToDatabase(Fate fate)
         {
-            if (fate == null)
-            {
-                Logger.SendDebugLog("Cannot add passed FATE to database, it is null.");
-                return;
-            }
-
             try
             {
                 this.fateDatabase.Add(fate.Id, fate);
@@ -69,7 +64,7 @@ namespace Tarot.Data
             }
         }
 
-        public Fate GetFateWithId(uint id)
+        public Fate GetFateFromId(uint id)
         {
             Fate fate;
             try
@@ -86,8 +81,31 @@ namespace Tarot.Data
             }
 
             // Create a null fate with Unsupported flag if we can't find it.
-            fate = new NullFate {SupportLevel = FateSupportLevel.Unsupported};
+            fate = new Fate {SupportLevel = FateSupportLevel.Unsupported};
             Logger.SendDebugLog("Fate with id: '" + id + "' not found, flagging as unsupported.");
+
+            return fate;
+        }
+
+        public Fate GetFateFromFateData(FateData fateData)
+        {
+            Fate fate;
+            try
+            {
+                if (this.fateDatabase.TryGetValue(fateData.Id, out fate))
+                {
+                    return fate;
+                }
+            }
+            catch (ArgumentNullException exception)
+            {
+                Logger.SendErrorLog("Error looking up FATE in the database.");
+                Logger.SendDebugLog("ArgumentNullException thrown:\n\n" + exception + "\n");
+            }
+
+            // Create a null fate with Unsupported flag if we can't find it.
+            fate = new Fate { SupportLevel = FateSupportLevel.Unsupported };
+            Logger.SendDebugLog("Fate with id: '" + fateData.Id + "' not found, flagging as unsupported.");
 
             return fate;
         }

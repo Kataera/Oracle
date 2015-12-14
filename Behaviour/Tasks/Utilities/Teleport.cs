@@ -150,13 +150,11 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 if (navResult != null)
                 {
                     distanceFromPlayer = navResult.PathLength - (fate.Radius * 0.75f);
-                    ;
                 }
             }
             else
             {
                 distanceFromPlayer = fate.Location.Distance(Core.Player.Location) - (fate.Radius * 0.75f);
-                ;
             }
 
             return distanceFromPlayer;

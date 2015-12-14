@@ -57,7 +57,10 @@ namespace Tarot.Behaviour.PoiHooks
             {
                 if (!IsFatePoiSet() && Poi.Current.Type != PoiType.Death && !GameObjectManager.Attackers.Any())
                 {
-                    Poi.Current = new Poi(TarotFateManager.CurrentFate, PoiType.Fate);
+                    if (TarotFateManager.GetCurrentFateData() != null)
+                    {
+                        Poi.Current = new Poi(TarotFateManager.GetCurrentFateData(), PoiType.Fate);
+                    }
                 }
 
                 return true;
@@ -99,7 +102,7 @@ namespace Tarot.Behaviour.PoiHooks
                     break;
             }
 
-            if (TarotFateManager.CurrentFate != null && TarotSettings.Instance.FateDelayMovement
+            if (TarotFateManager.GetCurrentFateData() != null && TarotSettings.Instance.FateDelayMovement
                 && !TarotFateManager.DoNotWaitBeforeMovingFlag)
             {
                 await WaitBeforeMoving();
@@ -111,7 +114,7 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static bool IsFatePoiSet()
         {
-            if (Poi.Current.Type != PoiType.Fate || Poi.Current.Fate != TarotFateManager.CurrentFate)
+            if (Poi.Current.Type != PoiType.Fate || Poi.Current.Fate != TarotFateManager.GetCurrentFateData())
             {
                 return false;
             }
@@ -121,18 +124,19 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static bool IsFateSet()
         {
-            if (TarotFateManager.CurrentFate == null)
+            var currentFate = TarotFateManager.GetCurrentFateData();
+            if (currentFate == null)
             {
                 return false;
             }
 
-            if (TarotFateManager.CurrentFate.Status == FateStatus.NOTACTIVE)
+            if (currentFate.Status == FateStatus.NOTACTIVE)
             {
                 return false;
             }
 
-            var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id);
-            if (TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE && tarotFate.Type != FateType.Collect)
+            var tarotFate = TarotFateManager.FateDatabase.GetFateFromFateData(currentFate);
+            if (currentFate.Status == FateStatus.COMPLETE && tarotFate.Type != FateType.Collect)
             {
                 return false;
             }
@@ -147,12 +151,12 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static bool PreviousFateChainedOnFailure()
         {
-            if (TarotFateManager.PreviousFate == null)
+            if (TarotFateManager.PreviousFateId == 0)
             {
                 return false;
             }
 
-            if (TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.PreviousFate.Id).ChainIdFailure != 0)
+            if (TarotFateManager.FateDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdFailure != 0)
             {
                 return true;
             }
@@ -162,12 +166,12 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static bool PreviousFateChainedOnSuccess()
         {
-            if (TarotFateManager.PreviousFate == null)
+            if (TarotFateManager.PreviousFateId == 0)
             {
                 return false;
             }
 
-            if (TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.PreviousFate.Id).ChainIdSuccess != 0)
+            if (TarotFateManager.FateDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdSuccess != 0)
             {
                 return true;
             }
@@ -177,7 +181,7 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static async Task<bool> SelectChainFate()
         {
-            if (TarotFateManager.PreviousFate == null)
+            if (TarotFateManager.PreviousFateId == 0)
             {
                 return false;
             }
@@ -189,12 +193,12 @@ namespace Tarot.Behaviour.PoiHooks
             else if (chainFateTimer.Elapsed > TimeSpan.FromSeconds(TarotSettings.Instance.ChainFateWaitTimeout))
             {
                 Logger.SendLog("Timed out waiting for the next FATE in the chain to appear.");
-                TarotFateManager.PreviousFate = null;
+                TarotFateManager.PreviousFateId = 0;
                 chainFateTimer.Reset();
             }
 
-            var chainIdSuccess = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.PreviousFate.Id).ChainIdSuccess;
-            var chainIdFailure = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.PreviousFate.Id).ChainIdFailure;
+            var chainIdSuccess = TarotFateManager.FateDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdSuccess;
+            var chainIdFailure = TarotFateManager.FateDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdFailure;
 
             // If there's a success chain only.
             if (chainIdSuccess != 0 && chainIdFailure == 0)
@@ -208,7 +212,7 @@ namespace Tarot.Behaviour.PoiHooks
                 }
 
                 Logger.SendLog("Selected FATE: '" + chainSuccess.Name + "'.");
-                TarotFateManager.CurrentFate = chainSuccess;
+                TarotFateManager.CurrentFateId = chainSuccess.Id;
                 Poi.Current = new Poi(chainSuccess, PoiType.Fate);
                 return true;
             }
@@ -225,7 +229,7 @@ namespace Tarot.Behaviour.PoiHooks
                 }
 
                 Logger.SendLog("Selected FATE: '" + chainFail.Name + "'.");
-                TarotFateManager.CurrentFate = chainFail;
+                TarotFateManager.CurrentFateId = chainFail.Id;
                 Poi.Current = new Poi(chainFail, PoiType.Fate);
                 return true;
             }
@@ -245,13 +249,13 @@ namespace Tarot.Behaviour.PoiHooks
                 if (chainSuccess != null && chainFail == null)
                 {
                     Logger.SendLog("Selected FATE: '" + chainSuccess.Name + "'.");
-                    TarotFateManager.CurrentFate = chainSuccess;
+                    TarotFateManager.CurrentFateId = chainSuccess.Id;
                     Poi.Current = new Poi(chainSuccess, PoiType.Fate);
                     return true;
                 }
 
                 Logger.SendLog("Selected FATE: '" + chainFail.Name + "'.");
-                TarotFateManager.CurrentFate = chainFail;
+                TarotFateManager.CurrentFateId = chainFail.Id;
                 Poi.Current = new Poi(chainFail, PoiType.Fate);
                 return true;
             }
@@ -261,12 +265,13 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static async Task<bool> WaitBeforeMoving()
         {
+            var currentFate = TarotFateManager.GetCurrentFateData();
             var minTime = TarotSettings.Instance.FateDelayMovementMinimum * 1000;
             var maxTime = TarotSettings.Instance.FateDelayMovementMaximum * 1000;
             var randomWaitTime = new Random().Next(minTime, maxTime);
 
             Logger.SendLog("Waiting " + Math.Round(randomWaitTime / 1000f, 2) + " seconds before moving to FATE.");
-            await Coroutine.Wait(randomWaitTime, () => TarotFateManager.CurrentFate.Status == FateStatus.NOTACTIVE);
+            await Coroutine.Wait(randomWaitTime, () => currentFate.Status == FateStatus.NOTACTIVE);
 
             return true;
         }

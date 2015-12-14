@@ -50,7 +50,8 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            var itemId = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id).ItemId;
+            var currentFate = TarotFateManager.GetCurrentFateData();
+            var itemId = TarotFateManager.FateDatabase.GetFateFromId(currentFate.Id).ItemId;
             var turnInBagSlot = GetBagSlotFromItemId(itemId);
 
             if (turnInBagSlot == null)

@@ -155,8 +155,8 @@ namespace Tarot
         public override void Stop()
         {
             // Clean up all botbase internal variables.
-            TarotFateManager.CurrentFate = null;
-            TarotFateManager.PreviousFate = null;
+            TarotFateManager.CurrentFateId = 0;
+            TarotFateManager.PreviousFateId = 0;
             TarotFateManager.FateDatabase = null;
 
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;

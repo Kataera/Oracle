@@ -70,14 +70,16 @@ namespace Tarot.Behaviour
 
         private static async Task<bool> HandleCombat()
         {
-            if (TarotFateManager.CurrentFate == null)
+            var currentFate = TarotFateManager.GetCurrentFateData();
+
+            if (currentFate == null)
             {
-                return true;
+                return false;
             }
 
-            if (TarotFateManager.CurrentFate != null && TarotFateManager.CurrentFate.Status == FateStatus.NOTACTIVE)
+            if (TarotFateManager.CurrentFateId !=0 && currentFate.Status == FateStatus.NOTACTIVE)
             {
-                if (TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id).Type != FateType.Collect)
+                if (TarotFateManager.FateDatabase.GetFateFromFateData(currentFate).Type != FateType.Collect)
                 {
                     TarotFateManager.ClearCurrentFate("Current FATE is finished.");
                     return true;
@@ -90,7 +92,7 @@ namespace Tarot.Behaviour
             }
 
             if (Poi.Current.BattleCharacter != null && Poi.Current.BattleCharacter.IsValid && !Poi.Current.BattleCharacter.IsFate
-                && !GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter) && TarotFateManager.CurrentFate != null)
+                && !GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
             {
                 ClearPoi("Targeted unit is not valid.", false);
                 return true;
@@ -129,26 +131,23 @@ namespace Tarot.Behaviour
 
         private static async Task<bool> HandleFate()
         {
-            if (TarotFateManager.CurrentFate == null)
+            var currentFate = TarotFateManager.GetCurrentFateData();
+
+            if (currentFate == null)
             {
                 return false;
             }
 
-            if (TarotFateManager.CurrentFate.Status == FateStatus.NOTACTIVE)
+            if (currentFate.Status == FateStatus.NOTACTIVE)
             {
-                TarotFateManager.ClearCurrentFate("FATE is no longer valid.");
+                TarotFateManager.ClearCurrentFate("FATE is no longer active.");
                 return false;
             }
 
-            if (Core.Player.Distance(TarotFateManager.CurrentFate.Location) > TarotFateManager.CurrentFate.Radius)
+            if (Core.Player.Distance(currentFate.Location) > currentFate.Radius)
             {
                 await MoveToFate.Main(false);
-            }
-
-            // Check again since Move to FATE task can clear the current FATE.
-            if (TarotFateManager.CurrentFate == null)
-            {
-                return false;
+                return true;
             }
 
             if (GameObjectManager.Attackers.Any(mob => !mob.IsFateGone) && !Core.Player.IsMounted)
@@ -157,9 +156,10 @@ namespace Tarot.Behaviour
                 return true;
             }
 
-            if (TarotFateManager.CurrentFate.Status != FateStatus.NOTACTIVE && LevelSync.IsLevelSyncNeeded(TarotFateManager.CurrentFate))
+            if (LevelSync.IsLevelSyncNeeded(currentFate))
             {
-                await LevelSync.Main(TarotFateManager.CurrentFate);
+                await LevelSync.Main(currentFate);
+                return true;
             }
 
             return await FateRunner.Main();
@@ -194,9 +194,11 @@ namespace Tarot.Behaviour
                 return false;
             }
 
+            var currentFate = TarotFateManager.GetCurrentFateData();
+
             if (Poi.Current.Type == PoiType.Death)
             {
-                if (TarotFateManager.CurrentFate != null)
+                if (currentFate != null)
                 {
                     TarotFateManager.ClearCurrentFate("We died.", false);
                 }

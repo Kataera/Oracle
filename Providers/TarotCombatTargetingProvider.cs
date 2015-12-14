@@ -76,6 +76,8 @@ namespace Tarot.Providers
 
         private bool Filter(bool inCombat, BattleCharacter battleCharacter)
         {
+            var currentFate = TarotFateManager.GetCurrentFateData();
+
             if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible
                 || battleCharacter.CurrentHealthPercent <= 0f)
             {
@@ -113,17 +115,17 @@ namespace Tarot.Providers
                 return true;
             }
 
-            if (!battleCharacter.IsFate && TarotFateManager.CurrentFate != null)
+            if (!battleCharacter.IsFate && currentFate != null)
             {
                 return false;
             }
 
-            if (TarotFateManager.CurrentFate != null && battleCharacter.FateId != TarotFateManager.CurrentFate.Id)
+            if (currentFate != null && battleCharacter.FateId != currentFate.Id)
             {
                 return false;
             }
 
-            if (TarotFateManager.CurrentFate == null || !TarotFateManager.CurrentFate.IsValid)
+            if (currentFate == null || !currentFate.IsValid)
             {
                 return false;
             }
@@ -134,6 +136,7 @@ namespace Tarot.Providers
         private double GetWeight(BattleCharacter battleCharacter)
         {
             var weight = (battleCharacter.Distance() * -30) + 1800;
+            var currentFate = TarotFateManager.GetCurrentFateData();
 
             if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)
             {
@@ -145,7 +148,7 @@ namespace Tarot.Providers
                 weight += 750;
             }
 
-            if (TarotFateManager.CurrentFate != null && battleCharacter.FateId == TarotFateManager.CurrentFate.Id)
+            if (currentFate != null && battleCharacter.FateId == currentFate.Id)
             {
                 weight += 210;
             }
