@@ -214,6 +214,7 @@ namespace Tarot.Behaviour.PoiHooks
                 Logger.SendLog("Selected FATE: '" + chainSuccess.Name + "'.");
                 TarotFateManager.CurrentFateId = chainSuccess.Id;
                 Poi.Current = new Poi(chainSuccess, PoiType.Fate);
+                chainFateTimer.Reset();
                 return true;
             }
 
@@ -231,6 +232,7 @@ namespace Tarot.Behaviour.PoiHooks
                 Logger.SendLog("Selected FATE: '" + chainFail.Name + "'.");
                 TarotFateManager.CurrentFateId = chainFail.Id;
                 Poi.Current = new Poi(chainFail, PoiType.Fate);
+                chainFateTimer.Reset();
                 return true;
             }
 
@@ -251,12 +253,14 @@ namespace Tarot.Behaviour.PoiHooks
                     Logger.SendLog("Selected FATE: '" + chainSuccess.Name + "'.");
                     TarotFateManager.CurrentFateId = chainSuccess.Id;
                     Poi.Current = new Poi(chainSuccess, PoiType.Fate);
+                    chainFateTimer.Reset();
                     return true;
                 }
 
                 Logger.SendLog("Selected FATE: '" + chainFail.Name + "'.");
                 TarotFateManager.CurrentFateId = chainFail.Id;
                 Poi.Current = new Poi(chainFail, PoiType.Fate);
+                chainFateTimer.Reset();
                 return true;
             }
 

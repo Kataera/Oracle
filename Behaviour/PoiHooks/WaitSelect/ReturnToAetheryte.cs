@@ -70,26 +70,16 @@ namespace Tarot.Behaviour.PoiHooks.WaitSelect
             }
 
             var aetherytes = WorldManager.AetheryteIdsForZone(WorldManager.ZoneId);
-            var navRequest =
-                aetherytes.Select(
-                    target => new CanFullyNavigateTarget {Id = target.Item1, Position = target.Item2});
+            var navRequest = aetherytes.Select(target => new CanFullyNavigateTarget {Id = target.Item1, Position = target.Item2});
             var navResults =
-                await
-                    Navigator.NavigationProvider.CanFullyNavigateToAsync(
-                        navRequest,
-                        Core.Player.Location,
-                        WorldManager.ZoneId);
+                await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
 
             foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
             {
-                var val = aetherytes.FirstOrDefault(result => result.Item1 == navResult.Id);
-                if (val != null)
+                var aetheryte = aetherytes.FirstOrDefault(result => result.Item1 == navResult.Id);
+                if (aetheryte != null)
                 {
-                    Blacklist.Add(
-                        val.Item1,
-                        BlacklistFlags.Node,
-                        TimeSpan.FromMinutes(10),
-                        "Cannot navigate to aetheryte crystal.");
+                    Blacklist.Add(aetheryte.Item1, BlacklistFlags.Node, TimeSpan.FromMinutes(10), "Cannot navigate to aetheryte crystal.");
                 }
             }
 

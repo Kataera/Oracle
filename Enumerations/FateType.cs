@@ -36,8 +36,6 @@ namespace Tarot.Enumerations
 
         Boss,
 
-        MegaBoss,
-
-        Null
+        MegaBoss
     }
 }

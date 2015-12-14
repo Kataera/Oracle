@@ -43,9 +43,13 @@ namespace Tarot.Settings
         public Dictionary<uint, Vector3> FateWaitLocations;
 
         private int bossEngagePercentage;
+        private bool bossFatesEnabled;
         private int chainFateWaitTimeout;
+        private bool collectFatesEnabled;
         private int collectFateTurnInAtAmount;
         private bool debugEnabled;
+        private bool defenceFatesEnabled;
+        private bool escortFatesEnabled;
         private bool fateDelayMovement;
         private int fateDelayMovementMaximum;
         private int fateDelayMovementMinimum;
@@ -54,8 +58,10 @@ namespace Tarot.Settings
         private FateSelectMode fateSelectMode;
         private FateWaitMode fateWaitMode;
         private int grindMobRadius;
+        private bool killFatesEnabled;
         private bool listHooksOnStart;
         private int megaBossEngagePercentage;
+        private bool megaBossFatesEnabled;
         private int mobMaximumLevelAbove;
         private int mobMinimumLevelBelow;
         private bool runProblematicFates;
@@ -106,6 +112,19 @@ namespace Tarot.Settings
             }
         }
 
+        [DefaultValue(true)]
+        [Setting]
+        public bool BossFatesEnabled
+        {
+            get { return this.bossFatesEnabled; }
+
+            set
+            {
+                this.bossFatesEnabled = value;
+                this.Save();
+            }
+        }
+
         [DefaultValue(60)]
         [Setting]
         public int ChainFateWaitTimeout
@@ -115,6 +134,19 @@ namespace Tarot.Settings
             set
             {
                 this.chainFateWaitTimeout = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool CollectFatesEnabled
+        {
+            get { return this.collectFatesEnabled; }
+
+            set
+            {
+                this.collectFatesEnabled = value;
                 this.Save();
             }
         }
@@ -141,6 +173,32 @@ namespace Tarot.Settings
             set
             {
                 this.debugEnabled = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool DefenceFatesEnabled
+        {
+            get { return this.defenceFatesEnabled; }
+
+            set
+            {
+                this.defenceFatesEnabled = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool EscortFatesEnabled
+        {
+            get { return this.escortFatesEnabled; }
+
+            set
+            {
+                this.escortFatesEnabled = value;
                 this.Save();
             }
         }
@@ -236,7 +294,7 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(150)]
+        [DefaultValue(200)]
         [Setting]
         public int GrindMobRadius
         {
@@ -245,6 +303,19 @@ namespace Tarot.Settings
             set
             {
                 this.grindMobRadius = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool KillFatesEnabled
+        {
+            get { return this.killFatesEnabled; }
+
+            set
+            {
+                this.killFatesEnabled = value;
                 this.Save();
             }
         }
@@ -262,7 +333,7 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(20)]
+        [DefaultValue(10)]
         [Setting]
         public int MegaBossEngagePercentage
         {
@@ -271,6 +342,19 @@ namespace Tarot.Settings
             set
             {
                 this.megaBossEngagePercentage = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool MegaBossFatesEnabled
+        {
+            get { return this.megaBossFatesEnabled; }
+
+            set
+            {
+                this.megaBossFatesEnabled = value;
                 this.Save();
             }
         }
