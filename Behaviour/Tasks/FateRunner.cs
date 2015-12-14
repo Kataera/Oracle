@@ -39,7 +39,14 @@ namespace Tarot.Behaviour.Tasks
     {
         public static async Task<bool> Main()
         {
-            switch (TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id).Type)
+            var currentFate = TarotFateManager.GetCurrentFateData();
+
+            if (currentFate == null)
+            {
+                return false;
+            }
+
+            switch (TarotFateManager.FateDatabase.GetFateFromFateData(currentFate).Type)
             {
                 case FateType.Kill:
                     await KillFate.Main();
@@ -64,7 +71,7 @@ namespace Tarot.Behaviour.Tasks
                     break;
             }
 
-            switch (TarotFateManager.CurrentFate.Icon)
+            switch (currentFate.Icon)
             {
                 case FateIconType.Battle:
                     await KillFate.Main();
@@ -85,7 +92,7 @@ namespace Tarot.Behaviour.Tasks
             }
 
             Logger.SendDebugLog("Cannot determine FATE type, blacklisting.");
-            Blacklist.Add(TarotFateManager.CurrentFate.Id, BlacklistFlags.Node, TimeSpan.MaxValue, "Cannot determine FATE type.");
+            Blacklist.Add(currentFate.Id, BlacklistFlags.Node, TimeSpan.MaxValue, "Cannot determine FATE type.");
             TarotFateManager.ClearCurrentFate("Cannot determine FATE type.");
 
             return false;

@@ -24,21 +24,26 @@
 
 using Tarot.Enumerations;
 
-namespace Tarot.Data.FateTypes
+namespace Tarot.Data
 {
-    internal class Escort : Fate
+    internal struct Fate
     {
-        public Escort()
-        {
-            this.ChainIdFailure = 0;
-            this.ChainIdSuccess = 0;
-            this.Id = 0;
-            this.ItemId = 0;
-            this.Level = 0;
-            this.Name = string.Empty;
-            this.NpcId = 0;
-            this.SupportLevel = FateSupportLevel.FullSupport;
-            this.Type = FateType.Escort;
-        }
+        public uint ChainIdFailure { get; set; }
+
+        public uint ChainIdSuccess { get; set; }
+
+        public uint Id { get; set; }
+
+        public uint ItemId { get; set; }
+
+        public uint Level { get; set; }
+
+        public string Name { get; set; }
+
+        public uint NpcId { get; set; }
+
+        public FateSupportLevel SupportLevel { get; set; }
+
+        public FateType Type { get; set; }
     }
 }

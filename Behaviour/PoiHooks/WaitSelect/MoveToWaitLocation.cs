@@ -54,7 +54,6 @@ namespace Tarot.Behaviour.PoiHooks.WaitSelect
                 var navRequest =
                     locations.Select(target => new CanFullyNavigateTarget {Id = target.Key, Position = target.Value})
                              .Where(target => target.Id == WorldManager.ZoneId);
-                ;
                 var navResults =
                     await
                         Navigator.NavigationProvider.CanFullyNavigateToAsync(

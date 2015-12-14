@@ -28,7 +28,6 @@ using System.Xml;
 using System.Xml.Schema;
 
 using Tarot.Data;
-using Tarot.Data.FateTypes;
 using Tarot.Enumerations;
 
 namespace Tarot.Helpers
@@ -81,48 +80,19 @@ namespace Tarot.Helpers
 
         private static Fate CreateFate()
         {
-            Fate fate;
-            switch (fateType)
+            var fate = new Fate
             {
-                case FateType.Kill:
-                    fate = new Kill();
-                    break;
+                ChainIdFailure = fateChainIdFail,
+                ChainIdSuccess = fateChainIdSuccess,
+                Id = fateId,
+                ItemId = fateCollectItemId,
+                Level = fateLevel,
+                Name = fateName,
+                NpcId = fateNpcId,
+                SupportLevel = fateSupportLevel,
+                Type = fateType
+            };
 
-                case FateType.Collect:
-                    fate = new Collect();
-                    break;
-
-                case FateType.Escort:
-                    fate = new Escort();
-                    break;
-
-                case FateType.Defence:
-                    fate = new Defence();
-                    break;
-
-                case FateType.Boss:
-                    fate = new Boss();
-                    break;
-
-                case FateType.MegaBoss:
-                    fate = new MegaBoss();
-                    break;
-
-                default:
-                    Logger.SendErrorLog("Error during FATE data parse.");
-                    Logger.SendDebugLog("FATE type is undefined, check FATE data is parsing correctly.");
-                    return null;
-            }
-
-            fate.ChainIdFailure = fateChainIdFail;
-            fate.ChainIdSuccess = fateChainIdSuccess;
-            fate.Id = fateId;
-            fate.ItemId = fateCollectItemId;
-            fate.Level = fateLevel;
-            fate.Name = fateName;
-            fate.NpcId = fateNpcId;
-            fate.SupportLevel = fateSupportLevel;
-            fate.Type = fateType;
             return fate;
         }
 
@@ -156,83 +126,85 @@ namespace Tarot.Helpers
             fateDataXml = GetXmlDocument();
             database = new FateDatabase();
 
-            // Parse fate data.
-            if (!fateDataInvalidFlag && fateDataXml.DocumentElement != null)
+            if (fateDataInvalidFlag || fateDataXml.DocumentElement == null)
             {
-                try
+                return;
+            }
+
+            // Parse fate data.
+            try
+            {
+                // Parse each node.
+                foreach (XmlNode currentNode in fateDataXml.DocumentElement.ChildNodes)
                 {
-                    // Parse each node.
-                    foreach (XmlNode currentNode in fateDataXml.DocumentElement.ChildNodes)
+                    // Ensure nodes are instantiated.
+                    fateId = 0;
+                    fateName = string.Empty;
+                    fateLevel = 0;
+                    fateType = FateType.Null;
+                    fateSupportLevel = FateSupportLevel.Unsupported;
+                    fateCollectItemId = 0;
+                    fateNpcId = 0;
+                    fateChainIdSuccess = 0;
+                    fateChainIdFail = 0;
+
+                    if (currentNode["ID"] != null)
                     {
-                        // Ensure nodes are instantiated.
-                        fateId = 0;
-                        fateName = string.Empty;
-                        fateLevel = 0;
-                        fateType = FateType.Null;
-                        fateSupportLevel = FateSupportLevel.Unsupported;
-                        fateCollectItemId = 0;
-                        fateNpcId = 0;
-                        fateChainIdSuccess = 0;
-                        fateChainIdFail = 0;
-
-                        if (currentNode["ID"] != null)
-                        {
-                            fateId = uint.Parse(currentNode["ID"].InnerText);
-                        }
-
-                        if (currentNode["Name"] != null)
-                        {
-                            fateName = currentNode["Name"].InnerText;
-                        }
-
-                        if (currentNode["Level"] != null)
-                        {
-                            fateLevel = uint.Parse(currentNode["Level"].InnerText);
-                        }
-
-                        if (currentNode["Type"] != null)
-                        {
-                            fateType = (FateType) int.Parse(currentNode["Type"].InnerText);
-                        }
-
-                        if (currentNode["TarotSupport"] != null)
-                        {
-                            fateSupportLevel = (FateSupportLevel) int.Parse(currentNode["TarotSupport"].InnerText);
-                        }
-
-                        if (currentNode["CollectItemId"] != null)
-                        {
-                            fateCollectItemId = uint.Parse(currentNode["CollectItemId"].InnerText);
-                        }
-
-                        if (currentNode["NpcId"] != null)
-                        {
-                            fateNpcId = uint.Parse(currentNode["NpcId"].InnerText);
-                        }
-
-                        if (currentNode["ChainIDSuccess"] != null)
-                        {
-                            fateChainIdSuccess = uint.Parse(currentNode["ChainIDSuccess"].InnerText);
-                        }
-
-                        if (currentNode["ChainIDFailure"] != null)
-                        {
-                            fateChainIdFail = uint.Parse(currentNode["ChainIDFailure"].InnerText);
-                        }
-
-                        database.AddFateToDatabase(CreateFate());
+                        fateId = uint.Parse(currentNode["ID"].InnerText);
                     }
+
+                    if (currentNode["Name"] != null)
+                    {
+                        fateName = currentNode["Name"].InnerText;
+                    }
+
+                    if (currentNode["Level"] != null)
+                    {
+                        fateLevel = uint.Parse(currentNode["Level"].InnerText);
+                    }
+
+                    if (currentNode["Type"] != null)
+                    {
+                        fateType = (FateType) int.Parse(currentNode["Type"].InnerText);
+                    }
+
+                    if (currentNode["TarotSupport"] != null)
+                    {
+                        fateSupportLevel = (FateSupportLevel) int.Parse(currentNode["TarotSupport"].InnerText);
+                    }
+
+                    if (currentNode["CollectItemId"] != null)
+                    {
+                        fateCollectItemId = uint.Parse(currentNode["CollectItemId"].InnerText);
+                    }
+
+                    if (currentNode["NpcId"] != null)
+                    {
+                        fateNpcId = uint.Parse(currentNode["NpcId"].InnerText);
+                    }
+
+                    if (currentNode["ChainIDSuccess"] != null)
+                    {
+                        fateChainIdSuccess = uint.Parse(currentNode["ChainIDSuccess"].InnerText);
+                    }
+
+                    if (currentNode["ChainIDFailure"] != null)
+                    {
+                        fateChainIdFail = uint.Parse(currentNode["ChainIDFailure"].InnerText);
+                    }
+
+                    database.AddFateToDatabase(CreateFate());
                 }
-                catch (FormatException exception)
-                {
-                    Logger.SendErrorLog("Formatting error during fate data parse.");
-                    Logger.SendDebugLog("FormatException thrown:\n\n" + exception + "\n");
-                }
-                catch (OverflowException exception)
-                {
-                    Logger.SendErrorLog("Numerical conversion resulted in overflow.");
-                    Logger.SendDebugLog("OverflowException thrown.\n\n" + exception);
-                }
+            }
+            catch (FormatException exception)
+            {
+                Logger.SendErrorLog("Formatting error during fate data parse.");
+                Logger.SendDebugLog("FormatException thrown:\n\n" + exception + "\n");
+            }
+            catch (OverflowException exception)
+            {
+                Logger.SendErrorLog("Numerical conversion resulted in overflow.");
+                Logger.SendDebugLog("OverflowException thrown.\n\n" + exception);
             }
         }
 
