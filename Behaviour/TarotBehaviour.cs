@@ -77,7 +77,7 @@ namespace Tarot.Behaviour
                 return false;
             }
 
-            if (TarotFateManager.CurrentFateId !=0 && currentFate.Status == FateStatus.NOTACTIVE)
+            if (TarotFateManager.CurrentFateId != 0 && currentFate.Status == FateStatus.NOTACTIVE)
             {
                 if (TarotFateManager.FateDatabase.GetFateFromFateData(currentFate).Type != FateType.Collect)
                 {
