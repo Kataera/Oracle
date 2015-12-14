@@ -70,6 +70,11 @@ namespace Tarot.Behaviour
 
         private static async Task<bool> HandleCombat()
         {
+            if (TarotFateManager.CurrentFate == null)
+            {
+                return true;
+            }
+
             if (TarotFateManager.CurrentFate != null && TarotFateManager.CurrentFate.Status == FateStatus.NOTACTIVE)
             {
                 if (TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id).Type != FateType.Collect)
