@@ -43,6 +43,7 @@ namespace Tarot.Settings
         public Dictionary<uint, Vector3> FateWaitLocations;
 
         private int bossEngagePercentage;
+        private int chainFateWaitTimeout;
         private int collectFateTurnInAtAmount;
 
         private bool debugEnabled;
@@ -109,6 +110,19 @@ namespace Tarot.Settings
             set
             {
                 this.bossEngagePercentage = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(60)]
+        [Setting]
+        public int ChainFateWaitTimeout
+        {
+            get { return this.chainFateWaitTimeout; }
+
+            set
+            {
+                this.chainFateWaitTimeout = value;
                 this.Save();
             }
         }
