@@ -49,7 +49,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
             if (Poi.Current.BattleCharacter == null || !Poi.Current.BattleCharacter.IsValid)
             {
-                TarotBehaviour.ClearPoi("Target is no longer valid.");
+                TarotBehaviour.ClearPoi("Target is no longer valid.", false);
                 Core.Player.ClearTarget();
                 return true;
             }
@@ -71,12 +71,12 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            if (blacklistTimer.Elapsed >= TimeSpan.FromSeconds(15))
+            if (blacklistTimer.Elapsed >= TimeSpan.FromSeconds(30))
             {
-                Logger.SendLog("Current targets HP has not changed in 15 seconds, blacklisting and moving on.");
+                Logger.SendLog("Current target's HP has not decreased in 30 seconds, blacklisting and moving on.");
                 Blacklist.Add(currentTarget.ObjectId, BlacklistFlags.Combat, TimeSpan.FromMinutes(15),
-                    "Target HP has not changed in too long.");
-                TarotBehaviour.ClearPoi("Target HP has not changed in too long.");
+                    "Target's HP has not changed in too long.");
+                TarotBehaviour.ClearPoi("Target's HP has not changed in too long.");
                 Core.Player.ClearTarget();
             }
 

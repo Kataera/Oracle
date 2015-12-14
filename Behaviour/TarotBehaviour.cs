@@ -52,7 +52,7 @@ namespace Tarot.Behaviour
             Poi.Clear(reason);
         }
 
-        private static void ClearPoi(string reason, bool sendLog)
+        public static void ClearPoi(string reason, bool sendLog)
         {
             if (sendLog)
             {

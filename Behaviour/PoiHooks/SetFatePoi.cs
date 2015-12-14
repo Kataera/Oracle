@@ -123,13 +123,13 @@ namespace Tarot.Behaviour.PoiHooks
                 return false;
             }
 
-            var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id);
-            if (TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE && tarotFate.Type != FateType.Collect)
+            if (!TarotFateManager.CurrentFate.IsValid)
             {
                 return false;
             }
 
-            if (!TarotFateManager.CurrentFate.IsValid)
+            var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id);
+            if (TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE && tarotFate.Type != FateType.Collect)
             {
                 return false;
             }
