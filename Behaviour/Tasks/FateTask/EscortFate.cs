@@ -53,7 +53,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
             var fate = TarotFateManager.CurrentFate;
             var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(fate.Id);
 
-            if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
+            if (fate.Status == FateStatus.NOTACTIVE || fate.Status == FateStatus.COMPLETE)
             {
                 ClearFate();
                 return true;
@@ -69,7 +69,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                 movementCooldown = GetRandomTimeSpan();
             }
 
-            if (fate.IsValid && AnyViableTargets())
+            if (fate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
             {
                 var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
                 if (target != null)
@@ -77,7 +77,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                     Poi.Current = new Poi(target, PoiType.Kill);
                 }
             }
-            else if (fate.IsValid)
+            else if (fate.Status != FateStatus.NOTACTIVE)
             {
                 var escortNpc = GameObjectManager.GetObjectByNPCId(tarotFate.NpcId)
                                 ?? GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
@@ -155,7 +155,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
             var fate = TarotFateManager.CurrentFate;
             while (Core.Player.Distance2D(fate.Location) > fate.Radius * 0.2f)
             {
-                if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
+                if (fate.Status == FateStatus.NOTACTIVE || fate.Status == FateStatus.COMPLETE)
                 {
                     Navigator.Stop();
                     ClearFate();
@@ -201,7 +201,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                     return true;
                 }
 
-                if (!TarotFateManager.CurrentFate.IsValid || TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
+                if (TarotFateManager.CurrentFate.Status == FateStatus.NOTACTIVE || TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
                 {
                     Navigator.PlayerMover.MoveStop();
                     timeout.Reset();

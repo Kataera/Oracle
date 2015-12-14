@@ -126,7 +126,7 @@ namespace Tarot.Behaviour.PoiHooks
                 return false;
             }
 
-            if (!TarotFateManager.CurrentFate.IsValid)
+            if (TarotFateManager.CurrentFate.Status == FateStatus.NOTACTIVE)
             {
                 return false;
             }
@@ -266,7 +266,7 @@ namespace Tarot.Behaviour.PoiHooks
             var randomWaitTime = new Random().Next(minTime, maxTime);
 
             Logger.SendLog("Waiting " + Math.Round(randomWaitTime / 1000f, 2) + " seconds before moving to FATE.");
-            await Coroutine.Wait(randomWaitTime, () => !TarotFateManager.CurrentFate.IsValid);
+            await Coroutine.Wait(randomWaitTime, () => TarotFateManager.CurrentFate.Status == FateStatus.NOTACTIVE);
 
             return true;
         }

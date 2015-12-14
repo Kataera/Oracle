@@ -117,7 +117,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
         {
             var fate = TarotFateManager.CurrentFate;
 
-            if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
+            if (!fate.IsValid || fate.Status == FateStatus.COMPLETE || fate.Status == FateStatus.NOTACTIVE)
             {
                 ClearFate(fate);
                 return true;
@@ -127,7 +127,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             {
                 while (!FateManager.WithinFate)
                 {
-                    if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
+                    if (!fate.IsValid || fate.Status == FateStatus.COMPLETE || fate.Status == FateStatus.NOTACTIVE)
                     {
                         ClearFate(fate);
                         return true;
@@ -141,7 +141,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             {
                 while (Core.Player.Distance(fate.Location) > fate.Radius * 0.75f)
                 {
-                    if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
+                    if (!fate.IsValid || fate.Status == FateStatus.COMPLETE || fate.Status == FateStatus.NOTACTIVE)
                     {
                         ClearFate(fate);
                         return true;

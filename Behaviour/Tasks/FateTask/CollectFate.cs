@@ -50,7 +50,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
             var tarotFate = TarotFateManager.FateDatabase.GetFateWithId(fate.Id);
             var fateItemBagSlot = GetBagSlotFromItemId(tarotFate.ItemId);
 
-            if (fate.IsValid && fateItemBagSlot != null)
+            if (fate.Status != FateStatus.NOTACTIVE && fateItemBagSlot != null)
             {
                 // Wait for potential inventory update.
                 var fateItemCount = fateItemBagSlot.Count;
@@ -66,7 +66,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                 }
             }
 
-            if (fate.IsValid && TarotFateManager.CurrentFate.Status == FateStatus.COMPLETE)
+            if (fate.Status != FateStatus.NOTACTIVE && fate.Status == FateStatus.COMPLETE)
             {
                 if (Core.Player.InCombat)
                 {
@@ -83,7 +83,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                 return true;
             }
 
-            if (fate.IsValid && AnyViableTargets())
+            if (fate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
             {
                 var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
                 if (target != null)

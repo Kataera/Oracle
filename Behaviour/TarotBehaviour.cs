@@ -26,6 +26,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using ff14bot;
+using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 
@@ -69,7 +70,7 @@ namespace Tarot.Behaviour
 
         private static async Task<bool> HandleCombat()
         {
-            if (TarotFateManager.CurrentFate != null && !TarotFateManager.CurrentFate.IsValid)
+            if (TarotFateManager.CurrentFate != null && TarotFateManager.CurrentFate.Status == FateStatus.NOTACTIVE)
             {
                 if (TarotFateManager.FateDatabase.GetFateWithId(TarotFateManager.CurrentFate.Id).Type != FateType.Collect)
                 {
@@ -104,7 +105,7 @@ namespace Tarot.Behaviour
                     return true;
                 }
 
-                if (fate.IsValid)
+                if (fate.Status != FateStatus.NOTACTIVE)
                 {
                     if (fate.Within2D(Core.Player.Location))
                     {
@@ -128,7 +129,7 @@ namespace Tarot.Behaviour
                 return false;
             }
 
-            if (!TarotFateManager.CurrentFate.IsValid)
+            if (TarotFateManager.CurrentFate.Status == FateStatus.NOTACTIVE)
             {
                 TarotFateManager.ClearCurrentFate("FATE is no longer valid.");
                 return false;
@@ -151,7 +152,7 @@ namespace Tarot.Behaviour
                 return true;
             }
 
-            if (TarotFateManager.CurrentFate.IsValid && LevelSync.IsLevelSyncNeeded(TarotFateManager.CurrentFate))
+            if (TarotFateManager.CurrentFate.Status != FateStatus.NOTACTIVE && LevelSync.IsLevelSyncNeeded(TarotFateManager.CurrentFate))
             {
                 await LevelSync.Main(TarotFateManager.CurrentFate);
             }

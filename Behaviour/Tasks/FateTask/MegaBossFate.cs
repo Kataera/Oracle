@@ -42,13 +42,13 @@ namespace Tarot.Behaviour.Tasks.FateTask
         {
             var fate = TarotFateManager.CurrentFate;
 
-            if (!fate.IsValid || fate.Status == FateStatus.COMPLETE)
+            if (fate.Status == FateStatus.NOTACTIVE || fate.Status == FateStatus.COMPLETE)
             {
                 ClearFate();
                 return true;
             }
 
-            if (fate.IsValid && fate.Progress < TarotSettings.Instance.MegaBossEngagePercentage)
+            if (fate.Status != FateStatus.NOTACTIVE && fate.Progress < TarotSettings.Instance.MegaBossEngagePercentage)
             {
                 if (!TarotSettings.Instance.WaitAtFateForProgress)
                 {
@@ -64,7 +64,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                 return true;
             }
 
-            if (fate.IsValid && AnyViableTargets())
+            if (fate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
             {
                 var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
                 if (target != null)
