@@ -115,6 +115,11 @@ namespace Tarot.Behaviour.Tasks.WaitTask
                 return false;
             }
 
+            if (battleCharacter.TappedByOther)
+            {
+                return false;
+            }
+
             if (Core.Player.ClassLevel - TarotSettings.Instance.MobMinimumLevelBelow > battleCharacter.ClassLevel)
             {
                 return false;
