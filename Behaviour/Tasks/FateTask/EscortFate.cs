@@ -76,7 +76,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
                 {
                     Logger.SendDebugLog("FATE has preferred targets listed, searching for them.");
                     var targets = GameObjectManager.GetObjectsByNPCIds<BattleCharacter>(tarotFate.PreferredTargetId.ToArray());
-                    target = targets.OrderBy(bc => bc.Distance(Core.Player)).FirstOrDefault();
+                    target = targets.OrderBy(bc => bc.Distance(Core.Player)).FirstOrDefault(bc => bc.IsValid && bc.IsAlive);
 
                     if (target == null)
                     {

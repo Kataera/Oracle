@@ -137,6 +137,13 @@ namespace Tarot.Providers
         {
             var weight = (battleCharacter.Distance() * -30) + 1800;
             var currentFate = TarotFateManager.GetCurrentFateData();
+            var tarotFate = TarotFateManager.FateDatabase.GetFateFromFateData(currentFate);
+
+            // If FATE has a preferred target, prioritise it we're out of combat.
+            if (tarotFate.PreferredTargetId.Contains(battleCharacter.NpcId) && !Core.Player.InCombat)
+            {
+                weight += 2000;
+            }
 
             if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)
             {
