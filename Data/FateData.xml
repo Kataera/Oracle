@@ -1126,6 +1126,7 @@
     <Level>12</Level>
     <Type>&Kill;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <PreferredTargetId>1362</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>306</ID>

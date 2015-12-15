@@ -43,6 +43,10 @@ namespace Tarot.Behaviour.PoiHooks.FateSelect
 
             var activeFates = await TarotFateManager.GetActiveFateDistances();
             var closestFates = activeFates.OrderBy(kvp => kvp.Value).Where(fate => TarotFateManager.FateFilter(fate.Key));
+            foreach (var fate in closestFates)
+            {
+                Logger.SendDebugLog("Found FATE '" + fate.Key.Name + "'. Distance to its centre is " + fate.Value + " yalms.");
+            }
 
             if (!closestFates.Any())
             {

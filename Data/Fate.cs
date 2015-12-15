@@ -22,6 +22,8 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Collections.Generic;
+
 using Tarot.Enumerations;
 
 namespace Tarot.Data
@@ -41,6 +43,8 @@ namespace Tarot.Data
         public string Name { get; set; }
 
         public uint NpcId { get; set; }
+
+        public List<uint> PreferredTargetId { get; set; }
 
         public FateSupportLevel SupportLevel { get; set; }
 

@@ -148,6 +148,11 @@ namespace Tarot.Providers
                 weight += 750;
             }
 
+            if (!battleCharacter.TappedByOther)
+            {
+                weight += 100;
+            }
+
             if (currentFate != null && battleCharacter.FateId == currentFate.Id)
             {
                 weight += 210;

@@ -44,6 +44,7 @@
         <xs:element ref="TarotSupport" maxOccurs="1" minOccurs="1" />
         <xs:element ref="CollectItemId" maxOccurs="1" minOccurs="0" />
         <xs:element ref="NpcId" maxOccurs="1" minOccurs="0" />
+        <xs:element ref="PreferredTargetId" maxOccurs="unbounded" minOccurs="0" />
         <xs:element ref="ChainIDSuccess" maxOccurs="1" minOccurs="0" />
         <xs:element ref="ChainIDFail" maxOccurs="1" minOccurs="0" />
       </xs:sequence>
@@ -94,6 +95,7 @@
   </xs:element>
   <xs:element name="CollectItemId" type="xs:integer" />
   <xs:element name="NpcId" type="xs:integer" />
+  <xs:element name="PreferredTargetId" type="xs:integer" />
   <xs:element name="ChainIDSuccess">
     <xs:simpleType>
       <xs:restriction base="xs:integer">

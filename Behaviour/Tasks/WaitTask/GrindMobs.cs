@@ -83,9 +83,13 @@ namespace Tarot.Behaviour.Tasks.WaitTask
                 {
                     if (result.CanNavigate == 0)
                     {
-                        if (!Blacklist.Contains(result.Id))
+                        var blacklistEntry = Blacklist.GetEntry(result.Id);
+                        if (blacklistEntry == null)
                         {
-                            Blacklist.Add(result.Id, BlacklistFlags.Combat, TimeSpan.FromMinutes(15), "Can't navigate to mob.");
+                            var mob = GameObjectManager.GetObjectByObjectId(result.Id);
+                            Logger.SendDebugLog("Blacklisting " + mob.Name + " (" + mob.ObjectId.ToString("X")
+                                                + "). It can't be navigated to.");
+                            Blacklist.Add(mob, BlacklistFlags.Combat, TimeSpan.FromMinutes(15), "Can't navigate to mob.");
                         }
                     }
                     else
