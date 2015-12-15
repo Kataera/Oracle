@@ -146,7 +146,7 @@ namespace Tarot.Providers
             }
 
             // If FATE has a preferred target, prioritise it we're out of combat.
-            if (tarotFate.PreferredTargetId.Contains(battleCharacter.NpcId) && !Core.Player.InCombat)
+            if (tarotFate.PreferredTargetId != null && tarotFate.PreferredTargetId.Contains(battleCharacter.NpcId) && !Core.Player.InCombat)
             {
                 weight += 2000;
             }

@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 
 using Buddy.Coroutines;
 
+using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Enums;
 using ff14bot.Helpers;
@@ -275,7 +276,7 @@ namespace Tarot.Behaviour.PoiHooks
             var randomWaitTime = new Random().Next(minTime, maxTime);
 
             Logger.SendLog("Waiting " + Math.Round(randomWaitTime / 1000f, 2) + " seconds before moving to FATE.");
-            await Coroutine.Wait(randomWaitTime, () => currentFate.Status == FateStatus.NOTACTIVE);
+            await Coroutine.Wait(randomWaitTime, () => currentFate.Status == FateStatus.NOTACTIVE || Core.Player.InCombat);
 
             return true;
         }
