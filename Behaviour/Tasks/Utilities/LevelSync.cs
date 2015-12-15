@@ -51,7 +51,8 @@ namespace Tarot.Behaviour.Tasks.Utilities
             }
 
             var levelSyncCooldown = new Stopwatch();
-            while (!Core.Player.IsLevelSynced && FateManager.WithinFate && fate.Status != FateStatus.NOTACTIVE && fate.Status != FateStatus.COMPLETE)
+            while (!Core.Player.IsLevelSynced && FateManager.WithinFate && fate.Status != FateStatus.NOTACTIVE
+                   && fate.Status != FateStatus.COMPLETE)
             {
                 if (!levelSyncCooldown.IsRunning || levelSyncCooldown.ElapsedMilliseconds > 2000)
                 {

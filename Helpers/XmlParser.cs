@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Schema;
@@ -53,6 +54,8 @@ namespace Tarot.Helpers
         private static string fateName;
 
         private static uint fateNpcId;
+
+        private static List<uint> fatePreferredTargetId;
 
         private static FateSupportLevel fateSupportLevel;
 
@@ -89,6 +92,7 @@ namespace Tarot.Helpers
                 Level = fateLevel,
                 Name = fateName,
                 NpcId = fateNpcId,
+                PreferredTargetId = fatePreferredTargetId,
                 SupportLevel = fateSupportLevel,
                 Type = fateType
             };
@@ -145,6 +149,7 @@ namespace Tarot.Helpers
                     fateSupportLevel = FateSupportLevel.Unsupported;
                     fateCollectItemId = 0;
                     fateNpcId = 0;
+                    fatePreferredTargetId = new List<uint>();
                     fateChainIdSuccess = 0;
                     fateChainIdFail = 0;
 
@@ -181,6 +186,22 @@ namespace Tarot.Helpers
                     if (currentNode["NpcId"] != null)
                     {
                         fateNpcId = uint.Parse(currentNode["NpcId"].InnerText);
+                    }
+
+                    if (currentNode["PreferredTargetId"] != null)
+                    {
+                        var targets = currentNode.SelectNodes("PreferredTargetId");
+                        if (targets != null)
+                        {
+                            for (var i = 0; i < targets.Count; i++)
+                            {
+                                var xmlNode = targets.Item(i);
+                                if (xmlNode != null)
+                                {
+                                    fatePreferredTargetId.Add(uint.Parse(xmlNode.InnerText));
+                                }
+                            }
+                        }
                     }
 
                     if (currentNode["ChainIDSuccess"] != null)

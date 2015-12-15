@@ -25,11 +25,13 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using ff14bot;
 using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Objects;
 
+using Tarot.Helpers;
 using Tarot.Managers;
 
 namespace Tarot.Behaviour.Tasks.FateTask
@@ -39,6 +41,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
         public static async Task<bool> Main()
         {
             var currentFate = TarotFateManager.GetCurrentFateData();
+            var tarotFate = TarotFateManager.FateDatabase.GetFateFromFateData(currentFate);
 
             if (currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
             {
@@ -48,7 +51,28 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
             if (currentFate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
             {
-                var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
+                BattleCharacter target = null;
+                if (tarotFate.PreferredTargetId.Any())
+                {
+                    Logger.SendDebugLog("FATE has preferred targets listed, searching for them.");
+                    var targets = GameObjectManager.GetObjectsByNPCIds<BattleCharacter>(tarotFate.PreferredTargetId.ToArray());
+                    target = targets.OrderBy(bc => bc.Distance(Core.Player)).FirstOrDefault(bc => bc.IsValid && bc.IsAlive);
+
+                    if (target == null)
+                    {
+                        Logger.SendDebugLog("Could not find any mobs with the preferred target's ID.");
+                    }
+                    else
+                    {
+                        Logger.SendDebugLog("Found target '" + target.Name + "' which matches the preferred target ID (" + target.NpcId + ").");
+                    }
+                }
+
+                if (target == null)
+                {
+                    target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
+                }
+
                 if (target != null)
                 {
                     Poi.Current = new Poi(target, PoiType.Kill);

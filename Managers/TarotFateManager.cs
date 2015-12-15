@@ -90,10 +90,7 @@ namespace Tarot.Managers
 
         public static void ClearCurrentFate(string reason)
         {
-            var tarotFateData = FateDatabase.GetFateFromId(CurrentFateId);
-            var wasFateAChain = tarotFateData.ChainIdFailure != 0 || tarotFateData.ChainIdSuccess != 0;
-
-            PreviousFateId = wasFateAChain ? CurrentFateId : 0;
+            PreviousFateId = CurrentFateId;
             CurrentFateId = 0;
 
             if (Poi.Current.Type == PoiType.Fate)
@@ -115,7 +112,37 @@ namespace Tarot.Managers
 
         public static bool FateFilter(FateData fate)
         {
-            var tarotFateData = FateDatabase.GetFateFromId(fate.Id);
+            var tarotFateData = FateDatabase.GetFateFromFateData(fate);
+
+            if (tarotFateData.Type == FateType.Boss && !TarotSettings.Instance.BossFatesEnabled)
+            {
+                return false;
+            }
+
+            if (tarotFateData.Type == FateType.Collect && !TarotSettings.Instance.CollectFatesEnabled)
+            {
+                return false;
+            }
+
+            if (tarotFateData.Type == FateType.Defence && !TarotSettings.Instance.DefenceFatesEnabled)
+            {
+                return false;
+            }
+
+            if (tarotFateData.Type == FateType.Escort && !TarotSettings.Instance.EscortFatesEnabled)
+            {
+                return false;
+            }
+
+            if (tarotFateData.Type == FateType.Kill && !TarotSettings.Instance.KillFatesEnabled)
+            {
+                return false;
+            }
+
+            if (tarotFateData.Type == FateType.MegaBoss && !TarotSettings.Instance.MegaBossFatesEnabled)
+            {
+                return false;
+            }
 
             if (Blacklist.Contains(fate.Id, BlacklistFlags.Node))
             {

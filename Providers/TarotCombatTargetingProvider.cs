@@ -31,6 +31,7 @@ using ff14bot.Managers;
 using ff14bot.NeoProfiles;
 using ff14bot.Objects;
 
+using Tarot.Data;
 using Tarot.Managers;
 
 namespace Tarot.Providers
@@ -137,6 +138,18 @@ namespace Tarot.Providers
         {
             var weight = (battleCharacter.Distance() * -30) + 1800;
             var currentFate = TarotFateManager.GetCurrentFateData();
+            var tarotFate = new Fate();
+
+            if (currentFate != null)
+            {
+                tarotFate = TarotFateManager.FateDatabase.GetFateFromFateData(currentFate);
+            }
+
+            // If FATE has a preferred target, prioritise it we're out of combat.
+            if (tarotFate.PreferredTargetId != null && tarotFate.PreferredTargetId.Contains(battleCharacter.NpcId) && !Core.Player.InCombat)
+            {
+                weight += 2000;
+            }
 
             if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)
             {
@@ -146,6 +159,11 @@ namespace Tarot.Providers
             if (battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Core.Player.ObjectId)
             {
                 weight += 750;
+            }
+
+            if (!battleCharacter.TappedByOther)
+            {
+                weight += 100;
             }
 
             if (currentFate != null && battleCharacter.FateId == currentFate.Id)
