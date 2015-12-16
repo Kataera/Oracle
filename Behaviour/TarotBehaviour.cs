@@ -25,6 +25,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using Buddy.Coroutines;
+
 using ff14bot;
 using ff14bot.Enums;
 using ff14bot.Helpers;
@@ -194,15 +196,10 @@ namespace Tarot.Behaviour
                 return false;
             }
 
-            var currentFate = TarotFateManager.GetCurrentFateData();
 
             if (Poi.Current.Type == PoiType.Death)
             {
-                if (currentFate != null)
-                {
-                    TarotFateManager.ClearCurrentFate("We died.", false);
-                }
-
+                await Coroutine.Sleep(500);
                 return false;
             }
 
