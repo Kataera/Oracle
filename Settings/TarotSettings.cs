@@ -65,6 +65,7 @@ namespace Tarot.Settings
         private int mobMaximumLevelAbove;
         private int mobMinimumLevelBelow;
         private bool runProblematicFates;
+        private TarotOperationMode tarotOperationMode;
         private bool teleportIfQuicker;
         private int teleportMinimumDistanceDelta;
         private int turnInActionDelay;
@@ -394,6 +395,19 @@ namespace Tarot.Settings
             set
             {
                 this.runProblematicFates = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(TarotOperationMode.FateGrind)]
+        [Setting]
+        public TarotOperationMode TarotOperationMode
+        {
+            get { return this.tarotOperationMode; }
+
+            set
+            {
+                this.tarotOperationMode = value;
                 this.Save();
             }
         }
