@@ -155,7 +155,7 @@ namespace Tarot.Providers
             if (!Core.Player.InCombat)
             {
                 weight = GameObjectManager.GetObjectsOfType<BattleCharacter>()
-                                          .Aggregate(weight, (current, mob) => current - 5 * (10 / mob.Distance(battleCharacter)));
+                                          .Aggregate(weight, (current, mob) => current - 2 * (10 / mob.Distance(battleCharacter)));
             }
 
             if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)
