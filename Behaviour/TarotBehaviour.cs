@@ -25,8 +25,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using Buddy.Coroutines;
-
 using ff14bot;
 using ff14bot.Enums;
 using ff14bot.Helpers;
