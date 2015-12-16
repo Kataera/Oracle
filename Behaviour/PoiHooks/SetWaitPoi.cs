@@ -24,7 +24,9 @@
 
 using System.Threading.Tasks;
 
+using ff14bot;
 using ff14bot.Behavior;
+using ff14bot.Managers;
 
 using Tarot.Behaviour.PoiHooks.WaitSelect;
 using Tarot.Enumerations;
@@ -39,6 +41,11 @@ namespace Tarot.Behaviour.PoiHooks
         public static async Task<bool> Main()
         {
             if (CommonBehaviors.IsLoading)
+            {
+                return false;
+            }
+
+            if (IsZoneChangeNeeded())
             {
                 return false;
             }
@@ -69,6 +76,24 @@ namespace Tarot.Behaviour.PoiHooks
             }
 
             return false;
+        }
+
+        private static bool IsZoneChangeNeeded()
+        {
+            uint aetheryteId = 0;
+            TarotSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
+
+            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
+            {
+                return false;
+            }
+
+            if (WorldManager.GetZoneForAetheryteId(aetheryteId) == WorldManager.ZoneId)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

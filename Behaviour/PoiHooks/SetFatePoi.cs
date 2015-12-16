@@ -54,6 +54,11 @@ namespace Tarot.Behaviour.PoiHooks
                 return false;
             }
 
+            if (IsZoneChangeNeeded())
+            {
+                return false;
+            }
+
             if (IsFateSet())
             {
                 if (!IsFatePoiSet() && Poi.Current.Type != PoiType.Death && !GameObjectManager.Attackers.Any())
@@ -266,6 +271,24 @@ namespace Tarot.Behaviour.PoiHooks
             }
 
             return false;
+        }
+
+        private static bool IsZoneChangeNeeded()
+        {
+            uint aetheryteId = 0;
+            TarotSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
+
+            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
+            {
+                return false;
+            }
+
+            if (WorldManager.GetZoneForAetheryteId(aetheryteId) == WorldManager.ZoneId)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private static async Task<bool> WaitBeforeMoving()

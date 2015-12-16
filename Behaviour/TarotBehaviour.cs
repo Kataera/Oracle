@@ -35,6 +35,7 @@ using Tarot.Behaviour.Tasks.Utilities;
 using Tarot.Enumerations;
 using Tarot.Helpers;
 using Tarot.Managers;
+using Tarot.Settings;
 
 using TreeSharp;
 
@@ -84,11 +85,6 @@ namespace Tarot.Behaviour
                     TarotFateManager.ClearCurrentFate("FATE is no longer active.");
                     return true;
                 }
-            }
-
-            if (await BlacklistMob.IsBlacklistNeeded())
-            {
-                return true;
             }
 
             if (Poi.Current.BattleCharacter != null && Poi.Current.BattleCharacter.IsValid && !Poi.Current.BattleCharacter.IsFate
@@ -182,6 +178,38 @@ namespace Tarot.Behaviour
             return await WaitRunner.Main();
         }
 
+        private static async Task<bool> HandleZoneChange()
+        {
+            if (Core.Player.IsLevelSynced || Core.Player.IsDead)
+            {
+                return false;
+            }
+
+            if (Poi.Current.Type == PoiType.Kill || Poi.Current.Type == PoiType.Fate || TarotFateManager.CurrentFateId != 0)
+            {
+                return false;
+            }
+
+            uint aetheryteId = 0;
+            TarotSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
+
+            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
+            {
+                return false;
+            }
+
+            if (WorldManager.GetZoneForAetheryteId(aetheryteId) == WorldManager.ZoneId)
+            {
+                return false;
+            }
+
+            var zoneName = WorldManager.AvailableLocations.FirstOrDefault(teleport => teleport.AetheryteId == aetheryteId).Name;
+            Logger.SendLog("Character is level " + Core.Player.ClassLevel + ", teleporting to " + zoneName + ".");
+            await Teleport.TeleportToAetheryte(aetheryteId);
+
+            return true;
+        }
+
         private static async Task<bool> Main()
         {
             if (TarotFateManager.FateDatabase == null)
@@ -192,6 +220,11 @@ namespace Tarot.Behaviour
             if (Poi.Current == null)
             {
                 return false;
+            }
+
+            if (TarotSettings.Instance.ChangeZonesEnabled)
+            {
+                await HandleZoneChange();
             }
 
             switch (Poi.Current.Type)
