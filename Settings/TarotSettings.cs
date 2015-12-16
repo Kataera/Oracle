@@ -498,76 +498,79 @@ namespace Tarot.Settings
 
         private void PopulateZoneLevels()
         {
-            // 1-12 Western Thanalan (Horizon).
-            for (uint i = 1; i < 12; i++)
+            for (uint i = 1; i < 61; i++)
             {
-                this.ZoneLevels.Add(i, Horizon);
-            }
+                // 1 - 12 Western Thanalan (Horizon).
+                if (i < 12)
+                {
+                    this.ZoneLevels.Add(i, Horizon);
+                }
 
-            // 12 - 18 Western La Noscea (Aleport).
-            for (uint i = 12; i < 18; i++)
-            {
-                this.ZoneLevels.Add(i, Aleport);
-            }
+                // 12 - 18 Western La Noscea (Aleport).
+                else if (i < 18)
+                {
+                    this.ZoneLevels.Add(i, Aleport);
+                }
 
-            // 18-24 East Shroud (The Hawthorne Hut).
-            for (uint i = 18; i < 24; i++)
-            {
-                this.ZoneLevels.Add(i, HawthorneHut);
-            }
+                // 18 - 24 East Shroud (The Hawthorne Hut).
+                else if (i < 24)
+                {
+                    this.ZoneLevels.Add(i, HawthorneHut);
+                }
 
-            // 24-29 South Shroud (Quarrymill).
-            for (uint i = 24; i < 29; i++)
-            {
-                this.ZoneLevels.Add(i, Quarrymill);
-            }
+                // 24 - 29 South Shroud (Quarrymill).
+                else if (i < 29)
+                {
+                    this.ZoneLevels.Add(i, Quarrymill);
+                }
 
-            // 29-36 Eastern La Noscea (Costa del Sol).
-            for (uint i = 29; i < 36; i++)
-            {
-                this.ZoneLevels.Add(i, CostaDelSol);
-            }
+                // 29 - 36 Eastern La Noscea (Costa del Sol).
+                else if (i < 36)
+                {
+                    this.ZoneLevels.Add(i, CostaDelSol);
+                }
 
-            // 36-43 Coerthas Central Highlands (Camp Dragonhead).
-            for (uint i = 36; i < 43; i++)
-            {
-                this.ZoneLevels.Add(i, CampDragonhead);
-            }
+                // 36 - 43 Coerthas Central Highlands (Camp Dragonhead).
+                else if (i < 43)
+                {
+                    this.ZoneLevels.Add(i, CampDragonhead);
+                }
 
-            // 43-46 Western La Noscea (Aleport).
-            for (uint i = 43; i < 46; i++)
-            {
-                this.ZoneLevels.Add(i, Aleport);
-            }
+                // 43 - 46 Western La Noscea (Aleport).
+                else if (i < 46)
+                {
+                    this.ZoneLevels.Add(i, Aleport);
+                }
 
-            // 46-50 Northern Thanalan (Ceruleum Processing Plant).
-            for (uint i = 46; i < 50; i++)
-            {
-                this.ZoneLevels.Add(i, CeruleumProcessingPlant);
-            }
+                // 46 - 50 Northern Thanalan (Ceruleum Processing Plant).
+                else if (i < 50)
+                {
+                    this.ZoneLevels.Add(i, CeruleumProcessingPlant);
+                }
 
-            // 50 - 52 Coerthas Western Highlands (Falcon's Nest).
-            for (uint i = 50; i < 52; i++)
-            {
-                this.ZoneLevels.Add(i, FalconsNest);
-            }
+                // 50 - 52 Coerthas Western Highlands (Falcon's Nest).
+                else if (i < 52)
+                {
+                    this.ZoneLevels.Add(i, FalconsNest);
+                }
 
-            // 52-54 The Dravanian Forelands (Tailfeather).
-            for (uint i = 52; i < 54; i++)
-            {
-                this.ZoneLevels.Add(i, Tailfeather);
-            }
+                // 52 - 54 The Dravanian Forelands (Tailfeather).
+                else if (i < 54)
+                {
+                    this.ZoneLevels.Add(i, Tailfeather);
+                }
 
-            // 54-58 The Churning Mists (Moghome)
-            for (uint i = 54; i < 58; i++)
-            {
-                this.ZoneLevels.Add(i, Moghome);
-            }
+                // 54 - 58 The Churning Mists (Moghome)
+                else if (i < 58)
+                {
+                    this.ZoneLevels.Add(i, Moghome);
+                }
 
-            // 58 - 60 Dravanian Hinterlands (Idyllshire).
-            for (uint i = 58; i < 61; i++)
-            {
-                this.ZoneLevels.Add(i, Idyllshire);
+                // 58 - 60 Dravanian Hinterlands (Idyllshire).
+                else
+                {
+                    this.ZoneLevels.Add(i, Idyllshire);
+                }
             }
         }
     }
