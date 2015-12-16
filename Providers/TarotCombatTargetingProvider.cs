@@ -153,7 +153,7 @@ namespace Tarot.Providers
             }
 
             // Prefer targets with less mobs around them.
-            if (!Core.Player.InCombat)
+            else if (!Core.Player.InCombat)
             {
                 weight = GameObjectManager.GetObjectsOfType<BattleCharacter>()
                                           .Aggregate(weight, (current, mob) => current - 2 * (10 / mob.Distance(battleCharacter)));
