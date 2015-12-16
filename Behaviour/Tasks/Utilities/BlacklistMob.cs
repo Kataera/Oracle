@@ -74,11 +74,25 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
             if (blacklistTimer.Elapsed >= TimeSpan.FromSeconds(30))
             {
+                var target = GetTargetFromId(currentTargetId);
+
+                if (target == null)
+                {
+                    return true;
+                }
+
+                var blacklistEntry = Blacklist.GetEntry(target);
+
+                if (blacklistEntry != null)
+                {
+                    return true;
+                }
+
                 Logger.SendLog("Current target's HP has not decreased in 30 seconds, blacklisting and moving on.");
-                Blacklist.Add(currentTargetId, BlacklistFlags.Combat, TimeSpan.FromMinutes(15),
-                    "Target's HP has not changed in too long.");
+                Blacklist.Add(target, BlacklistFlags.Combat, TimeSpan.FromMinutes(15), "Target's HP has not changed in too long.");
                 TarotBehaviour.ClearPoi("Target's HP has not changed in too long.");
                 Core.Player.ClearTarget();
+                blacklistTimer.Restart();
             }
 
             return true;

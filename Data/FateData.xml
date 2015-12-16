@@ -312,6 +312,7 @@
     <Level>19</Level>
     <Type>&Boss;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <PreferredTargetId>535</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>151</ID>
@@ -766,6 +767,7 @@
     <Level>23</Level>
     <Type>&Kill;</Type>
     <TarotSupport>&FullSupport;</TarotSupport>
+    <PreferredTargetId>538</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>214</ID>
