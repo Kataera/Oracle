@@ -150,6 +150,24 @@ namespace Tarot.Behaviour.PoiHooks
             return true;
         }
 
+        private static bool IsZoneChangeNeeded()
+        {
+            uint aetheryteId = 0;
+            TarotSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
+
+            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
+            {
+                return false;
+            }
+
+            if (WorldManager.GetZoneForAetheryteId(aetheryteId) == WorldManager.ZoneId)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private static bool PreviousFateChained()
         {
             return PreviousFateChainedOnSuccess() || PreviousFateChainedOnFailure();
@@ -271,24 +289,6 @@ namespace Tarot.Behaviour.PoiHooks
             }
 
             return false;
-        }
-
-        private static bool IsZoneChangeNeeded()
-        {
-            uint aetheryteId = 0;
-            TarotSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
-
-            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
-            {
-                return false;
-            }
-
-            if (WorldManager.GetZoneForAetheryteId(aetheryteId) == WorldManager.ZoneId)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         private static async Task<bool> WaitBeforeMoving()
