@@ -425,7 +425,7 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(500)]
+        [DefaultValue(400)]
         [Setting]
         public int TeleportMinimumDistanceDelta
         {

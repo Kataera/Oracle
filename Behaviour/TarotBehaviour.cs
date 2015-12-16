@@ -196,13 +196,6 @@ namespace Tarot.Behaviour
                 return false;
             }
 
-
-            if (Poi.Current.Type == PoiType.Death)
-            {
-                await Coroutine.Sleep(500);
-                return false;
-            }
-
             switch (Poi.Current.Type)
             {
                 case PoiType.Kill:

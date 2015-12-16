@@ -78,6 +78,7 @@ namespace Tarot.Providers
         private bool Filter(bool inCombat, BattleCharacter battleCharacter)
         {
             var currentFate = TarotFateManager.GetCurrentFateData();
+            var blacklistEntry = Blacklist.GetEntry(battleCharacter);
 
             if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible
                 || battleCharacter.CurrentHealthPercent <= 0f)
@@ -95,7 +96,7 @@ namespace Tarot.Providers
                 return false;
             }
 
-            if (Blacklist.Contains(battleCharacter.ObjectId, BlacklistFlags.Combat))
+            if (blacklistEntry != null)
             {
                 return false;
             }
