@@ -62,11 +62,7 @@ namespace Tarot.Behaviour.Tasks.WaitTask
 
         private static async Task<BattleCharacter> GetViableTarget()
         {
-            if (checkForTargetCooldown == null)
-            {
-                checkForTargetCooldown = Stopwatch.StartNew();
-            }
-            else if (checkForTargetCooldown.Elapsed > TimeSpan.FromSeconds(5))
+            if (checkForTargetCooldown == null || checkForTargetCooldown.Elapsed > TimeSpan.FromSeconds(5))
             {
                 var targets =
                     GameObjectManager.GetObjectsOfType<BattleCharacter>()
@@ -110,7 +106,7 @@ namespace Tarot.Behaviour.Tasks.WaitTask
                     await Coroutine.Yield();
                 }
 
-                checkForTargetCooldown.Restart();
+                checkForTargetCooldown = Stopwatch.StartNew();
                 return viableTargets.OrderBy(order => order.Value).FirstOrDefault().Key;
             }
 
