@@ -121,7 +121,8 @@ namespace Tarot.Behaviour.Tasks.Utilities
         {
             var currentFate = TarotFateManager.GetCurrentFateData();
 
-            if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
+            if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE
+                || currentFate.Status == FateStatus.NOTACTIVE)
             {
                 ClearFate(currentFate);
                 return true;

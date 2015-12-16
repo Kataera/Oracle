@@ -45,7 +45,7 @@ namespace Tarot.Behaviour.PoiHooks
                 return false;
             }
 
-            if (IsZoneChangeNeeded())
+            if (ZoneChangeNeeded())
             {
                 return false;
             }
@@ -78,7 +78,7 @@ namespace Tarot.Behaviour.PoiHooks
             return false;
         }
 
-        private static bool IsZoneChangeNeeded()
+        private static bool ZoneChangeNeeded()
         {
             uint aetheryteId = 0;
             TarotSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);

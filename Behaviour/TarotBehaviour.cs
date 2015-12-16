@@ -180,16 +180,6 @@ namespace Tarot.Behaviour
 
         private static async Task<bool> HandleZoneChange()
         {
-            if (Core.Player.IsLevelSynced || Core.Player.IsDead)
-            {
-                return false;
-            }
-
-            if (Poi.Current.Type == PoiType.Kill || Poi.Current.Type == PoiType.Fate || TarotFateManager.CurrentFateId != 0)
-            {
-                return false;
-            }
-
             uint aetheryteId = 0;
             TarotSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
 
@@ -198,7 +188,7 @@ namespace Tarot.Behaviour
                 return false;
             }
 
-            if (WorldManager.GetZoneForAetheryteId(aetheryteId) == WorldManager.ZoneId)
+            if (!WorldManager.CanTeleport())
             {
                 return false;
             }
@@ -222,9 +212,20 @@ namespace Tarot.Behaviour
                 return false;
             }
 
-            if (TarotSettings.Instance.ChangeZonesEnabled)
+            if (Poi.Current.Type == PoiType.Death)
+            {
+                if (Core.Player.IsAlive)
+                {
+                    ClearPoi("We died.");
+                }
+
+                return false;
+            }
+
+            if (TarotSettings.Instance.ChangeZonesEnabled && ZoneChangeNeeded())
             {
                 await HandleZoneChange();
+                return false;
             }
 
             switch (Poi.Current.Type)
@@ -242,6 +243,34 @@ namespace Tarot.Behaviour
 
             // Always return false to not block the tree.
             return false;
+        }
+
+        private static bool ZoneChangeNeeded()
+        {
+            if (Core.Player.IsLevelSynced || Core.Player.IsDead)
+            {
+                return false;
+            }
+
+            if (Poi.Current.Type == PoiType.Kill || Poi.Current.Type == PoiType.Fate || TarotFateManager.CurrentFateId != 0)
+            {
+                return false;
+            }
+
+            uint aetheryteId = 0;
+            TarotSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
+
+            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
+            {
+                return false;
+            }
+
+            if (WorldManager.GetZoneForAetheryteId(aetheryteId) == WorldManager.ZoneId)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

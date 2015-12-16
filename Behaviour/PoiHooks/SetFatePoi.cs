@@ -54,7 +54,7 @@ namespace Tarot.Behaviour.PoiHooks
                 return false;
             }
 
-            if (IsZoneChangeNeeded())
+            if (ZoneChangeNeeded())
             {
                 return false;
             }
@@ -143,24 +143,6 @@ namespace Tarot.Behaviour.PoiHooks
 
             var tarotFate = TarotFateManager.FateDatabase.GetFateFromFateData(currentFate);
             if (currentFate.Status == FateStatus.COMPLETE && tarotFate.Type != FateType.Collect)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private static bool IsZoneChangeNeeded()
-        {
-            uint aetheryteId = 0;
-            TarotSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
-
-            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
-            {
-                return false;
-            }
-
-            if (WorldManager.GetZoneForAetheryteId(aetheryteId) == WorldManager.ZoneId)
             {
                 return false;
             }
@@ -300,6 +282,24 @@ namespace Tarot.Behaviour.PoiHooks
 
             Logger.SendLog("Waiting " + Math.Round(randomWaitTime / 1000f, 2) + " seconds before moving to FATE.");
             await Coroutine.Wait(randomWaitTime, () => currentFate.Status == FateStatus.NOTACTIVE || Core.Player.InCombat);
+
+            return true;
+        }
+
+        private static bool ZoneChangeNeeded()
+        {
+            uint aetheryteId = 0;
+            TarotSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
+
+            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
+            {
+                return false;
+            }
+
+            if (WorldManager.GetZoneForAetheryteId(aetheryteId) == WorldManager.ZoneId)
+            {
+                return false;
+            }
 
             return true;
         }
