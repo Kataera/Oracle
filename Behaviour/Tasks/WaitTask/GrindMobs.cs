@@ -66,9 +66,15 @@ namespace Tarot.Behaviour.Tasks.WaitTask
             {
                 checkForTargetCooldown = Stopwatch.StartNew();
             }
-            else if (checkForTargetCooldown.Elapsed > TimeSpan.FromSeconds(1))
+            else if (checkForTargetCooldown.Elapsed > TimeSpan.FromSeconds(5))
             {
-                var targets = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(MobFilter).Where(MobWithinRadius);
+                var targets =
+                    GameObjectManager.GetObjectsOfType<BattleCharacter>()
+                                     .Where(MobFilter)
+                                     .Where(MobWithinRadius)
+                                     .OrderBy(bc => bc.Distance(Core.Player))
+                                     .Take(8);
+
                 if (!targets.Any())
                 {
                     return null;
