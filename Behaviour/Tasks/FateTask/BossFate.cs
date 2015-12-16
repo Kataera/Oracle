@@ -102,11 +102,11 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
                 if (target == null)
                 {
-                    Logger.SendDebugLog("Could not find any mobs with the preferred target's ID.");
+                    Logger.SendDebugLog("Could not find any mobs with the preferred targets' ID.");
                 }
                 else
                 {
-                    Logger.SendDebugLog("Found target '" + target.Name + "' which matches the preferred target ID (" + target.NpcId + ").");
+                    Logger.SendDebugLog("Found preferred target '" + target.Name + "' (" + target.NpcId + ").");
                 }
             }
 
