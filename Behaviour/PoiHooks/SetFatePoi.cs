@@ -67,6 +67,8 @@ namespace Tarot.Behaviour.PoiHooks
                 return true;
             }
 
+            TarotFateManager.CurrentFateId = 0;
+
             if (ZoneChangeNeeded())
             {
                 return false;
