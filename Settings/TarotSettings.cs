@@ -85,22 +85,26 @@ namespace Tarot.Settings
             if (this.BlacklistedFates == null)
             {
                 this.BlacklistedFates = new List<uint>();
+                this.Save();
             }
 
             if (this.BlacklistedMobs == null)
             {
                 this.BlacklistedMobs = new List<uint> {1992};
+                this.Save();
             }
 
             if (this.FateWaitLocations == null)
             {
                 this.FateWaitLocations = new Dictionary<uint, Vector3>();
+                this.Save();
             }
 
             if (this.ZoneLevels == null)
             {
                 this.ZoneLevels = new Dictionary<uint, uint>();
                 this.PopulateZoneLevels();
+                this.Save();
             }
         }
 
