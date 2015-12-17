@@ -39,7 +39,6 @@ using ff14bot.Navigation;
 using NeoGaia.ConnectionHandler;
 
 using Tarot.Helpers;
-using Tarot.Managers;
 using Tarot.Settings;
 
 namespace Tarot.Behaviour.Tasks.Utilities

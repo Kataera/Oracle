@@ -98,7 +98,7 @@ namespace Tarot.Settings
 
             if (this.BlacklistedMobs == null)
             {
-                this.BlacklistedMobs = new List<uint> { 1992 };
+                this.BlacklistedMobs = new List<uint> {1992};
             }
 
             if (this.FateWaitLocations == null)

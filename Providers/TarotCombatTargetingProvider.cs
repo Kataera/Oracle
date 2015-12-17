@@ -125,7 +125,7 @@ namespace Tarot.Providers
 
         private double GetWeight(BattleCharacter battleCharacter)
         {
-            var weight = 1800 - (battleCharacter.Distance(Core.Player) * 30);
+            var weight = 1800 - (battleCharacter.Distance(Core.Player) * 50);
             var currentFate = TarotFateManager.GetCurrentFateData();
             var tarotFate = new Fate();
 
@@ -140,14 +140,6 @@ namespace Tarot.Providers
                 weight += 2000;
             }
 
-            // Prefer targets with less mobs around them.
-            else if (!Core.Player.InCombat)
-            {
-                weight = GameObjectManager.GetObjectsOfType<BattleCharacter>()
-                                          .Where(mob => mob.Distance(battleCharacter) < 20f)
-                                          .Aggregate(weight, (current, mob) => current - 5 * (10 / mob.Distance(battleCharacter)));
-            }
-
             if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)
             {
                 weight += 150;
@@ -160,7 +152,7 @@ namespace Tarot.Providers
 
             if (Chocobo.Object != null && battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Chocobo.Object.ObjectId)
             {
-                weight += 750;
+                weight += 500;
             }
 
             if (!battleCharacter.TappedByOther)
