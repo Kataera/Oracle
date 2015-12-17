@@ -67,7 +67,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 }
             }
 
-            await Move();
+            await Move(ignoreCombat);
             return true;
         }
 
@@ -117,7 +117,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             return true;
         }
 
-        private static async Task<bool> Move()
+        private static async Task<bool> Move(bool ignoreCombat)
         {
             var currentFate = TarotFateManager.GetCurrentFateData();
 
@@ -139,7 +139,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                         return true;
                     }
 
-                    if (!Core.Player.IsMounted && IsMountNeeded() && Actionmanager.AvailableMounts.Any())
+                    if (!ignoreCombat && !Core.Player.IsMounted && IsMountNeeded() && Actionmanager.AvailableMounts.Any())
                     {
                         Navigator.Stop();
                         await MountUp();
@@ -160,7 +160,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                         return true;
                     }
 
-                    if (!Core.Player.IsMounted && IsMountNeeded() && Actionmanager.AvailableMounts.Any())
+                    if (!ignoreCombat && !Core.Player.IsMounted && IsMountNeeded() && Actionmanager.AvailableMounts.Any())
                     {
                         Navigator.Stop();
                         await MountUp();

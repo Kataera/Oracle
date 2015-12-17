@@ -75,8 +75,14 @@ namespace Tarot.Behaviour
         private static async Task<bool> HandleCombat()
         {
             var currentFate = TarotFateManager.GetCurrentFateData();
+            var currentBc = Poi.Current.BattleCharacter;
 
             if (currentFate == null)
+            {
+                return false;
+            }
+
+            if (currentBc == null)
             {
                 return false;
             }
@@ -90,14 +96,32 @@ namespace Tarot.Behaviour
                 }
             }
 
-            if (Poi.Current.BattleCharacter != null && Poi.Current.BattleCharacter.IsValid && !Poi.Current.BattleCharacter.IsFate
-                && !GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
+            // If target is not a FATE mob, nor attacking us.
+            if (currentBc.IsValid && !currentBc.IsFate && !GameObjectManager.Attackers.Contains(currentBc))
             {
                 ClearPoi("Targeted unit is not valid.", false);
                 return true;
             }
 
-            if (Poi.Current.BattleCharacter != null && Poi.Current.BattleCharacter.IsValid && Poi.Current.BattleCharacter.IsFate)
+            // If target is not a FATE mob and is tapped by someone else.
+            if (currentBc.TappedByOther && !currentBc.IsFate && TarotSettings.Instance.FateWaitMode == FateWaitMode.GrindMobs)
+            {
+                ClearPoi("Targeted unit is not a FATE mob and is tapped by someone else.");
+
+                var target = await SelectGrindTarget.Main();
+                if (target == null)
+                {
+                    return true;
+                }
+
+                Logger.SendLog("Selecting '" + target.Name + "' as the next target to kill.");
+                Poi.Current = new Poi(target, PoiType.Kill);
+
+                return false;
+            }
+
+            // If target is a FATE mob, we need to handle several potential issues.
+            if (currentBc.IsValid && currentBc.IsFate)
             {
                 var fate = FateManager.GetFateById(Poi.Current.BattleCharacter.FateId);
 
