@@ -29,6 +29,7 @@ using Buddy.Coroutines;
 
 using ff14bot;
 using ff14bot.Enums;
+using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.RemoteWindows;
@@ -59,12 +60,14 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
             Navigator.Stop();
 
-            await Coroutine.Sleep(TarotSettings.Instance.ActionDelay);
             aetheryteObject.Interact();
             await Coroutine.Sleep(TarotSettings.Instance.ActionDelay);
             SelectString.ClickLineContains("Set Home Point");
             await Coroutine.Sleep(TarotSettings.Instance.ActionDelay);
             SelectYesno.ClickYes();
+            await Coroutine.Sleep(TarotSettings.Instance.ActionDelay);
+
+            Logger.SendLog("Home point bound successfully.");
 
             return true;
         }
