@@ -135,6 +135,13 @@ namespace Tarot.Behaviour.Tasks.Utilities
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
                         ClearFate(currentFate);
+                        Navigator.Stop();
+                        return true;
+                    }
+
+                    if (Core.Player.InCombat && !Core.Player.IsMounted)
+                    {
+                        Navigator.Stop();
                         return true;
                     }
 
@@ -149,6 +156,13 @@ namespace Tarot.Behaviour.Tasks.Utilities
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
                         ClearFate(currentFate);
+                        Navigator.Stop();
+                        return true;
+                    }
+
+                    if (Core.Player.InCombat && !Core.Player.IsMounted)
+                    {
+                        Navigator.Stop();
                         return true;
                     }
 
