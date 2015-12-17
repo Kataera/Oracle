@@ -218,18 +218,23 @@ namespace Tarot.Behaviour
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
             {
                 Logger.SendErrorLog("Can't find requested teleport destination, make sure you've unlocked it.");
+                TreeRoot.Stop("Cannot teleport to destination.");
                 return false;
             }
 
             if (!WorldManager.CanTeleport())
             {
-                Logger.SendDebugLog("Can't cast teleport.");
                 return false;
             }
 
             var zoneName = WorldManager.AvailableLocations.FirstOrDefault(teleport => teleport.AetheryteId == aetheryteId).Name;
             Logger.SendLog("Character is level " + Core.Player.ClassLevel + ", teleporting to " + zoneName + ".");
             await Teleport.TeleportToAetheryte(aetheryteId);
+
+            if (TarotSettings.Instance.BindHomePoint)
+            {
+                await BindHomePoint.Main();
+            }
 
             return true;
         }

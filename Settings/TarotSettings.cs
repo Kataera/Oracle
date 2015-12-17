@@ -57,6 +57,8 @@ namespace Tarot.Settings
         public Dictionary<uint, Vector3> FateWaitLocations;
         public Dictionary<uint, uint> ZoneLevels;
 
+        private int actionDelay;
+        private bool bindHomePoint;
         private int bossEngagePercentage;
         private bool bossFatesEnabled;
         private int chainFateWaitTimeout;
@@ -84,7 +86,6 @@ namespace Tarot.Settings
         private TarotOperationMode tarotOperationMode;
         private bool teleportIfQuicker;
         private int teleportMinimumDistanceDelta;
-        private int turnInActionDelay;
         private bool waitAtFateForProgress;
         private bool waitForChainFates;
 
@@ -129,6 +130,32 @@ namespace Tarot.Settings
                 }
 
                 return instance;
+            }
+        }
+
+        [DefaultValue(1500)]
+        [Setting]
+        public int ActionDelay
+        {
+            get { return this.actionDelay; }
+
+            set
+            {
+                this.actionDelay = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool BindHomePoint
+        {
+            get { return this.bindHomePoint; }
+
+            set
+            {
+                this.bindHomePoint = value;
+                this.Save();
             }
         }
 
@@ -405,7 +432,7 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(6)]
+        [DefaultValue(4)]
         [Setting]
         public int MobMaximumLevelAbove
         {
@@ -479,19 +506,6 @@ namespace Tarot.Settings
             set
             {
                 this.teleportMinimumDistanceDelta = value;
-                this.Save();
-            }
-        }
-
-        [DefaultValue(1500)]
-        [Setting]
-        public int TurnInActionDelay
-        {
-            get { return this.turnInActionDelay; }
-
-            set
-            {
-                this.turnInActionDelay = value;
                 this.Save();
             }
         }
