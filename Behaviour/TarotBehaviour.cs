@@ -22,10 +22,13 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 using Buddy.Coroutines;
+
+using Clio.Utilities;
 
 using ff14bot;
 using ff14bot.Behavior;
@@ -89,7 +92,7 @@ namespace Tarot.Behaviour
 
             if (TarotFateManager.CurrentFateId != 0 && currentFate.Status == FateStatus.NOTACTIVE)
             {
-                if (TarotFateManager.FateDatabase.GetFateFromFateData(currentFate).Type != FateType.Collect)
+                if (TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate).Type != FateType.Collect)
                 {
                     TarotFateManager.ClearCurrentFate("FATE is no longer active.");
                     return true;
@@ -148,6 +151,15 @@ namespace Tarot.Behaviour
                     }
                 }
             }
+
+            return true;
+        }
+
+        private static async Task<bool> HandleDeath()
+        {
+            await Coroutine.Wait(TimeSpan.FromSeconds(5), () => CommonBehaviors.IsLoading);
+            await CommonTasks.HandleLoading();
+            await Coroutine.Sleep(TimeSpan.FromSeconds(2));
 
             return true;
         }
@@ -211,11 +223,13 @@ namespace Tarot.Behaviour
 
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
             {
+                Logger.SendErrorLog("Can't find requested teleport destination, make sure you've unlocked it.");
                 return false;
             }
 
             if (!WorldManager.CanTeleport())
             {
+                Logger.SendDebugLog("Can't cast teleport.");
                 return false;
             }
 
@@ -228,35 +242,39 @@ namespace Tarot.Behaviour
 
         private static async Task<bool> Main()
         {
-            if (Tarot.DeathFlag)
+            if (TarotFateManager.TarotDatabase == null)
             {
-                await Coroutine.Wait(5000, () => CommonBehaviors.IsLoading);
-                await CommonTasks.HandleLoading();
-                await Coroutine.Sleep(2000);
-
-                Tarot.DeathFlag = false;
-            }
-
-            if (TarotFateManager.FateDatabase == null)
-            {
-                await BuildFateDatabase.Main();
+                await BuildTarotDatabase.Main();
             }
 
             if (Poi.Current == null)
             {
+                Poi.Current = new Poi(Vector3.Zero, PoiType.None);
+
                 return false;
             }
 
-            if (Poi.Current.Type == PoiType.Death)
+            if (Poi.Current.Type == PoiType.Death || Tarot.DeathFlag)
             {
-                Logger.SendLog("We died, attempting to recover.");
-                Tarot.DeathFlag = true;
+                if (Poi.Current.Type == PoiType.Death)
+                {
+                    Logger.SendLog("We died, attempting to recover.");
+                    Tarot.DeathFlag = true;
+                }
+                else if (Tarot.DeathFlag)
+                {
+                    await HandleDeath();
+                    Tarot.DeathFlag = false;
+                }
+
                 return false;
             }
 
             if (TarotSettings.Instance.ChangeZonesEnabled && ZoneChangeNeeded())
             {
+                Logger.SendLog("Zone change is needed.");
                 await HandleZoneChange();
+
                 return false;
             }
 

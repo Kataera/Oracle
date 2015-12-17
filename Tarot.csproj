@@ -89,7 +89,7 @@
     <Compile Include="Behaviour\Tasks\FateTask\KillFate.cs" />
     <Compile Include="Behaviour\PoiHooks\SetWaitPoi.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\ReturnToAetheryte.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\BuildFateDatabase.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\BuildTarotDatabase.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\MoveToFate.cs" />
     <Compile Include="Enumerations\TarotOperationMode.cs" />
     <Compile Include="Managers\TarotFateManager.cs" />
@@ -98,7 +98,7 @@
     <Compile Include="Behaviour\PoiHooks\SetFatePoi.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SkipDialogue.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\TurnInItem.cs" />
-    <Compile Include="Data\FateDatabase.cs" />
+    <Compile Include="Data\TarotDatabase.cs" />
     <Compile Include="Data\Fate.cs" />
     <Compile Include="Enumerations\FateWaitMode.cs" />
     <Compile Include="Enumerations\FateSelectMode.cs" />

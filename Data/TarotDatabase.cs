@@ -32,16 +32,16 @@ using Tarot.Helpers;
 
 namespace Tarot.Data
 {
-    internal class FateDatabase
+    internal class TarotDatabase
     {
         private readonly Dictionary<uint, Fate> fateDatabase;
 
-        public FateDatabase()
+        public TarotDatabase()
         {
             this.fateDatabase = new Dictionary<uint, Fate>();
         }
 
-        public FateDatabase(Dictionary<uint, Fate> fateDatabase)
+        public TarotDatabase(Dictionary<uint, Fate> fateDatabase)
         {
             this.fateDatabase = fateDatabase;
         }

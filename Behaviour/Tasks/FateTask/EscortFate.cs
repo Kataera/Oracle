@@ -51,7 +51,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
         public static async Task<bool> Main()
         {
             var currentFate = TarotFateManager.GetCurrentFateData();
-            var tarotFate = TarotFateManager.FateDatabase.GetFateFromFateData(currentFate);
+            var tarotFate = TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate);
 
             if (currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
             {
@@ -107,7 +107,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
         private static bool IsEscortNpc(BattleCharacter battleCharacter)
         {
             var currentFate = TarotFateManager.GetCurrentFateData();
-            var tarotFate = TarotFateManager.FateDatabase.GetFateFromFateData(currentFate);
+            var tarotFate = TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate);
 
             if (tarotFate.NpcId == battleCharacter.NpcId)
             {
@@ -224,7 +224,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
         private static void SelectTarget()
         {
             var currentFate = TarotFateManager.GetCurrentFateData();
-            var tarotFate = TarotFateManager.FateDatabase.GetFateFromFateData(currentFate);
+            var tarotFate = TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate);
             BattleCharacter target = null;
 
             if (tarotFate.PreferredTargetId.Any())
