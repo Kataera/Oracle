@@ -273,9 +273,13 @@ namespace Tarot.Behaviour
 
             if (TarotSettings.Instance.ChangeZonesEnabled && ZoneChangeNeeded())
             {
+                if (Core.Player.InCombat)
+                {
+                    return false;
+                }
+
                 Logger.SendLog("Zone change is needed.");
                 await HandleZoneChange();
-
                 return false;
             }
 
