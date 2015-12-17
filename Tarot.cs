@@ -53,6 +53,8 @@ namespace Tarot
 
         private static SettingsForm settingsForm;
 
+        public static bool DeathFlag { get; internal set; }
+
         public override string EnglishName
         {
             get { return "Tarot"; }
@@ -151,8 +153,6 @@ namespace Tarot
 
             Logger.SendLog("Starting " + this.Name + ".");
         }
-
-        public static bool DeathFlag { get; internal set; }
 
         public override void Stop()
         {

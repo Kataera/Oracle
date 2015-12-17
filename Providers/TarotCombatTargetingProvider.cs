@@ -137,7 +137,7 @@ namespace Tarot.Providers
 
         private double GetWeight(BattleCharacter battleCharacter)
         {
-            var weight = (battleCharacter.Distance() * -30) + 1800;
+            var weight = (battleCharacter.Distance(Core.Player) * -30) + 1800;
             var currentFate = TarotFateManager.GetCurrentFateData();
             var tarotFate = new Fate();
 
