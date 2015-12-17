@@ -22,6 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,20 +46,21 @@ namespace Tarot.Behaviour.Tasks.Utilities
         {
             var currentFate = TarotFateManager.GetCurrentFateData();
 
-            if (!ignoreCombat && GameObjectManager.Attackers.Any() && !Core.Player.IsMounted)
+            if (!ignoreCombat && GameObjectManager.Attackers.Any(attacker => attacker.IsValid) && !Core.Player.IsMounted)
             {
                 return false;
             }
 
             if (!ignoreCombat && TarotSettings.Instance.TeleportIfQuicker && currentFate.IsValid)
             {
-                if (await Teleport.FasterToTeleport(currentFate))
+                if (await Teleport.FasterToTeleport(currentFate) && WorldManager.CanTeleport())
                 {
                     Logger.SendLog("Teleporting to the closest aetheryte crystal to the FATE.");
                     await Teleport.TeleportToClosestAetheryte(currentFate);
 
-                    if (Core.Player.InCombat)
+                    if (GameObjectManager.Attackers.Any(attacker => attacker.IsValid))
                     {
+                        TarotBehaviour.ClearPoi("We're under attack and can't teleport.");
                         return false;
                     }
                 }
@@ -115,6 +117,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 {
                     Actionmanager.Mount();
                 }
+
                 await Coroutine.Yield();
             }
 

@@ -84,38 +84,47 @@ namespace Tarot.Behaviour
                 return false;
             }
 
+            if (!currentBc.IsValid || currentBc.IsFateGone)
+            {
+                ClearPoi("Targeted unit is not valid.", false);
+                return true;
+            }
+
             // If target is not a FATE mob, nor attacking us.
-            if (currentBc.IsValid && !currentBc.IsFate && !GameObjectManager.Attackers.Contains(currentBc))
+            if (!currentBc.IsFate && !GameObjectManager.Attackers.Contains(currentBc) && TarotFateManager.CurrentFateId != 0)
             {
                 ClearPoi("Targeted unit is not valid.", false);
                 return true;
             }
 
             // If target is not a FATE mob and is tapped by someone else.
-            if (currentBc.TappedByOther && !currentBc.IsFate && TarotSettings.Instance.FateWaitMode == FateWaitMode.GrindMobs)
+            if (!currentBc.IsFate && currentBc.TappedByOther)
             {
                 ClearPoi("Targeted unit is not a FATE mob and is tapped by someone else.");
 
-                var target = await SelectGrindTarget.Main();
-                if (target == null)
+                if (TarotSettings.Instance.FateWaitMode == FateWaitMode.GrindMobs)
                 {
-                    return true;
+                    var target = await SelectGrindTarget.Main();
+                    if (target == null)
+                    {
+                        return true;
+                    }
+
+                    Logger.SendLog("Selecting '" + target.Name + "' as the next target to kill.");
+                    Poi.Current = new Poi(target, PoiType.Kill);
                 }
 
-                Logger.SendLog("Selecting '" + target.Name + "' as the next target to kill.");
-                Poi.Current = new Poi(target, PoiType.Kill);
-
-                return false;
+                return true;
             }
 
             // If target is a FATE mob, we need to handle several potential issues.
-            if (currentBc.IsValid && currentBc.IsFate)
+            if (currentBc.IsFate)
             {
                 var fate = FateManager.GetFateById(Poi.Current.BattleCharacter.FateId);
 
                 if (fate == null)
                 {
-                    return false;
+                    return true;
                 }
 
                 if (!LevelSync.IsLevelSyncNeeded(fate))
