@@ -139,7 +139,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                         return true;
                     }
 
-                    if (Core.Player.InCombat && !Core.Player.IsMounted)
+                    if (!Core.Player.IsMounted && IsMountNeeded())
                     {
                         Navigator.Stop();
                         return true;
@@ -160,7 +160,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                         return true;
                     }
 
-                    if (Core.Player.InCombat && !Core.Player.IsMounted)
+                    if (!Core.Player.IsMounted && IsMountNeeded())
                     {
                         Navigator.Stop();
                         return true;

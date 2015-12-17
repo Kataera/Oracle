@@ -152,6 +152,8 @@ namespace Tarot
             Logger.SendLog("Starting " + this.Name + ".");
         }
 
+        public static bool DeathFlag { get; internal set; }
+
         public override void Stop()
         {
             // Clean up all botbase internal variables.

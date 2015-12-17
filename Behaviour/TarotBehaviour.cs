@@ -25,7 +25,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using Buddy.Coroutines;
+
 using ff14bot;
+using ff14bot.Behavior;
 using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
@@ -143,7 +146,6 @@ namespace Tarot.Behaviour
             if (Core.Player.Distance(currentFate.Location) > currentFate.Radius)
             {
                 await MoveToFate.Main(false);
-                return true;
             }
 
             if (GameObjectManager.Attackers.Any(mob => !mob.IsFateGone) && !Core.Player.IsMounted)
@@ -202,6 +204,15 @@ namespace Tarot.Behaviour
 
         private static async Task<bool> Main()
         {
+            if (Tarot.DeathFlag)
+            {
+                await Coroutine.Wait(5000, () => CommonBehaviors.IsLoading);
+                await CommonTasks.HandleLoading();
+                await Coroutine.Sleep(2000);
+
+                Tarot.DeathFlag = false;
+            }
+
             if (TarotFateManager.FateDatabase == null)
             {
                 await BuildFateDatabase.Main();
@@ -214,11 +225,8 @@ namespace Tarot.Behaviour
 
             if (Poi.Current.Type == PoiType.Death)
             {
-                if (Core.Player.IsAlive)
-                {
-                    ClearPoi("We died.");
-                }
-
+                Logger.SendLog("We died, attempting to recover.");
+                Tarot.DeathFlag = true;
                 return false;
             }
 
