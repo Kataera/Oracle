@@ -155,7 +155,7 @@ namespace Tarot.Managers
                 return false;
             }
 
-            if (TarotSettings.Instance.IgnoreLowRemainingDurationFates)
+            if (TarotSettings.Instance.IgnoreLowDurationUnstartedFates)
             {
                 if (Math.Abs(fate.Progress) < 0.5f && fate.TimeLeft < TimeSpan.FromSeconds(TarotSettings.Instance.LowRemainingDuration))
                 {
