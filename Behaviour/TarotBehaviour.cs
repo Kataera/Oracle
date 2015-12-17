@@ -101,6 +101,8 @@ namespace Tarot.Behaviour
             if (!currentBc.IsFate && currentBc.TappedByOther)
             {
                 ClearPoi("Targeted unit is not a FATE mob and is tapped by someone else.");
+                Blacklist.Add(currentBc, BlacklistFlags.Combat, TimeSpan.FromSeconds(30), "Tapped by another person.");
+                Core.Player.ClearTarget();
 
                 if (TarotSettings.Instance.FateWaitMode == FateWaitMode.GrindMobs)
                 {
