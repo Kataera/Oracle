@@ -42,7 +42,7 @@ namespace Tarot.Behaviour.PoiHooks
 
             Composite[] composites =
             {
-                new HookExecutor("SetDeathPoi"), new HookExecutor("SetCombatPoi"),
+                new HookExecutor("SetDeathPoi"), new Decorator(check => !Tarot.DeathFlag, new HookExecutor("SetCombatPoi")),
                 new HookExecutor(
                     "SetFatePoi",
                     "A hook that selects a viable FATE based in user settings and assigns it as the Poi.",

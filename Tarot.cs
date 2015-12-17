@@ -53,6 +53,8 @@ namespace Tarot
 
         private static SettingsForm settingsForm;
 
+        public static bool DeathFlag { get; internal set; }
+
         public override string EnglishName
         {
             get { return "Tarot"; }

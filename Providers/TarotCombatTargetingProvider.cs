@@ -137,7 +137,7 @@ namespace Tarot.Providers
 
         private double GetWeight(BattleCharacter battleCharacter)
         {
-            var weight = (battleCharacter.Distance() * -30) + 1800;
+            var weight = (battleCharacter.Distance(Core.Player) * -30) + 1800;
             var currentFate = TarotFateManager.GetCurrentFateData();
             var tarotFate = new Fate();
 
@@ -156,7 +156,7 @@ namespace Tarot.Providers
             else if (!Core.Player.InCombat)
             {
                 weight = GameObjectManager.GetObjectsOfType<BattleCharacter>()
-                                          .Aggregate(weight, (current, mob) => current - 2 * (10 / mob.Distance(battleCharacter)));
+                                          .Aggregate(weight, (current, mob) => current - 3 * (10 / mob.Distance(battleCharacter)));
             }
 
             if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)

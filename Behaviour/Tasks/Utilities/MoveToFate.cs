@@ -121,7 +121,8 @@ namespace Tarot.Behaviour.Tasks.Utilities
         {
             var currentFate = TarotFateManager.GetCurrentFateData();
 
-            if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
+            if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE
+                || currentFate.Status == FateStatus.NOTACTIVE)
             {
                 ClearFate(currentFate);
                 return true;
@@ -134,6 +135,13 @@ namespace Tarot.Behaviour.Tasks.Utilities
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
                         ClearFate(currentFate);
+                        Navigator.Stop();
+                        return true;
+                    }
+
+                    if (!Core.Player.IsMounted && IsMountNeeded())
+                    {
+                        Navigator.Stop();
                         return true;
                     }
 
@@ -148,6 +156,13 @@ namespace Tarot.Behaviour.Tasks.Utilities
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
                         ClearFate(currentFate);
+                        Navigator.Stop();
+                        return true;
+                    }
+
+                    if (!Core.Player.IsMounted && IsMountNeeded())
+                    {
+                        Navigator.Stop();
                         return true;
                     }
 

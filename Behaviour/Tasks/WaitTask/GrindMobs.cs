@@ -156,6 +156,11 @@ namespace Tarot.Behaviour.Tasks.WaitTask
                 return false;
             }
 
+            if (TarotSettings.Instance.BlacklistedMobs.Contains(battleCharacter.NpcId))
+            {
+                return false;
+            }
+
             if (GameObjectManager.Attackers.Contains(battleCharacter))
             {
                 return true;

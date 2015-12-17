@@ -25,7 +25,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using Buddy.Coroutines;
+
 using ff14bot;
+using ff14bot.Behavior;
 using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
@@ -143,7 +146,6 @@ namespace Tarot.Behaviour
             if (Core.Player.Distance(currentFate.Location) > currentFate.Radius)
             {
                 await MoveToFate.Main(false);
-                return true;
             }
 
             if (GameObjectManager.Attackers.Any(mob => !mob.IsFateGone) && !Core.Player.IsMounted)
@@ -180,6 +182,79 @@ namespace Tarot.Behaviour
 
         private static async Task<bool> HandleZoneChange()
         {
+            uint aetheryteId = 0;
+            TarotSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
+
+            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
+            {
+                return false;
+            }
+
+            if (!WorldManager.CanTeleport())
+            {
+                return false;
+            }
+
+            var zoneName = WorldManager.AvailableLocations.FirstOrDefault(teleport => teleport.AetheryteId == aetheryteId).Name;
+            Logger.SendLog("Character is level " + Core.Player.ClassLevel + ", teleporting to " + zoneName + ".");
+            await Teleport.TeleportToAetheryte(aetheryteId);
+
+            return true;
+        }
+
+        private static async Task<bool> Main()
+        {
+            if (Tarot.DeathFlag)
+            {
+                await Coroutine.Wait(5000, () => CommonBehaviors.IsLoading);
+                await CommonTasks.HandleLoading();
+                await Coroutine.Sleep(2000);
+
+                Tarot.DeathFlag = false;
+            }
+
+            if (TarotFateManager.FateDatabase == null)
+            {
+                await BuildFateDatabase.Main();
+            }
+
+            if (Poi.Current == null)
+            {
+                return false;
+            }
+
+            if (Poi.Current.Type == PoiType.Death)
+            {
+                Logger.SendLog("We died, attempting to recover.");
+                Tarot.DeathFlag = true;
+                return false;
+            }
+
+            if (TarotSettings.Instance.ChangeZonesEnabled && ZoneChangeNeeded())
+            {
+                await HandleZoneChange();
+                return false;
+            }
+
+            switch (Poi.Current.Type)
+            {
+                case PoiType.Kill:
+                    await HandleCombat();
+                    return false;
+                case PoiType.Fate:
+                    await HandleFate();
+                    return false;
+                case PoiType.Wait:
+                    await HandleWait();
+                    return false;
+            }
+
+            // Always return false to not block the tree.
+            return false;
+        }
+
+        private static bool ZoneChangeNeeded()
+        {
             if (Core.Player.IsLevelSynced || Core.Player.IsDead)
             {
                 return false;
@@ -203,45 +278,7 @@ namespace Tarot.Behaviour
                 return false;
             }
 
-            var zoneName = WorldManager.AvailableLocations.FirstOrDefault(teleport => teleport.AetheryteId == aetheryteId).Name;
-            Logger.SendLog("Character is level " + Core.Player.ClassLevel + ", teleporting to " + zoneName + ".");
-            await Teleport.TeleportToAetheryte(aetheryteId);
-
             return true;
-        }
-
-        private static async Task<bool> Main()
-        {
-            if (TarotFateManager.FateDatabase == null)
-            {
-                await BuildFateDatabase.Main();
-            }
-
-            if (Poi.Current == null)
-            {
-                return false;
-            }
-
-            if (TarotSettings.Instance.ChangeZonesEnabled)
-            {
-                await HandleZoneChange();
-            }
-
-            switch (Poi.Current.Type)
-            {
-                case PoiType.Kill:
-                    await HandleCombat();
-                    return false;
-                case PoiType.Fate:
-                    await HandleFate();
-                    return false;
-                case PoiType.Wait:
-                    await HandleWait();
-                    return false;
-            }
-
-            // Always return false to not block the tree.
-            return false;
         }
     }
 }
