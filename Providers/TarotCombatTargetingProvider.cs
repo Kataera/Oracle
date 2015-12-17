@@ -127,6 +127,11 @@ namespace Tarot.Providers
                 return false;
             }
 
+            if (battleCharacter.TappedByOther && !battleCharacter.IsFate)
+            {
+                return false;
+            }
+
             if (currentFate == null || !currentFate.IsValid)
             {
                 return false;

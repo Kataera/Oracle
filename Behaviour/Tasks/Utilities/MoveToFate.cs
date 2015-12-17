@@ -139,10 +139,10 @@ namespace Tarot.Behaviour.Tasks.Utilities
                         return true;
                     }
 
-                    if (!Core.Player.IsMounted && IsMountNeeded())
+                    if (!Core.Player.IsMounted && IsMountNeeded() && Actionmanager.AvailableMounts.Any())
                     {
                         Navigator.Stop();
-                        return true;
+                        await MountUp();
                     }
 
                     Navigator.MoveToPointWithin(currentFate.Location, currentFate.Radius * 0.5f, currentFate.Name);
@@ -160,10 +160,10 @@ namespace Tarot.Behaviour.Tasks.Utilities
                         return true;
                     }
 
-                    if (!Core.Player.IsMounted && IsMountNeeded())
+                    if (!Core.Player.IsMounted && IsMountNeeded() && Actionmanager.AvailableMounts.Any())
                     {
                         Navigator.Stop();
-                        return true;
+                        await MountUp();
                     }
 
                     Navigator.MoveToPointWithin(currentFate.Location, currentFate.Radius * 0.5f, currentFate.Name);
