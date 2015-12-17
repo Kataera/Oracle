@@ -137,7 +137,7 @@ namespace Tarot.Providers
 
         private double GetWeight(BattleCharacter battleCharacter)
         {
-            var weight = (battleCharacter.Distance(Core.Player) * -30) + 1800;
+            var weight = 1800 - (battleCharacter.Distance(Core.Player) * 30);
             var currentFate = TarotFateManager.GetCurrentFateData();
             var tarotFate = new Fate();
 
@@ -146,7 +146,7 @@ namespace Tarot.Providers
                 tarotFate = TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate);
             }
 
-            // If FATE has a preferred target, prioritise it we're out of combat.
+            // If FATE has a preferred target, prioritise it if we're out of combat.
             if (tarotFate.PreferredTargetId != null && tarotFate.PreferredTargetId.Contains(battleCharacter.NpcId) && !Core.Player.InCombat)
             {
                 weight += 2000;
@@ -156,7 +156,8 @@ namespace Tarot.Providers
             else if (!Core.Player.InCombat)
             {
                 weight = GameObjectManager.GetObjectsOfType<BattleCharacter>()
-                                          .Aggregate(weight, (current, mob) => current - 3 * (10 / mob.Distance(battleCharacter)));
+                                          .Where(mob => mob.Distance(battleCharacter) < 20f)
+                                          .Aggregate(weight, (current, mob) => current - 5 * (10 / mob.Distance(battleCharacter)));
             }
 
             if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)

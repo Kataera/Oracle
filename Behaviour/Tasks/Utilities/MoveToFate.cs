@@ -56,6 +56,11 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 {
                     Logger.SendLog("Teleporting to the closest aetheryte crystal to the FATE.");
                     await Teleport.TeleportToClosestAetheryte(currentFate);
+
+                    if (Core.Player.InCombat)
+                    {
+                        return false;
+                    }
                 }
             }
 
@@ -73,10 +78,8 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
         private static void ClearFate()
         {
-            Logger.SendLog("FATE ended before we got there.");
-
             TarotFateManager.SetDoNotWaitFlag(true);
-            TarotFateManager.ClearCurrentFate("FATE has ended.", false);
+            TarotFateManager.ClearCurrentFate("FATE ended before we got there.", false);
             Navigator.Stop();
         }
 
