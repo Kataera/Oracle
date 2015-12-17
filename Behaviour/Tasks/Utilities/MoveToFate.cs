@@ -71,10 +71,11 @@ namespace Tarot.Behaviour.Tasks.Utilities
             return true;
         }
 
-        private static void ClearFate(FateData fate)
+        private static void ClearFate()
         {
+            Logger.SendLog("FATE ended before we got there.");
+
             TarotFateManager.SetDoNotWaitFlag(true);
-            Logger.SendLog("'" + fate.Name + "' ended before we got there.");
             TarotFateManager.ClearCurrentFate("FATE has ended.", false);
             Navigator.Stop();
         }
@@ -124,7 +125,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE
                 || currentFate.Status == FateStatus.NOTACTIVE)
             {
-                ClearFate(currentFate);
+                ClearFate();
                 return true;
             }
 
@@ -134,7 +135,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 {
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
-                        ClearFate(currentFate);
+                        ClearFate();
                         Navigator.Stop();
                         return true;
                     }
@@ -160,7 +161,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 {
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
-                        ClearFate(currentFate);
+                        ClearFate();
                         Navigator.Stop();
                         return true;
                     }
