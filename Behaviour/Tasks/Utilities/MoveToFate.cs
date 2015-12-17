@@ -139,9 +139,14 @@ namespace Tarot.Behaviour.Tasks.Utilities
                         return true;
                     }
 
-                    if (!ignoreCombat && !Core.Player.IsMounted && IsMountNeeded() && Actionmanager.AvailableMounts.Any())
+                    if (!Core.Player.IsMounted && IsMountNeeded() && Actionmanager.AvailableMounts.Any())
                     {
                         Navigator.Stop();
+                        if (!ignoreCombat && Core.Player.InCombat)
+                        {
+                            return true;
+                        }
+
                         await MountUp();
                     }
 
@@ -160,9 +165,14 @@ namespace Tarot.Behaviour.Tasks.Utilities
                         return true;
                     }
 
-                    if (!ignoreCombat && !Core.Player.IsMounted && IsMountNeeded() && Actionmanager.AvailableMounts.Any())
+                    if (!Core.Player.IsMounted && IsMountNeeded() && Actionmanager.AvailableMounts.Any())
                     {
                         Navigator.Stop();
+                        if (!ignoreCombat && Core.Player.InCombat)
+                        {
+                            return true;
+                        }
+
                         await MountUp();
                     }
 
