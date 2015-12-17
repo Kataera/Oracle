@@ -52,6 +52,7 @@ namespace Tarot.Settings
         private static readonly object SyncRoot = new object();
         private static volatile TarotSettings instance;
 
+        public List<uint> BlacklistedFates;
         public List<uint> BlacklistedMobs;
         public Dictionary<uint, Vector3> FateWaitLocations;
         public Dictionary<uint, uint> ZoneLevels;
@@ -90,6 +91,16 @@ namespace Tarot.Settings
         private TarotSettings()
             : base(Path.Combine(SettingsPath, "TarotSettings.json"))
         {
+            if (this.BlacklistedFates == null)
+            {
+                this.BlacklistedFates = new List<uint>();
+            }
+
+            if (this.BlacklistedMobs == null)
+            {
+                this.BlacklistedMobs = new List<uint> {1992};
+            }
+
             if (this.FateWaitLocations == null)
             {
                 this.FateWaitLocations = new Dictionary<uint, Vector3>();
@@ -99,11 +110,6 @@ namespace Tarot.Settings
             {
                 this.ZoneLevels = new Dictionary<uint, uint>();
                 this.PopulateZoneLevels();
-            }
-
-            if (this.BlacklistedMobs == null)
-            {
-                this.BlacklistedMobs = new List<uint> {1992};
             }
         }
 

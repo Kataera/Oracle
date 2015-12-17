@@ -149,6 +149,11 @@ namespace Tarot.Managers
                 return false;
             }
 
+            if (TarotSettings.Instance.BlacklistedFates.Contains(fate.Id))
+            {
+                return false;
+            }
+
             if (tarotFateData.SupportLevel == FateSupportLevel.Unsupported)
             {
                 return false;

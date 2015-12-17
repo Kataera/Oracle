@@ -47,13 +47,6 @@ namespace Tarot.Providers
     {
         private BattleCharacter[] attackers;
 
-        public TarotCombatTargetingProvider()
-        {
-            this.IgnoreNpcIds = new HashSet<uint> {1201};
-        }
-
-        public HashSet<uint> IgnoreNpcIds { get; set; }
-
         public List<BattleCharacter> GetObjectsByWeight()
         {
             this.attackers = GameObjectManager.Attackers.ToArray();
@@ -87,11 +80,6 @@ namespace Tarot.Providers
             }
 
             if (!battleCharacter.CanAttack)
-            {
-                return false;
-            }
-
-            if (this.IgnoreNpcIds.Contains(battleCharacter.NpcId))
             {
                 return false;
             }
@@ -137,7 +125,7 @@ namespace Tarot.Providers
 
         private double GetWeight(BattleCharacter battleCharacter)
         {
-            var weight = (battleCharacter.Distance(Core.Player) * -30) + 1800;
+            var weight = 1800 - (battleCharacter.Distance(Core.Player) * 50);
             var currentFate = TarotFateManager.GetCurrentFateData();
             var tarotFate = new Fate();
 
@@ -146,17 +134,10 @@ namespace Tarot.Providers
                 tarotFate = TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate);
             }
 
-            // If FATE has a preferred target, prioritise it we're out of combat.
+            // If FATE has a preferred target, prioritise it if we're out of combat.
             if (tarotFate.PreferredTargetId != null && tarotFate.PreferredTargetId.Contains(battleCharacter.NpcId) && !Core.Player.InCombat)
             {
                 weight += 2000;
-            }
-
-            // Prefer targets with less mobs around them.
-            else if (!Core.Player.InCombat)
-            {
-                weight = GameObjectManager.GetObjectsOfType<BattleCharacter>()
-                                          .Aggregate(weight, (current, mob) => current - 3 * (10 / mob.Distance(battleCharacter)));
             }
 
             if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)
@@ -167,6 +148,11 @@ namespace Tarot.Providers
             if (battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Core.Player.ObjectId)
             {
                 weight += 750;
+            }
+
+            if (Chocobo.Object != null && battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Chocobo.Object.ObjectId)
+            {
+                weight += 500;
             }
 
             if (!battleCharacter.TappedByOther)

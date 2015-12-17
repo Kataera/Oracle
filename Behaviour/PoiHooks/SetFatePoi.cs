@@ -54,11 +54,6 @@ namespace Tarot.Behaviour.PoiHooks
                 return false;
             }
 
-            if (ZoneChangeNeeded())
-            {
-                return false;
-            }
-
             if (IsFateSet())
             {
                 if (!IsFatePoiSet() && Poi.Current.Type != PoiType.Death && !GameObjectManager.Attackers.Any())
@@ -70,6 +65,13 @@ namespace Tarot.Behaviour.PoiHooks
                 }
 
                 return true;
+            }
+
+            TarotFateManager.CurrentFateId = 0;
+
+            if (ZoneChangeNeeded())
+            {
+                return false;
             }
 
             if (PreviousFateChained())

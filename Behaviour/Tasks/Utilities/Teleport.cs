@@ -87,9 +87,10 @@ namespace Tarot.Behaviour.Tasks.Utilities
             await
                 CommonBehaviors.CreateTeleportBehavior(vr => aetheryteId, vr => WorldManager.GetZoneForAetheryteId(aetheryteId))
                                .ExecuteCoroutine();
-            await Coroutine.Wait(TimeSpan.FromSeconds(10), () => !Core.Player.IsCasting);
-            await Coroutine.Sleep(TimeSpan.FromSeconds(5));
-            await Coroutine.Wait(TimeSpan.MaxValue, () => !CommonBehaviors.IsLoading);
+            await Coroutine.Wait(TimeSpan.FromSeconds(10), () => !Core.Player.IsCasting || Core.Player.InCombat);
+            await Coroutine.Wait(TimeSpan.FromSeconds(2), () => Core.Player.InCombat);
+            await Coroutine.Wait(TimeSpan.MaxValue, () => !CommonBehaviors.IsLoading || Core.Player.InCombat);
+            await Coroutine.Wait(TimeSpan.FromSeconds(2), () => Core.Player.InCombat);
 
             return true;
         }
@@ -98,6 +99,11 @@ namespace Tarot.Behaviour.Tasks.Utilities
         {
             var aetheryte = await GetClosestAetheryte(fate);
             await TeleportToAetheryte(aetheryte.Id);
+
+            if (Core.Player.InCombat)
+            {
+                TarotBehaviour.ClearPoi("We're in combat and need to teleport.");
+            }
 
             return true;
         }
