@@ -159,7 +159,7 @@ namespace Tarot
             // Clean up all botbase internal variables.
             TarotFateManager.CurrentFateId = 0;
             TarotFateManager.PreviousFateId = 0;
-            TarotFateManager.FateDatabase = null;
+            TarotFateManager.TarotDatabase = null;
 
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
             if (navProvider != null)

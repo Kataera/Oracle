@@ -46,7 +46,7 @@ namespace Tarot.Behaviour.Tasks
                 return false;
             }
 
-            switch (TarotFateManager.FateDatabase.GetFateFromFateData(currentFate).Type)
+            switch (TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate).Type)
             {
                 case FateType.Kill:
                     await KillFate.Main();

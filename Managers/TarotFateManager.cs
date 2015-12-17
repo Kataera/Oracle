@@ -47,8 +47,8 @@ namespace Tarot.Managers
     {
         internal static uint CurrentFateId { get; set; }
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
-        internal static FateDatabase FateDatabase { get; set; }
         internal static uint PreviousFateId { get; set; }
+        internal static TarotDatabase TarotDatabase { get; set; }
 
         public static async Task<bool> AnyViableFates()
         {
@@ -112,7 +112,7 @@ namespace Tarot.Managers
 
         public static bool FateFilter(FateData fate)
         {
-            var tarotFateData = FateDatabase.GetFateFromFateData(fate);
+            var tarotFateData = TarotDatabase.GetFateFromFateData(fate);
 
             if (tarotFateData.Type == FateType.Boss && !TarotSettings.Instance.BossFatesEnabled)
             {
@@ -220,19 +220,19 @@ namespace Tarot.Managers
                 return true;
             }
 
-            if (FateDatabase.GetFateFromFateData(fate).Type != FateType.Boss
-                && FateDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
+            if (TarotDatabase.GetFateFromFateData(fate).Type != FateType.Boss
+                && TarotDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
             {
                 return true;
             }
 
-            if (FateDatabase.GetFateFromFateData(fate).Type == FateType.Boss
+            if (TarotDatabase.GetFateFromFateData(fate).Type == FateType.Boss
                 && fate.Progress >= TarotSettings.Instance.BossEngagePercentage)
             {
                 return true;
             }
 
-            if (FateDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss
+            if (TarotDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss
                 && fate.Progress >= TarotSettings.Instance.MegaBossEngagePercentage)
             {
                 return true;

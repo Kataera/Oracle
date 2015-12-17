@@ -143,7 +143,7 @@ namespace Tarot.Providers
 
             if (currentFate != null)
             {
-                tarotFate = TarotFateManager.FateDatabase.GetFateFromFateData(currentFate);
+                tarotFate = TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate);
             }
 
             // If FATE has a preferred target, prioritise it we're out of combat.

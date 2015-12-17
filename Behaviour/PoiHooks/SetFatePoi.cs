@@ -141,7 +141,7 @@ namespace Tarot.Behaviour.PoiHooks
                 return false;
             }
 
-            var tarotFate = TarotFateManager.FateDatabase.GetFateFromFateData(currentFate);
+            var tarotFate = TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate);
             if (currentFate.Status == FateStatus.COMPLETE && tarotFate.Type != FateType.Collect)
             {
                 return false;
@@ -162,7 +162,7 @@ namespace Tarot.Behaviour.PoiHooks
                 return false;
             }
 
-            if (TarotFateManager.FateDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdFailure != 0)
+            if (TarotFateManager.TarotDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdFailure != 0)
             {
                 return true;
             }
@@ -177,7 +177,7 @@ namespace Tarot.Behaviour.PoiHooks
                 return false;
             }
 
-            if (TarotFateManager.FateDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdSuccess != 0)
+            if (TarotFateManager.TarotDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdSuccess != 0)
             {
                 return true;
             }
@@ -203,8 +203,8 @@ namespace Tarot.Behaviour.PoiHooks
                 chainFateTimer.Reset();
             }
 
-            var chainIdSuccess = TarotFateManager.FateDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdSuccess;
-            var chainIdFailure = TarotFateManager.FateDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdFailure;
+            var chainIdSuccess = TarotFateManager.TarotDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdSuccess;
+            var chainIdFailure = TarotFateManager.TarotDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdFailure;
 
             // If there's a success chain only.
             if (chainIdSuccess != 0 && chainIdFailure == 0)

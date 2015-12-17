@@ -47,7 +47,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
         public static async Task<bool> Main()
         {
             var currentFate = TarotFateManager.GetCurrentFateData();
-            var tarotFate = TarotFateManager.FateDatabase.GetFateFromId(currentFate.Id);
+            var tarotFate = TarotFateManager.TarotDatabase.GetFateFromId(currentFate.Id);
             var fateItemBagSlot = GetBagSlotFromItemId(tarotFate.ItemId);
 
             if (currentFate.Status != FateStatus.NOTACTIVE && fateItemBagSlot != null)
@@ -138,7 +138,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
         private static void SelectTarget()
         {
             var currentFate = TarotFateManager.GetCurrentFateData();
-            var tarotFate = TarotFateManager.FateDatabase.GetFateFromFateData(currentFate);
+            var tarotFate = TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate);
             BattleCharacter target = null;
 
             if (tarotFate.PreferredTargetId.Any())

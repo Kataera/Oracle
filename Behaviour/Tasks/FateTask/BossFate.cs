@@ -92,7 +92,7 @@ namespace Tarot.Behaviour.Tasks.FateTask
         private static void SelectTarget()
         {
             var currentFate = TarotFateManager.GetCurrentFateData();
-            var tarotFate = TarotFateManager.FateDatabase.GetFateFromFateData(currentFate);
+            var tarotFate = TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate);
             BattleCharacter target = null;
 
             if (tarotFate.PreferredTargetId.Any())

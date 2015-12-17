@@ -22,6 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,7 +46,8 @@ namespace Tarot.Behaviour.PoiHooks.FateSelect
             var closestFates = activeFates.OrderBy(kvp => kvp.Value).Where(fate => TarotFateManager.FateFilter(fate.Key));
             foreach (var fate in closestFates)
             {
-                Logger.SendDebugLog("Found FATE '" + fate.Key.Name + "'. Distance to its centre is " + fate.Value + " yalms.");
+                var distance = Math.Round(fate.Value - (fate.Key.Radius * 0.75f), 0);
+                Logger.SendDebugLog("Found FATE '" + fate.Key.Name + "'. Distance to it is ~" + distance + " yalms.");
             }
 
             if (!closestFates.Any())

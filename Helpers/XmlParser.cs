@@ -35,7 +35,7 @@ namespace Tarot.Helpers
 {
     internal static class XmlParser
     {
-        private static FateDatabase database;
+        private static TarotDatabase database;
 
         private static uint fateChainIdFail;
 
@@ -61,7 +61,7 @@ namespace Tarot.Helpers
 
         private static FateType fateType;
 
-        public static FateDatabase GetFateDatabase()
+        public static TarotDatabase GetFateDatabase()
         {
             if (database == null)
             {
@@ -71,7 +71,7 @@ namespace Tarot.Helpers
             return database;
         }
 
-        public static FateDatabase GetFateDatabase(bool forceReparse)
+        public static TarotDatabase GetFateDatabase(bool forceReparse)
         {
             if (forceReparse || database == null)
             {
@@ -128,7 +128,7 @@ namespace Tarot.Helpers
         private static void ParseFateData()
         {
             fateDataXml = GetXmlDocument();
-            database = new FateDatabase();
+            database = new TarotDatabase();
 
             if (fateDataInvalidFlag || fateDataXml.DocumentElement == null)
             {
