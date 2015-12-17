@@ -47,7 +47,15 @@ namespace Tarot.Behaviour.PoiHooks.FateSelect
             foreach (var fate in closestFates)
             {
                 var distance = Math.Round(fate.Value - (fate.Key.Radius * 0.75f), 0);
-                Logger.SendDebugLog("Found FATE '" + fate.Key.Name + "'. Distance to it is ~" + distance + " yalms.");
+
+                if (distance > 0)
+                {
+                    Logger.SendDebugLog("Found FATE '" + fate.Key.Name + "'. Distance to it is ~" + distance + " yalms.");
+                }
+                else
+                {
+                    Logger.SendDebugLog("Found FATE '" + fate.Key.Name + "'. Distance to it is 0 yalms.");
+                }
             }
 
             if (!closestFates.Any())

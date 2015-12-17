@@ -22,6 +22,7 @@
     along with Tarot. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -152,6 +153,14 @@ namespace Tarot.Managers
             if (TarotSettings.Instance.BlacklistedFates.Contains(fate.Id))
             {
                 return false;
+            }
+
+            if (TarotSettings.Instance.IgnoreLowDurationUnstartedFates)
+            {
+                if (Math.Abs(fate.Progress) < 0.5f && fate.TimeLeft < TimeSpan.FromSeconds(TarotSettings.Instance.LowRemainingDuration))
+                {
+                    return false;
+                }
             }
 
             if (tarotFateData.SupportLevel == FateSupportLevel.Unsupported)

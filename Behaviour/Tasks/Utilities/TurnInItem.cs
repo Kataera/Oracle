@@ -62,7 +62,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             Logger.SendLog("Attempting to hand over " + turnInBagSlot.Count + " of the item '" + turnInBagSlot.Name + "'.");
             turnInBagSlot.Handover();
 
-            await Coroutine.Sleep(TarotSettings.Instance.TurnInActionDelay);
+            await Coroutine.Sleep(TarotSettings.Instance.ActionDelay);
             if (!Request.IsOpen || !Request.HandOverButtonClickable)
             {
                 Logger.SendErrorLog("Hand over failed.");
@@ -73,7 +73,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
             Logger.SendDebugLog("Pressing 'Hand Over' button.");
             Request.HandOver();
-            await Coroutine.Sleep(TarotSettings.Instance.TurnInActionDelay);
+            await Coroutine.Sleep(TarotSettings.Instance.ActionDelay);
 
             return true;
         }

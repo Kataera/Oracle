@@ -40,13 +40,16 @@ namespace Tarot.Helpers
 
         internal static void SendDebugLog(string log)
         {
+            var prefix = "[Tarot v" + Tarot.Version + "] [DEBUG]: ";
+
             if (!TarotSettings.Instance.DebugEnabled)
             {
-                return;
+                Logging.WriteQuiet(LoggerDebugColour, prefix + log);
             }
-
-            var prefix = "[Tarot v" + Tarot.Version + "] [DEBUG]: ";
-            Logging.Write(LoggerDebugColour, prefix + log);
+            else
+            {
+                Logging.Write(LoggerDebugColour, prefix + log);
+            }
         }
 
         internal static void SendErrorLog(string log)

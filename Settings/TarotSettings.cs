@@ -37,18 +37,6 @@ namespace Tarot.Settings
 {
     internal sealed class TarotSettings : JsonSettings
     {
-        private const uint Aleport = 14;
-        private const uint CampDragonhead = 23;
-        private const uint CeruleumProcessingPlant = 22;
-        private const uint CostaDelSol = 11;
-        private const uint FalconsNest = 71;
-        private const uint HawthorneHut = 4;
-        private const uint Horizon = 17;
-        private const uint Idyllshire = 75;
-        private const uint Moghome = 78;
-        private const uint Quarrymill = 5;
-        private const uint Tailfeather = 76;
-
         private static readonly object SyncRoot = new object();
         private static volatile TarotSettings instance;
 
@@ -57,6 +45,8 @@ namespace Tarot.Settings
         public Dictionary<uint, Vector3> FateWaitLocations;
         public Dictionary<uint, uint> ZoneLevels;
 
+        private int actionDelay;
+        private bool bindHomePoint;
         private int bossEngagePercentage;
         private bool bossFatesEnabled;
         private int chainFateWaitTimeout;
@@ -74,8 +64,10 @@ namespace Tarot.Settings
         private FateSelectMode fateSelectMode;
         private FateWaitMode fateWaitMode;
         private int grindMobRadius;
+        private bool ignoreLowDurationUnstartedFates;
         private bool killFatesEnabled;
         private bool listHooksOnStart;
+        private int lowRemainingDuration;
         private int megaBossEngagePercentage;
         private bool megaBossFatesEnabled;
         private int mobMaximumLevelAbove;
@@ -84,7 +76,6 @@ namespace Tarot.Settings
         private TarotOperationMode tarotOperationMode;
         private bool teleportIfQuicker;
         private int teleportMinimumDistanceDelta;
-        private int turnInActionDelay;
         private bool waitAtFateForProgress;
         private bool waitForChainFates;
 
@@ -129,6 +120,32 @@ namespace Tarot.Settings
                 }
 
                 return instance;
+            }
+        }
+
+        [DefaultValue(1500)]
+        [Setting]
+        public int ActionDelay
+        {
+            get { return this.actionDelay; }
+
+            set
+            {
+                this.actionDelay = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool BindHomePoint
+        {
+            get { return this.bindHomePoint; }
+
+            set
+            {
+                this.bindHomePoint = value;
+                this.Save();
             }
         }
 
@@ -355,6 +372,19 @@ namespace Tarot.Settings
 
         [DefaultValue(true)]
         [Setting]
+        public bool IgnoreLowDurationUnstartedFates
+        {
+            get { return this.ignoreLowDurationUnstartedFates; }
+
+            set
+            {
+                this.ignoreLowDurationUnstartedFates = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
         public bool KillFatesEnabled
         {
             get { return this.killFatesEnabled; }
@@ -375,6 +405,19 @@ namespace Tarot.Settings
             set
             {
                 this.listHooksOnStart = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(180)]
+        [Setting]
+        public int LowRemainingDuration
+        {
+            get { return this.lowRemainingDuration; }
+
+            set
+            {
+                this.lowRemainingDuration = value;
                 this.Save();
             }
         }
@@ -405,7 +448,7 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(6)]
+        [DefaultValue(4)]
         [Setting]
         public int MobMaximumLevelAbove
         {
@@ -483,19 +526,6 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(1500)]
-        [Setting]
-        public int TurnInActionDelay
-        {
-            get { return this.turnInActionDelay; }
-
-            set
-            {
-                this.turnInActionDelay = value;
-                this.Save();
-            }
-        }
-
         [DefaultValue(false)]
         [Setting]
         public bool WaitAtFateForProgress
@@ -524,78 +554,90 @@ namespace Tarot.Settings
 
         private void PopulateZoneLevels()
         {
+            const uint aleport = 14;
+            const uint campDragonhead = 23;
+            const uint ceruleumProcessingPlant = 22;
+            const uint costaDelSol = 11;
+            const uint falconsNest = 71;
+            const uint hawthorneHut = 4;
+            const uint horizon = 17;
+            const uint idyllshire = 75;
+            const uint moghome = 78;
+            const uint quarrymill = 5;
+            const uint tailfeather = 76;
+
             for (uint i = 1; i < 60; i++)
             {
                 // 1-12: Western Thanalan (Horizon).
                 if (i < 12)
                 {
-                    this.ZoneLevels.Add(i, Horizon);
+                    this.ZoneLevels.Add(i, horizon);
                 }
 
                 // 12-18: Western La Noscea (Aleport).
                 else if (i < 18)
                 {
-                    this.ZoneLevels.Add(i, Aleport);
+                    this.ZoneLevels.Add(i, aleport);
                 }
 
                 // 18-24: East Shroud (The Hawthorne Hut).
                 else if (i < 24)
                 {
-                    this.ZoneLevels.Add(i, HawthorneHut);
+                    this.ZoneLevels.Add(i, hawthorneHut);
                 }
 
                 // 24-29: South Shroud (Quarrymill).
                 else if (i < 29)
                 {
-                    this.ZoneLevels.Add(i, Quarrymill);
+                    this.ZoneLevels.Add(i, quarrymill);
                 }
 
                 // 29-36: Eastern La Noscea (Costa del Sol).
                 else if (i < 36)
                 {
-                    this.ZoneLevels.Add(i, CostaDelSol);
+                    this.ZoneLevels.Add(i, costaDelSol);
                 }
 
                 // 36-43: Coerthas Central Highlands (Camp Dragonhead).
                 else if (i < 43)
                 {
-                    this.ZoneLevels.Add(i, CampDragonhead);
+                    this.ZoneLevels.Add(i, campDragonhead);
                 }
 
                 // 43-46: Western La Noscea (Aleport).
                 else if (i < 46)
                 {
-                    this.ZoneLevels.Add(i, Aleport);
+                    this.ZoneLevels.Add(i, aleport);
                 }
 
                 // 46-50: Northern Thanalan (Ceruleum Processing Plant).
                 else if (i < 50)
                 {
-                    this.ZoneLevels.Add(i, CeruleumProcessingPlant);
+                    this.ZoneLevels.Add(i, ceruleumProcessingPlant);
                 }
 
                 // 50-52: Coerthas Western Highlands (Falcon's Nest).
                 else if (i < 52)
                 {
-                    this.ZoneLevels.Add(i, FalconsNest);
+                    this.ZoneLevels.Add(i, falconsNest);
                 }
 
                 // 52-54: The Dravanian Forelands (Tailfeather).
                 else if (i < 54)
                 {
-                    this.ZoneLevels.Add(i, Tailfeather);
+                    this.ZoneLevels.Add(i, tailfeather);
                 }
 
                 // 54-58: The Churning Mists (Moghome)
                 else if (i < 58)
                 {
-                    this.ZoneLevels.Add(i, Moghome);
+                    this.ZoneLevels.Add(i, moghome);
                 }
 
                 // 58-60: Dravanian Hinterlands (Idyllshire).
                 else
                 {
-                    this.ZoneLevels.Add(i, Idyllshire);
+                    this.ZoneLevels.Add(i, idyllshire);
                 }
             }
         }
