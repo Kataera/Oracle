@@ -77,26 +77,11 @@ namespace Tarot.Behaviour
 
         private static async Task<bool> HandleCombat()
         {
-            var currentFate = TarotFateManager.GetCurrentFateData();
             var currentBc = Poi.Current.BattleCharacter;
-
-            if (currentFate == null)
-            {
-                return false;
-            }
 
             if (currentBc == null)
             {
                 return false;
-            }
-
-            if (TarotFateManager.CurrentFateId != 0 && currentFate.Status == FateStatus.NOTACTIVE)
-            {
-                if (TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate).Type != FateType.Collect)
-                {
-                    TarotFateManager.ClearCurrentFate("FATE is no longer active.");
-                    return true;
-                }
             }
 
             // If target is not a FATE mob, nor attacking us.
