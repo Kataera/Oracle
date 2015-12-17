@@ -47,13 +47,6 @@ namespace Tarot.Providers
     {
         private BattleCharacter[] attackers;
 
-        public TarotCombatTargetingProvider()
-        {
-            this.IgnoreNpcIds = new HashSet<uint> {1201};
-        }
-
-        public HashSet<uint> IgnoreNpcIds { get; set; }
-
         public List<BattleCharacter> GetObjectsByWeight()
         {
             this.attackers = GameObjectManager.Attackers.ToArray();
@@ -87,11 +80,6 @@ namespace Tarot.Providers
             }
 
             if (!battleCharacter.CanAttack)
-            {
-                return false;
-            }
-
-            if (this.IgnoreNpcIds.Contains(battleCharacter.NpcId))
             {
                 return false;
             }
@@ -166,6 +154,11 @@ namespace Tarot.Providers
             }
 
             if (battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Core.Player.ObjectId)
+            {
+                weight += 750;
+            }
+
+            if (Chocobo.Object != null && battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Chocobo.Object.ObjectId)
             {
                 weight += 750;
             }
