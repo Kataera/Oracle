@@ -6,10 +6,13 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-using Oracle.Forms.MaterialSkin.Controls;
+using MaterialSkin.Controls;
+
 using Oracle.Properties;
 
-namespace Oracle.Forms.MaterialSkin
+// ReSharper disable CheckNamespace
+
+namespace MaterialSkin
 {
 
     #region Using Directives

@@ -239,10 +239,13 @@ Settings.StyleCop
 *.sh
 *.bak
 
-# Tarot Test project
-TarotTest/
+# Oracle Test project
+OracleTest/
 
-# Tarot solution
-Tarot.sln
+# Oracle solution
+Oracle.sln
 Properties/AssemblyInfo.cs
+
+# Project notes
 Notes.txt
+Oracle.sln

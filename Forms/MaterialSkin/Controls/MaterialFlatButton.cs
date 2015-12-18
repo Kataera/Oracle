@@ -4,9 +4,11 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
 
-using Oracle.Forms.MaterialSkin.Animations;
+using MaterialSkin.Animations;
 
-namespace Oracle.Forms.MaterialSkin.Controls
+// ReSharper disable CheckNamespace
+
+namespace MaterialSkin.Controls
 {
 
     #region Using Directives

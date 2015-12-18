@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 
-namespace Oracle.Forms.MaterialSkin
+// ReSharper disable CheckNamespace
+
+namespace MaterialSkin
 {
 
     #region Using Directives
@@ -16,7 +18,7 @@ namespace Oracle.Forms.MaterialSkin
         public readonly Pen PrimaryPen, DarkPrimaryPen, LightPrimaryPen, AccentPen, TextPen;
 
         /// <summary>
-        ///     Defines the Color Scheme to be used for all forms.
+        ///     Defines the <see cref="Color" /> Scheme to be used for all forms.
         /// </summary>
         /// <param name="primary">
         ///     The primary color, a -500 color is suggested here.

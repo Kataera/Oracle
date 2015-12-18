@@ -2,7 +2,9 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace Oracle.Forms.MaterialSkin.Controls
+// ReSharper disable CheckNamespace
+
+namespace MaterialSkin.Controls
 {
 
     #region Using Directives

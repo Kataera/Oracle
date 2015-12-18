@@ -26,8 +26,8 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-using Oracle.Forms.MaterialSkin;
-using Oracle.Forms.MaterialSkin.Controls;
+using MaterialSkin;
+using MaterialSkin.Controls;
 
 namespace Oracle.Forms
 {

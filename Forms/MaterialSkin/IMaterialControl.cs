@@ -1,4 +1,6 @@
-﻿namespace Oracle.Forms.MaterialSkin
+﻿// ReSharper disable CheckNamespace
+
+namespace MaterialSkin
 {
     internal interface IMaterialControl
     {
