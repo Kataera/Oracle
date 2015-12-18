@@ -241,13 +241,6 @@ namespace Oracle.Behaviour
             return true;
         }
 
-        private static void UpdateGameCache()
-        {
-            FateManager.Update();
-            GameObjectManager.Clear();
-            GameObjectManager.Update();
-        }
-
         private static async Task<bool> Main()
         {
             UpdateGameCache();
@@ -307,6 +300,13 @@ namespace Oracle.Behaviour
 
             // Always return false to not block the tree.
             return false;
+        }
+
+        private static void UpdateGameCache()
+        {
+            FateManager.Update();
+            GameObjectManager.Clear();
+            GameObjectManager.Update();
         }
 
         private static bool ZoneChangeNeeded()
