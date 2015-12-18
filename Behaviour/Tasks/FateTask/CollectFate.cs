@@ -101,7 +101,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
             OracleFateManager.ClearCurrentFate("Current FATE is finished.");
         }
 
-        private static BagSlot GetBagSlotFromItemId(uint itemId)
+        public static BagSlot GetBagSlotFromItemId(uint itemId)
         {
             BagSlot bagSlot = null;
             foreach (var bagslot in InventoryManager.FilledSlots)

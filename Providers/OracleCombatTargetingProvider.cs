@@ -26,13 +26,16 @@ using System.Collections.Generic;
 using System.Linq;
 
 using ff14bot;
+using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.NeoProfiles;
 using ff14bot.Objects;
 
+using Oracle.Behaviour.Tasks.FateTask;
 using Oracle.Data;
 using Oracle.Managers;
+using Oracle.Settings;
 
 namespace Oracle.Providers
 {
@@ -68,10 +71,35 @@ namespace Oracle.Providers
             return FateManager.GetFateById(battleCharacter.FateId).MaxLevel < Core.Player.ClassLevel;
         }
 
+        private static bool ReadyToTurnIn()
+        {
+            var currentFate = OracleFateManager.GetCurrentFateData();
+            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(currentFate.Id);
+            var fateItemBagSlot = CollectFate.GetBagSlotFromItemId(oracleFate.ItemId);
+
+            if (currentFate.Status == FateStatus.NOTACTIVE || fateItemBagSlot == null)
+            {
+                return false;
+            }
+
+            var fateItemCount = fateItemBagSlot.Count;
+            if (fateItemCount >= OracleSettings.Instance.CollectFateTurnInAtAmount)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private bool Filter(bool inCombat, BattleCharacter battleCharacter)
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
             var blacklistEntry = Blacklist.GetEntry(battleCharacter);
+
+            if (currentFate != null)
+            {
+                return !ReadyToTurnIn();
+            }
 
             if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible
                 || battleCharacter.CurrentHealthPercent <= 0f)
