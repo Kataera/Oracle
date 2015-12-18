@@ -181,12 +181,14 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
             turnInNpc.Interact();
             await Coroutine.Sleep(500);
-            await SkipDialogue.Main();
-            await TurnInItem.Main();
-            await SkipDialogue.Main();
+            var result = await SkipDialogue.Main() && await TurnInItem.Main() && await SkipDialogue.Main();
 
-            Logger.SendLog("Items have been handed over to " + turnInNpc.Name + ".");
-            return true;
+            if (result)
+            {
+                Logger.SendLog("Items have been handed over to " + turnInNpc.Name + ".");
+            }
+
+            return result;
         }
     }
 }

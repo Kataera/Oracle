@@ -42,7 +42,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
         {
             if (!Talk.DialogOpen && !Talk.ConvoLock)
             {
-                return true;
+                return false;
             }
 
             Logger.SendDebugLog("Skipping dialogue.");
