@@ -241,8 +241,17 @@ namespace Oracle.Behaviour
             return true;
         }
 
+        private static void UpdateGameCache()
+        {
+            FateManager.Update();
+            GameObjectManager.Clear();
+            GameObjectManager.Update();
+        }
+
         private static async Task<bool> Main()
         {
+            UpdateGameCache();
+
             if (OracleFateManager.OracleDatabase == null)
             {
                 await BuildOracleDatabase.Main();

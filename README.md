@@ -1,4 +1,4 @@
-# Oracle 
+# Oracle
 *An improved FATE botbase for RebornBuddy.*
 
 ## Information
