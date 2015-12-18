@@ -90,7 +90,7 @@ namespace Oracle.Behaviour
                 return true;
             }
 
-            if (!currentBc.IsFate && GameObjectManager.Attackers.All(mob => mob.ObjectId != currentBc.ObjectId)
+            if (!currentBc.IsFate && !currentBc.IsDead && GameObjectManager.Attackers.All(mob => mob.ObjectId != currentBc.ObjectId)
                 && OracleFateManager.CurrentFateId != 0)
             {
                 ClearPoi("Targeted unit is not in combat with us, nor part of the current FATE.", false);
