@@ -3,23 +3,23 @@
     ##   License   ##
     #################
 
-    Tarot - An improved FATE bot for RebornBuddy
+    Oracle - An improved FATE bot for RebornBuddy
     Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
 
-    This file is part of Tarot.
+    This file is part of Oracle.
 
-    Tarot is free software: you can redistribute it and/or modify
+    Oracle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Tarot is distributed in the hope that it will be useful,
+    Oracle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Tarot. If not, see http://www.gnu.org/licenses/.
+    along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
 using System.Linq;
@@ -30,11 +30,11 @@ using Buddy.Coroutines;
 using ff14bot.Managers;
 using ff14bot.RemoteWindows;
 
-using Tarot.Helpers;
-using Tarot.Managers;
-using Tarot.Settings;
+using Oracle.Helpers;
+using Oracle.Managers;
+using Oracle.Settings;
 
-namespace Tarot.Behaviour.Tasks.Utilities
+namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class TurnInItem
     {
@@ -50,8 +50,8 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            var currentFate = TarotFateManager.GetCurrentFateData();
-            var itemId = TarotFateManager.TarotDatabase.GetFateFromId(currentFate.Id).ItemId;
+            var currentFate = OracleFateManager.GetCurrentFateData();
+            var itemId = OracleFateManager.OracleDatabase.GetFateFromId(currentFate.Id).ItemId;
             var turnInBagSlot = GetBagSlotFromItemId(itemId);
 
             if (turnInBagSlot == null)
@@ -62,7 +62,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
             Logger.SendLog("Attempting to hand over " + turnInBagSlot.Count + " of the item '" + turnInBagSlot.Name + "'.");
             turnInBagSlot.Handover();
 
-            await Coroutine.Sleep(TarotSettings.Instance.ActionDelay);
+            await Coroutine.Sleep(OracleSettings.Instance.ActionDelay);
             if (!Request.IsOpen || !Request.HandOverButtonClickable)
             {
                 Logger.SendErrorLog("Hand over failed.");
@@ -73,7 +73,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
             Logger.SendDebugLog("Pressing 'Hand Over' button.");
             Request.HandOver();
-            await Coroutine.Sleep(TarotSettings.Instance.ActionDelay);
+            await Coroutine.Sleep(OracleSettings.Instance.ActionDelay);
 
             return true;
         }

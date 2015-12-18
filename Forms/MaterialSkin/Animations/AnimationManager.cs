@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Tarot.Forms.MaterialSkin.Animations
+namespace Oracle.Forms.MaterialSkin.Animations
 {
 
     #region Using Directives

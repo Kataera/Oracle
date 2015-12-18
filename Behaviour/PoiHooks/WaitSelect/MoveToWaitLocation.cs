@@ -11,10 +11,10 @@ using ff14bot.Navigation;
 
 using NeoGaia.ConnectionHandler;
 
-using Tarot.Helpers;
-using Tarot.Settings;
+using Oracle.Helpers;
+using Oracle.Settings;
 
-namespace Tarot.Behaviour.PoiHooks.WaitSelect
+namespace Oracle.Behaviour.PoiHooks.WaitSelect
 {
     internal static class MoveToWaitLocation
     {
@@ -43,14 +43,14 @@ namespace Tarot.Behaviour.PoiHooks.WaitSelect
         {
             if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
-                if (!TarotSettings.Instance.FateWaitLocations.ContainsKey(WorldManager.ZoneId))
+                if (!OracleSettings.Instance.FateWaitLocations.ContainsKey(WorldManager.ZoneId))
                 {
                     Logger.SendErrorLog(
                         "No wait location has been set. Check the 'downtime' section under 'General Settings' and set the location you wish.");
                     return false;
                 }
 
-                var locations = TarotSettings.Instance.FateWaitLocations;
+                var locations = OracleSettings.Instance.FateWaitLocations;
                 var navRequest =
                     locations.Select(target => new CanFullyNavigateTarget {Id = target.Key, Position = target.Value})
                              .Where(target => target.Id == WorldManager.ZoneId);
@@ -80,7 +80,7 @@ namespace Tarot.Behaviour.PoiHooks.WaitSelect
             var location = Vector3.Zero;
 
             // Vectors are non-nullable, so return zeroed location and handle in task.
-            if (TarotSettings.Instance.FateWaitLocations.ContainsKey(WorldManager.ZoneId))
+            if (OracleSettings.Instance.FateWaitLocations.ContainsKey(WorldManager.ZoneId))
             {
                 return location;
             }
@@ -88,7 +88,7 @@ namespace Tarot.Behaviour.PoiHooks.WaitSelect
             if (!Blacklist.Contains(WorldManager.ZoneId))
             {
                 location =
-                    TarotSettings.Instance.FateWaitLocations.FirstOrDefault(result => result.Key == WorldManager.ZoneId)
+                    OracleSettings.Instance.FateWaitLocations.FirstOrDefault(result => result.Key == WorldManager.ZoneId)
                                  .Value;
             }
 

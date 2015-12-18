@@ -3,23 +3,23 @@
     ##   License   ##
     #################
 
-    Tarot - An improved FATE bot for RebornBuddy
+    Oracle - An improved FATE bot for RebornBuddy
     Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
 
-    This file is part of Tarot.
+    This file is part of Oracle.
 
-    Tarot is free software: you can redistribute it and/or modify
+    Oracle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Tarot is distributed in the hope that it will be useful,
+    Oracle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Tarot. If not, see http://www.gnu.org/licenses/.
+    along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
 using System.Collections.Generic;
@@ -31,10 +31,10 @@ using ff14bot.Managers;
 using ff14bot.NeoProfiles;
 using ff14bot.Objects;
 
-using Tarot.Data;
-using Tarot.Managers;
+using Oracle.Data;
+using Oracle.Managers;
 
-namespace Tarot.Providers
+namespace Oracle.Providers
 {
     internal struct BattleCharacterWeight
     {
@@ -43,7 +43,7 @@ namespace Tarot.Providers
         public double Weight;
     }
 
-    internal class TarotCombatTargetingProvider : ITargetingProvider
+    internal class OracleCombatTargetingProvider : ITargetingProvider
     {
         private BattleCharacter[] attackers;
 
@@ -70,7 +70,7 @@ namespace Tarot.Providers
 
         private bool Filter(bool inCombat, BattleCharacter battleCharacter)
         {
-            var currentFate = TarotFateManager.GetCurrentFateData();
+            var currentFate = OracleFateManager.GetCurrentFateData();
             var blacklistEntry = Blacklist.GetEntry(battleCharacter);
 
             if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible
@@ -126,16 +126,16 @@ namespace Tarot.Providers
         private double GetWeight(BattleCharacter battleCharacter)
         {
             var weight = 1800 - (battleCharacter.Distance(Core.Player) * 50);
-            var currentFate = TarotFateManager.GetCurrentFateData();
-            var tarotFate = new Fate();
+            var currentFate = OracleFateManager.GetCurrentFateData();
+            var oracleFate = new Fate();
 
             if (currentFate != null)
             {
-                tarotFate = TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate);
+                oracleFate = OracleFateManager.OracleDatabase.GetFateFromFateData(currentFate);
             }
 
             // If FATE has a preferred target, prioritise it if we're out of combat.
-            if (tarotFate.PreferredTargetId != null && tarotFate.PreferredTargetId.Contains(battleCharacter.NpcId) && !Core.Player.InCombat)
+            if (oracleFate.PreferredTargetId != null && oracleFate.PreferredTargetId.Contains(battleCharacter.NpcId) && !Core.Player.InCombat)
             {
                 weight += 2000;
             }

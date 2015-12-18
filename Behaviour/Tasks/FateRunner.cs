@@ -3,23 +3,23 @@
     ##   License   ##
     #################
 
-    Tarot - An improved FATE bot for RebornBuddy
+    Oracle - An improved FATE bot for RebornBuddy
     Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
 
-    This file is part of Tarot.
+    This file is part of Oracle.
 
-    Tarot is free software: you can redistribute it and/or modify
+    Oracle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Tarot is distributed in the hope that it will be useful,
+    Oracle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Tarot. If not, see http://www.gnu.org/licenses/.
+    along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
 using System;
@@ -28,25 +28,25 @@ using System.Threading.Tasks;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 
-using Tarot.Behaviour.Tasks.FateTask;
-using Tarot.Enumerations;
-using Tarot.Helpers;
-using Tarot.Managers;
+using Oracle.Behaviour.Tasks.FateTask;
+using Oracle.Enumerations;
+using Oracle.Helpers;
+using Oracle.Managers;
 
-namespace Tarot.Behaviour.Tasks
+namespace Oracle.Behaviour.Tasks
 {
     internal static class FateRunner
     {
         public static async Task<bool> Main()
         {
-            var currentFate = TarotFateManager.GetCurrentFateData();
+            var currentFate = OracleFateManager.GetCurrentFateData();
 
             if (currentFate == null)
             {
                 return false;
             }
 
-            switch (TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate).Type)
+            switch (OracleFateManager.OracleDatabase.GetFateFromFateData(currentFate).Type)
             {
                 case FateType.Kill:
                     await KillFate.Main();
@@ -93,7 +93,7 @@ namespace Tarot.Behaviour.Tasks
 
             Logger.SendDebugLog("Cannot determine FATE type, blacklisting.");
             Blacklist.Add(currentFate.Id, BlacklistFlags.Node, TimeSpan.MaxValue, "Cannot determine FATE type.");
-            TarotFateManager.ClearCurrentFate("Cannot determine FATE type.");
+            OracleFateManager.ClearCurrentFate("Cannot determine FATE type.");
 
             return false;
         }

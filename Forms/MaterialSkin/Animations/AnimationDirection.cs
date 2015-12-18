@@ -1,4 +1,4 @@
-﻿namespace Tarot.Forms.MaterialSkin.Animations
+﻿namespace Oracle.Forms.MaterialSkin.Animations
 {
     internal enum AnimationDirection
     {

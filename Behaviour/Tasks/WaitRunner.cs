@@ -3,38 +3,38 @@
     ##   License   ##
     #################
 
-    Tarot - An improved FATE bot for RebornBuddy
+    Oracle - An improved FATE bot for RebornBuddy
     Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
 
-    This file is part of Tarot.
+    This file is part of Oracle.
 
-    Tarot is free software: you can redistribute it and/or modify
+    Oracle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Tarot is distributed in the hope that it will be useful,
+    Oracle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Tarot. If not, see http://www.gnu.org/licenses/.
+    along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
 using System.Threading.Tasks;
 
-using Tarot.Behaviour.Tasks.WaitTask;
-using Tarot.Enumerations;
-using Tarot.Settings;
+using Oracle.Behaviour.Tasks.WaitTask;
+using Oracle.Enumerations;
+using Oracle.Settings;
 
-namespace Tarot.Behaviour.Tasks
+namespace Oracle.Behaviour.Tasks
 {
     internal static class WaitRunner
     {
         public static async Task<bool> Main()
         {
-            switch (TarotSettings.Instance.FateWaitMode)
+            switch (OracleSettings.Instance.FateWaitMode)
             {
                 case FateWaitMode.ReturnToAetheryte:
                     await ReturnToAetheryte.Main();
