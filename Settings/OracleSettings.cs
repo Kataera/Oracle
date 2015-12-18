@@ -72,8 +72,8 @@ namespace Oracle.Settings
         private bool megaBossFatesEnabled;
         private int mobMaximumLevelAbove;
         private int mobMinimumLevelBelow;
-        private bool runProblematicFates;
         private OracleOperationMode oracleOperationMode;
+        private bool runProblematicFates;
         private bool teleportIfQuicker;
         private int teleportMinimumDistanceDelta;
         private bool waitAtFateForProgress;
@@ -478,19 +478,6 @@ namespace Oracle.Settings
             }
         }
 
-        [DefaultValue(false)]
-        [Setting]
-        public bool RunProblematicFates
-        {
-            get { return this.runProblematicFates; }
-
-            set
-            {
-                this.runProblematicFates = value;
-                this.Save();
-            }
-        }
-
         [DefaultValue(OracleOperationMode.FateGrind)]
         [Setting]
         public OracleOperationMode OracleOperationMode
@@ -500,6 +487,19 @@ namespace Oracle.Settings
             set
             {
                 this.oracleOperationMode = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool RunProblematicFates
+        {
+            get { return this.runProblematicFates; }
+
+            set
+            {
+                this.runProblematicFates = value;
                 this.Save();
             }
         }

@@ -135,7 +135,8 @@ namespace Oracle.Providers
             }
 
             // If FATE has a preferred target, prioritise it if we're out of combat.
-            if (oracleFate.PreferredTargetId != null && oracleFate.PreferredTargetId.Contains(battleCharacter.NpcId) && !Core.Player.InCombat)
+            if (oracleFate.PreferredTargetId != null && oracleFate.PreferredTargetId.Contains(battleCharacter.NpcId)
+                && !Core.Player.InCombat)
             {
                 weight += 2000;
             }

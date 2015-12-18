@@ -48,8 +48,8 @@ namespace Oracle.Managers
     {
         internal static uint CurrentFateId { get; set; }
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
-        internal static uint PreviousFateId { get; set; }
         internal static OracleDatabase OracleDatabase { get; set; }
+        internal static uint PreviousFateId { get; set; }
 
         public static async Task<bool> AnyViableFates()
         {

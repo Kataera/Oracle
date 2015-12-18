@@ -89,7 +89,7 @@ namespace Oracle.Behaviour.PoiHooks.WaitSelect
             {
                 location =
                     OracleSettings.Instance.FateWaitLocations.FirstOrDefault(result => result.Key == WorldManager.ZoneId)
-                                 .Value;
+                                  .Value;
             }
 
             return location;
