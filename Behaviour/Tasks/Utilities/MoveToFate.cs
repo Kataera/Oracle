@@ -67,10 +67,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             if (!ignoreCombat && IsMountNeeded() && !Core.Player.IsMounted && currentFate.IsValid)
             {
-                while (!await MountUp())
-                {
-                    await Coroutine.Yield();
-                }
+                await MountUp();
             }
 
             await Move(ignoreCombat);

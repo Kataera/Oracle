@@ -84,16 +84,16 @@ namespace Oracle.Behaviour
                 return false;
             }
 
-            if (!currentBc.IsValid || currentBc.IsFateGone)
+            if (!currentBc.IsValid)
             {
                 ClearPoi("Targeted unit is not valid.", false);
                 return true;
             }
 
-            // If target is not a FATE mob, nor attacking us.
-            if (!currentBc.IsFate && !GameObjectManager.Attackers.Contains(currentBc) && OracleFateManager.CurrentFateId != 0)
+            if (!currentBc.IsFate && GameObjectManager.Attackers.All(mob => mob.ObjectId != currentBc.ObjectId)
+                && OracleFateManager.CurrentFateId != 0)
             {
-                ClearPoi("Targeted unit is not valid.", false);
+                ClearPoi("Targeted unit is not in combat with us, nor part of the current FATE.", false);
                 return true;
             }
 
