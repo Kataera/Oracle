@@ -30,10 +30,10 @@ namespace Oracle.Enumerations
 
         SpecificFate,
 
-        Atma,
+        AtmaGrind,
 
-        Zeta,
+        ZetaGrind,
 
-        Anima
+        AnimaGrind
     }
 }

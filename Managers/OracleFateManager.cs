@@ -145,6 +145,12 @@ namespace Oracle.Managers
                 return false;
             }
 
+            if (OracleSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate
+                && !fate.Name.Equals(OracleSettings.Instance.SpecificFate))
+            {
+                return false;
+            }
+
             if (Blacklist.Contains(fate.Id, BlacklistFlags.Node))
             {
                 return false;

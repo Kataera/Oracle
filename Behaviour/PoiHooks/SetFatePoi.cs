@@ -74,40 +74,19 @@ namespace Oracle.Behaviour.PoiHooks
                 return false;
             }
 
-            if (PreviousFateChained())
+            if (PreviousFateChained() && OracleSettings.Instance.OracleOperationMode != OracleOperationMode.SpecificFate)
             {
                 await SelectChainFate();
                 return true;
             }
 
-            switch (OracleSettings.Instance.FateSelectMode)
+            if (OracleSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate)
             {
-                case FateSelectMode.Closest:
-                    await Closest.Main();
-                    break;
-
-                case FateSelectMode.TypePriority:
-
-                    // TODO: Implement.
-                    await Closest.Main();
-                    break;
-
-                case FateSelectMode.ChainPriority:
-
-                    // TODO: Implement.
-                    await Closest.Main();
-                    break;
-
-                case FateSelectMode.TypeAndChainPriority:
-
-                    // TODO: Implement.
-                    await Closest.Main();
-                    break;
-
-                default:
-                    Logger.SendDebugLog("Cannot determine FATE selection strategy, defaulting to closest FATE.");
-                    await Closest.Main();
-                    break;
+                await SelectSpecificFate();
+            }
+            else
+            {
+                await SelectFate();
             }
 
             if (OracleFateManager.GetCurrentFateData() != null && OracleSettings.Instance.FateDelayMovement
@@ -273,6 +252,44 @@ namespace Oracle.Behaviour.PoiHooks
             }
 
             return false;
+        }
+
+        private static async Task<bool> SelectFate()
+        {
+            switch (OracleSettings.Instance.FateSelectMode)
+            {
+                case FateSelectMode.Closest:
+                    await Closest.Main();
+                    return true;
+                case FateSelectMode.TypePriority:
+                    await Closest.Main();
+                    return true;
+                case FateSelectMode.ChainPriority:
+                    await Closest.Main();
+                    return true;
+                case FateSelectMode.TypeAndChainPriority:
+                    await Closest.Main();
+                    return true;
+                default:
+                    Logger.SendDebugLog("Cannot determine FATE selection strategy, defaulting to closest FATE.");
+                    await Closest.Main();
+                    return true;
+            }
+        }
+
+        private static async Task<bool> SelectSpecificFate()
+        {
+            var specificFate = FateManager.ActiveFates.FirstOrDefault(result => result.Name.Equals(OracleSettings.Instance.SpecificFate));
+
+            if (specificFate == null)
+            {
+                return false;
+            }
+
+            Logger.SendLog("Selected FATE: '" + specificFate.Name + "'.");
+            OracleFateManager.CurrentFateId = specificFate.Id;
+            Poi.Current = new Poi(specificFate, PoiType.Fate);
+            return true;
         }
 
         private static async Task<bool> WaitBeforeMoving()

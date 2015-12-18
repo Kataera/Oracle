@@ -73,6 +73,7 @@ namespace Oracle.Settings
         private int mobMinimumLevelBelow;
         private OracleOperationMode oracleOperationMode;
         private bool runProblematicFates;
+        private string specificFate;
         private bool teleportIfQuicker;
         private int teleportMinimumDistanceDelta;
         private bool waitAtFateForProgress;
@@ -487,6 +488,17 @@ namespace Oracle.Settings
             set
             {
                 this.runProblematicFates = value;
+                this.Save();
+            }
+        }
+
+        public string SpecificFate
+        {
+            get { return this.specificFate; }
+
+            set
+            {
+                this.specificFate = value;
                 this.Save();
             }
         }
