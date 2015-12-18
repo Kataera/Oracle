@@ -1,7 +1,9 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace Oracle.Forms.MaterialSkin
+// ReSharper disable CheckNamespace
+
+namespace MaterialSkin
 {
 
     #region Using Directives

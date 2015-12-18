@@ -7,7 +7,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace Oracle.Forms.MaterialSkin.Controls
+// ReSharper disable CheckNamespace
+
+namespace MaterialSkin.Controls
 {
     public class MaterialForm : Form, IMaterialControl
     {

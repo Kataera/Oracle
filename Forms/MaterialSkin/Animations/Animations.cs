@@ -1,6 +1,8 @@
 ﻿using System;
 
-namespace Oracle.Forms.MaterialSkin.Animations
+// ReSharper disable CheckNamespace
+
+namespace MaterialSkin.Animations
 {
 
     #region Using Directives

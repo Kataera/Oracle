@@ -1,4 +1,6 @@
-﻿namespace Oracle.Forms.MaterialSkin.Animations
+﻿// ReSharper disable CheckNamespace
+
+namespace MaterialSkin.Animations
 {
     internal enum AnimationDirection
     {
