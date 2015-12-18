@@ -3,23 +3,23 @@
     ##   License   ##
     #################
 
-    Tarot - An improved FATE bot for RebornBuddy
+    Oracle - An improved FATE bot for RebornBuddy
     Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
 
-    This file is part of Tarot.
+    This file is part of Oracle.
 
-    Tarot is free software: you can redistribute it and/or modify
+    Oracle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Tarot is distributed in the hope that it will be useful,
+    Oracle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Tarot. If not, see http://www.gnu.org/licenses/.
+    along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
 using System.Linq;
@@ -31,16 +31,16 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Objects;
 
-using Tarot.Helpers;
-using Tarot.Managers;
+using Oracle.Helpers;
+using Oracle.Managers;
 
-namespace Tarot.Behaviour.Tasks.FateTask
+namespace Oracle.Behaviour.Tasks.FateTask
 {
     internal static class DefenceFate
     {
         public static async Task<bool> Main()
         {
-            var currentFate = TarotFateManager.GetCurrentFateData();
+            var currentFate = OracleFateManager.GetCurrentFateData();
 
             if (currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
             {
@@ -63,24 +63,24 @@ namespace Tarot.Behaviour.Tasks.FateTask
 
         private static void ClearFate()
         {
-            TarotFateManager.ClearCurrentFate("Current FATE is finished.");
+            OracleFateManager.ClearCurrentFate("Current FATE is finished.");
         }
 
         private static bool IsViableTarget(BattleCharacter target)
         {
-            var currentFate = TarotFateManager.GetCurrentFateData();
+            var currentFate = OracleFateManager.GetCurrentFateData();
             return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == currentFate.Id;
         }
 
         private static void SelectTarget()
         {
-            var currentFate = TarotFateManager.GetCurrentFateData();
-            var tarotFate = TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate);
+            var currentFate = OracleFateManager.GetCurrentFateData();
+            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromFateData(currentFate);
             BattleCharacter target = null;
 
-            if (tarotFate.PreferredTargetId.Any())
+            if (oracleFate.PreferredTargetId.Any())
             {
-                var targets = GameObjectManager.GetObjectsByNPCIds<BattleCharacter>(tarotFate.PreferredTargetId.ToArray());
+                var targets = GameObjectManager.GetObjectsByNPCIds<BattleCharacter>(oracleFate.PreferredTargetId.ToArray());
                 target = targets.OrderBy(bc => bc.Distance(Core.Player)).FirstOrDefault(bc => bc.IsValid && bc.IsAlive);
 
                 if (target == null)

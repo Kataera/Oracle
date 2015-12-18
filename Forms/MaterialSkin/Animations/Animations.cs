@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tarot.Forms.MaterialSkin.Animations
+namespace Oracle.Forms.MaterialSkin.Animations
 {
 
     #region Using Directives

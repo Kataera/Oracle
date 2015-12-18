@@ -1,4 +1,4 @@
-﻿namespace Tarot.Forms.MaterialSkin
+﻿namespace Oracle.Forms.MaterialSkin
 {
     internal interface IMaterialControl
     {

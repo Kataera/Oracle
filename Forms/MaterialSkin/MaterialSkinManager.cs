@@ -6,10 +6,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-using Tarot.Forms.MaterialSkin.Controls;
-using Tarot.Properties;
+using Oracle.Forms.MaterialSkin.Controls;
+using Oracle.Properties;
 
-namespace Tarot.Forms.MaterialSkin
+namespace Oracle.Forms.MaterialSkin
 {
 
     #region Using Directives

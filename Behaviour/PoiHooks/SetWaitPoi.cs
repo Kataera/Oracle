@@ -3,23 +3,23 @@
     ##   License   ##
     #################
 
-    Tarot - An improved FATE bot for RebornBuddy
+    Oracle - An improved FATE bot for RebornBuddy
     Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
 
-    This file is part of Tarot.
+    This file is part of Oracle.
 
-    Tarot is free software: you can redistribute it and/or modify
+    Oracle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Tarot is distributed in the hope that it will be useful,
+    Oracle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Tarot. If not, see http://www.gnu.org/licenses/.
+    along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
 using System.Threading.Tasks;
@@ -28,13 +28,13 @@ using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Managers;
 
-using Tarot.Behaviour.PoiHooks.WaitSelect;
-using Tarot.Enumerations;
-using Tarot.Helpers;
-using Tarot.Managers;
-using Tarot.Settings;
+using Oracle.Behaviour.PoiHooks.WaitSelect;
+using Oracle.Enumerations;
+using Oracle.Helpers;
+using Oracle.Managers;
+using Oracle.Settings;
 
-namespace Tarot.Behaviour.PoiHooks
+namespace Oracle.Behaviour.PoiHooks
 {
     internal static class SetWaitPoi
     {
@@ -50,8 +50,8 @@ namespace Tarot.Behaviour.PoiHooks
                 return false;
             }
 
-            TarotFateManager.SetDoNotWaitFlag(false);
-            switch (TarotSettings.Instance.FateWaitMode)
+            OracleFateManager.SetDoNotWaitFlag(false);
+            switch (OracleSettings.Instance.FateWaitMode)
             {
                 case FateWaitMode.ReturnToAetheryte:
                     await ReturnToAetheryte.Main();
@@ -81,7 +81,7 @@ namespace Tarot.Behaviour.PoiHooks
         private static bool ZoneChangeNeeded()
         {
             uint aetheryteId = 0;
-            TarotSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
+            OracleSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
 
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
             {

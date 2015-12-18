@@ -7,7 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace Tarot.Forms.MaterialSkin.Controls
+namespace Oracle.Forms.MaterialSkin.Controls
 {
     public class MaterialForm : Form, IMaterialControl
     {
