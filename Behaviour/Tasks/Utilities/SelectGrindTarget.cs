@@ -51,12 +51,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
         {
             if (checkForTargetCooldown == null || checkForTargetCooldown.Elapsed > TimeSpan.FromSeconds(5))
             {
-                var targets =
-                    GameObjectManager.GetObjectsOfType<BattleCharacter>()
-                                     .Where(MobFilter)
-                                     .Where(MobWithinRadius)
-                                     .OrderBy(bc => bc.Distance(Core.Player))
-                                     .Take(8);
+                var targets = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(MobFilter).OrderBy(bc => bc.Distance()).Take(8);
 
                 if (!targets.Any())
                 {
@@ -154,11 +149,6 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             return true;
-        }
-
-        private static bool MobWithinRadius(BattleCharacter battleCharacter)
-        {
-            return Core.Player.Distance2D(battleCharacter.Location) <= OracleSettings.Instance.GrindMobRadius;
         }
     }
 }

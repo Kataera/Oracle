@@ -180,7 +180,7 @@ namespace Oracle.Behaviour
                 await MoveToFate.Main(false);
             }
 
-            if (GameObjectManager.Attackers.Any(mob => !mob.IsFateGone) && !Core.Player.IsMounted)
+            if (GameObjectManager.Attackers.Any(mob => mob.IsValid) && !Core.Player.IsMounted)
             {
                 ClearPoi("We're being attacked.", false);
                 return true;
@@ -197,7 +197,7 @@ namespace Oracle.Behaviour
 
         private static async Task<bool> HandleWait()
         {
-            if (GameObjectManager.Attackers.Any(mob => !mob.IsFateGone) && !Core.Player.IsMounted)
+            if (GameObjectManager.Attackers.Any(mob => mob.IsValid) && !Core.Player.IsMounted)
             {
                 ClearPoi("We're being attacked.", false);
                 return true;

@@ -63,7 +63,6 @@ namespace Oracle.Settings
         private int fateMaxLevelsBelow;
         private FateSelectMode fateSelectMode;
         private FateWaitMode fateWaitMode;
-        private int grindMobRadius;
         private bool ignoreLowDurationUnstartedFates;
         private bool killFatesEnabled;
         private bool listHooksOnStart;
@@ -358,19 +357,6 @@ namespace Oracle.Settings
             set
             {
                 this.fateWaitMode = value;
-                this.Save();
-            }
-        }
-
-        [DefaultValue(200)]
-        [Setting]
-        public int GrindMobRadius
-        {
-            get { return this.grindMobRadius; }
-
-            set
-            {
-                this.grindMobRadius = value;
                 this.Save();
             }
         }
