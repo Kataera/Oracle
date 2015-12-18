@@ -3,23 +3,23 @@
     ##   License   ##
     #################
 
-    Tarot - An improved FATE bot for RebornBuddy
+    Oracle - An improved FATE bot for RebornBuddy
     Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
 
-    This file is part of Tarot.
+    This file is part of Oracle.
 
-    Tarot is free software: you can redistribute it and/or modify
+    Oracle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Tarot is distributed in the hope that it will be useful,
+    Oracle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Tarot. If not, see http://www.gnu.org/licenses/.
+    along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
 using System.Collections.Generic;
@@ -31,14 +31,14 @@ using Clio.Utilities;
 
 using ff14bot.Helpers;
 
-using Tarot.Enumerations;
+using Oracle.Enumerations;
 
-namespace Tarot.Settings
+namespace Oracle.Settings
 {
-    internal sealed class TarotSettings : JsonSettings
+    internal sealed class OracleSettings : JsonSettings
     {
         private static readonly object SyncRoot = new object();
-        private static volatile TarotSettings instance;
+        private static volatile OracleSettings instance;
 
         public List<uint> BlacklistedFates;
         public List<uint> BlacklistedMobs;
@@ -73,38 +73,42 @@ namespace Tarot.Settings
         private int mobMaximumLevelAbove;
         private int mobMinimumLevelBelow;
         private bool runProblematicFates;
-        private TarotOperationMode tarotOperationMode;
+        private OracleOperationMode oracleOperationMode;
         private bool teleportIfQuicker;
         private int teleportMinimumDistanceDelta;
         private bool waitAtFateForProgress;
         private bool waitForChainFates;
 
-        private TarotSettings()
-            : base(Path.Combine(SettingsPath, "TarotSettings.json"))
+        private OracleSettings()
+            : base(Path.Combine(SettingsPath, "OracleSettings.json"))
         {
             if (this.BlacklistedFates == null)
             {
                 this.BlacklistedFates = new List<uint>();
+                this.Save();
             }
 
             if (this.BlacklistedMobs == null)
             {
                 this.BlacklistedMobs = new List<uint> {1992};
+                this.Save();
             }
 
             if (this.FateWaitLocations == null)
             {
                 this.FateWaitLocations = new Dictionary<uint, Vector3>();
+                this.Save();
             }
 
             if (this.ZoneLevels == null)
             {
                 this.ZoneLevels = new Dictionary<uint, uint>();
                 this.PopulateZoneLevels();
+                this.Save();
             }
         }
 
-        public static TarotSettings Instance
+        public static OracleSettings Instance
         {
             get
             {
@@ -114,7 +118,7 @@ namespace Tarot.Settings
                     {
                         if (instance == null)
                         {
-                            instance = new TarotSettings();
+                            instance = new OracleSettings();
                         }
                     }
                 }
@@ -487,15 +491,15 @@ namespace Tarot.Settings
             }
         }
 
-        [DefaultValue(TarotOperationMode.FateGrind)]
+        [DefaultValue(OracleOperationMode.FateGrind)]
         [Setting]
-        public TarotOperationMode TarotOperationMode
+        public OracleOperationMode OracleOperationMode
         {
-            get { return this.tarotOperationMode; }
+            get { return this.oracleOperationMode; }
 
             set
             {
-                this.tarotOperationMode = value;
+                this.oracleOperationMode = value;
                 this.Save();
             }
         }

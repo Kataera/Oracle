@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace Tarot.Forms.MaterialSkin
+namespace Oracle.Forms.MaterialSkin
 {
 
     #region Using Directives

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Tarot.Properties {
+namespace Oracle.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Tarot.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Tarot.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Oracle.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -68,12 +68,12 @@ namespace Tarot.Properties {
         ///    ##   License   ##
         ///    #################
         ///
-        ///    Tarot - An improved FATE bot for RebornBuddy
+        ///    Oracle - An improved FATE bot for RebornBuddy
         ///    Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
         ///
-        ///    This file is part of Tarot.
+        ///    This file is part of Oracle.
         ///
-        ///    Tarot is free software: you can redistribute it and/or modify
+        ///    Oracle is free software: you can redistribute it and/or modify
         ///    it under the terms of the GNU General Public License as published by
         ///    the Free Software Foundation, either version 3 of the License, or
         ///    (at your option) any later version. [rest of string was truncated]&quot;;.
@@ -92,12 +92,12 @@ namespace Tarot.Properties {
         ///    ##   License   ##
         ///    #################
         ///
-        ///    Tarot - An improved FATE bot for RebornBuddy
+        ///    Oracle - An improved FATE bot for RebornBuddy
         ///    Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
         ///
-        ///    This file is part of Tarot.
+        ///    This file is part of Oracle.
         ///
-        ///    Tarot is free software: you can redistribute it and/or modify
+        ///    Oracle is free software: you can redistribute it and/or modify
         ///    it under the terms of the GNU General Public License as published by
         ///    the Free Software Foundation, either version 3 of the License, or
         ///    (at your option) any later version. [rest of string was truncated]&quot;;.

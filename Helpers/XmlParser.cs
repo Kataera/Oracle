@@ -3,23 +3,23 @@
     ##   License   ##
     #################
 
-    Tarot - An improved FATE bot for RebornBuddy
+    Oracle - An improved FATE bot for RebornBuddy
     Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
 
-    This file is part of Tarot.
+    This file is part of Oracle.
 
-    Tarot is free software: you can redistribute it and/or modify
+    Oracle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Tarot is distributed in the hope that it will be useful,
+    Oracle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Tarot. If not, see http://www.gnu.org/licenses/.
+    along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
 using System;
@@ -28,14 +28,14 @@ using System.IO;
 using System.Xml;
 using System.Xml.Schema;
 
-using Tarot.Data;
-using Tarot.Enumerations;
+using Oracle.Data;
+using Oracle.Enumerations;
 
-namespace Tarot.Helpers
+namespace Oracle.Helpers
 {
     internal static class XmlParser
     {
-        private static TarotDatabase database;
+        private static OracleDatabase database;
 
         private static uint fateChainIdFail;
 
@@ -61,7 +61,7 @@ namespace Tarot.Helpers
 
         private static FateType fateType;
 
-        public static TarotDatabase GetFateDatabase()
+        public static OracleDatabase GetFateDatabase()
         {
             if (database == null)
             {
@@ -71,7 +71,7 @@ namespace Tarot.Helpers
             return database;
         }
 
-        public static TarotDatabase GetFateDatabase(bool forceReparse)
+        public static OracleDatabase GetFateDatabase(bool forceReparse)
         {
             if (forceReparse || database == null)
             {
@@ -107,18 +107,18 @@ namespace Tarot.Helpers
 
             try
             {
-                xmlDocument.Load(Environment.CurrentDirectory + "\\BotBases\\Tarot\\Data\\FateData.xml");
-                xmlDocument.Schemas.Add(null, Environment.CurrentDirectory + "\\BotBases\\Tarot\\Data\\FateData.xsd");
+                xmlDocument.Load(Environment.CurrentDirectory + "\\BotBases\\Oracle\\Data\\FateData.xml");
+                xmlDocument.Schemas.Add(null, Environment.CurrentDirectory + "\\BotBases\\Oracle\\Data\\FateData.xsd");
                 xmlDocument.Validate(ValidationEventHandler);
             }
             catch (DirectoryNotFoundException exception)
             {
-                Logger.SendErrorLog("Directory structure is incorrect, did you place Tarot in the correct place?");
+                Logger.SendErrorLog("Directory structure is incorrect, did you place Oracle in the correct place?");
                 Logger.SendDebugLog("DirectoryNotFoundException thrown.\n\n" + exception);
             }
             catch (IOException exception)
             {
-                Logger.SendErrorLog("Cannot find xml data, did you place Tarot in the correct place?");
+                Logger.SendErrorLog("Cannot find xml data, did you place Oracle in the correct place?");
                 Logger.SendDebugLog("IOException thrown.\n\n" + exception);
             }
 
@@ -128,7 +128,7 @@ namespace Tarot.Helpers
         private static void ParseFateData()
         {
             fateDataXml = GetXmlDocument();
-            database = new TarotDatabase();
+            database = new OracleDatabase();
 
             if (fateDataInvalidFlag || fateDataXml.DocumentElement == null)
             {
@@ -173,9 +173,9 @@ namespace Tarot.Helpers
                         fateType = (FateType) int.Parse(currentNode["Type"].InnerText);
                     }
 
-                    if (currentNode["TarotSupport"] != null)
+                    if (currentNode["OracleSupport"] != null)
                     {
-                        fateSupportLevel = (FateSupportLevel) int.Parse(currentNode["TarotSupport"].InnerText);
+                        fateSupportLevel = (FateSupportLevel) int.Parse(currentNode["OracleSupport"].InnerText);
                     }
 
                     if (currentNode["CollectItemId"] != null)

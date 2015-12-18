@@ -4,9 +4,9 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
 
-using Tarot.Forms.MaterialSkin.Animations;
+using Oracle.Forms.MaterialSkin.Animations;
 
-namespace Tarot.Forms.MaterialSkin.Controls
+namespace Oracle.Forms.MaterialSkin.Controls
 {
 
     #region Using Directives

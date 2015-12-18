@@ -3,23 +3,23 @@
     ##   License   ##
     #################
 
-    Tarot - An improved FATE bot for RebornBuddy
+    Oracle - An improved FATE bot for RebornBuddy
     Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
 
-    This file is part of Tarot.
+    This file is part of Oracle.
 
-    Tarot is free software: you can redistribute it and/or modify
+    Oracle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Tarot is distributed in the hope that it will be useful,
+    Oracle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Tarot. If not, see http://www.gnu.org/licenses/.
+    along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
 using System;
@@ -36,20 +36,20 @@ using ff14bot.Navigation;
 
 using NeoGaia.ConnectionHandler;
 
-using Tarot.Behaviour;
-using Tarot.Data;
-using Tarot.Enumerations;
-using Tarot.Helpers;
-using Tarot.Settings;
+using Oracle.Behaviour;
+using Oracle.Data;
+using Oracle.Enumerations;
+using Oracle.Helpers;
+using Oracle.Settings;
 
-namespace Tarot.Managers
+namespace Oracle.Managers
 {
-    internal class TarotFateManager : FateManager
+    internal class OracleFateManager : FateManager
     {
         internal static uint CurrentFateId { get; set; }
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
         internal static uint PreviousFateId { get; set; }
-        internal static TarotDatabase TarotDatabase { get; set; }
+        internal static OracleDatabase OracleDatabase { get; set; }
 
         public static async Task<bool> AnyViableFates()
         {
@@ -96,7 +96,7 @@ namespace Tarot.Managers
 
             if (Poi.Current.Type == PoiType.Fate)
             {
-                TarotBehaviour.ClearPoi(reason);
+                OracleBehaviour.ClearPoi(reason);
             }
         }
 
@@ -107,40 +107,40 @@ namespace Tarot.Managers
 
             if (Poi.Current.Type == PoiType.Fate)
             {
-                TarotBehaviour.ClearPoi(reason);
+                OracleBehaviour.ClearPoi(reason);
             }
         }
 
         public static bool FateFilter(FateData fate)
         {
-            var tarotFateData = TarotDatabase.GetFateFromFateData(fate);
+            var oracleFateData = OracleDatabase.GetFateFromFateData(fate);
 
-            if (tarotFateData.Type == FateType.Boss && !TarotSettings.Instance.BossFatesEnabled)
+            if (oracleFateData.Type == FateType.Boss && !OracleSettings.Instance.BossFatesEnabled)
             {
                 return false;
             }
 
-            if (tarotFateData.Type == FateType.Collect && !TarotSettings.Instance.CollectFatesEnabled)
+            if (oracleFateData.Type == FateType.Collect && !OracleSettings.Instance.CollectFatesEnabled)
             {
                 return false;
             }
 
-            if (tarotFateData.Type == FateType.Defence && !TarotSettings.Instance.DefenceFatesEnabled)
+            if (oracleFateData.Type == FateType.Defence && !OracleSettings.Instance.DefenceFatesEnabled)
             {
                 return false;
             }
 
-            if (tarotFateData.Type == FateType.Escort && !TarotSettings.Instance.EscortFatesEnabled)
+            if (oracleFateData.Type == FateType.Escort && !OracleSettings.Instance.EscortFatesEnabled)
             {
                 return false;
             }
 
-            if (tarotFateData.Type == FateType.Kill && !TarotSettings.Instance.KillFatesEnabled)
+            if (oracleFateData.Type == FateType.Kill && !OracleSettings.Instance.KillFatesEnabled)
             {
                 return false;
             }
 
-            if (tarotFateData.Type == FateType.MegaBoss && !TarotSettings.Instance.MegaBossFatesEnabled)
+            if (oracleFateData.Type == FateType.MegaBoss && !OracleSettings.Instance.MegaBossFatesEnabled)
             {
                 return false;
             }
@@ -150,30 +150,30 @@ namespace Tarot.Managers
                 return false;
             }
 
-            if (TarotSettings.Instance.BlacklistedFates.Contains(fate.Id))
+            if (OracleSettings.Instance.BlacklistedFates.Contains(fate.Id))
             {
                 return false;
             }
 
-            if (TarotSettings.Instance.IgnoreLowDurationUnstartedFates)
+            if (OracleSettings.Instance.IgnoreLowDurationUnstartedFates)
             {
-                if (Math.Abs(fate.Progress) < 0.5f && fate.TimeLeft < TimeSpan.FromSeconds(TarotSettings.Instance.LowRemainingDuration))
+                if (Math.Abs(fate.Progress) < 0.5f && fate.TimeLeft < TimeSpan.FromSeconds(OracleSettings.Instance.LowRemainingDuration))
                 {
                     return false;
                 }
             }
 
-            if (tarotFateData.SupportLevel == FateSupportLevel.Unsupported)
+            if (oracleFateData.SupportLevel == FateSupportLevel.Unsupported)
             {
                 return false;
             }
 
-            if (tarotFateData.SupportLevel == FateSupportLevel.Problematic && !TarotSettings.Instance.RunProblematicFates)
+            if (oracleFateData.SupportLevel == FateSupportLevel.Problematic && !OracleSettings.Instance.RunProblematicFates)
             {
                 return false;
             }
 
-            if (tarotFateData.SupportLevel == FateSupportLevel.NotInGame)
+            if (oracleFateData.SupportLevel == FateSupportLevel.NotInGame)
             {
                 return false;
             }
@@ -183,12 +183,12 @@ namespace Tarot.Managers
                 return false;
             }
 
-            if (fate.Level > Core.Player.ClassLevel + TarotSettings.Instance.FateMaxLevelsAbove)
+            if (fate.Level > Core.Player.ClassLevel + OracleSettings.Instance.FateMaxLevelsAbove)
             {
                 return false;
             }
 
-            if (fate.Level < Core.Player.ClassLevel - TarotSettings.Instance.FateMaxLevelsBelow)
+            if (fate.Level < Core.Player.ClassLevel - OracleSettings.Instance.FateMaxLevelsBelow)
             {
                 return false;
             }
@@ -229,25 +229,25 @@ namespace Tarot.Managers
 
         private static bool FateProgressionMet(FateData fate)
         {
-            if (TarotSettings.Instance.WaitAtFateForProgress)
+            if (OracleSettings.Instance.WaitAtFateForProgress)
             {
                 return true;
             }
 
-            if (TarotDatabase.GetFateFromFateData(fate).Type != FateType.Boss
-                && TarotDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
+            if (OracleDatabase.GetFateFromFateData(fate).Type != FateType.Boss
+                && OracleDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
             {
                 return true;
             }
 
-            if (TarotDatabase.GetFateFromFateData(fate).Type == FateType.Boss
-                && fate.Progress >= TarotSettings.Instance.BossEngagePercentage)
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss
+                && fate.Progress >= OracleSettings.Instance.BossEngagePercentage)
             {
                 return true;
             }
 
-            if (TarotDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss
-                && fate.Progress >= TarotSettings.Instance.MegaBossEngagePercentage)
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss
+                && fate.Progress >= OracleSettings.Instance.MegaBossEngagePercentage)
             {
                 return true;
             }

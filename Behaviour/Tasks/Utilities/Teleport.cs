@@ -3,23 +3,23 @@
     ##   License   ##
     #################
 
-    Tarot - An improved FATE bot for RebornBuddy
+    Oracle - An improved FATE bot for RebornBuddy
     Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
 
-    This file is part of Tarot.
+    This file is part of Oracle.
 
-    Tarot is free software: you can redistribute it and/or modify
+    Oracle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Tarot is distributed in the hope that it will be useful,
+    Oracle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Tarot. If not, see http://www.gnu.org/licenses/.
+    along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
 using System;
@@ -38,10 +38,10 @@ using ff14bot.Navigation;
 
 using NeoGaia.ConnectionHandler;
 
-using Tarot.Helpers;
-using Tarot.Settings;
+using Oracle.Helpers;
+using Oracle.Settings;
 
-namespace Tarot.Behaviour.Tasks.Utilities
+namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class Teleport
     {
@@ -49,7 +49,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
         {
             var aetheryte = await GetClosestAetheryte(fate);
             var distanceFromPlayer = await GetDistanceFromPlayer(fate);
-            var teleportMinDistance = TarotSettings.Instance.TeleportMinimumDistanceDelta;
+            var teleportMinDistance = OracleSettings.Instance.TeleportMinimumDistanceDelta;
 
             Logger.SendDebugLog("Distance to navigate to FATE from player location is ~" + Math.Round(distanceFromPlayer, 0) + " yalms.");
             Logger.SendDebugLog("Distance to navigate to FATE from closest aetheryte location is ~" + Math.Round(aetheryte.Distance, 0)
@@ -102,7 +102,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
             if (Core.Player.InCombat)
             {
-                TarotBehaviour.ClearPoi("We're in combat and need to teleport.");
+                OracleBehaviour.ClearPoi("We're in combat and need to teleport.");
             }
 
             return true;

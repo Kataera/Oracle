@@ -3,23 +3,23 @@
     ##   License   ##
     #################
 
-    Tarot - An improved FATE bot for RebornBuddy
+    Oracle - An improved FATE bot for RebornBuddy
     Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
 
-    This file is part of Tarot.
+    This file is part of Oracle.
 
-    Tarot is free software: you can redistribute it and/or modify
+    Oracle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Tarot is distributed in the hope that it will be useful,
+    Oracle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Tarot. If not, see http://www.gnu.org/licenses/.
+    along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
 using System;
@@ -38,10 +38,10 @@ using ff14bot.Objects;
 
 using NeoGaia.ConnectionHandler;
 
-using Tarot.Helpers;
-using Tarot.Settings;
+using Oracle.Helpers;
+using Oracle.Settings;
 
-namespace Tarot.Behaviour.Tasks.Utilities
+namespace Oracle.Behaviour.Tasks.Utilities
 {
     public class SelectGrindTarget
     {
@@ -113,12 +113,12 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            if (Core.Player.ClassLevel - TarotSettings.Instance.MobMinimumLevelBelow > battleCharacter.ClassLevel)
+            if (Core.Player.ClassLevel - OracleSettings.Instance.MobMinimumLevelBelow > battleCharacter.ClassLevel)
             {
                 return false;
             }
 
-            if (Core.Player.ClassLevel + TarotSettings.Instance.MobMaximumLevelAbove < battleCharacter.ClassLevel)
+            if (Core.Player.ClassLevel + OracleSettings.Instance.MobMaximumLevelAbove < battleCharacter.ClassLevel)
             {
                 return false;
             }
@@ -143,7 +143,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            if (TarotSettings.Instance.BlacklistedMobs.Contains(battleCharacter.NpcId))
+            if (OracleSettings.Instance.BlacklistedMobs.Contains(battleCharacter.NpcId))
             {
                 return false;
             }
@@ -158,7 +158,7 @@ namespace Tarot.Behaviour.Tasks.Utilities
 
         private static bool MobWithinRadius(BattleCharacter battleCharacter)
         {
-            return Core.Player.Distance2D(battleCharacter.Location) <= TarotSettings.Instance.GrindMobRadius;
+            return Core.Player.Distance2D(battleCharacter.Location) <= OracleSettings.Instance.GrindMobRadius;
         }
     }
 }

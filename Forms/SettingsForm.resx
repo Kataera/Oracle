@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="labelLicenseText.Text" xml:space="preserve">
-    <value>Tarot - An improved FATE bot for RebornBuddy
+    <value>Oracle - An improved FATE bot for RebornBuddy
 Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
 
-Tarot is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+Oracle is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-Tarot is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+Oracle is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with Tarot.  If not, see below.</value>
+You should have received a copy of the GNU General Public License along with Oracle.  If not, see below.</value>
   </data>
   <data name="labelDonateText.Text" xml:space="preserve">
-    <value>If you're finding Tarot useful and would like to offer more than a thank you, you can find my PayPal donation link below.
+    <value>If you're finding Oracle useful and would like to offer more than a thank you, you can find my PayPal donation link below.
 
-Donations are in no way expected nor required for developing and maintaining Tarot; I do it only for fun and programming experience. I don't want anyone to feel pressured to donate, especially since I'm financially comfortable and do not need donations to support myself.
+Donations are in no way expected nor required for developing and maintaining Oracle; I do it only for fun and programming experience. I don't want anyone to feel pressured to donate, especially since I'm financially comfortable and do not need donations to support myself.
 
 If you do decide to donate, thank you very much!</value>
   </data>

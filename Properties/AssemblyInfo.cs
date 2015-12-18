@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Tarot")]
+[assembly: AssemblyTitle("Oracle")]
 [assembly: AssemblyDescription("An improved FATE botbase for RebornBuddy.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Tarot")]
+[assembly: AssemblyProduct("Oracle")]
 [assembly: AssemblyCopyright("Caitlin Howarth (a.k.a. Kataera)")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -33,6 +33,6 @@ using System.Runtime.InteropServices;
 //      Revision
 //
 
-[assembly: AssemblyVersion("0.1.0.303")]
-[assembly: AssemblyFileVersion("0.1.0.303")]
+[assembly: AssemblyVersion("0.1.0.310")]
+[assembly: AssemblyFileVersion("0.1.0.310")]
 [assembly: NeutralResourcesLanguage("en-GB")]

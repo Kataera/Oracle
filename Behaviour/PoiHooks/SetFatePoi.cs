@@ -3,23 +3,23 @@
     ##   License   ##
     #################
 
-    Tarot - An improved FATE bot for RebornBuddy
+    Oracle - An improved FATE bot for RebornBuddy
     Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
 
-    This file is part of Tarot.
+    This file is part of Oracle.
 
-    Tarot is free software: you can redistribute it and/or modify
+    Oracle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Tarot is distributed in the hope that it will be useful,
+    Oracle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Tarot. If not, see http://www.gnu.org/licenses/.
+    along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
 using System;
@@ -35,13 +35,13 @@ using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 
-using Tarot.Behaviour.PoiHooks.FateSelect;
-using Tarot.Enumerations;
-using Tarot.Helpers;
-using Tarot.Managers;
-using Tarot.Settings;
+using Oracle.Behaviour.PoiHooks.FateSelect;
+using Oracle.Enumerations;
+using Oracle.Helpers;
+using Oracle.Managers;
+using Oracle.Settings;
 
-namespace Tarot.Behaviour.PoiHooks
+namespace Oracle.Behaviour.PoiHooks
 {
     internal static class SetFatePoi
     {
@@ -58,16 +58,16 @@ namespace Tarot.Behaviour.PoiHooks
             {
                 if (!IsFatePoiSet() && Poi.Current.Type != PoiType.Death && !GameObjectManager.Attackers.Any())
                 {
-                    if (TarotFateManager.GetCurrentFateData() != null)
+                    if (OracleFateManager.GetCurrentFateData() != null)
                     {
-                        Poi.Current = new Poi(TarotFateManager.GetCurrentFateData(), PoiType.Fate);
+                        Poi.Current = new Poi(OracleFateManager.GetCurrentFateData(), PoiType.Fate);
                     }
                 }
 
                 return true;
             }
 
-            TarotFateManager.CurrentFateId = 0;
+            OracleFateManager.CurrentFateId = 0;
 
             if (ZoneChangeNeeded())
             {
@@ -80,7 +80,7 @@ namespace Tarot.Behaviour.PoiHooks
                 return true;
             }
 
-            switch (TarotSettings.Instance.FateSelectMode)
+            switch (OracleSettings.Instance.FateSelectMode)
             {
                 case FateSelectMode.Closest:
                     await Closest.Main();
@@ -110,19 +110,19 @@ namespace Tarot.Behaviour.PoiHooks
                     break;
             }
 
-            if (TarotFateManager.GetCurrentFateData() != null && TarotSettings.Instance.FateDelayMovement
-                && !TarotFateManager.DoNotWaitBeforeMovingFlag)
+            if (OracleFateManager.GetCurrentFateData() != null && OracleSettings.Instance.FateDelayMovement
+                && !OracleFateManager.DoNotWaitBeforeMovingFlag)
             {
                 await WaitBeforeMoving();
             }
 
-            TarotFateManager.SetDoNotWaitFlag(false);
+            OracleFateManager.SetDoNotWaitFlag(false);
             return IsFateSet() && IsFatePoiSet();
         }
 
         private static bool IsFatePoiSet()
         {
-            if (Poi.Current.Type != PoiType.Fate || Poi.Current.Fate != TarotFateManager.GetCurrentFateData())
+            if (Poi.Current.Type != PoiType.Fate || Poi.Current.Fate != OracleFateManager.GetCurrentFateData())
             {
                 return false;
             }
@@ -132,7 +132,7 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static bool IsFateSet()
         {
-            var currentFate = TarotFateManager.GetCurrentFateData();
+            var currentFate = OracleFateManager.GetCurrentFateData();
             if (currentFate == null)
             {
                 return false;
@@ -143,8 +143,8 @@ namespace Tarot.Behaviour.PoiHooks
                 return false;
             }
 
-            var tarotFate = TarotFateManager.TarotDatabase.GetFateFromFateData(currentFate);
-            if (currentFate.Status == FateStatus.COMPLETE && tarotFate.Type != FateType.Collect)
+            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromFateData(currentFate);
+            if (currentFate.Status == FateStatus.COMPLETE && oracleFate.Type != FateType.Collect)
             {
                 return false;
             }
@@ -159,12 +159,12 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static bool PreviousFateChainedOnFailure()
         {
-            if (TarotFateManager.PreviousFateId == 0)
+            if (OracleFateManager.PreviousFateId == 0)
             {
                 return false;
             }
 
-            if (TarotFateManager.TarotDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdFailure != 0)
+            if (OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainIdFailure != 0)
             {
                 return true;
             }
@@ -174,12 +174,12 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static bool PreviousFateChainedOnSuccess()
         {
-            if (TarotFateManager.PreviousFateId == 0)
+            if (OracleFateManager.PreviousFateId == 0)
             {
                 return false;
             }
 
-            if (TarotFateManager.TarotDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdSuccess != 0)
+            if (OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainIdSuccess != 0)
             {
                 return true;
             }
@@ -189,7 +189,7 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static async Task<bool> SelectChainFate()
         {
-            if (TarotFateManager.PreviousFateId == 0)
+            if (OracleFateManager.PreviousFateId == 0)
             {
                 return false;
             }
@@ -198,15 +198,15 @@ namespace Tarot.Behaviour.PoiHooks
             {
                 chainFateTimer = Stopwatch.StartNew();
             }
-            else if (chainFateTimer.Elapsed > TimeSpan.FromSeconds(TarotSettings.Instance.ChainFateWaitTimeout))
+            else if (chainFateTimer.Elapsed > TimeSpan.FromSeconds(OracleSettings.Instance.ChainFateWaitTimeout))
             {
                 Logger.SendLog("Timed out waiting for the next FATE in the chain to appear.");
-                TarotFateManager.PreviousFateId = 0;
+                OracleFateManager.PreviousFateId = 0;
                 chainFateTimer.Reset();
             }
 
-            var chainIdSuccess = TarotFateManager.TarotDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdSuccess;
-            var chainIdFailure = TarotFateManager.TarotDatabase.GetFateFromId(TarotFateManager.PreviousFateId).ChainIdFailure;
+            var chainIdSuccess = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainIdSuccess;
+            var chainIdFailure = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainIdFailure;
 
             // If there's a success chain only.
             if (chainIdSuccess != 0 && chainIdFailure == 0)
@@ -220,7 +220,7 @@ namespace Tarot.Behaviour.PoiHooks
                 }
 
                 Logger.SendLog("Selected FATE: '" + chainSuccess.Name + "'.");
-                TarotFateManager.CurrentFateId = chainSuccess.Id;
+                OracleFateManager.CurrentFateId = chainSuccess.Id;
                 Poi.Current = new Poi(chainSuccess, PoiType.Fate);
                 chainFateTimer.Reset();
                 return true;
@@ -238,7 +238,7 @@ namespace Tarot.Behaviour.PoiHooks
                 }
 
                 Logger.SendLog("Selected FATE: '" + chainFail.Name + "'.");
-                TarotFateManager.CurrentFateId = chainFail.Id;
+                OracleFateManager.CurrentFateId = chainFail.Id;
                 Poi.Current = new Poi(chainFail, PoiType.Fate);
                 chainFateTimer.Reset();
                 return true;
@@ -259,14 +259,14 @@ namespace Tarot.Behaviour.PoiHooks
                 if (chainSuccess != null && chainFail == null)
                 {
                     Logger.SendLog("Selected FATE: '" + chainSuccess.Name + "'.");
-                    TarotFateManager.CurrentFateId = chainSuccess.Id;
+                    OracleFateManager.CurrentFateId = chainSuccess.Id;
                     Poi.Current = new Poi(chainSuccess, PoiType.Fate);
                     chainFateTimer.Reset();
                     return true;
                 }
 
                 Logger.SendLog("Selected FATE: '" + chainFail.Name + "'.");
-                TarotFateManager.CurrentFateId = chainFail.Id;
+                OracleFateManager.CurrentFateId = chainFail.Id;
                 Poi.Current = new Poi(chainFail, PoiType.Fate);
                 chainFateTimer.Reset();
                 return true;
@@ -277,9 +277,9 @@ namespace Tarot.Behaviour.PoiHooks
 
         private static async Task<bool> WaitBeforeMoving()
         {
-            var currentFate = TarotFateManager.GetCurrentFateData();
-            var minTime = TarotSettings.Instance.FateDelayMovementMinimum * 1000;
-            var maxTime = TarotSettings.Instance.FateDelayMovementMaximum * 1000;
+            var currentFate = OracleFateManager.GetCurrentFateData();
+            var minTime = OracleSettings.Instance.FateDelayMovementMinimum * 1000;
+            var maxTime = OracleSettings.Instance.FateDelayMovementMaximum * 1000;
             var randomWaitTime = new Random().Next(minTime, maxTime);
 
             Logger.SendLog("Waiting " + Math.Round(randomWaitTime / 1000f, 2) + " seconds before moving to FATE.");
@@ -291,7 +291,7 @@ namespace Tarot.Behaviour.PoiHooks
         private static bool ZoneChangeNeeded()
         {
             uint aetheryteId = 0;
-            TarotSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
+            OracleSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
 
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
             {

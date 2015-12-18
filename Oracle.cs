@@ -3,23 +3,23 @@
     ##   License   ##
     #################
 
-    Tarot - An improved FATE bot for RebornBuddy
+    Oracle - An improved FATE bot for RebornBuddy
     Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
 
-    This file is part of Tarot.
+    This file is part of Oracle.
 
-    Tarot is free software: you can redistribute it and/or modify
+    Oracle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Tarot is distributed in the hope that it will be useful,
+    Oracle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Tarot. If not, see http://www.gnu.org/licenses/.
+    along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
 using System;
@@ -31,19 +31,19 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 
-using Tarot.Behaviour;
-using Tarot.Behaviour.PoiHooks;
-using Tarot.Forms;
-using Tarot.Helpers;
-using Tarot.Managers;
-using Tarot.Providers;
-using Tarot.Settings;
+using Oracle.Behaviour;
+using Oracle.Behaviour.PoiHooks;
+using Oracle.Forms;
+using Oracle.Helpers;
+using Oracle.Managers;
+using Oracle.Providers;
+using Oracle.Settings;
 
 using TreeSharp;
 
-namespace Tarot
+namespace Oracle
 {
-    public class Tarot : BotBase
+    public class Oracle : BotBase
     {
         private static bool playerFaceTargetOnAction;
 
@@ -57,7 +57,7 @@ namespace Tarot
 
         public override string EnglishName
         {
-            get { return "Tarot"; }
+            get { return "Oracle"; }
         }
 
         public override bool IsAutonomous
@@ -67,7 +67,7 @@ namespace Tarot
 
         public override string Name
         {
-            get { return "Tarot"; }
+            get { return "Oracle"; }
         }
 
         public override PulseFlags PulseFlags
@@ -102,12 +102,12 @@ namespace Tarot
 
         public override void Initialize()
         {
-            Logger.SendLog("Initialising Tarot.");
+            Logger.SendLog("Initialising Oracle.");
 
             // TODO: Implement rest of Updater.
             if (Updater.UpdateIsAvailable())
             {
-                Logger.SendLog("An update for Tarot is available.");
+                Logger.SendLog("An update for Oracle is available.");
             }
         }
 
@@ -134,7 +134,7 @@ namespace Tarot
         {
             Navigator.PlayerMover = new SlideMover();
             Navigator.NavigationProvider = new GaiaNavigator();
-            CombatTargeting.Instance.Provider = new TarotCombatTargetingProvider();
+            CombatTargeting.Instance.Provider = new OracleCombatTargetingProvider();
 
             playerFaceTargetOnAction = GameSettingsManager.FaceTargetOnAction;
             playerFlightMode = GameSettingsManager.FlightMode;
@@ -143,10 +143,10 @@ namespace Tarot
 
             TreeHooks.Instance.ClearAll();
             root = BrainBehavior.CreateBrain();
-            TreeHooks.Instance.AddHook("TreeStart", TarotBehaviour.Behaviour);
+            TreeHooks.Instance.AddHook("TreeStart", OracleBehaviour.Behaviour);
             TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
 
-            if (TarotSettings.Instance.ListHooksOnStart && TarotSettings.Instance.DebugEnabled)
+            if (OracleSettings.Instance.ListHooksOnStart && OracleSettings.Instance.DebugEnabled)
             {
                 ListHooks();
             }
@@ -157,9 +157,9 @@ namespace Tarot
         public override void Stop()
         {
             // Clean up all botbase internal variables.
-            TarotFateManager.CurrentFateId = 0;
-            TarotFateManager.PreviousFateId = 0;
-            TarotFateManager.TarotDatabase = null;
+            OracleFateManager.CurrentFateId = 0;
+            OracleFateManager.PreviousFateId = 0;
+            OracleFateManager.OracleDatabase = null;
 
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
             if (navProvider != null)
