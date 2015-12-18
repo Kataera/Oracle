@@ -37,13 +37,12 @@ namespace Oracle.Forms
         {
             this.InitializeComponent();
 
-            // Initialize MaterialSkinManager
             var skinManager = MaterialSkinManager.Instance;
             skinManager.AddFormToManage(this);
             skinManager.Theme = MaterialSkinManager.Themes.Light;
             skinManager.ColorScheme = new ColorScheme(
-                Primary.Indigo500,
-                Primary.Indigo500,
+                Primary.Indigo600,
+                Primary.Indigo600,
                 Primary.Indigo300,
                 Accent.Indigo100,
                 TextShade.White);

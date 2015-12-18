@@ -93,6 +93,9 @@
     <Compile Include="Behaviour\Tasks\Utilities\BuildTarotDatabase.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\MoveToFate.cs" />
     <Compile Include="Enumerations\OracleOperationMode.cs" />
+    <Compile Include="Forms\MaterialSkin\Controls\MaterialPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Managers\OracleFateManager.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LevelSync.cs" />
     <Compile Include="Behaviour\Tasks\FateTask\MegaBossFate.cs" />
