@@ -74,6 +74,12 @@ namespace Oracle.Providers
         private static bool ReadyToTurnIn()
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
+
+            if (currentFate == null)
+            {
+                return false;
+            }
+
             var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(currentFate.Id);
             var fateItemBagSlot = CollectFate.GetBagSlotFromItemId(oracleFate.ItemId);
 
@@ -83,6 +89,7 @@ namespace Oracle.Providers
             }
 
             var fateItemCount = fateItemBagSlot.Count;
+
             if (fateItemCount >= OracleSettings.Instance.CollectFateTurnInAtAmount)
             {
                 return true;
@@ -96,9 +103,9 @@ namespace Oracle.Providers
             var currentFate = OracleFateManager.GetCurrentFateData();
             var blacklistEntry = Blacklist.GetEntry(battleCharacter);
 
-            if (currentFate != null)
+            if (ReadyToTurnIn())
             {
-                return !ReadyToTurnIn();
+                return false;
             }
 
             if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible
