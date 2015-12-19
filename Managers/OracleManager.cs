@@ -273,7 +273,9 @@ namespace Oracle.Managers
 
         public static bool IsPlayerBeingAttacked()
         {
-            return GameObjectManager.Attackers.Any(mob => mob.IsValid && mob.HasTarget && mob.CurrentTargetId == Core.Player.ObjectId);
+            return
+                GameObjectManager.Attackers.Any(
+                    mob => mob.IsValid && mob.HasTarget && mob.CurrentTargetId == Core.Player.ObjectId && !mob.IsFateGone);
         }
 
         public static void SetDoNotWaitFlag(bool flag)
