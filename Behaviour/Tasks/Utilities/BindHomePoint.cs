@@ -53,7 +53,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
-                while (aetheryteObject.Distance(Core.Player) > 10f)
+                while (aetheryteObject.Distance(Core.Player) > 8f)
                 {
                     Navigator.MoveTo(aetheryteObject.Location, "Aetheryte crystal.");
                     await Coroutine.Yield();
@@ -63,7 +63,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
             else
             {
-                while (aetheryteObject.Distance(Core.Player) > 10f)
+                while (aetheryteObject.Distance(Core.Player) > 8f)
                 {
                     Core.Player.Face(aetheryteObject);
                     Navigator.PlayerMover.MoveTowards(aetheryteObject.Location);
