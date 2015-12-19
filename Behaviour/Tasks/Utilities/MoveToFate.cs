@@ -102,6 +102,11 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return true;
             }
 
+            if (MovementManager.IsMoving)
+            {
+                Navigator.PlayerMover.MoveStop();
+            }
+
             while (!Core.Player.IsMounted)
             {
                 if (GameObjectManager.Attackers.Any())
