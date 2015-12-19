@@ -57,7 +57,9 @@ namespace Oracle.Behaviour.Modes
             if (!ConditionParser.HasQuest(animaQuest))
             {
                 Logger.SendErrorLog("You do not have the quest 'Soul Without Life', which is required to run in Anima grind mode.");
+
                 TreeRoot.Stop("Required quest is not picked up.");
+                return true;
             }
 
             if (ConditionParser.GetQuestStep(animaQuest) != animaQuestStep)
@@ -65,7 +67,9 @@ namespace Oracle.Behaviour.Modes
                 Logger.SendErrorLog(
                     "You are not at the correct step of 'Soul Without Life'. You must be at the objective that says " +
                     "\"Deliver the astral nodule and umbral nodule to Ardashir in Azys Lla.\" to run in Anima grind mode.");
+
                 TreeRoot.Stop("Not at required step of quest.");
+                return true;
             }
 
             if (Poi.Current.Type == PoiType.Kill)
@@ -78,6 +82,7 @@ namespace Oracle.Behaviour.Modes
             {
                 if (WorldManager.ZoneId != coerthasWesternHighlands)
                 {
+                    Logger.SendLog("We need more Luminous Ice Crystals. Teleporting to Coerthas Western Highlands.");
                     await ZoneChangeHandler.HandleZoneChange(coerthasWesternHighlands);
                 }
             }
@@ -86,6 +91,7 @@ namespace Oracle.Behaviour.Modes
             {
                 if (WorldManager.ZoneId != seaOfClouds)
                 {
+                    Logger.SendLog("We need more Luminous Wind Crystals. Teleporting to The Sea of Clouds.");
                     await ZoneChangeHandler.HandleZoneChange(seaOfClouds);
                 }
             }
@@ -94,6 +100,7 @@ namespace Oracle.Behaviour.Modes
             {
                 if (WorldManager.ZoneId != azysLla)
                 {
+                    Logger.SendLog("We need more Luminous Fire Crystals. Teleporting to Azys Lla.");
                     await ZoneChangeHandler.HandleZoneChange(azysLla);
                 }
             }
@@ -102,6 +109,7 @@ namespace Oracle.Behaviour.Modes
             {
                 if (WorldManager.ZoneId != dravanianForelands)
                 {
+                    Logger.SendLog("We need more Luminous Earth Crystals. Teleporting to The Dravanian Forelands.");
                     await ZoneChangeHandler.HandleZoneChange(dravanianForelands);
                 }
             }
@@ -110,6 +118,7 @@ namespace Oracle.Behaviour.Modes
             {
                 if (WorldManager.ZoneId != churningMists)
                 {
+                    Logger.SendLog("We need more Luminous Lightning Crystals. Teleporting to The Churning Mists.");
                     await ZoneChangeHandler.HandleZoneChange(churningMists);
                 }
             }
@@ -118,6 +127,7 @@ namespace Oracle.Behaviour.Modes
             {
                 if (WorldManager.ZoneId != dravanianHinterlands)
                 {
+                    Logger.SendLog("We need more Luminous Water Crystals. Teleporting to The Dravanian Hinterlands.");
                     await ZoneChangeHandler.HandleZoneChange(dravanianHinterlands);
                 }
             }
@@ -128,6 +138,7 @@ namespace Oracle.Behaviour.Modes
                 await Teleport.TeleportToAetheryte(8);
 
                 TreeRoot.Stop("We are done!");
+                return true;
             }
 
             switch (Poi.Current.Type)
