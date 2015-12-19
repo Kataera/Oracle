@@ -217,6 +217,34 @@ namespace Oracle.Managers
             return true;
         }
 
+        public static bool FateProgressionMet(FateData fate)
+        {
+            if (OracleSettings.Instance.WaitAtFateForProgress)
+            {
+                return true;
+            }
+
+            if (OracleDatabase.GetFateFromFateData(fate).Type != FateType.Boss
+                && OracleDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
+            {
+                return true;
+            }
+
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss
+                && fate.Progress >= OracleSettings.Instance.BossEngagePercentage)
+            {
+                return true;
+            }
+
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss
+                && fate.Progress >= OracleSettings.Instance.MegaBossEngagePercentage)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static async Task<Dictionary<FateData, float>> GetActiveFateDistances()
         {
             var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
@@ -294,34 +322,6 @@ namespace Oracle.Managers
             }
 
             return true;
-        }
-
-        public static bool FateProgressionMet(FateData fate)
-        {
-            if (OracleSettings.Instance.WaitAtFateForProgress)
-            {
-                return true;
-            }
-
-            if (OracleDatabase.GetFateFromFateData(fate).Type != FateType.Boss
-                && OracleDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
-            {
-                return true;
-            }
-
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss
-                && fate.Progress >= OracleSettings.Instance.BossEngagePercentage)
-            {
-                return true;
-            }
-
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss
-                && fate.Progress >= OracleSettings.Instance.MegaBossEngagePercentage)
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 }

@@ -43,10 +43,11 @@ namespace Oracle.Behaviour.Tasks
 {
     internal static class ZoneChangeHandler
     {
+        private const ushort DravanianHinterlands = 399;
+        private const uint IdyllshireAetheryte = 75;
+
         public static async Task<bool> HandleZoneChange()
         {
-            const uint idyllshireAetheryte = 75;
-
             uint aetheryteId = 0;
             OracleSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
 
@@ -71,7 +72,7 @@ namespace Oracle.Behaviour.Tasks
                 await BindHomePoint.Main();
             }
 
-            if (aetheryteId == idyllshireAetheryte)
+            if (aetheryteId == IdyllshireAetheryte)
             {
                 await MoveOutOfIdyllshire();
             }
@@ -81,13 +82,11 @@ namespace Oracle.Behaviour.Tasks
 
         public static async Task<bool> HandleZoneChange(uint zoneId)
         {
-            const ushort dravanianHinterlands = 399;
-            const uint idyllshireAetheryte = 75;
             uint aetheryteId = 0;
 
-            if (zoneId == dravanianHinterlands)
+            if (zoneId == DravanianHinterlands)
             {
-                aetheryteId = 75;
+                aetheryteId = IdyllshireAetheryte;
             }
             else
             {
@@ -123,7 +122,7 @@ namespace Oracle.Behaviour.Tasks
                 await BindHomePoint.Main();
             }
 
-            if (aetheryteId == idyllshireAetheryte)
+            if (aetheryteId == IdyllshireAetheryte)
             {
                 await MoveOutOfIdyllshire();
             }
