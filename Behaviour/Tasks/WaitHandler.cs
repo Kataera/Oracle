@@ -25,75 +25,52 @@
 using System.Threading.Tasks;
 
 using ff14bot;
-using ff14bot.Behavior;
-using ff14bot.Managers;
 
-using Oracle.Behaviour.PoiHooks.WaitSelect;
+using Oracle.Behaviour.Tasks.WaitTask;
 using Oracle.Enumerations;
-using Oracle.Helpers;
 using Oracle.Managers;
 using Oracle.Settings;
 
-namespace Oracle.Behaviour.PoiHooks
+namespace Oracle.Behaviour.Tasks
 {
-    internal static class SetWaitPoi
+    internal static class WaitHandler
     {
-        public static async Task<bool> Main()
+        public static async Task<bool> HandleWait()
         {
-            if (CommonBehaviors.IsLoading)
+            if (OracleManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted)
             {
-                return false;
+                OracleManager.ClearPoi("We're being attacked.", false);
+                return true;
             }
 
-            if (ZoneChangeNeeded())
+            if (await OracleManager.AnyViableFates())
             {
-                return false;
+                OracleManager.ClearPoi("Viable FATE detected.");
+                return true;
             }
 
-            OracleManager.SetDoNotWaitFlag(false);
+            return await RunWait();
+        }
+
+        private static async Task<bool> RunWait()
+        {
             switch (OracleSettings.Instance.FateWaitMode)
             {
                 case FateWaitMode.ReturnToAetheryte:
                     await ReturnToAetheryte.Main();
-                    break;
-
+                    return true;
                 case FateWaitMode.MoveToWaitLocation:
                     await MoveToWaitLocation.Main();
-                    break;
-
+                    return true;
                 case FateWaitMode.GrindMobs:
                     await GrindMobs.Main();
-                    break;
-
+                    return true;
                 case FateWaitMode.WaitInPlace:
                     await WaitInPlace.Main();
-                    break;
-
-                default:
-                    Logger.SendDebugLog("Cannot determine idle strategy, defaulting to 'Return to Aetheryte'.");
-                    await ReturnToAetheryte.Main();
-                    break;
+                    return true;
             }
 
             return false;
-        }
-
-        private static bool ZoneChangeNeeded()
-        {
-            uint aetheryteId = 0;
-            OracleSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
-
-            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
-            {
-                return false;
-            }
-
-            if (WorldManager.GetZoneForAetheryteId(aetheryteId) == WorldManager.ZoneId)
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }

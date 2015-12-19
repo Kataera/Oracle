@@ -26,51 +26,35 @@ using System.Collections.Generic;
 using System.Linq;
 
 using ff14bot;
+using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.NeoProfiles;
 using ff14bot.Objects;
 
 using Oracle.Data;
+using Oracle.Enumerations;
 using Oracle.Managers;
+using Oracle.Settings;
 
 namespace Oracle.Providers
 {
-    internal struct BattleCharacterWeight
-    {
-        public BattleCharacter BattleCharacter;
-
-        public double Weight;
-    }
-
     internal class OracleCombatTargetingProvider : ITargetingProvider
     {
-        private BattleCharacter[] attackers;
-
         public List<BattleCharacter> GetObjectsByWeight()
         {
-            this.attackers = GameObjectManager.Attackers.ToArray();
-            var allBattleCharacters = GameObjectManager.GetObjectsOfType<BattleCharacter>().ToArray();
-            var inCombat = Core.Player.InCombat;
-
-            var battleChars = allBattleCharacters.Where(bc => this.Filter(inCombat, bc)).OrderByDescending(this.GetWeight).ToList();
-
-            return battleChars;
-        }
-
-        private static bool IsLevelSyncNeeded(GameObject battleCharacter)
-        {
-            if (battleCharacter.FateId == 0)
+            var allTargets = GameObjectManager.GetObjectsOfType<BattleCharacter>().ToArray();
+            if (ReadyToTurnIn())
             {
-                return false;
+                return new List<BattleCharacter>();
             }
 
-            return FateManager.GetFateById(battleCharacter.FateId).MaxLevel < Core.Player.ClassLevel;
+            return allTargets.Where(bc => Filter(Core.Player.InCombat, bc)).OrderByDescending(GetWeight).ToList();
         }
 
-        private bool Filter(bool inCombat, BattleCharacter battleCharacter)
+        private static bool Filter(bool inCombat, BattleCharacter battleCharacter)
         {
-            var currentFate = OracleFateManager.GetCurrentFateData();
+            var currentFate = OracleManager.GetCurrentFateData();
             var blacklistEntry = Blacklist.GetEntry(battleCharacter);
 
             if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible
@@ -100,7 +84,7 @@ namespace Oracle.Providers
                 return false;
             }
 
-            if (this.attackers.Contains(battleCharacter))
+            if (GameObjectManager.Attackers.Contains(battleCharacter))
             {
                 return true;
             }
@@ -123,15 +107,15 @@ namespace Oracle.Providers
             return !inCombat;
         }
 
-        private double GetWeight(BattleCharacter battleCharacter)
+        private static double GetWeight(BattleCharacter battleCharacter)
         {
             var weight = 1800 - (battleCharacter.Distance(Core.Player) * 50);
-            var currentFate = OracleFateManager.GetCurrentFateData();
+            var currentFate = OracleManager.GetCurrentFateData();
             var oracleFate = new Fate();
 
             if (currentFate != null)
             {
-                oracleFate = OracleFateManager.OracleDatabase.GetFateFromFateData(currentFate);
+                oracleFate = OracleManager.OracleDatabase.GetFateFromFateData(currentFate);
             }
 
             // If FATE has a preferred target, prioritise it if we're out of combat.
@@ -143,7 +127,7 @@ namespace Oracle.Providers
 
             if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)
             {
-                weight += 150;
+                weight += 350;
             }
 
             if (battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Core.Player.ObjectId)
@@ -166,7 +150,7 @@ namespace Oracle.Providers
                 weight += 210;
             }
 
-            if (this.attackers.Contains(battleCharacter))
+            if (GameObjectManager.Attackers.Contains(battleCharacter))
             {
                 weight += 110;
             }
@@ -182,6 +166,44 @@ namespace Oracle.Providers
             }
 
             return weight;
+        }
+
+        private static bool IsLevelSyncNeeded(GameObject battleCharacter)
+        {
+            if (battleCharacter.FateId == 0)
+            {
+                return false;
+            }
+
+            return FateManager.GetFateById(battleCharacter.FateId).MaxLevel < Core.Player.ClassLevel;
+        }
+
+        private static bool ReadyToTurnIn()
+        {
+            var currentFate = OracleManager.GetCurrentFateData();
+            if (currentFate == null)
+            {
+                return false;
+            }
+
+            var oracleFate = OracleManager.OracleDatabase.GetFateFromId(currentFate.Id);
+            if (oracleFate.Type != FateType.Collect)
+            {
+                return false;
+            }
+
+            if (currentFate.Status == FateStatus.NOTACTIVE)
+            {
+                return false;
+            }
+
+            var fateItemCount = ConditionParser.ItemCount(oracleFate.ItemId);
+            if (fateItemCount >= OracleSettings.Instance.CollectFateTurnInAtAmount)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

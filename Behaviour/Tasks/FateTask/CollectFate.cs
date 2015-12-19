@@ -22,7 +22,6 @@
     along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,6 +32,7 @@ using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+using ff14bot.NeoProfiles;
 using ff14bot.Objects;
 
 using Oracle.Behaviour.Tasks.Utilities;
@@ -46,19 +46,15 @@ namespace Oracle.Behaviour.Tasks.FateTask
     {
         public static async Task<bool> Main()
         {
-            var currentFate = OracleFateManager.GetCurrentFateData();
-            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(currentFate.Id);
-            var fateItemBagSlot = GetBagSlotFromItemId(oracleFate.ItemId);
+            var currentFate = OracleManager.GetCurrentFateData();
+            var oracleFate = OracleManager.OracleDatabase.GetFateFromId(currentFate.Id);
+            var fateItemCount = ConditionParser.ItemCount(oracleFate.ItemId);
 
-            if (currentFate.Status != FateStatus.NOTACTIVE && fateItemBagSlot != null)
+            if (currentFate.Status != FateStatus.NOTACTIVE)
             {
-                // Wait for potential inventory update.
-                var fateItemCount = fateItemBagSlot.Count;
-                await Coroutine.Wait(TimeSpan.FromSeconds(2), () => fateItemCount < fateItemBagSlot.Count);
-
                 if (GameObjectManager.GetObjectByNPCId(oracleFate.NpcId) != null)
                 {
-                    if (fateItemBagSlot.Count >= OracleSettings.Instance.CollectFateTurnInAtAmount)
+                    if (fateItemCount >= OracleSettings.Instance.CollectFateTurnInAtAmount)
                     {
                         Logger.SendLog("Turning in what we've collected.");
                         await TurnInFateItems(GameObjectManager.GetObjectByNPCId(oracleFate.NpcId));
@@ -73,7 +69,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
                     return false;
                 }
 
-                if (fateItemBagSlot != null && fateItemBagSlot.Count >= 1)
+                if (fateItemCount >= 1)
                 {
                     Logger.SendLog("FATE is complete, turning in remaining items.");
                     await TurnInFateItems(GameObjectManager.GetObjectByNPCId(oracleFate.NpcId));
@@ -98,26 +94,12 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static void ClearFate()
         {
-            OracleFateManager.ClearCurrentFate("Current FATE is finished.");
-        }
-
-        private static BagSlot GetBagSlotFromItemId(uint itemId)
-        {
-            BagSlot bagSlot = null;
-            foreach (var bagslot in InventoryManager.FilledSlots)
-            {
-                if (bagslot.TrueItemId == itemId)
-                {
-                    bagSlot = bagslot;
-                }
-            }
-
-            return bagSlot;
+            OracleManager.ClearCurrentFate("Current FATE is finished.");
         }
 
         private static bool IsViableTarget(BattleCharacter target)
         {
-            var currentFate = OracleFateManager.GetCurrentFateData();
+            var currentFate = OracleManager.GetCurrentFateData();
             return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == currentFate.Id;
         }
 
@@ -137,8 +119,8 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static void SelectTarget()
         {
-            var currentFate = OracleFateManager.GetCurrentFateData();
-            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromFateData(currentFate);
+            var currentFate = OracleManager.GetCurrentFateData();
+            var oracleFate = OracleManager.OracleDatabase.GetFateFromFateData(currentFate);
             BattleCharacter target = null;
 
             if (oracleFate.PreferredTargetId.Any())

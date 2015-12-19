@@ -39,9 +39,9 @@ namespace Oracle.Behaviour.Tasks.WaitTask
                 return false;
             }
 
-            if (await OracleFateManager.AnyViableFates())
+            if (await OracleManager.AnyViableFates())
             {
-                OracleBehaviour.ClearPoi("Found a FATE.");
+                OracleManager.ClearPoi("Found a FATE.");
             }
 
             return true;

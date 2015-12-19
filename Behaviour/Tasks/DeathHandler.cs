@@ -22,18 +22,24 @@
     along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Oracle.Enumerations
+using System;
+using System.Threading.Tasks;
+
+using Buddy.Coroutines;
+
+using ff14bot.Behavior;
+
+namespace Oracle.Behaviour.Tasks
 {
-    internal enum OracleOperationMode
+    internal static class DeathHandler
     {
-        FateGrind,
+        public static async Task<bool> HandleDeath()
+        {
+            await Coroutine.Wait(TimeSpan.FromSeconds(5), () => CommonBehaviors.IsLoading);
+            await CommonTasks.HandleLoading();
+            await Coroutine.Sleep(TimeSpan.FromSeconds(2));
 
-        SpecificFate,
-
-        AtmaGrind,
-
-        ZetaGrind,
-
-        AnimaGrind
+            return true;
+        }
     }
 }

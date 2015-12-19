@@ -24,24 +24,37 @@
 
 using System.Threading.Tasks;
 
-using Oracle.Helpers;
-using Oracle.Managers;
+using ff14bot;
+using ff14bot.Helpers;
 
-namespace Oracle.Behaviour.Tasks.Utilities
+using Oracle.Behaviour.Tasks;
+using Oracle.Helpers;
+using Oracle.Settings;
+
+namespace Oracle.Behaviour.Modes
 {
-    internal static class BuildOracleDatabase
+    internal static class SpecificFate
     {
         public static async Task<bool> Main()
         {
-            // Make sure we actually need to populate the data, since XML parsing is very expensive.
-            if (OracleManager.OracleDatabase != null)
+            if (OracleSettings.Instance.SpecificFate == string.Empty)
             {
-                return true;
+                Logger.SendErrorLog("Please set a specific FATE before starting the bot.");
+                TreeRoot.Stop("No FATE set.");
             }
 
-            Logger.SendLog("Building Oracle's FATE database, this may take a few seconds.");
-            OracleManager.OracleDatabase = XmlParser.GetFateDatabase(true);
-            Logger.SendLog("Oracle's FATE database has been built successfully.");
+            switch (Poi.Current.Type)
+            {
+                case PoiType.Kill:
+                    await CombatHandler.HandleCombat();
+                    break;
+                case PoiType.Fate:
+                    await FateHandler.HandleFate();
+                    break;
+                case PoiType.Wait:
+                    await WaitHandler.HandleWait();
+                    break;
+            }
 
             return true;
         }

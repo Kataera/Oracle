@@ -43,7 +43,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
     {
         public static async Task<bool> Main(bool ignoreCombat)
         {
-            var currentFate = OracleFateManager.GetCurrentFateData();
+            var currentFate = OracleManager.GetCurrentFateData();
 
             if (!ignoreCombat && GameObjectManager.Attackers.Any(attacker => attacker.IsValid) && !Core.Player.IsMounted)
             {
@@ -59,7 +59,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
                     if (GameObjectManager.Attackers.Any(attacker => attacker.IsValid))
                     {
-                        OracleBehaviour.ClearPoi("We're under attack and can't teleport.");
+                        OracleManager.ClearPoi("We're under attack and can't teleport.");
                         return false;
                     }
                 }
@@ -76,14 +76,14 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
         private static void ClearFate()
         {
-            OracleFateManager.SetDoNotWaitFlag(true);
-            OracleFateManager.ClearCurrentFate("FATE ended before we got there.", false);
+            OracleManager.SetDoNotWaitFlag(true);
+            OracleManager.ClearCurrentFate("FATE ended before we got there.", false);
             Navigator.Stop();
         }
 
         private static bool IsMountNeeded()
         {
-            var currentFate = OracleFateManager.GetCurrentFateData();
+            var currentFate = OracleManager.GetCurrentFateData();
 
             if (currentFate == null || !currentFate.IsValid)
             {
@@ -100,6 +100,11 @@ namespace Oracle.Behaviour.Tasks.Utilities
             {
                 Logger.SendDebugLog("Character does not have any mount available, skipping mount task.");
                 return true;
+            }
+
+            if (MovementManager.IsMoving)
+            {
+                Navigator.PlayerMover.MoveStop();
             }
 
             while (!Core.Player.IsMounted)
@@ -122,7 +127,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
         private static async Task<bool> Move(bool ignoreCombat)
         {
-            var currentFate = OracleFateManager.GetCurrentFateData();
+            var currentFate = OracleManager.GetCurrentFateData();
 
             if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE
                 || currentFate.Status == FateStatus.NOTACTIVE)

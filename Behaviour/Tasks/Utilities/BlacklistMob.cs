@@ -32,6 +32,7 @@ using ff14bot.Managers;
 using ff14bot.Objects;
 
 using Oracle.Helpers;
+using Oracle.Managers;
 
 namespace Oracle.Behaviour.Tasks.Utilities
 {
@@ -50,7 +51,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             if (Poi.Current.BattleCharacter == null || !Poi.Current.BattleCharacter.IsValid)
             {
-                OracleBehaviour.ClearPoi("Target is no longer valid.", false);
+                OracleManager.ClearPoi("Target is no longer valid.", false);
                 Core.Player.ClearTarget();
                 return true;
             }
@@ -90,7 +91,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
                 Logger.SendLog("Current target's HP has not decreased in 30 seconds, blacklisting and moving on.");
                 Blacklist.Add(target, BlacklistFlags.Combat, TimeSpan.FromMinutes(15), "Target's HP has not changed in too long.");
-                OracleBehaviour.ClearPoi("Target's HP has not changed in too long.");
+                OracleManager.ClearPoi("Target's HP has not changed in too long.");
                 Core.Player.ClearTarget();
                 blacklistTimer.Restart();
             }

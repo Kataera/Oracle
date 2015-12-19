@@ -22,18 +22,22 @@
     along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Oracle.Enumerations
+using System.Threading.Tasks;
+
+using ff14bot;
+
+using Oracle.Helpers;
+
+namespace Oracle.Behaviour.Modes
 {
-    internal enum OracleOperationMode
+    internal static class AtmaGrind
     {
-        FateGrind,
+        public static async Task<bool> Main()
+        {
+            Logger.SendErrorLog("Atma grind mode is not yet implemented.");
+            TreeRoot.Stop("Atma grind mode is not yet implemented.");
 
-        SpecificFate,
-
-        AtmaGrind,
-
-        ZetaGrind,
-
-        AnimaGrind
+            return true;
+        }
     }
 }

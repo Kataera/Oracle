@@ -37,13 +37,14 @@ namespace Oracle.Behaviour.PoiHooks.FateSelect
     {
         public static async Task<bool> Main()
         {
-            if (!await OracleFateManager.AnyViableFates())
+            if (!await OracleManager.AnyViableFates())
             {
                 return false;
             }
 
-            var activeFates = await OracleFateManager.GetActiveFateDistances();
-            var closestFates = activeFates.OrderBy(kvp => kvp.Value - (kvp.Key.Radius * 0.75)).Where(fate => OracleFateManager.FateFilter(fate.Key));
+            var activeFates = await OracleManager.GetActiveFateDistances();
+            var closestFates =
+                activeFates.OrderBy(kvp => kvp.Value - (kvp.Key.Radius * 0.75)).Where(fate => OracleManager.FateFilter(fate.Key));
             foreach (var fate in closestFates)
             {
                 var distance = Math.Round(fate.Value - (fate.Key.Radius * 0.75f), 0);
@@ -67,7 +68,7 @@ namespace Oracle.Behaviour.PoiHooks.FateSelect
             var closestFate = closestFates.FirstOrDefault().Key;
 
             Logger.SendLog("Selected FATE: '" + closestFate.Name + "'.");
-            OracleFateManager.CurrentFateId = closestFate.Id;
+            OracleManager.CurrentFateId = closestFate.Id;
             Poi.Current = new Poi(closestFate, PoiType.Fate);
 
             return true;

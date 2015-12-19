@@ -36,7 +36,6 @@ using ff14bot.Navigation;
 
 using NeoGaia.ConnectionHandler;
 
-using Oracle.Behaviour;
 using Oracle.Data;
 using Oracle.Enumerations;
 using Oracle.Helpers;
@@ -44,7 +43,7 @@ using Oracle.Settings;
 
 namespace Oracle.Managers
 {
-    internal class OracleFateManager : FateManager
+    internal class OracleManager
     {
         internal static uint CurrentFateId { get; set; }
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
@@ -53,13 +52,13 @@ namespace Oracle.Managers
 
         public static async Task<bool> AnyViableFates()
         {
-            if (!ActiveFates.Any(FateFilter))
+            if (!FateManager.ActiveFates.Any(FateFilter))
             {
                 return false;
             }
 
             await BlacklistBadFates();
-            if (ActiveFates.Any(FateFilter))
+            if (FateManager.ActiveFates.Any(FateFilter))
             {
                 return true;
             }
@@ -71,13 +70,13 @@ namespace Oracle.Managers
         {
             if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
-                var navRequest = ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
+                var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
                 var navResults =
                     await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
 
                 foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
                 {
-                    var fate = ActiveFates.FirstOrDefault(result => result.Id == navResult.Id);
+                    var fate = FateManager.ActiveFates.FirstOrDefault(result => result.Id == navResult.Id);
                     if (fate == null || Blacklist.Contains(fate.Id))
                     {
                         continue;
@@ -96,7 +95,7 @@ namespace Oracle.Managers
 
             if (Poi.Current.Type == PoiType.Fate)
             {
-                OracleBehaviour.ClearPoi(reason);
+                ClearPoi(reason);
             }
         }
 
@@ -107,8 +106,24 @@ namespace Oracle.Managers
 
             if (Poi.Current.Type == PoiType.Fate)
             {
-                OracleBehaviour.ClearPoi(reason);
+                ClearPoi(reason);
             }
+        }
+
+        public static void ClearPoi(string reason)
+        {
+            Logger.SendLog(reason);
+            Poi.Clear(reason);
+        }
+
+        public static void ClearPoi(string reason, bool sendLog)
+        {
+            if (sendLog)
+            {
+                Logger.SendLog(reason);
+            }
+
+            Poi.Clear(reason);
         }
 
         public static bool FateFilter(FateData fate)
@@ -141,6 +156,12 @@ namespace Oracle.Managers
             }
 
             if (oracleFateData.Type == FateType.MegaBoss && !OracleSettings.Instance.MegaBossFatesEnabled)
+            {
+                return false;
+            }
+
+            if (OracleSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate
+                && !fate.Name.Equals(OracleSettings.Instance.SpecificFate))
             {
                 return false;
             }
@@ -196,38 +217,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<Dictionary<FateData, float>> GetActiveFateDistances()
-        {
-            var navRequest = ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
-            var navResults =
-                await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
-
-            var activeFates = new Dictionary<FateData, float>();
-            foreach (var result in navResults)
-            {
-                activeFates.Add(GetFateById(result.Id), result.PathLength);
-                await Coroutine.Yield();
-            }
-
-            return activeFates;
-        }
-
-        public static FateData GetCurrentFateData()
-        {
-            return GetFateById(CurrentFateId);
-        }
-
-        public static FateData GetPreviousFateData()
-        {
-            return GetFateById(PreviousFateId);
-        }
-
-        public static void SetDoNotWaitFlag(bool flag)
-        {
-            DoNotWaitBeforeMovingFlag = flag;
-        }
-
-        private static bool FateProgressionMet(FateData fate)
+        public static bool FateProgressionMet(FateData fate)
         {
             if (OracleSettings.Instance.WaitAtFateForProgress)
             {
@@ -253,6 +243,87 @@ namespace Oracle.Managers
             }
 
             return false;
+        }
+
+        public static async Task<Dictionary<FateData, float>> GetActiveFateDistances()
+        {
+            var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
+            var navResults =
+                await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+
+            var activeFates = new Dictionary<FateData, float>();
+            foreach (var result in navResults)
+            {
+                activeFates.Add(FateManager.GetFateById(result.Id), result.PathLength);
+                await Coroutine.Yield();
+            }
+
+            return activeFates;
+        }
+
+        public static FateData GetCurrentFateData()
+        {
+            return FateManager.GetFateById(CurrentFateId);
+        }
+
+        public static FateData GetPreviousFateData()
+        {
+            return FateManager.GetFateById(PreviousFateId);
+        }
+
+        public static bool IsPlayerBeingAttacked()
+        {
+            return
+                GameObjectManager.Attackers.Any(
+                    mob => mob.IsValid && mob.HasTarget && mob.CurrentTargetId == Core.Player.ObjectId && !mob.IsFateGone);
+        }
+
+        public static void SetDoNotWaitFlag(bool flag)
+        {
+            DoNotWaitBeforeMovingFlag = flag;
+        }
+
+        public static void UpdateGameCache()
+        {
+            FateManager.Update();
+            GameObjectManager.Clear();
+            GameObjectManager.Update();
+        }
+
+        public static bool ZoneChangeNeeded()
+        {
+            const ushort dravanianHinterlands = 399;
+
+            if (Core.Player.IsLevelSynced || Core.Player.IsDead)
+            {
+                return false;
+            }
+
+            if (Poi.Current.Type == PoiType.Kill || Poi.Current.Type == PoiType.Fate || CurrentFateId != 0)
+            {
+                return false;
+            }
+
+            uint aetheryteId = 0;
+            OracleSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
+
+            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
+            {
+                return false;
+            }
+
+            if (WorldManager.GetZoneForAetheryteId(aetheryteId) == WorldManager.ZoneId)
+            {
+                return false;
+            }
+
+            // Handle Idyllshire.
+            if (aetheryteId == 75 && WorldManager.ZoneId == dravanianHinterlands)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

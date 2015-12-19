@@ -25,28 +25,66 @@
 using System;
 using System.Threading.Tasks;
 
+using ff14bot;
+using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 
 using Oracle.Behaviour.Tasks.FateTask;
+using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Managers;
 
 namespace Oracle.Behaviour.Tasks
 {
-    internal static class FateRunner
+    internal static class FateHandler
     {
-        public static async Task<bool> Main()
+        public static async Task<bool> HandleFate()
         {
-            var currentFate = OracleFateManager.GetCurrentFateData();
+            var currentFate = OracleManager.GetCurrentFateData();
 
             if (currentFate == null)
             {
                 return false;
             }
 
-            switch (OracleFateManager.OracleDatabase.GetFateFromFateData(currentFate).Type)
+            if (currentFate.Status == FateStatus.NOTACTIVE)
+            {
+                OracleManager.ClearCurrentFate("FATE is no longer active.");
+                return false;
+            }
+
+            if (Core.Player.Distance(currentFate.Location) > currentFate.Radius)
+            {
+                await MoveToFate.Main(false);
+            }
+
+            if (OracleManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted)
+            {
+                OracleManager.ClearPoi("We're being attacked.", false);
+                return true;
+            }
+
+            if (LevelSync.IsLevelSyncNeeded(currentFate))
+            {
+                await LevelSync.Main(currentFate);
+                return true;
+            }
+
+            return await RunFate();
+        }
+
+        private static async Task<bool> RunFate()
+        {
+            var currentFate = OracleManager.GetCurrentFateData();
+
+            if (currentFate == null)
+            {
+                return false;
+            }
+
+            switch (OracleManager.OracleDatabase.GetFateFromFateData(currentFate).Type)
             {
                 case FateType.Kill:
                     await KillFate.Main();
@@ -93,7 +131,7 @@ namespace Oracle.Behaviour.Tasks
 
             Logger.SendDebugLog("Cannot determine FATE type, blacklisting.");
             Blacklist.Add(currentFate.Id, BlacklistFlags.Node, TimeSpan.MaxValue, "Cannot determine FATE type.");
-            OracleFateManager.ClearCurrentFate("Cannot determine FATE type.");
+            OracleManager.ClearCurrentFate("Cannot determine FATE type.");
 
             return false;
         }

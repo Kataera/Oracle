@@ -50,8 +50,8 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            var currentFate = OracleFateManager.GetCurrentFateData();
-            var itemId = OracleFateManager.OracleDatabase.GetFateFromId(currentFate.Id).ItemId;
+            var currentFate = OracleManager.GetCurrentFateData();
+            var itemId = OracleManager.OracleDatabase.GetFateFromId(currentFate.Id).ItemId;
             var turnInBagSlot = GetBagSlotFromItemId(itemId);
 
             if (turnInBagSlot == null)

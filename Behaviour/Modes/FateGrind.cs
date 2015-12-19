@@ -24,24 +24,44 @@
 
 using System.Threading.Tasks;
 
+using ff14bot;
+using ff14bot.Helpers;
+
+using Oracle.Behaviour.Tasks;
 using Oracle.Helpers;
 using Oracle.Managers;
+using Oracle.Settings;
 
-namespace Oracle.Behaviour.Tasks.Utilities
+namespace Oracle.Behaviour.Modes
 {
-    internal static class BuildOracleDatabase
+    public class FateGrind
     {
         public static async Task<bool> Main()
         {
-            // Make sure we actually need to populate the data, since XML parsing is very expensive.
-            if (OracleManager.OracleDatabase != null)
+            if (OracleSettings.Instance.ChangeZonesEnabled && OracleManager.ZoneChangeNeeded())
             {
+                if (Core.Player.InCombat)
+                {
+                    return true;
+                }
+
+                Logger.SendLog("Zone change is needed.");
+                await ZoneChangeHandler.HandleZoneChange();
                 return true;
             }
 
-            Logger.SendLog("Building Oracle's FATE database, this may take a few seconds.");
-            OracleManager.OracleDatabase = XmlParser.GetFateDatabase(true);
-            Logger.SendLog("Oracle's FATE database has been built successfully.");
+            switch (Poi.Current.Type)
+            {
+                case PoiType.Kill:
+                    await CombatHandler.HandleCombat();
+                    break;
+                case PoiType.Fate:
+                    await FateHandler.HandleFate();
+                    break;
+                case PoiType.Wait:
+                    await WaitHandler.HandleWait();
+                    break;
+            }
 
             return true;
         }

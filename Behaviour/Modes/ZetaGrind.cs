@@ -24,33 +24,20 @@
 
 using System.Threading.Tasks;
 
-using Oracle.Behaviour.Tasks.WaitTask;
-using Oracle.Enumerations;
-using Oracle.Settings;
+using ff14bot;
 
-namespace Oracle.Behaviour.Tasks
+using Oracle.Helpers;
+
+namespace Oracle.Behaviour.Modes
 {
-    internal static class WaitRunner
+    internal static class ZetaGrind
     {
         public static async Task<bool> Main()
         {
-            switch (OracleSettings.Instance.FateWaitMode)
-            {
-                case FateWaitMode.ReturnToAetheryte:
-                    await ReturnToAetheryte.Main();
-                    return true;
-                case FateWaitMode.MoveToWaitLocation:
-                    await MoveToWaitLocation.Main();
-                    return true;
-                case FateWaitMode.GrindMobs:
-                    await GrindMobs.Main();
-                    return true;
-                case FateWaitMode.WaitInPlace:
-                    await WaitInPlace.Main();
-                    return true;
-            }
+            Logger.SendErrorLog("Zeta grind mode is not yet implemented.");
+            TreeRoot.Stop("Zeta grind mode is not yet implemented.");
 
-            return false;
+            return true;
         }
     }
 }

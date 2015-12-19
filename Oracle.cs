@@ -33,6 +33,7 @@ using ff14bot.Navigation;
 
 using Oracle.Behaviour;
 using Oracle.Behaviour.PoiHooks;
+using Oracle.Enumerations;
 using Oracle.Forms;
 using Oracle.Helpers;
 using Oracle.Managers;
@@ -151,15 +152,32 @@ namespace Oracle
                 ListHooks();
             }
 
-            Logger.SendLog("Starting " + this.Name + ".");
+            switch (OracleSettings.Instance.OracleOperationMode)
+            {
+                case OracleOperationMode.FateGrind:
+                    Logger.SendLog("Starting Oracle in FATE grind mode.");
+                    break;
+                case OracleOperationMode.SpecificFate:
+                    Logger.SendLog("Starting Oracle in specific FATE mode.");
+                    break;
+                case OracleOperationMode.AtmaGrind:
+                    Logger.SendLog("Starting Oracle in Atma grind mode.");
+                    break;
+                case OracleOperationMode.ZetaGrind:
+                    Logger.SendLog("Starting Oracle in Zeta grind mode.");
+                    break;
+                case OracleOperationMode.AnimaGrind:
+                    Logger.SendLog("Starting Oracle in Anima grind mode.");
+                    break;
+            }
         }
 
         public override void Stop()
         {
             // Clean up all botbase internal variables.
-            OracleFateManager.CurrentFateId = 0;
-            OracleFateManager.PreviousFateId = 0;
-            OracleFateManager.OracleDatabase = null;
+            OracleManager.CurrentFateId = 0;
+            OracleManager.PreviousFateId = 0;
+            OracleManager.OracleDatabase = null;
 
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
             if (navProvider != null)
@@ -174,7 +192,7 @@ namespace Oracle
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;
 
-            Logger.SendLog("Stopping " + this.Name + ".");
+            Logger.SendLog("Stopping Oracle.");
         }
 
         private static void ListHooks()
