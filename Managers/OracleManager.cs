@@ -233,20 +233,6 @@ namespace Oracle.Managers
             return activeFates;
         }
 
-        public static BagSlot GetBagSlotFromItemId(uint itemId)
-        {
-            BagSlot bagSlot = null;
-            foreach (var bagslot in InventoryManager.FilledSlots)
-            {
-                if (bagslot.TrueItemId == itemId)
-                {
-                    bagSlot = bagslot;
-                }
-            }
-
-            return bagSlot;
-        }
-
         public static FateData GetCurrentFateData()
         {
             return FateManager.GetFateById(CurrentFateId);

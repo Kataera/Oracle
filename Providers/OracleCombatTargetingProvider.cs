@@ -192,13 +192,12 @@ namespace Oracle.Providers
                 return false;
             }
 
-            var fateItemBagSlot = OracleManager.GetBagSlotFromItemId(oracleFate.ItemId);
-            if (currentFate.Status == FateStatus.NOTACTIVE || fateItemBagSlot == null)
+            if (currentFate.Status == FateStatus.NOTACTIVE)
             {
                 return false;
             }
 
-            var fateItemCount = fateItemBagSlot.Count;
+            var fateItemCount = ConditionParser.ItemCount(oracleFate.ItemId);
             if (fateItemCount >= OracleSettings.Instance.CollectFateTurnInAtAmount)
             {
                 return true;

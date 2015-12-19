@@ -33,6 +33,7 @@ using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+using ff14bot.NeoProfiles;
 using ff14bot.Objects;
 
 using Oracle.Behaviour.Tasks.Utilities;
@@ -48,17 +49,13 @@ namespace Oracle.Behaviour.Tasks.FateTask
         {
             var currentFate = OracleManager.GetCurrentFateData();
             var oracleFate = OracleManager.OracleDatabase.GetFateFromId(currentFate.Id);
-            var fateItemBagSlot = OracleManager.GetBagSlotFromItemId(oracleFate.ItemId);
+            var fateItemCount = ConditionParser.ItemCount(oracleFate.ItemId);
 
-            if (currentFate.Status != FateStatus.NOTACTIVE && fateItemBagSlot != null)
+            if (currentFate.Status != FateStatus.NOTACTIVE)
             {
-                // Wait for potential inventory update.
-                var fateItemCount = fateItemBagSlot.Count;
-                await Coroutine.Wait(TimeSpan.FromSeconds(2), () => fateItemCount < fateItemBagSlot.Count);
-
                 if (GameObjectManager.GetObjectByNPCId(oracleFate.NpcId) != null)
                 {
-                    if (fateItemBagSlot.Count >= OracleSettings.Instance.CollectFateTurnInAtAmount)
+                    if (fateItemCount >= OracleSettings.Instance.CollectFateTurnInAtAmount)
                     {
                         Logger.SendLog("Turning in what we've collected.");
                         await TurnInFateItems(GameObjectManager.GetObjectByNPCId(oracleFate.NpcId));
@@ -73,7 +70,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
                     return false;
                 }
 
-                if (fateItemBagSlot != null && fateItemBagSlot.Count >= 1)
+                if (fateItemCount >= 1)
                 {
                     Logger.SendLog("FATE is complete, turning in remaining items.");
                     await TurnInFateItems(GameObjectManager.GetObjectByNPCId(oracleFate.NpcId));
