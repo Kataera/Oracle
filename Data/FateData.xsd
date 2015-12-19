@@ -25,92 +25,110 @@
 -->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <xs:import namespace="http://www.w3.org/2001/XMLSchema-instance" />
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <xs:import namespace="http://www.w3.org/2001/XMLSchema-instance"/>
   <xs:element name="Fates">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="Fate" maxOccurs="unbounded" minOccurs="0" />
+        <xs:element ref="Fate" maxOccurs="unbounded" minOccurs="0"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="Fate">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="ID" maxOccurs="1" minOccurs="1" />
-        <xs:element ref="Name" maxOccurs="1" minOccurs="1" />
-        <xs:element ref="Level" maxOccurs="1" minOccurs="1" />
-        <xs:element ref="Type" maxOccurs="1" minOccurs="1" />
-        <xs:element ref="OracleSupport" maxOccurs="1" minOccurs="1" />
-        <xs:element ref="CollectItemId" maxOccurs="1" minOccurs="0" />
-        <xs:element ref="NpcId" maxOccurs="1" minOccurs="0" />
-        <xs:element ref="PreferredTargetId" maxOccurs="unbounded" minOccurs="0" />
-        <xs:element ref="ChainIDSuccess" maxOccurs="1" minOccurs="0" />
-        <xs:element ref="ChainIDFail" maxOccurs="1" minOccurs="0" />
+        <xs:element ref="ID" maxOccurs="1" minOccurs="1"/>
+        <xs:element ref="Name" maxOccurs="1" minOccurs="1"/>
+        <xs:element ref="Level" maxOccurs="1" minOccurs="1"/>
+        <xs:element ref="Type" maxOccurs="1" minOccurs="1"/>
+        <xs:element ref="OracleSupport" maxOccurs="1" minOccurs="1"/>
+        <xs:element ref="CollectItemId" maxOccurs="1" minOccurs="0"/>
+        <xs:element ref="NpcId" maxOccurs="1" minOccurs="0"/>
+        <xs:element ref="PreferredTargetId" maxOccurs="unbounded" minOccurs="0"/>
+        <xs:element ref="ChainIDSuccess" maxOccurs="1" minOccurs="0"/>
+        <xs:element ref="ChainIDFail" maxOccurs="1" minOccurs="0"/>
+        <xs:element ref="Waypoints" maxOccurs="1" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Waypoints">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Waypoint" maxOccurs="unbounded" minOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Waypoint">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Order" type="xs:integer" maxOccurs="1" minOccurs="1"/>
+        <xs:element name="X" type="xs:float" maxOccurs="1" minOccurs="1"/>
+        <xs:element name="Y" type="xs:float" maxOccurs="1" minOccurs="1"/>
+        <xs:element name="Z" type="xs:float" maxOccurs="1" minOccurs="1"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ID">
     <xs:simpleType>
       <xs:restriction base="xs:integer">
-        <xs:minInclusive value="100" />
-        <xs:maxInclusive value="999" />
-        <xs:totalDigits value="3" />
+        <xs:minInclusive value="100"/>
+        <xs:maxInclusive value="999"/>
+        <xs:totalDigits value="3"/>
       </xs:restriction>
     </xs:simpleType>
   </xs:element>
   <xs:element name="Name">
     <xs:simpleType>
       <xs:restriction base="xs:string">
-        <xs:whiteSpace value="preserve" />
+        <xs:whiteSpace value="preserve"/>
       </xs:restriction>
     </xs:simpleType>
   </xs:element>
   <xs:element name="Level">
     <xs:simpleType>
       <xs:restriction base="xs:integer">
-        <xs:minInclusive value="1" />
-        <xs:maxInclusive value="60" />
-        <xs:totalDigits value="2" />
+        <xs:minInclusive value="1"/>
+        <xs:maxInclusive value="60"/>
+        <xs:totalDigits value="2"/>
       </xs:restriction>
     </xs:simpleType>
   </xs:element>
   <xs:element name="Type">
     <xs:simpleType>
       <xs:restriction base="xs:integer">
-        <xs:minInclusive value="0" />
-        <xs:maxInclusive value="5" />
-        <xs:totalDigits value="1" />
+        <xs:minInclusive value="0"/>
+        <xs:maxInclusive value="5"/>
+        <xs:totalDigits value="1"/>
       </xs:restriction>
     </xs:simpleType>
   </xs:element>
   <xs:element name="OracleSupport">
     <xs:simpleType>
       <xs:restriction base="xs:integer">
-        <xs:minInclusive value="0" />
-        <xs:maxInclusive value="4" />
-        <xs:totalDigits value="1" />
+        <xs:minInclusive value="0"/>
+        <xs:maxInclusive value="4"/>
+        <xs:totalDigits value="1"/>
       </xs:restriction>
     </xs:simpleType>
   </xs:element>
-  <xs:element name="CollectItemId" type="xs:integer" />
-  <xs:element name="NpcId" type="xs:integer" />
-  <xs:element name="PreferredTargetId" type="xs:integer" />
+  <xs:element name="CollectItemId" type="xs:integer"/>
+  <xs:element name="NpcId" type="xs:integer"/>
+  <xs:element name="PreferredTargetId" type="xs:integer"/>
   <xs:element name="ChainIDSuccess">
     <xs:simpleType>
       <xs:restriction base="xs:integer">
-        <xs:minInclusive value="100" />
-        <xs:maxInclusive value="999" />
-        <xs:totalDigits value="3" />
+        <xs:minInclusive value="100"/>
+        <xs:maxInclusive value="999"/>
+        <xs:totalDigits value="3"/>
       </xs:restriction>
     </xs:simpleType>
   </xs:element>
   <xs:element name="ChainIDFail">
     <xs:simpleType>
       <xs:restriction base="xs:integer">
-        <xs:minInclusive value="100" />
-        <xs:maxInclusive value="999" />
-        <xs:totalDigits value="3" />
+        <xs:minInclusive value="100"/>
+        <xs:maxInclusive value="999"/>
+        <xs:totalDigits value="3"/>
       </xs:restriction>
     </xs:simpleType>
   </xs:element>
