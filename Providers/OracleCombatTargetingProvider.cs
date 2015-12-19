@@ -127,7 +127,7 @@ namespace Oracle.Providers
 
             if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)
             {
-                weight += 150;
+                weight += 350;
             }
 
             if (battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Core.Player.ObjectId)

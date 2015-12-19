@@ -492,6 +492,8 @@ namespace Oracle.Settings
             }
         }
 
+        [DefaultValue("")]
+        [Setting]
         public string SpecificFate
         {
             get { return this.specificFate; }
