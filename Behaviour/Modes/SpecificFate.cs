@@ -24,9 +24,12 @@
 
 using System.Threading.Tasks;
 
+using ff14bot;
 using ff14bot.Helpers;
 
 using Oracle.Behaviour.Tasks;
+using Oracle.Helpers;
+using Oracle.Settings;
 
 namespace Oracle.Behaviour.Modes
 {
@@ -34,6 +37,12 @@ namespace Oracle.Behaviour.Modes
     {
         public static async Task<bool> Main()
         {
+            if (OracleSettings.Instance.SpecificFate == string.Empty)
+            {
+                Logger.SendErrorLog("Please set a specific FATE before starting the bot.");
+                TreeRoot.Stop("No FATE set.");
+            }
+
             switch (Poi.Current.Type)
             {
                 case PoiType.Kill:
