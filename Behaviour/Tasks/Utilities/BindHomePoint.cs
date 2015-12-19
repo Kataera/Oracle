@@ -51,13 +51,27 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            while (aetheryteObject.Distance(Core.Player) > 10f)
+            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
-                Navigator.MoveTo(aetheryteObject.Location, "Aetheryte crystal.");
-                await Coroutine.Yield();
-            }
+                while (aetheryteObject.Distance(Core.Player) > 10f)
+                {
+                    Navigator.MoveTo(aetheryteObject.Location, "Aetheryte crystal.");
+                    await Coroutine.Yield();
+                }
 
-            Navigator.Stop();
+                Navigator.Stop();
+            }
+            else
+            {
+                while (aetheryteObject.Distance(Core.Player) > 10f)
+                {
+                    Core.Player.Face(aetheryteObject);
+                    Navigator.PlayerMover.MoveTowards(aetheryteObject.Location);
+                    await Coroutine.Yield();
+                }
+
+                Navigator.PlayerMover.MoveStop();
+            }
 
             aetheryteObject.Interact();
             await Coroutine.Sleep(OracleSettings.Instance.ActionDelay);
