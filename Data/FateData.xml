@@ -170,7 +170,7 @@
     <Level>14</Level>
     <Type>&Collect;</Type>
     <OracleSupport>&NotInGame;</OracleSupport>
-    <CollectItemId>0</CollectItemId>
+    <CollectItemId>2000193</CollectItemId>
     <NpcId>0</NpcId>
   </Fate>
   <Fate>
@@ -3990,14 +3990,13 @@
     <OracleSupport>&FullSupport;</OracleSupport>
   </Fate>
   <Fate>
-    <!-- TODO: Find NPC id for this fate. -->
     <ID>852</ID>
     <Name>Obey their Thirst</Name>
     <Level>57</Level>
     <Type>&Collect;</Type>
-    <OracleSupport>&Unsupported;</OracleSupport>
+    <OracleSupport>&FullSupport;</OracleSupport>
     <CollectItemId>2001877</CollectItemId>
-    <NpcId>0</NpcId>
+    <NpcId>4004</NpcId>
   </Fate>
   <Fate>
     <!--Find out in game -->
@@ -4469,63 +4468,57 @@
     <OracleSupport>&Problematic;</OracleSupport>
   </Fate>
   <Fate>
-    <!-- TODO: Find information for this FATE when the event activates. -->
     <ID>936</ID>
     <Name>Pounding Rice, Pounding Hearts</Name>
     <Level>5</Level>
     <Type>&Collect;</Type>
-    <OracleSupport>&Unsupported;</OracleSupport>
-    <CollectItemId>0</CollectItemId>
-    <NpcId>0</NpcId>
+    <OracleSupport>&FullSupport;</OracleSupport>
+    <CollectItemId>2001940</CollectItemId>
+    <NpcId>4662</NpcId>
   </Fate>
   <Fate>
-    <!-- TODO: Find information for this FATE when the event activates. -->
     <ID>937</ID>
     <Name>Pounding Rice, Pounding Hearts</Name>
     <Level>13</Level>
     <Type>&Collect;</Type>
-    <OracleSupport>&Unsupported;</OracleSupport>
-    <CollectItemId>0</CollectItemId>
-    <NpcId>0</NpcId>
+    <OracleSupport>&FullSupport;</OracleSupport>
+    <CollectItemId>2001940</CollectItemId>
+    <NpcId>4662</NpcId>
   </Fate>
   <Fate>
-    <!-- TODO: Find information for this FATE when the event activates. -->
     <ID>938</ID>
     <Name>Pounding Rice, Pounding Hearts</Name>
     <Level>5</Level>
     <Type>&Collect;</Type>
-    <OracleSupport>&Unsupported;</OracleSupport>
-    <CollectItemId>0</CollectItemId>
-    <NpcId>0</NpcId>
+    <OracleSupport>&FullSupport;</OracleSupport>
+    <CollectItemId>2001940</CollectItemId>
+    <NpcId>4662</NpcId>
   </Fate>
   <Fate>
-    <!-- TODO: Find information for this FATE when the event activates. -->
     <ID>939</ID>
     <Name>Pounding Rice, Pounding Hearts</Name>
     <Level>15</Level>
     <Type>&Collect;</Type>
-    <OracleSupport>&Unsupported;</OracleSupport>
-    <CollectItemId>0</CollectItemId>
-    <NpcId>0</NpcId>
+    <OracleSupport>&FullSupport;</OracleSupport>
+    <CollectItemId>2001940</CollectItemId>
+    <NpcId>4662</NpcId>
   </Fate>
   <Fate>
-    <!-- TODO: Find information for this FATE when the event activates. -->
     <ID>940</ID>
     <Name>Pounding Rice, Pounding Hearts</Name>
     <Level>11</Level>
     <Type>&Collect;</Type>
-    <OracleSupport>&Unsupported;</OracleSupport>
-    <CollectItemId>0</CollectItemId>
-    <NpcId>0</NpcId>
+    <OracleSupport>&FullSupport;</OracleSupport>
+    <CollectItemId>2001940</CollectItemId>
+    <NpcId>4662</NpcId>
   </Fate>
   <Fate>
-    <!-- TODO: Find information for this FATE when the event activates. -->
     <ID>941</ID>
     <Name>Pounding Rice, Pounding Hearts</Name>
     <Level>6</Level>
     <Type>&Collect;</Type>
-    <OracleSupport>&Unsupported;</OracleSupport>
-    <CollectItemId>0</CollectItemId>
-    <NpcId>0</NpcId>
+    <OracleSupport>&FullSupport;</OracleSupport>
+    <CollectItemId>2001940</CollectItemId>
+    <NpcId>4662</NpcId>
   </Fate>
 </Fates>
