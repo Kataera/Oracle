@@ -1048,7 +1048,7 @@
     <Level>32</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-	<PreferredTargetId>858</PreferredTargetId>
+    <PreferredTargetId>858</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>282</ID>

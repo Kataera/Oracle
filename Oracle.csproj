@@ -64,6 +64,11 @@
     <None Include="Resources\Fonts\Roboto-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviour\Modes\AnimaGrind.cs" />
+    <Compile Include="Behaviour\Modes\AtmaGrind.cs" />
+    <Compile Include="Behaviour\Modes\FateGrind.cs" />
+    <Compile Include="Behaviour\Modes\SpecificFate.cs" />
+    <Compile Include="Behaviour\Modes\ZetaGrind.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\GrindMobs.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\MoveToWaitLocation.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\WaitInPlace.cs" />
@@ -94,6 +99,7 @@
     <Compile Include="Behaviour\PoiHooks\WaitSelect\ReturnToAetheryte.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BuildTarotDatabase.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\MoveToFate.cs" />
+    <Compile Include="Behaviour\Tasks\ZoneChangeHandler.cs" />
     <Compile Include="Enumerations\OracleOperationMode.cs" />
     <Compile Include="Forms\MaterialSkin\Controls\MaterialPictureBox.cs">
       <SubType>Component</SubType>

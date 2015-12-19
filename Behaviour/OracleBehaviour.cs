@@ -22,15 +22,13 @@
     along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
-using System.Linq;
 using System.Threading.Tasks;
 
 using Clio.Utilities;
 
-using ff14bot;
 using ff14bot.Helpers;
-using ff14bot.Managers;
 
+using Oracle.Behaviour.Modes;
 using Oracle.Behaviour.Tasks;
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Enumerations;
@@ -52,53 +50,6 @@ namespace Oracle.Behaviour
         private static Composite CreateBehaviour()
         {
             return new ActionRunCoroutine(coroutine => Main());
-        }
-
-        private static async Task<bool> FateGrindMode()
-        {
-            if (OracleSettings.Instance.ChangeZonesEnabled && OracleManager.ZoneChangeNeeded())
-            {
-                if (Core.Player.InCombat)
-                {
-                    return true;
-                }
-
-                Logger.SendLog("Zone change is needed.");
-                await HandleZoneChange();
-                return true;
-            }
-
-            await OracleCore();
-            return true;
-        }
-
-        private static async Task<bool> HandleZoneChange()
-        {
-            uint aetheryteId = 0;
-            OracleSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
-
-            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
-            {
-                Logger.SendErrorLog("Can't find requested teleport destination, make sure you've unlocked it.");
-                TreeRoot.Stop("Cannot teleport to destination.");
-                return false;
-            }
-
-            if (!WorldManager.CanTeleport())
-            {
-                return false;
-            }
-
-            var zoneName = WorldManager.AvailableLocations.FirstOrDefault(teleport => teleport.AetheryteId == aetheryteId).Name;
-            Logger.SendLog("Character is level " + Core.Player.ClassLevel + ", teleporting to " + zoneName + ".");
-            await Teleport.TeleportToAetheryte(aetheryteId);
-
-            if (OracleSettings.Instance.BindHomePoint)
-            {
-                await BindHomePoint.Main();
-            }
-
-            return true;
         }
 
         private static async Task<bool> Main()
@@ -136,54 +87,24 @@ namespace Oracle.Behaviour
             switch (OracleSettings.Instance.OracleOperationMode)
             {
                 case OracleOperationMode.FateGrind:
-                    await FateGrindMode();
+                    await FateGrind.Main();
                     break;
                 case OracleOperationMode.SpecificFate:
-                    await SpecificFateMode();
+                    await SpecificFate.Main();
                     break;
                 case OracleOperationMode.AtmaGrind:
-
-                    // TODO: Implement.
-                    await FateGrindMode();
+                    await AtmaGrind.Main();
                     break;
                 case OracleOperationMode.ZetaGrind:
-
-                    // TODO: Implement.
-                    await FateGrindMode();
+                    await ZetaGrind.Main();
                     break;
                 case OracleOperationMode.AnimaGrind:
-
-                    // TODO: Implement.
-                    await FateGrindMode();
+                    await AnimaGrind.Main();
                     break;
             }
 
             // Always return false to not block the tree.
             return false;
-        }
-
-        private static async Task<bool> OracleCore()
-        {
-            switch (Poi.Current.Type)
-            {
-                case PoiType.Kill:
-                    await CombatHandler.HandleCombat();
-                    break;
-                case PoiType.Fate:
-                    await FateHandler.HandleFate();
-                    break;
-                case PoiType.Wait:
-                    await WaitHandler.HandleWait();
-                    break;
-            }
-
-            return true;
-        }
-
-        private static async Task<bool> SpecificFateMode()
-        {
-            await OracleCore();
-            return true;
         }
     }
 }

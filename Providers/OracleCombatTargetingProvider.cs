@@ -32,7 +32,6 @@ using ff14bot.Managers;
 using ff14bot.NeoProfiles;
 using ff14bot.Objects;
 
-using Oracle.Behaviour.Tasks.FateTask;
 using Oracle.Data;
 using Oracle.Enumerations;
 using Oracle.Managers;
@@ -193,7 +192,7 @@ namespace Oracle.Providers
                 return false;
             }
 
-            var fateItemBagSlot = CollectFate.GetBagSlotFromItemId(oracleFate.ItemId);
+            var fateItemBagSlot = OracleManager.GetBagSlotFromItemId(oracleFate.ItemId);
             if (currentFate.Status == FateStatus.NOTACTIVE || fateItemBagSlot == null)
             {
                 return false;

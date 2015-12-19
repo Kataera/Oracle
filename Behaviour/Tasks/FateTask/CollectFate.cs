@@ -44,25 +44,11 @@ namespace Oracle.Behaviour.Tasks.FateTask
 {
     internal static class CollectFate
     {
-        public static BagSlot GetBagSlotFromItemId(uint itemId)
-        {
-            BagSlot bagSlot = null;
-            foreach (var bagslot in InventoryManager.FilledSlots)
-            {
-                if (bagslot.TrueItemId == itemId)
-                {
-                    bagSlot = bagslot;
-                }
-            }
-
-            return bagSlot;
-        }
-
         public static async Task<bool> Main()
         {
             var currentFate = OracleManager.GetCurrentFateData();
             var oracleFate = OracleManager.OracleDatabase.GetFateFromId(currentFate.Id);
-            var fateItemBagSlot = GetBagSlotFromItemId(oracleFate.ItemId);
+            var fateItemBagSlot = OracleManager.GetBagSlotFromItemId(oracleFate.ItemId);
 
             if (currentFate.Status != FateStatus.NOTACTIVE && fateItemBagSlot != null)
             {

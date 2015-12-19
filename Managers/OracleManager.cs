@@ -233,6 +233,20 @@ namespace Oracle.Managers
             return activeFates;
         }
 
+        public static BagSlot GetBagSlotFromItemId(uint itemId)
+        {
+            BagSlot bagSlot = null;
+            foreach (var bagslot in InventoryManager.FilledSlots)
+            {
+                if (bagslot.TrueItemId == itemId)
+                {
+                    bagSlot = bagslot;
+                }
+            }
+
+            return bagSlot;
+        }
+
         public static FateData GetCurrentFateData()
         {
             return FateManager.GetFateById(CurrentFateId);
@@ -262,6 +276,8 @@ namespace Oracle.Managers
 
         public static bool ZoneChangeNeeded()
         {
+            const ushort dravanianHinterlands = 399;
+
             if (Core.Player.IsLevelSynced || Core.Player.IsDead)
             {
                 return false;
@@ -285,10 +301,16 @@ namespace Oracle.Managers
                 return false;
             }
 
+            // Handle Idyllshire.
+            if (aetheryteId == 75 && WorldManager.ZoneId == dravanianHinterlands)
+            {
+                return false;
+            }
+
             return true;
         }
 
-        private static bool FateProgressionMet(FateData fate)
+        public static bool FateProgressionMet(FateData fate)
         {
             if (OracleSettings.Instance.WaitAtFateForProgress)
             {
