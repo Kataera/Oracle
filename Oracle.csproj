@@ -73,12 +73,14 @@
     <Compile Include="Behaviour\PoiHooks\FateSelect\ChainPriority.cs" />
     <Compile Include="Behaviour\PoiHooks\FateSelect\Closest.cs" />
     <Compile Include="Behaviour\PoiHooks\FateSelect\TypePriority.cs" />
-    <Compile Include="Behaviour\Tasks\FateRunner.cs" />
+    <Compile Include="Behaviour\Tasks\CombatHandler.cs" />
+    <Compile Include="Behaviour\Tasks\DeathHandler.cs" />
+    <Compile Include="Behaviour\Tasks\FateHandler.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BindHomePoint.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BlacklistMob.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SelectGrindTarget.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\Teleport.cs" />
-    <Compile Include="Behaviour\Tasks\WaitRunner.cs" />
+    <Compile Include="Behaviour\Tasks\WaitHandler.cs" />
     <Compile Include="Behaviour\Tasks\WaitTask\WaitInPlace.cs" />
     <Compile Include="Behaviour\Tasks\WaitTask\GrindMobs.cs" />
     <Compile Include="Behaviour\Tasks\WaitTask\ReturnToAetheryte.cs" />
@@ -96,7 +98,7 @@
     <Compile Include="Forms\MaterialSkin\Controls\MaterialPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Managers\OracleFateManager.cs" />
+    <Compile Include="Managers\OracleManager.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LevelSync.cs" />
     <Compile Include="Behaviour\Tasks\FateTask\MegaBossFate.cs" />
     <Compile Include="Behaviour\PoiHooks\SetFatePoi.cs" />

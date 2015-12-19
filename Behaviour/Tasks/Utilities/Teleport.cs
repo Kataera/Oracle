@@ -39,6 +39,7 @@ using ff14bot.Navigation;
 using NeoGaia.ConnectionHandler;
 
 using Oracle.Helpers;
+using Oracle.Managers;
 using Oracle.Settings;
 
 namespace Oracle.Behaviour.Tasks.Utilities
@@ -102,7 +103,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             if (Core.Player.InCombat)
             {
-                OracleBehaviour.ClearPoi("We're in combat and need to teleport.");
+                OracleManager.ClearPoi("We're in combat and need to teleport.");
             }
 
             return true;

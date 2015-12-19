@@ -45,9 +45,9 @@ namespace Oracle.Behaviour.Tasks.WaitTask
                 return false;
             }
 
-            if (await OracleFateManager.AnyViableFates())
+            if (await OracleManager.AnyViableFates())
             {
-                OracleBehaviour.ClearPoi("Found a FATE.");
+                OracleManager.ClearPoi("Found a FATE.");
                 return true;
             }
 
@@ -59,10 +59,10 @@ namespace Oracle.Behaviour.Tasks.WaitTask
             while (Core.Player.Distance2D(Poi.Current.Location) > 15f)
             {
                 // Check if a FATE popped while we're moving.
-                if (await OracleFateManager.AnyViableFates())
+                if (await OracleManager.AnyViableFates())
                 {
                     Navigator.Stop();
-                    OracleBehaviour.ClearPoi("Found a FATE.");
+                    OracleManager.ClearPoi("Found a FATE.");
                     return true;
                 }
 

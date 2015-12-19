@@ -50,7 +50,7 @@ namespace Oracle.Behaviour.PoiHooks
                 return false;
             }
 
-            OracleFateManager.SetDoNotWaitFlag(false);
+            OracleManager.SetDoNotWaitFlag(false);
             switch (OracleSettings.Instance.FateWaitMode)
             {
                 case FateWaitMode.ReturnToAetheryte:

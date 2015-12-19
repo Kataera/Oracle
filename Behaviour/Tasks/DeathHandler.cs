@@ -22,26 +22,22 @@
     along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
 using System.Threading.Tasks;
 
-using Oracle.Helpers;
-using Oracle.Managers;
+using Buddy.Coroutines;
 
-namespace Oracle.Behaviour.Tasks.Utilities
+using ff14bot.Behavior;
+
+namespace Oracle.Behaviour.Tasks
 {
-    internal static class BuildOracleDatabase
+    internal static class DeathHandler
     {
-        public static async Task<bool> Main()
+        public static async Task<bool> HandleDeath()
         {
-            // Make sure we actually need to populate the data, since XML parsing is very expensive.
-            if (OracleManager.OracleDatabase != null)
-            {
-                return true;
-            }
-
-            Logger.SendLog("Building Oracle's FATE database, this may take a few seconds.");
-            OracleManager.OracleDatabase = XmlParser.GetFateDatabase(true);
-            Logger.SendLog("Oracle's FATE database has been built successfully.");
+            await Coroutine.Wait(TimeSpan.FromSeconds(5), () => CommonBehaviors.IsLoading);
+            await CommonTasks.HandleLoading();
+            await Coroutine.Sleep(TimeSpan.FromSeconds(2));
 
             return true;
         }

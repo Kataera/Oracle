@@ -22,17 +22,39 @@
     along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Linq;
 using System.Threading.Tasks;
+
+using ff14bot;
+using ff14bot.Managers;
 
 using Oracle.Behaviour.Tasks.WaitTask;
 using Oracle.Enumerations;
+using Oracle.Managers;
 using Oracle.Settings;
 
 namespace Oracle.Behaviour.Tasks
 {
-    internal static class WaitRunner
+    internal static class WaitHandler
     {
-        public static async Task<bool> Main()
+        public static async Task<bool> HandleWait()
+        {
+            if (OracleManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted)
+            {
+                OracleManager.ClearPoi("We're being attacked.", false);
+                return true;
+            }
+
+            if (await OracleManager.AnyViableFates())
+            {
+                OracleManager.ClearPoi("Viable FATE detected.");
+                return true;
+            }
+
+            return await RunWait();
+        }
+
+        private static async Task<bool> RunWait()
         {
             switch (OracleSettings.Instance.FateWaitMode)
             {

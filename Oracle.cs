@@ -175,9 +175,9 @@ namespace Oracle
         public override void Stop()
         {
             // Clean up all botbase internal variables.
-            OracleFateManager.CurrentFateId = 0;
-            OracleFateManager.PreviousFateId = 0;
-            OracleFateManager.OracleDatabase = null;
+            OracleManager.CurrentFateId = 0;
+            OracleManager.PreviousFateId = 0;
+            OracleManager.OracleDatabase = null;
 
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
             if (navProvider != null)
