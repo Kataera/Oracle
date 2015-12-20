@@ -67,7 +67,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             if (!ignoreCombat && IsMountNeeded() && !Core.Player.IsMounted && currentFate.IsValid)
             {
-                await MountUp();
+                await Mount.MountUp();
             }
 
             await Move(ignoreCombat);
@@ -92,37 +92,6 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             var distanceToFateBoundary = Core.Player.Distance(currentFate.Location) - currentFate.Radius;
             return distanceToFateBoundary > CharacterSettings.Instance.MountDistance;
-        }
-
-        private static async Task<bool> MountUp()
-        {
-            if (!Actionmanager.AvailableMounts.Any())
-            {
-                Logger.SendDebugLog("Character does not have any mount available, skipping mount task.");
-                return true;
-            }
-
-            if (MovementManager.IsMoving)
-            {
-                Navigator.PlayerMover.MoveStop();
-            }
-
-            while (!Core.Player.IsMounted)
-            {
-                if (GameObjectManager.Attackers.Any())
-                {
-                    return false;
-                }
-
-                if (Actionmanager.CanMount == 0)
-                {
-                    Actionmanager.Mount();
-                }
-
-                await Coroutine.Yield();
-            }
-
-            return true;
         }
 
         private static async Task<bool> Move(bool ignoreCombat)

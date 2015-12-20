@@ -132,13 +132,14 @@ namespace Oracle.Behaviour.Tasks
 
         private static async Task<bool> MoveOutOfIdyllshire()
         {
+            await Mount.MountUp();
+
             var location = new Vector3(142.6006f, 207f, 114.136f);
             while (Core.Player.Distance(location) > 5f)
             {
                 Navigator.MoveTo(location, "Leaving Idyllshire.");
                 await Coroutine.Yield();
             }
-
             Navigator.Stop();
             Core.Player.SetFacing(0.9709215f);
             MovementManager.MoveForwardStart();
