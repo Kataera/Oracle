@@ -31,6 +31,7 @@ using ff14bot;
 using ff14bot.Enums;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+using ff14bot.Objects;
 using ff14bot.RemoteWindows;
 
 using Oracle.Helpers;
@@ -40,10 +41,10 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class BindHomePoint
     {
-        public static async Task<bool> Main()
+        public static async Task<bool> Main(uint aetheryteId)
         {
             Logger.SendLog("Binding to the aetheryte crystal.");
-            var aetheryteObject = GameObjectManager.GameObjects.FirstOrDefault(obj => obj.Type == GameObjectType.AetheryteObject);
+            var aetheryteObject = GetAetheryteObject(aetheryteId);
 
             if (aetheryteObject == null)
             {
@@ -51,13 +52,27 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            while (aetheryteObject.Distance(Core.Player) > 10f)
+            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
-                Navigator.MoveTo(aetheryteObject.Location, "Aetheryte crystal.");
-                await Coroutine.Yield();
-            }
+                while (aetheryteObject.Distance(Core.Player) > 8f)
+                {
+                    Navigator.MoveTo(aetheryteObject.Location, "Aetheryte crystal.");
+                    await Coroutine.Yield();
+                }
 
-            Navigator.Stop();
+                Navigator.Stop();
+            }
+            else
+            {
+                while (aetheryteObject.Distance(Core.Player) > 8f)
+                {
+                    Core.Player.Face(aetheryteObject);
+                    Navigator.PlayerMover.MoveTowards(aetheryteObject.Location);
+                    await Coroutine.Yield();
+                }
+
+                Navigator.PlayerMover.MoveStop();
+            }
 
             aetheryteObject.Interact();
             await Coroutine.Sleep(OracleSettings.Instance.ActionDelay);
@@ -69,6 +84,12 @@ namespace Oracle.Behaviour.Tasks.Utilities
             Logger.SendLog("Home point bound successfully.");
 
             return true;
+        }
+
+        private static GameObject GetAetheryteObject(uint aetheryteId)
+        {
+            return
+                GameObjectManager.GameObjects.FirstOrDefault(obj => obj.Type == GameObjectType.AetheryteObject && obj.NpcId == aetheryteId);
         }
     }
 }

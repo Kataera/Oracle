@@ -29,6 +29,7 @@ using ff14bot.Helpers;
 
 using Oracle.Behaviour.Tasks;
 using Oracle.Helpers;
+using Oracle.Managers;
 using Oracle.Settings;
 
 namespace Oracle.Behaviour.Modes
@@ -43,17 +44,19 @@ namespace Oracle.Behaviour.Modes
                 TreeRoot.Stop("No FATE set.");
             }
 
-            switch (Poi.Current.Type)
+            if (Poi.Current.Type == PoiType.Kill)
             {
-                case PoiType.Kill:
-                    await CombatHandler.HandleCombat();
-                    break;
-                case PoiType.Fate:
-                    await FateHandler.HandleFate();
-                    break;
-                case PoiType.Wait:
-                    await WaitHandler.HandleWait();
-                    break;
+                await CombatHandler.HandleCombat();
+            }
+
+            else if (Poi.Current.Type == PoiType.Fate || OracleManager.CurrentFateId != 0)
+            {
+                await FateHandler.HandleFate();
+            }
+
+            else if (Poi.Current.Type == PoiType.Wait)
+            {
+                await WaitHandler.HandleWait();
             }
 
             return true;

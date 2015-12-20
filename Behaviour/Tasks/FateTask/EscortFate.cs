@@ -51,11 +51,11 @@ namespace Oracle.Behaviour.Tasks.FateTask
         public static async Task<bool> Main()
         {
             var currentFate = OracleManager.GetCurrentFateData();
-            var oracleFate = OracleManager.OracleDatabase.GetFateFromFateData(currentFate);
+            var oracleFate = OracleManager.OracleDatabase.GetFateFromId(OracleManager.CurrentFateId);
 
-            if (currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
+            if (currentFate == null || currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
             {
-                ClearFate();
+                await ClearFate();
                 return true;
             }
 
@@ -94,9 +94,9 @@ namespace Oracle.Behaviour.Tasks.FateTask
             return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableTarget).Any();
         }
 
-        private static void ClearFate()
+        private static async Task ClearFate()
         {
-            OracleManager.ClearCurrentFate("Current FATE is finished.");
+            await OracleManager.ClearCurrentFate("Current FATE is finished.");
         }
 
         private static TimeSpan GetRandomTimeSpan()
@@ -107,7 +107,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
         private static bool IsEscortNpc(BattleCharacter battleCharacter)
         {
             var currentFate = OracleManager.GetCurrentFateData();
-            var oracleFate = OracleManager.OracleDatabase.GetFateFromFateData(currentFate);
+            var oracleFate = OracleManager.OracleDatabase.GetFateFromId(OracleManager.CurrentFateId);
 
             if (oracleFate.NpcId == battleCharacter.NpcId)
             {
@@ -144,19 +144,25 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static bool IsViableTarget(BattleCharacter target)
         {
-            var currentFate = OracleManager.GetCurrentFateData();
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == currentFate.Id;
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleManager.CurrentFateId;
         }
 
         private static async Task<bool> MoveToFateCentre()
         {
             var currentFate = OracleManager.GetCurrentFateData();
+
+            if (currentFate == null)
+            {
+                await ClearFate();
+                return true;
+            }
+
             while (Core.Player.Distance2D(currentFate.Location) > currentFate.Radius * 0.2f)
             {
                 if (currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
                 {
                     Navigator.Stop();
-                    ClearFate();
+                    await ClearFate();
                     return true;
                 }
 
@@ -183,8 +189,8 @@ namespace Oracle.Behaviour.Tasks.FateTask
             const float radius = 3f;
             const float radiusSquared = radius * radius;
             var xOffset = Convert.ToSingle(((2 * new Random().NextDouble()) - 1.0) * radius);
-            var yOffset = Convert.ToSingle(((2 * new Random().NextDouble()) - 1.0) * Math.Sqrt(radiusSquared - (xOffset * xOffset)));
-            var location = new Vector3(npc.Location.X + xOffset, npc.Location.Y + yOffset, npc.Location.Z);
+            var zOffset = Convert.ToSingle(((2 * new Random().NextDouble()) - 1.0) * Math.Sqrt(radiusSquared - (xOffset * xOffset)));
+            var location = new Vector3(npc.Location.X + xOffset, npc.Location.Y, npc.Location.Z + zOffset);
 
             Logger.SendDebugLog("NPC Location: " + npc.Location + ", Moving to: " + location);
             var timeout = new Stopwatch();
@@ -205,7 +211,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 {
                     Navigator.PlayerMover.MoveStop();
                     timeout.Reset();
-                    ClearFate();
+                    await ClearFate();
                     return true;
                 }
 
@@ -223,8 +229,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static void SelectTarget()
         {
-            var currentFate = OracleManager.GetCurrentFateData();
-            var oracleFate = OracleManager.OracleDatabase.GetFateFromFateData(currentFate);
+            var oracleFate = OracleManager.OracleDatabase.GetFateFromId(OracleManager.CurrentFateId);
             BattleCharacter target = null;
 
             if (oracleFate.PreferredTargetId.Any())

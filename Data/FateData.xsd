@@ -47,6 +47,24 @@
         <xs:element ref="PreferredTargetId" maxOccurs="unbounded" minOccurs="0" />
         <xs:element ref="ChainIDSuccess" maxOccurs="1" minOccurs="0" />
         <xs:element ref="ChainIDFail" maxOccurs="1" minOccurs="0" />
+        <xs:element ref="Waypoints" maxOccurs="1" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Waypoints">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Waypoint" maxOccurs="unbounded" minOccurs="1" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Waypoint">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Order" type="xs:integer" maxOccurs="1" minOccurs="1" />
+        <xs:element name="X" type="xs:float" maxOccurs="1" minOccurs="1" />
+        <xs:element name="Y" type="xs:float" maxOccurs="1" minOccurs="1" />
+        <xs:element name="Z" type="xs:float" maxOccurs="1" minOccurs="1" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

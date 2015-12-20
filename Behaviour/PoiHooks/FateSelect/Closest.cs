@@ -68,6 +68,7 @@ namespace Oracle.Behaviour.PoiHooks.FateSelect
             var closestFate = closestFates.FirstOrDefault().Key;
 
             Logger.SendLog("Selected FATE: '" + closestFate.Name + "'.");
+            Logger.SendDebugLog("Location of FATE: " + closestFate.Location);
             OracleManager.CurrentFateId = closestFate.Id;
             Poi.Current = new Poi(closestFate, PoiType.Fate);
 

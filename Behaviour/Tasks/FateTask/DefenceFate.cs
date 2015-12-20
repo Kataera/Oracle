@@ -42,9 +42,9 @@ namespace Oracle.Behaviour.Tasks.FateTask
         {
             var currentFate = OracleManager.GetCurrentFateData();
 
-            if (currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
+            if (currentFate == null || currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
             {
-                ClearFate();
+                await ClearFate();
                 return true;
             }
 
@@ -61,21 +61,19 @@ namespace Oracle.Behaviour.Tasks.FateTask
             return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableTarget).Any();
         }
 
-        private static void ClearFate()
+        private static async Task ClearFate()
         {
-            OracleManager.ClearCurrentFate("Current FATE is finished.");
+            await OracleManager.ClearCurrentFate("Current FATE is finished.");
         }
 
         private static bool IsViableTarget(BattleCharacter target)
         {
-            var currentFate = OracleManager.GetCurrentFateData();
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == currentFate.Id;
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleManager.CurrentFateId;
         }
 
         private static void SelectTarget()
         {
-            var currentFate = OracleManager.GetCurrentFateData();
-            var oracleFate = OracleManager.OracleDatabase.GetFateFromFateData(currentFate);
+            var oracleFate = OracleManager.OracleDatabase.GetFateFromId(OracleManager.CurrentFateId);
             BattleCharacter target = null;
 
             if (oracleFate.PreferredTargetId.Any())

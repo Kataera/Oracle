@@ -52,7 +52,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             if (!ignoreCombat && OracleSettings.Instance.TeleportIfQuicker && currentFate.IsValid)
             {
-                if (await Teleport.FasterToTeleport(currentFate) && WorldManager.CanTeleport())
+                if (WorldManager.CanTeleport() && await Teleport.FasterToTeleport(currentFate))
                 {
                     Logger.SendLog("Teleporting to the closest aetheryte crystal to the FATE.");
                     await Teleport.TeleportToClosestAetheryte(currentFate);
@@ -67,17 +67,17 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             if (!ignoreCombat && IsMountNeeded() && !Core.Player.IsMounted && currentFate.IsValid)
             {
-                await MountUp();
+                await Mount.MountUp();
             }
 
             await Move(ignoreCombat);
             return true;
         }
 
-        private static void ClearFate()
+        private static async Task ClearFate()
         {
             OracleManager.SetDoNotWaitFlag(true);
-            OracleManager.ClearCurrentFate("FATE ended before we got there.", false);
+            await OracleManager.ClearCurrentFate("FATE ended before we got there.", false);
             Navigator.Stop();
         }
 
@@ -94,45 +94,25 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return distanceToFateBoundary > CharacterSettings.Instance.MountDistance;
         }
 
-        private static async Task<bool> MountUp()
-        {
-            if (!Actionmanager.AvailableMounts.Any())
-            {
-                Logger.SendDebugLog("Character does not have any mount available, skipping mount task.");
-                return true;
-            }
-
-            if (MovementManager.IsMoving)
-            {
-                Navigator.PlayerMover.MoveStop();
-            }
-
-            while (!Core.Player.IsMounted)
-            {
-                if (GameObjectManager.Attackers.Any())
-                {
-                    return false;
-                }
-
-                if (Actionmanager.CanMount == 0)
-                {
-                    Actionmanager.Mount();
-                }
-
-                await Coroutine.Yield();
-            }
-
-            return true;
-        }
-
         private static async Task<bool> Move(bool ignoreCombat)
         {
             var currentFate = OracleManager.GetCurrentFateData();
-
             if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE
                 || currentFate.Status == FateStatus.NOTACTIVE)
             {
-                ClearFate();
+                await ClearFate();
+                return true;
+            }
+
+            var oracleFate = OracleManager.OracleDatabase.GetFateFromFateData(currentFate);
+            if (oracleFate.CustomWaypoints.Any() && !ignoreCombat)
+            {
+                await WaypointMovement.MoveThroughWaypoints();
+            }
+
+            if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
+            {
+                await ClearFate();
                 return true;
             }
 
@@ -142,7 +122,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 {
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
-                        ClearFate();
+                        await ClearFate();
                         Navigator.Stop();
                         return true;
                     }
@@ -155,7 +135,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                             return true;
                         }
 
-                        await MountUp();
+                        await Mount.MountUp();
                     }
 
                     Navigator.MoveToPointWithin(currentFate.Location, currentFate.Radius * 0.5f, currentFate.Name);
@@ -168,7 +148,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 {
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
-                        ClearFate();
+                        await ClearFate();
                         Navigator.Stop();
                         return true;
                     }
@@ -181,7 +161,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                             return true;
                         }
 
-                        await MountUp();
+                        await Mount.MountUp();
                     }
 
                     Navigator.MoveToPointWithin(currentFate.Location, currentFate.Radius * 0.5f, currentFate.Name);

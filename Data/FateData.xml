@@ -3775,6 +3775,26 @@
     <Level>52</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <Waypoints>
+      <Waypoint>
+        <Order>1</Order>
+        <X>610.6792</X>
+        <Y>-33.48798</Y>
+        <Z>330.0788</Z>
+      </Waypoint>
+      <Waypoint>
+        <Order>2</Order>
+        <X>630.0248</X>
+        <Y>-37.15497</Y>
+        <Z>394.4561</Z>
+      </Waypoint>
+      <Waypoint>
+        <Order>3</Order>
+        <X>608.5453</X>
+        <Y>-39.30981</Y>
+        <Z>446.9431</Z>
+      </Waypoint>
+    </Waypoints>
   </Fate>
   <Fate>
     <ID>819</ID>
@@ -3890,6 +3910,26 @@
     <Level>53</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <Waypoints>
+      <Waypoint>
+        <Order>1</Order>
+        <X>-145.846</X>
+        <Y>294.1468</Y>
+        <Z>-44.95064</Z>
+      </Waypoint>
+      <Waypoint>
+        <Order>2</Order>
+        <X>-344.6414</X>
+        <Y>35.58191</Y>
+        <Z>-44.95832</Z>
+      </Waypoint>
+      <Waypoint>
+        <Order>3</Order>
+        <X>-425.8185</X>
+        <Y>36.40708</Y>
+        <Z>-210.628</Z>
+      </Waypoint>
+    </Waypoints>
   </Fate>
   <Fate>
     <ID>835</ID>
@@ -3897,6 +3937,38 @@
     <Level>53</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <Waypoints>
+      <Waypoint>
+        <Order>1</Order>
+        <X>-145.846</X>
+        <Y>294.1468</Y>
+        <Z>-44.95064</Z>
+      </Waypoint>
+      <Waypoint>
+        <Order>2</Order>
+        <X>-344.6414</X>
+        <Y>35.58191</Y>
+        <Z>-44.95832</Z>
+      </Waypoint>
+      <Waypoint>
+        <Order>3</Order>
+        <X>-385.5695</X>
+        <Y>35.68822</Y>
+        <Z>-120.3647</Z>
+      </Waypoint>
+      <Waypoint>
+        <Order>4</Order>
+        <X>-317.6523</X>
+        <Y>46.84972</Y>
+        <Z>-488.4724</Z>
+      </Waypoint>
+      <Waypoint>
+        <Order>5</Order>
+        <X>-223.9359</X>
+        <Y>0.1008737</Y>
+        <Z>-756.4649</Z>
+      </Waypoint>
+    </Waypoints>
   </Fate>
   <Fate>
     <ID>836</ID>

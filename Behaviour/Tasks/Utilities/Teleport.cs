@@ -48,7 +48,19 @@ namespace Oracle.Behaviour.Tasks.Utilities
     {
         public static async Task<bool> FasterToTeleport(FateData fate)
         {
+            if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            {
+                return false;
+            }
+
             var aetheryte = await GetClosestAetheryte(fate);
+
+            if (aetheryte.Id == 0)
+            {
+                Logger.SendDebugLog("No viable aetheryte crystals in this zone.");
+                return false;
+            }
+
             var distanceFromPlayer = await GetDistanceFromPlayer(fate);
             var teleportMinDistance = OracleSettings.Instance.TeleportMinimumDistanceDelta;
 
@@ -99,6 +111,13 @@ namespace Oracle.Behaviour.Tasks.Utilities
         public static async Task<bool> TeleportToClosestAetheryte(FateData fate)
         {
             var aetheryte = await GetClosestAetheryte(fate);
+
+            if (aetheryte.Id == 0)
+            {
+                Logger.SendDebugLog("No viable aetheryte crystals in this zone.");
+                return false;
+            }
+
             await TeleportToAetheryte(aetheryte.Id);
 
             if (Core.Player.InCombat)

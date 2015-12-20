@@ -22,47 +22,47 @@
     along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Linq;
 using System.Threading.Tasks;
 
+using Buddy.Coroutines;
+
 using ff14bot;
-using ff14bot.Helpers;
+using ff14bot.Managers;
+using ff14bot.Navigation;
 
-using Oracle.Behaviour.Tasks;
 using Oracle.Helpers;
-using Oracle.Managers;
-using Oracle.Settings;
 
-namespace Oracle.Behaviour.Modes
+namespace Oracle.Behaviour.Tasks.Utilities
 {
-    public class FateGrind
+    internal static class Mount
     {
-        public static async Task<bool> Main()
+        public static async Task<bool> MountUp()
         {
-            if (OracleSettings.Instance.ChangeZonesEnabled && OracleManager.ZoneChangeNeeded())
+            if (!Actionmanager.AvailableMounts.Any())
             {
-                if (Core.Player.InCombat)
-                {
-                    return true;
-                }
-
-                Logger.SendLog("Zone change is needed.");
-                await ZoneChangeHandler.HandleZoneChange();
+                Logger.SendDebugLog("Character does not have any mount available, skipping mount task.");
                 return true;
             }
 
-            if (Poi.Current.Type == PoiType.Kill)
+            if (MovementManager.IsMoving)
             {
-                await CombatHandler.HandleCombat();
+                Navigator.PlayerMover.MoveStop();
             }
 
-            else if (Poi.Current.Type == PoiType.Fate || OracleManager.CurrentFateId != 0)
+            while (!Core.Player.IsMounted)
             {
-                await FateHandler.HandleFate();
-            }
+                if (GameObjectManager.Attackers.Any())
+                {
+                    return false;
+                }
 
-            else if (Poi.Current.Type == PoiType.Wait)
-            {
-                await WaitHandler.HandleWait();
+                if (Actionmanager.CanMount == 0)
+                {
+                    Actionmanager.Mount();
+                }
+
+                await Coroutine.Yield();
             }
 
             return true;

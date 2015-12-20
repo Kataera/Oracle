@@ -32,6 +32,7 @@ using ff14bot.NeoProfiles;
 using Oracle.Behaviour.Tasks;
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Helpers;
+using Oracle.Managers;
 
 namespace Oracle.Behaviour.Modes
 {
@@ -179,14 +180,14 @@ namespace Oracle.Behaviour.Modes
                 return true;
             }
 
-            switch (Poi.Current.Type)
+            if (Poi.Current.Type == PoiType.Fate || OracleManager.CurrentFateId != 0)
             {
-                case PoiType.Fate:
-                    await FateHandler.HandleFate();
-                    break;
-                case PoiType.Wait:
-                    await WaitHandler.HandleWait();
-                    break;
+                await FateHandler.HandleFate();
+            }
+
+            else if (Poi.Current.Type == PoiType.Wait)
+            {
+                await WaitHandler.HandleWait();
             }
 
             return true;

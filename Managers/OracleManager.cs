@@ -36,6 +36,7 @@ using ff14bot.Navigation;
 
 using NeoGaia.ConnectionHandler;
 
+using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Data;
 using Oracle.Enumerations;
 using Oracle.Helpers;
@@ -88,25 +89,46 @@ namespace Oracle.Managers
             }
         }
 
-        public static void ClearCurrentFate(string reason)
+        public static async Task ClearCurrentFate(string reason)
         {
+            Logger.SendLog(reason);
+            if (OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
+            {
+                if (WaypointMovement.ReturnFlag)
+                {
+                    Logger.SendLog("Previous FATE had custom waypoints, going back through them in reverse order.");
+                    await WaypointMovement.MoveThroughWaypointsReversed(CurrentFateId);
+                }
+            }
+
             PreviousFateId = CurrentFateId;
             CurrentFateId = 0;
 
             if (Poi.Current.Type == PoiType.Fate)
             {
-                ClearPoi(reason);
+                ClearPoi(reason, false);
             }
         }
 
-        public static void ClearCurrentFate(string reason, bool setAsPrevious)
+        public static async Task ClearCurrentFate(string reason, bool setAsPrevious)
         {
+            Logger.SendLog(reason);
+
+            if (OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
+            {
+                if (WaypointMovement.ReturnFlag)
+                {
+                    Logger.SendLog("Previous FATE had custom waypoints, going back through them in reverse order.");
+                    await WaypointMovement.MoveThroughWaypointsReversed(CurrentFateId);
+                }
+            }
+
             PreviousFateId = setAsPrevious ? CurrentFateId : 0;
             CurrentFateId = 0;
 
             if (Poi.Current.Type == PoiType.Fate)
             {
-                ClearPoi(reason);
+                ClearPoi(reason, false);
             }
         }
 
@@ -247,15 +269,26 @@ namespace Oracle.Managers
 
         public static async Task<Dictionary<FateData, float>> GetActiveFateDistances()
         {
-            var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
-            var navResults =
-                await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
-
             var activeFates = new Dictionary<FateData, float>();
-            foreach (var result in navResults)
+
+            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
-                activeFates.Add(FateManager.GetFateById(result.Id), result.PathLength);
-                await Coroutine.Yield();
+                var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
+                var navResults =
+                    await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+
+                foreach (var result in navResults.Where(result => result.CanNavigate != 0))
+                {
+                    activeFates.Add(FateManager.GetFateById(result.Id), result.PathLength);
+                    await Coroutine.Yield();
+                }
+            }
+            else
+            {
+                foreach (var fate in FateManager.ActiveFates)
+                {
+                    activeFates.Add(fate, fate.Location.Distance(Core.Player.Location));
+                }
             }
 
             return activeFates;

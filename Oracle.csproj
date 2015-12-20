@@ -83,8 +83,10 @@
     <Compile Include="Behaviour\Tasks\FateHandler.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BindHomePoint.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BlacklistMob.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\Mount.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SelectGrindTarget.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\Teleport.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\WaypointMovement.cs" />
     <Compile Include="Behaviour\Tasks\WaitHandler.cs" />
     <Compile Include="Behaviour\Tasks\WaitTask\WaitInPlace.cs" />
     <Compile Include="Behaviour\Tasks\WaitTask\GrindMobs.cs" />

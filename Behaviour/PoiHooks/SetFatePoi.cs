@@ -56,18 +56,18 @@ namespace Oracle.Behaviour.PoiHooks
 
             if (IsFateSet())
             {
+                if (OracleManager.GetCurrentFateData() == null)
+                {
+                    return true;
+                }
+
                 if (!IsFatePoiSet() && Poi.Current.Type != PoiType.Death && !GameObjectManager.Attackers.Any())
                 {
-                    if (OracleManager.GetCurrentFateData() != null)
-                    {
-                        Poi.Current = new Poi(OracleManager.GetCurrentFateData(), PoiType.Fate);
-                    }
+                    Poi.Current = new Poi(OracleManager.GetCurrentFateData(), PoiType.Fate);
                 }
 
                 return true;
             }
-
-            OracleManager.CurrentFateId = 0;
 
             if (ZoneChangeNeeded())
             {
@@ -101,7 +101,7 @@ namespace Oracle.Behaviour.PoiHooks
 
         private static bool IsFatePoiSet()
         {
-            if (Poi.Current.Type != PoiType.Fate || Poi.Current.Fate != OracleManager.GetCurrentFateData())
+            if (Poi.Current.Type != PoiType.Fate || Poi.Current.Fate.Id != OracleManager.GetCurrentFateData().Id)
             {
                 return false;
             }
@@ -111,19 +111,7 @@ namespace Oracle.Behaviour.PoiHooks
 
         private static bool IsFateSet()
         {
-            var currentFate = OracleManager.GetCurrentFateData();
-            if (currentFate == null)
-            {
-                return false;
-            }
-
-            if (currentFate.Status == FateStatus.NOTACTIVE)
-            {
-                return false;
-            }
-
-            var oracleFate = OracleManager.OracleDatabase.GetFateFromFateData(currentFate);
-            if (currentFate.Status == FateStatus.COMPLETE && oracleFate.Type != FateType.Collect)
+            if (OracleManager.CurrentFateId == 0)
             {
                 return false;
             }
