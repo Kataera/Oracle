@@ -50,7 +50,7 @@ namespace Oracle.Behaviour.Tasks
                 return false;
             }
 
-            if (currentFate != null && Core.Player.Distance(currentFate.Location) > currentFate.Radius)
+            if (currentFate != null && Core.Player.Distance(currentFate.Location) > currentFate.Radius * 1.05f)
             {
                 await MoveToFate.Main(false);
             }
