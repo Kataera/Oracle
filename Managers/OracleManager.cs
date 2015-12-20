@@ -36,6 +36,7 @@ using ff14bot.Navigation;
 
 using NeoGaia.ConnectionHandler;
 
+using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Data;
 using Oracle.Enumerations;
 using Oracle.Helpers;
@@ -88,8 +89,17 @@ namespace Oracle.Managers
             }
         }
 
-        public static void ClearCurrentFate(string reason)
+        public static async Task ClearCurrentFate(string reason)
         {
+            if (OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
+            {
+                if (Core.Player.Distance(OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.FirstOrDefault(wp => wp.Order == 1).Location)
+                    > 50f)
+                {
+                    await MoveToFate.MoveThroughWaypointsReversed(CurrentFateId);
+                }
+            }
+
             PreviousFateId = CurrentFateId;
             CurrentFateId = 0;
 
@@ -99,8 +109,17 @@ namespace Oracle.Managers
             }
         }
 
-        public static void ClearCurrentFate(string reason, bool setAsPrevious)
+        public static async Task ClearCurrentFate(string reason, bool setAsPrevious)
         {
+            if (OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
+            {
+                if (Core.Player.Distance(OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.FirstOrDefault(wp => wp.Order == 1).Location)
+                    > 50f)
+                {
+                    await MoveToFate.MoveThroughWaypointsReversed(CurrentFateId);
+                }
+            }
+
             PreviousFateId = setAsPrevious ? CurrentFateId : 0;
             CurrentFateId = 0;
 

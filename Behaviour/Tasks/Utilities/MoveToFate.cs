@@ -22,6 +22,7 @@
     along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,6 +34,7 @@ using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Settings;
 
+using Oracle.Data;
 using Oracle.Helpers;
 using Oracle.Managers;
 using Oracle.Settings;
@@ -74,10 +76,59 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return true;
         }
 
-        private static void ClearFate()
+        public static async Task<bool> MoveThroughWaypoints()
+        {
+            var currentFate = OracleManager.GetCurrentFateData();
+            if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE
+                || currentFate.Status == FateStatus.NOTACTIVE)
+            {
+                return true;
+            }
+
+            var oracleFate = OracleManager.OracleDatabase.GetFateFromFateData(currentFate);
+            var waypointsNavigated = new List<Waypoint>();
+            foreach (var waypoint in oracleFate.CustomWaypoints)
+            {
+                await MoveToWaypoint(waypoint, false);
+
+                if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
+                {
+                    Logger.SendLog("FATE ended, going back through previous waypoints.");
+                    waypointsNavigated.Reverse();
+
+                    // We may not be able to navigate back from current position, so follow the waypoints in the reverse direction.
+                    foreach (var reverseWaypoint in waypointsNavigated)
+                    {
+                        await MoveToWaypoint(reverseWaypoint, true);
+                    }
+
+                    return true;
+                }
+
+                waypointsNavigated.Add(waypoint);
+            }
+
+            return true;
+        }
+
+        public static async Task<bool> MoveThroughWaypointsReversed(uint fateId)
+        {
+            var oracleFate = OracleManager.OracleDatabase.GetFateFromId(fateId);
+            var reverseWaypoints = oracleFate.CustomWaypoints;
+            reverseWaypoints.Reverse();
+
+            foreach (var waypoint in reverseWaypoints)
+            {
+                await MoveToWaypoint(waypoint, true);
+            }
+
+            return true;
+        }
+
+        private static async Task ClearFate()
         {
             OracleManager.SetDoNotWaitFlag(true);
-            OracleManager.ClearCurrentFate("FATE ended before we got there.", false);
+            await OracleManager.ClearCurrentFate("FATE ended before we got there.", false);
             Navigator.Stop();
         }
 
@@ -97,11 +148,22 @@ namespace Oracle.Behaviour.Tasks.Utilities
         private static async Task<bool> Move(bool ignoreCombat)
         {
             var currentFate = OracleManager.GetCurrentFateData();
-
             if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE
                 || currentFate.Status == FateStatus.NOTACTIVE)
             {
-                ClearFate();
+                await ClearFate();
+                return true;
+            }
+
+            var oracleFate = OracleManager.OracleDatabase.GetFateFromFateData(currentFate);
+            if (oracleFate.CustomWaypoints.Any() && !ignoreCombat)
+            {
+                await MoveThroughWaypoints();
+            }
+
+            if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
+            {
+                await ClearFate();
                 return true;
             }
 
@@ -111,7 +173,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 {
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
-                        ClearFate();
+                        await ClearFate();
                         Navigator.Stop();
                         return true;
                     }
@@ -137,7 +199,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 {
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
-                        ClearFate();
+                        await ClearFate();
                         Navigator.Stop();
                         return true;
                     }
@@ -159,6 +221,38 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             Navigator.Stop();
+            return true;
+        }
+
+        private static async Task<bool> MoveToWaypoint(Waypoint waypoint, bool ignoreExpiredFate)
+        {
+            if (!ignoreExpiredFate)
+            {
+                var currentFate = OracleManager.GetCurrentFateData();
+                if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE
+                    || currentFate.Status == FateStatus.NOTACTIVE)
+                {
+                    return true;
+                }
+            }
+
+            var location = waypoint.Location;
+            while (Core.Player.Distance(location) > 5f)
+            {
+                if (!ignoreExpiredFate)
+                {
+                    var currentFate = OracleManager.GetCurrentFateData();
+                    if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
+                    {
+                        Navigator.Stop();
+                        return true;
+                    }
+                }
+
+                Navigator.MoveTo(location, "Waypoint " + waypoint);
+                await Coroutine.Yield();
+            }
+
             return true;
         }
     }

@@ -51,7 +51,7 @@ namespace Oracle.Behaviour.Tasks
 
             if (currentFate.Status == FateStatus.NOTACTIVE)
             {
-                OracleManager.ClearCurrentFate("FATE is no longer active.");
+                await OracleManager.ClearCurrentFate("FATE is no longer active.");
                 return false;
             }
 
@@ -131,7 +131,7 @@ namespace Oracle.Behaviour.Tasks
 
             Logger.SendDebugLog("Cannot determine FATE type, blacklisting.");
             Blacklist.Add(currentFate.Id, BlacklistFlags.Node, TimeSpan.MaxValue, "Cannot determine FATE type.");
-            OracleManager.ClearCurrentFate("Cannot determine FATE type.");
+            await OracleManager.ClearCurrentFate("Cannot determine FATE type.");
 
             return false;
         }

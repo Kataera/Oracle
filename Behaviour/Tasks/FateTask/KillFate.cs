@@ -44,7 +44,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
             if (currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
             {
-                ClearFate();
+                await ClearFate();
                 return true;
             }
 
@@ -61,9 +61,9 @@ namespace Oracle.Behaviour.Tasks.FateTask
             return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableTarget).Any();
         }
 
-        private static void ClearFate()
+        private static async Task ClearFate()
         {
-            OracleManager.ClearCurrentFate("Current FATE is finished.");
+            await OracleManager.ClearCurrentFate("Current FATE is finished.");
         }
 
         private static bool IsViableTarget(BattleCharacter target)
