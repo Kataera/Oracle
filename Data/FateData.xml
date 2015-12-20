@@ -3336,6 +3336,20 @@
     <Level>56</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+	<Waypoints>
+	  <Waypoint>
+	    <Order>1</Order>
+		<X>-589.8137</X>
+		<Y>295.8554</Y>
+		<Z>-191.1647</Z>
+	  </Waypoint>
+	  <Waypoint>
+	    <Order>2</Order>
+		<X>-708.6296</X>
+		<Y>290.2332</Y>
+		<Z>-227.8015</Z>
+	  </Waypoint>
+    </Waypoints>
   </Fate>
   <Fate>
     <ID>747</ID>
@@ -3343,6 +3357,20 @@
     <Level>55</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+	<Waypoints>
+	  <Waypoint>
+	    <Order>1</Order>
+		<X>-47.47805</X>
+		<Y>147.3668</Y>
+		<Z>-189.4197</Z>
+	  </Waypoint>
+	  <Waypoint>
+	    <Order>2</Order>
+		<X>-99.47672</X>
+		<Y>93.40805</Y>
+		<Z>-260.731</Z>
+	  </Waypoint>
+    </Waypoints>
   </Fate>
   <Fate>
     <ID>748</ID>

@@ -40,7 +40,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
     {
         public static bool IsLevelSyncNeeded(FateData fate)
         {
-            if (!fate.IsValid || fate.Status != FateStatus.NOTACTIVE || fate.Status != FateStatus.COMPLETE)
+            if (!fate.IsValid || fate.Status == FateStatus.NOTACTIVE || fate.Status == FateStatus.COMPLETE)
             {
                 return false;
             }
@@ -57,7 +57,6 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             var levelSyncCooldown = new Stopwatch();
             while (!Core.Player.IsLevelSynced
-                   && fate.Within2D(Core.Player.Location)
                    && FateManager.WithinFate
                    && fate.Status != FateStatus.NOTACTIVE
                    && fate.Status != FateStatus.COMPLETE)
