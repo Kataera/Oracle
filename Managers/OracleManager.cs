@@ -92,13 +92,11 @@ namespace Oracle.Managers
         public static async Task ClearCurrentFate(string reason)
         {
             Logger.SendLog(reason);
-
             if (OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
             {
-                if (
-                    Core.Player.Distance(
-                        OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.FirstOrDefault(wp => wp.Order == 1).Location) > 50f)
+                if (WaypointMovement.ReturnFlag)
                 {
+                    Logger.SendLog("Previous FATE had custom waypoints, going back through them in reverse order.");
                     await WaypointMovement.MoveThroughWaypointsReversed(CurrentFateId);
                 }
             }
@@ -118,11 +116,9 @@ namespace Oracle.Managers
 
             if (OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
             {
-                if (
-                    Core.Player.Distance(
-                        OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.FirstOrDefault(wp => wp.Order == 1).Location)
-                    > 50f)
+                if (WaypointMovement.ReturnFlag)
                 {
+                    Logger.SendLog("Previous FATE had custom waypoints, going back through them in reverse order.");
                     await WaypointMovement.MoveThroughWaypointsReversed(CurrentFateId);
                 }
             }

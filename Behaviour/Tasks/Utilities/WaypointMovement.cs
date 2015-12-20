@@ -40,6 +40,8 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class WaypointMovement
     {
+        public static bool ReturnFlag { get; set; }
+
         public static async Task<bool> MoveThroughWaypoints()
         {
             var currentFate = OracleManager.GetCurrentFateData();
@@ -77,11 +79,13 @@ namespace Oracle.Behaviour.Tasks.Utilities
                     return true;
                 }
 
+                waypointCount++;
                 waypointsNavigated.Add(waypoint);
             }
 
             Navigator.PlayerMover.MoveStop();
             await CommonTasks.Land();
+            ReturnFlag = true;
 
             return true;
         }
@@ -103,9 +107,11 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 {
                     await MoveToWaypoint(waypoint, false, false);
                 }
+
+                waypointCount++;
             }
 
-
+            ReturnFlag = false;
             Navigator.PlayerMover.MoveStop();
             return true;
         }
@@ -127,8 +133,8 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 await Mount.MountUp();
             }
 
+            Logger.SendLog("Moving to waypoint " + waypoint.Order + ".");
             var location = waypoint.Location;
-
             if (useNavServer)
             {
                 while (Navigator.MoveTo(location, "Waypoint " + waypoint.Order) != MoveResult.Done)
