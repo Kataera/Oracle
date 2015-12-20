@@ -247,15 +247,26 @@ namespace Oracle.Managers
 
         public static async Task<Dictionary<FateData, float>> GetActiveFateDistances()
         {
-            var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
-            var navResults =
-                await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
-
             var activeFates = new Dictionary<FateData, float>();
-            foreach (var result in navResults)
+
+            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
-                activeFates.Add(FateManager.GetFateById(result.Id), result.PathLength);
-                await Coroutine.Yield();
+                var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
+                var navResults =
+                    await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+
+                foreach (var result in navResults.Where(result => result.CanNavigate != 0))
+                {
+                    activeFates.Add(FateManager.GetFateById(result.Id), result.PathLength);
+                    await Coroutine.Yield();
+                }
+            }
+            else
+            {
+                foreach (var fate in FateManager.ActiveFates)
+                {
+                    activeFates.Add(fate, fate.Location.Distance(Core.Player.Location));
+                }
             }
 
             return activeFates;
