@@ -3775,6 +3775,26 @@
     <Level>52</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <Waypoints>
+      <Waypoint>
+        <Order>1</Order>
+        <X>610.6792</X>
+        <Y>-33.48798</Y>
+        <Z>330.0788</Z>
+      </Waypoint>
+      <Waypoint>
+        <Order>2</Order>
+        <X>630.0248</X>
+        <Y>-37.15497</Y>
+        <Z>394.4561</Z>
+      </Waypoint>
+      <Waypoint>
+        <Order>3</Order>
+        <X>608.5453</X>
+        <Y>-39.30981</Y>
+        <Z>446.9431</Z>
+      </Waypoint>
+    </Waypoints>
   </Fate>
   <Fate>
     <ID>819</ID>
@@ -3891,7 +3911,7 @@
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
     <Waypoints>
-	  <Waypoint>
+      <Waypoint>
         <Order>1</Order>
         <X>-288.7476</X>
         <Y>88.63895</Y>
@@ -3905,15 +3925,9 @@
       </Waypoint>
       <Waypoint>
         <Order>3</Order>
-        <X>-408.8188</X>
-        <Y>14.91456</Y>
-        <Z>-169.7812</Z>
-      </Waypoint>
-	  <Waypoint>
-        <Order>4</Order>
-        <X>-425.3539</X>
-        <Y>-3.121994</Y>
-        <Z>-183.3704</Z>
+        <X>-427.1574</X>
+        <Y>9.491603</Y>
+        <Z>-197.7094</Z>
       </Waypoint>
     </Waypoints>
   </Fate>
@@ -3924,7 +3938,7 @@
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
     <Waypoints>
-	  <Waypoint>
+      <Waypoint>
         <Order>1</Order>
         <X>-288.7476</X>
         <Y>88.63895</Y>
@@ -3942,19 +3956,19 @@
         <Y>22.99071</Y>
         <Z>-93.72369</Z>
       </Waypoint>
-	  <Waypoint>
+      <Waypoint>
         <Order>4</Order>
         <X>-451.9213</X>
         <Y>9.585291</Y>
         <Z>-402.6535</Z>
       </Waypoint>
-	  <Waypoint>
+      <Waypoint>
         <Order>5</Order>
         <X>-501.8815</X>
         <Y>5.882646</Y>
         <Z>-575.1199</Z>
       </Waypoint>
-	  <Waypoint>
+      <Waypoint>
         <Order>6</Order>
         <X>-249.7385</X>
         <Y>-1.456261</Y>
@@ -3962,16 +3976,10 @@
       </Waypoint>
       <Waypoint>
         <Order>7</Order>
-        <X>-222.0412</X>
-        <Y>-7.056304</Y>
-        <Z>-766.7716</Z>
+        <X>-232.1671</X>
+        <Y>-3.292034</Y>
+        <Z>-770.9478</Z>
       </Waypoint>
-	  <Waypoint>
-        <Order>8</Order>
-        <X>-224.0883</X>
-        <Y>-15.82697</Y>
-        <Z>-773.601</Z>
-	  </Waypoint>
     </Waypoints>
   </Fate>
   <Fate>

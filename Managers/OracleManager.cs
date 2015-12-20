@@ -91,12 +91,15 @@ namespace Oracle.Managers
 
         public static async Task ClearCurrentFate(string reason)
         {
+            Logger.SendLog(reason);
+
             if (OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
             {
-                if (Core.Player.Distance(OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.FirstOrDefault(wp => wp.Order == 1).Location)
-                    > 50f)
+                if (
+                    Core.Player.Distance(
+                        OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.FirstOrDefault(wp => wp.Order == 1).Location) > 50f)
                 {
-                    await MoveToFate.MoveThroughWaypointsReversed(CurrentFateId);
+                    await WaypointMovement.MoveThroughWaypointsReversed(CurrentFateId);
                 }
             }
 
@@ -105,18 +108,22 @@ namespace Oracle.Managers
 
             if (Poi.Current.Type == PoiType.Fate)
             {
-                ClearPoi(reason);
+                ClearPoi(reason, false);
             }
         }
 
         public static async Task ClearCurrentFate(string reason, bool setAsPrevious)
         {
+            Logger.SendLog(reason);
+
             if (OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
             {
-                if (Core.Player.Distance(OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.FirstOrDefault(wp => wp.Order == 1).Location)
+                if (
+                    Core.Player.Distance(
+                        OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.FirstOrDefault(wp => wp.Order == 1).Location)
                     > 50f)
                 {
-                    await MoveToFate.MoveThroughWaypointsReversed(CurrentFateId);
+                    await WaypointMovement.MoveThroughWaypointsReversed(CurrentFateId);
                 }
             }
 
@@ -125,7 +132,7 @@ namespace Oracle.Managers
 
             if (Poi.Current.Type == PoiType.Fate)
             {
-                ClearPoi(reason);
+                ClearPoi(reason, false);
             }
         }
 
