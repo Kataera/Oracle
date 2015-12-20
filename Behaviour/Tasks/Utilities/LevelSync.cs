@@ -24,6 +24,7 @@
 
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 using Buddy.Coroutines;
 
@@ -45,7 +46,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            return fate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced;
+            return fate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced && fate.Within2D(Core.Player.Location);
         }
 
         public static async Task<bool> Main(FateData fate)
@@ -55,23 +56,12 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            var levelSyncCooldown = new Stopwatch();
-            while (!Core.Player.IsLevelSynced
-                   && FateManager.WithinFate
-                   && fate.Status != FateStatus.NOTACTIVE
-                   && fate.Status != FateStatus.COMPLETE)
+            ToDoList.LevelSync();
+            if (Core.Player.IsLevelSynced)
             {
-                if (!levelSyncCooldown.IsRunning || levelSyncCooldown.ElapsedMilliseconds > 2000)
-                {
-                    ToDoList.LevelSync();
-                    levelSyncCooldown.Restart();
-                }
-
-                await Coroutine.Yield();
+                Logger.SendLog("Synced to level " + fate.MaxLevel + " to participate in FATE.");
             }
 
-            Logger.SendLog("Synced to level " + fate.MaxLevel + " to participate in FATE.");
-            levelSyncCooldown.Stop();
             return true;
         }
     }
