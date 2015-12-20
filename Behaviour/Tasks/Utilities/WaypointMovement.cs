@@ -101,11 +101,11 @@ namespace Oracle.Behaviour.Tasks.Utilities
             {
                 if (waypointCount == 1)
                 {
-                    await MoveToWaypoint(waypoint, false, true);
+                    await MoveToWaypoint(waypoint, true, true);
                 }
                 else
                 {
-                    await MoveToWaypoint(waypoint, false, false);
+                    await MoveToWaypoint(waypoint, true, false);
                 }
 
                 waypointCount++;
