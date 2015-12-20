@@ -64,6 +64,11 @@ namespace Oracle.Behaviour.PoiHooks
                     }
                 }
 
+                if (OracleManager.GetCurrentFateData() == null)
+                {
+                    await OracleManager.ClearCurrentFate("FATE is invalid.");
+                }
+
                 return true;
             }
 
