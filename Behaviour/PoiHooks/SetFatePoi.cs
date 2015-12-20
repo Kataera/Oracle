@@ -58,9 +58,10 @@ namespace Oracle.Behaviour.PoiHooks
             {
                 if (OracleManager.GetCurrentFateData() == null)
                 {
-                    await OracleManager.ClearCurrentFate("FATE is invalid.");
+                    return true;
                 }
-                else if (!IsFatePoiSet() && Poi.Current.Type != PoiType.Death && !GameObjectManager.Attackers.Any())
+
+                if (!IsFatePoiSet() && Poi.Current.Type != PoiType.Death && !GameObjectManager.Attackers.Any())
                 {
                     Poi.Current = new Poi(OracleManager.GetCurrentFateData(), PoiType.Fate);
                 }

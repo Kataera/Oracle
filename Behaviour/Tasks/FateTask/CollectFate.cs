@@ -47,8 +47,14 @@ namespace Oracle.Behaviour.Tasks.FateTask
         public static async Task<bool> Main()
         {
             var currentFate = OracleManager.GetCurrentFateData();
-            var oracleFate = OracleManager.OracleDatabase.GetFateFromId(currentFate.Id);
+            var oracleFate = OracleManager.OracleDatabase.GetFateFromId(OracleManager.CurrentFateId);
             var fateItemCount = ConditionParser.ItemCount(oracleFate.ItemId);
+
+            if (currentFate == null)
+            {
+                await ClearFate();
+                return true;
+            }
 
             if (currentFate.Status != FateStatus.NOTACTIVE)
             {
@@ -99,8 +105,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static bool IsViableTarget(BattleCharacter target)
         {
-            var currentFate = OracleManager.GetCurrentFateData();
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == currentFate.Id;
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleManager.CurrentFateId;
         }
 
         private static async Task<bool> MoveToTurnInNpc(GameObject turnInNpc)
@@ -119,8 +124,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static void SelectTarget()
         {
-            var currentFate = OracleManager.GetCurrentFateData();
-            var oracleFate = OracleManager.OracleDatabase.GetFateFromFateData(currentFate);
+            var oracleFate = OracleManager.OracleDatabase.GetFateFromId(OracleManager.CurrentFateId);
             BattleCharacter target = null;
 
             if (oracleFate.PreferredTargetId.Any())

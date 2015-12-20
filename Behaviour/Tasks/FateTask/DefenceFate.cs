@@ -42,7 +42,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
         {
             var currentFate = OracleManager.GetCurrentFateData();
 
-            if (currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
+            if (currentFate == null || currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
             {
                 await ClearFate();
                 return true;
@@ -68,14 +68,12 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static bool IsViableTarget(BattleCharacter target)
         {
-            var currentFate = OracleManager.GetCurrentFateData();
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == currentFate.Id;
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleManager.CurrentFateId;
         }
 
         private static void SelectTarget()
         {
-            var currentFate = OracleManager.GetCurrentFateData();
-            var oracleFate = OracleManager.OracleDatabase.GetFateFromFateData(currentFate);
+            var oracleFate = OracleManager.OracleDatabase.GetFateFromId(OracleManager.CurrentFateId);
             BattleCharacter target = null;
 
             if (oracleFate.PreferredTargetId.Any())

@@ -50,17 +50,19 @@ namespace Oracle.Behaviour.Modes
                 return true;
             }
 
-            switch (Poi.Current.Type)
+            if (Poi.Current.Type == PoiType.Kill)
             {
-                case PoiType.Kill:
-                    await CombatHandler.HandleCombat();
-                    break;
-                case PoiType.Fate:
-                    await FateHandler.HandleFate();
-                    break;
-                case PoiType.Wait:
-                    await WaitHandler.HandleWait();
-                    break;
+                await CombatHandler.HandleCombat();
+            }
+
+            else if (Poi.Current.Type == PoiType.Fate || OracleManager.CurrentFateId != 0)
+            {
+                await FateHandler.HandleFate();
+            }
+
+            else if (Poi.Current.Type == PoiType.Wait)
+            {
+                await WaitHandler.HandleWait();
             }
 
             return true;

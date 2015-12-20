@@ -44,18 +44,13 @@ namespace Oracle.Behaviour.Tasks
         {
             var currentFate = OracleManager.GetCurrentFateData();
 
-            if (currentFate == null)
-            {
-                return false;
-            }
-
-            if (currentFate.Status == FateStatus.NOTACTIVE)
+            if (currentFate != null && currentFate.Status == FateStatus.NOTACTIVE)
             {
                 await OracleManager.ClearCurrentFate("FATE is no longer active.");
                 return false;
             }
 
-            if (Core.Player.Distance(currentFate.Location) > currentFate.Radius)
+            if (currentFate != null && Core.Player.Distance(currentFate.Location) > currentFate.Radius)
             {
                 await MoveToFate.Main(false);
             }
@@ -66,7 +61,7 @@ namespace Oracle.Behaviour.Tasks
                 return true;
             }
 
-            if (LevelSync.IsLevelSyncNeeded(currentFate))
+            if (currentFate != null && LevelSync.IsLevelSyncNeeded(currentFate))
             {
                 await LevelSync.Main(currentFate);
                 return true;
@@ -77,14 +72,9 @@ namespace Oracle.Behaviour.Tasks
 
         private static async Task<bool> RunFate()
         {
-            var currentFate = OracleManager.GetCurrentFateData();
+            var oracleFate = OracleManager.OracleDatabase.GetFateFromId(OracleManager.CurrentFateId);
 
-            if (currentFate == null)
-            {
-                return false;
-            }
-
-            switch (OracleManager.OracleDatabase.GetFateFromFateData(currentFate).Type)
+            switch (oracleFate.Type)
             {
                 case FateType.Kill:
                     await KillFate.Main();
@@ -107,6 +97,13 @@ namespace Oracle.Behaviour.Tasks
                 case FateType.Null:
                     Logger.SendDebugLog("Cannot find FATE in database, using Rebornbuddy's FATE type identifier.");
                     break;
+            }
+
+            var currentFate = OracleManager.GetCurrentFateData();
+            if (currentFate == null)
+            {
+                await OracleManager.ClearCurrentFate("Cannot determine FATE type and FateData is null");
+                return true;
             }
 
             switch (currentFate.Icon)
