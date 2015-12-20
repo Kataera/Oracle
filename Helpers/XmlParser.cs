@@ -28,6 +28,8 @@ using System.IO;
 using System.Xml;
 using System.Xml.Schema;
 
+using Clio.Utilities;
+
 using Oracle.Data;
 using Oracle.Enumerations;
 
@@ -36,30 +38,23 @@ namespace Oracle.Helpers
     internal static class XmlParser
     {
         private static OracleDatabase database;
-
         private static uint fateChainIdFail;
-
         private static uint fateChainIdSuccess;
-
         private static uint fateCollectItemId;
-
+        private static List<Waypoint> fateCustomWaypoints;
         private static bool fateDataInvalidFlag;
-
         private static XmlDocument fateDataXml;
-
         private static uint fateId;
-
         private static uint fateLevel;
-
         private static string fateName;
-
         private static uint fateNpcId;
-
         private static List<uint> fatePreferredTargetId;
-
         private static FateSupportLevel fateSupportLevel;
-
         private static FateType fateType;
+        private static uint? waypointOrder;
+        private static float? waypointXCoord;
+        private static float? waypointYCoord;
+        private static float? waypointZCoord;
 
         public static OracleDatabase GetFateDatabase()
         {
@@ -94,10 +89,22 @@ namespace Oracle.Helpers
                 NpcId = fateNpcId,
                 PreferredTargetId = fatePreferredTargetId,
                 SupportLevel = fateSupportLevel,
-                Type = fateType
+                Type = fateType,
+                CustomWaypoints = fateCustomWaypoints
             };
 
             return fate;
+        }
+
+        private static Waypoint CreateWaypoint()
+        {
+            var waypoint = new Waypoint
+            {
+                Order = waypointOrder ?? default(uint),
+                Location = new Vector3(waypointXCoord ?? default(float), waypointYCoord ?? default(float), waypointZCoord ?? default(float))
+            };
+
+            return waypoint;
         }
 
         private static XmlDocument GetXmlDocument()
@@ -152,6 +159,7 @@ namespace Oracle.Helpers
                     fatePreferredTargetId = new List<uint>();
                     fateChainIdSuccess = 0;
                     fateChainIdFail = 0;
+                    fateCustomWaypoints = new List<Waypoint>();
 
                     if (currentNode["ID"] != null)
                     {
@@ -212,6 +220,46 @@ namespace Oracle.Helpers
                     if (currentNode["ChainIDFailure"] != null)
                     {
                         fateChainIdFail = uint.Parse(currentNode["ChainIDFailure"].InnerText);
+                    }
+
+                    if (currentNode["Waypoints"] != null)
+                    {
+                        var waypointNodes = currentNode.SelectSingleNode("Waypoints");
+                        if (waypointNodes != null)
+                        {
+                            foreach (XmlNode waypointNode in waypointNodes.ChildNodes)
+                            {
+                                waypointOrder = null;
+                                waypointXCoord = null;
+                                waypointYCoord = null;
+                                waypointZCoord = null;
+
+                                if (waypointNode["Order"] != null)
+                                {
+                                    waypointOrder = uint.Parse(waypointNode["Order"].InnerText);
+                                }
+
+                                if (waypointNode["X"] != null)
+                                {
+                                    waypointXCoord = float.Parse(waypointNode["X"].InnerText);
+                                }
+
+                                if (waypointNode["Y"] != null)
+                                {
+                                    waypointYCoord = float.Parse(waypointNode["Y"].InnerText);
+                                }
+
+                                if (waypointNode["Z"] != null)
+                                {
+                                    waypointZCoord = float.Parse(waypointNode["Z"].InnerText);
+                                }
+
+                                if (waypointOrder != null && waypointXCoord != null && waypointYCoord != null && waypointZCoord != null)
+                                {
+                                    fateCustomWaypoints.Add(CreateWaypoint());
+                                }
+                            }
+                        }
                     }
 
                     database.AddFateToDatabase(CreateFate());
