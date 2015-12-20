@@ -3776,20 +3776,26 @@
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
     <Waypoints>
+	  <Waypoint>
+	    <Order>1</Order>
+		<X>598.3621</X>
+		<Y>38.43913</Y>
+		<Z>280.4516</Z>
+	  </Waypoint>
       <Waypoint>
-        <Order>1</Order>
+        <Order>2</Order>
         <X>610.6792</X>
         <Y>-33.48798</Y>
         <Z>330.0788</Z>
       </Waypoint>
       <Waypoint>
-        <Order>2</Order>
+        <Order>3</Order>
         <X>630.0248</X>
         <Y>-37.15497</Y>
         <Z>394.4561</Z>
       </Waypoint>
       <Waypoint>
-        <Order>3</Order>
+        <Order>4</Order>
         <X>608.5453</X>
         <Y>-39.30981</Y>
         <Z>446.9431</Z>
