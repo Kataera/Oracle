@@ -3351,6 +3351,20 @@
     <Level>54</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+	<Waypoints>
+	  <Waypoint>
+	    <Order>1</Order>
+		<X>23.45731</X>
+		<Y>68.61462</Y>
+		<Z>312.9044</Z>
+	  </Waypoint>
+	  <Waypoint>
+	    <Order>2</Order>
+		<X>-6.948176</X>
+		<Y>12.2758</Y>
+		<Z>344.1244</Z>
+	  </Waypoint>
+    </Waypoints>
   </Fate>
   <Fate>
     <ID>744</ID>

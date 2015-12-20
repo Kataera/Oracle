@@ -96,19 +96,16 @@ namespace Oracle.Behaviour.Tasks.Utilities
             var reverseWaypoints = oracleFate.CustomWaypoints;
             reverseWaypoints.Reverse();
 
-            var waypointCount = 1;
+            if (!Core.Player.IsMounted)
+            {
+                await Mount.MountUp();
+            }
+
+            await CommonTasks.TakeOff();
+
             foreach (var waypoint in reverseWaypoints)
             {
-                if (waypointCount == 1)
-                {
-                    await MoveToWaypoint(waypoint, true, true);
-                }
-                else
-                {
-                    await MoveToWaypoint(waypoint, true, false);
-                }
-
-                waypointCount++;
+                await MoveToWaypoint(waypoint, true, false);
             }
 
             ReturnFlag = false;
