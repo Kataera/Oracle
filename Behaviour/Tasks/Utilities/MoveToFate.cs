@@ -237,7 +237,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             var location = waypoint.Location;
-            while (Core.Player.Distance(location) > 5f)
+            while (Navigator.MoveTo(location, "Waypoint " + waypoint.Order) != MoveResult.Done)
             {
                 if (!ignoreExpiredFate)
                 {
@@ -249,7 +249,6 @@ namespace Oracle.Behaviour.Tasks.Utilities
                     }
                 }
 
-                Navigator.MoveTo(location, "Waypoint " + waypoint);
                 await Coroutine.Yield();
             }
 
