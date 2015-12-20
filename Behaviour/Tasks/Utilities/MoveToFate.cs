@@ -52,7 +52,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             if (!ignoreCombat && OracleSettings.Instance.TeleportIfQuicker && currentFate.IsValid)
             {
-                if (await Teleport.FasterToTeleport(currentFate) && WorldManager.CanTeleport())
+                if (WorldManager.CanTeleport() && await Teleport.FasterToTeleport(currentFate))
                 {
                     Logger.SendLog("Teleporting to the closest aetheryte crystal to the FATE.");
                     await Teleport.TeleportToClosestAetheryte(currentFate);

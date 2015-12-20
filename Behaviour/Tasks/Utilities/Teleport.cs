@@ -48,6 +48,11 @@ namespace Oracle.Behaviour.Tasks.Utilities
     {
         public static async Task<bool> FasterToTeleport(FateData fate)
         {
+            if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            {
+                return false;
+            }
+
             var aetheryte = await GetClosestAetheryte(fate);
 
             if (aetheryte.Id == 0)
