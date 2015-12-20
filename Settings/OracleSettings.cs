@@ -70,7 +70,7 @@ namespace Oracle.Settings
         private int megaBossEngagePercentage;
         private bool megaBossFatesEnabled;
         private int mobMaximumLevelAbove;
-        private int mobMinimumLevelBelow;
+        private int mobMaximumLevelBelow;
         private OracleOperationMode oracleOperationMode;
         private bool runFatesWithCustomWaypoints;
         private bool runProblematicFates;
@@ -456,13 +456,13 @@ namespace Oracle.Settings
 
         [DefaultValue(6)]
         [Setting]
-        public int MobMinimumLevelBelow
+        public int MobMaximumLevelBelow
         {
-            get { return this.mobMinimumLevelBelow; }
+            get { return this.mobMaximumLevelBelow; }
 
             set
             {
-                this.mobMinimumLevelBelow = value;
+                this.mobMaximumLevelBelow = value;
                 this.Save();
             }
         }
