@@ -92,7 +92,7 @@ namespace Oracle.Managers
         public static async Task ClearCurrentFate(string reason)
         {
             Logger.SendLog(reason);
-            if (OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
+            if (CurrentFateId != 0 && OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
             {
                 if (WaypointMovement.ReturnFlag)
                 {
@@ -114,7 +114,7 @@ namespace Oracle.Managers
         {
             Logger.SendLog(reason);
 
-            if (OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
+            if (CurrentFateId != 0 && OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
             {
                 if (WaypointMovement.ReturnFlag)
                 {
