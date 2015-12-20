@@ -120,7 +120,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
                 var canLand = await CommonTasks.CanLand();
-                while (!FateManager.WithinFate && canLand != CanLandResult.Yes)
+                while (!FateManager.WithinFate || canLand != CanLandResult.Yes)
                 {
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {

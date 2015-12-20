@@ -40,6 +40,11 @@ namespace Oracle.Behaviour.Tasks.Utilities
     {
         public static bool IsLevelSyncNeeded(FateData fate)
         {
+            if (!fate.IsValid || fate.Status != FateStatus.NOTACTIVE || fate.Status != FateStatus.COMPLETE)
+            {
+                return false;
+            }
+
             return fate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced;
         }
 
@@ -51,7 +56,10 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             var levelSyncCooldown = new Stopwatch();
-            while (!Core.Player.IsLevelSynced && FateManager.WithinFate && fate.Status != FateStatus.NOTACTIVE
+            while (!Core.Player.IsLevelSynced
+                   && fate.Within2D(Core.Player.Location)
+                   && FateManager.WithinFate
+                   && fate.Status != FateStatus.NOTACTIVE
                    && fate.Status != FateStatus.COMPLETE)
             {
                 if (!levelSyncCooldown.IsRunning || levelSyncCooldown.ElapsedMilliseconds > 2000)
