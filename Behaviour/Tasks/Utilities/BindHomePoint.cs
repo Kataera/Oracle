@@ -43,7 +43,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
         public static async Task<bool> Main()
         {
             Logger.SendLog("Binding to the aetheryte crystal.");
-            var aetheryteObject = GameObjectManager.GameObjects.FirstOrDefault(obj => obj.Type == GameObjectType.AetheryteObject);
+            var aetheryteObject = GameObjectManager.GameObjects.OrderBy(obj => obj.Distance()).FirstOrDefault(obj => obj.Name == "Aetheryte");
 
             if (aetheryteObject == null)
             {
