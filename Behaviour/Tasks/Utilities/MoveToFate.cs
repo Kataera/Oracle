@@ -124,7 +124,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                             return true;
                         }
 
-                        await MountUp();
+                        await Mount.MountUp();
                     }
 
                     Navigator.MoveToPointWithin(currentFate.Location, currentFate.Radius * 0.5f, currentFate.Name);
@@ -150,7 +150,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                             return true;
                         }
 
-                        await MountUp();
+                        await Mount.MountUp();
                     }
 
                     Navigator.MoveToPointWithin(currentFate.Location, currentFate.Radius * 0.5f, currentFate.Name);

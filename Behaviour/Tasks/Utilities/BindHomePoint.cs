@@ -28,8 +28,10 @@ using System.Threading.Tasks;
 using Buddy.Coroutines;
 
 using ff14bot;
+using ff14bot.Enums;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+using ff14bot.Objects;
 using ff14bot.RemoteWindows;
 
 using Oracle.Helpers;
@@ -39,10 +41,10 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class BindHomePoint
     {
-        public static async Task<bool> Main()
+        public static async Task<bool> Main(uint aetheryteId)
         {
             Logger.SendLog("Binding to the aetheryte crystal.");
-            var aetheryteObject = GameObjectManager.GameObjects.OrderBy(obj => obj.Distance()).FirstOrDefault(obj => obj.Name == "Aetheryte");
+            var aetheryteObject = GetAetheryteObject(aetheryteId);
 
             if (aetheryteObject == null)
             {
@@ -82,6 +84,12 @@ namespace Oracle.Behaviour.Tasks.Utilities
             Logger.SendLog("Home point bound successfully.");
 
             return true;
+        }
+
+        private static GameObject GetAetheryteObject(uint aetheryteId)
+        {
+            return
+                GameObjectManager.GameObjects.FirstOrDefault(obj => obj.Type == GameObjectType.AetheryteObject && obj.NpcId == aetheryteId);
         }
     }
 }
