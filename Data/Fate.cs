@@ -24,6 +24,8 @@
 
 using System.Collections.Generic;
 
+using Clio.Utilities;
+
 using Oracle.Enumerations;
 
 namespace Oracle.Data
@@ -31,23 +33,21 @@ namespace Oracle.Data
     internal struct Fate
     {
         public uint ChainIdFailure { get; set; }
-
         public uint ChainIdSuccess { get; set; }
-
+        public List<Waypoint> CustomWaypoints { get; set; }
         public uint Id { get; set; }
-
         public uint ItemId { get; set; }
-
         public uint Level { get; set; }
-
         public string Name { get; set; }
-
         public uint NpcId { get; set; }
-
         public List<uint> PreferredTargetId { get; set; }
-
         public FateSupportLevel SupportLevel { get; set; }
-
         public FateType Type { get; set; }
+    }
+
+    internal struct Waypoint
+    {
+        public Vector3 Location { get; set; }
+        public uint Order { get; set; }
     }
 }
