@@ -480,6 +480,8 @@ namespace Oracle.Settings
             }
         }
 
+        [DefaultValue(true)]
+        [Setting]
         public bool RunFatesWithCustomWaypoints
         {
             get { return this.runFatesWithCustomWaypoints; }
