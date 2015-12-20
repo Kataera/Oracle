@@ -111,19 +111,7 @@ namespace Oracle.Behaviour.PoiHooks
 
         private static bool IsFateSet()
         {
-            var currentFate = OracleManager.GetCurrentFateData();
-            if (currentFate == null)
-            {
-                return false;
-            }
-
-            if (currentFate.Status == FateStatus.NOTACTIVE)
-            {
-                return false;
-            }
-
-            var oracleFate = OracleManager.OracleDatabase.GetFateFromFateData(currentFate);
-            if (currentFate.Status == FateStatus.COMPLETE && oracleFate.Type != FateType.Collect)
+            if (OracleManager.CurrentFateId == 0)
             {
                 return false;
             }
