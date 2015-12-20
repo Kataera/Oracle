@@ -3287,6 +3287,20 @@
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
     <ChainIDSuccess>737</ChainIDSuccess>
+	<Waypoints>
+	  <Waypoint>
+	    <Order>1</Order>
+		<X>133.6889</X>
+		<Y>69.04734</Y>
+		<Z>3.87307</Z>
+	  </Waypoint>
+	  <Waypoint>
+	    <Order>2</Order>
+		<X>187.1827</X>
+		<Y>22.49115</Y>
+		<Z>-141.3947</Z>
+	  </Waypoint>
+    </Waypoints>
   </Fate>
   <Fate>
     <ID>737</ID>
@@ -3294,6 +3308,20 @@
     <Level>54</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <Waypoints>
+	  <Waypoint>
+	    <Order>1</Order>
+		<X>133.6889</X>
+		<Y>69.04734</Y>
+		<Z>3.87307</Z>
+	  </Waypoint>
+	  <Waypoint>
+	    <Order>2</Order>
+		<X>187.1827</X>
+		<Y>22.49115</Y>
+		<Z>-141.3947</Z>
+	  </Waypoint>
+    </Waypoints>
   </Fate>
   <Fate>
     <ID>738</ID>
@@ -3308,6 +3336,7 @@
     <Level>54</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+	<ChainIDSuccess>741</ChainIDSuccess>
   </Fate>
   <Fate>
     <ID>741</ID>

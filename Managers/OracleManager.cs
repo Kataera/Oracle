@@ -94,7 +94,7 @@ namespace Oracle.Managers
             Logger.SendLog(reason);
             if (CurrentFateId != 0 && OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
             {
-                if (WaypointMovement.ReturnFlag)
+                if (WaypointMovement.ReturnFlag && !CurrentFateHasChain())
                 {
                     Logger.SendLog("Previous FATE had custom waypoints, going back through them in reverse order.");
                     await WaypointMovement.MoveThroughWaypointsReversed(CurrentFateId);
@@ -116,7 +116,7 @@ namespace Oracle.Managers
 
             if (CurrentFateId != 0 && OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
             {
-                if (WaypointMovement.ReturnFlag)
+                if (WaypointMovement.ReturnFlag && !CurrentFateHasChain())
                 {
                     Logger.SendLog("Previous FATE had custom waypoints, going back through them in reverse order.");
                     await WaypointMovement.MoveThroughWaypointsReversed(CurrentFateId);
@@ -146,6 +146,23 @@ namespace Oracle.Managers
             }
 
             Poi.Clear(reason);
+        }
+
+        public static bool CurrentFateHasChain()
+        {
+            var oracleFate = OracleDatabase.GetFateFromId(CurrentFateId);
+
+            if (oracleFate.ChainIdFailure != 0)
+            {
+                return true;
+            }
+
+            if (oracleFate.ChainIdSuccess != 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public static bool FateFilter(FateData fate)
