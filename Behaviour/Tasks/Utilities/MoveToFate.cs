@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using Buddy.Coroutines;
 
 using ff14bot;
+using ff14bot.Behavior;
 using ff14bot.Enums;
 using ff14bot.Managers;
 using ff14bot.Navigation;
@@ -118,7 +119,8 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
-                while (!FateManager.WithinFate)
+                var canLand = await CommonTasks.CanLand();
+                while (!FateManager.WithinFate && canLand != CanLandResult.Yes)
                 {
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
@@ -139,6 +141,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                     }
 
                     Navigator.MoveToPointWithin(currentFate.Location, currentFate.Radius * 0.5f, currentFate.Name);
+                    canLand = await CommonTasks.CanLand();
                     await Coroutine.Yield();
                 }
             }
