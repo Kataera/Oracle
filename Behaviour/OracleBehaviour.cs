@@ -68,17 +68,17 @@ namespace Oracle.Behaviour
                 return false;
             }
 
-            if (Poi.Current.Type == PoiType.Death || Oracle.DeathFlag)
+            if (Poi.Current.Type == PoiType.Death || OracleManager.DeathFlag)
             {
                 if (Poi.Current.Type == PoiType.Death)
                 {
                     Logger.SendLog("We died, attempting to recover.");
-                    Oracle.DeathFlag = true;
+                    OracleManager.DeathFlag = true;
                 }
-                else if (Oracle.DeathFlag)
+                else if (OracleManager.DeathFlag)
                 {
                     await DeathHandler.HandleDeath();
-                    Oracle.DeathFlag = false;
+                    OracleManager.DeathFlag = false;
                 }
 
                 return false;
