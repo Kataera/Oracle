@@ -22,11 +22,7 @@
     along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
-using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using Buddy.Coroutines;
 
 using ff14bot;
 using ff14bot.Enums;

@@ -196,6 +196,7 @@ namespace Oracle
 
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;
+
             // EnableExFlight();
 
             Logger.SendLog("Stopping Oracle.");
@@ -209,14 +210,14 @@ namespace Oracle
                 return;
             }
 
-            Logger.SendLog("Disabling EnableFlight, it is incompatible with Oracle. It will be re-enabled on stopping the bot.");
             var enableFlightPlugin = PluginManager.Plugins.FirstOrDefault(plugin => plugin.Plugin.Name.Equals("EnableFlight"));
-
             if (enableFlightPlugin == null)
             {
                 return;
             }
 
+            Logger.SendLog(
+                "Disabling the plugin 'EnableFlight' since it's incompatible with Oracle. It will be re-enabled when the bot stops.");
             enableFlightPlugin.Enabled = false;
             reenableFlightPlugin = true;
         }
@@ -228,14 +229,13 @@ namespace Oracle
                 return;
             }
 
-            Logger.SendLog("Re-enabling EnableFlight.");
             var enableFlightPlugin = PluginManager.Plugins.FirstOrDefault(plugin => plugin.Plugin.Name.Equals("EnableFlight"));
-
             if (enableFlightPlugin == null)
             {
                 return;
             }
 
+            Logger.SendLog("Re-enabling the plugin 'EnableFlight'.");
             enableFlightPlugin.Enabled = true;
             reenableFlightPlugin = false;
         }
