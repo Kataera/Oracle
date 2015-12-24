@@ -206,6 +206,7 @@
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs" />
     <Compile Include="Providers\OracleCombatTargetingProvider.cs" />
+    <Compile Include="Providers\OracleFlightNavigationProvider.cs" />
     <Compile Include="Settings\OracleSettings.cs" />
     <Compile Include="Oracle.cs" />
   </ItemGroup>

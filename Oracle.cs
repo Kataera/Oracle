@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Linq;
 using System.Reflection;
 
 using ff14bot.AClasses;
@@ -49,6 +50,8 @@ namespace Oracle
         private static bool playerFaceTargetOnAction;
 
         private static bool playerFlightMode;
+
+        private static bool reenableFlightPlugin;
 
         private static Composite root;
 
@@ -133,6 +136,8 @@ namespace Oracle
 
         public override void Start()
         {
+            // DisableExFlight();
+
             Navigator.PlayerMover = new SlideMover();
             Navigator.NavigationProvider = new GaiaNavigator();
             CombatTargeting.Instance.Provider = new OracleCombatTargetingProvider();
@@ -191,8 +196,48 @@ namespace Oracle
 
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;
+            // EnableExFlight();
 
             Logger.SendLog("Stopping Oracle.");
+        }
+
+        private static void DisableExFlight()
+        {
+            var enabledPlugins = PluginManager.Plugins.Where(plugin => plugin.Enabled);
+            if (!enabledPlugins.Any(plugin => plugin.Plugin.Name.Equals("EnableFlight")))
+            {
+                return;
+            }
+
+            Logger.SendLog("Disabling EnableFlight, it is incompatible with Oracle. It will be re-enabled on stopping the bot.");
+            var enableFlightPlugin = PluginManager.Plugins.FirstOrDefault(plugin => plugin.Plugin.Name.Equals("EnableFlight"));
+
+            if (enableFlightPlugin == null)
+            {
+                return;
+            }
+
+            enableFlightPlugin.Enabled = false;
+            reenableFlightPlugin = true;
+        }
+
+        private static void EnableExFlight()
+        {
+            if (!reenableFlightPlugin)
+            {
+                return;
+            }
+
+            Logger.SendLog("Re-enabling EnableFlight.");
+            var enableFlightPlugin = PluginManager.Plugins.FirstOrDefault(plugin => plugin.Plugin.Name.Equals("EnableFlight"));
+
+            if (enableFlightPlugin == null)
+            {
+                return;
+            }
+
+            enableFlightPlugin.Enabled = true;
+            reenableFlightPlugin = false;
         }
 
         private static void ListHooks()
