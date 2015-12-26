@@ -282,10 +282,11 @@ namespace Oracle.Behaviour.PoiHooks
 
         private static async Task<bool> WaitBeforeMoving()
         {
+            var rng = new Random();
             var currentFate = OracleManager.GetCurrentFateData();
             var minTime = OracleSettings.Instance.FateDelayMovementMinimum * 1000;
             var maxTime = OracleSettings.Instance.FateDelayMovementMaximum * 1000;
-            var randomWaitTime = new Random().Next(minTime, maxTime);
+            var randomWaitTime = rng.Next(minTime, maxTime);
 
             Logger.SendLog("Waiting " + Math.Round(randomWaitTime / 1000f, 2) + " seconds before moving to FATE.");
             await Coroutine.Wait(randomWaitTime, () => currentFate.Status == FateStatus.NOTACTIVE || Core.Player.InCombat);

@@ -66,9 +66,10 @@ namespace Oracle.Providers
 
         public Vector3 GenerateRandomSpotWithinRadius(Vector3 location, float radius)
         {
+            var rng = new Random();
             var radiusSquared = radius * radius;
-            var xOffset = Convert.ToSingle(((2 * new Random().NextDouble()) - 1.0) * radius);
-            var zOffset = Convert.ToSingle(((2 * new Random().NextDouble()) - 1.0) * Math.Sqrt(radiusSquared - (xOffset * xOffset)));
+            var xOffset = Convert.ToSingle(((2 * rng.NextDouble()) - 1.0) * radius);
+            var zOffset = Convert.ToSingle(((2 * rng.NextDouble()) - 1.0) * Math.Sqrt(radiusSquared - (xOffset * xOffset)));
 
             return new Vector3(location.X + xOffset, location.Y, location.Z + zOffset);
         }

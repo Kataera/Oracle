@@ -101,7 +101,8 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static TimeSpan GetRandomTimeSpan()
         {
-            return TimeSpan.FromMilliseconds(new Random().Next(500, 1500));
+            var rng = new Random();
+            return TimeSpan.FromMilliseconds(rng.Next(500, 1500));
         }
 
         private static bool IsEscortNpc(BattleCharacter battleCharacter)
@@ -186,10 +187,11 @@ namespace Oracle.Behaviour.Tasks.FateTask
             }
 
             // Find random point within 3 yards of NPC.
+            var rng = new Random();
             const float radius = 3f;
             const float radiusSquared = radius * radius;
-            var xOffset = Convert.ToSingle(((2 * new Random().NextDouble()) - 1.0) * radius);
-            var zOffset = Convert.ToSingle(((2 * new Random().NextDouble()) - 1.0) * Math.Sqrt(radiusSquared - (xOffset * xOffset)));
+            var xOffset = Convert.ToSingle(((2 * rng.NextDouble()) - 1.0) * radius);
+            var zOffset = Convert.ToSingle(((2 * rng.NextDouble()) - 1.0) * Math.Sqrt(radiusSquared - (xOffset * xOffset)));
             var location = new Vector3(npc.Location.X + xOffset, npc.Location.Y, npc.Location.Z + zOffset);
 
             Logger.SendDebugLog("NPC Location: " + npc.Location + ", Moving to: " + location);
