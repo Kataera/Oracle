@@ -36,7 +36,6 @@ using ff14bot.Navigation;
 
 using NeoGaia.ConnectionHandler;
 
-using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Data;
 using Oracle.Enumerations;
 using Oracle.Helpers;
@@ -94,15 +93,6 @@ namespace Oracle.Managers
         public static async Task ClearCurrentFate(string reason)
         {
             Logger.SendLog(reason);
-            if (CurrentFateId != 0 && OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
-            {
-                if (WaypointMovement.ReturnFlag && !CurrentFateHasChain())
-                {
-                    Logger.SendLog("Previous FATE had custom waypoints, going back through them in reverse order.");
-                    await WaypointMovement.MoveThroughWaypointsReversed(CurrentFateId);
-                }
-            }
-
             PreviousFateId = CurrentFateId;
             CurrentFateId = 0;
 
@@ -115,16 +105,6 @@ namespace Oracle.Managers
         public static async Task ClearCurrentFate(string reason, bool setAsPrevious)
         {
             Logger.SendLog(reason);
-
-            if (CurrentFateId != 0 && OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
-            {
-                if (WaypointMovement.ReturnFlag && !CurrentFateHasChain())
-                {
-                    Logger.SendLog("Previous FATE had custom waypoints, going back through them in reverse order.");
-                    await WaypointMovement.MoveThroughWaypointsReversed(CurrentFateId);
-                }
-            }
-
             PreviousFateId = setAsPrevious ? CurrentFateId : 0;
             CurrentFateId = 0;
 

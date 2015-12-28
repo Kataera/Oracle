@@ -72,7 +72,6 @@ namespace Oracle.Settings
         private int mobMaximumLevelAbove;
         private int mobMaximumLevelBelow;
         private OracleOperationMode oracleOperationMode;
-        private bool runFatesWithCustomWaypoints;
         private bool runProblematicFates;
         private string specificFate;
         private bool teleportIfQuicker;
@@ -476,19 +475,6 @@ namespace Oracle.Settings
             set
             {
                 this.oracleOperationMode = value;
-                this.Save();
-            }
-        }
-
-        [DefaultValue(true)]
-        [Setting]
-        public bool RunFatesWithCustomWaypoints
-        {
-            get { return this.runFatesWithCustomWaypoints; }
-
-            set
-            {
-                this.runFatesWithCustomWaypoints = value;
                 this.Save();
             }
         }

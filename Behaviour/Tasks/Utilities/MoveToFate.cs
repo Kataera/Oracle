@@ -219,12 +219,6 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return true;
             }
 
-            var oracleFate = OracleManager.OracleDatabase.GetFateFromFateData(currentFate);
-            if (oracleFate.CustomWaypoints.Any() && !ignoreCombat)
-            {
-                await WaypointMovement.MoveThroughWaypoints();
-            }
-
             if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
             {
                 await ClearFate();
