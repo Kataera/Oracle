@@ -51,6 +51,7 @@ namespace Oracle.Managers
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
         internal static OracleDatabase OracleDatabase { get; set; }
         internal static uint PreviousFateId { get; set; }
+        internal static OracleFlightMesh ZoneFlightMesh { get; set; }
 
         public static async Task<bool> AnyViableFates()
         {

@@ -30,6 +30,8 @@ using System.Xml.Schema;
 
 using Clio.Utilities;
 
+using ff14bot.Settings;
+
 using Oracle.Data;
 using Oracle.Enumerations;
 
@@ -114,8 +116,8 @@ namespace Oracle.Helpers
 
             try
             {
-                xmlDocument.Load(Environment.CurrentDirectory + "\\BotBases\\Oracle\\Data\\FateData.xml");
-                xmlDocument.Schemas.Add(null, Environment.CurrentDirectory + "\\BotBases\\Oracle\\Data\\FateData.xsd");
+                xmlDocument.Load(GlobalSettings.Instance.BotBasePath + @"\Oracle\Data\Fates\FateData.xml");
+                xmlDocument.Schemas.Add(null, GlobalSettings.Instance.BotBasePath + @"\Oracle\Data\Fates\FateData.xsd");
                 xmlDocument.Validate(ValidationEventHandler);
             }
             catch (DirectoryNotFoundException exception)
