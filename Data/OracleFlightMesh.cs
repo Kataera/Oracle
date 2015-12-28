@@ -28,13 +28,13 @@ namespace Oracle.Data
 {
     internal class OracleFlightMesh
     {
-        public OracleFlightMesh(uint zoneId, Graph nodeGraph)
+        public OracleFlightMesh(uint zoneId, Graph graph)
         {
             this.ZoneId = zoneId;
-            this.NodeGraph = nodeGraph;
+            this.Graph = graph;
         }
 
-        public Graph NodeGraph { get; set; }
+        public Graph Graph { get; set; }
 
         public uint ZoneId { get; set; }
     }
