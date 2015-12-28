@@ -22,23 +22,20 @@
     along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
-using System.Collections.Generic;
-
-using Oracle.Enumerations;
+using Pathfinding;
 
 namespace Oracle.Data
 {
-    internal struct Fate
+    internal class OracleFlightMesh
     {
-        public uint ChainIdFailure { get; set; }
-        public uint ChainIdSuccess { get; set; }
-        public uint Id { get; set; }
-        public uint ItemId { get; set; }
-        public uint Level { get; set; }
-        public string Name { get; set; }
-        public uint NpcId { get; set; }
-        public List<uint> PreferredTargetId { get; set; }
-        public FateSupportLevel SupportLevel { get; set; }
-        public FateType Type { get; set; }
+        public OracleFlightMesh(uint zoneId, Graph graph)
+        {
+            this.ZoneId = zoneId;
+            this.Graph = graph;
+        }
+
+        public Graph Graph { get; set; }
+
+        public uint ZoneId { get; set; }
     }
 }

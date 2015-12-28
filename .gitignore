@@ -244,6 +244,7 @@ OracleTest/
 
 # Oracle solution
 Oracle.sln
+Oracle.csproj.DotSettings
 Properties/AssemblyInfo.cs
 
 # Project notes

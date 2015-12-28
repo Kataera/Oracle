@@ -26,7 +26,9 @@ using System.Threading.Tasks;
 
 using Clio.Utilities;
 
+using ff14bot;
 using ff14bot.Helpers;
+using ff14bot.Managers;
 
 using Oracle.Behaviour.Modes;
 using Oracle.Behaviour.Tasks;
@@ -61,6 +63,19 @@ namespace Oracle.Behaviour
                 await BuildOracleDatabase.Main();
             }
 
+            // Temporary code, will fully implement when rest of meshes are finished.
+            if (OracleManager.ZoneFlightMesh == null || OracleManager.ZoneFlightMesh.ZoneId != WorldManager.ZoneId)
+            {
+                if (WorldManager.ZoneId == 400)
+                {
+                    await LoadFlightMesh.Main();
+                }
+                else
+                {
+                    OracleManager.ZoneFlightMesh = null;
+                }
+            }
+
             if (Poi.Current == null)
             {
                 Poi.Current = new Poi(Vector3.Zero, PoiType.None);
@@ -68,17 +83,17 @@ namespace Oracle.Behaviour
                 return false;
             }
 
-            if (Poi.Current.Type == PoiType.Death || Oracle.DeathFlag)
+            if (Poi.Current.Type == PoiType.Death || OracleManager.DeathFlag || Core.Player.IsDead)
             {
-                if (Poi.Current.Type == PoiType.Death)
+                if (Poi.Current.Type == PoiType.Death || Core.Player.IsDead)
                 {
                     Logger.SendLog("We died, attempting to recover.");
-                    Oracle.DeathFlag = true;
+                    OracleManager.DeathFlag = true;
                 }
-                else if (Oracle.DeathFlag)
+                else if (OracleManager.DeathFlag)
                 {
                     await DeathHandler.HandleDeath();
-                    Oracle.DeathFlag = false;
+                    OracleManager.DeathFlag = false;
                 }
 
                 return false;

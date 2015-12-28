@@ -36,7 +36,6 @@ using ff14bot.Navigation;
 
 using NeoGaia.ConnectionHandler;
 
-using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Data;
 using Oracle.Enumerations;
 using Oracle.Helpers;
@@ -44,12 +43,14 @@ using Oracle.Settings;
 
 namespace Oracle.Managers
 {
-    internal class OracleManager
+    internal static class OracleManager
     {
         internal static uint CurrentFateId { get; set; }
+        internal static bool DeathFlag { get; set; }
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
         internal static OracleDatabase OracleDatabase { get; set; }
         internal static uint PreviousFateId { get; set; }
+        internal static OracleFlightMesh ZoneFlightMesh { get; set; }
 
         public static async Task<bool> AnyViableFates()
         {
@@ -69,7 +70,7 @@ namespace Oracle.Managers
 
         public static async Task BlacklistBadFates()
         {
-            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            if (!WorldManager.CanFly)
             {
                 var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
                 var navResults =
@@ -92,15 +93,6 @@ namespace Oracle.Managers
         public static async Task ClearCurrentFate(string reason)
         {
             Logger.SendLog(reason);
-            if (OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
-            {
-                if (WaypointMovement.ReturnFlag)
-                {
-                    Logger.SendLog("Previous FATE had custom waypoints, going back through them in reverse order.");
-                    await WaypointMovement.MoveThroughWaypointsReversed(CurrentFateId);
-                }
-            }
-
             PreviousFateId = CurrentFateId;
             CurrentFateId = 0;
 
@@ -113,16 +105,6 @@ namespace Oracle.Managers
         public static async Task ClearCurrentFate(string reason, bool setAsPrevious)
         {
             Logger.SendLog(reason);
-
-            if (OracleDatabase.GetFateFromId(CurrentFateId).CustomWaypoints.Any())
-            {
-                if (WaypointMovement.ReturnFlag)
-                {
-                    Logger.SendLog("Previous FATE had custom waypoints, going back through them in reverse order.");
-                    await WaypointMovement.MoveThroughWaypointsReversed(CurrentFateId);
-                }
-            }
-
             PreviousFateId = setAsPrevious ? CurrentFateId : 0;
             CurrentFateId = 0;
 
@@ -146,6 +128,23 @@ namespace Oracle.Managers
             }
 
             Poi.Clear(reason);
+        }
+
+        public static bool CurrentFateHasChain()
+        {
+            var oracleFate = OracleDatabase.GetFateFromId(CurrentFateId);
+
+            if (oracleFate.ChainIdFailure != 0)
+            {
+                return true;
+            }
+
+            if (oracleFate.ChainIdSuccess != 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public static bool FateFilter(FateData fate)
@@ -271,7 +270,7 @@ namespace Oracle.Managers
         {
             var activeFates = new Dictionary<FateData, float>();
 
-            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            if (!WorldManager.CanFly)
             {
                 var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
                 var navResults =

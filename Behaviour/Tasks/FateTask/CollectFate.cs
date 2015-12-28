@@ -165,6 +165,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 return false;
             }
 
+            turnInNpc.Face();
             turnInNpc.Interact();
             await Coroutine.Sleep(500);
             var result = await SkipDialogue.Main() && await TurnInItem.Main() && await SkipDialogue.Main();

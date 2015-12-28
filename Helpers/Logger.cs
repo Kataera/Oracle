@@ -37,31 +37,53 @@ namespace Oracle.Helpers
         private static readonly Color LoggerErrorColour = Color.FromRgb(255, 25, 117);
 
         private static readonly Color LoggerRegularColour = Color.FromRgb(179, 179, 255);
+        private static string LastLog;
 
         internal static void SendDebugLog(string log)
         {
-            var prefix = "[Oracle v" + Oracle.Version + "] [DEBUG]: ";
+            log = "[Oracle v" + Oracle.Version + "] [DEBUG]: " + log;
+
+            if (log.Equals(LastLog))
+            {
+                return;
+            }
 
             if (!OracleSettings.Instance.DebugEnabled)
             {
-                Logging.WriteQuiet(LoggerDebugColour, prefix + log);
+                Logging.WriteQuiet(LoggerDebugColour, log);
             }
             else
             {
-                Logging.Write(LoggerDebugColour, prefix + log);
+                Logging.Write(LoggerDebugColour, log);
             }
+
+            LastLog = log;
         }
 
         internal static void SendErrorLog(string log)
         {
-            var prefix = "[Oracle v" + Oracle.Version + "] [ERROR]: ";
-            Logging.Write(LoggerErrorColour, prefix + log);
+            log = "[Oracle v" + Oracle.Version + "] [ERROR]: " + log;
+
+            if (log.Equals(LastLog))
+            {
+                return;
+            }
+
+            Logging.Write(LoggerErrorColour, log);
+            LastLog = log;
         }
 
         internal static void SendLog(string log)
         {
-            var prefix = "[Oracle v" + Oracle.Version + "]: ";
-            Logging.Write(LoggerRegularColour, prefix + log);
+            log = "[Oracle v" + Oracle.Version + "]: " + log;
+
+            if (log.Equals(LastLog))
+            {
+                return;
+            }
+
+            Logging.Write(LoggerRegularColour, log);
+            LastLog = log;
         }
     }
 }

@@ -58,38 +58,50 @@ namespace Oracle.Behaviour.Tasks.Utilities
                     return null;
                 }
 
-                var navRequest = targets.Select(target => new CanFullyNavigateTarget {Id = target.ObjectId, Position = target.Location});
-                var navResults =
-                    await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
-
-                var viableTargets = new Dictionary<BattleCharacter, float>();
-                foreach (var result in navResults)
+                if (!WorldManager.CanFly)
                 {
-                    if (result.CanNavigate == 0)
+                    var navRequest = targets.Select(target => new CanFullyNavigateTarget {Id = target.ObjectId, Position = target.Location});
+                    var navResults =
+                        await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+
+                    var viableTargets = new Dictionary<BattleCharacter, float>();
+                    foreach (var result in navResults)
                     {
-                        var blacklistEntry = Blacklist.GetEntry(result.Id);
-                        if (blacklistEntry == null)
+                        if (result.CanNavigate == 0)
                         {
-                            var mob = GameObjectManager.GetObjectByObjectId(result.Id);
-                            Logger.SendDebugLog("Blacklisting " + mob.Name + " (" + mob.ObjectId.ToString("X")
-                                                + "). It can't be navigated to.");
-                            Blacklist.Add(mob, BlacklistFlags.Combat, TimeSpan.FromMinutes(15), "Can't navigate to mob.");
+                            var blacklistEntry = Blacklist.GetEntry(result.Id);
+                            if (blacklistEntry == null)
+                            {
+                                var mob = GameObjectManager.GetObjectByObjectId(result.Id);
+                                Logger.SendDebugLog("Blacklisting " + mob.Name + " (" + mob.ObjectId.ToString("X")
+                                                    + "). It can't be navigated to.");
+                                Blacklist.Add(mob, BlacklistFlags.Combat, TimeSpan.FromMinutes(15), "Can't navigate to mob.");
+                            }
                         }
-                    }
-                    else
-                    {
-                        var battleCharacter = targets.FirstOrDefault(target => target.ObjectId == result.Id);
-                        if (battleCharacter != null)
+                        else
                         {
-                            viableTargets.Add(battleCharacter, result.PathLength);
+                            var battleCharacter = targets.FirstOrDefault(target => target.ObjectId == result.Id);
+                            if (battleCharacter != null)
+                            {
+                                viableTargets.Add(battleCharacter, result.PathLength);
+                            }
                         }
+
+                        await Coroutine.Yield();
                     }
 
-                    await Coroutine.Yield();
+                    checkForTargetCooldown = Stopwatch.StartNew();
+                    return viableTargets.OrderBy(order => order.Value).FirstOrDefault().Key;
                 }
+                else
+                {
+                    var viableTargets = GameObjectManager.GetObjectsOfType<BattleCharacter>()
+                                                         .Where(MobFilter)
+                                                         .ToDictionary(result => result, result => result.Distance());
 
-                checkForTargetCooldown = Stopwatch.StartNew();
-                return viableTargets.OrderBy(order => order.Value).FirstOrDefault().Key;
+                    checkForTargetCooldown = Stopwatch.StartNew();
+                    return viableTargets.OrderBy(order => order.Value).FirstOrDefault().Key;
+                }
             }
 
             return null;
@@ -108,7 +120,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            if (Core.Player.ClassLevel - OracleSettings.Instance.MobMinimumLevelBelow > battleCharacter.ClassLevel)
+            if (Core.Player.ClassLevel - OracleSettings.Instance.MobMaximumLevelBelow > battleCharacter.ClassLevel)
             {
                 return false;
             }

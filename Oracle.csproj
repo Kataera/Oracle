@@ -48,14 +48,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\FateData.xml" />
+    <Content Include="Data\Fates\FateData.xml" />
     <Content Include="Resources\Images\Logo.png" />
     <Content Include="Resources\Images\PayPal.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\FateData.xsd">
+    <None Include="Data\Fates\FateData.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Data\Meshes\zone_400.gz" />
     <None Include="Forms\MaterialSkin\LICENSE">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </None>
@@ -83,10 +84,10 @@
     <Compile Include="Behaviour\Tasks\FateHandler.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BindHomePoint.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BlacklistMob.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\LoadFlightMesh.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\Mount.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SelectGrindTarget.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\Teleport.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\WaypointMovement.cs" />
     <Compile Include="Behaviour\Tasks\WaitHandler.cs" />
     <Compile Include="Behaviour\Tasks\WaitTask\WaitInPlace.cs" />
     <Compile Include="Behaviour\Tasks\WaitTask\GrindMobs.cs" />
@@ -99,9 +100,10 @@
     <Compile Include="Behaviour\Tasks\FateTask\KillFate.cs" />
     <Compile Include="Behaviour\PoiHooks\SetWaitPoi.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\ReturnToAetheryte.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\BuildTarotDatabase.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\BuildOracleDatabase.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\MoveToFate.cs" />
     <Compile Include="Behaviour\Tasks\ZoneChangeHandler.cs" />
+    <Compile Include="Data\OracleFlightMesh.cs" />
     <Compile Include="Enumerations\OracleOperationMode.cs" />
     <Compile Include="Forms\MaterialSkin\Controls\MaterialPictureBox.cs">
       <SubType>Component</SubType>

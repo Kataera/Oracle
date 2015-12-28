@@ -52,7 +52,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            if (!WorldManager.CanFly)
             {
                 while (aetheryteObject.Distance(Core.Player) > 8f)
                 {

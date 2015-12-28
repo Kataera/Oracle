@@ -53,6 +53,11 @@ namespace Oracle.Behaviour.Tasks
             if (currentFate != null && Core.Player.Distance(currentFate.Location) > currentFate.Radius * 1.05f)
             {
                 await MoveToFate.Main(false);
+
+                if (OracleManager.CurrentFateId == 0)
+                {
+                    return true;
+                }
             }
 
             if (OracleManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted)

@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Linq;
 using System.Reflection;
 
 using ff14bot.AClasses;
@@ -50,11 +51,11 @@ namespace Oracle
 
         private static bool playerFlightMode;
 
+        private static bool reenableFlightPlugin;
+
         private static Composite root;
 
         private static SettingsForm settingsForm;
-
-        public static bool DeathFlag { get; internal set; }
 
         public override string EnglishName
         {
@@ -133,8 +134,9 @@ namespace Oracle
 
         public override void Start()
         {
-            Navigator.PlayerMover = new SlideMover();
+            DisableExFlight();
             Navigator.NavigationProvider = new GaiaNavigator();
+            Navigator.PlayerMover = new SlideMover();
             CombatTargeting.Instance.Provider = new OracleCombatTargetingProvider();
 
             playerFaceTargetOnAction = GameSettingsManager.FaceTargetOnAction;
@@ -178,6 +180,7 @@ namespace Oracle
             OracleManager.CurrentFateId = 0;
             OracleManager.PreviousFateId = 0;
             OracleManager.OracleDatabase = null;
+            OracleManager.ZoneFlightMesh = null;
 
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
             if (navProvider != null)
@@ -192,7 +195,46 @@ namespace Oracle
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;
 
+            EnableExFlight();
             Logger.SendLog("Stopping Oracle.");
+        }
+
+        private static void DisableExFlight()
+        {
+            var enabledPlugins = PluginManager.Plugins.Where(plugin => plugin.Enabled);
+            if (!enabledPlugins.Any(plugin => plugin.Plugin.Name.Equals("EnableFlight")))
+            {
+                return;
+            }
+
+            var enableFlightPlugin = PluginManager.Plugins.FirstOrDefault(plugin => plugin.Plugin.Name.Equals("EnableFlight"));
+            if (enableFlightPlugin == null)
+            {
+                return;
+            }
+
+            Logger.SendLog(
+                "Disabling the plugin 'EnableFlight' since it's incompatible with Oracle. It will be re-enabled when the bot stops.");
+            enableFlightPlugin.Enabled = false;
+            reenableFlightPlugin = true;
+        }
+
+        private static void EnableExFlight()
+        {
+            if (!reenableFlightPlugin)
+            {
+                return;
+            }
+
+            var enableFlightPlugin = PluginManager.Plugins.FirstOrDefault(plugin => plugin.Plugin.Name.Equals("EnableFlight"));
+            if (enableFlightPlugin == null)
+            {
+                return;
+            }
+
+            Logger.SendLog("Re-enabling the plugin 'EnableFlight'.");
+            enableFlightPlugin.Enabled = true;
+            reenableFlightPlugin = false;
         }
 
         private static void ListHooks()

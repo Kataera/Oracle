@@ -64,7 +64,7 @@ namespace Oracle.Behaviour.PoiHooks.WaitSelect
 
         private static async Task<bool> BlacklistUnnavigableAetherytes()
         {
-            if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            if (WorldManager.CanFly)
             {
                 return true;
             }
