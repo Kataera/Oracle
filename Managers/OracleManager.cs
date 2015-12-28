@@ -71,7 +71,7 @@ namespace Oracle.Managers
 
         public static async Task BlacklistBadFates()
         {
-            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            if (!WorldManager.CanFly)
             {
                 var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
                 var navResults =
@@ -290,7 +290,7 @@ namespace Oracle.Managers
         {
             var activeFates = new Dictionary<FateData, float>();
 
-            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            if (!WorldManager.CanFly)
             {
                 var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
                 var navResults =

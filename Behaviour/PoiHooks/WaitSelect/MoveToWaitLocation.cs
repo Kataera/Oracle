@@ -41,7 +41,7 @@ namespace Oracle.Behaviour.PoiHooks.WaitSelect
 
         private static async Task<bool> BlacklistUnnavigableLocation()
         {
-            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            if (!WorldManager.CanFly)
             {
                 if (!OracleSettings.Instance.FateWaitLocations.ContainsKey(WorldManager.ZoneId))
                 {

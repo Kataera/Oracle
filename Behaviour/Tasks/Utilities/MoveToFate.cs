@@ -120,7 +120,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             var currentFateLocation = currentFate.Location;
             var currentFateRadius = currentFate.Radius;
 
-            if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            if (WorldManager.CanFly)
             {
                 var canLand = await CommonTasks.CanLand();
                 while (!FateManager.WithinFate || canLand != CanLandResult.Yes)

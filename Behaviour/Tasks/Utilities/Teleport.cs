@@ -48,7 +48,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
     {
         public static async Task<bool> FasterToTeleport(FateData fate)
         {
-            if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            if (WorldManager.CanFly)
             {
                 return false;
             }
@@ -143,7 +143,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
         {
             float distanceFromPlayer = 0;
 
-            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            if (!WorldManager.CanFly)
             {
                 var navRequest = new List<CanFullyNavigateTarget>
                 {
@@ -173,7 +173,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             var allAetherytes = AllTuplesToAetherytes(WorldManager.AetheryteIdsForZone(WorldManager.ZoneId), fate.Location);
             var viableAetheryteList = new List<Aetheryte>();
 
-            if (!WorldManager.CanFly || !PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            if (!WorldManager.CanFly)
             {
                 var navRequest = allAetherytes.Select(target => new CanFullyNavigateTarget {Id = target.Id, Position = target.Location});
                 var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, fate.Location, WorldManager.ZoneId);

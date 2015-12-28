@@ -134,10 +134,8 @@ namespace Oracle
 
         public override void Start()
         {
-            // DisableExFlight();
-
+            DisableExFlight();
             Navigator.PlayerMover = new SlideMover();
-            Navigator.NavigationProvider = new GaiaNavigator();
             CombatTargeting.Instance.Provider = new OracleCombatTargetingProvider();
 
             playerFaceTargetOnAction = GameSettingsManager.FaceTargetOnAction;
@@ -195,8 +193,7 @@ namespace Oracle
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;
 
-            // EnableExFlight();
-
+            EnableExFlight();
             Logger.SendLog("Stopping Oracle.");
         }
 
