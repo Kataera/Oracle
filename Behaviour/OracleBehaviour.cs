@@ -70,6 +70,10 @@ namespace Oracle.Behaviour
                 {
                     await LoadFlightMesh.Main();
                 }
+                else
+                {
+                    OracleManager.ZoneFlightMesh = null;
+                }
             }
 
             if (Poi.Current == null)
