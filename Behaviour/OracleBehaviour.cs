@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 
 using Clio.Utilities;
 
+using ff14bot;
 using ff14bot.Helpers;
 
 using Oracle.Behaviour.Modes;
@@ -68,9 +69,9 @@ namespace Oracle.Behaviour
                 return false;
             }
 
-            if (Poi.Current.Type == PoiType.Death || OracleManager.DeathFlag)
+            if (Poi.Current.Type == PoiType.Death || OracleManager.DeathFlag || Core.Player.IsDead)
             {
-                if (Poi.Current.Type == PoiType.Death)
+                if (Poi.Current.Type == PoiType.Death || Core.Player.IsDead)
                 {
                     Logger.SendLog("We died, attempting to recover.");
                     OracleManager.DeathFlag = true;

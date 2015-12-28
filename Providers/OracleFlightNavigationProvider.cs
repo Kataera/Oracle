@@ -21,16 +21,17 @@ namespace Oracle.Providers
 {
     public class OracleFlightNavigationProvider : INavigationProvider
     {
-        private static AStarz aStar;
-        private static List<Vector3> currentPath;
-        private static Dictionary<uint, Graph> graphDictionary;
-        private static INavigationProvider groundNavigationProvider;
-        private static Vector3 targetLocation;
+        private readonly AStarz aStar;
+        private readonly Graph graph;
+        private readonly INavigationProvider groundNavigationProvider;
+        private List<Vector3> currentPath;
+        private Vector3 targetLocation;
 
-        public OracleFlightNavigationProvider()
+        public OracleFlightNavigationProvider(Graph graph)
         {
-            groundNavigationProvider = new GaiaNavigator();
-            this.LoadZoneGraph(WorldManager.ZoneId);
+            this.groundNavigationProvider = new GaiaNavigator();
+            this.graph = graph;
+            this.aStar = new AStarz(this.graph) {ChoosenHeuristic = AStarz.ManhattanHeuristic};
         }
 
         public float PathPrecision { get; set; }
@@ -50,18 +51,21 @@ namespace Oracle.Providers
             Vector3 start,
             ushort zoneid)
         {
-            return groundNavigationProvider.CanFullyNavigateToAsync(targets, start, zoneid);
+            return this.groundNavigationProvider.CanFullyNavigateToAsync(targets, start, zoneid);
         }
 
         [Obsolete("CanNavigateFully is deprecated, please use CanFullyNavigateToAsync instead.")]
         public bool CanNavigateFully(Vector3 @from, Vector3 to, float strictDistance)
         {
-            return groundNavigationProvider.CanNavigateFully(@from, to, strictDistance);
+            return this.groundNavigationProvider.CanNavigateFully(@from, to, strictDistance);
         }
 
         public bool Clear()
         {
-            return false;
+            this.targetLocation = Vector3.Zero;
+            this.currentPath = null;
+
+            return this.groundNavigationProvider.Clear();
         }
 
         public Vector3 GenerateRandomSpotWithinRadius(Vector3 location, float radius)
@@ -74,21 +78,16 @@ namespace Oracle.Providers
             return new Vector3(location.X + xOffset, location.Y, location.Z + zOffset);
         }
 
-        public void LoadZoneGraph(uint zoneId)
-        {
-            aStar = new AStarz(this.ZoneGraph(zoneId)) {ChoosenHeuristic = AStarz.ManhattanHeuristic};
-        }
-
         public MoveResult MoveTo(Vector3 location, string destination = null)
         {
-            if (aStar.SearchStarted && !aStar.SearchEnded)
+            if (this.aStar.SearchStarted && !this.aStar.SearchEnded)
             {
                 return MoveResult.GeneratingPath;
             }
 
             if (!WorldManager.CanFly)
             {
-                return groundNavigationProvider.MoveTo(location, destination);
+                return this.groundNavigationProvider.MoveTo(location, destination);
             }
 
             if (location.Equals(Vector3.Zero))
@@ -107,21 +106,21 @@ namespace Oracle.Providers
             }
 
             var currentLocation = Core.Player.Location;
-            if (targetLocation == Vector3.Zero)
+            if (this.targetLocation == Vector3.Zero)
             {
-                targetLocation = location;
+                this.targetLocation = location;
             }
 
-            if (currentLocation.Distance(targetLocation) > this.PathPrecision)
+            if (currentLocation.Distance(this.targetLocation) > this.PathPrecision)
             {
-                currentPath = this.GeneratePath(currentLocation, targetLocation).ToList();
+                this.currentPath = this.GeneratePath(currentLocation, this.targetLocation).ToList();
 
-                if (currentPath == null)
+                if (this.currentPath == null)
                 {
                     return MoveResult.GeneratingPath;
                 }
 
-                if (!currentPath.Any())
+                if (!this.currentPath.Any())
                 {
                     return MoveResult.ReachedDestination;
                 }
@@ -130,22 +129,22 @@ namespace Oracle.Providers
             }
 
             Navigator.PlayerMover.MoveStop();
-            currentPath = null;
-            targetLocation = Vector3.Zero;
+            this.currentPath = null;
+            this.targetLocation = Vector3.Zero;
 
             return MoveResult.Done;
         }
 
         public MoveResult MoveToRandomSpotWithin(Vector3 location, float radius, string destination = null)
         {
-            if (aStar.SearchStarted && !aStar.SearchEnded)
+            if (this.aStar.SearchStarted && !this.aStar.SearchEnded)
             {
                 return MoveResult.GeneratingPath;
             }
 
             if (!WorldManager.CanFly)
             {
-                return groundNavigationProvider.MoveToRandomSpotWithin(location, radius, destination);
+                return this.groundNavigationProvider.MoveToRandomSpotWithin(location, radius, destination);
             }
 
             if (location.Equals(Vector3.Zero))
@@ -164,21 +163,21 @@ namespace Oracle.Providers
             }
 
             var currentLocation = Core.Player.Location;
-            if (targetLocation == Vector3.Zero)
+            if (this.targetLocation == Vector3.Zero)
             {
-                targetLocation = this.GenerateRandomSpotWithinRadius(location, radius);
+                this.targetLocation = this.GenerateRandomSpotWithinRadius(location, radius);
             }
 
-            if (currentLocation.Distance(targetLocation) > this.PathPrecision)
+            if (currentLocation.Distance(this.targetLocation) > this.PathPrecision)
             {
-                currentPath = this.GeneratePath(currentLocation, targetLocation).ToList();
+                this.currentPath = this.GeneratePath(currentLocation, this.targetLocation).ToList();
 
-                if (currentPath == null)
+                if (this.currentPath == null)
                 {
                     return MoveResult.GeneratingPath;
                 }
 
-                if (!currentPath.Any())
+                if (!this.currentPath.Any())
                 {
                     return MoveResult.ReachedDestination;
                 }
@@ -187,36 +186,32 @@ namespace Oracle.Providers
             }
 
             Navigator.PlayerMover.MoveStop();
-            currentPath = null;
-            targetLocation = Vector3.Zero;
+            this.currentPath = null;
+            this.targetLocation = Vector3.Zero;
 
             return MoveResult.Done;
-        }
-
-        public Graph ZoneGraph(uint zoneId)
-        {
-            Graph graph;
-            graphDictionary.TryGetValue(zoneId, out graph);
-
-            return graph;
         }
 
         private IEnumerable<Vector3> GeneratePath(Vector3 from, Vector3 to)
         {
             var path = new List<Vector3>();
 
-            var currentNode = this.ZoneGraph(WorldManager.ZoneId).CloestNode(from);
-            var targetNode = this.ZoneGraph(WorldManager.ZoneId).CloestNode(to);
+            var currentNode = this.graph.CloestNode(from);
+            var targetNode =
+                this.graph.Nodes.Where(kvp => kvp.Value.Position.Y > to.Y)
+                    .OrderBy(kvp => kvp.Value.Position.Distance(to))
+                    .FirstOrDefault()
+                    .Value;
 
-            aStar.Initialize(currentNode, targetNode);
-            if (!aStar.SearchEnded)
+            this.aStar.Initialize(currentNode, targetNode);
+            if (!this.aStar.SearchEnded)
             {
                 Logger.SendLog("Generating flight path.");
                 return null;
             }
 
             path.Add(currentNode.Position);
-            path.AddRange(aStar.PathByCoordinates);
+            path.AddRange(this.aStar.PathByCoordinates);
             path.Add(to);
 
             return path;
@@ -225,15 +220,15 @@ namespace Oracle.Providers
         private MoveResult MoveToNextHop()
         {
             var currentLocation = Core.Player.Location;
-            var currentStep = currentPath.FirstOrDefault();
+            var currentStep = this.currentPath.FirstOrDefault();
 
             if (currentStep.Distance(currentLocation) > this.PathPrecision)
             {
-                Navigator.PlayerMover.MoveTowards(currentPath.FirstOrDefault());
+                Navigator.PlayerMover.MoveTowards(this.currentPath.FirstOrDefault());
             }
-            else if (currentPath.Count > 1)
+            else if (this.currentPath.Count > 1)
             {
-                currentPath.Remove(currentStep);
+                this.currentPath.Remove(currentStep);
             }
             else
             {
