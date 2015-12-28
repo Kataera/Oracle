@@ -102,6 +102,7 @@
     <Compile Include="Behaviour\Tasks\Utilities\BuildTarotDatabase.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\MoveToFate.cs" />
     <Compile Include="Behaviour\Tasks\ZoneChangeHandler.cs" />
+    <Compile Include="Data\OracleFlightMesh.cs" />
     <Compile Include="Enumerations\OracleOperationMode.cs" />
     <Compile Include="Forms\MaterialSkin\Controls\MaterialPictureBox.cs">
       <SubType>Component</SubType>

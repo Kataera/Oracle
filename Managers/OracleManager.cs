@@ -44,10 +44,10 @@ using Oracle.Settings;
 
 namespace Oracle.Managers
 {
-    internal class OracleManager
+    internal static class OracleManager
     {
-        internal static bool DeathFlag { get; set; }
         internal static uint CurrentFateId { get; set; }
+        internal static bool DeathFlag { get; set; }
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
         internal static OracleDatabase OracleDatabase { get; set; }
         internal static uint PreviousFateId { get; set; }
