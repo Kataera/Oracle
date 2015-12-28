@@ -22,10 +22,14 @@
     along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 using Buddy.Coroutines;
+
+using Clio.Common;
+using Clio.Utilities;
 
 using ff14bot;
 using ff14bot.Behavior;
@@ -71,7 +75,15 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 await Mount.MountUp();
             }
 
-            await Move(ignoreCombat);
+            if (!WorldManager.CanFly || OracleManager.ZoneFlightMesh == null)
+            {
+                await MoveWithNavigator(ignoreCombat);
+            }
+            else
+            {
+                await MoveWithFlight();
+            }
+
             return true;
         }
 
@@ -80,6 +92,13 @@ namespace Oracle.Behaviour.Tasks.Utilities
             OracleManager.SetDoNotWaitFlag(true);
             await OracleManager.ClearCurrentFate("FATE ended before we got there.", false);
             Navigator.Stop();
+        }
+
+        private static Vector3 GenerateLandingSpot()
+        {
+            var currentFate = OracleManager.GetCurrentFateData();
+            return MathEx.GetPointAt(currentFate.Location, currentFate.Radius * Convert.ToSingle(MathEx.Random(0.5, 1)),
+                Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.25 * Math.PI, 0.25 * Math.PI)));
         }
 
         private static bool IsMountNeeded()
@@ -95,7 +114,102 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return distanceToFateBoundary > CharacterSettings.Instance.MountDistance;
         }
 
-        private static async Task<bool> Move(bool ignoreCombat)
+        private static async Task<bool> Land()
+        {
+            var landingSpot = GenerateLandingSpot();
+            while (await CommonTasks.CanLand(landingSpot) != CanLandResult.Yes)
+            {
+                landingSpot = GenerateLandingSpot();
+                await Coroutine.Yield();
+            }
+
+            Logger.SendLog("Attempting to land at: " + landingSpot);
+            while (Core.Player.Distance2D(landingSpot) > 2f)
+            {
+                Navigator.PlayerMover.MoveTowards(landingSpot);
+                await Coroutine.Yield();
+            }
+
+            Navigator.PlayerMover.MoveStop();
+            await CommonTasks.Land();
+
+            if (MovementManager.IsFlying)
+            {
+                return false;
+            }
+
+            Logger.SendLog("Landing successful.");
+            return true;
+        }
+
+        private static async Task<bool> MoveWithFlight()
+        {
+            var currentFate = OracleManager.GetCurrentFateData();
+            if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE
+                || currentFate.Status == FateStatus.NOTACTIVE)
+            {
+                await ClearFate();
+                return true;
+            }
+
+            Logger.SendLog("Flying to FATE.");
+
+            if (!MovementManager.IsFlying)
+            {
+                await CommonTasks.TakeOff();
+            }
+
+            var currentFateLocation = currentFate.Location;
+            var aStar = new AStarNavigator(OracleManager.ZoneFlightMesh.Graph);
+            var closestNode =
+                OracleManager.ZoneFlightMesh.Graph.Nodes
+                             .OrderBy(kvp => kvp.Value.Position.Distance(currentFateLocation))
+                             .FirstOrDefault(kvp => kvp.Value.Position.Y > currentFateLocation.Y);
+            var path = aStar.GeneratePath(Core.Player.Location, closestNode.Value.Position);
+
+            foreach (var step in path)
+            {
+                while (Core.Player.Distance(step) > 1f)
+                {
+                    if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
+                    {
+                        await ClearFate();
+                        Navigator.PlayerMover.MoveStop();
+                        return true;
+                    }
+
+                    if (!Core.Player.IsMounted && Actionmanager.AvailableMounts.Any())
+                    {
+                        Navigator.PlayerMover.MoveStop();
+                        if (Core.Player.InCombat)
+                        {
+                            return true;
+                        }
+
+                        await Mount.MountUp();
+                    }
+
+                    if (!MovementManager.IsFlying)
+                    {
+                        Navigator.PlayerMover.MoveStop();
+                        await CommonTasks.TakeOff();
+                    }
+
+                    Logger.SendLog("Flying to hop: " + step);
+                    Navigator.PlayerMover.MoveTowards(step);
+                    await Coroutine.Yield();
+                }
+            }
+
+            while (MovementManager.IsFlying)
+            {
+                await Land();
+            }
+
+            return true;
+        }
+
+        private static async Task<bool> MoveWithNavigator(bool ignoreCombat)
         {
             var currentFate = OracleManager.GetCurrentFateData();
             if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE
@@ -120,59 +234,28 @@ namespace Oracle.Behaviour.Tasks.Utilities
             var currentFateLocation = currentFate.Location;
             var currentFateRadius = currentFate.Radius;
 
-            if (WorldManager.CanFly)
+            while (Core.Player.Distance(currentFateLocation) > currentFateRadius * 0.75f)
             {
-                var canLand = await CommonTasks.CanLand();
-                while (!FateManager.WithinFate || canLand != CanLandResult.Yes)
+                if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                 {
-                    if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
+                    await ClearFate();
+                    Navigator.Stop();
+                    return true;
+                }
+
+                if (!Core.Player.IsMounted && IsMountNeeded() && Actionmanager.AvailableMounts.Any())
+                {
+                    Navigator.Stop();
+                    if (!ignoreCombat && Core.Player.InCombat)
                     {
-                        await ClearFate();
-                        Navigator.Stop();
                         return true;
                     }
 
-                    if (!Core.Player.IsMounted && IsMountNeeded() && Actionmanager.AvailableMounts.Any())
-                    {
-                        Navigator.Stop();
-                        if (!ignoreCombat && Core.Player.InCombat)
-                        {
-                            return true;
-                        }
-
-                        await Mount.MountUp();
-                    }
-
-                    Navigator.MoveToPointWithin(currentFateLocation, currentFateRadius * 0.5f, currentFate.Name);
-                    canLand = await CommonTasks.CanLand();
-                    await Coroutine.Yield();
+                    await Mount.MountUp();
                 }
-            }
-            else
-            {
-                while (Core.Player.Distance(currentFateLocation) > currentFateRadius * 0.75f)
-                {
-                    if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
-                    {
-                        await ClearFate();
-                        Navigator.Stop();
-                        return true;
-                    }
 
-                    if (!Core.Player.IsMounted && IsMountNeeded() && Actionmanager.AvailableMounts.Any())
-                    {
-                        Navigator.Stop();
-                        if (!ignoreCombat && Core.Player.InCombat)
-                        {
-                            return true;
-                        }
-
-                        await Mount.MountUp();
-                    }
-
-                    Navigator.MoveToPointWithin(currentFateLocation, currentFateRadius * 0.5f, currentFate.Name);
-                    await Coroutine.Yield();
-                }
+                Navigator.MoveToPointWithin(currentFateLocation, currentFateRadius * 0.5f, currentFate.Name);
+                await Coroutine.Yield();
             }
 
             Navigator.Stop();

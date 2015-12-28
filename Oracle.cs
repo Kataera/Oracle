@@ -135,6 +135,7 @@ namespace Oracle
         public override void Start()
         {
             DisableExFlight();
+            Navigator.NavigationProvider = new GaiaNavigator();
             Navigator.PlayerMover = new SlideMover();
             CombatTargeting.Instance.Provider = new OracleCombatTargetingProvider();
 
@@ -179,6 +180,7 @@ namespace Oracle
             OracleManager.CurrentFateId = 0;
             OracleManager.PreviousFateId = 0;
             OracleManager.OracleDatabase = null;
+            OracleManager.ZoneFlightMesh = null;
 
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
             if (navProvider != null)
