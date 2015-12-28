@@ -117,6 +117,9 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return true;
             }
 
+            var currentFateLocation = currentFate.Location;
+            var currentFateRadius = currentFate.Radius;
+
             if (WorldManager.CanFly && PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
             {
                 var canLand = await CommonTasks.CanLand();
@@ -140,14 +143,14 @@ namespace Oracle.Behaviour.Tasks.Utilities
                         await Mount.MountUp();
                     }
 
-                    Navigator.MoveToPointWithin(currentFate.Location, currentFate.Radius * 0.5f, currentFate.Name);
+                    Navigator.MoveToPointWithin(currentFateLocation, currentFateRadius * 0.5f, currentFate.Name);
                     canLand = await CommonTasks.CanLand();
                     await Coroutine.Yield();
                 }
             }
             else
             {
-                while (Core.Player.Distance(currentFate.Location) > currentFate.Radius * 0.75f)
+                while (Core.Player.Distance(currentFateLocation) > currentFateRadius * 0.75f)
                 {
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
@@ -167,7 +170,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                         await Mount.MountUp();
                     }
 
-                    Navigator.MoveToPointWithin(currentFate.Location, currentFate.Radius * 0.5f, currentFate.Name);
+                    Navigator.MoveToPointWithin(currentFateLocation, currentFateRadius * 0.5f, currentFate.Name);
                     await Coroutine.Yield();
                 }
             }
