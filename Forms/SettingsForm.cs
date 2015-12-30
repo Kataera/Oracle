@@ -29,6 +29,9 @@ using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
 
+using Oracle.Enumerations;
+using Oracle.Settings;
+
 namespace Oracle.Forms
 {
     public partial class SettingsForm : MaterialForm
@@ -46,6 +49,16 @@ namespace Oracle.Forms
                 Primary.Indigo300,
                 Accent.Indigo100,
                 TextShade.White);
+
+            this.ActiveControl = this.labelDefaultFocus;
+            this.SetComponentValues();
+        }
+
+        private void SetComponentValues()
+        {
+            this.comboBoxOracleMode.SelectedIndex = (int)OracleSettings.Instance.OracleOperationMode;
+            this.tabControlOracleMode.SelectedIndex = (int)OracleSettings.Instance.OracleOperationMode;
+            this.textBoxSpecificFateName.Text = OracleSettings.Instance.SpecificFate;
         }
 
         // Add to MouseDown of a component to allow dragging of the form.
@@ -75,6 +88,31 @@ namespace Oracle.Forms
         {
             var startInfo = new ProcessStartInfo("http://www.gnu.org/licenses/gpl-3.0.en.html");
             Process.Start(startInfo);
+        }
+
+        private void OnComboBoxOracleModeSelectedIndexChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.OracleOperationMode = (OracleOperationMode) this.comboBoxOracleMode.SelectedIndex;
+            this.tabControlOracleMode.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
+        }
+
+        private void OnTextBoxSpecificFateNameTextChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.SpecificFate = this.textBoxSpecificFateName.Text;
+        }
+
+        private void OnTextBoxSpecificFateNameKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.ActiveControl = this.labelDefaultFocus;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void OnTabPageClick(object sender, EventArgs e)
+        {
+            this.ActiveControl = this.labelDefaultFocus;
         }
     }
 }

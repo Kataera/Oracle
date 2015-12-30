@@ -112,9 +112,9 @@ namespace Oracle.Behaviour.Tasks.FateTask
         {
             Logger.SendLog("Moving to interact with " + turnInNpc.Name + ".");
 
-            while (Core.Player.Distance2D(turnInNpc.Location) > 5f)
+            while (Core.Player.Distance2D(turnInNpc.Location) > 3f)
             {
-                Navigator.MoveToPointWithin(turnInNpc.Location, 5f, "Moving to NPC.");
+                Navigator.MoveTo(turnInNpc.Location, "Moving to NPC.");
                 await Coroutine.Yield();
             }
 
@@ -165,7 +165,6 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 return false;
             }
 
-            turnInNpc.Face();
             turnInNpc.Interact();
             await Coroutine.Sleep(500);
             var result = await SkipDialogue.Main() && await TurnInItem.Main() && await SkipDialogue.Main();

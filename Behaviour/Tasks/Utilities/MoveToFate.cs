@@ -57,15 +57,23 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             if (!ignoreCombat && OracleSettings.Instance.TeleportIfQuicker && currentFate.IsValid)
             {
-                if (WorldManager.CanTeleport() && await Teleport.FasterToTeleport(currentFate))
+                if (await Teleport.FasterToTeleport(currentFate))
                 {
-                    Logger.SendLog("Teleporting to the closest aetheryte crystal to the FATE.");
-                    await Teleport.TeleportToClosestAetheryte(currentFate);
-
-                    if (GameObjectManager.Attackers.Any(attacker => attacker.IsValid))
+                    await Coroutine.Wait(TimeSpan.FromSeconds(10), WorldManager.CanTeleport);
+                    if (WorldManager.CanTeleport())
                     {
-                        OracleManager.ClearPoi("We're under attack and can't teleport.");
-                        return false;
+                        Logger.SendLog("Teleporting to the closest aetheryte crystal to the FATE.");
+                        await Teleport.TeleportToClosestAetheryte(currentFate);
+
+                        if (GameObjectManager.Attackers.Any(attacker => attacker.IsValid))
+                        {
+                            OracleManager.ClearPoi("We're under attack and can't teleport.");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        Logger.SendLog("Timed out trying to teleport, running to FATE instead.");
                     }
                 }
             }
