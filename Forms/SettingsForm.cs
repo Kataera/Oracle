@@ -54,13 +54,6 @@ namespace Oracle.Forms
             this.SetComponentValues();
         }
 
-        private void SetComponentValues()
-        {
-            this.comboBoxOracleMode.SelectedIndex = (int)OracleSettings.Instance.OracleOperationMode;
-            this.tabControlOracleMode.SelectedIndex = (int)OracleSettings.Instance.OracleOperationMode;
-            this.textBoxSpecificFateName.Text = OracleSettings.Instance.SpecificFate;
-        }
-
         // Add to MouseDown of a component to allow dragging of the form.
         private void MoveWindow(object sender, MouseEventArgs e)
         {
@@ -74,6 +67,12 @@ namespace Oracle.Forms
         private void OnCloseButtonClick(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void OnComboBoxOracleModeSelectedIndexChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.OracleOperationMode = (OracleOperationMode) this.comboBoxOracleMode.SelectedIndex;
+            this.tabControlOracleMode.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
         }
 
         private void OnDonatePictureBoxClick(object sender, EventArgs e)
@@ -90,15 +89,9 @@ namespace Oracle.Forms
             Process.Start(startInfo);
         }
 
-        private void OnComboBoxOracleModeSelectedIndexChanged(object sender, EventArgs e)
+        private void OnTabPageClick(object sender, EventArgs e)
         {
-            OracleSettings.Instance.OracleOperationMode = (OracleOperationMode) this.comboBoxOracleMode.SelectedIndex;
-            this.tabControlOracleMode.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
-        }
-
-        private void OnTextBoxSpecificFateNameTextChanged(object sender, EventArgs e)
-        {
-            OracleSettings.Instance.SpecificFate = this.textBoxSpecificFateName.Text;
+            this.ActiveControl = this.labelDefaultFocus;
         }
 
         private void OnTextBoxSpecificFateNameKeyDown(object sender, KeyEventArgs e)
@@ -110,9 +103,16 @@ namespace Oracle.Forms
             }
         }
 
-        private void OnTabPageClick(object sender, EventArgs e)
+        private void OnTextBoxSpecificFateNameTextChanged(object sender, EventArgs e)
         {
-            this.ActiveControl = this.labelDefaultFocus;
+            OracleSettings.Instance.SpecificFate = this.textBoxSpecificFateName.Text;
+        }
+
+        private void SetComponentValues()
+        {
+            this.comboBoxOracleMode.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
+            this.tabControlOracleMode.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
+            this.textBoxSpecificFateName.Text = OracleSettings.Instance.SpecificFate;
         }
     }
 }
