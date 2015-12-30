@@ -4,7 +4,7 @@
     #################
 
     Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
+    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
 
     This file is part of Oracle.
 
@@ -58,20 +58,20 @@ namespace Oracle.Forms
             this.tabGeneralSettings = new System.Windows.Forms.TabPage();
             this.tabSelectorGeneral = new MaterialSkin.Controls.MaterialTabSelectorVertical();
             this.tabControllerGeneral = new MaterialSkin.Controls.MaterialTabControl();
+            this.tabPageOracleMode = new System.Windows.Forms.TabPage();
+            this.labelOracleModeTitle = new System.Windows.Forms.Label();
             this.tabPageFateSelection = new System.Windows.Forms.TabPage();
             this.labelFateSelectionTitle = new System.Windows.Forms.Label();
-            this.tabPageBotMode = new System.Windows.Forms.TabPage();
-            this.labelBotModeTitle = new System.Windows.Forms.Label();
-            this.tabPageMovement = new System.Windows.Forms.TabPage();
-            this.labelMovementTitle = new System.Windows.Forms.Label();
-            this.tabPageScheduler = new System.Windows.Forms.TabPage();
-            this.labelSchedulerTitle = new System.Windows.Forms.Label();
-            this.tabPagePatrol = new System.Windows.Forms.TabPage();
-            this.labelPatrolTitle = new System.Windows.Forms.Label();
+            this.tabPageDowntime = new System.Windows.Forms.TabPage();
+            this.labelDowntimeTitle = new System.Windows.Forms.Label();
+            this.tabPageZoneChange = new System.Windows.Forms.TabPage();
+            this.labelZoneChangeTitle = new System.Windows.Forms.Label();
             this.tabPageMiscellaneous = new System.Windows.Forms.TabPage();
             this.labelMiscellaneousTitle = new System.Windows.Forms.Label();
             this.tabFateSettings = new System.Windows.Forms.TabPage();
             this.tabControllerFate = new MaterialSkin.Controls.MaterialTabControl();
+            this.tabPageGeneral = new System.Windows.Forms.TabPage();
+            this.labelGeneralFateSettingsTitle = new System.Windows.Forms.Label();
             this.tabPageKillFates = new System.Windows.Forms.TabPage();
             this.labelKillFatesTitle = new System.Windows.Forms.Label();
             this.tabPageCollectFates = new System.Windows.Forms.TabPage();
@@ -85,15 +85,15 @@ namespace Oracle.Forms
             this.tabPageMegaBossFates = new System.Windows.Forms.TabPage();
             this.labelMegaBossFatesTitle = new System.Windows.Forms.Label();
             this.tabSelectorFate = new MaterialSkin.Controls.MaterialTabSelectorVertical();
-            this.tabCustomBehaviour = new System.Windows.Forms.TabPage();
+            this.tabNavigation = new System.Windows.Forms.TabPage();
             this.tabSelectorCustom = new MaterialSkin.Controls.MaterialTabSelectorVertical();
             this.tabControllerCustom = new MaterialSkin.Controls.MaterialTabControl();
-            this.tabPageAvoidance = new System.Windows.Forms.TabPage();
-            this.labelAvoidanceTitle = new System.Windows.Forms.Label();
-            this.tabPageNavigation = new System.Windows.Forms.TabPage();
-            this.labelNavigationTitle = new System.Windows.Forms.Label();
-            this.tabPageSpecialFates = new System.Windows.Forms.TabPage();
-            this.labelSpecialFatesTitle = new System.Windows.Forms.Label();
+            this.tabPageMovement = new System.Windows.Forms.TabPage();
+            this.labelMovementTitle = new System.Windows.Forms.Label();
+            this.tabPageFlight = new System.Windows.Forms.TabPage();
+            this.labelFlightTitle = new System.Windows.Forms.Label();
+            this.tabPageTeleport = new System.Windows.Forms.TabPage();
+            this.labelTeleportTitle = new System.Windows.Forms.Label();
             this.tabBlacklist = new System.Windows.Forms.TabPage();
             this.tabSelectorBlacklist = new MaterialSkin.Controls.MaterialTabSelectorVertical();
             this.tabControllerBlacklist = new MaterialSkin.Controls.MaterialTabControl();
@@ -111,6 +111,8 @@ namespace Oracle.Forms
             this.pictureBoxDonate = new MaterialSkin.Controls.MaterialPictureBox();
             this.labelDonateText = new System.Windows.Forms.Label();
             this.labelDonateTitle = new System.Windows.Forms.Label();
+            this.tabPageDevelopment = new System.Windows.Forms.TabPage();
+            this.labelDevelopmentTitle = new System.Windows.Forms.Label();
             this.tabSelectorAbout = new MaterialSkin.Controls.MaterialTabSelectorVertical();
             this.labelTooltip = new System.Windows.Forms.Label();
             this.panelControl = new System.Windows.Forms.Panel();
@@ -119,25 +121,25 @@ namespace Oracle.Forms
             this.tabControllerMain.SuspendLayout();
             this.tabGeneralSettings.SuspendLayout();
             this.tabControllerGeneral.SuspendLayout();
+            this.tabPageOracleMode.SuspendLayout();
             this.tabPageFateSelection.SuspendLayout();
-            this.tabPageBotMode.SuspendLayout();
-            this.tabPageMovement.SuspendLayout();
-            this.tabPageScheduler.SuspendLayout();
-            this.tabPagePatrol.SuspendLayout();
+            this.tabPageDowntime.SuspendLayout();
+            this.tabPageZoneChange.SuspendLayout();
             this.tabPageMiscellaneous.SuspendLayout();
             this.tabFateSettings.SuspendLayout();
             this.tabControllerFate.SuspendLayout();
+            this.tabPageGeneral.SuspendLayout();
             this.tabPageKillFates.SuspendLayout();
             this.tabPageCollectFates.SuspendLayout();
             this.tabPageEscortFates.SuspendLayout();
             this.tabPageDefenceFates.SuspendLayout();
             this.tabPageBossFates.SuspendLayout();
             this.tabPageMegaBossFates.SuspendLayout();
-            this.tabCustomBehaviour.SuspendLayout();
+            this.tabNavigation.SuspendLayout();
             this.tabControllerCustom.SuspendLayout();
-            this.tabPageAvoidance.SuspendLayout();
-            this.tabPageNavigation.SuspendLayout();
-            this.tabPageSpecialFates.SuspendLayout();
+            this.tabPageMovement.SuspendLayout();
+            this.tabPageFlight.SuspendLayout();
+            this.tabPageTeleport.SuspendLayout();
             this.tabBlacklist.SuspendLayout();
             this.tabControllerBlacklist.SuspendLayout();
             this.tabPageFateBlacklist.SuspendLayout();
@@ -147,6 +149,7 @@ namespace Oracle.Forms
             this.tabPageLicense.SuspendLayout();
             this.tabPageDonate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDonate)).BeginInit();
+            this.tabPageDevelopment.SuspendLayout();
             this.panelControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.SuspendLayout();
@@ -173,7 +176,7 @@ namespace Oracle.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerMain.Controls.Add(this.tabGeneralSettings);
             this.tabControllerMain.Controls.Add(this.tabFateSettings);
-            this.tabControllerMain.Controls.Add(this.tabCustomBehaviour);
+            this.tabControllerMain.Controls.Add(this.tabNavigation);
             this.tabControllerMain.Controls.Add(this.tabBlacklist);
             this.tabControllerMain.Controls.Add(this.tabAbout);
             this.tabControllerMain.Depth = 0;
@@ -220,11 +223,10 @@ namespace Oracle.Forms
             this.tabControllerGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControllerGeneral.Controls.Add(this.tabPageOracleMode);
             this.tabControllerGeneral.Controls.Add(this.tabPageFateSelection);
-            this.tabControllerGeneral.Controls.Add(this.tabPageBotMode);
-            this.tabControllerGeneral.Controls.Add(this.tabPageMovement);
-            this.tabControllerGeneral.Controls.Add(this.tabPageScheduler);
-            this.tabControllerGeneral.Controls.Add(this.tabPagePatrol);
+            this.tabControllerGeneral.Controls.Add(this.tabPageDowntime);
+            this.tabControllerGeneral.Controls.Add(this.tabPageZoneChange);
             this.tabControllerGeneral.Controls.Add(this.tabPageMiscellaneous);
             this.tabControllerGeneral.Depth = 0;
             this.tabControllerGeneral.Location = new System.Drawing.Point(172, 0);
@@ -236,17 +238,40 @@ namespace Oracle.Forms
             this.tabControllerGeneral.Size = new System.Drawing.Size(674, 449);
             this.tabControllerGeneral.TabIndex = 2;
             // 
+            // tabPageOracleMode
+            // 
+            this.tabPageOracleMode.AutoScroll = true;
+            this.tabPageOracleMode.Controls.Add(this.labelOracleModeTitle);
+            this.tabPageOracleMode.Location = new System.Drawing.Point(4, 29);
+            this.tabPageOracleMode.Margin = new System.Windows.Forms.Padding(0);
+            this.tabPageOracleMode.Name = "tabPageOracleMode";
+            this.tabPageOracleMode.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageOracleMode.Size = new System.Drawing.Size(666, 416);
+            this.tabPageOracleMode.TabIndex = 0;
+            this.tabPageOracleMode.Text = "Oracle Mode";
+            this.tabPageOracleMode.UseVisualStyleBackColor = true;
+            // 
+            // labelOracleModeTitle
+            // 
+            this.labelOracleModeTitle.AutoSize = true;
+            this.labelOracleModeTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelOracleModeTitle.Location = new System.Drawing.Point(10, 10);
+            this.labelOracleModeTitle.Margin = new System.Windows.Forms.Padding(3);
+            this.labelOracleModeTitle.Name = "labelOracleModeTitle";
+            this.labelOracleModeTitle.Size = new System.Drawing.Size(258, 38);
+            this.labelOracleModeTitle.TabIndex = 1;
+            this.labelOracleModeTitle.Text = "Oracle Mode Settings";
+            // 
             // tabPageFateSelection
             // 
-            this.tabPageFateSelection.AutoScroll = true;
             this.tabPageFateSelection.Controls.Add(this.labelFateSelectionTitle);
             this.tabPageFateSelection.Location = new System.Drawing.Point(4, 29);
             this.tabPageFateSelection.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageFateSelection.Name = "tabPageFateSelection";
             this.tabPageFateSelection.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageFateSelection.Size = new System.Drawing.Size(666, 416);
-            this.tabPageFateSelection.TabIndex = 0;
-            this.tabPageFateSelection.Text = "FATE Selection";
+            this.tabPageFateSelection.TabIndex = 1;
+            this.tabPageFateSelection.Text = "Fate Selection";
             this.tabPageFateSelection.UseVisualStyleBackColor = true;
             // 
             // labelFateSelectionTitle
@@ -256,106 +281,62 @@ namespace Oracle.Forms
             this.labelFateSelectionTitle.Location = new System.Drawing.Point(10, 10);
             this.labelFateSelectionTitle.Margin = new System.Windows.Forms.Padding(3);
             this.labelFateSelectionTitle.Name = "labelFateSelectionTitle";
-            this.labelFateSelectionTitle.Size = new System.Drawing.Size(187, 38);
-            this.labelFateSelectionTitle.TabIndex = 1;
-            this.labelFateSelectionTitle.Text = "FATE Selection";
+            this.labelFateSelectionTitle.Size = new System.Drawing.Size(279, 38);
+            this.labelFateSelectionTitle.TabIndex = 4;
+            this.labelFateSelectionTitle.Text = "Fate Selection Settings";
             // 
-            // tabPageBotMode
+            // tabPageDowntime
             // 
-            this.tabPageBotMode.Controls.Add(this.labelBotModeTitle);
-            this.tabPageBotMode.Location = new System.Drawing.Point(4, 22);
-            this.tabPageBotMode.Margin = new System.Windows.Forms.Padding(0);
-            this.tabPageBotMode.Name = "tabPageBotMode";
-            this.tabPageBotMode.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageBotMode.Size = new System.Drawing.Size(666, 423);
-            this.tabPageBotMode.TabIndex = 1;
-            this.tabPageBotMode.Text = "Bot Mode";
-            this.tabPageBotMode.UseVisualStyleBackColor = true;
+            this.tabPageDowntime.Controls.Add(this.labelDowntimeTitle);
+            this.tabPageDowntime.Location = new System.Drawing.Point(4, 29);
+            this.tabPageDowntime.Margin = new System.Windows.Forms.Padding(0);
+            this.tabPageDowntime.Name = "tabPageDowntime";
+            this.tabPageDowntime.Size = new System.Drawing.Size(666, 416);
+            this.tabPageDowntime.TabIndex = 2;
+            this.tabPageDowntime.Text = "Downtime";
+            this.tabPageDowntime.UseVisualStyleBackColor = true;
             // 
-            // labelBotModeTitle
+            // labelDowntimeTitle
             // 
-            this.labelBotModeTitle.AutoSize = true;
-            this.labelBotModeTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelBotModeTitle.Location = new System.Drawing.Point(10, 10);
-            this.labelBotModeTitle.Margin = new System.Windows.Forms.Padding(3);
-            this.labelBotModeTitle.Name = "labelBotModeTitle";
-            this.labelBotModeTitle.Size = new System.Drawing.Size(124, 38);
-            this.labelBotModeTitle.TabIndex = 4;
-            this.labelBotModeTitle.Text = "Bot Mode";
+            this.labelDowntimeTitle.AutoSize = true;
+            this.labelDowntimeTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDowntimeTitle.Location = new System.Drawing.Point(10, 10);
+            this.labelDowntimeTitle.Margin = new System.Windows.Forms.Padding(3);
+            this.labelDowntimeTitle.Name = "labelDowntimeTitle";
+            this.labelDowntimeTitle.Size = new System.Drawing.Size(230, 38);
+            this.labelDowntimeTitle.TabIndex = 5;
+            this.labelDowntimeTitle.Text = "Downtime Settings";
             // 
-            // tabPageMovement
+            // tabPageZoneChange
             // 
-            this.tabPageMovement.Controls.Add(this.labelMovementTitle);
-            this.tabPageMovement.Location = new System.Drawing.Point(4, 22);
-            this.tabPageMovement.Margin = new System.Windows.Forms.Padding(0);
-            this.tabPageMovement.Name = "tabPageMovement";
-            this.tabPageMovement.Size = new System.Drawing.Size(666, 423);
-            this.tabPageMovement.TabIndex = 2;
-            this.tabPageMovement.Text = "Movement";
-            this.tabPageMovement.UseVisualStyleBackColor = true;
+            this.tabPageZoneChange.Controls.Add(this.labelZoneChangeTitle);
+            this.tabPageZoneChange.Location = new System.Drawing.Point(4, 29);
+            this.tabPageZoneChange.Margin = new System.Windows.Forms.Padding(0);
+            this.tabPageZoneChange.Name = "tabPageZoneChange";
+            this.tabPageZoneChange.Size = new System.Drawing.Size(666, 416);
+            this.tabPageZoneChange.TabIndex = 3;
+            this.tabPageZoneChange.Text = "Zone Change";
+            this.tabPageZoneChange.UseVisualStyleBackColor = true;
             // 
-            // labelMovementTitle
+            // labelZoneChangeTitle
             // 
-            this.labelMovementTitle.AutoSize = true;
-            this.labelMovementTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelMovementTitle.Location = new System.Drawing.Point(10, 10);
-            this.labelMovementTitle.Margin = new System.Windows.Forms.Padding(3);
-            this.labelMovementTitle.Name = "labelMovementTitle";
-            this.labelMovementTitle.Size = new System.Drawing.Size(135, 38);
-            this.labelMovementTitle.TabIndex = 5;
-            this.labelMovementTitle.Text = "Movement";
-            // 
-            // tabPageScheduler
-            // 
-            this.tabPageScheduler.Controls.Add(this.labelSchedulerTitle);
-            this.tabPageScheduler.Location = new System.Drawing.Point(4, 22);
-            this.tabPageScheduler.Margin = new System.Windows.Forms.Padding(0);
-            this.tabPageScheduler.Name = "tabPageScheduler";
-            this.tabPageScheduler.Size = new System.Drawing.Size(666, 423);
-            this.tabPageScheduler.TabIndex = 3;
-            this.tabPageScheduler.Text = "Scheduler";
-            this.tabPageScheduler.UseVisualStyleBackColor = true;
-            // 
-            // labelSchedulerTitle
-            // 
-            this.labelSchedulerTitle.AutoSize = true;
-            this.labelSchedulerTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelSchedulerTitle.Location = new System.Drawing.Point(10, 10);
-            this.labelSchedulerTitle.Margin = new System.Windows.Forms.Padding(3);
-            this.labelSchedulerTitle.Name = "labelSchedulerTitle";
-            this.labelSchedulerTitle.Size = new System.Drawing.Size(130, 38);
-            this.labelSchedulerTitle.TabIndex = 5;
-            this.labelSchedulerTitle.Text = "Scheduler";
-            // 
-            // tabPagePatrol
-            // 
-            this.tabPagePatrol.Controls.Add(this.labelPatrolTitle);
-            this.tabPagePatrol.Location = new System.Drawing.Point(4, 22);
-            this.tabPagePatrol.Margin = new System.Windows.Forms.Padding(0);
-            this.tabPagePatrol.Name = "tabPagePatrol";
-            this.tabPagePatrol.Size = new System.Drawing.Size(666, 423);
-            this.tabPagePatrol.TabIndex = 4;
-            this.tabPagePatrol.Text = "Patrol";
-            this.tabPagePatrol.UseVisualStyleBackColor = true;
-            // 
-            // labelPatrolTitle
-            // 
-            this.labelPatrolTitle.AutoSize = true;
-            this.labelPatrolTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPatrolTitle.Location = new System.Drawing.Point(10, 10);
-            this.labelPatrolTitle.Margin = new System.Windows.Forms.Padding(3);
-            this.labelPatrolTitle.Name = "labelPatrolTitle";
-            this.labelPatrolTitle.Size = new System.Drawing.Size(85, 38);
-            this.labelPatrolTitle.TabIndex = 5;
-            this.labelPatrolTitle.Text = "Patrol";
+            this.labelZoneChangeTitle.AutoSize = true;
+            this.labelZoneChangeTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelZoneChangeTitle.Location = new System.Drawing.Point(10, 10);
+            this.labelZoneChangeTitle.Margin = new System.Windows.Forms.Padding(3);
+            this.labelZoneChangeTitle.Name = "labelZoneChangeTitle";
+            this.labelZoneChangeTitle.Size = new System.Drawing.Size(262, 38);
+            this.labelZoneChangeTitle.TabIndex = 5;
+            this.labelZoneChangeTitle.Text = "Zone Change Settings";
             // 
             // tabPageMiscellaneous
             // 
             this.tabPageMiscellaneous.Controls.Add(this.labelMiscellaneousTitle);
-            this.tabPageMiscellaneous.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMiscellaneous.Location = new System.Drawing.Point(4, 29);
+            this.tabPageMiscellaneous.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageMiscellaneous.Name = "tabPageMiscellaneous";
-            this.tabPageMiscellaneous.Size = new System.Drawing.Size(666, 423);
-            this.tabPageMiscellaneous.TabIndex = 5;
+            this.tabPageMiscellaneous.Size = new System.Drawing.Size(666, 416);
+            this.tabPageMiscellaneous.TabIndex = 4;
             this.tabPageMiscellaneous.Text = "Miscellaneous";
             this.tabPageMiscellaneous.UseVisualStyleBackColor = true;
             // 
@@ -366,9 +347,9 @@ namespace Oracle.Forms
             this.labelMiscellaneousTitle.Location = new System.Drawing.Point(10, 10);
             this.labelMiscellaneousTitle.Margin = new System.Windows.Forms.Padding(3);
             this.labelMiscellaneousTitle.Name = "labelMiscellaneousTitle";
-            this.labelMiscellaneousTitle.Size = new System.Drawing.Size(179, 38);
-            this.labelMiscellaneousTitle.TabIndex = 6;
-            this.labelMiscellaneousTitle.Text = "Miscellaneous";
+            this.labelMiscellaneousTitle.Size = new System.Drawing.Size(280, 38);
+            this.labelMiscellaneousTitle.TabIndex = 5;
+            this.labelMiscellaneousTitle.Text = "Miscellaneous Settings";
             // 
             // tabFateSettings
             // 
@@ -388,6 +369,7 @@ namespace Oracle.Forms
             this.tabControllerFate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControllerFate.Controls.Add(this.tabPageGeneral);
             this.tabControllerFate.Controls.Add(this.tabPageKillFates);
             this.tabControllerFate.Controls.Add(this.tabPageCollectFates);
             this.tabControllerFate.Controls.Add(this.tabPageEscortFates);
@@ -399,20 +381,44 @@ namespace Oracle.Forms
             this.tabControllerFate.Margin = new System.Windows.Forms.Padding(0);
             this.tabControllerFate.MinimumSize = new System.Drawing.Size(674, 449);
             this.tabControllerFate.MouseState = MaterialSkin.MouseState.Hover;
+            this.tabControllerFate.Multiline = true;
             this.tabControllerFate.Name = "tabControllerFate";
             this.tabControllerFate.SelectedIndex = 0;
             this.tabControllerFate.Size = new System.Drawing.Size(674, 449);
             this.tabControllerFate.TabIndex = 9;
             // 
+            // tabPageGeneral
+            // 
+            this.tabPageGeneral.Controls.Add(this.labelGeneralFateSettingsTitle);
+            this.tabPageGeneral.Location = new System.Drawing.Point(4, 54);
+            this.tabPageGeneral.Margin = new System.Windows.Forms.Padding(0);
+            this.tabPageGeneral.Name = "tabPageGeneral";
+            this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageGeneral.Size = new System.Drawing.Size(666, 391);
+            this.tabPageGeneral.TabIndex = 0;
+            this.tabPageGeneral.Text = "General";
+            this.tabPageGeneral.UseVisualStyleBackColor = true;
+            // 
+            // labelGeneralFateSettingsTitle
+            // 
+            this.labelGeneralFateSettingsTitle.AutoSize = true;
+            this.labelGeneralFateSettingsTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelGeneralFateSettingsTitle.Location = new System.Drawing.Point(10, 10);
+            this.labelGeneralFateSettingsTitle.Margin = new System.Windows.Forms.Padding(3);
+            this.labelGeneralFateSettingsTitle.Name = "labelGeneralFateSettingsTitle";
+            this.labelGeneralFateSettingsTitle.Size = new System.Drawing.Size(268, 38);
+            this.labelGeneralFateSettingsTitle.TabIndex = 1;
+            this.labelGeneralFateSettingsTitle.Text = "General FATE Settings";
+            // 
             // tabPageKillFates
             // 
             this.tabPageKillFates.Controls.Add(this.labelKillFatesTitle);
-            this.tabPageKillFates.Location = new System.Drawing.Point(4, 29);
+            this.tabPageKillFates.Location = new System.Drawing.Point(4, 22);
             this.tabPageKillFates.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageKillFates.Name = "tabPageKillFates";
             this.tabPageKillFates.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageKillFates.Size = new System.Drawing.Size(666, 416);
-            this.tabPageKillFates.TabIndex = 0;
+            this.tabPageKillFates.Size = new System.Drawing.Size(666, 423);
+            this.tabPageKillFates.TabIndex = 1;
             this.tabPageKillFates.Text = "Kill FATEs";
             this.tabPageKillFates.UseVisualStyleBackColor = true;
             // 
@@ -423,9 +429,9 @@ namespace Oracle.Forms
             this.labelKillFatesTitle.Location = new System.Drawing.Point(10, 10);
             this.labelKillFatesTitle.Margin = new System.Windows.Forms.Padding(3);
             this.labelKillFatesTitle.Name = "labelKillFatesTitle";
-            this.labelKillFatesTitle.Size = new System.Drawing.Size(131, 38);
-            this.labelKillFatesTitle.TabIndex = 1;
-            this.labelKillFatesTitle.Text = "Kill FATEs";
+            this.labelKillFatesTitle.Size = new System.Drawing.Size(219, 38);
+            this.labelKillFatesTitle.TabIndex = 4;
+            this.labelKillFatesTitle.Text = "Kill FATE Settings";
             // 
             // tabPageCollectFates
             // 
@@ -433,9 +439,8 @@ namespace Oracle.Forms
             this.tabPageCollectFates.Location = new System.Drawing.Point(4, 22);
             this.tabPageCollectFates.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageCollectFates.Name = "tabPageCollectFates";
-            this.tabPageCollectFates.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageCollectFates.Size = new System.Drawing.Size(666, 423);
-            this.tabPageCollectFates.TabIndex = 1;
+            this.tabPageCollectFates.TabIndex = 2;
             this.tabPageCollectFates.Text = "Collect FATEs";
             this.tabPageCollectFates.UseVisualStyleBackColor = true;
             // 
@@ -446,9 +451,9 @@ namespace Oracle.Forms
             this.labelCollectFatesTitle.Location = new System.Drawing.Point(10, 10);
             this.labelCollectFatesTitle.Margin = new System.Windows.Forms.Padding(3);
             this.labelCollectFatesTitle.Name = "labelCollectFatesTitle";
-            this.labelCollectFatesTitle.Size = new System.Drawing.Size(172, 38);
-            this.labelCollectFatesTitle.TabIndex = 4;
-            this.labelCollectFatesTitle.Text = "Collect FATEs";
+            this.labelCollectFatesTitle.Size = new System.Drawing.Size(260, 38);
+            this.labelCollectFatesTitle.TabIndex = 5;
+            this.labelCollectFatesTitle.Text = "Collect FATE Settings";
             // 
             // tabPageEscortFates
             // 
@@ -457,7 +462,7 @@ namespace Oracle.Forms
             this.tabPageEscortFates.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageEscortFates.Name = "tabPageEscortFates";
             this.tabPageEscortFates.Size = new System.Drawing.Size(666, 423);
-            this.tabPageEscortFates.TabIndex = 2;
+            this.tabPageEscortFates.TabIndex = 3;
             this.tabPageEscortFates.Text = "Escort FATEs";
             this.tabPageEscortFates.UseVisualStyleBackColor = true;
             // 
@@ -468,9 +473,9 @@ namespace Oracle.Forms
             this.labelEscortFatesTitle.Location = new System.Drawing.Point(10, 10);
             this.labelEscortFatesTitle.Margin = new System.Windows.Forms.Padding(3);
             this.labelEscortFatesTitle.Name = "labelEscortFatesTitle";
-            this.labelEscortFatesTitle.Size = new System.Drawing.Size(166, 38);
-            this.labelEscortFatesTitle.TabIndex = 5;
-            this.labelEscortFatesTitle.Text = "Escort FATEs";
+            this.labelEscortFatesTitle.Size = new System.Drawing.Size(254, 38);
+            this.labelEscortFatesTitle.TabIndex = 6;
+            this.labelEscortFatesTitle.Text = "Escort FATE Settings";
             // 
             // tabPageDefenceFates
             // 
@@ -479,7 +484,7 @@ namespace Oracle.Forms
             this.tabPageDefenceFates.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageDefenceFates.Name = "tabPageDefenceFates";
             this.tabPageDefenceFates.Size = new System.Drawing.Size(666, 423);
-            this.tabPageDefenceFates.TabIndex = 3;
+            this.tabPageDefenceFates.TabIndex = 4;
             this.tabPageDefenceFates.Text = "Defence FATEs";
             this.tabPageDefenceFates.UseVisualStyleBackColor = true;
             // 
@@ -490,9 +495,9 @@ namespace Oracle.Forms
             this.labelDefenceFatesTitle.Location = new System.Drawing.Point(10, 10);
             this.labelDefenceFatesTitle.Margin = new System.Windows.Forms.Padding(3);
             this.labelDefenceFatesTitle.Name = "labelDefenceFatesTitle";
-            this.labelDefenceFatesTitle.Size = new System.Drawing.Size(185, 38);
+            this.labelDefenceFatesTitle.Size = new System.Drawing.Size(273, 38);
             this.labelDefenceFatesTitle.TabIndex = 6;
-            this.labelDefenceFatesTitle.Text = "Defence FATEs";
+            this.labelDefenceFatesTitle.Text = "Defence FATE Settings";
             // 
             // tabPageBossFates
             // 
@@ -501,7 +506,7 @@ namespace Oracle.Forms
             this.tabPageBossFates.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageBossFates.Name = "tabPageBossFates";
             this.tabPageBossFates.Size = new System.Drawing.Size(666, 423);
-            this.tabPageBossFates.TabIndex = 4;
+            this.tabPageBossFates.TabIndex = 5;
             this.tabPageBossFates.Text = "Boss FATEs";
             this.tabPageBossFates.UseVisualStyleBackColor = true;
             // 
@@ -512,18 +517,17 @@ namespace Oracle.Forms
             this.labelBossFatesTitle.Location = new System.Drawing.Point(10, 10);
             this.labelBossFatesTitle.Margin = new System.Windows.Forms.Padding(3);
             this.labelBossFatesTitle.Name = "labelBossFatesTitle";
-            this.labelBossFatesTitle.Size = new System.Drawing.Size(150, 38);
+            this.labelBossFatesTitle.Size = new System.Drawing.Size(238, 38);
             this.labelBossFatesTitle.TabIndex = 6;
-            this.labelBossFatesTitle.Text = "Boss FATEs";
+            this.labelBossFatesTitle.Text = "Boss FATE Settings";
             // 
             // tabPageMegaBossFates
             // 
             this.tabPageMegaBossFates.Controls.Add(this.labelMegaBossFatesTitle);
             this.tabPageMegaBossFates.Location = new System.Drawing.Point(4, 22);
-            this.tabPageMegaBossFates.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageMegaBossFates.Name = "tabPageMegaBossFates";
             this.tabPageMegaBossFates.Size = new System.Drawing.Size(666, 423);
-            this.tabPageMegaBossFates.TabIndex = 5;
+            this.tabPageMegaBossFates.TabIndex = 6;
             this.tabPageMegaBossFates.Text = "Mega-Boss FATEs";
             this.tabPageMegaBossFates.UseVisualStyleBackColor = true;
             // 
@@ -534,9 +538,9 @@ namespace Oracle.Forms
             this.labelMegaBossFatesTitle.Location = new System.Drawing.Point(10, 10);
             this.labelMegaBossFatesTitle.Margin = new System.Windows.Forms.Padding(3);
             this.labelMegaBossFatesTitle.Name = "labelMegaBossFatesTitle";
-            this.labelMegaBossFatesTitle.Size = new System.Drawing.Size(222, 38);
-            this.labelMegaBossFatesTitle.TabIndex = 6;
-            this.labelMegaBossFatesTitle.Text = "Mega-Boss FATEs";
+            this.labelMegaBossFatesTitle.Size = new System.Drawing.Size(310, 38);
+            this.labelMegaBossFatesTitle.TabIndex = 7;
+            this.labelMegaBossFatesTitle.Text = "Mega-Boss FATE Settings";
             // 
             // tabSelectorFate
             // 
@@ -553,18 +557,18 @@ namespace Oracle.Forms
             this.tabSelectorFate.TabIndex = 8;
             this.tabSelectorFate.Text = "materialTabSelectorVertical1";
             // 
-            // tabCustomBehaviour
+            // tabNavigation
             // 
-            this.tabCustomBehaviour.Controls.Add(this.tabSelectorCustom);
-            this.tabCustomBehaviour.Controls.Add(this.tabControllerCustom);
-            this.tabCustomBehaviour.Location = new System.Drawing.Point(4, 29);
-            this.tabCustomBehaviour.Margin = new System.Windows.Forms.Padding(0);
-            this.tabCustomBehaviour.Name = "tabCustomBehaviour";
-            this.tabCustomBehaviour.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCustomBehaviour.Size = new System.Drawing.Size(842, 488);
-            this.tabCustomBehaviour.TabIndex = 2;
-            this.tabCustomBehaviour.Text = "Custom Behaviour";
-            this.tabCustomBehaviour.UseVisualStyleBackColor = true;
+            this.tabNavigation.Controls.Add(this.tabSelectorCustom);
+            this.tabNavigation.Controls.Add(this.tabControllerCustom);
+            this.tabNavigation.Location = new System.Drawing.Point(4, 29);
+            this.tabNavigation.Margin = new System.Windows.Forms.Padding(0);
+            this.tabNavigation.Name = "tabNavigation";
+            this.tabNavigation.Padding = new System.Windows.Forms.Padding(3);
+            this.tabNavigation.Size = new System.Drawing.Size(842, 488);
+            this.tabNavigation.TabIndex = 2;
+            this.tabNavigation.Text = "Navigation";
+            this.tabNavigation.UseVisualStyleBackColor = true;
             // 
             // tabSelectorCustom
             // 
@@ -586,9 +590,9 @@ namespace Oracle.Forms
             this.tabControllerCustom.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControllerCustom.Controls.Add(this.tabPageAvoidance);
-            this.tabControllerCustom.Controls.Add(this.tabPageNavigation);
-            this.tabControllerCustom.Controls.Add(this.tabPageSpecialFates);
+            this.tabControllerCustom.Controls.Add(this.tabPageMovement);
+            this.tabControllerCustom.Controls.Add(this.tabPageFlight);
+            this.tabControllerCustom.Controls.Add(this.tabPageTeleport);
             this.tabControllerCustom.Depth = 0;
             this.tabControllerCustom.Location = new System.Drawing.Point(172, 0);
             this.tabControllerCustom.Margin = new System.Windows.Forms.Padding(0);
@@ -599,73 +603,72 @@ namespace Oracle.Forms
             this.tabControllerCustom.Size = new System.Drawing.Size(674, 449);
             this.tabControllerCustom.TabIndex = 2;
             // 
-            // tabPageAvoidance
+            // tabPageMovement
             // 
-            this.tabPageAvoidance.Controls.Add(this.labelAvoidanceTitle);
-            this.tabPageAvoidance.Location = new System.Drawing.Point(4, 29);
-            this.tabPageAvoidance.Margin = new System.Windows.Forms.Padding(0);
-            this.tabPageAvoidance.Name = "tabPageAvoidance";
-            this.tabPageAvoidance.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAvoidance.Size = new System.Drawing.Size(666, 416);
-            this.tabPageAvoidance.TabIndex = 0;
-            this.tabPageAvoidance.Text = "Avoidance";
-            this.tabPageAvoidance.UseVisualStyleBackColor = true;
+            this.tabPageMovement.Controls.Add(this.labelMovementTitle);
+            this.tabPageMovement.Location = new System.Drawing.Point(4, 29);
+            this.tabPageMovement.Margin = new System.Windows.Forms.Padding(0);
+            this.tabPageMovement.Name = "tabPageMovement";
+            this.tabPageMovement.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageMovement.Size = new System.Drawing.Size(666, 416);
+            this.tabPageMovement.TabIndex = 0;
+            this.tabPageMovement.Text = "Movement";
+            this.tabPageMovement.UseVisualStyleBackColor = true;
             // 
-            // labelAvoidanceTitle
+            // labelMovementTitle
             // 
-            this.labelAvoidanceTitle.AutoSize = true;
-            this.labelAvoidanceTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAvoidanceTitle.Location = new System.Drawing.Point(10, 10);
-            this.labelAvoidanceTitle.Margin = new System.Windows.Forms.Padding(3);
-            this.labelAvoidanceTitle.Name = "labelAvoidanceTitle";
-            this.labelAvoidanceTitle.Size = new System.Drawing.Size(134, 38);
-            this.labelAvoidanceTitle.TabIndex = 1;
-            this.labelAvoidanceTitle.Text = "Avoidance";
+            this.labelMovementTitle.AutoSize = true;
+            this.labelMovementTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMovementTitle.Location = new System.Drawing.Point(10, 10);
+            this.labelMovementTitle.Margin = new System.Windows.Forms.Padding(3);
+            this.labelMovementTitle.Name = "labelMovementTitle";
+            this.labelMovementTitle.Size = new System.Drawing.Size(236, 38);
+            this.labelMovementTitle.TabIndex = 1;
+            this.labelMovementTitle.Text = "Movement Settings";
             // 
-            // tabPageNavigation
+            // tabPageFlight
             // 
-            this.tabPageNavigation.Controls.Add(this.labelNavigationTitle);
-            this.tabPageNavigation.Location = new System.Drawing.Point(4, 22);
-            this.tabPageNavigation.Margin = new System.Windows.Forms.Padding(0);
-            this.tabPageNavigation.Name = "tabPageNavigation";
-            this.tabPageNavigation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageNavigation.Size = new System.Drawing.Size(666, 423);
-            this.tabPageNavigation.TabIndex = 1;
-            this.tabPageNavigation.Text = "Navigation";
-            this.tabPageNavigation.UseVisualStyleBackColor = true;
+            this.tabPageFlight.Controls.Add(this.labelFlightTitle);
+            this.tabPageFlight.Location = new System.Drawing.Point(4, 22);
+            this.tabPageFlight.Margin = new System.Windows.Forms.Padding(0);
+            this.tabPageFlight.Name = "tabPageFlight";
+            this.tabPageFlight.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFlight.Size = new System.Drawing.Size(666, 423);
+            this.tabPageFlight.TabIndex = 1;
+            this.tabPageFlight.Text = "Flight";
+            this.tabPageFlight.UseVisualStyleBackColor = true;
             // 
-            // labelNavigationTitle
+            // labelFlightTitle
             // 
-            this.labelNavigationTitle.AutoSize = true;
-            this.labelNavigationTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNavigationTitle.Location = new System.Drawing.Point(10, 10);
-            this.labelNavigationTitle.Margin = new System.Windows.Forms.Padding(3);
-            this.labelNavigationTitle.Name = "labelNavigationTitle";
-            this.labelNavigationTitle.Size = new System.Drawing.Size(139, 38);
-            this.labelNavigationTitle.TabIndex = 4;
-            this.labelNavigationTitle.Text = "Navigation";
+            this.labelFlightTitle.AutoSize = true;
+            this.labelFlightTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelFlightTitle.Location = new System.Drawing.Point(10, 10);
+            this.labelFlightTitle.Margin = new System.Windows.Forms.Padding(3);
+            this.labelFlightTitle.Name = "labelFlightTitle";
+            this.labelFlightTitle.Size = new System.Drawing.Size(183, 38);
+            this.labelFlightTitle.TabIndex = 4;
+            this.labelFlightTitle.Text = "Flight Settings";
             // 
-            // tabPageSpecialFates
+            // tabPageTeleport
             // 
-            this.tabPageSpecialFates.Controls.Add(this.labelSpecialFatesTitle);
-            this.tabPageSpecialFates.Location = new System.Drawing.Point(4, 22);
-            this.tabPageSpecialFates.Margin = new System.Windows.Forms.Padding(0);
-            this.tabPageSpecialFates.Name = "tabPageSpecialFates";
-            this.tabPageSpecialFates.Size = new System.Drawing.Size(666, 423);
-            this.tabPageSpecialFates.TabIndex = 2;
-            this.tabPageSpecialFates.Text = "Special FATEs";
-            this.tabPageSpecialFates.UseVisualStyleBackColor = true;
+            this.tabPageTeleport.Controls.Add(this.labelTeleportTitle);
+            this.tabPageTeleport.Location = new System.Drawing.Point(4, 22);
+            this.tabPageTeleport.Name = "tabPageTeleport";
+            this.tabPageTeleport.Size = new System.Drawing.Size(666, 423);
+            this.tabPageTeleport.TabIndex = 2;
+            this.tabPageTeleport.Text = "Teleport";
+            this.tabPageTeleport.UseVisualStyleBackColor = true;
             // 
-            // labelSpecialFatesTitle
+            // labelTeleportTitle
             // 
-            this.labelSpecialFatesTitle.AutoSize = true;
-            this.labelSpecialFatesTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelSpecialFatesTitle.Location = new System.Drawing.Point(10, 10);
-            this.labelSpecialFatesTitle.Margin = new System.Windows.Forms.Padding(3);
-            this.labelSpecialFatesTitle.Name = "labelSpecialFatesTitle";
-            this.labelSpecialFatesTitle.Size = new System.Drawing.Size(177, 38);
-            this.labelSpecialFatesTitle.TabIndex = 5;
-            this.labelSpecialFatesTitle.Text = "Special FATEs";
+            this.labelTeleportTitle.AutoSize = true;
+            this.labelTeleportTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTeleportTitle.Location = new System.Drawing.Point(10, 10);
+            this.labelTeleportTitle.Margin = new System.Windows.Forms.Padding(3);
+            this.labelTeleportTitle.Name = "labelTeleportTitle";
+            this.labelTeleportTitle.Size = new System.Drawing.Size(211, 38);
+            this.labelTeleportTitle.TabIndex = 5;
+            this.labelTeleportTitle.Text = "Teleport Settings";
             // 
             // tabBlacklist
             // 
@@ -738,11 +741,11 @@ namespace Oracle.Forms
             // tabPageMobBlacklist
             // 
             this.tabPageMobBlacklist.Controls.Add(this.labelMobBlacklistTitle);
-            this.tabPageMobBlacklist.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMobBlacklist.Location = new System.Drawing.Point(4, 29);
             this.tabPageMobBlacklist.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageMobBlacklist.Name = "tabPageMobBlacklist";
             this.tabPageMobBlacklist.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMobBlacklist.Size = new System.Drawing.Size(666, 423);
+            this.tabPageMobBlacklist.Size = new System.Drawing.Size(666, 416);
             this.tabPageMobBlacklist.TabIndex = 1;
             this.tabPageMobBlacklist.Text = "Mob Blacklist";
             this.tabPageMobBlacklist.UseVisualStyleBackColor = true;
@@ -778,6 +781,7 @@ namespace Oracle.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerAbout.Controls.Add(this.tabPageLicense);
             this.tabControllerAbout.Controls.Add(this.tabPageDonate);
+            this.tabControllerAbout.Controls.Add(this.tabPageDevelopment);
             this.tabControllerAbout.Depth = 0;
             this.tabControllerAbout.Location = new System.Drawing.Point(172, 0);
             this.tabControllerAbout.Margin = new System.Windows.Forms.Padding(0);
@@ -889,6 +893,27 @@ namespace Oracle.Forms
             this.labelDonateTitle.TabIndex = 4;
             this.labelDonateTitle.Text = "Donate";
             // 
+            // tabPageDevelopment
+            // 
+            this.tabPageDevelopment.Controls.Add(this.labelDevelopmentTitle);
+            this.tabPageDevelopment.Location = new System.Drawing.Point(4, 29);
+            this.tabPageDevelopment.Name = "tabPageDevelopment";
+            this.tabPageDevelopment.Size = new System.Drawing.Size(666, 416);
+            this.tabPageDevelopment.TabIndex = 2;
+            this.tabPageDevelopment.Text = "Development";
+            this.tabPageDevelopment.UseVisualStyleBackColor = true;
+            // 
+            // labelDevelopmentTitle
+            // 
+            this.labelDevelopmentTitle.AutoSize = true;
+            this.labelDevelopmentTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDevelopmentTitle.Location = new System.Drawing.Point(10, 10);
+            this.labelDevelopmentTitle.Margin = new System.Windows.Forms.Padding(3);
+            this.labelDevelopmentTitle.Name = "labelDevelopmentTitle";
+            this.labelDevelopmentTitle.Size = new System.Drawing.Size(164, 38);
+            this.labelDevelopmentTitle.TabIndex = 2;
+            this.labelDevelopmentTitle.Text = "Development";
+            // 
             // tabSelectorAbout
             // 
             this.tabSelectorAbout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -912,7 +937,7 @@ namespace Oracle.Forms
             this.labelTooltip.Cursor = System.Windows.Forms.Cursors.Help;
             this.labelTooltip.Font = new System.Drawing.Font("Roboto Condensed", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTooltip.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.labelTooltip.Location = new System.Drawing.Point(4, 5);
+            this.labelTooltip.Location = new System.Drawing.Point(9, 9);
             this.labelTooltip.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.labelTooltip.Name = "labelTooltip";
             this.labelTooltip.Size = new System.Drawing.Size(735, 39);
@@ -926,10 +951,10 @@ namespace Oracle.Forms
             this.panelControl.Controls.Add(this.labelTooltip);
             this.panelControl.Controls.Add(this.buttonClose);
             this.panelControl.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelControl.Location = new System.Drawing.Point(0, 541);
+            this.panelControl.Location = new System.Drawing.Point(0, 533);
             this.panelControl.Margin = new System.Windows.Forms.Padding(0);
             this.panelControl.Name = "panelControl";
-            this.panelControl.Size = new System.Drawing.Size(850, 44);
+            this.panelControl.Size = new System.Drawing.Size(850, 52);
             this.panelControl.TabIndex = 5;
             this.panelControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
             // 
@@ -939,12 +964,12 @@ namespace Oracle.Forms
             this.buttonClose.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.buttonClose.Depth = 0;
             this.buttonClose.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonClose.Location = new System.Drawing.Point(746, 7);
+            this.buttonClose.Location = new System.Drawing.Point(742, 9);
             this.buttonClose.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.buttonClose.MouseState = MaterialSkin.MouseState.Hover;
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Primary = true;
-            this.buttonClose.Size = new System.Drawing.Size(100, 33);
+            this.buttonClose.Size = new System.Drawing.Size(100, 37);
             this.buttonClose.TabIndex = 6;
             this.buttonClose.Text = "Close";
             this.buttonClose.UseVisualStyleBackColor = true;
@@ -981,20 +1006,20 @@ namespace Oracle.Forms
             this.tabControllerMain.ResumeLayout(false);
             this.tabGeneralSettings.ResumeLayout(false);
             this.tabControllerGeneral.ResumeLayout(false);
+            this.tabPageOracleMode.ResumeLayout(false);
+            this.tabPageOracleMode.PerformLayout();
             this.tabPageFateSelection.ResumeLayout(false);
             this.tabPageFateSelection.PerformLayout();
-            this.tabPageBotMode.ResumeLayout(false);
-            this.tabPageBotMode.PerformLayout();
-            this.tabPageMovement.ResumeLayout(false);
-            this.tabPageMovement.PerformLayout();
-            this.tabPageScheduler.ResumeLayout(false);
-            this.tabPageScheduler.PerformLayout();
-            this.tabPagePatrol.ResumeLayout(false);
-            this.tabPagePatrol.PerformLayout();
+            this.tabPageDowntime.ResumeLayout(false);
+            this.tabPageDowntime.PerformLayout();
+            this.tabPageZoneChange.ResumeLayout(false);
+            this.tabPageZoneChange.PerformLayout();
             this.tabPageMiscellaneous.ResumeLayout(false);
             this.tabPageMiscellaneous.PerformLayout();
             this.tabFateSettings.ResumeLayout(false);
             this.tabControllerFate.ResumeLayout(false);
+            this.tabPageGeneral.ResumeLayout(false);
+            this.tabPageGeneral.PerformLayout();
             this.tabPageKillFates.ResumeLayout(false);
             this.tabPageKillFates.PerformLayout();
             this.tabPageCollectFates.ResumeLayout(false);
@@ -1007,14 +1032,14 @@ namespace Oracle.Forms
             this.tabPageBossFates.PerformLayout();
             this.tabPageMegaBossFates.ResumeLayout(false);
             this.tabPageMegaBossFates.PerformLayout();
-            this.tabCustomBehaviour.ResumeLayout(false);
+            this.tabNavigation.ResumeLayout(false);
             this.tabControllerCustom.ResumeLayout(false);
-            this.tabPageAvoidance.ResumeLayout(false);
-            this.tabPageAvoidance.PerformLayout();
-            this.tabPageNavigation.ResumeLayout(false);
-            this.tabPageNavigation.PerformLayout();
-            this.tabPageSpecialFates.ResumeLayout(false);
-            this.tabPageSpecialFates.PerformLayout();
+            this.tabPageMovement.ResumeLayout(false);
+            this.tabPageMovement.PerformLayout();
+            this.tabPageFlight.ResumeLayout(false);
+            this.tabPageFlight.PerformLayout();
+            this.tabPageTeleport.ResumeLayout(false);
+            this.tabPageTeleport.PerformLayout();
             this.tabBlacklist.ResumeLayout(false);
             this.tabControllerBlacklist.ResumeLayout(false);
             this.tabPageFateBlacklist.ResumeLayout(false);
@@ -1028,6 +1053,8 @@ namespace Oracle.Forms
             this.tabPageDonate.ResumeLayout(false);
             this.tabPageDonate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDonate)).EndInit();
+            this.tabPageDevelopment.ResumeLayout(false);
+            this.tabPageDevelopment.PerformLayout();
             this.panelControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
             this.ResumeLayout(false);
@@ -1040,7 +1067,7 @@ namespace Oracle.Forms
         private MaterialSkin.Controls.MaterialTabControl tabControllerMain;
         private System.Windows.Forms.TabPage tabGeneralSettings;
         private System.Windows.Forms.TabPage tabFateSettings;
-        private System.Windows.Forms.TabPage tabCustomBehaviour;
+        private System.Windows.Forms.TabPage tabNavigation;
         private System.Windows.Forms.TabPage tabBlacklist;
         private System.Windows.Forms.Label labelTooltip;
         private System.Windows.Forms.TabPage tabAbout;
@@ -1062,42 +1089,44 @@ namespace Oracle.Forms
         private System.Windows.Forms.Label labelDonateText;
         private MaterialSkin.Controls.MaterialTabSelectorVertical tabSelectorCustom;
         private MaterialSkin.Controls.MaterialTabControl tabControllerCustom;
-        private System.Windows.Forms.TabPage tabPageAvoidance;
-        private System.Windows.Forms.Label labelAvoidanceTitle;
-        private System.Windows.Forms.TabPage tabPageNavigation;
-        private System.Windows.Forms.Label labelNavigationTitle;
-        private System.Windows.Forms.TabPage tabPageSpecialFates;
-        private System.Windows.Forms.Label labelSpecialFatesTitle;
+        private System.Windows.Forms.TabPage tabPageMovement;
+        private System.Windows.Forms.Label labelMovementTitle;
+        private System.Windows.Forms.TabPage tabPageFlight;
+        private System.Windows.Forms.Label labelFlightTitle;
         private MaterialSkin.Controls.MaterialTabSelectorVertical tabSelectorFate;
         private MaterialSkin.Controls.MaterialTabControl tabControllerFate;
+        private System.Windows.Forms.TabPage tabPageGeneral;
+        private System.Windows.Forms.Label labelGeneralFateSettingsTitle;
         private System.Windows.Forms.TabPage tabPageKillFates;
         private System.Windows.Forms.Label labelKillFatesTitle;
         private System.Windows.Forms.TabPage tabPageCollectFates;
         private System.Windows.Forms.Label labelCollectFatesTitle;
         private System.Windows.Forms.TabPage tabPageEscortFates;
-        private System.Windows.Forms.Label labelEscortFatesTitle;
         private System.Windows.Forms.TabPage tabPageDefenceFates;
         private System.Windows.Forms.TabPage tabPageBossFates;
-        private System.Windows.Forms.TabPage tabPageMegaBossFates;
+        private System.Windows.Forms.Label labelEscortFatesTitle;
         private System.Windows.Forms.Label labelDefenceFatesTitle;
         private System.Windows.Forms.Label labelBossFatesTitle;
-        private System.Windows.Forms.Label labelMegaBossFatesTitle;
         private MaterialSkin.Controls.MaterialFlatButton buttonClose;
         private MaterialSkin.Controls.MaterialTabControl tabControllerGeneral;
+        private System.Windows.Forms.TabPage tabPageOracleMode;
+        private System.Windows.Forms.Label labelOracleModeTitle;
         private System.Windows.Forms.TabPage tabPageFateSelection;
         private System.Windows.Forms.Label labelFateSelectionTitle;
-        private System.Windows.Forms.TabPage tabPageBotMode;
-        private System.Windows.Forms.Label labelBotModeTitle;
         private MaterialSkin.Controls.MaterialTabSelectorVertical tabSelectorGeneral;
-        private System.Windows.Forms.TabPage tabPageMovement;
-        private System.Windows.Forms.TabPage tabPageScheduler;
-        private System.Windows.Forms.TabPage tabPagePatrol;
-        private System.Windows.Forms.Label labelMovementTitle;
-        private System.Windows.Forms.Label labelSchedulerTitle;
-        private System.Windows.Forms.Label labelPatrolTitle;
+        private System.Windows.Forms.TabPage tabPageDowntime;
+        private System.Windows.Forms.TabPage tabPageZoneChange;
         private System.Windows.Forms.TabPage tabPageMiscellaneous;
+        private System.Windows.Forms.Label labelDowntimeTitle;
+        private System.Windows.Forms.Label labelZoneChangeTitle;
         private System.Windows.Forms.Label labelMiscellaneousTitle;
         private MaterialSkin.Controls.MaterialPictureBox pictureBoxLogo;
         private MaterialSkin.Controls.MaterialPictureBox pictureBoxDonate;
+        private System.Windows.Forms.TabPage tabPageMegaBossFates;
+        private System.Windows.Forms.Label labelMegaBossFatesTitle;
+        private System.Windows.Forms.TabPage tabPageTeleport;
+        private System.Windows.Forms.Label labelTeleportTitle;
+        private System.Windows.Forms.TabPage tabPageDevelopment;
+        private System.Windows.Forms.Label labelDevelopmentTitle;
     }
 }
