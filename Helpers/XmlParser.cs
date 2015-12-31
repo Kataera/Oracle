@@ -38,8 +38,7 @@ namespace Oracle.Helpers
     internal static class XmlParser
     {
         private static OracleDatabase database;
-        private static uint fateChainIdFail;
-        private static uint fateChainIdSuccess;
+        private static uint fateChainId;
         private static uint fateCollectItemId;
         private static bool fateDataInvalidFlag;
         private static XmlDocument fateDataXml;
@@ -75,8 +74,7 @@ namespace Oracle.Helpers
         {
             var fate = new Fate
             {
-                ChainIdFailure = fateChainIdFail,
-                ChainIdSuccess = fateChainIdSuccess,
+                ChainIdSuccess = fateChainId,
                 Id = fateId,
                 ItemId = fateCollectItemId,
                 Level = fateLevel,
@@ -140,8 +138,7 @@ namespace Oracle.Helpers
                     fateCollectItemId = 0;
                     fateNpcId = 0;
                     fatePreferredTargetId = new List<uint>();
-                    fateChainIdSuccess = 0;
-                    fateChainIdFail = 0;
+                    fateChainId = 0;
 
                     if (currentNode["ID"] != null)
                     {
@@ -194,14 +191,9 @@ namespace Oracle.Helpers
                         }
                     }
 
-                    if (currentNode["ChainIDSuccess"] != null)
+                    if (currentNode["ChainID"] != null)
                     {
-                        fateChainIdSuccess = uint.Parse(currentNode["ChainIDSuccess"].InnerText);
-                    }
-
-                    if (currentNode["ChainIDFailure"] != null)
-                    {
-                        fateChainIdFail = uint.Parse(currentNode["ChainIDFailure"].InnerText);
+                        fateChainId = uint.Parse(currentNode["ChainID"].InnerText);
                     }
 
                     database.AddFateToDatabase(CreateFate());

@@ -42,6 +42,8 @@ using Oracle.Helpers;
 using Oracle.Managers;
 using Oracle.Settings;
 
+using Pathfinding;
+
 namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class MoveToFate
@@ -89,7 +91,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
             else
             {
-                await MoveWithFlight();
+                await MoveWithFlightMesh();
             }
 
             return true;
@@ -107,6 +109,13 @@ namespace Oracle.Behaviour.Tasks.Utilities
             var currentFate = OracleManager.GetCurrentFateData();
             return MathEx.GetPointAt(currentFate.Location, currentFate.Radius * Convert.ToSingle(MathEx.Random(0.5, 1)),
                 Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.25 * Math.PI, 0.25 * Math.PI)));
+        }
+
+        private static Node GetClosestNodeToLocation(Vector3 location)
+        {
+            return OracleManager.ZoneFlightMesh.Graph.Nodes
+                                .OrderBy(kvp => kvp.Value.Position.Distance(location))
+                                .FirstOrDefault(kvp => kvp.Value.Position.Y > location.Y).Value;
         }
 
         private static bool IsMountNeeded()
@@ -150,7 +159,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return true;
         }
 
-        private static async Task<bool> MoveWithFlight()
+        private static async Task<bool> MoveWithFlightMesh()
         {
             var currentFate = OracleManager.GetCurrentFateData();
             if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE
@@ -160,7 +169,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return true;
             }
 
-            Logger.SendLog("Flying to FATE.");
+            Logger.SendLog("Generating new flight path to FATE.");
 
             if (!MovementManager.IsFlying)
             {
@@ -169,11 +178,8 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             var currentFateLocation = currentFate.Location;
             var aStar = new AStarNavigator(OracleManager.ZoneFlightMesh.Graph);
-            var closestNode =
-                OracleManager.ZoneFlightMesh.Graph.Nodes
-                             .OrderBy(kvp => kvp.Value.Position.Distance(currentFateLocation))
-                             .FirstOrDefault(kvp => kvp.Value.Position.Y > currentFateLocation.Y);
-            var path = aStar.GeneratePath(Core.Player.Location, closestNode.Value.Position);
+            var closestNode = GetClosestNodeToLocation(currentFateLocation);
+            var path = aStar.GeneratePath(Core.Player.Location, closestNode.Position);
 
             foreach (var step in path)
             {
@@ -201,6 +207,14 @@ namespace Oracle.Behaviour.Tasks.Utilities
                     {
                         Navigator.PlayerMover.MoveStop();
                         await CommonTasks.TakeOff();
+                    }
+
+                    // Did FATE move?
+                    currentFateLocation = currentFate.Location;
+                    if (!Equals(GetClosestNodeToLocation(currentFateLocation), closestNode))
+                    {
+                        await MoveWithFlightMesh();
+                        return true;
                     }
 
                     Logger.SendLog("Flying to hop: " + step);
@@ -256,6 +270,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                     await Mount.MountUp();
                 }
 
+                currentFateLocation = currentFate.Location;
                 Navigator.MoveToPointWithin(currentFateLocation, currentFateRadius * 0.5f, currentFate.Name);
                 await Coroutine.Yield();
             }

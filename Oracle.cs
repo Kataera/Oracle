@@ -134,7 +134,6 @@ namespace Oracle
 
         public override void Start()
         {
-            DisableExFlight();
             Navigator.NavigationProvider = new GaiaNavigator();
             Navigator.PlayerMover = new SlideMover();
             CombatTargeting.Instance.Provider = new OracleCombatTargetingProvider();
@@ -195,46 +194,7 @@ namespace Oracle
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;
 
-            EnableExFlight();
             Logger.SendLog("Stopping Oracle.");
-        }
-
-        private static void DisableExFlight()
-        {
-            var enabledPlugins = PluginManager.Plugins.Where(plugin => plugin.Enabled);
-            if (!enabledPlugins.Any(plugin => plugin.Plugin.Name.Equals("EnableFlight")))
-            {
-                return;
-            }
-
-            var enableFlightPlugin = PluginManager.Plugins.FirstOrDefault(plugin => plugin.Plugin.Name.Equals("EnableFlight"));
-            if (enableFlightPlugin == null)
-            {
-                return;
-            }
-
-            Logger.SendLog(
-                "Disabling the plugin 'EnableFlight' since it's incompatible with Oracle. It will be re-enabled when the bot stops.");
-            enableFlightPlugin.Enabled = false;
-            reenableFlightPlugin = true;
-        }
-
-        private static void EnableExFlight()
-        {
-            if (!reenableFlightPlugin)
-            {
-                return;
-            }
-
-            var enableFlightPlugin = PluginManager.Plugins.FirstOrDefault(plugin => plugin.Plugin.Name.Equals("EnableFlight"));
-            if (enableFlightPlugin == null)
-            {
-                return;
-            }
-
-            Logger.SendLog("Re-enabling the plugin 'EnableFlight'.");
-            enableFlightPlugin.Enabled = true;
-            reenableFlightPlugin = false;
         }
 
         private static void ListHooks()

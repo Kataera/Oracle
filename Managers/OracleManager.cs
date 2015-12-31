@@ -134,11 +134,6 @@ namespace Oracle.Managers
         {
             var oracleFate = OracleDatabase.GetFateFromId(CurrentFateId);
 
-            if (oracleFate.ChainIdFailure != 0)
-            {
-                return true;
-            }
-
             if (oracleFate.ChainIdSuccess != 0)
             {
                 return true;

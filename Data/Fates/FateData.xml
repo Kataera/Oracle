@@ -376,7 +376,7 @@
     <Level>32</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&Problematic;</OracleSupport>
-    <ChainIDSuccess>160</ChainIDSuccess>
+    <ChainID>160</ChainID>
   </Fate>
   <Fate>
     <ID>160</ID>
@@ -384,7 +384,7 @@
     <Level>32</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&Problematic;</OracleSupport>
-    <ChainIDSuccess>162</ChainIDSuccess>
+    <ChainID>162</ChainID>
   </Fate>
   <Fate>
     <ID>161</ID>
@@ -608,7 +608,7 @@
     <Level>26</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>192</ChainIDSuccess>
+    <ChainID>192</ChainID>
   </Fate>
   <Fate>
     <ID>192</ID>
@@ -616,7 +616,7 @@
     <Level>26</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>193</ChainIDSuccess>
+    <ChainID>193</ChainID>
   </Fate>
   <Fate>
     <ID>193</ID>
@@ -624,7 +624,7 @@
     <Level>26</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>194</ChainIDSuccess>
+    <ChainID>194</ChainID>
   </Fate>
   <Fate>
     <ID>194</ID>
@@ -874,7 +874,7 @@
     <Level>14</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>238</ChainIDSuccess>
+    <ChainID>238</ChainID>
   </Fate>
   <Fate>
     <ID>235</ID>
@@ -980,7 +980,7 @@
     <Level>9</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>265</ChainIDSuccess>
+    <ChainID>265</ChainID>
   </Fate>
   <Fate>
     <ID>265</ID>
@@ -1968,7 +1968,7 @@
     <Type>&Escort;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
     <NpcId>1862</NpcId>
-    <ChainIDSuccess>502</ChainIDSuccess>
+    <ChainID>502</ChainID>
   </Fate>
   <Fate>
     <ID>502</ID>
@@ -1976,8 +1976,7 @@
     <Level>38</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>503</ChainIDSuccess>
-    <ChainIDFail>504</ChainIDFail>
+    <ChainID>503</ChainID>
   </Fate>
   <Fate>
     <ID>503</ID>
@@ -2347,7 +2346,7 @@
     <Level>44</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>569</ChainIDSuccess>
+    <ChainID>569</ChainID>
   </Fate>
   <Fate>
     <ID>569</ID>
@@ -2362,7 +2361,7 @@
     <Level>45</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>571</ChainIDSuccess>
+    <ChainID>571</ChainID>
   </Fate>
   <Fate>
     <ID>571</ID>
@@ -2579,7 +2578,7 @@
     <Level>42</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>611</ChainIDSuccess>
+    <ChainID>611</ChainID>
   </Fate>
   <Fate>
     <ID>611</ID>
@@ -2735,7 +2734,7 @@
     <Level>49</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>644</ChainIDSuccess>
+    <ChainID>644</ChainID>
   </Fate>
   <Fate>
     <ID>644</ID>
@@ -2743,7 +2742,7 @@
     <Level>49</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>645</ChainIDSuccess>
+    <ChainID>645</ChainID>
   </Fate>
   <Fate>
     <ID>645</ID>
@@ -2751,7 +2750,7 @@
     <Level>49</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>646</ChainIDSuccess>
+    <ChainID>646</ChainID>
   </Fate>
   <Fate>
     <ID>646</ID>
@@ -2969,7 +2968,7 @@
     <Level>11</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>680</ChainIDSuccess>
+    <ChainID>680</ChainID>
   </Fate>
   <Fate>
     <ID>680</ID>
@@ -2984,7 +2983,7 @@
     <Level>33</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>682</ChainIDSuccess>
+    <ChainID>682</ChainID>
   </Fate>
   <Fate>
     <ID>682</ID>
@@ -2999,7 +2998,7 @@
     <Level>10</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>684</ChainIDSuccess>
+    <ChainID>684</ChainID>
   </Fate>
   <Fate>
     <ID>684</ID>
@@ -3014,7 +3013,7 @@
     <Level>31</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>686</ChainIDSuccess>
+    <ChainID>686</ChainID>
   </Fate>
   <Fate>
     <ID>686</ID>
@@ -3029,7 +3028,7 @@
     <Level>12</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>688</ChainIDSuccess>
+    <ChainID>688</ChainID>
   </Fate>
   <Fate>
     <ID>688</ID>
@@ -3044,7 +3043,7 @@
     <Level>32</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>690</ChainIDSuccess>
+    <ChainID>690</ChainID>
   </Fate>
   <Fate>
     <ID>690</ID>
@@ -3286,7 +3285,7 @@
     <Level>54</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>737</ChainIDSuccess>
+    <ChainID>737</ChainID>
   </Fate>
   <Fate>
     <ID>737</ID>
@@ -3308,7 +3307,7 @@
     <Level>54</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>741</ChainIDSuccess>
+    <ChainID>741</ChainID>
   </Fate>
   <Fate>
     <ID>741</ID>
@@ -3396,7 +3395,7 @@
     <OracleSupport>&FullSupport;</OracleSupport>
     <CollectItemId>2001796</CollectItemId>
     <NpcId>4416</NpcId>
-    <ChainIDSuccess>757</ChainIDSuccess>
+    <ChainID>757</ChainID>
   </Fate>
   <Fate>
     <ID>757</ID>
@@ -3404,7 +3403,7 @@
     <Level>58</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>758</ChainIDSuccess>
+    <ChainID>758</ChainID>
   </Fate>
   <Fate>
     <ID>758</ID>
@@ -3461,7 +3460,7 @@
     <Level>58</Level>
     <Type>&Defence;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>767</ChainIDSuccess>
+    <ChainID>767</ChainID>
   </Fate>
   <Fate>
     <ID>767</ID>
@@ -3626,7 +3625,7 @@
     <Level>50</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>792</ChainIDSuccess>
+    <ChainID>792</ChainID>
   </Fate>
   <Fate>
     <ID>792</ID>
@@ -3725,7 +3724,7 @@
     <Level>51</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>812</ChainIDSuccess>
+    <ChainID>812</ChainID>
   </Fate>
   <Fate>
     <ID>812</ID>
@@ -3754,7 +3753,7 @@
     <Level>50</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>816</ChainIDSuccess>
+    <ChainID>816</ChainID>
   </Fate>
   <Fate>
     <ID>816</ID>
@@ -3841,7 +3840,7 @@
     <Level>52</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>828</ChainIDSuccess>
+    <ChainID>828</ChainID>
   </Fate>
   <Fate>
     <ID>828</ID>
@@ -3933,7 +3932,7 @@
     <Level>50</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>841</ChainIDSuccess>
+    <ChainID>841</ChainID>
   </Fate>
   <Fate>
     <ID>841</ID>
@@ -4049,7 +4048,7 @@
     <Level>59</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>862</ChainIDSuccess>
+    <ChainID>862</ChainID>
   </Fate>
   <Fate>
     <ID>862</ID>
@@ -4057,7 +4056,7 @@
     <Level>59</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>863</ChainIDSuccess>
+    <ChainID>863</ChainID>
   </Fate>
   <Fate>
     <ID>863</ID>
@@ -4100,7 +4099,7 @@
     <Level>55</Level>
     <Type>&Defence;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>869</ChainIDSuccess>
+    <ChainID>869</ChainID>
   </Fate>
   <Fate>
     <ID>869</ID>
@@ -4108,7 +4107,7 @@
     <Level>55</Level>
     <Type>&Defence;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-    <ChainIDSuccess>870</ChainIDSuccess>
+    <ChainID>870</ChainID>
   </Fate>
   <Fate>
     <ID>870</ID>
