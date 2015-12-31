@@ -110,8 +110,8 @@ namespace Oracle.Behaviour
                 case OracleOperationMode.AtmaGrind:
                     await AtmaGrind.Main();
                     break;
-                case OracleOperationMode.ZetaGrind:
-                    await ZetaGrind.Main();
+                case OracleOperationMode.AnimusGrind:
+                    await AnimusGrind.Main();
                     break;
                 case OracleOperationMode.AnimaGrind:
                     await AnimaGrind.Main();

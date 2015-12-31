@@ -165,8 +165,8 @@ namespace Oracle
                 case OracleOperationMode.AtmaGrind:
                     Logger.SendLog("Starting Oracle in Atma grind mode.");
                     break;
-                case OracleOperationMode.ZetaGrind:
-                    Logger.SendLog("Starting Oracle in Zeta grind mode.");
+                case OracleOperationMode.AnimusGrind:
+                    Logger.SendLog("Starting Oracle in Animus grind mode.");
                     break;
                 case OracleOperationMode.AnimaGrind:
                     Logger.SendLog("Starting Oracle in Anima grind mode.");

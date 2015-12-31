@@ -87,6 +87,7 @@ namespace Oracle.Behaviour.Modes
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in Coerthas Western Highlands.");
                     TreeRoot.Stop("Too low level to continue.");
+                    return true;
                 }
 
                 if (WorldManager.ZoneId != ZoneCoerthasWesternHighlands)
@@ -102,6 +103,7 @@ namespace Oracle.Behaviour.Modes
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Sea of Clouds.");
                     TreeRoot.Stop("Too low level to continue.");
+                    return true;
                 }
 
                 if (WorldManager.ZoneId != ZoneSeaOfClouds)
@@ -117,6 +119,7 @@ namespace Oracle.Behaviour.Modes
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Dravanian Forelands.");
                     TreeRoot.Stop("Too low level to continue.");
+                    return true;
                 }
 
                 if (WorldManager.ZoneId != ZoneDravanianForelands)
@@ -132,6 +135,7 @@ namespace Oracle.Behaviour.Modes
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Churning Mists.");
                     TreeRoot.Stop("Too low level to continue.");
+                    return true;
                 }
 
                 if (WorldManager.ZoneId != ZoneChurningMists)
@@ -147,6 +151,7 @@ namespace Oracle.Behaviour.Modes
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Dravanian Hinterlands.");
                     TreeRoot.Stop("Too low level to continue.");
+                    return true;
                 }
 
                 if (WorldManager.ZoneId != ZoneDravanianHinterlands)
@@ -162,6 +167,7 @@ namespace Oracle.Behaviour.Modes
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in Azys Lla.");
                     TreeRoot.Stop("Too low level to continue.");
+                    return true;
                 }
 
                 if (WorldManager.ZoneId != ZoneAzysLla)

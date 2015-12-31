@@ -120,25 +120,31 @@
   <data name="labelOracleModeFateGrind.Text" xml:space="preserve">
     <value>FATE Grind mode will run all FATEs in the current zone, assuming they meet the following criteria:
 
+- You have enabled the FATE type in the FATE settings tab.
 - Your character can reach the FATE from where they currently are.
 - The FATE is not blacklisted.
-- You have enabled the FATE type in the FATE settings tab.
-- The FATE has met the minimum progression to begin (Boss and Mega-Boss FATEs only).</value>
+- The FATE has met the minimum progression required to begin (Boss and Mega-Boss FATEs only).</value>
   </data>
   <data name="labelAnimaGrindMode.Text" xml:space="preserve">
-    <value>Anima Grind mode is designed to gather the Luminous Crystals for the first quest of the Anima weapon quest chain. It will check how many crystals of each type you have, and then teleport to the correct zone to farm them.
+    <value>Anima Grind mode is designed to gather the Luminous Crystals for the first quest of the Anima weapon quest chain. It will check how many crystals of each type you have, and then teleport to the correct zone to farm those that you don't have three of.
 
 In order to use Anima Grind mode, the following conditions must be met:
 
 - You must have the quest 'Soul without Life'.
 - You must be on the final step of the quest.
-- You must be at least level 50 to do FATEs in Coerthas Western Highlands, Sea of Clouds and The Dravanian Forelands.
+- You must be at least level 50 to do FATEs in Coerthas Western Highlands, The Sea of Clouds and The Dravanian Forelands.
 - You must be at least level 52 to do FATEs in The Churning Mists.
 - You must be at least level 54 to do FATEs in The Dravanian Hinterlands.
 - You must be at least level 55 to do FATEs in Azys Lla.
 
-If any of these steps are not met, Oracle will stop running.</value>
+If any of these conditions are not met, Oracle will stop running.</value>
   </data>
+  <metadata name="LevelColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="AetheryteColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="labelLicenseText.Text" xml:space="preserve">
     <value>Oracle - An improved FATE bot for RebornBuddy
 Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
@@ -159,6 +165,9 @@ If you do decide to donate, thank you very much!</value>
   <data name="labelTooltip.Text" xml:space="preserve">
     <value>Lorem ipsum dolor sit amet, cetero docendi per cu, ignota probatus an mea. Has id saperet molestie, ne vel civibus ancillae. Eu assum denique nam. Nam id putent omittam gubergren. Ea nihil tempor sit. Pri decore accusam eu, ius labore dicunt audire eu, tollit gloriatur no vix.</value>
   </data>
+  <metadata name="oracleSettingsBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

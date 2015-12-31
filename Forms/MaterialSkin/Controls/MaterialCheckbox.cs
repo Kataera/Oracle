@@ -108,15 +108,14 @@ namespace MaterialSkin.Controls
 
         public override Size GetPreferredSize(Size proposedSize)
         {
-            var w = this.boxOffset + CheckboxSize + 2
-                    + (int) this.CreateGraphics().MeasureString(this.Text, this.SkinManager.RobotoMedium10).Width;
+            var w = this.boxOffset + CheckboxSize + this.boxOffset;
             return this.Ripple ? new Size(w, 30) : new Size(w, 20);
         }
 
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            this.Font = this.SkinManager.RobotoMedium10;
+            this.Font = this.SkinManager.RobotoRegular11;
 
             if (this.DesignMode)
             {
@@ -263,10 +262,12 @@ namespace MaterialSkin.Controls
             }
 
             // draw checkbox text
-            var stringSize = g.MeasureString(this.Text, this.SkinManager.RobotoMedium10);
-            g.DrawString(this.Text, this.SkinManager.RobotoMedium10,
+            /*
+            var stringSize = g.MeasureString(this.Text, this.SkinManager.RobotoRegular11);
+            g.DrawString(this.Text, this.SkinManager.RobotoRegular11,
                 this.Enabled ? this.SkinManager.GetPrimaryTextBrush() : this.SkinManager.GetDisabledOrHintBrush(),
                 this.boxOffset + TextOffset, this.Height / 2 - stringSize.Height / 2);
+                */
 
             // dispose used paint objects
             pen.Dispose();

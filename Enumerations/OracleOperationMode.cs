@@ -32,7 +32,7 @@ namespace Oracle.Enumerations
 
         AtmaGrind,
 
-        ZetaGrind,
+        AnimusGrind,
 
         AnimaGrind
     }

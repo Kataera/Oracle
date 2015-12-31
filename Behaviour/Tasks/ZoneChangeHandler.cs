@@ -48,7 +48,7 @@ namespace Oracle.Behaviour.Tasks
 
         public static async Task<bool> HandleZoneChange()
         {
-            uint aetheryteId = 0;
+            uint aetheryteId;
             OracleSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
 
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
@@ -67,6 +67,11 @@ namespace Oracle.Behaviour.Tasks
             Logger.SendLog("Character is level " + Core.Player.ClassLevel + ", teleporting to " + zoneName + ".");
             await Teleport.TeleportToAetheryte(aetheryteId);
 
+            if (WorldManager.ZoneId != WorldManager.GetZoneForAetheryteId(aetheryteId))
+            {
+                return true;
+            }
+
             if (OracleSettings.Instance.BindHomePoint)
             {
                 await BindHomePoint.Main(aetheryteId);
@@ -82,7 +87,7 @@ namespace Oracle.Behaviour.Tasks
 
         public static async Task<bool> HandleZoneChange(uint zoneId)
         {
-            uint aetheryteId = 0;
+            uint aetheryteId;
 
             if (zoneId == DravanianHinterlands)
             {
@@ -116,6 +121,11 @@ namespace Oracle.Behaviour.Tasks
             var zoneName = WorldManager.AvailableLocations.FirstOrDefault(teleport => teleport.AetheryteId == aetheryteId).Name;
             Logger.SendLog("Teleporting to " + zoneName + ".");
             await Teleport.TeleportToAetheryte(aetheryteId);
+
+            if (WorldManager.ZoneId != WorldManager.GetZoneForAetheryteId(aetheryteId))
+            {
+                return true;
+            }
 
             if (OracleSettings.Instance.BindHomePoint)
             {

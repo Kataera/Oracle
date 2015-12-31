@@ -55,6 +55,7 @@ namespace Oracle.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.tabSelectorMain = new MaterialSkin.Controls.MaterialTabSelector();
             this.tabControllerMain = new MaterialSkin.Controls.MaterialTabControl();
@@ -62,27 +63,56 @@ namespace Oracle.Forms
             this.tabSelectorGeneral = new MaterialSkin.Controls.MaterialTabSelectorVertical();
             this.tabControllerGeneral = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPageOracleMode = new System.Windows.Forms.TabPage();
-            this.tabControlOracleMode = new MaterialSkin.Controls.MaterialTabControl();
+            this.tabControllerOracleMode = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPageOracleModeFateGrind = new System.Windows.Forms.TabPage();
             this.labelOracleModeFateGrind = new System.Windows.Forms.Label();
             this.tabPageOracleModeSpecificFate = new System.Windows.Forms.TabPage();
-            this.labelSpecificFateName = new System.Windows.Forms.Label();
-            this.textBoxSpecificFateName = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.labelSpecificFateNameSetting = new System.Windows.Forms.Label();
+            this.textBoxSpecificFateNameSetting = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.labelOracleModeSpecificFate = new System.Windows.Forms.Label();
             this.tabPageOracleModeAtmaGrind = new System.Windows.Forms.TabPage();
             this.labelAtmaGrindNYI = new System.Windows.Forms.Label();
-            this.tabPageOracleModeZetaGrind = new System.Windows.Forms.TabPage();
-            this.labelZetaGrindModeNYI = new System.Windows.Forms.Label();
+            this.tabPageOracleModeAnimusGrind = new System.Windows.Forms.TabPage();
+            this.labelAnimusGrindModeNYI = new System.Windows.Forms.Label();
             this.tabPageOracleModeAnimaGrind = new System.Windows.Forms.TabPage();
             this.labelAnimaGrindMode = new System.Windows.Forms.Label();
-            this.materialLabelOracleMode = new System.Windows.Forms.Label();
-            this.comboBoxOracleMode = new System.Windows.Forms.ComboBox();
+            this.labelOracleModeSetting = new System.Windows.Forms.Label();
+            this.comboBoxOracleModeSetting = new System.Windows.Forms.ComboBox();
             this.labelOracleModeTitle = new System.Windows.Forms.Label();
             this.tabPageFateSelection = new System.Windows.Forms.TabPage();
+            this.labelFateSelectionDescription = new System.Windows.Forms.Label();
+            this.comboBoxFateSelectStrategySetting = new System.Windows.Forms.ComboBox();
+            this.labelFateSelectStrategySetting = new System.Windows.Forms.Label();
             this.labelFateSelectionTitle = new System.Windows.Forms.Label();
             this.tabPageDowntime = new System.Windows.Forms.TabPage();
+            this.tabControllerDowntime = new MaterialSkin.Controls.MaterialTabControl();
+            this.tabPageDowntimeReturnToAetheryte = new System.Windows.Forms.TabPage();
+            this.labelDowntimeReturnToAetheryte = new System.Windows.Forms.Label();
+            this.tabPageDowntimeMoveToLocation = new System.Windows.Forms.TabPage();
+            this.buttonDowntimeSetLocation = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.buttonDowntimeRefreshZone = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.labelDowntimeWaitLocationValue = new System.Windows.Forms.Label();
+            this.labelDowntimeCurrentZoneValue = new System.Windows.Forms.Label();
+            this.labelDowntimeWaitLocation = new System.Windows.Forms.Label();
+            this.labelDowntimeCurrentZone = new System.Windows.Forms.Label();
+            this.labelDowntimeMoveToLocation = new System.Windows.Forms.Label();
+            this.tabPageDowntimeGrindMobs = new System.Windows.Forms.TabPage();
+            this.numericUpDownMaxLevelAboveSetting = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMinLevelBelowSetting = new System.Windows.Forms.NumericUpDown();
+            this.labelDowntimeGrindMobsMaxLevelAboveSetting = new System.Windows.Forms.Label();
+            this.labelDowntimeGrindMobsMaxLevelBelowSetting = new System.Windows.Forms.Label();
+            this.labelDowntimeGrindMobs = new System.Windows.Forms.Label();
+            this.tabPageDowntimeDoNothing = new System.Windows.Forms.TabPage();
+            this.labelDowntimeDoNothing = new System.Windows.Forms.Label();
+            this.comboBoxDowntimeBehaviourSetting = new System.Windows.Forms.ComboBox();
+            this.labelDowntimeBehaviourSetting = new System.Windows.Forms.Label();
             this.labelDowntimeTitle = new System.Windows.Forms.Label();
             this.tabPageZoneChange = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.LevelColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AetheryteColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.labelZoneChangeEnabledSetting = new System.Windows.Forms.Label();
+            this.materialCheckBox1 = new MaterialSkin.Controls.MaterialCheckBox();
             this.labelZoneChangeTitle = new System.Windows.Forms.Label();
             this.tabPageMiscellaneous = new System.Windows.Forms.TabPage();
             this.labelMiscellaneousTitle = new System.Windows.Forms.Label();
@@ -135,21 +165,30 @@ namespace Oracle.Forms
             this.labelTooltip = new System.Windows.Forms.Label();
             this.panelControl = new System.Windows.Forms.Panel();
             this.buttonClose = new MaterialSkin.Controls.MaterialFlatButton();
-            this.pictureBoxLogo = new MaterialSkin.Controls.MaterialPictureBox();
             this.labelDefaultFocus = new System.Windows.Forms.Label();
+            this.pictureBoxLogo = new MaterialSkin.Controls.MaterialPictureBox();
+            this.oracleSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControllerMain.SuspendLayout();
             this.tabGeneralSettings.SuspendLayout();
             this.tabControllerGeneral.SuspendLayout();
             this.tabPageOracleMode.SuspendLayout();
-            this.tabControlOracleMode.SuspendLayout();
+            this.tabControllerOracleMode.SuspendLayout();
             this.tabPageOracleModeFateGrind.SuspendLayout();
             this.tabPageOracleModeSpecificFate.SuspendLayout();
             this.tabPageOracleModeAtmaGrind.SuspendLayout();
-            this.tabPageOracleModeZetaGrind.SuspendLayout();
+            this.tabPageOracleModeAnimusGrind.SuspendLayout();
             this.tabPageOracleModeAnimaGrind.SuspendLayout();
             this.tabPageFateSelection.SuspendLayout();
             this.tabPageDowntime.SuspendLayout();
+            this.tabControllerDowntime.SuspendLayout();
+            this.tabPageDowntimeReturnToAetheryte.SuspendLayout();
+            this.tabPageDowntimeMoveToLocation.SuspendLayout();
+            this.tabPageDowntimeGrindMobs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxLevelAboveSetting)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinLevelBelowSetting)).BeginInit();
+            this.tabPageDowntimeDoNothing.SuspendLayout();
             this.tabPageZoneChange.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPageMiscellaneous.SuspendLayout();
             this.tabFateSettings.SuspendLayout();
             this.tabControllerFate.SuspendLayout();
@@ -177,6 +216,7 @@ namespace Oracle.Forms
             this.tabPageDevelopment.SuspendLayout();
             this.panelControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oracleSettingsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabSelectorMain
@@ -267,10 +307,10 @@ namespace Oracle.Forms
             // tabPageOracleMode
             // 
             this.tabPageOracleMode.AutoScroll = true;
-            this.tabPageOracleMode.BackColor = System.Drawing.Color.White;
-            this.tabPageOracleMode.Controls.Add(this.tabControlOracleMode);
-            this.tabPageOracleMode.Controls.Add(this.materialLabelOracleMode);
-            this.tabPageOracleMode.Controls.Add(this.comboBoxOracleMode);
+            this.tabPageOracleMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
+            this.tabPageOracleMode.Controls.Add(this.tabControllerOracleMode);
+            this.tabPageOracleMode.Controls.Add(this.labelOracleModeSetting);
+            this.tabPageOracleMode.Controls.Add(this.comboBoxOracleModeSetting);
             this.tabPageOracleMode.Controls.Add(this.labelOracleModeTitle);
             this.tabPageOracleMode.Location = new System.Drawing.Point(4, 29);
             this.tabPageOracleMode.Margin = new System.Windows.Forms.Padding(0);
@@ -281,24 +321,24 @@ namespace Oracle.Forms
             this.tabPageOracleMode.Text = "Oracle Mode";
             this.tabPageOracleMode.Click += new System.EventHandler(this.OnTabPageClick);
             // 
-            // tabControlOracleMode
+            // tabControllerOracleMode
             // 
-            this.tabControlOracleMode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tabControllerOracleMode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControlOracleMode.Controls.Add(this.tabPageOracleModeFateGrind);
-            this.tabControlOracleMode.Controls.Add(this.tabPageOracleModeSpecificFate);
-            this.tabControlOracleMode.Controls.Add(this.tabPageOracleModeAtmaGrind);
-            this.tabControlOracleMode.Controls.Add(this.tabPageOracleModeZetaGrind);
-            this.tabControlOracleMode.Controls.Add(this.tabPageOracleModeAnimaGrind);
-            this.tabControlOracleMode.Depth = 0;
-            this.tabControlOracleMode.Location = new System.Drawing.Point(3, 117);
-            this.tabControlOracleMode.Margin = new System.Windows.Forms.Padding(0);
-            this.tabControlOracleMode.MouseState = MaterialSkin.MouseState.Hover;
-            this.tabControlOracleMode.Name = "tabControlOracleMode";
-            this.tabControlOracleMode.SelectedIndex = 0;
-            this.tabControlOracleMode.Size = new System.Drawing.Size(655, 283);
-            this.tabControlOracleMode.TabIndex = 4;
+            this.tabControllerOracleMode.Controls.Add(this.tabPageOracleModeFateGrind);
+            this.tabControllerOracleMode.Controls.Add(this.tabPageOracleModeSpecificFate);
+            this.tabControllerOracleMode.Controls.Add(this.tabPageOracleModeAtmaGrind);
+            this.tabControllerOracleMode.Controls.Add(this.tabPageOracleModeAnimusGrind);
+            this.tabControllerOracleMode.Controls.Add(this.tabPageOracleModeAnimaGrind);
+            this.tabControllerOracleMode.Depth = 0;
+            this.tabControllerOracleMode.Location = new System.Drawing.Point(3, 117);
+            this.tabControllerOracleMode.Margin = new System.Windows.Forms.Padding(0);
+            this.tabControllerOracleMode.MouseState = MaterialSkin.MouseState.Hover;
+            this.tabControllerOracleMode.Name = "tabControllerOracleMode";
+            this.tabControllerOracleMode.SelectedIndex = 0;
+            this.tabControllerOracleMode.Size = new System.Drawing.Size(655, 276);
+            this.tabControllerOracleMode.TabIndex = 4;
             // 
             // tabPageOracleModeFateGrind
             // 
@@ -307,7 +347,7 @@ namespace Oracle.Forms
             this.tabPageOracleModeFateGrind.Location = new System.Drawing.Point(4, 29);
             this.tabPageOracleModeFateGrind.Name = "tabPageOracleModeFateGrind";
             this.tabPageOracleModeFateGrind.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageOracleModeFateGrind.Size = new System.Drawing.Size(647, 250);
+            this.tabPageOracleModeFateGrind.Size = new System.Drawing.Size(647, 243);
             this.tabPageOracleModeFateGrind.TabIndex = 0;
             this.tabPageOracleModeFateGrind.Text = "FATE Grind";
             this.tabPageOracleModeFateGrind.Click += new System.EventHandler(this.OnTabPageClick);
@@ -320,54 +360,55 @@ namespace Oracle.Forms
             this.labelOracleModeFateGrind.ForeColor = System.Drawing.Color.Black;
             this.labelOracleModeFateGrind.Location = new System.Drawing.Point(10, 0);
             this.labelOracleModeFateGrind.Name = "labelOracleModeFateGrind";
-            this.labelOracleModeFateGrind.Size = new System.Drawing.Size(631, 240);
+            this.labelOracleModeFateGrind.Size = new System.Drawing.Size(631, 226);
             this.labelOracleModeFateGrind.TabIndex = 1;
             this.labelOracleModeFateGrind.Text = resources.GetString("labelOracleModeFateGrind.Text");
             // 
             // tabPageOracleModeSpecificFate
             // 
             this.tabPageOracleModeSpecificFate.BackColor = System.Drawing.Color.White;
-            this.tabPageOracleModeSpecificFate.Controls.Add(this.labelSpecificFateName);
-            this.tabPageOracleModeSpecificFate.Controls.Add(this.textBoxSpecificFateName);
+            this.tabPageOracleModeSpecificFate.Controls.Add(this.labelSpecificFateNameSetting);
+            this.tabPageOracleModeSpecificFate.Controls.Add(this.textBoxSpecificFateNameSetting);
             this.tabPageOracleModeSpecificFate.Controls.Add(this.labelOracleModeSpecificFate);
             this.tabPageOracleModeSpecificFate.Location = new System.Drawing.Point(4, 22);
             this.tabPageOracleModeSpecificFate.Name = "tabPageOracleModeSpecificFate";
             this.tabPageOracleModeSpecificFate.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageOracleModeSpecificFate.Size = new System.Drawing.Size(647, 257);
+            this.tabPageOracleModeSpecificFate.Size = new System.Drawing.Size(647, 250);
             this.tabPageOracleModeSpecificFate.TabIndex = 1;
             this.tabPageOracleModeSpecificFate.Text = "Specific FATE";
             this.tabPageOracleModeSpecificFate.Click += new System.EventHandler(this.OnTabPageClick);
             // 
-            // labelSpecificFateName
+            // labelSpecificFateNameSetting
             // 
-            this.labelSpecificFateName.AutoSize = true;
-            this.labelSpecificFateName.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelSpecificFateName.Location = new System.Drawing.Point(18, 45);
-            this.labelSpecificFateName.Name = "labelSpecificFateName";
-            this.labelSpecificFateName.Size = new System.Drawing.Size(89, 18);
-            this.labelSpecificFateName.TabIndex = 4;
-            this.labelSpecificFateName.Text = "FATE Name:";
+            this.labelSpecificFateNameSetting.AutoSize = true;
+            this.labelSpecificFateNameSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSpecificFateNameSetting.Location = new System.Drawing.Point(28, 45);
+            this.labelSpecificFateNameSetting.Name = "labelSpecificFateNameSetting";
+            this.labelSpecificFateNameSetting.Size = new System.Drawing.Size(89, 18);
+            this.labelSpecificFateNameSetting.TabIndex = 4;
+            this.labelSpecificFateNameSetting.Text = "FATE Name:";
             // 
-            // textBoxSpecificFateName
+            // textBoxSpecificFateNameSetting
             // 
-            this.textBoxSpecificFateName.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.textBoxSpecificFateName.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.textBoxSpecificFateName.Depth = 0;
-            this.textBoxSpecificFateName.Hint = "";
-            this.textBoxSpecificFateName.Location = new System.Drawing.Point(113, 45);
-            this.textBoxSpecificFateName.MaxLength = 100;
-            this.textBoxSpecificFateName.MouseState = MaterialSkin.MouseState.Hover;
-            this.textBoxSpecificFateName.Name = "textBoxSpecificFateName";
-            this.textBoxSpecificFateName.PasswordChar = '\0';
-            this.textBoxSpecificFateName.SelectedText = "";
-            this.textBoxSpecificFateName.SelectionLength = 0;
-            this.textBoxSpecificFateName.SelectionStart = 0;
-            this.textBoxSpecificFateName.Size = new System.Drawing.Size(257, 25);
-            this.textBoxSpecificFateName.TabIndex = 3;
-            this.textBoxSpecificFateName.TabStop = false;
-            this.textBoxSpecificFateName.UseSystemPasswordChar = false;
-            this.textBoxSpecificFateName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnTextBoxSpecificFateNameKeyDown);
-            this.textBoxSpecificFateName.TextChanged += new System.EventHandler(this.OnTextBoxSpecificFateNameTextChanged);
+            this.textBoxSpecificFateNameSetting.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.textBoxSpecificFateNameSetting.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBoxSpecificFateNameSetting.Depth = 0;
+            this.textBoxSpecificFateNameSetting.Hint = "";
+            this.textBoxSpecificFateNameSetting.Location = new System.Drawing.Point(123, 45);
+            this.textBoxSpecificFateNameSetting.MaxLength = 100;
+            this.textBoxSpecificFateNameSetting.MouseState = MaterialSkin.MouseState.Hover;
+            this.textBoxSpecificFateNameSetting.Name = "textBoxSpecificFateNameSetting";
+            this.textBoxSpecificFateNameSetting.PasswordChar = '\0';
+            this.textBoxSpecificFateNameSetting.SelectedText = "";
+            this.textBoxSpecificFateNameSetting.SelectionLength = 0;
+            this.textBoxSpecificFateNameSetting.SelectionStart = 0;
+            this.textBoxSpecificFateNameSetting.Size = new System.Drawing.Size(317, 25);
+            this.textBoxSpecificFateNameSetting.TabIndex = 3;
+            this.textBoxSpecificFateNameSetting.TabStop = false;
+            this.textBoxSpecificFateNameSetting.UseSystemPasswordChar = false;
+            this.textBoxSpecificFateNameSetting.Enter += new System.EventHandler(this.OnEnterSelectAllText);
+            this.textBoxSpecificFateNameSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
+            this.textBoxSpecificFateNameSetting.TextChanged += new System.EventHandler(this.OnTextBoxSpecificFateNameTextChanged);
             // 
             // labelOracleModeSpecificFate
             // 
@@ -381,7 +422,7 @@ namespace Oracle.Forms
             this.labelOracleModeSpecificFate.Name = "labelOracleModeSpecificFate";
             this.labelOracleModeSpecificFate.Size = new System.Drawing.Size(435, 20);
             this.labelOracleModeSpecificFate.TabIndex = 2;
-            this.labelOracleModeSpecificFate.Text = "Specific FATE mode will only run the FATE you specify below:";
+            this.labelOracleModeSpecificFate.Text = "Specific FATE mode will only run the FATE you specify below.";
             // 
             // tabPageOracleModeAtmaGrind
             // 
@@ -389,7 +430,7 @@ namespace Oracle.Forms
             this.tabPageOracleModeAtmaGrind.Controls.Add(this.labelAtmaGrindNYI);
             this.tabPageOracleModeAtmaGrind.Location = new System.Drawing.Point(4, 22);
             this.tabPageOracleModeAtmaGrind.Name = "tabPageOracleModeAtmaGrind";
-            this.tabPageOracleModeAtmaGrind.Size = new System.Drawing.Size(647, 257);
+            this.tabPageOracleModeAtmaGrind.Size = new System.Drawing.Size(647, 250);
             this.tabPageOracleModeAtmaGrind.TabIndex = 2;
             this.tabPageOracleModeAtmaGrind.Text = "Atma Grind";
             this.tabPageOracleModeAtmaGrind.Click += new System.EventHandler(this.OnTabPageClick);
@@ -405,33 +446,33 @@ namespace Oracle.Forms
             this.labelAtmaGrindNYI.TabIndex = 0;
             this.labelAtmaGrindNYI.Text = "Atma Grind mode is not yet implemented.";
             // 
-            // tabPageOracleModeZetaGrind
+            // tabPageOracleModeAnimusGrind
             // 
-            this.tabPageOracleModeZetaGrind.BackColor = System.Drawing.Color.White;
-            this.tabPageOracleModeZetaGrind.Controls.Add(this.labelZetaGrindModeNYI);
-            this.tabPageOracleModeZetaGrind.Location = new System.Drawing.Point(4, 29);
-            this.tabPageOracleModeZetaGrind.Name = "tabPageOracleModeZetaGrind";
-            this.tabPageOracleModeZetaGrind.Size = new System.Drawing.Size(647, 250);
-            this.tabPageOracleModeZetaGrind.TabIndex = 3;
-            this.tabPageOracleModeZetaGrind.Text = "Zeta Grind";
-            this.tabPageOracleModeZetaGrind.Click += new System.EventHandler(this.OnTabPageClick);
+            this.tabPageOracleModeAnimusGrind.BackColor = System.Drawing.Color.White;
+            this.tabPageOracleModeAnimusGrind.Controls.Add(this.labelAnimusGrindModeNYI);
+            this.tabPageOracleModeAnimusGrind.Location = new System.Drawing.Point(4, 22);
+            this.tabPageOracleModeAnimusGrind.Name = "tabPageOracleModeAnimusGrind";
+            this.tabPageOracleModeAnimusGrind.Size = new System.Drawing.Size(647, 250);
+            this.tabPageOracleModeAnimusGrind.TabIndex = 3;
+            this.tabPageOracleModeAnimusGrind.Text = "Animus Grind";
+            this.tabPageOracleModeAnimusGrind.Click += new System.EventHandler(this.OnTabPageClick);
             // 
-            // labelZetaGrindModeNYI
+            // labelAnimusGrindModeNYI
             // 
-            this.labelZetaGrindModeNYI.AutoSize = true;
-            this.labelZetaGrindModeNYI.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelZetaGrindModeNYI.ForeColor = System.Drawing.Color.Red;
-            this.labelZetaGrindModeNYI.Location = new System.Drawing.Point(10, 0);
-            this.labelZetaGrindModeNYI.Name = "labelZetaGrindModeNYI";
-            this.labelZetaGrindModeNYI.Size = new System.Drawing.Size(279, 18);
-            this.labelZetaGrindModeNYI.TabIndex = 1;
-            this.labelZetaGrindModeNYI.Text = "Zeta Grind mode is not yet implemented.";
+            this.labelAnimusGrindModeNYI.AutoSize = true;
+            this.labelAnimusGrindModeNYI.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelAnimusGrindModeNYI.ForeColor = System.Drawing.Color.Red;
+            this.labelAnimusGrindModeNYI.Location = new System.Drawing.Point(10, 0);
+            this.labelAnimusGrindModeNYI.Name = "labelAnimusGrindModeNYI";
+            this.labelAnimusGrindModeNYI.Size = new System.Drawing.Size(300, 18);
+            this.labelAnimusGrindModeNYI.TabIndex = 1;
+            this.labelAnimusGrindModeNYI.Text = "Animus Grind mode is not yet implemented.";
             // 
             // tabPageOracleModeAnimaGrind
             // 
             this.tabPageOracleModeAnimaGrind.BackColor = System.Drawing.Color.White;
             this.tabPageOracleModeAnimaGrind.Controls.Add(this.labelAnimaGrindMode);
-            this.tabPageOracleModeAnimaGrind.Location = new System.Drawing.Point(4, 29);
+            this.tabPageOracleModeAnimaGrind.Location = new System.Drawing.Point(4, 22);
             this.tabPageOracleModeAnimaGrind.Name = "tabPageOracleModeAnimaGrind";
             this.tabPageOracleModeAnimaGrind.Size = new System.Drawing.Size(647, 250);
             this.tabPageOracleModeAnimaGrind.TabIndex = 4;
@@ -450,34 +491,35 @@ namespace Oracle.Forms
             this.labelAnimaGrindMode.TabIndex = 2;
             this.labelAnimaGrindMode.Text = resources.GetString("labelAnimaGrindMode.Text");
             // 
-            // materialLabelOracleMode
+            // labelOracleModeSetting
             // 
-            this.materialLabelOracleMode.AutoSize = true;
-            this.materialLabelOracleMode.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.materialLabelOracleMode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabelOracleMode.Location = new System.Drawing.Point(12, 68);
-            this.materialLabelOracleMode.Name = "materialLabelOracleMode";
-            this.materialLabelOracleMode.Size = new System.Drawing.Size(99, 20);
-            this.materialLabelOracleMode.TabIndex = 3;
-            this.materialLabelOracleMode.Text = "Oracle Mode:";
+            this.labelOracleModeSetting.AutoSize = true;
+            this.labelOracleModeSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelOracleModeSetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelOracleModeSetting.Location = new System.Drawing.Point(15, 68);
+            this.labelOracleModeSetting.Name = "labelOracleModeSetting";
+            this.labelOracleModeSetting.Size = new System.Drawing.Size(96, 18);
+            this.labelOracleModeSetting.TabIndex = 3;
+            this.labelOracleModeSetting.Text = "Oracle Mode:";
             // 
-            // comboBoxOracleMode
+            // comboBoxOracleModeSetting
             // 
-            this.comboBoxOracleMode.BackColor = System.Drawing.Color.Azure;
-            this.comboBoxOracleMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxOracleMode.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.comboBoxOracleMode.FormattingEnabled = true;
-            this.comboBoxOracleMode.Items.AddRange(new object[] {
+            this.comboBoxOracleModeSetting.BackColor = System.Drawing.Color.White;
+            this.comboBoxOracleModeSetting.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxOracleModeSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxOracleModeSetting.ForeColor = System.Drawing.Color.Black;
+            this.comboBoxOracleModeSetting.FormattingEnabled = true;
+            this.comboBoxOracleModeSetting.Items.AddRange(new object[] {
             "FATE Grind",
             "Specific FATE",
             "Atma Grind",
-            "Zeta Grind",
+            "Animus Grind",
             "Anima Grind"});
-            this.comboBoxOracleMode.Location = new System.Drawing.Point(117, 65);
-            this.comboBoxOracleMode.Name = "comboBoxOracleMode";
-            this.comboBoxOracleMode.Size = new System.Drawing.Size(121, 28);
-            this.comboBoxOracleMode.TabIndex = 2;
-            this.comboBoxOracleMode.SelectedIndexChanged += new System.EventHandler(this.OnComboBoxOracleModeSelectedIndexChanged);
+            this.comboBoxOracleModeSetting.Location = new System.Drawing.Point(117, 63);
+            this.comboBoxOracleModeSetting.Name = "comboBoxOracleModeSetting";
+            this.comboBoxOracleModeSetting.Size = new System.Drawing.Size(121, 28);
+            this.comboBoxOracleModeSetting.TabIndex = 2;
+            this.comboBoxOracleModeSetting.SelectedIndexChanged += new System.EventHandler(this.OnOracleModeSelectedIndexChanged);
             // 
             // labelOracleModeTitle
             // 
@@ -493,15 +535,57 @@ namespace Oracle.Forms
             // tabPageFateSelection
             // 
             this.tabPageFateSelection.BackColor = System.Drawing.Color.White;
+            this.tabPageFateSelection.Controls.Add(this.labelFateSelectionDescription);
+            this.tabPageFateSelection.Controls.Add(this.comboBoxFateSelectStrategySetting);
+            this.tabPageFateSelection.Controls.Add(this.labelFateSelectStrategySetting);
             this.tabPageFateSelection.Controls.Add(this.labelFateSelectionTitle);
-            this.tabPageFateSelection.Location = new System.Drawing.Point(4, 29);
+            this.tabPageFateSelection.Location = new System.Drawing.Point(4, 22);
             this.tabPageFateSelection.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageFateSelection.Name = "tabPageFateSelection";
             this.tabPageFateSelection.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFateSelection.Size = new System.Drawing.Size(666, 416);
+            this.tabPageFateSelection.Size = new System.Drawing.Size(666, 423);
             this.tabPageFateSelection.TabIndex = 1;
             this.tabPageFateSelection.Text = "Fate Selection";
             this.tabPageFateSelection.Click += new System.EventHandler(this.OnTabPageClick);
+            // 
+            // labelFateSelectionDescription
+            // 
+            this.labelFateSelectionDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelFateSelectionDescription.ForeColor = System.Drawing.Color.Black;
+            this.labelFateSelectionDescription.Location = new System.Drawing.Point(13, 117);
+            this.labelFateSelectionDescription.Name = "labelFateSelectionDescription";
+            this.labelFateSelectionDescription.Size = new System.Drawing.Size(631, 210);
+            this.labelFateSelectionDescription.TabIndex = 7;
+            this.labelFateSelectionDescription.Text = "At the moment, Oracle will only select the closest FATE to you.\r\n\r\nMore strategie" +
+    "s are coming soon!";
+            // 
+            // comboBoxFateSelectStrategySetting
+            // 
+            this.comboBoxFateSelectStrategySetting.BackColor = System.Drawing.Color.White;
+            this.comboBoxFateSelectStrategySetting.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxFateSelectStrategySetting.Enabled = false;
+            this.comboBoxFateSelectStrategySetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxFateSelectStrategySetting.ForeColor = System.Drawing.Color.Black;
+            this.comboBoxFateSelectStrategySetting.FormattingEnabled = true;
+            this.comboBoxFateSelectStrategySetting.Items.AddRange(new object[] {
+            "Closest FATE"});
+            this.comboBoxFateSelectStrategySetting.Location = new System.Drawing.Point(169, 63);
+            this.comboBoxFateSelectStrategySetting.Name = "comboBoxFateSelectStrategySetting";
+            this.comboBoxFateSelectStrategySetting.Size = new System.Drawing.Size(121, 28);
+            this.comboBoxFateSelectStrategySetting.TabIndex = 6;
+            // 
+            // labelFateSelectStrategySetting
+            // 
+            this.labelFateSelectStrategySetting.AutoSize = true;
+            this.labelFateSelectStrategySetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelFateSelectStrategySetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelFateSelectStrategySetting.Location = new System.Drawing.Point(15, 68);
+            this.labelFateSelectStrategySetting.Name = "labelFateSelectStrategySetting";
+            this.labelFateSelectStrategySetting.Size = new System.Drawing.Size(148, 18);
+            this.labelFateSelectStrategySetting.TabIndex = 5;
+            this.labelFateSelectStrategySetting.Text = "Fate Select Strategy:";
             // 
             // labelFateSelectionTitle
             // 
@@ -517,14 +601,308 @@ namespace Oracle.Forms
             // tabPageDowntime
             // 
             this.tabPageDowntime.BackColor = System.Drawing.Color.White;
+            this.tabPageDowntime.Controls.Add(this.tabControllerDowntime);
+            this.tabPageDowntime.Controls.Add(this.comboBoxDowntimeBehaviourSetting);
+            this.tabPageDowntime.Controls.Add(this.labelDowntimeBehaviourSetting);
             this.tabPageDowntime.Controls.Add(this.labelDowntimeTitle);
-            this.tabPageDowntime.Location = new System.Drawing.Point(4, 29);
+            this.tabPageDowntime.Location = new System.Drawing.Point(4, 22);
             this.tabPageDowntime.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageDowntime.Name = "tabPageDowntime";
-            this.tabPageDowntime.Size = new System.Drawing.Size(666, 416);
+            this.tabPageDowntime.Size = new System.Drawing.Size(666, 423);
             this.tabPageDowntime.TabIndex = 2;
             this.tabPageDowntime.Text = "Downtime";
             this.tabPageDowntime.Click += new System.EventHandler(this.OnTabPageClick);
+            // 
+            // tabControllerDowntime
+            // 
+            this.tabControllerDowntime.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControllerDowntime.Controls.Add(this.tabPageDowntimeReturnToAetheryte);
+            this.tabControllerDowntime.Controls.Add(this.tabPageDowntimeMoveToLocation);
+            this.tabControllerDowntime.Controls.Add(this.tabPageDowntimeGrindMobs);
+            this.tabControllerDowntime.Controls.Add(this.tabPageDowntimeDoNothing);
+            this.tabControllerDowntime.Depth = 0;
+            this.tabControllerDowntime.Location = new System.Drawing.Point(3, 117);
+            this.tabControllerDowntime.Margin = new System.Windows.Forms.Padding(0);
+            this.tabControllerDowntime.MouseState = MaterialSkin.MouseState.Hover;
+            this.tabControllerDowntime.Name = "tabControllerDowntime";
+            this.tabControllerDowntime.SelectedIndex = 0;
+            this.tabControllerDowntime.Size = new System.Drawing.Size(655, 290);
+            this.tabControllerDowntime.TabIndex = 8;
+            // 
+            // tabPageDowntimeReturnToAetheryte
+            // 
+            this.tabPageDowntimeReturnToAetheryte.BackColor = System.Drawing.Color.White;
+            this.tabPageDowntimeReturnToAetheryte.Controls.Add(this.labelDowntimeReturnToAetheryte);
+            this.tabPageDowntimeReturnToAetheryte.Location = new System.Drawing.Point(4, 29);
+            this.tabPageDowntimeReturnToAetheryte.Name = "tabPageDowntimeReturnToAetheryte";
+            this.tabPageDowntimeReturnToAetheryte.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageDowntimeReturnToAetheryte.Size = new System.Drawing.Size(647, 257);
+            this.tabPageDowntimeReturnToAetheryte.TabIndex = 0;
+            this.tabPageDowntimeReturnToAetheryte.Text = "Return to Aetheryte";
+            // 
+            // labelDowntimeReturnToAetheryte
+            // 
+            this.labelDowntimeReturnToAetheryte.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelDowntimeReturnToAetheryte.ForeColor = System.Drawing.Color.Black;
+            this.labelDowntimeReturnToAetheryte.Location = new System.Drawing.Point(10, 0);
+            this.labelDowntimeReturnToAetheryte.Name = "labelDowntimeReturnToAetheryte";
+            this.labelDowntimeReturnToAetheryte.Size = new System.Drawing.Size(631, 240);
+            this.labelDowntimeReturnToAetheryte.TabIndex = 1;
+            this.labelDowntimeReturnToAetheryte.Text = "The Return to Aetheryte behaviour will move your character to the closest aethery" +
+    "te crystal when there are no viable FATEs active.";
+            // 
+            // tabPageDowntimeMoveToLocation
+            // 
+            this.tabPageDowntimeMoveToLocation.BackColor = System.Drawing.Color.White;
+            this.tabPageDowntimeMoveToLocation.Controls.Add(this.buttonDowntimeSetLocation);
+            this.tabPageDowntimeMoveToLocation.Controls.Add(this.buttonDowntimeRefreshZone);
+            this.tabPageDowntimeMoveToLocation.Controls.Add(this.labelDowntimeWaitLocationValue);
+            this.tabPageDowntimeMoveToLocation.Controls.Add(this.labelDowntimeCurrentZoneValue);
+            this.tabPageDowntimeMoveToLocation.Controls.Add(this.labelDowntimeWaitLocation);
+            this.tabPageDowntimeMoveToLocation.Controls.Add(this.labelDowntimeCurrentZone);
+            this.tabPageDowntimeMoveToLocation.Controls.Add(this.labelDowntimeMoveToLocation);
+            this.tabPageDowntimeMoveToLocation.Location = new System.Drawing.Point(4, 22);
+            this.tabPageDowntimeMoveToLocation.Name = "tabPageDowntimeMoveToLocation";
+            this.tabPageDowntimeMoveToLocation.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageDowntimeMoveToLocation.Size = new System.Drawing.Size(647, 264);
+            this.tabPageDowntimeMoveToLocation.TabIndex = 1;
+            this.tabPageDowntimeMoveToLocation.Text = "Move to Location";
+            // 
+            // buttonDowntimeSetLocation
+            // 
+            this.buttonDowntimeSetLocation.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonDowntimeSetLocation.BackColor = System.Drawing.Color.Lavender;
+            this.buttonDowntimeSetLocation.Depth = 0;
+            this.buttonDowntimeSetLocation.Location = new System.Drawing.Point(14, 122);
+            this.buttonDowntimeSetLocation.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.buttonDowntimeSetLocation.MouseState = MaterialSkin.MouseState.Hover;
+            this.buttonDowntimeSetLocation.Name = "buttonDowntimeSetLocation";
+            this.buttonDowntimeSetLocation.Primary = true;
+            this.buttonDowntimeSetLocation.Size = new System.Drawing.Size(203, 35);
+            this.buttonDowntimeSetLocation.TabIndex = 8;
+            this.buttonDowntimeSetLocation.Text = "Set Current Location";
+            this.buttonDowntimeSetLocation.UseVisualStyleBackColor = false;
+            this.buttonDowntimeSetLocation.Click += new System.EventHandler(this.OnButtonDowntimeSetLocationClick);
+            // 
+            // buttonDowntimeRefreshZone
+            // 
+            this.buttonDowntimeRefreshZone.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonDowntimeRefreshZone.Depth = 0;
+            this.buttonDowntimeRefreshZone.Location = new System.Drawing.Point(225, 122);
+            this.buttonDowntimeRefreshZone.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.buttonDowntimeRefreshZone.MouseState = MaterialSkin.MouseState.Hover;
+            this.buttonDowntimeRefreshZone.Name = "buttonDowntimeRefreshZone";
+            this.buttonDowntimeRefreshZone.Primary = true;
+            this.buttonDowntimeRefreshZone.Size = new System.Drawing.Size(140, 35);
+            this.buttonDowntimeRefreshZone.TabIndex = 7;
+            this.buttonDowntimeRefreshZone.Text = "Refresh Zone";
+            this.buttonDowntimeRefreshZone.UseVisualStyleBackColor = true;
+            // 
+            // labelDowntimeWaitLocationValue
+            // 
+            this.labelDowntimeWaitLocationValue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelDowntimeWaitLocationValue.BackColor = System.Drawing.Color.White;
+            this.labelDowntimeWaitLocationValue.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDowntimeWaitLocationValue.ForeColor = System.Drawing.Color.Black;
+            this.labelDowntimeWaitLocationValue.Location = new System.Drawing.Point(164, 85);
+            this.labelDowntimeWaitLocationValue.Name = "labelDowntimeWaitLocationValue";
+            this.labelDowntimeWaitLocationValue.Size = new System.Drawing.Size(69, 36);
+            this.labelDowntimeWaitLocationValue.TabIndex = 6;
+            this.labelDowntimeWaitLocationValue.Text = "None";
+            // 
+            // labelDowntimeCurrentZoneValue
+            // 
+            this.labelDowntimeCurrentZoneValue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelDowntimeCurrentZoneValue.BackColor = System.Drawing.Color.White;
+            this.labelDowntimeCurrentZoneValue.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDowntimeCurrentZoneValue.ForeColor = System.Drawing.Color.Black;
+            this.labelDowntimeCurrentZoneValue.Location = new System.Drawing.Point(164, 55);
+            this.labelDowntimeCurrentZoneValue.Name = "labelDowntimeCurrentZoneValue";
+            this.labelDowntimeCurrentZoneValue.Size = new System.Drawing.Size(69, 36);
+            this.labelDowntimeCurrentZoneValue.TabIndex = 5;
+            this.labelDowntimeCurrentZoneValue.Text = "0";
+            // 
+            // labelDowntimeWaitLocation
+            // 
+            this.labelDowntimeWaitLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelDowntimeWaitLocation.BackColor = System.Drawing.Color.White;
+            this.labelDowntimeWaitLocation.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDowntimeWaitLocation.ForeColor = System.Drawing.Color.Black;
+            this.labelDowntimeWaitLocation.Location = new System.Drawing.Point(28, 85);
+            this.labelDowntimeWaitLocation.Name = "labelDowntimeWaitLocation";
+            this.labelDowntimeWaitLocation.Size = new System.Drawing.Size(130, 36);
+            this.labelDowntimeWaitLocation.TabIndex = 4;
+            this.labelDowntimeWaitLocation.Text = "Wait Location: ";
+            // 
+            // labelDowntimeCurrentZone
+            // 
+            this.labelDowntimeCurrentZone.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelDowntimeCurrentZone.BackColor = System.Drawing.Color.White;
+            this.labelDowntimeCurrentZone.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDowntimeCurrentZone.ForeColor = System.Drawing.Color.Black;
+            this.labelDowntimeCurrentZone.Location = new System.Drawing.Point(28, 55);
+            this.labelDowntimeCurrentZone.Name = "labelDowntimeCurrentZone";
+            this.labelDowntimeCurrentZone.Size = new System.Drawing.Size(130, 36);
+            this.labelDowntimeCurrentZone.TabIndex = 3;
+            this.labelDowntimeCurrentZone.Text = "Current Zone Id: ";
+            // 
+            // labelDowntimeMoveToLocation
+            // 
+            this.labelDowntimeMoveToLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelDowntimeMoveToLocation.BackColor = System.Drawing.Color.White;
+            this.labelDowntimeMoveToLocation.ForeColor = System.Drawing.Color.Black;
+            this.labelDowntimeMoveToLocation.Location = new System.Drawing.Point(10, 0);
+            this.labelDowntimeMoveToLocation.Name = "labelDowntimeMoveToLocation";
+            this.labelDowntimeMoveToLocation.Size = new System.Drawing.Size(631, 55);
+            this.labelDowntimeMoveToLocation.TabIndex = 2;
+            this.labelDowntimeMoveToLocation.Text = "The Move to Location behaviour will move you to a location of your choosing when " +
+    "there are no viable FATEs active. Each zone has its own location.";
+            // 
+            // tabPageDowntimeGrindMobs
+            // 
+            this.tabPageDowntimeGrindMobs.BackColor = System.Drawing.Color.White;
+            this.tabPageDowntimeGrindMobs.Controls.Add(this.numericUpDownMaxLevelAboveSetting);
+            this.tabPageDowntimeGrindMobs.Controls.Add(this.numericUpDownMinLevelBelowSetting);
+            this.tabPageDowntimeGrindMobs.Controls.Add(this.labelDowntimeGrindMobsMaxLevelAboveSetting);
+            this.tabPageDowntimeGrindMobs.Controls.Add(this.labelDowntimeGrindMobsMaxLevelBelowSetting);
+            this.tabPageDowntimeGrindMobs.Controls.Add(this.labelDowntimeGrindMobs);
+            this.tabPageDowntimeGrindMobs.Location = new System.Drawing.Point(4, 22);
+            this.tabPageDowntimeGrindMobs.Name = "tabPageDowntimeGrindMobs";
+            this.tabPageDowntimeGrindMobs.Size = new System.Drawing.Size(647, 264);
+            this.tabPageDowntimeGrindMobs.TabIndex = 2;
+            this.tabPageDowntimeGrindMobs.Text = "Grind Mobs";
+            // 
+            // numericUpDownMaxLevelAboveSetting
+            // 
+            this.numericUpDownMaxLevelAboveSetting.AutoSize = true;
+            this.numericUpDownMaxLevelAboveSetting.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.numericUpDownMaxLevelAboveSetting.Location = new System.Drawing.Point(232, 84);
+            this.numericUpDownMaxLevelAboveSetting.Maximum = new decimal(new int[] {
+            59,
+            0,
+            0,
+            0});
+            this.numericUpDownMaxLevelAboveSetting.Name = "numericUpDownMaxLevelAboveSetting";
+            this.numericUpDownMaxLevelAboveSetting.Size = new System.Drawing.Size(46, 23);
+            this.numericUpDownMaxLevelAboveSetting.TabIndex = 8;
+            this.numericUpDownMaxLevelAboveSetting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownMaxLevelAboveSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
+            // 
+            // numericUpDownMinLevelBelowSetting
+            // 
+            this.numericUpDownMinLevelBelowSetting.AutoSize = true;
+            this.numericUpDownMinLevelBelowSetting.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.numericUpDownMinLevelBelowSetting.Location = new System.Drawing.Point(232, 54);
+            this.numericUpDownMinLevelBelowSetting.Maximum = new decimal(new int[] {
+            59,
+            0,
+            0,
+            0});
+            this.numericUpDownMinLevelBelowSetting.Name = "numericUpDownMinLevelBelowSetting";
+            this.numericUpDownMinLevelBelowSetting.Size = new System.Drawing.Size(46, 23);
+            this.numericUpDownMinLevelBelowSetting.TabIndex = 7;
+            this.numericUpDownMinLevelBelowSetting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownMinLevelBelowSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
+            // 
+            // labelDowntimeGrindMobsMaxLevelAboveSetting
+            // 
+            this.labelDowntimeGrindMobsMaxLevelAboveSetting.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelDowntimeGrindMobsMaxLevelAboveSetting.AutoSize = true;
+            this.labelDowntimeGrindMobsMaxLevelAboveSetting.BackColor = System.Drawing.Color.White;
+            this.labelDowntimeGrindMobsMaxLevelAboveSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDowntimeGrindMobsMaxLevelAboveSetting.ForeColor = System.Drawing.Color.Black;
+            this.labelDowntimeGrindMobsMaxLevelAboveSetting.Location = new System.Drawing.Point(28, 85);
+            this.labelDowntimeGrindMobsMaxLevelAboveSetting.Name = "labelDowntimeGrindMobsMaxLevelAboveSetting";
+            this.labelDowntimeGrindMobsMaxLevelAboveSetting.Size = new System.Drawing.Size(198, 18);
+            this.labelDowntimeGrindMobsMaxLevelAboveSetting.TabIndex = 6;
+            this.labelDowntimeGrindMobsMaxLevelAboveSetting.Text = "Mob Maximum Level Above:";
+            // 
+            // labelDowntimeGrindMobsMaxLevelBelowSetting
+            // 
+            this.labelDowntimeGrindMobsMaxLevelBelowSetting.AutoSize = true;
+            this.labelDowntimeGrindMobsMaxLevelBelowSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDowntimeGrindMobsMaxLevelBelowSetting.Location = new System.Drawing.Point(28, 55);
+            this.labelDowntimeGrindMobsMaxLevelBelowSetting.Name = "labelDowntimeGrindMobsMaxLevelBelowSetting";
+            this.labelDowntimeGrindMobsMaxLevelBelowSetting.Size = new System.Drawing.Size(197, 18);
+            this.labelDowntimeGrindMobsMaxLevelBelowSetting.TabIndex = 5;
+            this.labelDowntimeGrindMobsMaxLevelBelowSetting.Text = "Mob Maximum Level Below:";
+            // 
+            // labelDowntimeGrindMobs
+            // 
+            this.labelDowntimeGrindMobs.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDowntimeGrindMobs.ForeColor = System.Drawing.Color.Black;
+            this.labelDowntimeGrindMobs.Location = new System.Drawing.Point(10, 0);
+            this.labelDowntimeGrindMobs.Name = "labelDowntimeGrindMobs";
+            this.labelDowntimeGrindMobs.Size = new System.Drawing.Size(631, 40);
+            this.labelDowntimeGrindMobs.TabIndex = 0;
+            this.labelDowntimeGrindMobs.Text = "The Grind Mobs behaviour will kill nearby enemy mobs when there are no viable FAT" +
+    "Es active. You can blacklist mobs in the Blacklist tab.";
+            // 
+            // tabPageDowntimeDoNothing
+            // 
+            this.tabPageDowntimeDoNothing.BackColor = System.Drawing.Color.White;
+            this.tabPageDowntimeDoNothing.Controls.Add(this.labelDowntimeDoNothing);
+            this.tabPageDowntimeDoNothing.Location = new System.Drawing.Point(4, 22);
+            this.tabPageDowntimeDoNothing.Name = "tabPageDowntimeDoNothing";
+            this.tabPageDowntimeDoNothing.Size = new System.Drawing.Size(647, 264);
+            this.tabPageDowntimeDoNothing.TabIndex = 3;
+            this.tabPageDowntimeDoNothing.Text = "Do Nothing";
+            // 
+            // labelDowntimeDoNothing
+            // 
+            this.labelDowntimeDoNothing.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDowntimeDoNothing.ForeColor = System.Drawing.Color.Black;
+            this.labelDowntimeDoNothing.Location = new System.Drawing.Point(10, 0);
+            this.labelDowntimeDoNothing.Name = "labelDowntimeDoNothing";
+            this.labelDowntimeDoNothing.Size = new System.Drawing.Size(631, 240);
+            this.labelDowntimeDoNothing.TabIndex = 1;
+            this.labelDowntimeDoNothing.Text = "The Do Nothing behaviour will stand still when there\'s no viable FATEs active. Th" +
+    "e bot will defend itself if attacked.";
+            // 
+            // comboBoxDowntimeBehaviourSetting
+            // 
+            this.comboBoxDowntimeBehaviourSetting.BackColor = System.Drawing.Color.White;
+            this.comboBoxDowntimeBehaviourSetting.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxDowntimeBehaviourSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxDowntimeBehaviourSetting.ForeColor = System.Drawing.Color.Black;
+            this.comboBoxDowntimeBehaviourSetting.FormattingEnabled = true;
+            this.comboBoxDowntimeBehaviourSetting.Items.AddRange(new object[] {
+            "Return to Aetheryte",
+            "Move to Location",
+            "Grind Mobs",
+            "Do Nothing"});
+            this.comboBoxDowntimeBehaviourSetting.Location = new System.Drawing.Point(171, 63);
+            this.comboBoxDowntimeBehaviourSetting.Name = "comboBoxDowntimeBehaviourSetting";
+            this.comboBoxDowntimeBehaviourSetting.Size = new System.Drawing.Size(160, 28);
+            this.comboBoxDowntimeBehaviourSetting.TabIndex = 7;
+            this.comboBoxDowntimeBehaviourSetting.SelectedIndexChanged += new System.EventHandler(this.OnDowntimeBehaviourSelectedIndexChanged);
+            // 
+            // labelDowntimeBehaviourSetting
+            // 
+            this.labelDowntimeBehaviourSetting.AutoSize = true;
+            this.labelDowntimeBehaviourSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDowntimeBehaviourSetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelDowntimeBehaviourSetting.Location = new System.Drawing.Point(15, 68);
+            this.labelDowntimeBehaviourSetting.Name = "labelDowntimeBehaviourSetting";
+            this.labelDowntimeBehaviourSetting.Size = new System.Drawing.Size(150, 18);
+            this.labelDowntimeBehaviourSetting.TabIndex = 6;
+            this.labelDowntimeBehaviourSetting.Text = "Downtime Behaviour:";
             // 
             // labelDowntimeTitle
             // 
@@ -540,14 +918,83 @@ namespace Oracle.Forms
             // tabPageZoneChange
             // 
             this.tabPageZoneChange.BackColor = System.Drawing.Color.White;
+            this.tabPageZoneChange.Controls.Add(this.dataGridView1);
+            this.tabPageZoneChange.Controls.Add(this.labelZoneChangeEnabledSetting);
+            this.tabPageZoneChange.Controls.Add(this.materialCheckBox1);
             this.tabPageZoneChange.Controls.Add(this.labelZoneChangeTitle);
-            this.tabPageZoneChange.Location = new System.Drawing.Point(4, 29);
+            this.tabPageZoneChange.Location = new System.Drawing.Point(4, 22);
             this.tabPageZoneChange.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageZoneChange.Name = "tabPageZoneChange";
-            this.tabPageZoneChange.Size = new System.Drawing.Size(666, 416);
+            this.tabPageZoneChange.Size = new System.Drawing.Size(666, 423);
             this.tabPageZoneChange.TabIndex = 3;
             this.tabPageZoneChange.Text = "Zone Change";
             this.tabPageZoneChange.Click += new System.EventHandler(this.OnTabPageClick);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.LevelColumn,
+            this.AetheryteColumn});
+            this.dataGridView1.GridColor = System.Drawing.Color.Black;
+            this.dataGridView1.Location = new System.Drawing.Point(17, 101);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dataGridView1.Size = new System.Drawing.Size(632, 307);
+            this.dataGridView1.TabIndex = 10;
+            // 
+            // LevelColumn
+            // 
+            this.LevelColumn.HeaderText = "Level";
+            this.LevelColumn.Name = "LevelColumn";
+            this.LevelColumn.ReadOnly = true;
+            this.LevelColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // AetheryteColumn
+            // 
+            this.AetheryteColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.AetheryteColumn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AetheryteColumn.HeaderText = "Aetheryte";
+            this.AetheryteColumn.Name = "AetheryteColumn";
+            // 
+            // labelZoneChangeEnabledSetting
+            // 
+            this.labelZoneChangeEnabledSetting.AutoSize = true;
+            this.labelZoneChangeEnabledSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelZoneChangeEnabledSetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelZoneChangeEnabledSetting.Location = new System.Drawing.Point(15, 68);
+            this.labelZoneChangeEnabledSetting.Name = "labelZoneChangeEnabledSetting";
+            this.labelZoneChangeEnabledSetting.Size = new System.Drawing.Size(173, 18);
+            this.labelZoneChangeEnabledSetting.TabIndex = 9;
+            this.labelZoneChangeEnabledSetting.Text = "Zone Changing Enabled: ";
+            // 
+            // materialCheckBox1
+            // 
+            this.materialCheckBox1.Appearance = System.Windows.Forms.Appearance.Button;
+            this.materialCheckBox1.AutoSize = true;
+            this.materialCheckBox1.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.materialCheckBox1.Depth = 0;
+            this.materialCheckBox1.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.materialCheckBox1.Location = new System.Drawing.Point(191, 62);
+            this.materialCheckBox1.Margin = new System.Windows.Forms.Padding(0);
+            this.materialCheckBox1.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialCheckBox1.MouseState = MaterialSkin.MouseState.Hover;
+            this.materialCheckBox1.Name = "materialCheckBox1";
+            this.materialCheckBox1.Ripple = true;
+            this.materialCheckBox1.Size = new System.Drawing.Size(30, 30);
+            this.materialCheckBox1.TabIndex = 8;
+            this.materialCheckBox1.Text = "Zone Change Enabled";
+            this.materialCheckBox1.UseVisualStyleBackColor = true;
             // 
             // labelZoneChangeTitle
             // 
@@ -564,10 +1011,10 @@ namespace Oracle.Forms
             // 
             this.tabPageMiscellaneous.BackColor = System.Drawing.Color.White;
             this.tabPageMiscellaneous.Controls.Add(this.labelMiscellaneousTitle);
-            this.tabPageMiscellaneous.Location = new System.Drawing.Point(4, 29);
+            this.tabPageMiscellaneous.Location = new System.Drawing.Point(4, 22);
             this.tabPageMiscellaneous.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageMiscellaneous.Name = "tabPageMiscellaneous";
-            this.tabPageMiscellaneous.Size = new System.Drawing.Size(666, 416);
+            this.tabPageMiscellaneous.Size = new System.Drawing.Size(666, 423);
             this.tabPageMiscellaneous.TabIndex = 4;
             this.tabPageMiscellaneous.Text = "Miscellaneous";
             this.tabPageMiscellaneous.Click += new System.EventHandler(this.OnTabPageClick);
@@ -588,11 +1035,11 @@ namespace Oracle.Forms
             this.tabFateSettings.BackColor = System.Drawing.Color.White;
             this.tabFateSettings.Controls.Add(this.tabControllerFate);
             this.tabFateSettings.Controls.Add(this.tabSelectorFate);
-            this.tabFateSettings.Location = new System.Drawing.Point(4, 29);
+            this.tabFateSettings.Location = new System.Drawing.Point(4, 22);
             this.tabFateSettings.Margin = new System.Windows.Forms.Padding(0);
             this.tabFateSettings.Name = "tabFateSettings";
             this.tabFateSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFateSettings.Size = new System.Drawing.Size(842, 488);
+            this.tabFateSettings.Size = new System.Drawing.Size(842, 495);
             this.tabFateSettings.TabIndex = 1;
             this.tabFateSettings.Text = "Fate Settings";
             this.tabFateSettings.Click += new System.EventHandler(this.OnTabPageClick);
@@ -802,11 +1249,11 @@ namespace Oracle.Forms
             this.tabNavigation.BackColor = System.Drawing.Color.White;
             this.tabNavigation.Controls.Add(this.tabSelectorCustom);
             this.tabNavigation.Controls.Add(this.tabControllerCustom);
-            this.tabNavigation.Location = new System.Drawing.Point(4, 29);
+            this.tabNavigation.Location = new System.Drawing.Point(4, 22);
             this.tabNavigation.Margin = new System.Windows.Forms.Padding(0);
             this.tabNavigation.Name = "tabNavigation";
             this.tabNavigation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabNavigation.Size = new System.Drawing.Size(842, 488);
+            this.tabNavigation.Size = new System.Drawing.Size(842, 495);
             this.tabNavigation.TabIndex = 2;
             this.tabNavigation.Text = "Navigation";
             this.tabNavigation.Click += new System.EventHandler(this.OnTabPageClick);
@@ -919,11 +1366,11 @@ namespace Oracle.Forms
             this.tabBlacklist.BackColor = System.Drawing.Color.White;
             this.tabBlacklist.Controls.Add(this.tabSelectorBlacklist);
             this.tabBlacklist.Controls.Add(this.tabControllerBlacklist);
-            this.tabBlacklist.Location = new System.Drawing.Point(4, 29);
+            this.tabBlacklist.Location = new System.Drawing.Point(4, 22);
             this.tabBlacklist.Margin = new System.Windows.Forms.Padding(0);
             this.tabBlacklist.Name = "tabBlacklist";
             this.tabBlacklist.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBlacklist.Size = new System.Drawing.Size(842, 488);
+            this.tabBlacklist.Size = new System.Drawing.Size(842, 495);
             this.tabBlacklist.TabIndex = 3;
             this.tabBlacklist.Text = "Blacklist";
             this.tabBlacklist.Click += new System.EventHandler(this.OnTabPageClick);
@@ -1013,11 +1460,11 @@ namespace Oracle.Forms
             this.tabAbout.BackColor = System.Drawing.Color.White;
             this.tabAbout.Controls.Add(this.tabControllerAbout);
             this.tabAbout.Controls.Add(this.tabSelectorAbout);
-            this.tabAbout.Location = new System.Drawing.Point(4, 29);
+            this.tabAbout.Location = new System.Drawing.Point(4, 22);
             this.tabAbout.Margin = new System.Windows.Forms.Padding(0);
             this.tabAbout.Name = "tabAbout";
             this.tabAbout.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAbout.Size = new System.Drawing.Size(842, 488);
+            this.tabAbout.Size = new System.Drawing.Size(842, 495);
             this.tabAbout.TabIndex = 4;
             this.tabAbout.Text = "About";
             this.tabAbout.Click += new System.EventHandler(this.OnTabPageClick);
@@ -1076,7 +1523,7 @@ namespace Oracle.Forms
             this.labelLicenseText.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelLicenseText.Location = new System.Drawing.Point(14, 56);
             this.labelLicenseText.Name = "labelLicenseText";
-            this.labelLicenseText.Size = new System.Drawing.Size(641, 256);
+            this.labelLicenseText.Size = new System.Drawing.Size(641, 249);
             this.labelLicenseText.TabIndex = 4;
             this.labelLicenseText.Text = resources.GetString("labelLicenseText.Text");
             // 
@@ -1226,6 +1673,16 @@ namespace Oracle.Forms
             this.buttonClose.UseVisualStyleBackColor = true;
             this.buttonClose.Click += new System.EventHandler(this.OnCloseButtonClick);
             // 
+            // labelDefaultFocus
+            // 
+            this.labelDefaultFocus.AutoSize = true;
+            this.labelDefaultFocus.Location = new System.Drawing.Point(623, 4);
+            this.labelDefaultFocus.Name = "labelDefaultFocus";
+            this.labelDefaultFocus.Size = new System.Drawing.Size(146, 20);
+            this.labelDefaultFocus.TabIndex = 0;
+            this.labelDefaultFocus.Text = "Default Focus Label";
+            this.labelDefaultFocus.Visible = false;
+            // 
             // pictureBoxLogo
             // 
             this.pictureBoxLogo.BackColor = System.Drawing.Color.Transparent;
@@ -1237,16 +1694,6 @@ namespace Oracle.Forms
             this.pictureBoxLogo.TabIndex = 0;
             this.pictureBoxLogo.TabStop = false;
             this.pictureBoxLogo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
-            // 
-            // labelDefaultFocus
-            // 
-            this.labelDefaultFocus.AutoSize = true;
-            this.labelDefaultFocus.Location = new System.Drawing.Point(209, 8);
-            this.labelDefaultFocus.Name = "labelDefaultFocus";
-            this.labelDefaultFocus.Size = new System.Drawing.Size(146, 20);
-            this.labelDefaultFocus.TabIndex = 0;
-            this.labelDefaultFocus.Text = "Default Focus Label";
-            this.labelDefaultFocus.Visible = false;
             // 
             // SettingsForm
             // 
@@ -1270,21 +1717,30 @@ namespace Oracle.Forms
             this.tabControllerGeneral.ResumeLayout(false);
             this.tabPageOracleMode.ResumeLayout(false);
             this.tabPageOracleMode.PerformLayout();
-            this.tabControlOracleMode.ResumeLayout(false);
+            this.tabControllerOracleMode.ResumeLayout(false);
             this.tabPageOracleModeFateGrind.ResumeLayout(false);
             this.tabPageOracleModeSpecificFate.ResumeLayout(false);
             this.tabPageOracleModeSpecificFate.PerformLayout();
             this.tabPageOracleModeAtmaGrind.ResumeLayout(false);
             this.tabPageOracleModeAtmaGrind.PerformLayout();
-            this.tabPageOracleModeZetaGrind.ResumeLayout(false);
-            this.tabPageOracleModeZetaGrind.PerformLayout();
+            this.tabPageOracleModeAnimusGrind.ResumeLayout(false);
+            this.tabPageOracleModeAnimusGrind.PerformLayout();
             this.tabPageOracleModeAnimaGrind.ResumeLayout(false);
             this.tabPageFateSelection.ResumeLayout(false);
             this.tabPageFateSelection.PerformLayout();
             this.tabPageDowntime.ResumeLayout(false);
             this.tabPageDowntime.PerformLayout();
+            this.tabControllerDowntime.ResumeLayout(false);
+            this.tabPageDowntimeReturnToAetheryte.ResumeLayout(false);
+            this.tabPageDowntimeMoveToLocation.ResumeLayout(false);
+            this.tabPageDowntimeGrindMobs.ResumeLayout(false);
+            this.tabPageDowntimeGrindMobs.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxLevelAboveSetting)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinLevelBelowSetting)).EndInit();
+            this.tabPageDowntimeDoNothing.ResumeLayout(false);
             this.tabPageZoneChange.ResumeLayout(false);
             this.tabPageZoneChange.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabPageMiscellaneous.ResumeLayout(false);
             this.tabPageMiscellaneous.PerformLayout();
             this.tabFateSettings.ResumeLayout(false);
@@ -1328,6 +1784,7 @@ namespace Oracle.Forms
             this.tabPageDevelopment.PerformLayout();
             this.panelControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oracleSettingsBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1400,21 +1857,85 @@ namespace Oracle.Forms
         private System.Windows.Forms.Label labelTeleportTitle;
         private System.Windows.Forms.TabPage tabPageDevelopment;
         private System.Windows.Forms.Label labelDevelopmentTitle;
-        private System.Windows.Forms.ComboBox comboBoxOracleMode;
+        private System.Windows.Forms.ComboBox comboBoxOracleModeSetting;
         private System.Windows.Forms.TabPage tabPageOracleModeFateGrind;
         private System.Windows.Forms.TabPage tabPageOracleModeSpecificFate;
-        private MaterialSkin.Controls.MaterialTabControl tabControlOracleMode;
+        private MaterialSkin.Controls.MaterialTabControl tabControllerOracleMode;
         private System.Windows.Forms.TabPage tabPageOracleModeAtmaGrind;
-        private System.Windows.Forms.TabPage tabPageOracleModeZetaGrind;
+        private System.Windows.Forms.TabPage tabPageOracleModeAnimusGrind;
         private System.Windows.Forms.TabPage tabPageOracleModeAnimaGrind;
         private System.Windows.Forms.Label labelAtmaGrindNYI;
-        private System.Windows.Forms.Label materialLabelOracleMode;
-        private System.Windows.Forms.Label labelZetaGrindModeNYI;
+        private System.Windows.Forms.Label labelOracleModeSetting;
+        private System.Windows.Forms.Label labelAnimusGrindModeNYI;
         private System.Windows.Forms.Label labelOracleModeFateGrind;
         private System.Windows.Forms.Label labelOracleModeSpecificFate;
-        private MaterialSkin.Controls.MaterialSingleLineTextField textBoxSpecificFateName;
-        private System.Windows.Forms.Label labelSpecificFateName;
+        private MaterialSkin.Controls.MaterialSingleLineTextField textBoxSpecificFateNameSetting;
+        private System.Windows.Forms.Label labelSpecificFateNameSetting;
         private System.Windows.Forms.Label labelDefaultFocus;
         private System.Windows.Forms.Label labelAnimaGrindMode;
+        private System.Windows.Forms.Label labelFateSelectStrategySetting;
+        private System.Windows.Forms.ComboBox comboBoxFateSelectStrategySetting;
+        private System.Windows.Forms.Label labelFateSelectionDescription;
+        private System.Windows.Forms.ComboBox comboBoxDowntimeBehaviourSetting;
+        private System.Windows.Forms.Label labelDowntimeBehaviourSetting;
+        private MaterialSkin.Controls.MaterialTabControl tabControllerDowntime;
+        private System.Windows.Forms.TabPage tabPageDowntimeReturnToAetheryte;
+        private System.Windows.Forms.Label labelDowntimeReturnToAetheryte;
+        private System.Windows.Forms.TabPage tabPageDowntimeMoveToLocation;
+        private System.Windows.Forms.Label labelDowntimeMoveToLocation;
+        private System.Windows.Forms.TabPage tabPageDowntimeGrindMobs;
+        private System.Windows.Forms.Label labelDowntimeGrindMobs;
+        private System.Windows.Forms.TabPage tabPageDowntimeDoNothing;
+        private System.Windows.Forms.Label labelDowntimeDoNothing;
+        private System.Windows.Forms.Label labelDowntimeCurrentZone;
+        private System.Windows.Forms.Label labelDowntimeWaitLocation;
+        private System.Windows.Forms.Label labelDowntimeWaitLocationValue;
+        private System.Windows.Forms.Label labelDowntimeCurrentZoneValue;
+        private MaterialSkin.Controls.MaterialRaisedButton buttonDowntimeSetLocation;
+        private MaterialSkin.Controls.MaterialRaisedButton buttonDowntimeRefreshZone;
+        private MaterialSkin.Controls.MaterialCheckBox materialCheckBox1;
+        private System.Windows.Forms.Label labelZoneChangeEnabledSetting;
+        private System.Windows.Forms.Label labelDowntimeGrindMobsMaxLevelAboveSetting;
+        private System.Windows.Forms.Label labelDowntimeGrindMobsMaxLevelBelowSetting;
+        private System.Windows.Forms.NumericUpDown numericUpDownMinLevelBelowSetting;
+        private System.Windows.Forms.NumericUpDown numericUpDownMaxLevelAboveSetting;
+        private System.Windows.Forms.BindingSource oracleSettingsBindingSource;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LevelColumn;
+        private System.Windows.Forms.DataGridViewComboBoxColumn AetheryteColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn actionDelayDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn bindHomePointDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn bossEngagePercentageDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn bossFatesEnabledDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn chainFateWaitTimeoutDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn changeZonesEnabledDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn collectFatesEnabledDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn collectFateTurnInAtAmountDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn debugEnabledDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn defenceFatesEnabledDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn escortFatesEnabledDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn fateDelayMovementDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fateDelayMovementMaximumDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fateDelayMovementMinimumDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fateMaxLevelsAboveDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fateMaxLevelsBelowDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fateSelectModeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fateWaitModeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ignoreLowDurationUnstartedFatesDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn killFatesEnabledDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn listHooksOnStartDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn lowRemainingDurationDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn megaBossEngagePercentageDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn megaBossFatesEnabledDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mobMaximumLevelAboveDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mobMaximumLevelBelowDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn oracleOperationModeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn runProblematicFatesDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn specificFateDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn teleportIfQuickerDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn teleportMinimumDistanceDeltaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn waitAtFateForProgressDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn waitForChainFatesDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.BindingSource oracleSettingsBindingSource1;
     }
 }

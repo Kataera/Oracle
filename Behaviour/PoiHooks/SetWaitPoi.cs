@@ -80,7 +80,7 @@ namespace Oracle.Behaviour.PoiHooks
 
         private static bool ZoneChangeNeeded()
         {
-            uint aetheryteId = 0;
+            uint aetheryteId;
             OracleSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
 
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))

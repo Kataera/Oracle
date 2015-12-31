@@ -69,7 +69,7 @@
     <Compile Include="Behaviour\Modes\AtmaGrind.cs" />
     <Compile Include="Behaviour\Modes\FateGrind.cs" />
     <Compile Include="Behaviour\Modes\SpecificFate.cs" />
-    <Compile Include="Behaviour\Modes\ZetaGrind.cs" />
+    <Compile Include="Behaviour\Modes\AnimusGrind.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\GrindMobs.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\MoveToWaitLocation.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\WaitInPlace.cs" />
