@@ -3710,6 +3710,7 @@
     <Level>50</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <ChainID>810</ChainID>
   </Fate>
   <Fate>
     <ID>810</ID>
