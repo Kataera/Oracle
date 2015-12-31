@@ -105,6 +105,7 @@ namespace Oracle.Forms
         {
             OracleSettings.Instance.FateWaitMode = (FateWaitMode) this.comboBoxDowntimeBehaviourSetting.SelectedIndex;
             this.tabControllerDowntime.SelectedIndex = (int) OracleSettings.Instance.FateWaitMode;
+            this.ActiveControl = this.labelDefaultFocus;
         }
 
         private void OnEnterKeyDownDropFocus(object sender, KeyEventArgs e)
@@ -131,6 +132,7 @@ namespace Oracle.Forms
         {
             OracleSettings.Instance.OracleOperationMode = (OracleOperationMode) this.comboBoxOracleModeSetting.SelectedIndex;
             this.tabControllerOracleMode.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
+            this.ActiveControl = this.labelDefaultFocus;
         }
 
         private void OnTabPageClick(object sender, EventArgs e)
