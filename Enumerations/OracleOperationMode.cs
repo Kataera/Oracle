@@ -4,7 +4,7 @@
     #################
 
     Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
+    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
 
     This file is part of Oracle.
 
@@ -32,7 +32,7 @@ namespace Oracle.Enumerations
 
         AtmaGrind,
 
-        ZetaGrind,
+        AnimusGrind,
 
         AnimaGrind
     }

@@ -6,7 +6,7 @@
     #################
 
     Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
+    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
 
     This file is part of Oracle.
 
@@ -45,8 +45,7 @@
         <xs:element ref="CollectItemId" maxOccurs="1" minOccurs="0" />
         <xs:element ref="NpcId" maxOccurs="1" minOccurs="0" />
         <xs:element ref="PreferredTargetId" maxOccurs="unbounded" minOccurs="0" />
-        <xs:element ref="ChainIDSuccess" maxOccurs="1" minOccurs="0" />
-        <xs:element ref="ChainIDFail" maxOccurs="1" minOccurs="0" />
+        <xs:element ref="ChainID" maxOccurs="1" minOccurs="0" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -96,16 +95,7 @@
   <xs:element name="CollectItemId" type="xs:integer" />
   <xs:element name="NpcId" type="xs:integer" />
   <xs:element name="PreferredTargetId" type="xs:integer" />
-  <xs:element name="ChainIDSuccess">
-    <xs:simpleType>
-      <xs:restriction base="xs:integer">
-        <xs:minInclusive value="100" />
-        <xs:maxInclusive value="999" />
-        <xs:totalDigits value="3" />
-      </xs:restriction>
-    </xs:simpleType>
-  </xs:element>
-  <xs:element name="ChainIDFail">
+  <xs:element name="ChainID">
     <xs:simpleType>
       <xs:restriction base="xs:integer">
         <xs:minInclusive value="100" />

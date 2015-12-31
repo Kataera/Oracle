@@ -4,7 +4,7 @@
     #################
 
     Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
+    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
 
     This file is part of Oracle.
 
@@ -786,19 +786,13 @@ namespace Oracle.Settings
                     this.ZoneLevels.Add(i, costaDelSol);
                 }
 
-                // 36-43: Coerthas Central Highlands (Camp Dragonhead).
-                else if (i < 43)
+                // 36-45: Coerthas Central Highlands (Camp Dragonhead).
+                else if (i < 45)
                 {
                     this.ZoneLevels.Add(i, campDragonhead);
                 }
 
-                // 43-46: Western La Noscea (Aleport).
-                else if (i < 46)
-                {
-                    this.ZoneLevels.Add(i, aleport);
-                }
-
-                // 46-50: Northern Thanalan (Ceruleum Processing Plant).
+                // 45-50: Northern Thanalan (Ceruleum Processing Plant).
                 else if (i < 50)
                 {
                     this.ZoneLevels.Add(i, ceruleumProcessingPlant);

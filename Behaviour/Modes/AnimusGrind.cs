@@ -4,7 +4,7 @@
     #################
 
     Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
+    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
 
     This file is part of Oracle.
 
@@ -30,12 +30,12 @@ using Oracle.Helpers;
 
 namespace Oracle.Behaviour.Modes
 {
-    internal static class ZetaGrind
+    internal static class AnimusGrind
     {
         public static async Task<bool> Main()
         {
-            Logger.SendErrorLog("Zeta grind mode is not yet implemented.");
-            TreeRoot.Stop("Zeta grind mode is not yet implemented.");
+            Logger.SendErrorLog("Animus grind mode is not yet implemented.");
+            TreeRoot.Stop("Animus grind mode is not yet implemented.");
 
             return true;
         }

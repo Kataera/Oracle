@@ -4,7 +4,7 @@
     #################
 
     Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
+    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
 
     This file is part of Oracle.
 
@@ -80,7 +80,7 @@ namespace Oracle.Behaviour.PoiHooks
 
         private static bool ZoneChangeNeeded()
         {
-            uint aetheryteId = 0;
+            uint aetheryteId;
             OracleSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
 
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))

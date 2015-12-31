@@ -4,7 +4,7 @@
     #################
 
     Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
+    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
 
     This file is part of Oracle.
 
@@ -110,8 +110,8 @@ namespace Oracle.Behaviour
                 case OracleOperationMode.AtmaGrind:
                     await AtmaGrind.Main();
                     break;
-                case OracleOperationMode.ZetaGrind:
-                    await ZetaGrind.Main();
+                case OracleOperationMode.AnimusGrind:
+                    await AnimusGrind.Main();
                     break;
                 case OracleOperationMode.AnimaGrind:
                     await AnimaGrind.Main();

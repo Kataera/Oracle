@@ -4,7 +4,7 @@
     #################
 
     Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
+    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
 
     This file is part of Oracle.
 
@@ -24,10 +24,17 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
+
+using ff14bot;
+using ff14bot.Managers;
 
 using MaterialSkin;
 using MaterialSkin.Controls;
+
+using Oracle.Enumerations;
+using Oracle.Settings;
 
 namespace Oracle.Forms
 {
@@ -46,6 +53,9 @@ namespace Oracle.Forms
                 Primary.Indigo300,
                 Accent.Indigo100,
                 TextShade.White);
+
+            this.ActiveControl = this.labelDefaultFocus;
+            this.SetComponentValues();
         }
 
         // Add to MouseDown of a component to allow dragging of the form.
@@ -55,6 +65,26 @@ namespace Oracle.Forms
             {
                 ReleaseCapture();
                 SendMessage(this.Handle, WmNclbuttondown, HtCaption, 0);
+            }
+        }
+
+        private void OnButtonDowntimeSetLocationClick(object sender, EventArgs e)
+        {
+            try
+            {
+                var zoneId = WorldManager.ZoneId;
+                var location = Core.Player.Location;
+
+                if (OracleSettings.Instance.FateWaitLocations.ContainsKey(zoneId))
+                {
+                    OracleSettings.Instance.FateWaitLocations.Remove(zoneId);
+                }
+
+                OracleSettings.Instance.FateWaitLocations.Add(zoneId, location);
+            }
+            catch (NullReferenceException)
+            {
+                // This will only occur if the form is created outside of RebornBuddy.
             }
         }
 
@@ -71,10 +101,76 @@ namespace Oracle.Forms
             Process.Start(startInfo);
         }
 
+        private void OnDowntimeBehaviourSelectedIndexChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.FateWaitMode = (FateWaitMode) this.comboBoxDowntimeBehaviourSetting.SelectedIndex;
+            this.tabControllerDowntime.SelectedIndex = (int) OracleSettings.Instance.FateWaitMode;
+            this.ActiveControl = this.labelDefaultFocus;
+        }
+
+        private void OnEnterKeyDownDropFocus(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.ActiveControl = this.labelDefaultFocus;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void OnEnterSelectAllText(object sender, EventArgs e)
+        {
+            this.textBoxSpecificFateNameSetting.SelectAll();
+        }
+
         private void OnFullLicenseLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var startInfo = new ProcessStartInfo("http://www.gnu.org/licenses/gpl-3.0.en.html");
             Process.Start(startInfo);
+        }
+
+        private void OnOracleModeSelectedIndexChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.OracleOperationMode = (OracleOperationMode) this.comboBoxOracleModeSetting.SelectedIndex;
+            this.tabControllerOracleMode.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
+            this.ActiveControl = this.labelDefaultFocus;
+        }
+
+        private void OnTabPageClick(object sender, EventArgs e)
+        {
+            this.ActiveControl = this.labelDefaultFocus;
+        }
+
+        private void OnTextBoxSpecificFateNameTextChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.SpecificFate = this.textBoxSpecificFateNameSetting.Text;
+        }
+
+        private void SetComponentValues()
+        {
+            this.comboBoxOracleModeSetting.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
+            this.tabControllerOracleMode.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
+            this.textBoxSpecificFateNameSetting.Text = OracleSettings.Instance.SpecificFate;
+
+            this.comboBoxFateSelectStrategySetting.SelectedIndex = (int) OracleSettings.Instance.FateSelectMode;
+
+            this.comboBoxDowntimeBehaviourSetting.SelectedIndex = (int) OracleSettings.Instance.FateWaitMode;
+
+            this.numericUpDownMaxLevelAboveSetting.Value = OracleSettings.Instance.MobMaximumLevelAbove;
+            this.numericUpDownMinLevelBelowSetting.Value = OracleSettings.Instance.MobMaximumLevelBelow;
+
+            try
+            {
+                this.labelDowntimeCurrentZoneValue.Text = WorldManager.ZoneId.ToString();
+                if (OracleSettings.Instance.FateWaitLocations.ContainsKey(WorldManager.ZoneId))
+                {
+                    var waitLocation = OracleSettings.Instance.FateWaitLocations.FirstOrDefault(loc => loc.Key == WorldManager.ZoneId).Value;
+                    this.labelDowntimeWaitLocationValue.Text = waitLocation.ToString();
+                }
+            }
+            catch (NullReferenceException)
+            {
+                // This will only occur if the form is created outside of RebornBuddy.
+            }
         }
     }
 }

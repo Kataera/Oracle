@@ -4,7 +4,7 @@
     #################
 
     Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
+    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
 
     This file is part of Oracle.
 
@@ -133,11 +133,6 @@ namespace Oracle.Managers
         public static bool CurrentFateHasChain()
         {
             var oracleFate = OracleDatabase.GetFateFromId(CurrentFateId);
-
-            if (oracleFate.ChainIdFailure != 0)
-            {
-                return true;
-            }
 
             if (oracleFate.ChainIdSuccess != 0)
             {
@@ -336,7 +331,7 @@ namespace Oracle.Managers
                 return false;
             }
 
-            uint aetheryteId = 0;
+            uint aetheryteId;
             OracleSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
 
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))

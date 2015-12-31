@@ -4,7 +4,7 @@
     #################
 
     Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
+    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
 
     This file is part of Oracle.
 
@@ -28,6 +28,7 @@ using Buddy.Coroutines;
 
 using ff14bot;
 using ff14bot.Behavior;
+using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Navigation;
 using ff14bot.Settings;
@@ -40,23 +41,13 @@ namespace Oracle.Behaviour.Tasks.WaitTask
     {
         public static async Task<bool> Main()
         {
-            if (Poi.Current.Type != PoiType.Wait)
-            {
-                return false;
-            }
-
-            if (await OracleManager.AnyViableFates())
-            {
-                OracleManager.ClearPoi("Found a FATE.");
-                return true;
-            }
-
             if (!(Core.Player.Distance2D(Poi.Current.Location) > 15f))
             {
                 return true;
             }
 
-            while (Core.Player.Distance2D(Poi.Current.Location) > 15f)
+            var result = Navigator.MoveToPointWithin(Poi.Current.Location, 15f, "Moving to Aetheryte");
+            while (result != MoveResult.Done || result != MoveResult.ReachedDestination)
             {
                 // Check if a FATE popped while we're moving.
                 if (await OracleManager.AnyViableFates())
@@ -81,12 +72,11 @@ namespace Oracle.Behaviour.Tasks.WaitTask
                     await CommonBehaviors.CreateMountBehavior().ExecuteCoroutine();
                 }
 
-                Navigator.MoveToPointWithin(Poi.Current.Location, 15f, "Moving to Aetheryte");
+                result = Navigator.MoveToPointWithin(Poi.Current.Location, 15f, "Moving to Aetheryte");
                 await Coroutine.Yield();
             }
 
-            Navigator.PlayerMover.MoveStop();
-
+            Navigator.Clear();
             return true;
         }
     }

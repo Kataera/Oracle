@@ -4,7 +4,7 @@
     #################
 
     Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015 Caitlin Howarth (a.k.a. Kataera)
+    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
 
     This file is part of Oracle.
 
@@ -30,7 +30,6 @@ namespace Oracle.Data
 {
     internal struct Fate
     {
-        public uint ChainIdFailure { get; set; }
         public uint ChainIdSuccess { get; set; }
         public uint Id { get; set; }
         public uint ItemId { get; set; }
