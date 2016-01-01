@@ -81,7 +81,6 @@ namespace Oracle.Forms
             dataTable.Rows.Add(71, "Falcon's Nest");
             dataTable.Rows.Add(7, "Fallgourd Float");
             dataTable.Rows.Add(20, "Forgotten Springs");
-            dataTable.Rows.Add(70, "Foundation");
             dataTable.Rows.Add(74, "Helix");
             dataTable.Rows.Add(17, "Horizon");
             dataTable.Rows.Add(75, "Idyllshire");
