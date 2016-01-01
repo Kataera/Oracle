@@ -940,10 +940,10 @@ namespace Oracle.Forms
             this.tabPageZoneChange.Controls.Add(this.labelZoneChangeEnabledSetting);
             this.tabPageZoneChange.Controls.Add(this.checkBoxZoneChangingEnabledSetting);
             this.tabPageZoneChange.Controls.Add(this.labelZoneChangeTitle);
-            this.tabPageZoneChange.Location = new System.Drawing.Point(4, 29);
+            this.tabPageZoneChange.Location = new System.Drawing.Point(4, 22);
             this.tabPageZoneChange.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageZoneChange.Name = "tabPageZoneChange";
-            this.tabPageZoneChange.Size = new System.Drawing.Size(666, 416);
+            this.tabPageZoneChange.Size = new System.Drawing.Size(666, 423);
             this.tabPageZoneChange.TabIndex = 3;
             this.tabPageZoneChange.Text = "Zone Change";
             this.tabPageZoneChange.Click += new System.EventHandler(this.OnTabPageClick);
@@ -952,7 +952,7 @@ namespace Oracle.Forms
             // 
             this.buttonResetZoneLevelsToDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonResetZoneLevelsToDefault.Depth = 0;
-            this.buttonResetZoneLevelsToDefault.Location = new System.Drawing.Point(16, 345);
+            this.buttonResetZoneLevelsToDefault.Location = new System.Drawing.Point(16, 352);
             this.buttonResetZoneLevelsToDefault.MouseState = MaterialSkin.MouseState.Hover;
             this.buttonResetZoneLevelsToDefault.Name = "buttonResetZoneLevelsToDefault";
             this.buttonResetZoneLevelsToDefault.Primary = true;
@@ -971,7 +971,7 @@ namespace Oracle.Forms
             this.labelZoneChangeTip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.labelZoneChangeTip.Location = new System.Drawing.Point(422, 104);
             this.labelZoneChangeTip.Name = "labelZoneChangeTip";
-            this.labelZoneChangeTip.Size = new System.Drawing.Size(220, 290);
+            this.labelZoneChangeTip.Size = new System.Drawing.Size(220, 297);
             this.labelZoneChangeTip.TabIndex = 11;
             this.labelZoneChangeTip.Text = resources.GetString("labelZoneChangeTip.Text");
             // 
@@ -1027,7 +1027,7 @@ namespace Oracle.Forms
             this.dataGridViewZoneChangeSettings.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewZoneChangeSettings.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridViewZoneChangeSettings.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewZoneChangeSettings.Size = new System.Drawing.Size(384, 221);
+            this.dataGridViewZoneChangeSettings.Size = new System.Drawing.Size(384, 228);
             this.dataGridViewZoneChangeSettings.TabIndex = 10;
             this.dataGridViewZoneChangeSettings.TabStop = false;
             this.dataGridViewZoneChangeSettings.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.OnDataGridViewCellClick);

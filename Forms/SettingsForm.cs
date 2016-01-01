@@ -160,6 +160,7 @@ namespace Oracle.Forms
                     this.dataGridViewZoneChangeSettings.Rows.Add(item.Key, item.Value.ToString());
                 }
 
+                OracleSettings.Instance.Save();
                 this.dataGridViewZoneChangeSettings.CellValueChanged += this.OnDataGridViewCellValueChanged;
             }
         }
@@ -197,6 +198,7 @@ namespace Oracle.Forms
             }
 
             dataGridView.BeginEdit(false);
+            ((ComboBox) dataGridView.EditingControl).KeyDown += this.OnEnterKeyDownDropFocus;
             ((ComboBox) dataGridView.EditingControl).DroppedDown = true;
         }
 
@@ -224,6 +226,7 @@ namespace Oracle.Forms
                 row.Cells[this.ColumnAetheryte.Index].Value = aetheryteId.ToString();
             }
 
+            OracleSettings.Instance.Save();
             this.UpdatingRows = false;
         }
 
