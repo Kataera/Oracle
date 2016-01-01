@@ -41,6 +41,8 @@ namespace Oracle.Forms
 {
     public partial class SettingsForm : MaterialForm
     {
+        private bool UpdatingRows;
+
         public SettingsForm()
         {
             this.InitializeComponent();
@@ -64,6 +66,7 @@ namespace Oracle.Forms
             var dataTable = new DataTable("Aetherytes");
             dataTable.Columns.Add("Id");
             dataTable.Columns.Add("Name");
+            dataTable.PrimaryKey = new[] {dataTable.Columns["Id"]};
 
             dataTable.Rows.Add(14, "Aleport");
             dataTable.Rows.Add(77, "Anyx Trine");
@@ -100,22 +103,21 @@ namespace Oracle.Forms
             return dataTable;
         }
 
-        private static void OnDataGridViewControlEnter(object sender, EventArgs e)
-        {
-            ((ComboBox) sender).DroppedDown = true;
-        }
-
         // Add to MouseDown of a component to allow dragging of the form.
         private void MoveWindow(object sender, MouseEventArgs e)
         {
-            if (!this.Maximized)
+            if (this.Maximized)
             {
-                if (e.Button == MouseButtons.Left)
-                {
-                    ReleaseCapture();
-                    SendMessage(this.Handle, WmNclbuttondown, HtCaption, 0);
-                }
+                return;
             }
+
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+
+            ReleaseCapture();
+            SendMessage(this.Handle, WmNclbuttondown, HtCaption, 0);
         }
 
         private void OnButtonDowntimeSetLocationClick(object sender, EventArgs e)
@@ -143,12 +145,60 @@ namespace Oracle.Forms
             this.Close();
         }
 
-        private void OnDataGridViewEditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        private void OnDataGridViewCellChanged(object sender, DataGridViewCellEventArgs e)
         {
-            // Dirty hack that lets us open the combo box in one click. :>
-            var ctrl = e.Control;
-            ctrl.Enter -= OnDataGridViewControlEnter;
-            ctrl.Enter += OnDataGridViewControlEnter;
+            var aetheryteId =
+                Convert.ToUInt32(this.dataGridViewZoneChangeSettings.Rows[e.RowIndex].Cells[this.ColumnAetheryte.Index].Value.ToString());
+
+            if (this.UpdatingRows)
+            {
+                return;
+            }
+
+            this.UpdatingRows = true;
+            foreach (DataGridViewRow row in this.dataGridViewZoneChangeSettings.SelectedRows)
+            {
+                var level = Convert.ToUInt32(row.Cells[this.ColumnLevel.Index].Value);
+                if (!OracleSettings.Instance.ZoneLevels.ContainsKey(level))
+                {
+                    continue;
+                }
+
+                OracleSettings.Instance.ZoneLevels.Remove(level);
+                OracleSettings.Instance.ZoneLevels.Add(level, aetheryteId);
+                row.Cells[this.ColumnAetheryte.Index].Value = aetheryteId.ToString();
+            }
+
+            this.UpdatingRows = false;
+        }
+
+        private void OnDataGridViewCellClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            // Make sure the clicked row isn't the header.
+            var validRow = e.RowIndex != -1;
+            var dataGridView = sender as DataGridView;
+
+            if (dataGridView == null)
+            {
+                return;
+            }
+
+            if (!(dataGridView.Columns[e.ColumnIndex] is DataGridViewComboBoxColumn) || !validRow)
+            {
+                return;
+            }
+
+            // Band-aid fix for dropping selection of current cell.
+            if (e.Button == MouseButtons.Left && ModifierKeys == Keys.Control)
+            {
+                dataGridView.Rows[e.RowIndex].Selected = true;
+            }
+
+            if (!dataGridView.IsCurrentCellInEditMode)
+            {
+                dataGridView.BeginEdit(true);
+                ((ComboBox) dataGridView.EditingControl).DroppedDown = true;
+            }
         }
 
         private void OnDonatePictureBoxClick(object sender, EventArgs e)
@@ -168,11 +218,13 @@ namespace Oracle.Forms
 
         private void OnEnterKeyDownDropFocus(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode != Keys.Enter)
             {
-                this.ActiveControl = this.labelDefaultFocus;
-                e.SuppressKeyPress = true;
+                return;
             }
+
+            this.ActiveControl = this.labelDefaultFocus;
+            e.SuppressKeyPress = true;
         }
 
         private void OnEnterSelectAllText(object sender, EventArgs e)
@@ -203,19 +255,6 @@ namespace Oracle.Forms
             OracleSettings.Instance.SpecificFate = this.textBoxSpecificFateNameSetting.Text;
         }
 
-        private void OnZoneChangeSettingsCellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            var level = Convert.ToUInt32(this.dataGridViewZoneChangeSettings.Rows[e.RowIndex].Cells[this.ColumnLevel.Index].Value.ToString());
-            var value =
-                Convert.ToUInt32(this.dataGridViewZoneChangeSettings.Rows[e.RowIndex].Cells[this.ColumnAetheryte.Index].Value.ToString());
-
-            if (OracleSettings.Instance.ZoneLevels.ContainsKey(level))
-            {
-                OracleSettings.Instance.ZoneLevels.Remove(level);
-                OracleSettings.Instance.ZoneLevels.Add(level, value);
-            }
-        }
-
         private void SetComponentValues()
         {
             this.comboBoxOracleModeSetting.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
@@ -237,8 +276,6 @@ namespace Oracle.Forms
             {
                 this.dataGridViewZoneChangeSettings.Rows.Add(item.Key, item.Value.ToString());
             }
-
-            this.dataGridViewZoneChangeSettings.CellValueChanged += this.OnZoneChangeSettingsCellValueChanged;
 
             try
             {

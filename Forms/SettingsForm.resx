@@ -139,6 +139,13 @@ In order to use Anima Grind mode, the following conditions must be met:
 
 If any of these conditions are not met, Oracle will stop running.</value>
   </data>
+  <data name="labelZoneChangeTip.Text" xml:space="preserve">
+    <value>You can select multiple rows by holding down the shift key and left mouse button, then dragging the mouse over the rows you want to select.
+
+While continuing to hold down the shift key, change the aetheryte in one of the rows you have selected to set the value for all of them. Press enter to set the values.
+
+You can also select multiple individual rows by holding the control key and clicking them.</value>
+  </data>
   <metadata name="ColumnLevel.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
