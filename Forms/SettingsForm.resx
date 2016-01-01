@@ -152,6 +152,9 @@ You can also select multiple individual rows by holding the control key and clic
   <metadata name="ColumnAetheryte.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <metadata name="EmptyColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="labelLicenseText.Text" xml:space="preserve">
     <value>Oracle - An improved FATE bot for RebornBuddy
 Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)

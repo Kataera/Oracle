@@ -23,8 +23,10 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -140,12 +142,65 @@ namespace Oracle.Forms
             }
         }
 
+        private void OnButtonResetZoneLevelsToDefaultClick(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you wish to set the zone levels to their default setting?", "Warning",
+                MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                OracleSettings.Instance.ZoneLevels = new Dictionary<uint, uint>();
+                OracleSettings.Instance.PopulateZoneLevels();
+
+                this.dataGridViewZoneChangeSettings.CellValueChanged -= this.OnDataGridViewCellValueChanged;
+                this.dataGridViewZoneChangeSettings.Rows.Clear();
+
+                foreach (var item in OracleSettings.Instance.ZoneLevels)
+                {
+                    this.dataGridViewZoneChangeSettings.Rows.Add(item.Key, item.Value.ToString());
+                }
+
+                this.dataGridViewZoneChangeSettings.CellValueChanged += this.OnDataGridViewCellValueChanged;
+            }
+        }
+
+        private void OnChangingEnabledChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.ChangeZonesEnabled = this.checkBoxZoneChangingEnabledSetting.Checked;
+        }
+
         private void OnCloseButtonClick(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void OnDataGridViewCellValidated(object sender, DataGridViewCellEventArgs e)
+        private void OnDataGridViewCellClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            // Make sure the clicked row isn't the header.
+            var validRow = e.RowIndex != -1;
+            var dataGridView = sender as DataGridView;
+
+            if (dataGridView == null)
+            {
+                return;
+            }
+
+            if (!(dataGridView.Columns[e.ColumnIndex] is DataGridViewComboBoxColumn) || !validRow)
+            {
+                return;
+            }
+
+            // Band-aid fix for dropping selection of current cell.
+            if (e.Button == MouseButtons.Left && ModifierKeys == Keys.Control)
+            {
+                dataGridView.Rows[e.RowIndex].Selected = true;
+            }
+
+            dataGridView.BeginEdit(false);
+            ((ComboBox) dataGridView.EditingControl).DroppedDown = true;
+        }
+
+        private void OnDataGridViewCellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             var aetheryteId =
                 Convert.ToUInt32(this.dataGridViewZoneChangeSettings.Rows[e.RowIndex].Cells[this.ColumnAetheryte.Index].Value.ToString());
@@ -172,33 +227,33 @@ namespace Oracle.Forms
             this.UpdatingRows = false;
         }
 
-        private void OnDataGridViewCellClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void OnDataGridViewPaint(object sender, PaintEventArgs e)
         {
-            // Make sure the clicked row isn't the header.
-            var validRow = e.RowIndex != -1;
-            var dataGridView = sender as DataGridView;
+            // Another dirty hack, WinForms is fun!
+            var colour = this.dataGridViewZoneChangeSettings.ColumnHeadersDefaultCellStyle.BackColor;
+            var headerRect = this.dataGridViewZoneChangeSettings.GetCellDisplayRectangle(this.ColumnAetheryte.Index, -1, true);
 
-            if (dataGridView == null)
-            {
-                return;
-            }
+            headerRect.X += headerRect.Width - 2;
+            headerRect.Y += 1;
+            headerRect.Width = 4;
+            headerRect.Height -= 2;
+            e.Graphics.FillRectangle(new SolidBrush(colour), headerRect);
 
-            if (!(dataGridView.Columns[e.ColumnIndex] is DataGridViewComboBoxColumn) || !validRow)
-            {
-                return;
-            }
+            headerRect = this.dataGridViewZoneChangeSettings.GetCellDisplayRectangle(this.ColumnLevel.Index, -1, true);
 
-            // Band-aid fix for dropping selection of current cell.
-            if (e.Button == MouseButtons.Left && ModifierKeys == Keys.Control)
-            {
-                dataGridView.Rows[e.RowIndex].Selected = true;
-            }
+            headerRect.X += headerRect.Width - 2;
+            headerRect.Y += 1;
+            headerRect.Width = 4;
+            headerRect.Height -= 2;
+            e.Graphics.FillRectangle(new SolidBrush(colour), headerRect);
 
-            if (!dataGridView.IsCurrentCellInEditMode)
-            {
-                dataGridView.BeginEdit(true);
-                ((ComboBox) dataGridView.EditingControl).DroppedDown = true;
-            }
+            headerRect = this.dataGridViewZoneChangeSettings.GetCellDisplayRectangle(this.EmptyColumn.Index, -1, true);
+
+            headerRect.X += headerRect.Width - 2;
+            headerRect.Y += 1;
+            headerRect.Width = 4;
+            headerRect.Height -= 2;
+            e.Graphics.FillRectangle(new SolidBrush(colour), headerRect);
         }
 
         private void OnDonatePictureBoxClick(object sender, EventArgs e)
@@ -268,6 +323,7 @@ namespace Oracle.Forms
             this.numericUpDownMaxLevelAboveSetting.Value = OracleSettings.Instance.MobMaximumLevelAbove;
             this.numericUpDownMinLevelBelowSetting.Value = OracleSettings.Instance.MobMaximumLevelBelow;
 
+            this.checkBoxZoneChangingEnabledSetting.Checked = OracleSettings.Instance.ChangeZonesEnabled;
             this.ColumnAetheryte.DataSource = GenerateAetheryteNameTable();
             this.ColumnAetheryte.DisplayMember = "Name";
             this.ColumnAetheryte.ValueMember = "Id";
@@ -276,6 +332,8 @@ namespace Oracle.Forms
             {
                 this.dataGridViewZoneChangeSettings.Rows.Add(item.Key, item.Value.ToString());
             }
+
+            this.dataGridViewZoneChangeSettings.CellValueChanged += this.OnDataGridViewCellValueChanged;
 
             try
             {

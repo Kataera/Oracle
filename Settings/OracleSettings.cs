@@ -604,7 +604,7 @@ namespace Oracle.Settings
             }
         }
 
-        private void PopulateMobBlacklist()
+        public void PopulateMobBlacklist()
         {
             // Heavensward S-Rank Hunts.
             const uint kaiserBehemoth = 4374;
@@ -787,7 +787,7 @@ namespace Oracle.Settings
             this.BlacklistedMobs.Sort();
         }
 
-        private void PopulateZoneLevels()
+        public void PopulateZoneLevels()
         {
             const uint aleport = 14;
             const uint campDragonhead = 23;

@@ -56,10 +56,12 @@ namespace Oracle.Forms
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabSelectorMain = new MaterialSkin.Controls.MaterialTabSelector();
             this.tabControllerMain = new MaterialSkin.Controls.MaterialTabControl();
             this.tabGeneralSettings = new System.Windows.Forms.TabPage();
@@ -111,12 +113,14 @@ namespace Oracle.Forms
             this.labelDowntimeBehaviourSetting = new System.Windows.Forms.Label();
             this.labelDowntimeTitle = new System.Windows.Forms.Label();
             this.tabPageZoneChange = new System.Windows.Forms.TabPage();
+            this.buttonResetZoneLevelsToDefault = new MaterialSkin.Controls.MaterialRaisedButton();
             this.labelZoneChangeTip = new System.Windows.Forms.Label();
             this.dataGridViewZoneChangeSettings = new System.Windows.Forms.DataGridView();
             this.ColumnLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnAetheryte = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.EmptyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelZoneChangeEnabledSetting = new System.Windows.Forms.Label();
-            this.materialCheckBox1 = new MaterialSkin.Controls.MaterialCheckBox();
+            this.checkBoxZoneChangingEnabledSetting = new MaterialSkin.Controls.MaterialCheckBox();
             this.labelZoneChangeTitle = new System.Windows.Forms.Label();
             this.tabPageMiscellaneous = new System.Windows.Forms.TabPage();
             this.labelMiscellaneousTitle = new System.Windows.Forms.Label();
@@ -615,10 +619,10 @@ namespace Oracle.Forms
             this.tabPageDowntime.Controls.Add(this.comboBoxDowntimeBehaviourSetting);
             this.tabPageDowntime.Controls.Add(this.labelDowntimeBehaviourSetting);
             this.tabPageDowntime.Controls.Add(this.labelDowntimeTitle);
-            this.tabPageDowntime.Location = new System.Drawing.Point(4, 29);
+            this.tabPageDowntime.Location = new System.Drawing.Point(4, 22);
             this.tabPageDowntime.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageDowntime.Name = "tabPageDowntime";
-            this.tabPageDowntime.Size = new System.Drawing.Size(666, 416);
+            this.tabPageDowntime.Size = new System.Drawing.Size(666, 423);
             this.tabPageDowntime.TabIndex = 2;
             this.tabPageDowntime.Text = "Downtime";
             this.tabPageDowntime.Click += new System.EventHandler(this.OnTabPageClick);
@@ -638,7 +642,7 @@ namespace Oracle.Forms
             this.tabControllerDowntime.MouseState = MaterialSkin.MouseState.Hover;
             this.tabControllerDowntime.Name = "tabControllerDowntime";
             this.tabControllerDowntime.SelectedIndex = 0;
-            this.tabControllerDowntime.Size = new System.Drawing.Size(655, 283);
+            this.tabControllerDowntime.Size = new System.Drawing.Size(655, 290);
             this.tabControllerDowntime.TabIndex = 8;
             this.tabControllerDowntime.TabStop = false;
             // 
@@ -649,7 +653,7 @@ namespace Oracle.Forms
             this.tabPageDowntimeReturnToAetheryte.Location = new System.Drawing.Point(4, 29);
             this.tabPageDowntimeReturnToAetheryte.Name = "tabPageDowntimeReturnToAetheryte";
             this.tabPageDowntimeReturnToAetheryte.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDowntimeReturnToAetheryte.Size = new System.Drawing.Size(647, 250);
+            this.tabPageDowntimeReturnToAetheryte.Size = new System.Drawing.Size(647, 257);
             this.tabPageDowntimeReturnToAetheryte.TabIndex = 0;
             this.tabPageDowntimeReturnToAetheryte.Text = "Return to Aetheryte";
             // 
@@ -661,7 +665,7 @@ namespace Oracle.Forms
             this.labelDowntimeReturnToAetheryte.ForeColor = System.Drawing.Color.Black;
             this.labelDowntimeReturnToAetheryte.Location = new System.Drawing.Point(10, 0);
             this.labelDowntimeReturnToAetheryte.Name = "labelDowntimeReturnToAetheryte";
-            this.labelDowntimeReturnToAetheryte.Size = new System.Drawing.Size(631, 233);
+            this.labelDowntimeReturnToAetheryte.Size = new System.Drawing.Size(631, 240);
             this.labelDowntimeReturnToAetheryte.TabIndex = 1;
             this.labelDowntimeReturnToAetheryte.Text = "The Return to Aetheryte behaviour will move your character to the closest aethery" +
     "te crystal when there are no viable FATEs active.";
@@ -930,10 +934,11 @@ namespace Oracle.Forms
             // tabPageZoneChange
             // 
             this.tabPageZoneChange.BackColor = System.Drawing.Color.White;
+            this.tabPageZoneChange.Controls.Add(this.buttonResetZoneLevelsToDefault);
             this.tabPageZoneChange.Controls.Add(this.labelZoneChangeTip);
             this.tabPageZoneChange.Controls.Add(this.dataGridViewZoneChangeSettings);
             this.tabPageZoneChange.Controls.Add(this.labelZoneChangeEnabledSetting);
-            this.tabPageZoneChange.Controls.Add(this.materialCheckBox1);
+            this.tabPageZoneChange.Controls.Add(this.checkBoxZoneChangingEnabledSetting);
             this.tabPageZoneChange.Controls.Add(this.labelZoneChangeTitle);
             this.tabPageZoneChange.Location = new System.Drawing.Point(4, 29);
             this.tabPageZoneChange.Margin = new System.Windows.Forms.Padding(0);
@@ -943,6 +948,20 @@ namespace Oracle.Forms
             this.tabPageZoneChange.Text = "Zone Change";
             this.tabPageZoneChange.Click += new System.EventHandler(this.OnTabPageClick);
             // 
+            // buttonResetZoneLevelsToDefault
+            // 
+            this.buttonResetZoneLevelsToDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonResetZoneLevelsToDefault.Depth = 0;
+            this.buttonResetZoneLevelsToDefault.Location = new System.Drawing.Point(16, 345);
+            this.buttonResetZoneLevelsToDefault.MouseState = MaterialSkin.MouseState.Hover;
+            this.buttonResetZoneLevelsToDefault.Name = "buttonResetZoneLevelsToDefault";
+            this.buttonResetZoneLevelsToDefault.Primary = true;
+            this.buttonResetZoneLevelsToDefault.Size = new System.Drawing.Size(163, 33);
+            this.buttonResetZoneLevelsToDefault.TabIndex = 13;
+            this.buttonResetZoneLevelsToDefault.Text = "Reset to Default";
+            this.buttonResetZoneLevelsToDefault.UseVisualStyleBackColor = true;
+            this.buttonResetZoneLevelsToDefault.Click += new System.EventHandler(this.OnButtonResetZoneLevelsToDefaultClick);
+            // 
             // labelZoneChangeTip
             // 
             this.labelZoneChangeTip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -950,9 +969,9 @@ namespace Oracle.Forms
             this.labelZoneChangeTip.BackColor = System.Drawing.Color.Transparent;
             this.labelZoneChangeTip.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelZoneChangeTip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.labelZoneChangeTip.Location = new System.Drawing.Point(422, 108);
+            this.labelZoneChangeTip.Location = new System.Drawing.Point(422, 104);
             this.labelZoneChangeTip.Name = "labelZoneChangeTip";
-            this.labelZoneChangeTip.Size = new System.Drawing.Size(220, 286);
+            this.labelZoneChangeTip.Size = new System.Drawing.Size(220, 290);
             this.labelZoneChangeTip.TabIndex = 11;
             this.labelZoneChangeTip.Text = resources.GetString("labelZoneChangeTip.Text");
             // 
@@ -960,55 +979,68 @@ namespace Oracle.Forms
             // 
             this.dataGridViewZoneChangeSettings.AllowUserToAddRows = false;
             this.dataGridViewZoneChangeSettings.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            this.dataGridViewZoneChangeSettings.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewZoneChangeSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewZoneChangeSettings.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewZoneChangeSettings.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dataGridViewZoneChangeSettings.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            this.dataGridViewZoneChangeSettings.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dataGridViewZoneChangeSettings.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.MediumSlateBlue;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewZoneChangeSettings.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewZoneChangeSettings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewZoneChangeSettings.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnLevel,
-            this.ColumnAetheryte});
+            this.ColumnAetheryte,
+            this.EmptyColumn});
+            this.dataGridViewZoneChangeSettings.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridViewZoneChangeSettings.GridColor = System.Drawing.Color.Black;
             this.dataGridViewZoneChangeSettings.Location = new System.Drawing.Point(17, 108);
             this.dataGridViewZoneChangeSettings.Name = "dataGridViewZoneChangeSettings";
             this.dataGridViewZoneChangeSettings.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewZoneChangeSettings.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewZoneChangeSettings.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridViewZoneChangeSettings.RowHeadersVisible = false;
             this.dataGridViewZoneChangeSettings.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.MediumSlateBlue;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
-            this.dataGridViewZoneChangeSettings.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.WhiteSmoke;
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
+            this.dataGridViewZoneChangeSettings.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewZoneChangeSettings.RowTemplate.Height = 26;
             this.dataGridViewZoneChangeSettings.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewZoneChangeSettings.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridViewZoneChangeSettings.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewZoneChangeSettings.Size = new System.Drawing.Size(384, 286);
+            this.dataGridViewZoneChangeSettings.Size = new System.Drawing.Size(384, 221);
             this.dataGridViewZoneChangeSettings.TabIndex = 10;
             this.dataGridViewZoneChangeSettings.TabStop = false;
             this.dataGridViewZoneChangeSettings.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.OnDataGridViewCellClick);
-            this.dataGridViewZoneChangeSettings.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnDataGridViewCellValidated);
+            this.dataGridViewZoneChangeSettings.Paint += new System.Windows.Forms.PaintEventHandler(this.OnDataGridViewPaint);
             // 
             // ColumnLevel
             // 
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.MediumSlateBlue;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-            this.ColumnLevel.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+            this.ColumnLevel.DefaultCellStyle = dataGridViewCellStyle3;
             this.ColumnLevel.HeaderText = "Level";
             this.ColumnLevel.Name = "ColumnLevel";
             this.ColumnLevel.ReadOnly = true;
@@ -1017,11 +1049,14 @@ namespace Oracle.Forms
             // ColumnAetheryte
             // 
             this.ColumnAetheryte.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.MediumSlateBlue;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
-            this.ColumnAetheryte.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+            this.ColumnAetheryte.DefaultCellStyle = dataGridViewCellStyle4;
+            this.ColumnAetheryte.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.ColumnAetheryte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ColumnAetheryte.HeaderText = "Aetheryte";
             this.ColumnAetheryte.Items.AddRange(new object[] {
             "New Gridania",
@@ -1070,6 +1105,13 @@ namespace Oracle.Forms
             this.ColumnAetheryte.Name = "ColumnAetheryte";
             this.ColumnAetheryte.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
+            // EmptyColumn
+            // 
+            this.EmptyColumn.HeaderText = "";
+            this.EmptyColumn.Name = "EmptyColumn";
+            this.EmptyColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.EmptyColumn.Width = 5;
+            // 
             // labelZoneChangeEnabledSetting
             // 
             this.labelZoneChangeEnabledSetting.AutoSize = true;
@@ -1081,23 +1123,24 @@ namespace Oracle.Forms
             this.labelZoneChangeEnabledSetting.TabIndex = 9;
             this.labelZoneChangeEnabledSetting.Text = "Zone Changing Enabled: ";
             // 
-            // materialCheckBox1
+            // checkBoxZoneChangingEnabledSetting
             // 
-            this.materialCheckBox1.Appearance = System.Windows.Forms.Appearance.Button;
-            this.materialCheckBox1.AutoSize = true;
-            this.materialCheckBox1.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.materialCheckBox1.Depth = 0;
-            this.materialCheckBox1.Font = new System.Drawing.Font("Roboto Medium", 11F);
-            this.materialCheckBox1.Location = new System.Drawing.Point(191, 62);
-            this.materialCheckBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.materialCheckBox1.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.materialCheckBox1.MouseState = MaterialSkin.MouseState.Hover;
-            this.materialCheckBox1.Name = "materialCheckBox1";
-            this.materialCheckBox1.Ripple = true;
-            this.materialCheckBox1.Size = new System.Drawing.Size(30, 30);
-            this.materialCheckBox1.TabIndex = 8;
-            this.materialCheckBox1.Text = "Zone Change Enabled";
-            this.materialCheckBox1.UseVisualStyleBackColor = true;
+            this.checkBoxZoneChangingEnabledSetting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxZoneChangingEnabledSetting.AutoSize = true;
+            this.checkBoxZoneChangingEnabledSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxZoneChangingEnabledSetting.Depth = 0;
+            this.checkBoxZoneChangingEnabledSetting.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.checkBoxZoneChangingEnabledSetting.Location = new System.Drawing.Point(191, 62);
+            this.checkBoxZoneChangingEnabledSetting.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBoxZoneChangingEnabledSetting.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.checkBoxZoneChangingEnabledSetting.MouseState = MaterialSkin.MouseState.Hover;
+            this.checkBoxZoneChangingEnabledSetting.Name = "checkBoxZoneChangingEnabledSetting";
+            this.checkBoxZoneChangingEnabledSetting.Ripple = true;
+            this.checkBoxZoneChangingEnabledSetting.Size = new System.Drawing.Size(30, 30);
+            this.checkBoxZoneChangingEnabledSetting.TabIndex = 8;
+            this.checkBoxZoneChangingEnabledSetting.Text = "Zone Change Enabled";
+            this.checkBoxZoneChangingEnabledSetting.UseVisualStyleBackColor = true;
+            this.checkBoxZoneChangingEnabledSetting.CheckedChanged += new System.EventHandler(this.OnChangingEnabledChanged);
             // 
             // labelZoneChangeTitle
             // 
@@ -2007,15 +2050,17 @@ namespace Oracle.Forms
         private System.Windows.Forms.Label labelDowntimeCurrentZoneValue;
         private MaterialSkin.Controls.MaterialRaisedButton buttonDowntimeSetLocation;
         private MaterialSkin.Controls.MaterialRaisedButton buttonDowntimeRefreshZone;
-        private MaterialSkin.Controls.MaterialCheckBox materialCheckBox1;
+        private MaterialSkin.Controls.MaterialCheckBox checkBoxZoneChangingEnabledSetting;
         private System.Windows.Forms.Label labelZoneChangeEnabledSetting;
         private System.Windows.Forms.Label labelDowntimeGrindMobsMaxLevelAboveSetting;
         private System.Windows.Forms.Label labelDowntimeGrindMobsMaxLevelBelowSetting;
         private System.Windows.Forms.NumericUpDown numericUpDownMinLevelBelowSetting;
         private System.Windows.Forms.NumericUpDown numericUpDownMaxLevelAboveSetting;
         private System.Windows.Forms.DataGridView dataGridViewZoneChangeSettings;
+        private System.Windows.Forms.Label labelZoneChangeTip;
+        private MaterialSkin.Controls.MaterialRaisedButton buttonResetZoneLevelsToDefault;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLevel;
         private System.Windows.Forms.DataGridViewComboBoxColumn ColumnAetheryte;
-        private System.Windows.Forms.Label labelZoneChangeTip;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EmptyColumn;
     }
 }
