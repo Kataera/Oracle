@@ -145,7 +145,7 @@ namespace Oracle.Forms
             this.Close();
         }
 
-        private void OnDataGridViewCellChanged(object sender, DataGridViewCellEventArgs e)
+        private void OnDataGridViewCellValidated(object sender, DataGridViewCellEventArgs e)
         {
             var aetheryteId =
                 Convert.ToUInt32(this.dataGridViewZoneChangeSettings.Rows[e.RowIndex].Cells[this.ColumnAetheryte.Index].Value.ToString());

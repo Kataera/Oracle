@@ -615,10 +615,10 @@ namespace Oracle.Forms
             this.tabPageDowntime.Controls.Add(this.comboBoxDowntimeBehaviourSetting);
             this.tabPageDowntime.Controls.Add(this.labelDowntimeBehaviourSetting);
             this.tabPageDowntime.Controls.Add(this.labelDowntimeTitle);
-            this.tabPageDowntime.Location = new System.Drawing.Point(4, 22);
+            this.tabPageDowntime.Location = new System.Drawing.Point(4, 29);
             this.tabPageDowntime.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageDowntime.Name = "tabPageDowntime";
-            this.tabPageDowntime.Size = new System.Drawing.Size(666, 423);
+            this.tabPageDowntime.Size = new System.Drawing.Size(666, 416);
             this.tabPageDowntime.TabIndex = 2;
             this.tabPageDowntime.Text = "Downtime";
             this.tabPageDowntime.Click += new System.EventHandler(this.OnTabPageClick);
@@ -638,7 +638,7 @@ namespace Oracle.Forms
             this.tabControllerDowntime.MouseState = MaterialSkin.MouseState.Hover;
             this.tabControllerDowntime.Name = "tabControllerDowntime";
             this.tabControllerDowntime.SelectedIndex = 0;
-            this.tabControllerDowntime.Size = new System.Drawing.Size(655, 290);
+            this.tabControllerDowntime.Size = new System.Drawing.Size(655, 283);
             this.tabControllerDowntime.TabIndex = 8;
             this.tabControllerDowntime.TabStop = false;
             // 
@@ -649,7 +649,7 @@ namespace Oracle.Forms
             this.tabPageDowntimeReturnToAetheryte.Location = new System.Drawing.Point(4, 29);
             this.tabPageDowntimeReturnToAetheryte.Name = "tabPageDowntimeReturnToAetheryte";
             this.tabPageDowntimeReturnToAetheryte.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDowntimeReturnToAetheryte.Size = new System.Drawing.Size(647, 257);
+            this.tabPageDowntimeReturnToAetheryte.Size = new System.Drawing.Size(647, 250);
             this.tabPageDowntimeReturnToAetheryte.TabIndex = 0;
             this.tabPageDowntimeReturnToAetheryte.Text = "Return to Aetheryte";
             // 
@@ -661,7 +661,7 @@ namespace Oracle.Forms
             this.labelDowntimeReturnToAetheryte.ForeColor = System.Drawing.Color.Black;
             this.labelDowntimeReturnToAetheryte.Location = new System.Drawing.Point(10, 0);
             this.labelDowntimeReturnToAetheryte.Name = "labelDowntimeReturnToAetheryte";
-            this.labelDowntimeReturnToAetheryte.Size = new System.Drawing.Size(631, 240);
+            this.labelDowntimeReturnToAetheryte.Size = new System.Drawing.Size(631, 233);
             this.labelDowntimeReturnToAetheryte.TabIndex = 1;
             this.labelDowntimeReturnToAetheryte.Text = "The Return to Aetheryte behaviour will move your character to the closest aethery" +
     "te crystal when there are no viable FATEs active.";
@@ -1000,7 +1000,7 @@ namespace Oracle.Forms
             this.dataGridViewZoneChangeSettings.TabIndex = 10;
             this.dataGridViewZoneChangeSettings.TabStop = false;
             this.dataGridViewZoneChangeSettings.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.OnDataGridViewCellClick);
-            this.dataGridViewZoneChangeSettings.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnDataGridViewCellChanged);
+            this.dataGridViewZoneChangeSettings.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnDataGridViewCellValidated);
             // 
             // ColumnLevel
             // 
