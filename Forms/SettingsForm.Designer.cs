@@ -55,8 +55,11 @@ namespace Oracle.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabSelectorMain = new MaterialSkin.Controls.MaterialTabSelector();
             this.tabControllerMain = new MaterialSkin.Controls.MaterialTabControl();
             this.tabGeneralSettings = new System.Windows.Forms.TabPage();
@@ -108,6 +111,9 @@ namespace Oracle.Forms
             this.labelDowntimeBehaviourSetting = new System.Windows.Forms.Label();
             this.labelDowntimeTitle = new System.Windows.Forms.Label();
             this.tabPageZoneChange = new System.Windows.Forms.TabPage();
+            this.dataGridViewZoneChangeSettings = new System.Windows.Forms.DataGridView();
+            this.ColumnLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAetheryte = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.labelZoneChangeEnabledSetting = new System.Windows.Forms.Label();
             this.materialCheckBox1 = new MaterialSkin.Controls.MaterialCheckBox();
             this.labelZoneChangeTitle = new System.Windows.Forms.Label();
@@ -164,7 +170,6 @@ namespace Oracle.Forms
             this.buttonClose = new MaterialSkin.Controls.MaterialFlatButton();
             this.labelDefaultFocus = new System.Windows.Forms.Label();
             this.pictureBoxLogo = new MaterialSkin.Controls.MaterialPictureBox();
-            this.oracleSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControllerMain.SuspendLayout();
             this.tabGeneralSettings.SuspendLayout();
             this.tabControllerGeneral.SuspendLayout();
@@ -185,6 +190,7 @@ namespace Oracle.Forms
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinLevelBelowSetting)).BeginInit();
             this.tabPageDowntimeDoNothing.SuspendLayout();
             this.tabPageZoneChange.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewZoneChangeSettings)).BeginInit();
             this.tabPageMiscellaneous.SuspendLayout();
             this.tabFateSettings.SuspendLayout();
             this.tabControllerFate.SuspendLayout();
@@ -212,7 +218,6 @@ namespace Oracle.Forms
             this.tabPageDevelopment.SuspendLayout();
             this.panelControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oracleSettingsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabSelectorMain
@@ -228,6 +233,7 @@ namespace Oracle.Forms
             this.tabSelectorMain.Name = "tabSelectorMain";
             this.tabSelectorMain.Size = new System.Drawing.Size(695, 40);
             this.tabSelectorMain.TabIndex = 0;
+            this.tabSelectorMain.TabStop = false;
             this.tabSelectorMain.Text = "Settings Tabs";
             this.tabSelectorMain.Click += new System.EventHandler(this.OnTabPageClick);
             // 
@@ -279,6 +285,7 @@ namespace Oracle.Forms
             this.tabSelectorGeneral.Name = "tabSelectorGeneral";
             this.tabSelectorGeneral.Size = new System.Drawing.Size(173, 449);
             this.tabSelectorGeneral.TabIndex = 8;
+            this.tabSelectorGeneral.TabStop = false;
             this.tabSelectorGeneral.Text = "materialTabSelectorVertical1";
             this.tabSelectorGeneral.Click += new System.EventHandler(this.OnTabPageClick);
             // 
@@ -301,11 +308,12 @@ namespace Oracle.Forms
             this.tabControllerGeneral.SelectedIndex = 0;
             this.tabControllerGeneral.Size = new System.Drawing.Size(674, 449);
             this.tabControllerGeneral.TabIndex = 2;
+            this.tabControllerGeneral.TabStop = false;
             // 
             // tabPageOracleMode
             // 
             this.tabPageOracleMode.AutoScroll = true;
-            this.tabPageOracleMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
+            this.tabPageOracleMode.BackColor = System.Drawing.Color.White;
             this.tabPageOracleMode.Controls.Add(this.tabControllerOracleMode);
             this.tabPageOracleMode.Controls.Add(this.labelOracleModeSetting);
             this.tabPageOracleMode.Controls.Add(this.comboBoxOracleModeSetting);
@@ -337,6 +345,7 @@ namespace Oracle.Forms
             this.tabControllerOracleMode.SelectedIndex = 0;
             this.tabControllerOracleMode.Size = new System.Drawing.Size(655, 276);
             this.tabControllerOracleMode.TabIndex = 4;
+            this.tabControllerOracleMode.TabStop = false;
             // 
             // tabPageOracleModeFateGrind
             // 
@@ -517,6 +526,7 @@ namespace Oracle.Forms
             this.comboBoxOracleModeSetting.Name = "comboBoxOracleModeSetting";
             this.comboBoxOracleModeSetting.Size = new System.Drawing.Size(121, 28);
             this.comboBoxOracleModeSetting.TabIndex = 2;
+            this.comboBoxOracleModeSetting.TabStop = false;
             this.comboBoxOracleModeSetting.SelectedIndexChanged += new System.EventHandler(this.OnOracleModeSelectedIndexChanged);
             // 
             // labelOracleModeTitle
@@ -573,6 +583,7 @@ namespace Oracle.Forms
             this.comboBoxFateSelectStrategySetting.Name = "comboBoxFateSelectStrategySetting";
             this.comboBoxFateSelectStrategySetting.Size = new System.Drawing.Size(121, 28);
             this.comboBoxFateSelectStrategySetting.TabIndex = 6;
+            this.comboBoxFateSelectStrategySetting.TabStop = false;
             // 
             // labelFateSelectStrategySetting
             // 
@@ -603,10 +614,10 @@ namespace Oracle.Forms
             this.tabPageDowntime.Controls.Add(this.comboBoxDowntimeBehaviourSetting);
             this.tabPageDowntime.Controls.Add(this.labelDowntimeBehaviourSetting);
             this.tabPageDowntime.Controls.Add(this.labelDowntimeTitle);
-            this.tabPageDowntime.Location = new System.Drawing.Point(4, 29);
+            this.tabPageDowntime.Location = new System.Drawing.Point(4, 22);
             this.tabPageDowntime.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageDowntime.Name = "tabPageDowntime";
-            this.tabPageDowntime.Size = new System.Drawing.Size(666, 416);
+            this.tabPageDowntime.Size = new System.Drawing.Size(666, 423);
             this.tabPageDowntime.TabIndex = 2;
             this.tabPageDowntime.Text = "Downtime";
             this.tabPageDowntime.Click += new System.EventHandler(this.OnTabPageClick);
@@ -626,8 +637,9 @@ namespace Oracle.Forms
             this.tabControllerDowntime.MouseState = MaterialSkin.MouseState.Hover;
             this.tabControllerDowntime.Name = "tabControllerDowntime";
             this.tabControllerDowntime.SelectedIndex = 0;
-            this.tabControllerDowntime.Size = new System.Drawing.Size(655, 283);
+            this.tabControllerDowntime.Size = new System.Drawing.Size(655, 290);
             this.tabControllerDowntime.TabIndex = 8;
+            this.tabControllerDowntime.TabStop = false;
             // 
             // tabPageDowntimeReturnToAetheryte
             // 
@@ -636,7 +648,7 @@ namespace Oracle.Forms
             this.tabPageDowntimeReturnToAetheryte.Location = new System.Drawing.Point(4, 29);
             this.tabPageDowntimeReturnToAetheryte.Name = "tabPageDowntimeReturnToAetheryte";
             this.tabPageDowntimeReturnToAetheryte.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDowntimeReturnToAetheryte.Size = new System.Drawing.Size(647, 250);
+            this.tabPageDowntimeReturnToAetheryte.Size = new System.Drawing.Size(647, 257);
             this.tabPageDowntimeReturnToAetheryte.TabIndex = 0;
             this.tabPageDowntimeReturnToAetheryte.Text = "Return to Aetheryte";
             // 
@@ -648,7 +660,7 @@ namespace Oracle.Forms
             this.labelDowntimeReturnToAetheryte.ForeColor = System.Drawing.Color.Black;
             this.labelDowntimeReturnToAetheryte.Location = new System.Drawing.Point(10, 0);
             this.labelDowntimeReturnToAetheryte.Name = "labelDowntimeReturnToAetheryte";
-            this.labelDowntimeReturnToAetheryte.Size = new System.Drawing.Size(631, 233);
+            this.labelDowntimeReturnToAetheryte.Size = new System.Drawing.Size(631, 240);
             this.labelDowntimeReturnToAetheryte.TabIndex = 1;
             this.labelDowntimeReturnToAetheryte.Text = "The Return to Aetheryte behaviour will move your character to the closest aethery" +
     "te crystal when there are no viable FATEs active.";
@@ -666,7 +678,7 @@ namespace Oracle.Forms
             this.tabPageDowntimeMoveToLocation.Location = new System.Drawing.Point(4, 22);
             this.tabPageDowntimeMoveToLocation.Name = "tabPageDowntimeMoveToLocation";
             this.tabPageDowntimeMoveToLocation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDowntimeMoveToLocation.Size = new System.Drawing.Size(647, 257);
+            this.tabPageDowntimeMoveToLocation.Size = new System.Drawing.Size(647, 264);
             this.tabPageDowntimeMoveToLocation.TabIndex = 1;
             this.tabPageDowntimeMoveToLocation.Text = "Move to Location";
             // 
@@ -710,7 +722,7 @@ namespace Oracle.Forms
             this.labelDowntimeWaitLocationValue.ForeColor = System.Drawing.Color.Black;
             this.labelDowntimeWaitLocationValue.Location = new System.Drawing.Point(164, 85);
             this.labelDowntimeWaitLocationValue.Name = "labelDowntimeWaitLocationValue";
-            this.labelDowntimeWaitLocationValue.Size = new System.Drawing.Size(69, 29);
+            this.labelDowntimeWaitLocationValue.Size = new System.Drawing.Size(69, 36);
             this.labelDowntimeWaitLocationValue.TabIndex = 6;
             this.labelDowntimeWaitLocationValue.Text = "None";
             // 
@@ -724,7 +736,7 @@ namespace Oracle.Forms
             this.labelDowntimeCurrentZoneValue.ForeColor = System.Drawing.Color.Black;
             this.labelDowntimeCurrentZoneValue.Location = new System.Drawing.Point(164, 55);
             this.labelDowntimeCurrentZoneValue.Name = "labelDowntimeCurrentZoneValue";
-            this.labelDowntimeCurrentZoneValue.Size = new System.Drawing.Size(69, 29);
+            this.labelDowntimeCurrentZoneValue.Size = new System.Drawing.Size(69, 36);
             this.labelDowntimeCurrentZoneValue.TabIndex = 5;
             this.labelDowntimeCurrentZoneValue.Text = "0";
             // 
@@ -738,7 +750,7 @@ namespace Oracle.Forms
             this.labelDowntimeWaitLocation.ForeColor = System.Drawing.Color.Black;
             this.labelDowntimeWaitLocation.Location = new System.Drawing.Point(28, 85);
             this.labelDowntimeWaitLocation.Name = "labelDowntimeWaitLocation";
-            this.labelDowntimeWaitLocation.Size = new System.Drawing.Size(130, 29);
+            this.labelDowntimeWaitLocation.Size = new System.Drawing.Size(130, 36);
             this.labelDowntimeWaitLocation.TabIndex = 4;
             this.labelDowntimeWaitLocation.Text = "Wait Location: ";
             // 
@@ -752,7 +764,7 @@ namespace Oracle.Forms
             this.labelDowntimeCurrentZone.ForeColor = System.Drawing.Color.Black;
             this.labelDowntimeCurrentZone.Location = new System.Drawing.Point(28, 55);
             this.labelDowntimeCurrentZone.Name = "labelDowntimeCurrentZone";
-            this.labelDowntimeCurrentZone.Size = new System.Drawing.Size(130, 29);
+            this.labelDowntimeCurrentZone.Size = new System.Drawing.Size(130, 36);
             this.labelDowntimeCurrentZone.TabIndex = 3;
             this.labelDowntimeCurrentZone.Text = "Current Zone Id: ";
             // 
@@ -765,7 +777,7 @@ namespace Oracle.Forms
             this.labelDowntimeMoveToLocation.ForeColor = System.Drawing.Color.Black;
             this.labelDowntimeMoveToLocation.Location = new System.Drawing.Point(10, 0);
             this.labelDowntimeMoveToLocation.Name = "labelDowntimeMoveToLocation";
-            this.labelDowntimeMoveToLocation.Size = new System.Drawing.Size(631, 48);
+            this.labelDowntimeMoveToLocation.Size = new System.Drawing.Size(631, 55);
             this.labelDowntimeMoveToLocation.TabIndex = 2;
             this.labelDowntimeMoveToLocation.Text = "The Move to Location behaviour will move you to a location of your choosing when " +
     "there are no viable FATEs active. Each zone has its own location.";
@@ -780,7 +792,7 @@ namespace Oracle.Forms
             this.tabPageDowntimeGrindMobs.Controls.Add(this.labelDowntimeGrindMobs);
             this.tabPageDowntimeGrindMobs.Location = new System.Drawing.Point(4, 22);
             this.tabPageDowntimeGrindMobs.Name = "tabPageDowntimeGrindMobs";
-            this.tabPageDowntimeGrindMobs.Size = new System.Drawing.Size(647, 257);
+            this.tabPageDowntimeGrindMobs.Size = new System.Drawing.Size(647, 264);
             this.tabPageDowntimeGrindMobs.TabIndex = 2;
             this.tabPageDowntimeGrindMobs.Text = "Grind Mobs";
             // 
@@ -858,7 +870,7 @@ namespace Oracle.Forms
             this.tabPageDowntimeDoNothing.Controls.Add(this.labelDowntimeDoNothing);
             this.tabPageDowntimeDoNothing.Location = new System.Drawing.Point(4, 22);
             this.tabPageDowntimeDoNothing.Name = "tabPageDowntimeDoNothing";
-            this.tabPageDowntimeDoNothing.Size = new System.Drawing.Size(647, 257);
+            this.tabPageDowntimeDoNothing.Size = new System.Drawing.Size(647, 264);
             this.tabPageDowntimeDoNothing.TabIndex = 3;
             this.tabPageDowntimeDoNothing.Text = "Do Nothing";
             // 
@@ -889,6 +901,7 @@ namespace Oracle.Forms
             this.comboBoxDowntimeBehaviourSetting.Name = "comboBoxDowntimeBehaviourSetting";
             this.comboBoxDowntimeBehaviourSetting.Size = new System.Drawing.Size(160, 28);
             this.comboBoxDowntimeBehaviourSetting.TabIndex = 7;
+            this.comboBoxDowntimeBehaviourSetting.TabStop = false;
             this.comboBoxDowntimeBehaviourSetting.SelectedIndexChanged += new System.EventHandler(this.OnDowntimeBehaviourSelectedIndexChanged);
             // 
             // labelDowntimeBehaviourSetting
@@ -916,16 +929,130 @@ namespace Oracle.Forms
             // tabPageZoneChange
             // 
             this.tabPageZoneChange.BackColor = System.Drawing.Color.White;
+            this.tabPageZoneChange.Controls.Add(this.dataGridViewZoneChangeSettings);
             this.tabPageZoneChange.Controls.Add(this.labelZoneChangeEnabledSetting);
             this.tabPageZoneChange.Controls.Add(this.materialCheckBox1);
             this.tabPageZoneChange.Controls.Add(this.labelZoneChangeTitle);
-            this.tabPageZoneChange.Location = new System.Drawing.Point(4, 22);
+            this.tabPageZoneChange.Location = new System.Drawing.Point(4, 29);
             this.tabPageZoneChange.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageZoneChange.Name = "tabPageZoneChange";
-            this.tabPageZoneChange.Size = new System.Drawing.Size(666, 423);
+            this.tabPageZoneChange.Size = new System.Drawing.Size(666, 416);
             this.tabPageZoneChange.TabIndex = 3;
             this.tabPageZoneChange.Text = "Zone Change";
             this.tabPageZoneChange.Click += new System.EventHandler(this.OnTabPageClick);
+            // 
+            // dataGridViewZoneChangeSettings
+            // 
+            this.dataGridViewZoneChangeSettings.AllowUserToAddRows = false;
+            this.dataGridViewZoneChangeSettings.AllowUserToDeleteRows = false;
+            this.dataGridViewZoneChangeSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridViewZoneChangeSettings.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridViewZoneChangeSettings.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
+            this.dataGridViewZoneChangeSettings.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dataGridViewZoneChangeSettings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewZoneChangeSettings.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnLevel,
+            this.ColumnAetheryte});
+            this.dataGridViewZoneChangeSettings.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.dataGridViewZoneChangeSettings.GridColor = System.Drawing.Color.Black;
+            this.dataGridViewZoneChangeSettings.Location = new System.Drawing.Point(136, 110);
+            this.dataGridViewZoneChangeSettings.Name = "dataGridViewZoneChangeSettings";
+            this.dataGridViewZoneChangeSettings.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewZoneChangeSettings.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewZoneChangeSettings.RowHeadersVisible = false;
+            this.dataGridViewZoneChangeSettings.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.MediumSlateBlue;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+            this.dataGridViewZoneChangeSettings.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.dataGridViewZoneChangeSettings.RowTemplate.Height = 26;
+            this.dataGridViewZoneChangeSettings.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewZoneChangeSettings.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dataGridViewZoneChangeSettings.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewZoneChangeSettings.Size = new System.Drawing.Size(384, 286);
+            this.dataGridViewZoneChangeSettings.TabIndex = 10;
+            this.dataGridViewZoneChangeSettings.TabStop = false;
+            this.dataGridViewZoneChangeSettings.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.OnDataGridViewEditingControlShowing);
+            // 
+            // ColumnLevel
+            // 
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.MediumSlateBlue;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+            this.ColumnLevel.DefaultCellStyle = dataGridViewCellStyle1;
+            this.ColumnLevel.HeaderText = "Level";
+            this.ColumnLevel.Name = "ColumnLevel";
+            this.ColumnLevel.ReadOnly = true;
+            this.ColumnLevel.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // ColumnAetheryte
+            // 
+            this.ColumnAetheryte.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.MediumSlateBlue;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            this.ColumnAetheryte.DefaultCellStyle = dataGridViewCellStyle2;
+            this.ColumnAetheryte.HeaderText = "Aetheryte";
+            this.ColumnAetheryte.Items.AddRange(new object[] {
+            "New Gridania",
+            "Bentbranch Meadows",
+            "The Hawthorne Hut",
+            "Quarrymill",
+            "Camp Tranquil",
+            "Fallgourd Float",
+            "Limsa Lominsa Lower Decks",
+            "Ul\'dah - Steps of Nald",
+            "Moraby Drydocks",
+            "Costa del Sol",
+            "Wineport",
+            "Swiftperch",
+            "Aleport",
+            "Camp Bronze Lake",
+            "Camp Overlook",
+            "Horizon",
+            "Camp Drybone",
+            "Little Ala Mhigo",
+            "Forgotten Springs",
+            "Camp Bluefog",
+            "Ceruleum Processing Plant",
+            "Camp Dragonhead",
+            "Revenant\'s Toll",
+            "Summerford Farms",
+            "Black Brush Station",
+            "Wolves\' Den Pier",
+            "Estate Hall (Free Company)",
+            "Estate Hall (Free Company)",
+            "Estate Hall (Free Company)",
+            "Estate Hall (Private)",
+            "Estate Hall (Private)",
+            "Estate Hall (Private)",
+            "The Gold Saucer",
+            "Foundation",
+            "Falcon\'s Nest",
+            "Camp Cloudtop",
+            "Ok\' Zundu",
+            "Helix",
+            "Idyllshire",
+            "Tailfeather",
+            "Anyx Trine",
+            "Moghome",
+            "Zenith"});
+            this.ColumnAetheryte.Name = "ColumnAetheryte";
+            this.ColumnAetheryte.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // labelZoneChangeEnabledSetting
             // 
@@ -1026,6 +1153,7 @@ namespace Oracle.Forms
             this.tabControllerFate.SelectedIndex = 0;
             this.tabControllerFate.Size = new System.Drawing.Size(674, 449);
             this.tabControllerFate.TabIndex = 9;
+            this.tabControllerFate.TabStop = false;
             // 
             // tabPageGeneral
             // 
@@ -1202,6 +1330,7 @@ namespace Oracle.Forms
             this.tabSelectorFate.Name = "tabSelectorFate";
             this.tabSelectorFate.Size = new System.Drawing.Size(173, 449);
             this.tabSelectorFate.TabIndex = 8;
+            this.tabSelectorFate.TabStop = false;
             this.tabSelectorFate.Text = "materialTabSelectorVertical1";
             this.tabSelectorFate.Click += new System.EventHandler(this.OnTabPageClick);
             // 
@@ -1232,6 +1361,7 @@ namespace Oracle.Forms
             this.tabSelectorCustom.Name = "tabSelectorCustom";
             this.tabSelectorCustom.Size = new System.Drawing.Size(173, 449);
             this.tabSelectorCustom.TabIndex = 7;
+            this.tabSelectorCustom.TabStop = false;
             this.tabSelectorCustom.Text = "materialTabSelectorVertical1";
             this.tabSelectorCustom.Click += new System.EventHandler(this.OnTabPageClick);
             // 
@@ -1252,6 +1382,7 @@ namespace Oracle.Forms
             this.tabControllerCustom.SelectedIndex = 0;
             this.tabControllerCustom.Size = new System.Drawing.Size(674, 449);
             this.tabControllerCustom.TabIndex = 2;
+            this.tabControllerCustom.TabStop = false;
             // 
             // tabPageMovement
             // 
@@ -1350,6 +1481,7 @@ namespace Oracle.Forms
             this.tabSelectorBlacklist.Name = "tabSelectorBlacklist";
             this.tabSelectorBlacklist.Size = new System.Drawing.Size(173, 449);
             this.tabSelectorBlacklist.TabIndex = 6;
+            this.tabSelectorBlacklist.TabStop = false;
             this.tabSelectorBlacklist.Text = "materialTabSelectorVertical1";
             this.tabSelectorBlacklist.Click += new System.EventHandler(this.OnTabPageClick);
             // 
@@ -1369,6 +1501,7 @@ namespace Oracle.Forms
             this.tabControllerBlacklist.SelectedIndex = 0;
             this.tabControllerBlacklist.Size = new System.Drawing.Size(674, 449);
             this.tabControllerBlacklist.TabIndex = 1;
+            this.tabControllerBlacklist.TabStop = false;
             // 
             // tabPageFateBlacklist
             // 
@@ -1449,6 +1582,7 @@ namespace Oracle.Forms
             this.tabControllerAbout.SelectedIndex = 0;
             this.tabControllerAbout.Size = new System.Drawing.Size(674, 449);
             this.tabControllerAbout.TabIndex = 0;
+            this.tabControllerAbout.TabStop = false;
             // 
             // tabPageLicense
             // 
@@ -1588,6 +1722,7 @@ namespace Oracle.Forms
             this.tabSelectorAbout.Name = "tabSelectorAbout";
             this.tabSelectorAbout.Size = new System.Drawing.Size(173, 449);
             this.tabSelectorAbout.TabIndex = 5;
+            this.tabSelectorAbout.TabStop = false;
             this.tabSelectorAbout.Text = "materialTabSelectorVertical1";
             this.tabSelectorAbout.Click += new System.EventHandler(this.OnTabPageClick);
             // 
@@ -1704,6 +1839,7 @@ namespace Oracle.Forms
             this.tabPageDowntimeDoNothing.ResumeLayout(false);
             this.tabPageZoneChange.ResumeLayout(false);
             this.tabPageZoneChange.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewZoneChangeSettings)).EndInit();
             this.tabPageMiscellaneous.ResumeLayout(false);
             this.tabPageMiscellaneous.PerformLayout();
             this.tabFateSettings.ResumeLayout(false);
@@ -1747,7 +1883,6 @@ namespace Oracle.Forms
             this.tabPageDevelopment.PerformLayout();
             this.panelControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oracleSettingsBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1862,40 +1997,8 @@ namespace Oracle.Forms
         private System.Windows.Forms.Label labelDowntimeGrindMobsMaxLevelBelowSetting;
         private System.Windows.Forms.NumericUpDown numericUpDownMinLevelBelowSetting;
         private System.Windows.Forms.NumericUpDown numericUpDownMaxLevelAboveSetting;
-        private System.Windows.Forms.BindingSource oracleSettingsBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn actionDelayDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn bindHomePointDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn bossEngagePercentageDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn bossFatesEnabledDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn chainFateWaitTimeoutDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn changeZonesEnabledDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn collectFatesEnabledDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn collectFateTurnInAtAmountDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn debugEnabledDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn defenceFatesEnabledDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn escortFatesEnabledDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn fateDelayMovementDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fateDelayMovementMaximumDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fateDelayMovementMinimumDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fateMaxLevelsAboveDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fateMaxLevelsBelowDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fateSelectModeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fateWaitModeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn ignoreLowDurationUnstartedFatesDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn killFatesEnabledDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn listHooksOnStartDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn lowRemainingDurationDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn megaBossEngagePercentageDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn megaBossFatesEnabledDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mobMaximumLevelAboveDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mobMaximumLevelBelowDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn oracleOperationModeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn runProblematicFatesDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn specificFateDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn teleportIfQuickerDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn teleportMinimumDistanceDeltaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn waitAtFateForProgressDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn waitForChainFatesDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.BindingSource oracleSettingsBindingSource1;
+        private System.Windows.Forms.DataGridView dataGridViewZoneChangeSettings;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLevel;
+        private System.Windows.Forms.DataGridViewComboBoxColumn ColumnAetheryte;
     }
 }

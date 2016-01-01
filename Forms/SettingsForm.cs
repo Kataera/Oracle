@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
@@ -58,13 +59,63 @@ namespace Oracle.Forms
             this.SetComponentValues();
         }
 
+        private static DataTable GenerateAetheryteNameTable()
+        {
+            var dataTable = new DataTable("Aetherytes");
+            dataTable.Columns.Add("Id");
+            dataTable.Columns.Add("Name");
+
+            dataTable.Rows.Add(14, "Aleport");
+            dataTable.Rows.Add(77, "Anyx Trine");
+            dataTable.Rows.Add(3, "Bentbranch Meadows");
+            dataTable.Rows.Add(53, "Black Brush Station");
+            dataTable.Rows.Add(21, "Camp Bluefog");
+            dataTable.Rows.Add(15, "Camp Bronze Lake");
+            dataTable.Rows.Add(72, "Camp Cloudtop");
+            dataTable.Rows.Add(23, "Camp Dragonhead");
+            dataTable.Rows.Add(18, "Camp Drybone");
+            dataTable.Rows.Add(16, "Camp Overlook");
+            dataTable.Rows.Add(6, "Camp Tranquil");
+            dataTable.Rows.Add(22, "Ceruleum Processing Plant");
+            dataTable.Rows.Add(11, "Costa del Sol");
+            dataTable.Rows.Add(71, "Falcon's Nest");
+            dataTable.Rows.Add(7, "Fallgourd Float");
+            dataTable.Rows.Add(20, "Forgotten Springs");
+            dataTable.Rows.Add(70, "Foundation");
+            dataTable.Rows.Add(74, "Helix");
+            dataTable.Rows.Add(17, "Horizon");
+            dataTable.Rows.Add(75, "Idyllshire");
+            dataTable.Rows.Add(19, "Little Ala Mhigo");
+            dataTable.Rows.Add(78, "Moghome");
+            dataTable.Rows.Add(10, "Moraby Drydocks");
+            dataTable.Rows.Add(73, "Ok' Zundu");
+            dataTable.Rows.Add(5, "Quarrymill");
+            dataTable.Rows.Add(24, "Revenant's Toll");
+            dataTable.Rows.Add(52, "Summerford Farms");
+            dataTable.Rows.Add(13, "Swiftperch");
+            dataTable.Rows.Add(76, "Tailfeather");
+            dataTable.Rows.Add(4, "The Hawthorne Hut");
+            dataTable.Rows.Add(12, "Wineport");
+            dataTable.Rows.Add(79, "Zenith");
+
+            return dataTable;
+        }
+
+        private static void OnDataGridViewControlEnter(object sender, EventArgs e)
+        {
+            ((ComboBox) sender).DroppedDown = true;
+        }
+
         // Add to MouseDown of a component to allow dragging of the form.
         private void MoveWindow(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (!this.Maximized)
             {
-                ReleaseCapture();
-                SendMessage(this.Handle, WmNclbuttondown, HtCaption, 0);
+                if (e.Button == MouseButtons.Left)
+                {
+                    ReleaseCapture();
+                    SendMessage(this.Handle, WmNclbuttondown, HtCaption, 0);
+                }
             }
         }
 
@@ -91,6 +142,14 @@ namespace Oracle.Forms
         private void OnCloseButtonClick(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void OnDataGridViewEditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            // Dirty hack that lets us open the combo box in one click. :>
+            var ctrl = e.Control;
+            ctrl.Enter -= OnDataGridViewControlEnter;
+            ctrl.Enter += OnDataGridViewControlEnter;
         }
 
         private void OnDonatePictureBoxClick(object sender, EventArgs e)
@@ -145,6 +204,19 @@ namespace Oracle.Forms
             OracleSettings.Instance.SpecificFate = this.textBoxSpecificFateNameSetting.Text;
         }
 
+        private void OnZoneChangeSettingsCellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            var level = Convert.ToUInt32(this.dataGridViewZoneChangeSettings.Rows[e.RowIndex].Cells[this.ColumnLevel.Index].Value.ToString());
+            var value =
+                Convert.ToUInt32(this.dataGridViewZoneChangeSettings.Rows[e.RowIndex].Cells[this.ColumnAetheryte.Index].Value.ToString());
+
+            if (OracleSettings.Instance.ZoneLevels.ContainsKey(level))
+            {
+                OracleSettings.Instance.ZoneLevels.Remove(level);
+                OracleSettings.Instance.ZoneLevels.Add(level, value);
+            }
+        }
+
         private void SetComponentValues()
         {
             this.comboBoxOracleModeSetting.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
@@ -157,6 +229,17 @@ namespace Oracle.Forms
 
             this.numericUpDownMaxLevelAboveSetting.Value = OracleSettings.Instance.MobMaximumLevelAbove;
             this.numericUpDownMinLevelBelowSetting.Value = OracleSettings.Instance.MobMaximumLevelBelow;
+
+            this.ColumnAetheryte.DataSource = GenerateAetheryteNameTable();
+            this.ColumnAetheryte.DisplayMember = "Name";
+            this.ColumnAetheryte.ValueMember = "Id";
+
+            foreach (var item in OracleSettings.Instance.ZoneLevels)
+            {
+                this.dataGridViewZoneChangeSettings.Rows.Add(item.Key, item.Value.ToString());
+            }
+
+            this.dataGridViewZoneChangeSettings.CellValueChanged += this.OnZoneChangeSettingsCellValueChanged;
 
             try
             {

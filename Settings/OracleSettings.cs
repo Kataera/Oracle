@@ -40,13 +40,10 @@ namespace Oracle.Settings
         private static readonly object SyncRoot = new object();
         private static volatile OracleSettings instance;
 
-        public List<uint> BlacklistedFates;
-        public List<uint> BlacklistedMobs;
-        public Dictionary<uint, Vector3> FateWaitLocations;
-        public Dictionary<uint, uint> ZoneLevels;
-
         private int actionDelay;
         private bool bindHomePoint;
+        private List<uint> blacklistedFates;
+        private List<uint> blacklistedMobs;
         private int bossEngagePercentage;
         private bool bossFatesEnabled;
         private int chainFateWaitTimeout;
@@ -62,6 +59,7 @@ namespace Oracle.Settings
         private int fateMaxLevelsAbove;
         private int fateMaxLevelsBelow;
         private FateSelectMode fateSelectMode;
+        private Dictionary<uint, Vector3> fateWaitLocations;
         private FateWaitMode fateWaitMode;
         private bool ignoreLowDurationUnstartedFates;
         private bool killFatesEnabled;
@@ -78,6 +76,7 @@ namespace Oracle.Settings
         private int teleportMinimumDistanceDelta;
         private bool waitAtFateForProgress;
         private bool waitForChainFates;
+        private Dictionary<uint, uint> zoneLevels;
 
         private OracleSettings()
             : base(Path.Combine(SettingsPath, "OracleSettings.json"))
@@ -150,6 +149,30 @@ namespace Oracle.Settings
             set
             {
                 this.bindHomePoint = value;
+                this.Save();
+            }
+        }
+
+        [Setting]
+        public List<uint> BlacklistedFates
+        {
+            get { return this.blacklistedFates; }
+
+            set
+            {
+                this.blacklistedFates = value;
+                this.Save();
+            }
+        }
+
+        [Setting]
+        public List<uint> BlacklistedMobs
+        {
+            get { return this.blacklistedMobs; }
+
+            set
+            {
+                this.blacklistedMobs = value;
                 this.Save();
             }
         }
@@ -345,6 +368,18 @@ namespace Oracle.Settings
             set
             {
                 this.fateSelectMode = value;
+                this.Save();
+            }
+        }
+
+        [Setting]
+        public Dictionary<uint, Vector3> FateWaitLocations
+        {
+            get { return this.fateWaitLocations; }
+
+            set
+            {
+                this.fateWaitLocations = value;
                 this.Save();
             }
         }
@@ -553,6 +588,18 @@ namespace Oracle.Settings
             set
             {
                 this.waitForChainFates = value;
+                this.Save();
+            }
+        }
+
+        [Setting]
+        public Dictionary<uint, uint> ZoneLevels
+        {
+            get { return this.zoneLevels; }
+
+            set
+            {
+                this.zoneLevels = value;
                 this.Save();
             }
         }
