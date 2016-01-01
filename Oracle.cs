@@ -50,8 +50,6 @@ namespace Oracle
 
         private static bool playerFlightMode;
 
-        private static bool reenableFlightPlugin;
-
         private static Composite root;
 
         private static SettingsForm settingsForm;
