@@ -176,9 +176,9 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 await CommonTasks.TakeOff();
             }
 
-            var currentFateLocation = currentFate.Location;
+            var originalFateLocation = currentFate.Location;
             var aStar = new AStarNavigator(OracleManager.ZoneFlightMesh.Graph);
-            var closestNode = GetClosestNodeToLocation(currentFateLocation);
+            var closestNode = GetClosestNodeToLocation(originalFateLocation);
             var path = aStar.GeneratePath(Core.Player.Location, closestNode.Position);
 
             foreach (var step in path)
@@ -210,9 +210,9 @@ namespace Oracle.Behaviour.Tasks.Utilities
                     }
 
                     // Did FATE move?
-                    currentFateLocation = currentFate.Location;
-                    if (!Equals(GetClosestNodeToLocation(currentFateLocation), closestNode))
+                    if (currentFate.Location.Distance(originalFateLocation) > 50f)
                     {
+                        Logger.SendDebugLog("FATE has moved significantly, recalculating flight path.");
                         await MoveWithFlightMesh();
                         return true;
                     }
