@@ -172,9 +172,6 @@ Donations are in no way expected nor required for developing and maintaining Ora
 
 If you do decide to donate, thank you very much!</value>
   </data>
-  <data name="labelTooltip.Text" xml:space="preserve">
-    <value>Lorem ipsum dolor sit amet, cetero docendi per cu, ignota probatus an mea. Has id saperet molestie, ne vel civibus ancillae. Eu assum denique nam. Nam id putent omittam gubergren. Ea nihil tempor sit. Pri decore accusam eu, ius labore dicunt audire eu, tollit gloriatur no vix.</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

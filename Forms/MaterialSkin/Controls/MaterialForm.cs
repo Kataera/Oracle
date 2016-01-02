@@ -52,6 +52,7 @@ namespace MaterialSkin.Controls
         private const int WmszTopright = 5;
         private const int WsMinimizebox = 0x20000;
         private const int WsSysmenu = 0x00080000;
+        private const int CsDropshadow = 0x00020000;
 
         public bool Maximized;
 
@@ -146,7 +147,8 @@ namespace MaterialSkin.Controls
 
                 // WS_SYSMENU: Trigger the creation of the system menu
                 // WS_MINIMIZEBOX: Allow minimizing from taskbar
-                par.Style = par.Style | WsMinimizebox | WsSysmenu; // Turn on the WS_MINIMIZEBOX style flag
+                par.Style |= WsMinimizebox | WsSysmenu; // Turn on the WS_MINIMIZEBOX style flag
+                par.ClassStyle |= CsDropshadow;
                 return par;
             }
         }

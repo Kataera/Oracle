@@ -112,7 +112,9 @@ namespace Oracle.Forms
             this.comboBoxDowntimeBehaviourSetting = new System.Windows.Forms.ComboBox();
             this.labelDowntimeBehaviourSetting = new System.Windows.Forms.Label();
             this.labelDowntimeTitle = new System.Windows.Forms.Label();
-            this.tabPageZoneChange = new System.Windows.Forms.TabPage();
+            this.tabPageZoneChanging = new System.Windows.Forms.TabPage();
+            this.checkBoxBindHomePointSetting = new MaterialSkin.Controls.MaterialCheckBox();
+            this.labelBindHomePointSetting = new System.Windows.Forms.Label();
             this.buttonResetZoneLevelsToDefault = new MaterialSkin.Controls.MaterialRaisedButton();
             this.labelZoneChangeTip = new System.Windows.Forms.Label();
             this.dataGridViewZoneChangeSettings = new System.Windows.Forms.DataGridView();
@@ -121,7 +123,7 @@ namespace Oracle.Forms
             this.EmptyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelZoneChangeEnabledSetting = new System.Windows.Forms.Label();
             this.checkBoxZoneChangingEnabledSetting = new MaterialSkin.Controls.MaterialCheckBox();
-            this.labelZoneChangeTitle = new System.Windows.Forms.Label();
+            this.labelZoneChangingTitle = new System.Windows.Forms.Label();
             this.tabPageMiscellaneous = new System.Windows.Forms.TabPage();
             this.labelMiscellaneousTitle = new System.Windows.Forms.Label();
             this.tabFateSettings = new System.Windows.Forms.TabPage();
@@ -141,7 +143,7 @@ namespace Oracle.Forms
             this.tabPageMegaBossFates = new System.Windows.Forms.TabPage();
             this.labelMegaBossFatesTitle = new System.Windows.Forms.Label();
             this.tabSelectorFate = new MaterialSkin.Controls.MaterialTabSelectorVertical();
-            this.tabNavigation = new System.Windows.Forms.TabPage();
+            this.tabNavigationSettings = new System.Windows.Forms.TabPage();
             this.tabSelectorCustom = new MaterialSkin.Controls.MaterialTabSelectorVertical();
             this.tabControllerCustom = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPageMovement = new System.Windows.Forms.TabPage();
@@ -170,7 +172,7 @@ namespace Oracle.Forms
             this.tabPageDevelopment = new System.Windows.Forms.TabPage();
             this.labelDevelopmentTitle = new System.Windows.Forms.Label();
             this.tabSelectorAbout = new MaterialSkin.Controls.MaterialTabSelectorVertical();
-            this.labelTooltip = new System.Windows.Forms.Label();
+            this.labelVersionInformation = new System.Windows.Forms.Label();
             this.panelControl = new System.Windows.Forms.Panel();
             this.buttonClose = new MaterialSkin.Controls.MaterialFlatButton();
             this.labelDefaultFocus = new System.Windows.Forms.Label();
@@ -194,7 +196,7 @@ namespace Oracle.Forms
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxLevelAboveSetting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinLevelBelowSetting)).BeginInit();
             this.tabPageDowntimeDoNothing.SuspendLayout();
-            this.tabPageZoneChange.SuspendLayout();
+            this.tabPageZoneChanging.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewZoneChangeSettings)).BeginInit();
             this.tabPageMiscellaneous.SuspendLayout();
             this.tabFateSettings.SuspendLayout();
@@ -206,7 +208,7 @@ namespace Oracle.Forms
             this.tabPageDefenceFates.SuspendLayout();
             this.tabPageBossFates.SuspendLayout();
             this.tabPageMegaBossFates.SuspendLayout();
-            this.tabNavigation.SuspendLayout();
+            this.tabNavigationSettings.SuspendLayout();
             this.tabControllerCustom.SuspendLayout();
             this.tabPageMovement.SuspendLayout();
             this.tabPageFlight.SuspendLayout();
@@ -249,7 +251,7 @@ namespace Oracle.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerMain.Controls.Add(this.tabGeneralSettings);
             this.tabControllerMain.Controls.Add(this.tabFateSettings);
-            this.tabControllerMain.Controls.Add(this.tabNavigation);
+            this.tabControllerMain.Controls.Add(this.tabNavigationSettings);
             this.tabControllerMain.Controls.Add(this.tabBlacklist);
             this.tabControllerMain.Controls.Add(this.tabAbout);
             this.tabControllerMain.Depth = 0;
@@ -302,7 +304,7 @@ namespace Oracle.Forms
             this.tabControllerGeneral.Controls.Add(this.tabPageOracleMode);
             this.tabControllerGeneral.Controls.Add(this.tabPageFateSelection);
             this.tabControllerGeneral.Controls.Add(this.tabPageDowntime);
-            this.tabControllerGeneral.Controls.Add(this.tabPageZoneChange);
+            this.tabControllerGeneral.Controls.Add(this.tabPageZoneChanging);
             this.tabControllerGeneral.Controls.Add(this.tabPageMiscellaneous);
             this.tabControllerGeneral.Depth = 0;
             this.tabControllerGeneral.Location = new System.Drawing.Point(172, 0);
@@ -449,6 +451,9 @@ namespace Oracle.Forms
             // 
             // labelAtmaGrindNYI
             // 
+            this.labelAtmaGrindNYI.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelAtmaGrindNYI.AutoSize = true;
             this.labelAtmaGrindNYI.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelAtmaGrindNYI.ForeColor = System.Drawing.Color.Red;
@@ -471,6 +476,9 @@ namespace Oracle.Forms
             // 
             // labelAnimusGrindModeNYI
             // 
+            this.labelAnimusGrindModeNYI.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelAnimusGrindModeNYI.AutoSize = true;
             this.labelAnimusGrindModeNYI.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelAnimusGrindModeNYI.ForeColor = System.Drawing.Color.Red;
@@ -860,11 +868,14 @@ namespace Oracle.Forms
             // 
             // labelDowntimeGrindMobs
             // 
+            this.labelDowntimeGrindMobs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDowntimeGrindMobs.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDowntimeGrindMobs.ForeColor = System.Drawing.Color.Black;
             this.labelDowntimeGrindMobs.Location = new System.Drawing.Point(10, 0);
             this.labelDowntimeGrindMobs.Name = "labelDowntimeGrindMobs";
-            this.labelDowntimeGrindMobs.Size = new System.Drawing.Size(631, 40);
+            this.labelDowntimeGrindMobs.Size = new System.Drawing.Size(631, 54);
             this.labelDowntimeGrindMobs.TabIndex = 0;
             this.labelDowntimeGrindMobs.Text = "The Grind Mobs behaviour will kill nearby enemy mobs when there are no viable FAT" +
     "Es active. You can blacklist mobs in the Blacklist tab.";
@@ -881,11 +892,14 @@ namespace Oracle.Forms
             // 
             // labelDowntimeDoNothing
             // 
+            this.labelDowntimeDoNothing.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDowntimeDoNothing.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDowntimeDoNothing.ForeColor = System.Drawing.Color.Black;
             this.labelDowntimeDoNothing.Location = new System.Drawing.Point(10, 0);
             this.labelDowntimeDoNothing.Name = "labelDowntimeDoNothing";
-            this.labelDowntimeDoNothing.Size = new System.Drawing.Size(631, 240);
+            this.labelDowntimeDoNothing.Size = new System.Drawing.Size(631, 254);
             this.labelDowntimeDoNothing.TabIndex = 1;
             this.labelDowntimeDoNothing.Text = "The Do Nothing behaviour will stand still when there\'s no viable FATEs active. Th" +
     "e bot will defend itself if attacked.";
@@ -931,22 +945,54 @@ namespace Oracle.Forms
             this.labelDowntimeTitle.TabIndex = 5;
             this.labelDowntimeTitle.Text = "Downtime Settings";
             // 
-            // tabPageZoneChange
+            // tabPageZoneChanging
             // 
-            this.tabPageZoneChange.BackColor = System.Drawing.Color.White;
-            this.tabPageZoneChange.Controls.Add(this.buttonResetZoneLevelsToDefault);
-            this.tabPageZoneChange.Controls.Add(this.labelZoneChangeTip);
-            this.tabPageZoneChange.Controls.Add(this.dataGridViewZoneChangeSettings);
-            this.tabPageZoneChange.Controls.Add(this.labelZoneChangeEnabledSetting);
-            this.tabPageZoneChange.Controls.Add(this.checkBoxZoneChangingEnabledSetting);
-            this.tabPageZoneChange.Controls.Add(this.labelZoneChangeTitle);
-            this.tabPageZoneChange.Location = new System.Drawing.Point(4, 22);
-            this.tabPageZoneChange.Margin = new System.Windows.Forms.Padding(0);
-            this.tabPageZoneChange.Name = "tabPageZoneChange";
-            this.tabPageZoneChange.Size = new System.Drawing.Size(666, 423);
-            this.tabPageZoneChange.TabIndex = 3;
-            this.tabPageZoneChange.Text = "Zone Change";
-            this.tabPageZoneChange.Click += new System.EventHandler(this.OnTabPageClick);
+            this.tabPageZoneChanging.BackColor = System.Drawing.Color.White;
+            this.tabPageZoneChanging.Controls.Add(this.checkBoxBindHomePointSetting);
+            this.tabPageZoneChanging.Controls.Add(this.labelBindHomePointSetting);
+            this.tabPageZoneChanging.Controls.Add(this.buttonResetZoneLevelsToDefault);
+            this.tabPageZoneChanging.Controls.Add(this.labelZoneChangeTip);
+            this.tabPageZoneChanging.Controls.Add(this.dataGridViewZoneChangeSettings);
+            this.tabPageZoneChanging.Controls.Add(this.labelZoneChangeEnabledSetting);
+            this.tabPageZoneChanging.Controls.Add(this.checkBoxZoneChangingEnabledSetting);
+            this.tabPageZoneChanging.Controls.Add(this.labelZoneChangingTitle);
+            this.tabPageZoneChanging.Location = new System.Drawing.Point(4, 22);
+            this.tabPageZoneChanging.Margin = new System.Windows.Forms.Padding(0);
+            this.tabPageZoneChanging.Name = "tabPageZoneChanging";
+            this.tabPageZoneChanging.Size = new System.Drawing.Size(666, 423);
+            this.tabPageZoneChanging.TabIndex = 3;
+            this.tabPageZoneChanging.Text = "Zone Changing";
+            this.tabPageZoneChanging.Click += new System.EventHandler(this.OnTabPageClick);
+            // 
+            // checkBoxBindHomePointSetting
+            // 
+            this.checkBoxBindHomePointSetting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxBindHomePointSetting.AutoSize = true;
+            this.checkBoxBindHomePointSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxBindHomePointSetting.Depth = 0;
+            this.checkBoxBindHomePointSetting.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.checkBoxBindHomePointSetting.Location = new System.Drawing.Point(393, 62);
+            this.checkBoxBindHomePointSetting.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBoxBindHomePointSetting.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.checkBoxBindHomePointSetting.MouseState = MaterialSkin.MouseState.Hover;
+            this.checkBoxBindHomePointSetting.Name = "checkBoxBindHomePointSetting";
+            this.checkBoxBindHomePointSetting.Ripple = true;
+            this.checkBoxBindHomePointSetting.Size = new System.Drawing.Size(30, 30);
+            this.checkBoxBindHomePointSetting.TabIndex = 15;
+            this.checkBoxBindHomePointSetting.Text = "Bind Home Point";
+            this.checkBoxBindHomePointSetting.UseVisualStyleBackColor = true;
+            this.checkBoxBindHomePointSetting.CheckedChanged += new System.EventHandler(this.OnBindHomePointSettingChanged);
+            // 
+            // labelBindHomePointSetting
+            // 
+            this.labelBindHomePointSetting.AutoSize = true;
+            this.labelBindHomePointSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelBindHomePointSetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelBindHomePointSetting.Location = new System.Drawing.Point(261, 68);
+            this.labelBindHomePointSetting.Name = "labelBindHomePointSetting";
+            this.labelBindHomePointSetting.Size = new System.Drawing.Size(129, 18);
+            this.labelBindHomePointSetting.TabIndex = 14;
+            this.labelBindHomePointSetting.Text = "Bind Home Point: ";
             // 
             // buttonResetZoneLevelsToDefault
             // 
@@ -969,7 +1015,7 @@ namespace Oracle.Forms
             this.labelZoneChangeTip.BackColor = System.Drawing.Color.Transparent;
             this.labelZoneChangeTip.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelZoneChangeTip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.labelZoneChangeTip.Location = new System.Drawing.Point(422, 104);
+            this.labelZoneChangeTip.Location = new System.Drawing.Point(422, 103);
             this.labelZoneChangeTip.Name = "labelZoneChangeTip";
             this.labelZoneChangeTip.Size = new System.Drawing.Size(220, 297);
             this.labelZoneChangeTip.TabIndex = 11;
@@ -1140,18 +1186,18 @@ namespace Oracle.Forms
             this.checkBoxZoneChangingEnabledSetting.TabIndex = 8;
             this.checkBoxZoneChangingEnabledSetting.Text = "Zone Change Enabled";
             this.checkBoxZoneChangingEnabledSetting.UseVisualStyleBackColor = true;
-            this.checkBoxZoneChangingEnabledSetting.CheckedChanged += new System.EventHandler(this.OnChangingEnabledChanged);
+            this.checkBoxZoneChangingEnabledSetting.CheckedChanged += new System.EventHandler(this.OnZoneChangingEnabledChanged);
             // 
-            // labelZoneChangeTitle
+            // labelZoneChangingTitle
             // 
-            this.labelZoneChangeTitle.AutoSize = true;
-            this.labelZoneChangeTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelZoneChangeTitle.Location = new System.Drawing.Point(10, 10);
-            this.labelZoneChangeTitle.Margin = new System.Windows.Forms.Padding(3);
-            this.labelZoneChangeTitle.Name = "labelZoneChangeTitle";
-            this.labelZoneChangeTitle.Size = new System.Drawing.Size(262, 38);
-            this.labelZoneChangeTitle.TabIndex = 5;
-            this.labelZoneChangeTitle.Text = "Zone Change Settings";
+            this.labelZoneChangingTitle.AutoSize = true;
+            this.labelZoneChangingTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelZoneChangingTitle.Location = new System.Drawing.Point(10, 10);
+            this.labelZoneChangingTitle.Margin = new System.Windows.Forms.Padding(3);
+            this.labelZoneChangingTitle.Name = "labelZoneChangingTitle";
+            this.labelZoneChangingTitle.Size = new System.Drawing.Size(284, 38);
+            this.labelZoneChangingTitle.TabIndex = 5;
+            this.labelZoneChangingTitle.Text = "Zone Changing Settings";
             // 
             // tabPageMiscellaneous
             // 
@@ -1393,19 +1439,19 @@ namespace Oracle.Forms
             this.tabSelectorFate.Text = "materialTabSelectorVertical1";
             this.tabSelectorFate.Click += new System.EventHandler(this.OnTabPageClick);
             // 
-            // tabNavigation
+            // tabNavigationSettings
             // 
-            this.tabNavigation.BackColor = System.Drawing.Color.White;
-            this.tabNavigation.Controls.Add(this.tabSelectorCustom);
-            this.tabNavigation.Controls.Add(this.tabControllerCustom);
-            this.tabNavigation.Location = new System.Drawing.Point(4, 22);
-            this.tabNavigation.Margin = new System.Windows.Forms.Padding(0);
-            this.tabNavigation.Name = "tabNavigation";
-            this.tabNavigation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabNavigation.Size = new System.Drawing.Size(842, 495);
-            this.tabNavigation.TabIndex = 2;
-            this.tabNavigation.Text = "Navigation";
-            this.tabNavigation.Click += new System.EventHandler(this.OnTabPageClick);
+            this.tabNavigationSettings.BackColor = System.Drawing.Color.White;
+            this.tabNavigationSettings.Controls.Add(this.tabSelectorCustom);
+            this.tabNavigationSettings.Controls.Add(this.tabControllerCustom);
+            this.tabNavigationSettings.Location = new System.Drawing.Point(4, 22);
+            this.tabNavigationSettings.Margin = new System.Windows.Forms.Padding(0);
+            this.tabNavigationSettings.Name = "tabNavigationSettings";
+            this.tabNavigationSettings.Padding = new System.Windows.Forms.Padding(3);
+            this.tabNavigationSettings.Size = new System.Drawing.Size(842, 495);
+            this.tabNavigationSettings.TabIndex = 2;
+            this.tabNavigationSettings.Text = "Navigation Settings";
+            this.tabNavigationSettings.Click += new System.EventHandler(this.OnTabPageClick);
             // 
             // tabSelectorCustom
             // 
@@ -1785,32 +1831,34 @@ namespace Oracle.Forms
             this.tabSelectorAbout.Text = "materialTabSelectorVertical1";
             this.tabSelectorAbout.Click += new System.EventHandler(this.OnTabPageClick);
             // 
-            // labelTooltip
+            // labelVersionInformation
             // 
-            this.labelTooltip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.labelVersionInformation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelTooltip.BackColor = System.Drawing.Color.Transparent;
-            this.labelTooltip.Cursor = System.Windows.Forms.Cursors.Help;
-            this.labelTooltip.Font = new System.Drawing.Font("Roboto Condensed", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTooltip.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.labelTooltip.Location = new System.Drawing.Point(9, 9);
-            this.labelTooltip.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.labelTooltip.Name = "labelTooltip";
-            this.labelTooltip.Size = new System.Drawing.Size(735, 39);
-            this.labelTooltip.TabIndex = 4;
-            this.labelTooltip.Text = resources.GetString("labelTooltip.Text");
-            this.labelTooltip.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
+            this.labelVersionInformation.BackColor = System.Drawing.Color.Transparent;
+            this.labelVersionInformation.Cursor = System.Windows.Forms.Cursors.Default;
+            this.labelVersionInformation.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelVersionInformation.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.labelVersionInformation.Location = new System.Drawing.Point(0, 9);
+            this.labelVersionInformation.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.labelVersionInformation.Name = "labelVersionInformation";
+            this.labelVersionInformation.Size = new System.Drawing.Size(173, 24);
+            this.labelVersionInformation.TabIndex = 4;
+            this.labelVersionInformation.Text = "Oracle Version: ";
+            this.labelVersionInformation.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelVersionInformation.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
             // 
             // panelControl
             // 
             this.panelControl.BackColor = System.Drawing.Color.Gainsboro;
-            this.panelControl.Controls.Add(this.labelTooltip);
+            this.panelControl.Controls.Add(this.labelVersionInformation);
             this.panelControl.Controls.Add(this.buttonClose);
+            this.panelControl.Controls.Add(this.labelDefaultFocus);
             this.panelControl.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelControl.Location = new System.Drawing.Point(0, 533);
             this.panelControl.Margin = new System.Windows.Forms.Padding(0);
             this.panelControl.Name = "panelControl";
-            this.panelControl.Size = new System.Drawing.Size(850, 52);
+            this.panelControl.Size = new System.Drawing.Size(850, 42);
             this.panelControl.TabIndex = 5;
             this.panelControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
             // 
@@ -1820,12 +1868,12 @@ namespace Oracle.Forms
             this.buttonClose.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.buttonClose.Depth = 0;
             this.buttonClose.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonClose.Location = new System.Drawing.Point(742, 9);
+            this.buttonClose.Location = new System.Drawing.Point(746, 6);
             this.buttonClose.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.buttonClose.MouseState = MaterialSkin.MouseState.Hover;
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Primary = true;
-            this.buttonClose.Size = new System.Drawing.Size(100, 37);
+            this.buttonClose.Size = new System.Drawing.Size(100, 30);
             this.buttonClose.TabIndex = 6;
             this.buttonClose.Text = "Close";
             this.buttonClose.UseVisualStyleBackColor = true;
@@ -1834,7 +1882,7 @@ namespace Oracle.Forms
             // labelDefaultFocus
             // 
             this.labelDefaultFocus.AutoSize = true;
-            this.labelDefaultFocus.Location = new System.Drawing.Point(623, 4);
+            this.labelDefaultFocus.Location = new System.Drawing.Point(348, 22);
             this.labelDefaultFocus.Name = "labelDefaultFocus";
             this.labelDefaultFocus.Size = new System.Drawing.Size(146, 20);
             this.labelDefaultFocus.TabIndex = 0;
@@ -1856,8 +1904,7 @@ namespace Oracle.Forms
             // SettingsForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(850, 585);
-            this.Controls.Add(this.labelDefaultFocus);
+            this.ClientSize = new System.Drawing.Size(850, 575);
             this.Controls.Add(this.panelControl);
             this.Controls.Add(this.pictureBoxLogo);
             this.Controls.Add(this.tabControllerMain);
@@ -1896,8 +1943,8 @@ namespace Oracle.Forms
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxLevelAboveSetting)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinLevelBelowSetting)).EndInit();
             this.tabPageDowntimeDoNothing.ResumeLayout(false);
-            this.tabPageZoneChange.ResumeLayout(false);
-            this.tabPageZoneChange.PerformLayout();
+            this.tabPageZoneChanging.ResumeLayout(false);
+            this.tabPageZoneChanging.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewZoneChangeSettings)).EndInit();
             this.tabPageMiscellaneous.ResumeLayout(false);
             this.tabPageMiscellaneous.PerformLayout();
@@ -1917,7 +1964,7 @@ namespace Oracle.Forms
             this.tabPageBossFates.PerformLayout();
             this.tabPageMegaBossFates.ResumeLayout(false);
             this.tabPageMegaBossFates.PerformLayout();
-            this.tabNavigation.ResumeLayout(false);
+            this.tabNavigationSettings.ResumeLayout(false);
             this.tabControllerCustom.ResumeLayout(false);
             this.tabPageMovement.ResumeLayout(false);
             this.tabPageMovement.PerformLayout();
@@ -1941,9 +1988,9 @@ namespace Oracle.Forms
             this.tabPageDevelopment.ResumeLayout(false);
             this.tabPageDevelopment.PerformLayout();
             this.panelControl.ResumeLayout(false);
+            this.panelControl.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -1953,9 +2000,9 @@ namespace Oracle.Forms
         private MaterialSkin.Controls.MaterialTabControl tabControllerMain;
         private System.Windows.Forms.TabPage tabGeneralSettings;
         private System.Windows.Forms.TabPage tabFateSettings;
-        private System.Windows.Forms.TabPage tabNavigation;
+        private System.Windows.Forms.TabPage tabNavigationSettings;
         private System.Windows.Forms.TabPage tabBlacklist;
-        private System.Windows.Forms.Label labelTooltip;
+        private System.Windows.Forms.Label labelVersionInformation;
         private System.Windows.Forms.TabPage tabAbout;
         private System.Windows.Forms.LinkLabel labelFullLicenseLink;
         private MaterialSkin.Controls.MaterialTabControl tabControllerAbout;
@@ -2001,10 +2048,10 @@ namespace Oracle.Forms
         private System.Windows.Forms.Label labelFateSelectionTitle;
         private MaterialSkin.Controls.MaterialTabSelectorVertical tabSelectorGeneral;
         private System.Windows.Forms.TabPage tabPageDowntime;
-        private System.Windows.Forms.TabPage tabPageZoneChange;
+        private System.Windows.Forms.TabPage tabPageZoneChanging;
         private System.Windows.Forms.TabPage tabPageMiscellaneous;
         private System.Windows.Forms.Label labelDowntimeTitle;
-        private System.Windows.Forms.Label labelZoneChangeTitle;
+        private System.Windows.Forms.Label labelZoneChangingTitle;
         private System.Windows.Forms.Label labelMiscellaneousTitle;
         private MaterialSkin.Controls.MaterialPictureBox pictureBoxLogo;
         private MaterialSkin.Controls.MaterialPictureBox pictureBoxDonate;
@@ -2062,5 +2109,7 @@ namespace Oracle.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLevel;
         private System.Windows.Forms.DataGridViewComboBoxColumn ColumnAetheryte;
         private System.Windows.Forms.DataGridViewTextBoxColumn EmptyColumn;
+        private MaterialSkin.Controls.MaterialCheckBox checkBoxBindHomePointSetting;
+        private System.Windows.Forms.Label labelBindHomePointSetting;
     }
 }

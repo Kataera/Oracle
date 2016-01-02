@@ -165,7 +165,7 @@ namespace Oracle.Forms
             }
         }
 
-        private void OnChangingEnabledChanged(object sender, EventArgs e)
+        private void OnZoneChangingEnabledChanged(object sender, EventArgs e)
         {
             OracleSettings.Instance.ChangeZonesEnabled = this.checkBoxZoneChangingEnabledSetting.Checked;
         }
@@ -232,10 +232,10 @@ namespace Oracle.Forms
 
         private void OnDataGridViewPaint(object sender, PaintEventArgs e)
         {
-            // Another dirty hack, WinForms is fun!
             var colour = this.dataGridViewZoneChangeSettings.ColumnHeadersDefaultCellStyle.BackColor;
-            var headerRect = this.dataGridViewZoneChangeSettings.GetCellDisplayRectangle(this.ColumnAetheryte.Index, -1, true);
 
+            // Another dirty hack, this time to hide the tab dividers in the headers.
+            var headerRect = this.dataGridViewZoneChangeSettings.GetCellDisplayRectangle(this.ColumnAetheryte.Index, -1, true);
             headerRect.X += headerRect.Width - 2;
             headerRect.Y += 1;
             headerRect.Width = 4;
@@ -243,7 +243,6 @@ namespace Oracle.Forms
             e.Graphics.FillRectangle(new SolidBrush(colour), headerRect);
 
             headerRect = this.dataGridViewZoneChangeSettings.GetCellDisplayRectangle(this.ColumnLevel.Index, -1, true);
-
             headerRect.X += headerRect.Width - 2;
             headerRect.Y += 1;
             headerRect.Width = 4;
@@ -251,7 +250,6 @@ namespace Oracle.Forms
             e.Graphics.FillRectangle(new SolidBrush(colour), headerRect);
 
             headerRect = this.dataGridViewZoneChangeSettings.GetCellDisplayRectangle(this.EmptyColumn.Index, -1, true);
-
             headerRect.X += headerRect.Width - 2;
             headerRect.Y += 1;
             headerRect.Width = 4;
@@ -315,6 +313,8 @@ namespace Oracle.Forms
 
         private void SetComponentValues()
         {
+            this.labelVersionInformation.Text = "Current Version: " + Oracle.Version;
+
             this.comboBoxOracleModeSetting.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
             this.tabControllerOracleMode.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
             this.textBoxSpecificFateNameSetting.Text = OracleSettings.Instance.SpecificFate;
@@ -327,6 +327,7 @@ namespace Oracle.Forms
             this.numericUpDownMinLevelBelowSetting.Value = OracleSettings.Instance.MobMaximumLevelBelow;
 
             this.checkBoxZoneChangingEnabledSetting.Checked = OracleSettings.Instance.ChangeZonesEnabled;
+            this.checkBoxBindHomePointSetting.Checked = OracleSettings.Instance.BindHomePoint;
             this.ColumnAetheryte.DataSource = GenerateAetheryteNameTable();
             this.ColumnAetheryte.DisplayMember = "Name";
             this.ColumnAetheryte.ValueMember = "Id";
@@ -351,6 +352,11 @@ namespace Oracle.Forms
             {
                 // This will only occur if the form is created outside of RebornBuddy.
             }
+        }
+
+        private void OnBindHomePointSettingChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.BindHomePoint = this.checkBoxBindHomePointSetting.Checked;
         }
     }
 }

@@ -66,7 +66,7 @@ namespace Oracle.Behaviour
             // Temporary code, will fully implement when rest of meshes are finished.
             if (OracleManager.ZoneFlightMesh == null || OracleManager.ZoneFlightMesh.ZoneId != WorldManager.ZoneId)
             {
-                if (WorldManager.ZoneId == 400)
+                if (WorldManager.ZoneId == 400 || WorldManager.ZoneId == 398)
                 {
                     await LoadFlightMesh.Main();
                 }
