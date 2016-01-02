@@ -23,6 +23,7 @@ namespace MaterialSkin.Controls
         public const int WmRbuttondown = 0x0204;
         private const int ActionBarHeight = 40;
         private const int BorderWidth = 7;
+        private const int CsDropshadow = 0x00020000;
         private const int Htbottom = 15;
         private const int Htbottomleft = 16;
         private const int Htbottomright = 17;
@@ -52,7 +53,6 @@ namespace MaterialSkin.Controls
         private const int WmszTopright = 5;
         private const int WsMinimizebox = 0x20000;
         private const int WsSysmenu = 0x00080000;
-        private const int CsDropshadow = 0x00020000;
 
         public bool Maximized;
 

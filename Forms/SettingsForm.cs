@@ -122,6 +122,11 @@ namespace Oracle.Forms
             SendMessage(this.Handle, WmNclbuttondown, HtCaption, 0);
         }
 
+        private void OnBindHomePointSettingChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.BindHomePoint = this.checkBoxBindHomePointSetting.Checked;
+        }
+
         private void OnButtonDowntimeSetLocationClick(object sender, EventArgs e)
         {
             try
@@ -163,11 +168,6 @@ namespace Oracle.Forms
                 OracleSettings.Instance.Save();
                 this.dataGridViewZoneChangeSettings.CellValueChanged += this.OnDataGridViewCellValueChanged;
             }
-        }
-
-        private void OnZoneChangingEnabledChanged(object sender, EventArgs e)
-        {
-            OracleSettings.Instance.ChangeZonesEnabled = this.checkBoxZoneChangingEnabledSetting.Checked;
         }
 
         private void OnCloseButtonClick(object sender, EventArgs e)
@@ -311,6 +311,11 @@ namespace Oracle.Forms
             OracleSettings.Instance.SpecificFate = this.textBoxSpecificFateNameSetting.Text;
         }
 
+        private void OnZoneChangingEnabledChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.ChangeZonesEnabled = this.checkBoxZoneChangingEnabledSetting.Checked;
+        }
+
         private void SetComponentValues()
         {
             this.labelVersionInformation.Text = "Current Version: " + Oracle.Version;
@@ -352,11 +357,6 @@ namespace Oracle.Forms
             {
                 // This will only occur if the form is created outside of RebornBuddy.
             }
-        }
-
-        private void OnBindHomePointSettingChanged(object sender, EventArgs e)
-        {
-            OracleSettings.Instance.BindHomePoint = this.checkBoxBindHomePointSetting.Checked;
         }
     }
 }
