@@ -34,6 +34,7 @@ using Clio.Utilities;
 using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Enums;
+using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Settings;
@@ -107,15 +108,20 @@ namespace Oracle.Behaviour.Tasks.Utilities
         private static Vector3 GenerateLandingSpot()
         {
             var currentFate = OracleManager.GetCurrentFateData();
-            return MathEx.GetPointAt(currentFate.Location, currentFate.Radius * Convert.ToSingle(MathEx.Random(0.5, 1)),
+            return MathEx.GetPointAt(currentFate.Location, currentFate.Radius * Convert.ToSingle(MathEx.Random(0.1, 0.3)),
                 Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.25 * Math.PI, 0.25 * Math.PI)));
         }
 
-        private static Node GetClosestNodeToLocation(Vector3 location)
+        private static Node GetClosestNodeToFate(FateData fate)
         {
-            return OracleManager.ZoneFlightMesh.Graph.Nodes
-                                .OrderBy(kvp => kvp.Value.Position.Distance(location))
-                                .FirstOrDefault(kvp => kvp.Value.Position.Y > location.Y).Value;
+            var potentialNodes = OracleManager.ZoneFlightMesh.Graph.Nodes
+                                              .OrderBy(kvp => kvp.Value.Position.Distance(fate.Location))
+                                              .Where(kvp => kvp.Value.Position.Y > fate.Location.Y).Take(20);
+            var orderedPotentialNodes = potentialNodes.OrderBy(kvp => kvp.Value.Position.Distance2D(Core.Player.Location));
+            var bestNode = orderedPotentialNodes.FirstOrDefault(kvp => fate.Within2D(kvp.Value.Position)).Value
+                           ?? potentialNodes.FirstOrDefault(kvp => kvp.Value.Position.Y > fate.Location.Y).Value;
+
+            return bestNode;
         }
 
         private static bool IsMountNeeded()
@@ -178,7 +184,16 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             var originalFateLocation = currentFate.Location;
             var aStar = new AStarNavigator(OracleManager.ZoneFlightMesh.Graph);
-            var closestNode = GetClosestNodeToLocation(originalFateLocation);
+            var closestNode = GetClosestNodeToFate(currentFate);
+
+            if (closestNode == null)
+            {
+                Logger.SendErrorLog("Couldn't generate a flight path to the FATE, blacklisting it and selecting another.");
+                Blacklist.Add(currentFate.Id, BlacklistFlags.Node, currentFate.TimeLeft, "Could not generate path.");
+                await ClearFate();
+                return true;
+            }
+
             var path = aStar.GeneratePath(Core.Player.Location, closestNode.Position);
 
             foreach (var step in path)
@@ -226,6 +241,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             while (MovementManager.IsFlying)
             {
                 await Land();
+                await Coroutine.Yield();
             }
 
             return true;
