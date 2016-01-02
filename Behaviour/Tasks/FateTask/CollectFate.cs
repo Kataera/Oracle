@@ -79,6 +79,11 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 {
                     Logger.SendLog("FATE is complete, turning in remaining items.");
                     await TurnInFateItems(GameObjectManager.GetObjectByNPCId(oracleFate.NpcId));
+
+                    if (fateItemCount >= 1)
+                    {
+                        return false;
+                    }
                 }
 
                 await ClearFate();
@@ -155,7 +160,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static async Task<bool> TurnInFateItems(GameObject turnInNpc)
         {
-            if (Core.Player.Distance2D(turnInNpc.Location) > 5f)
+            if (Core.Player.Distance2D(turnInNpc.Location) > 4f)
             {
                 await MoveToTurnInNpc(turnInNpc);
             }
@@ -166,7 +171,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
             }
 
             turnInNpc.Interact();
-            await Coroutine.Sleep(500);
+            await Coroutine.Sleep(OracleSettings.Instance.ActionDelay);
             var result = await SkipDialogue.Main() && await TurnInItem.Main() && await SkipDialogue.Main();
 
             if (result)
