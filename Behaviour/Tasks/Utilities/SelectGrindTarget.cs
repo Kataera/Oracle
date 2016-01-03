@@ -120,7 +120,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            if (Core.Player.ClassLevel - OracleSettings.Instance.MobMaximumLevelBelow > battleCharacter.ClassLevel)
+            if (Core.Player.ClassLevel - OracleSettings.Instance.MobMinimumLevelBelow > battleCharacter.ClassLevel)
             {
                 return false;
             }

@@ -22,6 +22,8 @@
     along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
+using System.Windows.Forms;
+
 using Oracle.Enumerations;
 using Oracle.Settings;
 
@@ -56,12 +58,12 @@ namespace Oracle.Forms
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabSelectorMain = new MaterialSkin.Controls.MaterialTabSelector();
             this.tabControllerMain = new MaterialSkin.Controls.MaterialTabControl();
             this.tabGeneralSettings = new System.Windows.Forms.TabPage();
@@ -102,10 +104,10 @@ namespace Oracle.Forms
             this.labelDowntimeCurrentZone = new System.Windows.Forms.Label();
             this.labelDowntimeMoveToLocation = new System.Windows.Forms.Label();
             this.tabPageDowntimeGrindMobs = new System.Windows.Forms.TabPage();
-            this.numericUpDownMaxLevelAboveSetting = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownMinLevelBelowSetting = new System.Windows.Forms.NumericUpDown();
-            this.labelDowntimeGrindMobsMaxLevelAboveSetting = new System.Windows.Forms.Label();
-            this.labelDowntimeGrindMobsMaxLevelBelowSetting = new System.Windows.Forms.Label();
+            this.numericUpDownMobMaxLevelAboveSetting = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMobMinLevelBelowSetting = new System.Windows.Forms.NumericUpDown();
+            this.labelMobMaxLevelAboveSetting = new System.Windows.Forms.Label();
+            this.labelMobMinLevelBelowSetting = new System.Windows.Forms.Label();
             this.labelDowntimeGrindMobs = new System.Windows.Forms.Label();
             this.tabPageDowntimeDoNothing = new System.Windows.Forms.TabPage();
             this.labelDowntimeDoNothing = new System.Windows.Forms.Label();
@@ -129,6 +131,18 @@ namespace Oracle.Forms
             this.tabFateSettings = new System.Windows.Forms.TabPage();
             this.tabControllerFate = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPageGeneral = new System.Windows.Forms.TabPage();
+            this.labelLowDurationTimeSettingSuffix = new System.Windows.Forms.Label();
+            this.textBoxLowDurationFateSetting = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.labelLowDurationTimeSetting = new System.Windows.Forms.Label();
+            this.checkBoxIgnoreLowDurationFateSetting = new MaterialSkin.Controls.MaterialCheckBox();
+            this.labelIgnoreLowDurationFatesSetting = new System.Windows.Forms.Label();
+            this.checkBoxRunProblematicFatesSetting = new MaterialSkin.Controls.MaterialCheckBox();
+            this.labelRunProblematicFatesWarning = new System.Windows.Forms.Label();
+            this.labelRunProblematicFatesSetting = new System.Windows.Forms.Label();
+            this.numericUpDownFateMaximumLevelAboveSetting = new System.Windows.Forms.NumericUpDown();
+            this.labelFateMaximumLevelAboveSetting = new System.Windows.Forms.Label();
+            this.numericUpDownFateMinimumLevelBelowSetting = new System.Windows.Forms.NumericUpDown();
+            this.labelFateMinimumLevelBelowSetting = new System.Windows.Forms.Label();
             this.labelGeneralFateSettingsTitle = new System.Windows.Forms.Label();
             this.tabPageKillFates = new System.Windows.Forms.TabPage();
             this.labelKillFatesTitle = new System.Windows.Forms.Label();
@@ -193,8 +207,8 @@ namespace Oracle.Forms
             this.tabPageDowntimeReturnToAetheryte.SuspendLayout();
             this.tabPageDowntimeMoveToLocation.SuspendLayout();
             this.tabPageDowntimeGrindMobs.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxLevelAboveSetting)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinLevelBelowSetting)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMobMaxLevelAboveSetting)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMobMinLevelBelowSetting)).BeginInit();
             this.tabPageDowntimeDoNothing.SuspendLayout();
             this.tabPageZoneChanging.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewZoneChangeSettings)).BeginInit();
@@ -202,6 +216,8 @@ namespace Oracle.Forms
             this.tabFateSettings.SuspendLayout();
             this.tabControllerFate.SuspendLayout();
             this.tabPageGeneral.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFateMaximumLevelAboveSetting)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFateMinimumLevelBelowSetting)).BeginInit();
             this.tabPageKillFates.SuspendLayout();
             this.tabPageCollectFates.SuspendLayout();
             this.tabPageEscortFates.SuspendLayout();
@@ -226,10 +242,10 @@ namespace Oracle.Forms
             this.panelControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // tabSelectorMain
-            // 
-            this.tabSelectorMain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.tabSelectorMain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabSelectorMain.BaseTabControl = this.tabControllerMain;
             this.tabSelectorMain.Depth = 0;
@@ -243,11 +259,11 @@ namespace Oracle.Forms
             this.tabSelectorMain.TabStop = false;
             this.tabSelectorMain.Text = "Settings Tabs";
             this.tabSelectorMain.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // tabControllerMain
-            // 
-            this.tabControllerMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.tabControllerMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerMain.Controls.Add(this.tabGeneralSettings);
             this.tabControllerMain.Controls.Add(this.tabFateSettings);
@@ -263,9 +279,9 @@ namespace Oracle.Forms
             this.tabControllerMain.SelectedIndex = 0;
             this.tabControllerMain.Size = new System.Drawing.Size(850, 521);
             this.tabControllerMain.TabIndex = 1;
-            // 
+            //
             // tabGeneralSettings
-            // 
+            //
             this.tabGeneralSettings.BackColor = System.Drawing.Color.White;
             this.tabGeneralSettings.Controls.Add(this.tabSelectorGeneral);
             this.tabGeneralSettings.Controls.Add(this.tabControllerGeneral);
@@ -278,10 +294,10 @@ namespace Oracle.Forms
             this.tabGeneralSettings.TabIndex = 0;
             this.tabGeneralSettings.Text = "General Settings";
             this.tabGeneralSettings.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // tabSelectorGeneral
-            // 
-            this.tabSelectorGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            //
+            this.tabSelectorGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tabSelectorGeneral.BaseTabControl = this.tabControllerGeneral;
             this.tabSelectorGeneral.Depth = 0;
@@ -295,11 +311,11 @@ namespace Oracle.Forms
             this.tabSelectorGeneral.TabStop = false;
             this.tabSelectorGeneral.Text = "materialTabSelectorVertical1";
             this.tabSelectorGeneral.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // tabControllerGeneral
-            // 
-            this.tabControllerGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.tabControllerGeneral.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerGeneral.Controls.Add(this.tabPageOracleMode);
             this.tabControllerGeneral.Controls.Add(this.tabPageFateSelection);
@@ -316,9 +332,9 @@ namespace Oracle.Forms
             this.tabControllerGeneral.Size = new System.Drawing.Size(674, 449);
             this.tabControllerGeneral.TabIndex = 2;
             this.tabControllerGeneral.TabStop = false;
-            // 
+            //
             // tabPageOracleMode
-            // 
+            //
             this.tabPageOracleMode.AutoScroll = true;
             this.tabPageOracleMode.BackColor = System.Drawing.Color.White;
             this.tabPageOracleMode.Controls.Add(this.tabControllerOracleMode);
@@ -333,11 +349,11 @@ namespace Oracle.Forms
             this.tabPageOracleMode.TabIndex = 0;
             this.tabPageOracleMode.Text = "Oracle Mode";
             this.tabPageOracleMode.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // tabControllerOracleMode
-            // 
-            this.tabControllerOracleMode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.tabControllerOracleMode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerOracleMode.Controls.Add(this.tabPageOracleModeFateGrind);
             this.tabControllerOracleMode.Controls.Add(this.tabPageOracleModeSpecificFate);
@@ -353,9 +369,9 @@ namespace Oracle.Forms
             this.tabControllerOracleMode.Size = new System.Drawing.Size(655, 276);
             this.tabControllerOracleMode.TabIndex = 4;
             this.tabControllerOracleMode.TabStop = false;
-            // 
+            //
             // tabPageOracleModeFateGrind
-            // 
+            //
             this.tabPageOracleModeFateGrind.BackColor = System.Drawing.Color.White;
             this.tabPageOracleModeFateGrind.Controls.Add(this.labelOracleModeFateGrind);
             this.tabPageOracleModeFateGrind.Location = new System.Drawing.Point(4, 29);
@@ -365,11 +381,11 @@ namespace Oracle.Forms
             this.tabPageOracleModeFateGrind.TabIndex = 0;
             this.tabPageOracleModeFateGrind.Text = "FATE Grind";
             this.tabPageOracleModeFateGrind.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelOracleModeFateGrind
-            // 
-            this.labelOracleModeFateGrind.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelOracleModeFateGrind.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelOracleModeFateGrind.ForeColor = System.Drawing.Color.Black;
             this.labelOracleModeFateGrind.Location = new System.Drawing.Point(10, 0);
@@ -377,9 +393,9 @@ namespace Oracle.Forms
             this.labelOracleModeFateGrind.Size = new System.Drawing.Size(631, 226);
             this.labelOracleModeFateGrind.TabIndex = 1;
             this.labelOracleModeFateGrind.Text = resources.GetString("labelOracleModeFateGrind.Text");
-            // 
+            //
             // tabPageOracleModeSpecificFate
-            // 
+            //
             this.tabPageOracleModeSpecificFate.BackColor = System.Drawing.Color.White;
             this.tabPageOracleModeSpecificFate.Controls.Add(this.labelSpecificFateNameSetting);
             this.tabPageOracleModeSpecificFate.Controls.Add(this.textBoxSpecificFateNameSetting);
@@ -391,9 +407,9 @@ namespace Oracle.Forms
             this.tabPageOracleModeSpecificFate.TabIndex = 1;
             this.tabPageOracleModeSpecificFate.Text = "Specific FATE";
             this.tabPageOracleModeSpecificFate.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelSpecificFateNameSetting
-            // 
+            //
             this.labelSpecificFateNameSetting.AutoSize = true;
             this.labelSpecificFateNameSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelSpecificFateNameSetting.Location = new System.Drawing.Point(28, 45);
@@ -401,9 +417,9 @@ namespace Oracle.Forms
             this.labelSpecificFateNameSetting.Size = new System.Drawing.Size(89, 18);
             this.labelSpecificFateNameSetting.TabIndex = 4;
             this.labelSpecificFateNameSetting.Text = "FATE Name:";
-            // 
+            //
             // textBoxSpecificFateNameSetting
-            // 
+            //
             this.textBoxSpecificFateNameSetting.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.textBoxSpecificFateNameSetting.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.textBoxSpecificFateNameSetting.Depth = 0;
@@ -420,14 +436,14 @@ namespace Oracle.Forms
             this.textBoxSpecificFateNameSetting.TabIndex = 3;
             this.textBoxSpecificFateNameSetting.TabStop = false;
             this.textBoxSpecificFateNameSetting.UseSystemPasswordChar = false;
-            this.textBoxSpecificFateNameSetting.Enter += new System.EventHandler(this.OnEnterSelectAllText);
+            this.textBoxSpecificFateNameSetting.Enter += new System.EventHandler(this.OnEnterSpecificFateName);
             this.textBoxSpecificFateNameSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
             this.textBoxSpecificFateNameSetting.TextChanged += new System.EventHandler(this.OnTextBoxSpecificFateNameTextChanged);
-            // 
+            //
             // labelOracleModeSpecificFate
-            // 
-            this.labelOracleModeSpecificFate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelOracleModeSpecificFate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelOracleModeSpecificFate.AutoSize = true;
             this.labelOracleModeSpecificFate.BackColor = System.Drawing.Color.White;
@@ -437,9 +453,9 @@ namespace Oracle.Forms
             this.labelOracleModeSpecificFate.Size = new System.Drawing.Size(435, 20);
             this.labelOracleModeSpecificFate.TabIndex = 2;
             this.labelOracleModeSpecificFate.Text = "Specific FATE mode will only run the FATE you specify below.";
-            // 
+            //
             // tabPageOracleModeAtmaGrind
-            // 
+            //
             this.tabPageOracleModeAtmaGrind.BackColor = System.Drawing.Color.White;
             this.tabPageOracleModeAtmaGrind.Controls.Add(this.labelAtmaGrindNYI);
             this.tabPageOracleModeAtmaGrind.Location = new System.Drawing.Point(4, 22);
@@ -448,11 +464,11 @@ namespace Oracle.Forms
             this.tabPageOracleModeAtmaGrind.TabIndex = 2;
             this.tabPageOracleModeAtmaGrind.Text = "Atma Grind";
             this.tabPageOracleModeAtmaGrind.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelAtmaGrindNYI
-            // 
-            this.labelAtmaGrindNYI.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelAtmaGrindNYI.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelAtmaGrindNYI.AutoSize = true;
             this.labelAtmaGrindNYI.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -462,9 +478,9 @@ namespace Oracle.Forms
             this.labelAtmaGrindNYI.Size = new System.Drawing.Size(285, 18);
             this.labelAtmaGrindNYI.TabIndex = 0;
             this.labelAtmaGrindNYI.Text = "Atma Grind mode is not yet implemented.";
-            // 
+            //
             // tabPageOracleModeAnimusGrind
-            // 
+            //
             this.tabPageOracleModeAnimusGrind.BackColor = System.Drawing.Color.White;
             this.tabPageOracleModeAnimusGrind.Controls.Add(this.labelAnimusGrindModeNYI);
             this.tabPageOracleModeAnimusGrind.Location = new System.Drawing.Point(4, 22);
@@ -473,11 +489,11 @@ namespace Oracle.Forms
             this.tabPageOracleModeAnimusGrind.TabIndex = 3;
             this.tabPageOracleModeAnimusGrind.Text = "Animus Grind";
             this.tabPageOracleModeAnimusGrind.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelAnimusGrindModeNYI
-            // 
-            this.labelAnimusGrindModeNYI.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelAnimusGrindModeNYI.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelAnimusGrindModeNYI.AutoSize = true;
             this.labelAnimusGrindModeNYI.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -487,9 +503,9 @@ namespace Oracle.Forms
             this.labelAnimusGrindModeNYI.Size = new System.Drawing.Size(300, 18);
             this.labelAnimusGrindModeNYI.TabIndex = 1;
             this.labelAnimusGrindModeNYI.Text = "Animus Grind mode is not yet implemented.";
-            // 
+            //
             // tabPageOracleModeAnimaGrind
-            // 
+            //
             this.tabPageOracleModeAnimaGrind.BackColor = System.Drawing.Color.White;
             this.tabPageOracleModeAnimaGrind.Controls.Add(this.labelAnimaGrindMode);
             this.tabPageOracleModeAnimaGrind.Location = new System.Drawing.Point(4, 22);
@@ -498,11 +514,11 @@ namespace Oracle.Forms
             this.tabPageOracleModeAnimaGrind.TabIndex = 4;
             this.tabPageOracleModeAnimaGrind.Text = "Anima Grind";
             this.tabPageOracleModeAnimaGrind.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelAnimaGrindMode
-            // 
-            this.labelAnimaGrindMode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelAnimaGrindMode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelAnimaGrindMode.ForeColor = System.Drawing.Color.Black;
             this.labelAnimaGrindMode.Location = new System.Drawing.Point(10, 0);
@@ -510,9 +526,9 @@ namespace Oracle.Forms
             this.labelAnimaGrindMode.Size = new System.Drawing.Size(631, 240);
             this.labelAnimaGrindMode.TabIndex = 2;
             this.labelAnimaGrindMode.Text = resources.GetString("labelAnimaGrindMode.Text");
-            // 
+            //
             // labelOracleModeSetting
-            // 
+            //
             this.labelOracleModeSetting.AutoSize = true;
             this.labelOracleModeSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelOracleModeSetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -521,9 +537,9 @@ namespace Oracle.Forms
             this.labelOracleModeSetting.Size = new System.Drawing.Size(96, 18);
             this.labelOracleModeSetting.TabIndex = 3;
             this.labelOracleModeSetting.Text = "Oracle Mode:";
-            // 
+            //
             // comboBoxOracleModeSetting
-            // 
+            //
             this.comboBoxOracleModeSetting.BackColor = System.Drawing.Color.White;
             this.comboBoxOracleModeSetting.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxOracleModeSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -541,9 +557,9 @@ namespace Oracle.Forms
             this.comboBoxOracleModeSetting.TabIndex = 2;
             this.comboBoxOracleModeSetting.TabStop = false;
             this.comboBoxOracleModeSetting.SelectedIndexChanged += new System.EventHandler(this.OnOracleModeSelectedIndexChanged);
-            // 
+            //
             // labelOracleModeTitle
-            // 
+            //
             this.labelOracleModeTitle.AutoSize = true;
             this.labelOracleModeTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelOracleModeTitle.Location = new System.Drawing.Point(10, 10);
@@ -552,9 +568,9 @@ namespace Oracle.Forms
             this.labelOracleModeTitle.Size = new System.Drawing.Size(258, 38);
             this.labelOracleModeTitle.TabIndex = 1;
             this.labelOracleModeTitle.Text = "Oracle Mode Settings";
-            // 
+            //
             // tabPageFateSelection
-            // 
+            //
             this.tabPageFateSelection.BackColor = System.Drawing.Color.White;
             this.tabPageFateSelection.Controls.Add(this.labelFateSelectionDescription);
             this.tabPageFateSelection.Controls.Add(this.comboBoxFateSelectStrategySetting);
@@ -568,11 +584,11 @@ namespace Oracle.Forms
             this.tabPageFateSelection.TabIndex = 1;
             this.tabPageFateSelection.Text = "Fate Selection";
             this.tabPageFateSelection.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelFateSelectionDescription
-            // 
-            this.labelFateSelectionDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelFateSelectionDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelFateSelectionDescription.ForeColor = System.Drawing.Color.Black;
             this.labelFateSelectionDescription.Location = new System.Drawing.Point(13, 117);
@@ -581,9 +597,9 @@ namespace Oracle.Forms
             this.labelFateSelectionDescription.TabIndex = 7;
             this.labelFateSelectionDescription.Text = "At the moment, Oracle will only select the closest FATE to you.\r\n\r\nMore strategie" +
     "s are coming soon!";
-            // 
+            //
             // comboBoxFateSelectStrategySetting
-            // 
+            //
             this.comboBoxFateSelectStrategySetting.BackColor = System.Drawing.Color.White;
             this.comboBoxFateSelectStrategySetting.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFateSelectStrategySetting.Enabled = false;
@@ -597,9 +613,9 @@ namespace Oracle.Forms
             this.comboBoxFateSelectStrategySetting.Size = new System.Drawing.Size(121, 28);
             this.comboBoxFateSelectStrategySetting.TabIndex = 6;
             this.comboBoxFateSelectStrategySetting.TabStop = false;
-            // 
+            //
             // labelFateSelectStrategySetting
-            // 
+            //
             this.labelFateSelectStrategySetting.AutoSize = true;
             this.labelFateSelectStrategySetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelFateSelectStrategySetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -608,9 +624,9 @@ namespace Oracle.Forms
             this.labelFateSelectStrategySetting.Size = new System.Drawing.Size(148, 18);
             this.labelFateSelectStrategySetting.TabIndex = 5;
             this.labelFateSelectStrategySetting.Text = "Fate Select Strategy:";
-            // 
+            //
             // labelFateSelectionTitle
-            // 
+            //
             this.labelFateSelectionTitle.AutoSize = true;
             this.labelFateSelectionTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelFateSelectionTitle.Location = new System.Drawing.Point(10, 10);
@@ -619,9 +635,9 @@ namespace Oracle.Forms
             this.labelFateSelectionTitle.Size = new System.Drawing.Size(279, 38);
             this.labelFateSelectionTitle.TabIndex = 4;
             this.labelFateSelectionTitle.Text = "Fate Selection Settings";
-            // 
+            //
             // tabPageDowntime
-            // 
+            //
             this.tabPageDowntime.BackColor = System.Drawing.Color.White;
             this.tabPageDowntime.Controls.Add(this.tabControllerDowntime);
             this.tabPageDowntime.Controls.Add(this.comboBoxDowntimeBehaviourSetting);
@@ -634,11 +650,11 @@ namespace Oracle.Forms
             this.tabPageDowntime.TabIndex = 2;
             this.tabPageDowntime.Text = "Downtime";
             this.tabPageDowntime.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // tabControllerDowntime
-            // 
-            this.tabControllerDowntime.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.tabControllerDowntime.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerDowntime.Controls.Add(this.tabPageDowntimeReturnToAetheryte);
             this.tabControllerDowntime.Controls.Add(this.tabPageDowntimeMoveToLocation);
@@ -653,9 +669,9 @@ namespace Oracle.Forms
             this.tabControllerDowntime.Size = new System.Drawing.Size(655, 290);
             this.tabControllerDowntime.TabIndex = 8;
             this.tabControllerDowntime.TabStop = false;
-            // 
+            //
             // tabPageDowntimeReturnToAetheryte
-            // 
+            //
             this.tabPageDowntimeReturnToAetheryte.BackColor = System.Drawing.Color.White;
             this.tabPageDowntimeReturnToAetheryte.Controls.Add(this.labelDowntimeReturnToAetheryte);
             this.tabPageDowntimeReturnToAetheryte.Location = new System.Drawing.Point(4, 29);
@@ -664,11 +680,11 @@ namespace Oracle.Forms
             this.tabPageDowntimeReturnToAetheryte.Size = new System.Drawing.Size(647, 257);
             this.tabPageDowntimeReturnToAetheryte.TabIndex = 0;
             this.tabPageDowntimeReturnToAetheryte.Text = "Return to Aetheryte";
-            // 
+            //
             // labelDowntimeReturnToAetheryte
-            // 
-            this.labelDowntimeReturnToAetheryte.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelDowntimeReturnToAetheryte.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDowntimeReturnToAetheryte.ForeColor = System.Drawing.Color.Black;
             this.labelDowntimeReturnToAetheryte.Location = new System.Drawing.Point(10, 0);
@@ -677,9 +693,9 @@ namespace Oracle.Forms
             this.labelDowntimeReturnToAetheryte.TabIndex = 1;
             this.labelDowntimeReturnToAetheryte.Text = "The Return to Aetheryte behaviour will move your character to the closest aethery" +
     "te crystal when there are no viable FATEs active.";
-            // 
+            //
             // tabPageDowntimeMoveToLocation
-            // 
+            //
             this.tabPageDowntimeMoveToLocation.BackColor = System.Drawing.Color.White;
             this.tabPageDowntimeMoveToLocation.Controls.Add(this.buttonDowntimeSetLocation);
             this.tabPageDowntimeMoveToLocation.Controls.Add(this.buttonDowntimeRefreshZone);
@@ -694,9 +710,9 @@ namespace Oracle.Forms
             this.tabPageDowntimeMoveToLocation.Size = new System.Drawing.Size(647, 264);
             this.tabPageDowntimeMoveToLocation.TabIndex = 1;
             this.tabPageDowntimeMoveToLocation.Text = "Move to Location";
-            // 
+            //
             // buttonDowntimeSetLocation
-            // 
+            //
             this.buttonDowntimeSetLocation.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.buttonDowntimeSetLocation.BackColor = System.Drawing.Color.Lavender;
             this.buttonDowntimeSetLocation.Depth = 0;
@@ -710,9 +726,9 @@ namespace Oracle.Forms
             this.buttonDowntimeSetLocation.Text = "Set Current Location";
             this.buttonDowntimeSetLocation.UseVisualStyleBackColor = false;
             this.buttonDowntimeSetLocation.Click += new System.EventHandler(this.OnButtonDowntimeSetLocationClick);
-            // 
+            //
             // buttonDowntimeRefreshZone
-            // 
+            //
             this.buttonDowntimeRefreshZone.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.buttonDowntimeRefreshZone.Depth = 0;
             this.buttonDowntimeRefreshZone.Location = new System.Drawing.Point(225, 122);
@@ -724,11 +740,11 @@ namespace Oracle.Forms
             this.buttonDowntimeRefreshZone.TabIndex = 7;
             this.buttonDowntimeRefreshZone.Text = "Refresh Zone";
             this.buttonDowntimeRefreshZone.UseVisualStyleBackColor = true;
-            // 
+            //
             // labelDowntimeWaitLocationValue
-            // 
-            this.labelDowntimeWaitLocationValue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelDowntimeWaitLocationValue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDowntimeWaitLocationValue.BackColor = System.Drawing.Color.White;
             this.labelDowntimeWaitLocationValue.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -738,11 +754,11 @@ namespace Oracle.Forms
             this.labelDowntimeWaitLocationValue.Size = new System.Drawing.Size(69, 36);
             this.labelDowntimeWaitLocationValue.TabIndex = 6;
             this.labelDowntimeWaitLocationValue.Text = "None";
-            // 
+            //
             // labelDowntimeCurrentZoneValue
-            // 
-            this.labelDowntimeCurrentZoneValue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelDowntimeCurrentZoneValue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDowntimeCurrentZoneValue.BackColor = System.Drawing.Color.White;
             this.labelDowntimeCurrentZoneValue.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -752,11 +768,11 @@ namespace Oracle.Forms
             this.labelDowntimeCurrentZoneValue.Size = new System.Drawing.Size(69, 36);
             this.labelDowntimeCurrentZoneValue.TabIndex = 5;
             this.labelDowntimeCurrentZoneValue.Text = "0";
-            // 
+            //
             // labelDowntimeWaitLocation
-            // 
-            this.labelDowntimeWaitLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelDowntimeWaitLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDowntimeWaitLocation.BackColor = System.Drawing.Color.White;
             this.labelDowntimeWaitLocation.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -766,11 +782,11 @@ namespace Oracle.Forms
             this.labelDowntimeWaitLocation.Size = new System.Drawing.Size(130, 36);
             this.labelDowntimeWaitLocation.TabIndex = 4;
             this.labelDowntimeWaitLocation.Text = "Wait Location: ";
-            // 
+            //
             // labelDowntimeCurrentZone
-            // 
-            this.labelDowntimeCurrentZone.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelDowntimeCurrentZone.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDowntimeCurrentZone.BackColor = System.Drawing.Color.White;
             this.labelDowntimeCurrentZone.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -780,11 +796,11 @@ namespace Oracle.Forms
             this.labelDowntimeCurrentZone.Size = new System.Drawing.Size(130, 36);
             this.labelDowntimeCurrentZone.TabIndex = 3;
             this.labelDowntimeCurrentZone.Text = "Current Zone Id: ";
-            // 
+            //
             // labelDowntimeMoveToLocation
-            // 
-            this.labelDowntimeMoveToLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelDowntimeMoveToLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDowntimeMoveToLocation.BackColor = System.Drawing.Color.White;
             this.labelDowntimeMoveToLocation.ForeColor = System.Drawing.Color.Black;
@@ -794,82 +810,84 @@ namespace Oracle.Forms
             this.labelDowntimeMoveToLocation.TabIndex = 2;
             this.labelDowntimeMoveToLocation.Text = "The Move to Location behaviour will move you to a location of your choosing when " +
     "there are no viable FATEs active. Each zone has its own location.";
-            // 
+            //
             // tabPageDowntimeGrindMobs
-            // 
+            //
             this.tabPageDowntimeGrindMobs.BackColor = System.Drawing.Color.White;
-            this.tabPageDowntimeGrindMobs.Controls.Add(this.numericUpDownMaxLevelAboveSetting);
-            this.tabPageDowntimeGrindMobs.Controls.Add(this.numericUpDownMinLevelBelowSetting);
-            this.tabPageDowntimeGrindMobs.Controls.Add(this.labelDowntimeGrindMobsMaxLevelAboveSetting);
-            this.tabPageDowntimeGrindMobs.Controls.Add(this.labelDowntimeGrindMobsMaxLevelBelowSetting);
+            this.tabPageDowntimeGrindMobs.Controls.Add(this.numericUpDownMobMaxLevelAboveSetting);
+            this.tabPageDowntimeGrindMobs.Controls.Add(this.numericUpDownMobMinLevelBelowSetting);
+            this.tabPageDowntimeGrindMobs.Controls.Add(this.labelMobMaxLevelAboveSetting);
+            this.tabPageDowntimeGrindMobs.Controls.Add(this.labelMobMinLevelBelowSetting);
             this.tabPageDowntimeGrindMobs.Controls.Add(this.labelDowntimeGrindMobs);
             this.tabPageDowntimeGrindMobs.Location = new System.Drawing.Point(4, 22);
             this.tabPageDowntimeGrindMobs.Name = "tabPageDowntimeGrindMobs";
             this.tabPageDowntimeGrindMobs.Size = new System.Drawing.Size(647, 264);
             this.tabPageDowntimeGrindMobs.TabIndex = 2;
             this.tabPageDowntimeGrindMobs.Text = "Grind Mobs";
-            // 
-            // numericUpDownMaxLevelAboveSetting
-            // 
-            this.numericUpDownMaxLevelAboveSetting.AutoSize = true;
-            this.numericUpDownMaxLevelAboveSetting.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.numericUpDownMaxLevelAboveSetting.Location = new System.Drawing.Point(232, 84);
-            this.numericUpDownMaxLevelAboveSetting.Maximum = new decimal(new int[] {
+            //
+            // numericUpDownMobMaxLevelAboveSetting
+            //
+            this.numericUpDownMobMaxLevelAboveSetting.AutoSize = true;
+            this.numericUpDownMobMaxLevelAboveSetting.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.numericUpDownMobMaxLevelAboveSetting.Location = new System.Drawing.Point(232, 84);
+            this.numericUpDownMobMaxLevelAboveSetting.Maximum = new decimal(new int[] {
             59,
             0,
             0,
             0});
-            this.numericUpDownMaxLevelAboveSetting.Name = "numericUpDownMaxLevelAboveSetting";
-            this.numericUpDownMaxLevelAboveSetting.Size = new System.Drawing.Size(46, 23);
-            this.numericUpDownMaxLevelAboveSetting.TabIndex = 8;
-            this.numericUpDownMaxLevelAboveSetting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDownMaxLevelAboveSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
-            // 
-            // numericUpDownMinLevelBelowSetting
-            // 
-            this.numericUpDownMinLevelBelowSetting.AutoSize = true;
-            this.numericUpDownMinLevelBelowSetting.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.numericUpDownMinLevelBelowSetting.Location = new System.Drawing.Point(232, 54);
-            this.numericUpDownMinLevelBelowSetting.Maximum = new decimal(new int[] {
+            this.numericUpDownMobMaxLevelAboveSetting.Name = "numericUpDownMobMaxLevelAboveSetting";
+            this.numericUpDownMobMaxLevelAboveSetting.Size = new System.Drawing.Size(46, 23);
+            this.numericUpDownMobMaxLevelAboveSetting.TabIndex = 8;
+            this.numericUpDownMobMaxLevelAboveSetting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownMobMaxLevelAboveSetting.ValueChanged += new System.EventHandler(this.OnMobMaxLevelAboveValueChanged);
+            this.numericUpDownMobMaxLevelAboveSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
+            //
+            // numericUpDownMobMinLevelBelowSetting
+            //
+            this.numericUpDownMobMinLevelBelowSetting.AutoSize = true;
+            this.numericUpDownMobMinLevelBelowSetting.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.numericUpDownMobMinLevelBelowSetting.Location = new System.Drawing.Point(232, 54);
+            this.numericUpDownMobMinLevelBelowSetting.Maximum = new decimal(new int[] {
             59,
             0,
             0,
             0});
-            this.numericUpDownMinLevelBelowSetting.Name = "numericUpDownMinLevelBelowSetting";
-            this.numericUpDownMinLevelBelowSetting.Size = new System.Drawing.Size(46, 23);
-            this.numericUpDownMinLevelBelowSetting.TabIndex = 7;
-            this.numericUpDownMinLevelBelowSetting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDownMinLevelBelowSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
-            // 
-            // labelDowntimeGrindMobsMaxLevelAboveSetting
-            // 
-            this.labelDowntimeGrindMobsMaxLevelAboveSetting.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.numericUpDownMobMinLevelBelowSetting.Name = "numericUpDownMobMinLevelBelowSetting";
+            this.numericUpDownMobMinLevelBelowSetting.Size = new System.Drawing.Size(46, 23);
+            this.numericUpDownMobMinLevelBelowSetting.TabIndex = 7;
+            this.numericUpDownMobMinLevelBelowSetting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownMobMinLevelBelowSetting.ValueChanged += new System.EventHandler(this.OnMobMinLevelBelowValueChanged);
+            this.numericUpDownMobMinLevelBelowSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
+            //
+            // labelMobMaxLevelAboveSetting
+            //
+            this.labelMobMaxLevelAboveSetting.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelDowntimeGrindMobsMaxLevelAboveSetting.AutoSize = true;
-            this.labelDowntimeGrindMobsMaxLevelAboveSetting.BackColor = System.Drawing.Color.White;
-            this.labelDowntimeGrindMobsMaxLevelAboveSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelDowntimeGrindMobsMaxLevelAboveSetting.ForeColor = System.Drawing.Color.Black;
-            this.labelDowntimeGrindMobsMaxLevelAboveSetting.Location = new System.Drawing.Point(28, 85);
-            this.labelDowntimeGrindMobsMaxLevelAboveSetting.Name = "labelDowntimeGrindMobsMaxLevelAboveSetting";
-            this.labelDowntimeGrindMobsMaxLevelAboveSetting.Size = new System.Drawing.Size(198, 18);
-            this.labelDowntimeGrindMobsMaxLevelAboveSetting.TabIndex = 6;
-            this.labelDowntimeGrindMobsMaxLevelAboveSetting.Text = "Mob Maximum Level Above:";
-            // 
-            // labelDowntimeGrindMobsMaxLevelBelowSetting
-            // 
-            this.labelDowntimeGrindMobsMaxLevelBelowSetting.AutoSize = true;
-            this.labelDowntimeGrindMobsMaxLevelBelowSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelDowntimeGrindMobsMaxLevelBelowSetting.Location = new System.Drawing.Point(28, 55);
-            this.labelDowntimeGrindMobsMaxLevelBelowSetting.Name = "labelDowntimeGrindMobsMaxLevelBelowSetting";
-            this.labelDowntimeGrindMobsMaxLevelBelowSetting.Size = new System.Drawing.Size(197, 18);
-            this.labelDowntimeGrindMobsMaxLevelBelowSetting.TabIndex = 5;
-            this.labelDowntimeGrindMobsMaxLevelBelowSetting.Text = "Mob Maximum Level Below:";
-            // 
+            this.labelMobMaxLevelAboveSetting.AutoSize = true;
+            this.labelMobMaxLevelAboveSetting.BackColor = System.Drawing.Color.White;
+            this.labelMobMaxLevelAboveSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMobMaxLevelAboveSetting.ForeColor = System.Drawing.Color.Black;
+            this.labelMobMaxLevelAboveSetting.Location = new System.Drawing.Point(28, 85);
+            this.labelMobMaxLevelAboveSetting.Name = "labelMobMaxLevelAboveSetting";
+            this.labelMobMaxLevelAboveSetting.Size = new System.Drawing.Size(198, 18);
+            this.labelMobMaxLevelAboveSetting.TabIndex = 6;
+            this.labelMobMaxLevelAboveSetting.Text = "Mob Maximum Level Above:";
+            //
+            // labelMobMinLevelBelowSetting
+            //
+            this.labelMobMinLevelBelowSetting.AutoSize = true;
+            this.labelMobMinLevelBelowSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMobMinLevelBelowSetting.Location = new System.Drawing.Point(28, 55);
+            this.labelMobMinLevelBelowSetting.Name = "labelMobMinLevelBelowSetting";
+            this.labelMobMinLevelBelowSetting.Size = new System.Drawing.Size(193, 18);
+            this.labelMobMinLevelBelowSetting.TabIndex = 5;
+            this.labelMobMinLevelBelowSetting.Text = "Mob Minimum Level Below:";
+            //
             // labelDowntimeGrindMobs
-            // 
-            this.labelDowntimeGrindMobs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelDowntimeGrindMobs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDowntimeGrindMobs.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDowntimeGrindMobs.ForeColor = System.Drawing.Color.Black;
@@ -879,9 +897,9 @@ namespace Oracle.Forms
             this.labelDowntimeGrindMobs.TabIndex = 0;
             this.labelDowntimeGrindMobs.Text = "The Grind Mobs behaviour will kill nearby enemy mobs when there are no viable FAT" +
     "Es active. You can blacklist mobs in the Blacklist tab.";
-            // 
+            //
             // tabPageDowntimeDoNothing
-            // 
+            //
             this.tabPageDowntimeDoNothing.BackColor = System.Drawing.Color.White;
             this.tabPageDowntimeDoNothing.Controls.Add(this.labelDowntimeDoNothing);
             this.tabPageDowntimeDoNothing.Location = new System.Drawing.Point(4, 22);
@@ -889,11 +907,11 @@ namespace Oracle.Forms
             this.tabPageDowntimeDoNothing.Size = new System.Drawing.Size(647, 264);
             this.tabPageDowntimeDoNothing.TabIndex = 3;
             this.tabPageDowntimeDoNothing.Text = "Do Nothing";
-            // 
+            //
             // labelDowntimeDoNothing
-            // 
-            this.labelDowntimeDoNothing.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelDowntimeDoNothing.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDowntimeDoNothing.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDowntimeDoNothing.ForeColor = System.Drawing.Color.Black;
@@ -903,9 +921,9 @@ namespace Oracle.Forms
             this.labelDowntimeDoNothing.TabIndex = 1;
             this.labelDowntimeDoNothing.Text = "The Do Nothing behaviour will stand still when there\'s no viable FATEs active. Th" +
     "e bot will defend itself if attacked.";
-            // 
+            //
             // comboBoxDowntimeBehaviourSetting
-            // 
+            //
             this.comboBoxDowntimeBehaviourSetting.BackColor = System.Drawing.Color.White;
             this.comboBoxDowntimeBehaviourSetting.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxDowntimeBehaviourSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -922,9 +940,9 @@ namespace Oracle.Forms
             this.comboBoxDowntimeBehaviourSetting.TabIndex = 7;
             this.comboBoxDowntimeBehaviourSetting.TabStop = false;
             this.comboBoxDowntimeBehaviourSetting.SelectedIndexChanged += new System.EventHandler(this.OnDowntimeBehaviourSelectedIndexChanged);
-            // 
+            //
             // labelDowntimeBehaviourSetting
-            // 
+            //
             this.labelDowntimeBehaviourSetting.AutoSize = true;
             this.labelDowntimeBehaviourSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDowntimeBehaviourSetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -933,9 +951,9 @@ namespace Oracle.Forms
             this.labelDowntimeBehaviourSetting.Size = new System.Drawing.Size(150, 18);
             this.labelDowntimeBehaviourSetting.TabIndex = 6;
             this.labelDowntimeBehaviourSetting.Text = "Downtime Behaviour:";
-            // 
+            //
             // labelDowntimeTitle
-            // 
+            //
             this.labelDowntimeTitle.AutoSize = true;
             this.labelDowntimeTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDowntimeTitle.Location = new System.Drawing.Point(10, 10);
@@ -944,9 +962,9 @@ namespace Oracle.Forms
             this.labelDowntimeTitle.Size = new System.Drawing.Size(230, 38);
             this.labelDowntimeTitle.TabIndex = 5;
             this.labelDowntimeTitle.Text = "Downtime Settings";
-            // 
+            //
             // tabPageZoneChanging
-            // 
+            //
             this.tabPageZoneChanging.BackColor = System.Drawing.Color.White;
             this.tabPageZoneChanging.Controls.Add(this.checkBoxBindHomePointSetting);
             this.tabPageZoneChanging.Controls.Add(this.labelBindHomePointSetting);
@@ -963,9 +981,9 @@ namespace Oracle.Forms
             this.tabPageZoneChanging.TabIndex = 3;
             this.tabPageZoneChanging.Text = "Zone Changing";
             this.tabPageZoneChanging.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // checkBoxBindHomePointSetting
-            // 
+            //
             this.checkBoxBindHomePointSetting.Appearance = System.Windows.Forms.Appearance.Button;
             this.checkBoxBindHomePointSetting.AutoSize = true;
             this.checkBoxBindHomePointSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -982,9 +1000,9 @@ namespace Oracle.Forms
             this.checkBoxBindHomePointSetting.Text = "Bind Home Point";
             this.checkBoxBindHomePointSetting.UseVisualStyleBackColor = true;
             this.checkBoxBindHomePointSetting.CheckedChanged += new System.EventHandler(this.OnBindHomePointSettingChanged);
-            // 
+            //
             // labelBindHomePointSetting
-            // 
+            //
             this.labelBindHomePointSetting.AutoSize = true;
             this.labelBindHomePointSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelBindHomePointSetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -993,9 +1011,9 @@ namespace Oracle.Forms
             this.labelBindHomePointSetting.Size = new System.Drawing.Size(129, 18);
             this.labelBindHomePointSetting.TabIndex = 14;
             this.labelBindHomePointSetting.Text = "Bind Home Point: ";
-            // 
+            //
             // buttonResetZoneLevelsToDefault
-            // 
+            //
             this.buttonResetZoneLevelsToDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonResetZoneLevelsToDefault.Depth = 0;
             this.buttonResetZoneLevelsToDefault.Location = new System.Drawing.Point(16, 352);
@@ -1007,10 +1025,10 @@ namespace Oracle.Forms
             this.buttonResetZoneLevelsToDefault.Text = "Reset to Default";
             this.buttonResetZoneLevelsToDefault.UseVisualStyleBackColor = true;
             this.buttonResetZoneLevelsToDefault.Click += new System.EventHandler(this.OnButtonResetZoneLevelsToDefaultClick);
-            // 
+            //
             // labelZoneChangeTip
-            // 
-            this.labelZoneChangeTip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            //
+            this.labelZoneChangeTip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelZoneChangeTip.BackColor = System.Drawing.Color.Transparent;
             this.labelZoneChangeTip.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1020,28 +1038,28 @@ namespace Oracle.Forms
             this.labelZoneChangeTip.Size = new System.Drawing.Size(220, 297);
             this.labelZoneChangeTip.TabIndex = 11;
             this.labelZoneChangeTip.Text = resources.GetString("labelZoneChangeTip.Text");
-            // 
+            //
             // dataGridViewZoneChangeSettings
-            // 
+            //
             this.dataGridViewZoneChangeSettings.AllowUserToAddRows = false;
             this.dataGridViewZoneChangeSettings.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            this.dataGridViewZoneChangeSettings.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridViewZoneChangeSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.White;
+            this.dataGridViewZoneChangeSettings.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+            this.dataGridViewZoneChangeSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewZoneChangeSettings.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewZoneChangeSettings.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dataGridViewZoneChangeSettings.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dataGridViewZoneChangeSettings.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.MediumSlateBlue;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewZoneChangeSettings.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.MediumSlateBlue;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewZoneChangeSettings.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridViewZoneChangeSettings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewZoneChangeSettings.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnLevel,
@@ -1052,23 +1070,23 @@ namespace Oracle.Forms
             this.dataGridViewZoneChangeSettings.Location = new System.Drawing.Point(17, 108);
             this.dataGridViewZoneChangeSettings.Name = "dataGridViewZoneChangeSettings";
             this.dataGridViewZoneChangeSettings.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewZoneChangeSettings.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle11.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewZoneChangeSettings.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.dataGridViewZoneChangeSettings.RowHeadersVisible = false;
             this.dataGridViewZoneChangeSettings.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
-            this.dataGridViewZoneChangeSettings.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.WhiteSmoke;
+            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle12.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.White;
+            this.dataGridViewZoneChangeSettings.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.dataGridViewZoneChangeSettings.RowTemplate.Height = 26;
             this.dataGridViewZoneChangeSettings.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewZoneChangeSettings.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -1078,29 +1096,29 @@ namespace Oracle.Forms
             this.dataGridViewZoneChangeSettings.TabStop = false;
             this.dataGridViewZoneChangeSettings.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.OnDataGridViewCellClick);
             this.dataGridViewZoneChangeSettings.Paint += new System.Windows.Forms.PaintEventHandler(this.OnDataGridViewPaint);
-            // 
+            //
             // ColumnLevel
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            this.ColumnLevel.DefaultCellStyle = dataGridViewCellStyle3;
+            //
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.White;
+            this.ColumnLevel.DefaultCellStyle = dataGridViewCellStyle9;
             this.ColumnLevel.HeaderText = "Level";
             this.ColumnLevel.Name = "ColumnLevel";
             this.ColumnLevel.ReadOnly = true;
             this.ColumnLevel.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
+            //
             // ColumnAetheryte
-            // 
+            //
             this.ColumnAetheryte.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
-            this.ColumnAetheryte.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.White;
+            this.ColumnAetheryte.DefaultCellStyle = dataGridViewCellStyle10;
             this.ColumnAetheryte.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.ColumnAetheryte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ColumnAetheryte.HeaderText = "Aetheryte";
@@ -1150,16 +1168,16 @@ namespace Oracle.Forms
             "Zenith"});
             this.ColumnAetheryte.Name = "ColumnAetheryte";
             this.ColumnAetheryte.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
+            //
             // EmptyColumn
-            // 
+            //
             this.EmptyColumn.HeaderText = "";
             this.EmptyColumn.Name = "EmptyColumn";
             this.EmptyColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.EmptyColumn.Width = 5;
-            // 
+            //
             // labelZoneChangeEnabledSetting
-            // 
+            //
             this.labelZoneChangeEnabledSetting.AutoSize = true;
             this.labelZoneChangeEnabledSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelZoneChangeEnabledSetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -1168,9 +1186,9 @@ namespace Oracle.Forms
             this.labelZoneChangeEnabledSetting.Size = new System.Drawing.Size(173, 18);
             this.labelZoneChangeEnabledSetting.TabIndex = 9;
             this.labelZoneChangeEnabledSetting.Text = "Zone Changing Enabled: ";
-            // 
+            //
             // checkBoxZoneChangingEnabledSetting
-            // 
+            //
             this.checkBoxZoneChangingEnabledSetting.Appearance = System.Windows.Forms.Appearance.Button;
             this.checkBoxZoneChangingEnabledSetting.AutoSize = true;
             this.checkBoxZoneChangingEnabledSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1187,9 +1205,9 @@ namespace Oracle.Forms
             this.checkBoxZoneChangingEnabledSetting.Text = "Zone Change Enabled";
             this.checkBoxZoneChangingEnabledSetting.UseVisualStyleBackColor = true;
             this.checkBoxZoneChangingEnabledSetting.CheckedChanged += new System.EventHandler(this.OnZoneChangingEnabledChanged);
-            // 
+            //
             // labelZoneChangingTitle
-            // 
+            //
             this.labelZoneChangingTitle.AutoSize = true;
             this.labelZoneChangingTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelZoneChangingTitle.Location = new System.Drawing.Point(10, 10);
@@ -1198,9 +1216,9 @@ namespace Oracle.Forms
             this.labelZoneChangingTitle.Size = new System.Drawing.Size(284, 38);
             this.labelZoneChangingTitle.TabIndex = 5;
             this.labelZoneChangingTitle.Text = "Zone Changing Settings";
-            // 
+            //
             // tabPageMiscellaneous
-            // 
+            //
             this.tabPageMiscellaneous.BackColor = System.Drawing.Color.White;
             this.tabPageMiscellaneous.Controls.Add(this.labelMiscellaneousTitle);
             this.tabPageMiscellaneous.Location = new System.Drawing.Point(4, 22);
@@ -1210,9 +1228,9 @@ namespace Oracle.Forms
             this.tabPageMiscellaneous.TabIndex = 4;
             this.tabPageMiscellaneous.Text = "Miscellaneous";
             this.tabPageMiscellaneous.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelMiscellaneousTitle
-            // 
+            //
             this.labelMiscellaneousTitle.AutoSize = true;
             this.labelMiscellaneousTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelMiscellaneousTitle.Location = new System.Drawing.Point(10, 10);
@@ -1221,25 +1239,25 @@ namespace Oracle.Forms
             this.labelMiscellaneousTitle.Size = new System.Drawing.Size(280, 38);
             this.labelMiscellaneousTitle.TabIndex = 5;
             this.labelMiscellaneousTitle.Text = "Miscellaneous Settings";
-            // 
+            //
             // tabFateSettings
-            // 
+            //
             this.tabFateSettings.BackColor = System.Drawing.Color.White;
             this.tabFateSettings.Controls.Add(this.tabControllerFate);
             this.tabFateSettings.Controls.Add(this.tabSelectorFate);
-            this.tabFateSettings.Location = new System.Drawing.Point(4, 22);
+            this.tabFateSettings.Location = new System.Drawing.Point(4, 29);
             this.tabFateSettings.Margin = new System.Windows.Forms.Padding(0);
             this.tabFateSettings.Name = "tabFateSettings";
             this.tabFateSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFateSettings.Size = new System.Drawing.Size(842, 495);
+            this.tabFateSettings.Size = new System.Drawing.Size(842, 488);
             this.tabFateSettings.TabIndex = 1;
             this.tabFateSettings.Text = "Fate Settings";
             this.tabFateSettings.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // tabControllerFate
-            // 
-            this.tabControllerFate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.tabControllerFate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerFate.Controls.Add(this.tabPageGeneral);
             this.tabControllerFate.Controls.Add(this.tabPageKillFates);
@@ -1259,10 +1277,22 @@ namespace Oracle.Forms
             this.tabControllerFate.Size = new System.Drawing.Size(674, 449);
             this.tabControllerFate.TabIndex = 9;
             this.tabControllerFate.TabStop = false;
-            // 
+            //
             // tabPageGeneral
-            // 
+            //
             this.tabPageGeneral.BackColor = System.Drawing.Color.White;
+            this.tabPageGeneral.Controls.Add(this.labelLowDurationTimeSettingSuffix);
+            this.tabPageGeneral.Controls.Add(this.textBoxLowDurationFateSetting);
+            this.tabPageGeneral.Controls.Add(this.labelLowDurationTimeSetting);
+            this.tabPageGeneral.Controls.Add(this.checkBoxIgnoreLowDurationFateSetting);
+            this.tabPageGeneral.Controls.Add(this.labelIgnoreLowDurationFatesSetting);
+            this.tabPageGeneral.Controls.Add(this.checkBoxRunProblematicFatesSetting);
+            this.tabPageGeneral.Controls.Add(this.labelRunProblematicFatesWarning);
+            this.tabPageGeneral.Controls.Add(this.labelRunProblematicFatesSetting);
+            this.tabPageGeneral.Controls.Add(this.numericUpDownFateMaximumLevelAboveSetting);
+            this.tabPageGeneral.Controls.Add(this.labelFateMaximumLevelAboveSetting);
+            this.tabPageGeneral.Controls.Add(this.numericUpDownFateMinimumLevelBelowSetting);
+            this.tabPageGeneral.Controls.Add(this.labelFateMinimumLevelBelowSetting);
             this.tabPageGeneral.Controls.Add(this.labelGeneralFateSettingsTitle);
             this.tabPageGeneral.Location = new System.Drawing.Point(4, 54);
             this.tabPageGeneral.Margin = new System.Windows.Forms.Padding(0);
@@ -1272,9 +1302,171 @@ namespace Oracle.Forms
             this.tabPageGeneral.TabIndex = 0;
             this.tabPageGeneral.Text = "General";
             this.tabPageGeneral.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
+            // labelLowDurationTimeSettingSuffix
+            //
+            this.labelLowDurationTimeSettingSuffix.AutoSize = true;
+            this.labelLowDurationTimeSettingSuffix.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelLowDurationTimeSettingSuffix.Location = new System.Drawing.Point(211, 236);
+            this.labelLowDurationTimeSettingSuffix.Name = "labelLowDurationTimeSettingSuffix";
+            this.labelLowDurationTimeSettingSuffix.Size = new System.Drawing.Size(64, 18);
+            this.labelLowDurationTimeSettingSuffix.TabIndex = 18;
+            this.labelLowDurationTimeSettingSuffix.Text = "seconds";
+            //
+            // textBoxLowDurationFateSetting
+            //
+            this.textBoxLowDurationFateSetting.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.textBoxLowDurationFateSetting.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBoxLowDurationFateSetting.Depth = 0;
+            this.textBoxLowDurationFateSetting.Hint = "";
+            this.textBoxLowDurationFateSetting.Location = new System.Drawing.Point(162, 229);
+            this.textBoxLowDurationFateSetting.MaxLength = 4;
+            this.textBoxLowDurationFateSetting.MouseState = MaterialSkin.MouseState.Hover;
+            this.textBoxLowDurationFateSetting.Name = "textBoxLowDurationFateSetting";
+            this.textBoxLowDurationFateSetting.PasswordChar = '\0';
+            this.textBoxLowDurationFateSetting.SelectedText = "";
+            this.textBoxLowDurationFateSetting.SelectionLength = 0;
+            this.textBoxLowDurationFateSetting.SelectionStart = 0;
+            this.textBoxLowDurationFateSetting.Size = new System.Drawing.Size(43, 25);
+            this.textBoxLowDurationFateSetting.TabIndex = 17;
+            this.textBoxLowDurationFateSetting.TabStop = false;
+            this.textBoxLowDurationFateSetting.UseSystemPasswordChar = false;
+            this.textBoxLowDurationFateSetting.Enter += new System.EventHandler(this.OnEnterLowDurationFate);
+            this.textBoxLowDurationFateSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
+            this.textBoxLowDurationFateSetting.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnLowDurationFateSettingKeyPress);
+            //
+            // labelLowDurationTimeSetting
+            //
+            this.labelLowDurationTimeSetting.AutoSize = true;
+            this.labelLowDurationTimeSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelLowDurationTimeSetting.Location = new System.Drawing.Point(15, 236);
+            this.labelLowDurationTimeSetting.Name = "labelLowDurationTimeSetting";
+            this.labelLowDurationTimeSetting.Size = new System.Drawing.Size(141, 18);
+            this.labelLowDurationTimeSetting.TabIndex = 16;
+            this.labelLowDurationTimeSetting.Text = "Low Duration Value:";
+            //
+            // checkBoxIgnoreLowDurationFateSetting
+            //
+            this.checkBoxIgnoreLowDurationFateSetting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxIgnoreLowDurationFateSetting.AutoSize = true;
+            this.checkBoxIgnoreLowDurationFateSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxIgnoreLowDurationFateSetting.Depth = 0;
+            this.checkBoxIgnoreLowDurationFateSetting.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.checkBoxIgnoreLowDurationFateSetting.Location = new System.Drawing.Point(208, 190);
+            this.checkBoxIgnoreLowDurationFateSetting.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBoxIgnoreLowDurationFateSetting.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.checkBoxIgnoreLowDurationFateSetting.MouseState = MaterialSkin.MouseState.Hover;
+            this.checkBoxIgnoreLowDurationFateSetting.Name = "checkBoxIgnoreLowDurationFateSetting";
+            this.checkBoxIgnoreLowDurationFateSetting.Ripple = true;
+            this.checkBoxIgnoreLowDurationFateSetting.Size = new System.Drawing.Size(30, 30);
+            this.checkBoxIgnoreLowDurationFateSetting.TabIndex = 15;
+            this.checkBoxIgnoreLowDurationFateSetting.Text = "Run Problematic FATEs";
+            this.checkBoxIgnoreLowDurationFateSetting.UseVisualStyleBackColor = true;
+            this.checkBoxIgnoreLowDurationFateSetting.CheckedChanged += new System.EventHandler(this.OnIgnoreLowDurationFateChanged);
+            //
+            // labelIgnoreLowDurationFatesSetting
+            //
+            this.labelIgnoreLowDurationFatesSetting.AutoSize = true;
+            this.labelIgnoreLowDurationFatesSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelIgnoreLowDurationFatesSetting.Location = new System.Drawing.Point(15, 196);
+            this.labelIgnoreLowDurationFatesSetting.Name = "labelIgnoreLowDurationFatesSetting";
+            this.labelIgnoreLowDurationFatesSetting.Size = new System.Drawing.Size(190, 18);
+            this.labelIgnoreLowDurationFatesSetting.TabIndex = 14;
+            this.labelIgnoreLowDurationFatesSetting.Text = "Ignore Low Duration FATEs:";
+            //
+            // checkBoxRunProblematicFatesSetting
+            //
+            this.checkBoxRunProblematicFatesSetting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxRunProblematicFatesSetting.AutoSize = true;
+            this.checkBoxRunProblematicFatesSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxRunProblematicFatesSetting.Depth = 0;
+            this.checkBoxRunProblematicFatesSetting.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.checkBoxRunProblematicFatesSetting.Location = new System.Drawing.Point(208, 142);
+            this.checkBoxRunProblematicFatesSetting.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBoxRunProblematicFatesSetting.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.checkBoxRunProblematicFatesSetting.MouseState = MaterialSkin.MouseState.Hover;
+            this.checkBoxRunProblematicFatesSetting.Name = "checkBoxRunProblematicFatesSetting";
+            this.checkBoxRunProblematicFatesSetting.Ripple = true;
+            this.checkBoxRunProblematicFatesSetting.Size = new System.Drawing.Size(30, 30);
+            this.checkBoxRunProblematicFatesSetting.TabIndex = 13;
+            this.checkBoxRunProblematicFatesSetting.Text = "Run Problematic FATEs";
+            this.checkBoxRunProblematicFatesSetting.UseVisualStyleBackColor = true;
+            this.checkBoxRunProblematicFatesSetting.CheckedChanged += new System.EventHandler(this.OnRunProblematicFatesChanged);
+            //
+            // labelRunProblematicFatesWarning
+            //
+            this.labelRunProblematicFatesWarning.AutoSize = true;
+            this.labelRunProblematicFatesWarning.Font = new System.Drawing.Font("Roboto", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelRunProblematicFatesWarning.ForeColor = System.Drawing.Color.Maroon;
+            this.labelRunProblematicFatesWarning.Location = new System.Drawing.Point(15, 166);
+            this.labelRunProblematicFatesWarning.Name = "labelRunProblematicFatesWarning";
+            this.labelRunProblematicFatesWarning.Size = new System.Drawing.Size(160, 14);
+            this.labelRunProblematicFatesWarning.TabIndex = 12;
+            this.labelRunProblematicFatesWarning.Text = "Warning: Not Recommended";
+            //
+            // labelRunProblematicFatesSetting
+            //
+            this.labelRunProblematicFatesSetting.AutoSize = true;
+            this.labelRunProblematicFatesSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelRunProblematicFatesSetting.Location = new System.Drawing.Point(15, 148);
+            this.labelRunProblematicFatesSetting.Name = "labelRunProblematicFatesSetting";
+            this.labelRunProblematicFatesSetting.Size = new System.Drawing.Size(168, 18);
+            this.labelRunProblematicFatesSetting.TabIndex = 11;
+            this.labelRunProblematicFatesSetting.Text = "Run Problematic FATEs:";
+            //
+            // numericUpDownFateMaximumLevelAboveSetting
+            //
+            this.numericUpDownFateMaximumLevelAboveSetting.AutoSize = true;
+            this.numericUpDownFateMaximumLevelAboveSetting.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.numericUpDownFateMaximumLevelAboveSetting.Location = new System.Drawing.Point(223, 107);
+            this.numericUpDownFateMaximumLevelAboveSetting.Maximum = new decimal(new int[] {
+            59,
+            0,
+            0,
+            0});
+            this.numericUpDownFateMaximumLevelAboveSetting.Name = "numericUpDownFateMaximumLevelAboveSetting";
+            this.numericUpDownFateMaximumLevelAboveSetting.Size = new System.Drawing.Size(46, 23);
+            this.numericUpDownFateMaximumLevelAboveSetting.TabIndex = 10;
+            this.numericUpDownFateMaximumLevelAboveSetting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownFateMaximumLevelAboveSetting.ValueChanged += new System.EventHandler(this.OnFateMaxLevelAboveValueChanged);
+            //
+            // labelFateMaximumLevelAboveSetting
+            //
+            this.labelFateMaximumLevelAboveSetting.AutoSize = true;
+            this.labelFateMaximumLevelAboveSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelFateMaximumLevelAboveSetting.Location = new System.Drawing.Point(15, 108);
+            this.labelFateMaximumLevelAboveSetting.Name = "labelFateMaximumLevelAboveSetting";
+            this.labelFateMaximumLevelAboveSetting.Size = new System.Drawing.Size(202, 18);
+            this.labelFateMaximumLevelAboveSetting.TabIndex = 9;
+            this.labelFateMaximumLevelAboveSetting.Text = "FATE Maximum Level Above:";
+            //
+            // numericUpDownFateMinimumLevelBelowSetting
+            //
+            this.numericUpDownFateMinimumLevelBelowSetting.AutoSize = true;
+            this.numericUpDownFateMinimumLevelBelowSetting.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.numericUpDownFateMinimumLevelBelowSetting.Location = new System.Drawing.Point(223, 67);
+            this.numericUpDownFateMinimumLevelBelowSetting.Maximum = new decimal(new int[] {
+            59,
+            0,
+            0,
+            0});
+            this.numericUpDownFateMinimumLevelBelowSetting.Name = "numericUpDownFateMinimumLevelBelowSetting";
+            this.numericUpDownFateMinimumLevelBelowSetting.Size = new System.Drawing.Size(46, 23);
+            this.numericUpDownFateMinimumLevelBelowSetting.TabIndex = 8;
+            this.numericUpDownFateMinimumLevelBelowSetting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            //
+            // labelFateMinimumLevelBelowSetting
+            //
+            this.labelFateMinimumLevelBelowSetting.AutoSize = true;
+            this.labelFateMinimumLevelBelowSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelFateMinimumLevelBelowSetting.Location = new System.Drawing.Point(15, 68);
+            this.labelFateMinimumLevelBelowSetting.Name = "labelFateMinimumLevelBelowSetting";
+            this.labelFateMinimumLevelBelowSetting.Size = new System.Drawing.Size(197, 18);
+            this.labelFateMinimumLevelBelowSetting.TabIndex = 6;
+            this.labelFateMinimumLevelBelowSetting.Text = "FATE Minimum Level Below:";
+            //
             // labelGeneralFateSettingsTitle
-            // 
+            //
             this.labelGeneralFateSettingsTitle.AutoSize = true;
             this.labelGeneralFateSettingsTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelGeneralFateSettingsTitle.Location = new System.Drawing.Point(10, 10);
@@ -1283,9 +1475,9 @@ namespace Oracle.Forms
             this.labelGeneralFateSettingsTitle.Size = new System.Drawing.Size(268, 38);
             this.labelGeneralFateSettingsTitle.TabIndex = 1;
             this.labelGeneralFateSettingsTitle.Text = "General FATE Settings";
-            // 
+            //
             // tabPageKillFates
-            // 
+            //
             this.tabPageKillFates.BackColor = System.Drawing.Color.White;
             this.tabPageKillFates.Controls.Add(this.labelKillFatesTitle);
             this.tabPageKillFates.Location = new System.Drawing.Point(4, 22);
@@ -1296,9 +1488,9 @@ namespace Oracle.Forms
             this.tabPageKillFates.TabIndex = 1;
             this.tabPageKillFates.Text = "Kill FATEs";
             this.tabPageKillFates.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelKillFatesTitle
-            // 
+            //
             this.labelKillFatesTitle.AutoSize = true;
             this.labelKillFatesTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelKillFatesTitle.Location = new System.Drawing.Point(10, 10);
@@ -1307,9 +1499,9 @@ namespace Oracle.Forms
             this.labelKillFatesTitle.Size = new System.Drawing.Size(219, 38);
             this.labelKillFatesTitle.TabIndex = 4;
             this.labelKillFatesTitle.Text = "Kill FATE Settings";
-            // 
+            //
             // tabPageCollectFates
-            // 
+            //
             this.tabPageCollectFates.BackColor = System.Drawing.Color.White;
             this.tabPageCollectFates.Controls.Add(this.labelCollectFatesTitle);
             this.tabPageCollectFates.Location = new System.Drawing.Point(4, 22);
@@ -1319,9 +1511,9 @@ namespace Oracle.Forms
             this.tabPageCollectFates.TabIndex = 2;
             this.tabPageCollectFates.Text = "Collect FATEs";
             this.tabPageCollectFates.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelCollectFatesTitle
-            // 
+            //
             this.labelCollectFatesTitle.AutoSize = true;
             this.labelCollectFatesTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelCollectFatesTitle.Location = new System.Drawing.Point(10, 10);
@@ -1330,9 +1522,9 @@ namespace Oracle.Forms
             this.labelCollectFatesTitle.Size = new System.Drawing.Size(260, 38);
             this.labelCollectFatesTitle.TabIndex = 5;
             this.labelCollectFatesTitle.Text = "Collect FATE Settings";
-            // 
+            //
             // tabPageEscortFates
-            // 
+            //
             this.tabPageEscortFates.BackColor = System.Drawing.Color.White;
             this.tabPageEscortFates.Controls.Add(this.labelEscortFatesTitle);
             this.tabPageEscortFates.Location = new System.Drawing.Point(4, 22);
@@ -1342,9 +1534,9 @@ namespace Oracle.Forms
             this.tabPageEscortFates.TabIndex = 3;
             this.tabPageEscortFates.Text = "Escort FATEs";
             this.tabPageEscortFates.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelEscortFatesTitle
-            // 
+            //
             this.labelEscortFatesTitle.AutoSize = true;
             this.labelEscortFatesTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelEscortFatesTitle.Location = new System.Drawing.Point(10, 10);
@@ -1353,9 +1545,9 @@ namespace Oracle.Forms
             this.labelEscortFatesTitle.Size = new System.Drawing.Size(254, 38);
             this.labelEscortFatesTitle.TabIndex = 6;
             this.labelEscortFatesTitle.Text = "Escort FATE Settings";
-            // 
+            //
             // tabPageDefenceFates
-            // 
+            //
             this.tabPageDefenceFates.BackColor = System.Drawing.Color.White;
             this.tabPageDefenceFates.Controls.Add(this.labelDefenceFatesTitle);
             this.tabPageDefenceFates.Location = new System.Drawing.Point(4, 22);
@@ -1365,9 +1557,9 @@ namespace Oracle.Forms
             this.tabPageDefenceFates.TabIndex = 4;
             this.tabPageDefenceFates.Text = "Defence FATEs";
             this.tabPageDefenceFates.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelDefenceFatesTitle
-            // 
+            //
             this.labelDefenceFatesTitle.AutoSize = true;
             this.labelDefenceFatesTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDefenceFatesTitle.Location = new System.Drawing.Point(10, 10);
@@ -1376,9 +1568,9 @@ namespace Oracle.Forms
             this.labelDefenceFatesTitle.Size = new System.Drawing.Size(273, 38);
             this.labelDefenceFatesTitle.TabIndex = 6;
             this.labelDefenceFatesTitle.Text = "Defence FATE Settings";
-            // 
+            //
             // tabPageBossFates
-            // 
+            //
             this.tabPageBossFates.BackColor = System.Drawing.Color.White;
             this.tabPageBossFates.Controls.Add(this.labelBossFatesTitle);
             this.tabPageBossFates.Location = new System.Drawing.Point(4, 22);
@@ -1388,9 +1580,9 @@ namespace Oracle.Forms
             this.tabPageBossFates.TabIndex = 5;
             this.tabPageBossFates.Text = "Boss FATEs";
             this.tabPageBossFates.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelBossFatesTitle
-            // 
+            //
             this.labelBossFatesTitle.AutoSize = true;
             this.labelBossFatesTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelBossFatesTitle.Location = new System.Drawing.Point(10, 10);
@@ -1399,9 +1591,9 @@ namespace Oracle.Forms
             this.labelBossFatesTitle.Size = new System.Drawing.Size(238, 38);
             this.labelBossFatesTitle.TabIndex = 6;
             this.labelBossFatesTitle.Text = "Boss FATE Settings";
-            // 
+            //
             // tabPageMegaBossFates
-            // 
+            //
             this.tabPageMegaBossFates.BackColor = System.Drawing.Color.White;
             this.tabPageMegaBossFates.Controls.Add(this.labelMegaBossFatesTitle);
             this.tabPageMegaBossFates.Location = new System.Drawing.Point(4, 22);
@@ -1410,9 +1602,9 @@ namespace Oracle.Forms
             this.tabPageMegaBossFates.TabIndex = 6;
             this.tabPageMegaBossFates.Text = "Mega-Boss FATEs";
             this.tabPageMegaBossFates.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelMegaBossFatesTitle
-            // 
+            //
             this.labelMegaBossFatesTitle.AutoSize = true;
             this.labelMegaBossFatesTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelMegaBossFatesTitle.Location = new System.Drawing.Point(10, 10);
@@ -1421,10 +1613,10 @@ namespace Oracle.Forms
             this.labelMegaBossFatesTitle.Size = new System.Drawing.Size(310, 38);
             this.labelMegaBossFatesTitle.TabIndex = 7;
             this.labelMegaBossFatesTitle.Text = "Mega-Boss FATE Settings";
-            // 
+            //
             // tabSelectorFate
-            // 
-            this.tabSelectorFate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            //
+            this.tabSelectorFate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tabSelectorFate.BaseTabControl = this.tabControllerFate;
             this.tabSelectorFate.Depth = 0;
@@ -1438,24 +1630,24 @@ namespace Oracle.Forms
             this.tabSelectorFate.TabStop = false;
             this.tabSelectorFate.Text = "materialTabSelectorVertical1";
             this.tabSelectorFate.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // tabNavigationSettings
-            // 
+            //
             this.tabNavigationSettings.BackColor = System.Drawing.Color.White;
             this.tabNavigationSettings.Controls.Add(this.tabSelectorCustom);
             this.tabNavigationSettings.Controls.Add(this.tabControllerCustom);
-            this.tabNavigationSettings.Location = new System.Drawing.Point(4, 22);
+            this.tabNavigationSettings.Location = new System.Drawing.Point(4, 29);
             this.tabNavigationSettings.Margin = new System.Windows.Forms.Padding(0);
             this.tabNavigationSettings.Name = "tabNavigationSettings";
             this.tabNavigationSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabNavigationSettings.Size = new System.Drawing.Size(842, 495);
+            this.tabNavigationSettings.Size = new System.Drawing.Size(842, 488);
             this.tabNavigationSettings.TabIndex = 2;
             this.tabNavigationSettings.Text = "Navigation Settings";
             this.tabNavigationSettings.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // tabSelectorCustom
-            // 
-            this.tabSelectorCustom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            //
+            this.tabSelectorCustom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tabSelectorCustom.BaseTabControl = this.tabControllerCustom;
             this.tabSelectorCustom.Depth = 0;
@@ -1469,11 +1661,11 @@ namespace Oracle.Forms
             this.tabSelectorCustom.TabStop = false;
             this.tabSelectorCustom.Text = "materialTabSelectorVertical1";
             this.tabSelectorCustom.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // tabControllerCustom
-            // 
-            this.tabControllerCustom.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.tabControllerCustom.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerCustom.Controls.Add(this.tabPageMovement);
             this.tabControllerCustom.Controls.Add(this.tabPageFlight);
@@ -1488,9 +1680,9 @@ namespace Oracle.Forms
             this.tabControllerCustom.Size = new System.Drawing.Size(674, 449);
             this.tabControllerCustom.TabIndex = 2;
             this.tabControllerCustom.TabStop = false;
-            // 
+            //
             // tabPageMovement
-            // 
+            //
             this.tabPageMovement.BackColor = System.Drawing.Color.White;
             this.tabPageMovement.Controls.Add(this.labelMovementTitle);
             this.tabPageMovement.Location = new System.Drawing.Point(4, 29);
@@ -1501,9 +1693,9 @@ namespace Oracle.Forms
             this.tabPageMovement.TabIndex = 0;
             this.tabPageMovement.Text = "Movement";
             this.tabPageMovement.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelMovementTitle
-            // 
+            //
             this.labelMovementTitle.AutoSize = true;
             this.labelMovementTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelMovementTitle.Location = new System.Drawing.Point(10, 10);
@@ -1512,9 +1704,9 @@ namespace Oracle.Forms
             this.labelMovementTitle.Size = new System.Drawing.Size(236, 38);
             this.labelMovementTitle.TabIndex = 1;
             this.labelMovementTitle.Text = "Movement Settings";
-            // 
+            //
             // tabPageFlight
-            // 
+            //
             this.tabPageFlight.BackColor = System.Drawing.Color.White;
             this.tabPageFlight.Controls.Add(this.labelFlightTitle);
             this.tabPageFlight.Location = new System.Drawing.Point(4, 22);
@@ -1525,9 +1717,9 @@ namespace Oracle.Forms
             this.tabPageFlight.TabIndex = 1;
             this.tabPageFlight.Text = "Flight";
             this.tabPageFlight.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelFlightTitle
-            // 
+            //
             this.labelFlightTitle.AutoSize = true;
             this.labelFlightTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelFlightTitle.Location = new System.Drawing.Point(10, 10);
@@ -1536,9 +1728,9 @@ namespace Oracle.Forms
             this.labelFlightTitle.Size = new System.Drawing.Size(183, 38);
             this.labelFlightTitle.TabIndex = 4;
             this.labelFlightTitle.Text = "Flight Settings";
-            // 
+            //
             // tabPageTeleport
-            // 
+            //
             this.tabPageTeleport.BackColor = System.Drawing.Color.White;
             this.tabPageTeleport.Controls.Add(this.labelTeleportTitle);
             this.tabPageTeleport.Location = new System.Drawing.Point(4, 22);
@@ -1547,9 +1739,9 @@ namespace Oracle.Forms
             this.tabPageTeleport.TabIndex = 2;
             this.tabPageTeleport.Text = "Teleport";
             this.tabPageTeleport.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelTeleportTitle
-            // 
+            //
             this.labelTeleportTitle.AutoSize = true;
             this.labelTeleportTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTeleportTitle.Location = new System.Drawing.Point(10, 10);
@@ -1558,9 +1750,9 @@ namespace Oracle.Forms
             this.labelTeleportTitle.Size = new System.Drawing.Size(211, 38);
             this.labelTeleportTitle.TabIndex = 5;
             this.labelTeleportTitle.Text = "Teleport Settings";
-            // 
+            //
             // tabBlacklist
-            // 
+            //
             this.tabBlacklist.BackColor = System.Drawing.Color.White;
             this.tabBlacklist.Controls.Add(this.tabSelectorBlacklist);
             this.tabBlacklist.Controls.Add(this.tabControllerBlacklist);
@@ -1572,10 +1764,10 @@ namespace Oracle.Forms
             this.tabBlacklist.TabIndex = 3;
             this.tabBlacklist.Text = "Blacklist";
             this.tabBlacklist.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // tabSelectorBlacklist
-            // 
-            this.tabSelectorBlacklist.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            //
+            this.tabSelectorBlacklist.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tabSelectorBlacklist.BaseTabControl = this.tabControllerBlacklist;
             this.tabSelectorBlacklist.Depth = 0;
@@ -1589,11 +1781,11 @@ namespace Oracle.Forms
             this.tabSelectorBlacklist.TabStop = false;
             this.tabSelectorBlacklist.Text = "materialTabSelectorVertical1";
             this.tabSelectorBlacklist.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // tabControllerBlacklist
-            // 
-            this.tabControllerBlacklist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.tabControllerBlacklist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerBlacklist.Controls.Add(this.tabPageFateBlacklist);
             this.tabControllerBlacklist.Controls.Add(this.tabPageMobBlacklist);
@@ -1607,9 +1799,9 @@ namespace Oracle.Forms
             this.tabControllerBlacklist.Size = new System.Drawing.Size(674, 449);
             this.tabControllerBlacklist.TabIndex = 1;
             this.tabControllerBlacklist.TabStop = false;
-            // 
+            //
             // tabPageFateBlacklist
-            // 
+            //
             this.tabPageFateBlacklist.BackColor = System.Drawing.Color.White;
             this.tabPageFateBlacklist.Controls.Add(this.labelFateBlacklistTitle);
             this.tabPageFateBlacklist.Location = new System.Drawing.Point(4, 29);
@@ -1620,9 +1812,9 @@ namespace Oracle.Forms
             this.tabPageFateBlacklist.TabIndex = 0;
             this.tabPageFateBlacklist.Text = "FATE Blacklist";
             this.tabPageFateBlacklist.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelFateBlacklistTitle
-            // 
+            //
             this.labelFateBlacklistTitle.AutoSize = true;
             this.labelFateBlacklistTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelFateBlacklistTitle.Location = new System.Drawing.Point(10, 10);
@@ -1631,9 +1823,9 @@ namespace Oracle.Forms
             this.labelFateBlacklistTitle.Size = new System.Drawing.Size(180, 38);
             this.labelFateBlacklistTitle.TabIndex = 1;
             this.labelFateBlacklistTitle.Text = "FATE Blacklist";
-            // 
+            //
             // tabPageMobBlacklist
-            // 
+            //
             this.tabPageMobBlacklist.BackColor = System.Drawing.Color.White;
             this.tabPageMobBlacklist.Controls.Add(this.labelMobBlacklistTitle);
             this.tabPageMobBlacklist.Location = new System.Drawing.Point(4, 22);
@@ -1644,9 +1836,9 @@ namespace Oracle.Forms
             this.tabPageMobBlacklist.TabIndex = 1;
             this.tabPageMobBlacklist.Text = "Mob Blacklist";
             this.tabPageMobBlacklist.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelMobBlacklistTitle
-            // 
+            //
             this.labelMobBlacklistTitle.AutoSize = true;
             this.labelMobBlacklistTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelMobBlacklistTitle.Location = new System.Drawing.Point(10, 10);
@@ -1655,9 +1847,9 @@ namespace Oracle.Forms
             this.labelMobBlacklistTitle.Size = new System.Drawing.Size(171, 38);
             this.labelMobBlacklistTitle.TabIndex = 4;
             this.labelMobBlacklistTitle.Text = "Mob Blacklist";
-            // 
+            //
             // tabAbout
-            // 
+            //
             this.tabAbout.BackColor = System.Drawing.Color.White;
             this.tabAbout.Controls.Add(this.tabControllerAbout);
             this.tabAbout.Controls.Add(this.tabSelectorAbout);
@@ -1669,11 +1861,11 @@ namespace Oracle.Forms
             this.tabAbout.TabIndex = 4;
             this.tabAbout.Text = "About";
             this.tabAbout.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // tabControllerAbout
-            // 
-            this.tabControllerAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.tabControllerAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControllerAbout.Controls.Add(this.tabPageLicense);
             this.tabControllerAbout.Controls.Add(this.tabPageDonate);
@@ -1688,9 +1880,9 @@ namespace Oracle.Forms
             this.tabControllerAbout.Size = new System.Drawing.Size(674, 449);
             this.tabControllerAbout.TabIndex = 0;
             this.tabControllerAbout.TabStop = false;
-            // 
+            //
             // tabPageLicense
-            // 
+            //
             this.tabPageLicense.BackColor = System.Drawing.Color.White;
             this.tabPageLicense.Controls.Add(this.labelFullLicenseLink);
             this.tabPageLicense.Controls.Add(this.labelLicenseText);
@@ -1703,9 +1895,9 @@ namespace Oracle.Forms
             this.tabPageLicense.TabIndex = 0;
             this.tabPageLicense.Text = "License";
             this.tabPageLicense.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelFullLicenseLink
-            // 
+            //
             this.labelFullLicenseLink.AutoSize = true;
             this.labelFullLicenseLink.Font = new System.Drawing.Font("Roboto", 11F);
             this.labelFullLicenseLink.Location = new System.Drawing.Point(13, 374);
@@ -1716,11 +1908,11 @@ namespace Oracle.Forms
             this.labelFullLicenseLink.TabStop = true;
             this.labelFullLicenseLink.Text = "GNU General Public License - Version 3";
             this.labelFullLicenseLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnFullLicenseLinkClicked);
-            // 
+            //
             // labelLicenseText
-            // 
-            this.labelLicenseText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelLicenseText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelLicenseText.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelLicenseText.Location = new System.Drawing.Point(14, 56);
@@ -1728,9 +1920,9 @@ namespace Oracle.Forms
             this.labelLicenseText.Size = new System.Drawing.Size(641, 249);
             this.labelLicenseText.TabIndex = 4;
             this.labelLicenseText.Text = resources.GetString("labelLicenseText.Text");
-            // 
+            //
             // labelLicenseTitle
-            // 
+            //
             this.labelLicenseTitle.AutoSize = true;
             this.labelLicenseTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelLicenseTitle.Location = new System.Drawing.Point(10, 10);
@@ -1739,9 +1931,9 @@ namespace Oracle.Forms
             this.labelLicenseTitle.Size = new System.Drawing.Size(104, 38);
             this.labelLicenseTitle.TabIndex = 1;
             this.labelLicenseTitle.Text = "License";
-            // 
+            //
             // tabPageDonate
-            // 
+            //
             this.tabPageDonate.BackColor = System.Drawing.Color.White;
             this.tabPageDonate.Controls.Add(this.pictureBoxDonate);
             this.tabPageDonate.Controls.Add(this.labelDonateText);
@@ -1754,9 +1946,9 @@ namespace Oracle.Forms
             this.tabPageDonate.TabIndex = 1;
             this.tabPageDonate.Text = "Donate";
             this.tabPageDonate.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // pictureBoxDonate
-            // 
+            //
             this.pictureBoxDonate.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pictureBoxDonate.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBoxDonate.Image = global::Oracle.Properties.Resources.PayPal;
@@ -1768,10 +1960,10 @@ namespace Oracle.Forms
             this.pictureBoxDonate.TabIndex = 7;
             this.pictureBoxDonate.TabStop = false;
             this.pictureBoxDonate.Click += new System.EventHandler(this.OnDonatePictureBoxClick);
-            // 
+            //
             // labelDonateText
-            // 
-            this.labelDonateText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelDonateText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDonateText.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDonateText.Location = new System.Drawing.Point(14, 56);
@@ -1780,9 +1972,9 @@ namespace Oracle.Forms
             this.labelDonateText.Size = new System.Drawing.Size(641, 171);
             this.labelDonateText.TabIndex = 5;
             this.labelDonateText.Text = resources.GetString("labelDonateText.Text");
-            // 
+            //
             // labelDonateTitle
-            // 
+            //
             this.labelDonateTitle.AutoSize = true;
             this.labelDonateTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDonateTitle.Location = new System.Drawing.Point(10, 10);
@@ -1791,9 +1983,9 @@ namespace Oracle.Forms
             this.labelDonateTitle.Size = new System.Drawing.Size(96, 38);
             this.labelDonateTitle.TabIndex = 4;
             this.labelDonateTitle.Text = "Donate";
-            // 
+            //
             // tabPageDevelopment
-            // 
+            //
             this.tabPageDevelopment.BackColor = System.Drawing.Color.White;
             this.tabPageDevelopment.Controls.Add(this.labelDevelopmentTitle);
             this.tabPageDevelopment.Location = new System.Drawing.Point(4, 22);
@@ -1802,9 +1994,9 @@ namespace Oracle.Forms
             this.tabPageDevelopment.TabIndex = 2;
             this.tabPageDevelopment.Text = "Development";
             this.tabPageDevelopment.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelDevelopmentTitle
-            // 
+            //
             this.labelDevelopmentTitle.AutoSize = true;
             this.labelDevelopmentTitle.Font = new System.Drawing.Font("Roboto Condensed", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDevelopmentTitle.Location = new System.Drawing.Point(10, 10);
@@ -1813,10 +2005,10 @@ namespace Oracle.Forms
             this.labelDevelopmentTitle.Size = new System.Drawing.Size(164, 38);
             this.labelDevelopmentTitle.TabIndex = 2;
             this.labelDevelopmentTitle.Text = "Development";
-            // 
+            //
             // tabSelectorAbout
-            // 
-            this.tabSelectorAbout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            //
+            this.tabSelectorAbout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tabSelectorAbout.BaseTabControl = this.tabControllerAbout;
             this.tabSelectorAbout.Depth = 0;
@@ -1830,10 +2022,10 @@ namespace Oracle.Forms
             this.tabSelectorAbout.TabStop = false;
             this.tabSelectorAbout.Text = "materialTabSelectorVertical1";
             this.tabSelectorAbout.Click += new System.EventHandler(this.OnTabPageClick);
-            // 
+            //
             // labelVersionInformation
-            // 
-            this.labelVersionInformation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.labelVersionInformation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelVersionInformation.BackColor = System.Drawing.Color.Transparent;
             this.labelVersionInformation.Cursor = System.Windows.Forms.Cursors.Default;
@@ -1847,9 +2039,9 @@ namespace Oracle.Forms
             this.labelVersionInformation.Text = "Oracle Version: ";
             this.labelVersionInformation.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.labelVersionInformation.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
-            // 
+            //
             // panelControl
-            // 
+            //
             this.panelControl.BackColor = System.Drawing.Color.Gainsboro;
             this.panelControl.Controls.Add(this.labelVersionInformation);
             this.panelControl.Controls.Add(this.buttonClose);
@@ -1861,9 +2053,9 @@ namespace Oracle.Forms
             this.panelControl.Size = new System.Drawing.Size(850, 42);
             this.panelControl.TabIndex = 5;
             this.panelControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
-            // 
+            //
             // buttonClose
-            // 
+            //
             this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonClose.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.buttonClose.Depth = 0;
@@ -1878,9 +2070,9 @@ namespace Oracle.Forms
             this.buttonClose.Text = "Close";
             this.buttonClose.UseVisualStyleBackColor = true;
             this.buttonClose.Click += new System.EventHandler(this.OnCloseButtonClick);
-            // 
+            //
             // labelDefaultFocus
-            // 
+            //
             this.labelDefaultFocus.AutoSize = true;
             this.labelDefaultFocus.Location = new System.Drawing.Point(348, 22);
             this.labelDefaultFocus.Name = "labelDefaultFocus";
@@ -1888,9 +2080,9 @@ namespace Oracle.Forms
             this.labelDefaultFocus.TabIndex = 0;
             this.labelDefaultFocus.Text = "Default Focus Label";
             this.labelDefaultFocus.Visible = false;
-            // 
+            //
             // pictureBoxLogo
-            // 
+            //
             this.pictureBoxLogo.BackColor = System.Drawing.Color.Transparent;
             this.pictureBoxLogo.Image = global::Oracle.Properties.Resources.Logo;
             this.pictureBoxLogo.Location = new System.Drawing.Point(7, 6);
@@ -1900,9 +2092,9 @@ namespace Oracle.Forms
             this.pictureBoxLogo.TabIndex = 0;
             this.pictureBoxLogo.TabStop = false;
             this.pictureBoxLogo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
-            // 
+            //
             // SettingsForm
-            // 
+            //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(850, 575);
             this.Controls.Add(this.panelControl);
@@ -1940,8 +2132,8 @@ namespace Oracle.Forms
             this.tabPageDowntimeMoveToLocation.ResumeLayout(false);
             this.tabPageDowntimeGrindMobs.ResumeLayout(false);
             this.tabPageDowntimeGrindMobs.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxLevelAboveSetting)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinLevelBelowSetting)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMobMaxLevelAboveSetting)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMobMinLevelBelowSetting)).EndInit();
             this.tabPageDowntimeDoNothing.ResumeLayout(false);
             this.tabPageZoneChanging.ResumeLayout(false);
             this.tabPageZoneChanging.PerformLayout();
@@ -1952,6 +2144,8 @@ namespace Oracle.Forms
             this.tabControllerFate.ResumeLayout(false);
             this.tabPageGeneral.ResumeLayout(false);
             this.tabPageGeneral.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFateMaximumLevelAboveSetting)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFateMinimumLevelBelowSetting)).EndInit();
             this.tabPageKillFates.ResumeLayout(false);
             this.tabPageKillFates.PerformLayout();
             this.tabPageCollectFates.ResumeLayout(false);
@@ -2099,10 +2293,10 @@ namespace Oracle.Forms
         private MaterialSkin.Controls.MaterialRaisedButton buttonDowntimeRefreshZone;
         private MaterialSkin.Controls.MaterialCheckBox checkBoxZoneChangingEnabledSetting;
         private System.Windows.Forms.Label labelZoneChangeEnabledSetting;
-        private System.Windows.Forms.Label labelDowntimeGrindMobsMaxLevelAboveSetting;
-        private System.Windows.Forms.Label labelDowntimeGrindMobsMaxLevelBelowSetting;
-        private System.Windows.Forms.NumericUpDown numericUpDownMinLevelBelowSetting;
-        private System.Windows.Forms.NumericUpDown numericUpDownMaxLevelAboveSetting;
+        private System.Windows.Forms.Label labelMobMaxLevelAboveSetting;
+        private System.Windows.Forms.Label labelMobMinLevelBelowSetting;
+        private System.Windows.Forms.NumericUpDown numericUpDownMobMinLevelBelowSetting;
+        private System.Windows.Forms.NumericUpDown numericUpDownMobMaxLevelAboveSetting;
         private System.Windows.Forms.DataGridView dataGridViewZoneChangeSettings;
         private System.Windows.Forms.Label labelZoneChangeTip;
         private MaterialSkin.Controls.MaterialRaisedButton buttonResetZoneLevelsToDefault;
@@ -2111,5 +2305,17 @@ namespace Oracle.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn EmptyColumn;
         private MaterialSkin.Controls.MaterialCheckBox checkBoxBindHomePointSetting;
         private System.Windows.Forms.Label labelBindHomePointSetting;
+        private System.Windows.Forms.NumericUpDown numericUpDownFateMinimumLevelBelowSetting;
+        private System.Windows.Forms.Label labelFateMinimumLevelBelowSetting;
+        private System.Windows.Forms.NumericUpDown numericUpDownFateMaximumLevelAboveSetting;
+        private System.Windows.Forms.Label labelFateMaximumLevelAboveSetting;
+        private MaterialSkin.Controls.MaterialCheckBox checkBoxRunProblematicFatesSetting;
+        private System.Windows.Forms.Label labelRunProblematicFatesWarning;
+        private System.Windows.Forms.Label labelRunProblematicFatesSetting;
+        private MaterialSkin.Controls.MaterialCheckBox checkBoxIgnoreLowDurationFateSetting;
+        private System.Windows.Forms.Label labelIgnoreLowDurationFatesSetting;
+        private System.Windows.Forms.Label labelLowDurationTimeSetting;
+        private MaterialSkin.Controls.MaterialSingleLineTextField textBoxLowDurationFateSetting;
+        private System.Windows.Forms.Label labelLowDurationTimeSettingSuffix;
     }
 }

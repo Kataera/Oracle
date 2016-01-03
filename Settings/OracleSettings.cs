@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.IO;
+using System.Reflection;
 
 using Clio.Utilities;
 
@@ -56,8 +57,8 @@ namespace Oracle.Settings
         private bool fateDelayMovement;
         private int fateDelayMovementMaximum;
         private int fateDelayMovementMinimum;
-        private int fateMaxLevelsAbove;
-        private int fateMaxLevelsBelow;
+        private int fateMaximumLevelAbove;
+        private int fateMinimumLevelBelow;
         private FateSelectMode fateSelectMode;
         private Dictionary<uint, Vector3> fateWaitLocations;
         private FateWaitMode fateWaitMode;
@@ -68,9 +69,10 @@ namespace Oracle.Settings
         private int megaBossEngagePercentage;
         private bool megaBossFatesEnabled;
         private int mobMaximumLevelAbove;
-        private int mobMaximumLevelBelow;
+        private int mobMinimumLevelBelow;
         private OracleOperationMode oracleOperationMode;
         private bool runProblematicFates;
+        private bool skipFirstFlightNode;
         private string specificFate;
         private bool teleportIfQuicker;
         private int teleportMinimumDistanceDelta;
@@ -335,26 +337,26 @@ namespace Oracle.Settings
 
         [DefaultValue(4)]
         [Setting]
-        public int FateMaxLevelsAbove
+        public int FateMaximumLevelAbove
         {
-            get { return this.fateMaxLevelsAbove; }
+            get { return this.fateMaximumLevelAbove; }
 
             set
             {
-                this.fateMaxLevelsAbove = value;
+                this.fateMaximumLevelAbove = value;
                 this.Save();
             }
         }
 
         [DefaultValue(8)]
         [Setting]
-        public int FateMaxLevelsBelow
+        public int FateMinimumLevelBelow
         {
-            get { return this.fateMaxLevelsBelow; }
+            get { return this.fateMinimumLevelBelow; }
 
             set
             {
-                this.fateMaxLevelsBelow = value;
+                this.fateMinimumLevelBelow = value;
                 this.Save();
             }
         }
@@ -490,13 +492,13 @@ namespace Oracle.Settings
 
         [DefaultValue(6)]
         [Setting]
-        public int MobMaximumLevelBelow
+        public int MobMinimumLevelBelow
         {
-            get { return this.mobMaximumLevelBelow; }
+            get { return this.mobMinimumLevelBelow; }
 
             set
             {
-                this.mobMaximumLevelBelow = value;
+                this.mobMinimumLevelBelow = value;
                 this.Save();
             }
         }
@@ -523,6 +525,19 @@ namespace Oracle.Settings
             set
             {
                 this.runProblematicFates = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool SkipFirstFlightNode
+        {
+            get { return this.skipFirstFlightNode; }
+
+            set
+            {
+                this.skipFirstFlightNode = value;
                 this.Save();
             }
         }
@@ -602,6 +617,14 @@ namespace Oracle.Settings
                 this.zoneLevels = value;
                 this.Save();
             }
+        }
+
+        public static T GetDefaultValue<T>(string propertyName)
+        {
+            var property = typeof (OracleSettings).GetProperty(propertyName);
+            var attribute = (DefaultValueAttribute) property.GetCustomAttribute(typeof (DefaultValueAttribute));
+
+            return (T) attribute.Value;
         }
 
         public void PopulateMobBlacklist()

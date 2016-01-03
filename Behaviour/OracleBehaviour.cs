@@ -63,19 +63,6 @@ namespace Oracle.Behaviour
                 await BuildOracleDatabase.Main();
             }
 
-            // Temporary code, will fully implement when rest of meshes are finished.
-            if (OracleManager.ZoneFlightMesh == null || OracleManager.ZoneFlightMesh.ZoneId != WorldManager.ZoneId)
-            {
-                if (WorldManager.ZoneId == 400 || WorldManager.ZoneId == 398)
-                {
-                    await LoadFlightMesh.Main();
-                }
-                else
-                {
-                    OracleManager.ZoneFlightMesh = null;
-                }
-            }
-
             if (Poi.Current == null)
             {
                 Poi.Current = new Poi(Vector3.Zero, PoiType.None);
@@ -97,6 +84,19 @@ namespace Oracle.Behaviour
                 }
 
                 return false;
+            }
+
+            // Temporary code, will fully implement when rest of meshes are finished.
+            if (OracleManager.ZoneFlightMesh == null || OracleManager.ZoneFlightMesh.ZoneId != WorldManager.ZoneId)
+            {
+                if (WorldManager.ZoneId == 398 || WorldManager.ZoneId == 400)
+                {
+                    await LoadFlightMesh.Main();
+                }
+                else
+                {
+                    OracleManager.ZoneFlightMesh = null;
+                }
             }
 
             switch (OracleSettings.Instance.OracleOperationMode)

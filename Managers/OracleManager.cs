@@ -220,12 +220,12 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (fate.Level > Core.Player.ClassLevel + OracleSettings.Instance.FateMaxLevelsAbove)
+            if (fate.Level > Core.Player.ClassLevel + OracleSettings.Instance.FateMaximumLevelAbove)
             {
                 return false;
             }
 
-            if (fate.Level < Core.Player.ClassLevel - OracleSettings.Instance.FateMaxLevelsBelow)
+            if (fate.Level < Core.Player.ClassLevel - OracleSettings.Instance.FateMinimumLevelBelow)
             {
                 return false;
             }

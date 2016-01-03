@@ -103,7 +103,7 @@ namespace Oracle
         {
             Logger.SendLog("Initialising Oracle.");
 
-            // TODO: Implement rest of Updater.
+            // TODO: Implement.
             if (Updater.UpdateIsAvailable())
             {
                 Logger.SendLog("An update for Oracle is available.");

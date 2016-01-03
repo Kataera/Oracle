@@ -283,9 +283,14 @@ namespace Oracle.Forms
             e.SuppressKeyPress = true;
         }
 
-        private void OnEnterSelectAllText(object sender, EventArgs e)
+        private void OnEnterSpecificFateName(object sender, EventArgs e)
         {
             this.textBoxSpecificFateNameSetting.SelectAll();
+        }
+
+        private void OnEnterLowDurationFate(object sender, EventArgs e)
+        {
+            this.textBoxLowDurationFateSetting.SelectAll();
         }
 
         private void OnFullLicenseLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -328,8 +333,8 @@ namespace Oracle.Forms
 
             this.comboBoxDowntimeBehaviourSetting.SelectedIndex = (int) OracleSettings.Instance.FateWaitMode;
 
-            this.numericUpDownMaxLevelAboveSetting.Value = OracleSettings.Instance.MobMaximumLevelAbove;
-            this.numericUpDownMinLevelBelowSetting.Value = OracleSettings.Instance.MobMaximumLevelBelow;
+            this.numericUpDownMobMaxLevelAboveSetting.Value = OracleSettings.Instance.MobMaximumLevelAbove;
+            this.numericUpDownMobMinLevelBelowSetting.Value = OracleSettings.Instance.MobMinimumLevelBelow;
 
             this.checkBoxZoneChangingEnabledSetting.Checked = OracleSettings.Instance.ChangeZonesEnabled;
             this.checkBoxBindHomePointSetting.Checked = OracleSettings.Instance.BindHomePoint;
@@ -344,6 +349,9 @@ namespace Oracle.Forms
 
             this.dataGridViewZoneChangeSettings.CellValueChanged += this.OnDataGridViewCellValueChanged;
 
+            this.textBoxLowDurationFateSetting.TextAlign(HorizontalAlignment.Center);
+
+
             try
             {
                 this.labelDowntimeCurrentZoneValue.Text = WorldManager.ZoneId.ToString();
@@ -356,6 +364,44 @@ namespace Oracle.Forms
             catch (NullReferenceException)
             {
                 // This will only occur if the form is created outside of RebornBuddy.
+            }
+        }
+
+        private void OnMobMinLevelBelowValueChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.MobMinimumLevelBelow = Convert.ToInt32(this.numericUpDownMobMinLevelBelowSetting.Value);
+        }
+
+        private void OnMobMaxLevelAboveValueChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.MobMaximumLevelAbove = Convert.ToInt32(this.numericUpDownMobMaxLevelAboveSetting.Value);
+        }
+
+        private void OnFateMinLevelBelowValueChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.FateMinimumLevelBelow = Convert.ToInt32(this.numericUpDownFateMinimumLevelBelowSetting.Value);
+        }
+
+        private void OnFateMaxLevelAboveValueChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.FateMaximumLevelAbove = Convert.ToInt32(this.numericUpDownMobMaxLevelAboveSetting.Value);
+        }
+
+        private void OnRunProblematicFatesChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.RunProblematicFates = this.checkBoxRunProblematicFatesSetting.Checked;
+        }
+
+        private void OnIgnoreLowDurationFateChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.IgnoreLowDurationUnstartedFates = this.checkBoxIgnoreLowDurationFateSetting.Checked;
+        }
+
+        private void OnLowDurationFateSettingKeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
             }
         }
     }
