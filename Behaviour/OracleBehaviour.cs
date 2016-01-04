@@ -28,7 +28,6 @@ using Clio.Utilities;
 
 using ff14bot;
 using ff14bot.Helpers;
-using ff14bot.Managers;
 
 using Oracle.Behaviour.Modes;
 using Oracle.Behaviour.Tasks;
@@ -84,19 +83,6 @@ namespace Oracle.Behaviour
                 }
 
                 return false;
-            }
-
-            // Temporary code, will fully implement when rest of meshes are finished.
-            if (OracleManager.ZoneFlightMesh == null || OracleManager.ZoneFlightMesh.ZoneId != WorldManager.ZoneId)
-            {
-                if (WorldManager.ZoneId == 398 || WorldManager.ZoneId == 400)
-                {
-                    await LoadFlightMesh.Main();
-                }
-                else
-                {
-                    OracleManager.ZoneFlightMesh = null;
-                }
             }
 
             switch (OracleSettings.Instance.OracleOperationMode)

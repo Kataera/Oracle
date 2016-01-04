@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -58,6 +59,24 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return false;
             }
 
+            if (!ignoreCombat)
+            {
+                if (OracleManager.ZoneFlightMesh == null || OracleManager.ZoneFlightMesh.ZoneId != WorldManager.ZoneId)
+                {
+                    const ushort dravanianHinterlands = 398;
+                    const ushort churningMists = 400;
+
+                    if (WorldManager.ZoneId == dravanianHinterlands || WorldManager.ZoneId == churningMists)
+                    {
+                        await LoadFlightMesh.Main();
+                    }
+                    else
+                    {
+                        OracleManager.ZoneFlightMesh = null;
+                    }
+                }
+            }
+
             if (!ignoreCombat && OracleSettings.Instance.TeleportIfQuicker && currentFate.IsValid)
             {
                 if (await Teleport.FasterToTeleport(currentFate))
@@ -86,13 +105,13 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 await Mount.MountUp();
             }
 
-            if (!WorldManager.CanFly || OracleManager.ZoneFlightMesh == null)
+            if (!ignoreCombat && WorldManager.CanFly && OracleManager.ZoneFlightMesh != null)
             {
-                await MoveWithNavigator(ignoreCombat);
+                await MoveWithFlightMesh();
             }
             else
             {
-                await MoveWithFlightMesh();
+                await MoveWithNavigator(ignoreCombat);
             }
 
             return true;
@@ -123,11 +142,9 @@ namespace Oracle.Behaviour.Tasks.Utilities
         {
             var potentialNodes = OracleManager.ZoneFlightMesh.Graph.Nodes
                                               .OrderBy(kvp => kvp.Value.Position.Distance(fate.Location))
-                                              .Where(kvp => kvp.Value.Position.Y > fate.Location.Y).Take(20);
-            var orderedPotentialNodes = potentialNodes.OrderBy(kvp => kvp.Value.Position.Distance2D(Core.Player.Location));
+                                              .Where(kvp => kvp.Value.Position.Y > fate.Location.Y);
 
-            return orderedPotentialNodes.FirstOrDefault(kvp => fate.Within2D(kvp.Value.Position)).Value
-                   ?? potentialNodes.FirstOrDefault(kvp => kvp.Value.Position.Y > fate.Location.Y).Value;
+            return potentialNodes.FirstOrDefault().Value;
         }
 
         private static bool IsMountNeeded()
@@ -160,11 +177,13 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             Navigator.PlayerMover.MoveStop();
-            await CommonTasks.Land();
+            await Coroutine.Wait(TimeSpan.FromSeconds(OracleSettings.Instance.LandingTimeOut), () => CommonTasks.Land().IsCompleted);
 
             if (MovementManager.IsFlying)
             {
-                return false;
+                Logger.SendLog("Landing failed, trying another location.");
+                await Land();
+                return true;
             }
 
             Logger.SendLog("Landing successful.");
@@ -182,7 +201,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             Logger.SendLog("Generating new flight path to FATE.");
-
+            var flightPathTimer = Stopwatch.StartNew();
             var originalFateLocation = currentFate.Location;
             var aStar = new AStarNavigator(OracleManager.ZoneFlightMesh.Graph);
             var endingNode = GetClosestEndingNodeToFate(currentFate);
@@ -205,10 +224,13 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return true;
             }
 
-            if (OracleSettings.Instance.SkipFirstFlightNode && !MovementManager.IsFlying)
+            if (OracleSettings.Instance.SkipFirstFlightNode && !MovementManager.IsFlying && path.Count > 1)
             {
                 path.Remove(path.First());
             }
+
+            flightPathTimer.Stop();
+            Logger.SendLog("Flight path generated in " + flightPathTimer.ElapsedMilliseconds + " ms.");
 
             if (!MovementManager.IsFlying)
             {
@@ -217,7 +239,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             foreach (var step in path)
             {
-                while (Core.Player.Distance(step) > 1f)
+                while (Core.Player.Distance(step) > 2f)
                 {
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
@@ -243,6 +265,12 @@ namespace Oracle.Behaviour.Tasks.Utilities
                         await CommonTasks.TakeOff();
                     }
 
+                    // Avoid overshooting the centre of the FATE.
+                    if (Core.Player.Location.Distance2D(currentFate.Location) < Core.Player.Location.Distance2D(step))
+                    {
+                        break;
+                    }
+
                     // Did FATE move?
                     if (currentFate.Location.Distance(originalFateLocation) > 50f)
                     {
@@ -257,12 +285,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 }
             }
 
-            while (MovementManager.IsFlying)
-            {
-                await Land();
-                await Coroutine.Yield();
-            }
-
+            await Land();
             return true;
         }
 

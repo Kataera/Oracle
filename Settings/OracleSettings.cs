@@ -64,6 +64,7 @@ namespace Oracle.Settings
         private FateWaitMode fateWaitMode;
         private bool ignoreLowDurationUnstartedFates;
         private bool killFatesEnabled;
+        private double landingTimeOut;
         private bool listHooksOnStart;
         private int lowRemainingDuration;
         private int megaBossEngagePercentage;
@@ -421,6 +422,19 @@ namespace Oracle.Settings
             set
             {
                 this.killFatesEnabled = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(10)]
+        [Setting]
+        public double LandingTimeOut
+        {
+            get { return this.landingTimeOut; }
+
+            set
+            {
+                this.landingTimeOut = value;
                 this.Save();
             }
         }

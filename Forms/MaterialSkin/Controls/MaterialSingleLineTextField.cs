@@ -63,11 +63,6 @@ namespace MaterialSkin.Controls
             this.TabStop = false;
         }
 
-        public void TextAlign(HorizontalAlignment alignment)
-        {
-            this.baseTextBox.TextAlign = alignment;
-        }
-
         public event EventHandler AcceptsTabChanged
         {
             add { this.baseTextBox.AcceptsTabChanged += value; }
@@ -598,6 +593,11 @@ namespace MaterialSkin.Controls
         public void SelectAll()
         {
             this.baseTextBox.SelectAll();
+        }
+
+        public void TextAlign(HorizontalAlignment alignment)
+        {
+            this.baseTextBox.TextAlign = alignment;
         }
 
         protected override void OnCreateControl()
