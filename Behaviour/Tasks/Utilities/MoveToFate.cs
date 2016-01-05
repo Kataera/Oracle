@@ -268,7 +268,10 @@ namespace Oracle.Behaviour.Tasks.Utilities
                     // Avoid overshooting the centre of the FATE.
                     if (Core.Player.Location.Distance2D(currentFate.Location) < Core.Player.Location.Distance2D(step))
                     {
-                        break;
+                        Navigator.PlayerMover.MoveStop();
+
+                        await Land();
+                        return true;
                     }
 
                     // Did FATE move?

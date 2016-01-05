@@ -65,7 +65,6 @@ namespace Oracle.Behaviour
             if (Poi.Current == null)
             {
                 Poi.Current = new Poi(Vector3.Zero, PoiType.None);
-
                 return false;
             }
 

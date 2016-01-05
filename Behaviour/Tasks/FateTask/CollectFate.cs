@@ -61,6 +61,11 @@ namespace Oracle.Behaviour.Tasks.FateTask
             {
                 if (GameObjectManager.GetObjectByNPCId(oracleFate.NpcId) != null)
                 {
+                    if (Core.Player.InCombat)
+                    {
+                        return false;
+                    }
+
                     if (fateItemCount >= OracleSettings.Instance.CollectFateTurnInAtAmount)
                     {
                         Logger.SendLog("Turning in what we've collected.");
