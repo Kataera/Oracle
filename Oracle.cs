@@ -181,7 +181,7 @@ namespace Oracle
 
             if (LoadFlightMesh.MeshFileStream != null)
             {
-                LoadFlightMesh.MeshFileStream.Close();
+                LoadFlightMesh.MeshFileStream.Dispose();
             }
 
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
