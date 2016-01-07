@@ -33,6 +33,7 @@ using ff14bot.Navigation;
 
 using Oracle.Behaviour;
 using Oracle.Behaviour.PoiHooks;
+using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Enumerations;
 using Oracle.Forms;
 using Oracle.Helpers;
@@ -178,6 +179,11 @@ namespace Oracle
             OracleManager.OracleDatabase = null;
             OracleManager.ZoneFlightMesh = null;
 
+            if (LoadFlightMesh.MeshFileStream != null)
+            {
+                LoadFlightMesh.MeshFileStream.Close();
+            }
+
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
             if (navProvider != null)
             {
@@ -185,6 +191,7 @@ namespace Oracle
             }
 
             Navigator.NavigationProvider = null;
+
             CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
             Blacklist.Flush();
 

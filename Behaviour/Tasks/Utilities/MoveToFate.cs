@@ -162,13 +162,9 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
         private static async Task<bool> Land()
         {
-            var landingSpot = GenerateLandingSpot();
-            while (await CommonTasks.CanLand(landingSpot) != CanLandResult.Yes)
-            {
-                landingSpot = GenerateLandingSpot();
-                await Coroutine.Yield();
-            }
+            Navigator.PlayerMover.MoveStop();
 
+            var landingSpot = GenerateLandingSpot();
             Logger.SendLog("Attempting to land at: " + landingSpot);
             while (Core.Player.Distance2D(landingSpot) > 2f)
             {
@@ -224,9 +220,19 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return true;
             }
 
-            if (OracleSettings.Instance.SkipFirstFlightNode && !MovementManager.IsFlying && path.Count > 1)
+            // Skip first node if we can to prevent bot-like mid-air direction change.
+            if (path.Count > 1)
             {
-                path.Remove(path.First());
+                Vector3 collision;
+                if (!WorldManager.Raycast(Core.Player.Location, path.First(), out collision))
+                {
+                    Logger.SendDebugLog("Skipping first node, no collision detected.");
+                    path.Remove(path.First());
+                }
+                else
+                {
+                    Logger.SendDebugLog("Not skipping first node, collision detected at: " + collision);
+                }
             }
 
             flightPathTimer.Stop();
@@ -268,7 +274,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                     // Avoid overshooting the centre of the FATE.
                     if (Core.Player.Location.Distance2D(currentFate.Location) < Core.Player.Location.Distance2D(step))
                     {
-                        Navigator.PlayerMover.MoveStop();
+                        Logger.SendDebugLog("FATE centre is closer than next hop. Ending navigation early.");
 
                         await Land();
                         return true;
