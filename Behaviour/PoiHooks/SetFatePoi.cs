@@ -234,7 +234,7 @@ namespace Oracle.Behaviour.PoiHooks
 
         private static async Task<bool> SelectSpecificFate()
         {
-            var specificFate = FateManager.ActiveFates.FirstOrDefault(result => result.Name.Equals(OracleSettings.Instance.SpecificFate));
+            var specificFate = FateManager.ActiveFates.FirstOrDefault(result => result.Name.Equals(OracleSettings.Instance.SpecificFateName));
 
             if (specificFate == null)
             {

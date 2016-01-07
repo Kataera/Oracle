@@ -43,7 +43,7 @@ namespace Oracle.Forms
 {
     public partial class SettingsForm : MaterialForm
     {
-        private bool UpdatingRows;
+        private bool updatingRows;
 
         public SettingsForm()
         {
@@ -60,7 +60,7 @@ namespace Oracle.Forms
                 TextShade.White);
 
             this.ActiveControl = this.labelDefaultFocus;
-            this.SetComponentValues();
+            this.ConfigureControls();
         }
 
         private static DataTable GenerateAetheryteNameTable()
@@ -105,6 +105,61 @@ namespace Oracle.Forms
             return dataTable;
         }
 
+        private void ConfigureControls()
+        {
+            this.labelVersionInformation.Text = "Current Version: " + Oracle.Version;
+
+            // General settings
+            this.comboBoxOracleModeSetting.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
+            this.tabControllerOracleMode.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
+            this.textBoxSpecificFateNameSetting.Text = OracleSettings.Instance.SpecificFateName;
+            this.comboBoxFateSelectStrategySetting.SelectedIndex = (int) OracleSettings.Instance.FateSelectMode;
+            this.comboBoxFateWaitModeSetting.SelectedIndex = (int) OracleSettings.Instance.FateWaitMode;
+            this.numericUpDownMobMaximumLevelAboveSetting.Value = OracleSettings.Instance.MobMaximumLevelAbove;
+            this.numericUpDownMobMinimumLevelBelowSetting.Value = OracleSettings.Instance.MobMinimumLevelBelow;
+            this.checkBoxZoneChangingEnabledSetting.Checked = OracleSettings.Instance.ZoneChangingEnabled;
+            this.checkBoxBindHomePointSetting.Checked = OracleSettings.Instance.BindHomePoint;
+            this.ColumnAetheryte.DataSource = GenerateAetheryteNameTable();
+            this.ColumnAetheryte.DisplayMember = "Name";
+            this.ColumnAetheryte.ValueMember = "Id";
+            foreach (var item in OracleSettings.Instance.ZoneLevels)
+            {
+                this.dataGridViewZoneChangeSettings.Rows.Add(item.Key, item.Value.ToString());
+            }
+
+            this.dataGridViewZoneChangeSettings.CellValueChanged += this.OnDataGridViewCellValueChanged;
+
+            // FATE settings
+            this.numericUpDownFateMinimumLevelBelowSetting.Value = OracleSettings.Instance.FateMinimumLevelBelow;
+            this.numericUpDownFateMaximumLevelAboveSetting.Value = OracleSettings.Instance.FateMaximumLevelAbove;
+            this.checkBoxRunProblematicFatesSetting.Checked = OracleSettings.Instance.RunProblematicFates;
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.Checked = OracleSettings.Instance.IgnoreLowDurationUnstartedFates;
+            this.textBoxLowRemainingFateDurationSetting.Text = OracleSettings.Instance.LowRemainingFateDuration.ToString();
+            this.textBoxLowRemainingFateDurationSetting.TextAlign(HorizontalAlignment.Center);
+            this.checkBoxWaitForChainFateSetting.Checked = OracleSettings.Instance.WaitForChainFates;
+            this.checkBoxKillFatesEnabledSetting.Checked = OracleSettings.Instance.KillFatesEnabled;
+            this.checkBoxCollectFatesEnabledSetting.Checked = OracleSettings.Instance.CollectFatesEnabled;
+            this.checkBoxEscortFatesEnabledSetting.Checked = OracleSettings.Instance.EscortFatesEnabled;
+            this.checkBoxDefenceFatesEnabledSetting.Checked = OracleSettings.Instance.DefenceFatesEnabled;
+            this.checkBoxBossFatesEnabledSetting.Checked = OracleSettings.Instance.BossFatesEnabled;
+            this.checkBoxMegaBossFatesEnabledSetting.Checked = OracleSettings.Instance.MegaBossFatesEnabled;
+
+            // RebornBuddy dependent settings
+            try
+            {
+                this.labelDowntimeCurrentZoneValue.Text = WorldManager.ZoneId.ToString();
+                if (OracleSettings.Instance.FateWaitLocations.ContainsKey(WorldManager.ZoneId))
+                {
+                    var waitLocation = OracleSettings.Instance.FateWaitLocations.FirstOrDefault(loc => loc.Key == WorldManager.ZoneId).Value;
+                    this.labelDowntimeWaitLocationValue.Text = waitLocation.ToString();
+                }
+            }
+            catch (NullReferenceException)
+            {
+                // This will only occur if the form is created outside of RebornBuddy.
+            }
+        }
+
         // Add to MouseDown of a component to allow dragging of the form.
         private void MoveWindow(object sender, MouseEventArgs e)
         {
@@ -122,57 +177,24 @@ namespace Oracle.Forms
             SendMessage(this.Handle, WmNclbuttondown, HtCaption, 0);
         }
 
-        private void OnBindHomePointSettingChanged(object sender, EventArgs e)
+        private void OnBindHomePointChanged(object sender, EventArgs e)
         {
             OracleSettings.Instance.BindHomePoint = this.checkBoxBindHomePointSetting.Checked;
         }
 
-        private void OnButtonDowntimeSetLocationClick(object sender, EventArgs e)
+        private void OnBossFatesEnabledChanged(object sender, EventArgs e)
         {
-            try
-            {
-                var zoneId = WorldManager.ZoneId;
-                var location = Core.Player.Location;
-
-                if (OracleSettings.Instance.FateWaitLocations.ContainsKey(zoneId))
-                {
-                    OracleSettings.Instance.FateWaitLocations.Remove(zoneId);
-                }
-
-                OracleSettings.Instance.FateWaitLocations.Add(zoneId, location);
-            }
-            catch (NullReferenceException)
-            {
-                // This will only occur if the form is created outside of RebornBuddy.
-            }
-        }
-
-        private void OnButtonResetZoneLevelsToDefaultClick(object sender, EventArgs e)
-        {
-            var result = MessageBox.Show("Are you sure you wish to set the zone levels to their default setting?", "Warning",
-                MessageBoxButtons.YesNo);
-
-            if (result == DialogResult.Yes)
-            {
-                OracleSettings.Instance.ZoneLevels = new Dictionary<uint, uint>();
-                OracleSettings.Instance.PopulateZoneLevels();
-
-                this.dataGridViewZoneChangeSettings.CellValueChanged -= this.OnDataGridViewCellValueChanged;
-                this.dataGridViewZoneChangeSettings.Rows.Clear();
-
-                foreach (var item in OracleSettings.Instance.ZoneLevels)
-                {
-                    this.dataGridViewZoneChangeSettings.Rows.Add(item.Key, item.Value.ToString());
-                }
-
-                OracleSettings.Instance.Save();
-                this.dataGridViewZoneChangeSettings.CellValueChanged += this.OnDataGridViewCellValueChanged;
-            }
+            OracleSettings.Instance.BossFatesEnabled = this.checkBoxBossFatesEnabledSetting.Checked;
         }
 
         private void OnCloseButtonClick(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void OnCollectFatesEnabledChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.CollectFatesEnabled = this.checkBoxCollectFatesEnabledSetting.Checked;
         }
 
         private void OnDataGridViewCellClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -207,12 +229,12 @@ namespace Oracle.Forms
             var aetheryteId =
                 Convert.ToUInt32(this.dataGridViewZoneChangeSettings.Rows[e.RowIndex].Cells[this.ColumnAetheryte.Index].Value.ToString());
 
-            if (this.UpdatingRows)
+            if (this.updatingRows)
             {
                 return;
             }
 
-            this.UpdatingRows = true;
+            this.updatingRows = true;
             foreach (DataGridViewRow row in this.dataGridViewZoneChangeSettings.SelectedRows)
             {
                 var level = Convert.ToUInt32(row.Cells[this.ColumnLevel.Index].Value);
@@ -227,7 +249,7 @@ namespace Oracle.Forms
             }
 
             OracleSettings.Instance.Save();
-            this.UpdatingRows = false;
+            this.updatingRows = false;
         }
 
         private void OnDataGridViewPaint(object sender, PaintEventArgs e)
@@ -257,19 +279,17 @@ namespace Oracle.Forms
             e.Graphics.FillRectangle(new SolidBrush(colour), headerRect);
         }
 
+        private void OnDefenceFatesEnabledChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.DefenceFatesEnabled = this.checkBoxDefenceFatesEnabledSetting.Checked;
+        }
+
         private void OnDonatePictureBoxClick(object sender, EventArgs e)
         {
             var startInfo =
                 new ProcessStartInfo(
                     "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CK2TD9J572T34");
             Process.Start(startInfo);
-        }
-
-        private void OnDowntimeBehaviourSelectedIndexChanged(object sender, EventArgs e)
-        {
-            OracleSettings.Instance.FateWaitMode = (FateWaitMode) this.comboBoxDowntimeBehaviourSetting.SelectedIndex;
-            this.tabControllerDowntime.SelectedIndex = (int) OracleSettings.Instance.FateWaitMode;
-            this.ActiveControl = this.labelDefaultFocus;
         }
 
         private void OnEnterKeyDownDropFocus(object sender, KeyEventArgs e)
@@ -283,9 +303,9 @@ namespace Oracle.Forms
             e.SuppressKeyPress = true;
         }
 
-        private void OnEnterLowDurationFate(object sender, EventArgs e)
+        private void OnEnterLowRemainingFateDuration(object sender, EventArgs e)
         {
-            this.textBoxLowDurationFateSetting.SelectAll();
+            this.textBoxLowRemainingFateDurationSetting.SelectAll();
         }
 
         private void OnEnterSpecificFateName(object sender, EventArgs e)
@@ -293,14 +313,26 @@ namespace Oracle.Forms
             this.textBoxSpecificFateNameSetting.SelectAll();
         }
 
-        private void OnFateMaxLevelAboveValueChanged(object sender, EventArgs e)
+        private void OnEscortFatesEnabledChanged(object sender, EventArgs e)
         {
-            OracleSettings.Instance.FateMaximumLevelAbove = Convert.ToInt32(this.numericUpDownMobMaxLevelAboveSetting.Value);
+            OracleSettings.Instance.EscortFatesEnabled = this.checkBoxEscortFatesEnabledSetting.Checked;
         }
 
-        private void OnFateMinLevelBelowValueChanged(object sender, EventArgs e)
+        private void OnFateMaximumLevelAboveChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.FateMaximumLevelAbove = Convert.ToInt32(this.numericUpDownMobMaximumLevelAboveSetting.Value);
+        }
+
+        private void OnFateMinimumLevelBelowChanged(object sender, EventArgs e)
         {
             OracleSettings.Instance.FateMinimumLevelBelow = Convert.ToInt32(this.numericUpDownFateMinimumLevelBelowSetting.Value);
+        }
+
+        private void OnFateWaitModeChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.FateWaitMode = (FateWaitMode) this.comboBoxFateWaitModeSetting.SelectedIndex;
+            this.tabControllerDowntime.SelectedIndex = (int) OracleSettings.Instance.FateWaitMode;
+            this.ActiveControl = this.labelDefaultFocus;
         }
 
         private void OnFullLicenseLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -309,9 +341,14 @@ namespace Oracle.Forms
             Process.Start(startInfo);
         }
 
-        private void OnIgnoreLowDurationFateChanged(object sender, EventArgs e)
+        private void OnIgnoreLowDurationUnstartedFateChanged(object sender, EventArgs e)
         {
-            OracleSettings.Instance.IgnoreLowDurationUnstartedFates = this.checkBoxIgnoreLowDurationFateSetting.Checked;
+            OracleSettings.Instance.IgnoreLowDurationUnstartedFates = this.checkBoxIgnoreLowDurationUnstartedFateSetting.Checked;
+        }
+
+        private void OnKillFatesEnabledChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.KillFatesEnabled = this.checkBoxKillFatesEnabledSetting.Checked;
         }
 
         private void OnLowDurationFateSettingKeyPress(object sender, KeyPressEventArgs e)
@@ -322,21 +359,55 @@ namespace Oracle.Forms
             }
         }
 
-        private void OnMobMaxLevelAboveValueChanged(object sender, EventArgs e)
+        private void OnLowRemainingFateDurationChanged(object sender, EventArgs e)
         {
-            OracleSettings.Instance.MobMaximumLevelAbove = Convert.ToInt32(this.numericUpDownMobMaxLevelAboveSetting.Value);
+            OracleSettings.Instance.LowRemainingFateDuration = int.Parse(this.textBoxLowRemainingFateDurationSetting.Text);
         }
 
-        private void OnMobMinLevelBelowValueChanged(object sender, EventArgs e)
+        private void OnMegaBossFatesEnabledChanged(object sender, EventArgs e)
         {
-            OracleSettings.Instance.MobMinimumLevelBelow = Convert.ToInt32(this.numericUpDownMobMinLevelBelowSetting.Value);
+            OracleSettings.Instance.MegaBossFatesEnabled = this.checkBoxMegaBossFatesEnabledSetting.Checked;
         }
 
-        private void OnOracleModeSelectedIndexChanged(object sender, EventArgs e)
+        private void OnMobMaximumLevelAboveChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.MobMaximumLevelAbove = Convert.ToInt32(this.numericUpDownMobMaximumLevelAboveSetting.Value);
+        }
+
+        private void OnMobMinimumLevelBelowChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.MobMinimumLevelBelow = Convert.ToInt32(this.numericUpDownMobMinimumLevelBelowSetting.Value);
+        }
+
+        private void OnOracleModeChanged(object sender, EventArgs e)
         {
             OracleSettings.Instance.OracleOperationMode = (OracleOperationMode) this.comboBoxOracleModeSetting.SelectedIndex;
             this.tabControllerOracleMode.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
             this.ActiveControl = this.labelDefaultFocus;
+        }
+
+        private void OnResetZoneLevelsToDefaultClick(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you wish to set the zone levels to their default setting?", "Warning",
+                MessageBoxButtons.YesNo);
+
+            if (result != DialogResult.Yes)
+            {
+                return;
+            }
+
+            OracleSettings.Instance.ZoneLevels = new Dictionary<uint, uint>();
+            OracleSettings.Instance.PopulateZoneLevels();
+            this.dataGridViewZoneChangeSettings.CellValueChanged -= this.OnDataGridViewCellValueChanged;
+            this.dataGridViewZoneChangeSettings.Rows.Clear();
+
+            foreach (var item in OracleSettings.Instance.ZoneLevels)
+            {
+                this.dataGridViewZoneChangeSettings.Rows.Add(item.Key, item.Value.ToString());
+            }
+
+            OracleSettings.Instance.Save();
+            this.dataGridViewZoneChangeSettings.CellValueChanged += this.OnDataGridViewCellValueChanged;
         }
 
         private void OnRunProblematicFatesChanged(object sender, EventArgs e)
@@ -344,64 +415,44 @@ namespace Oracle.Forms
             OracleSettings.Instance.RunProblematicFates = this.checkBoxRunProblematicFatesSetting.Checked;
         }
 
-        private void OnTabPageClick(object sender, EventArgs e)
+        private void OnSetLocationClick(object sender, EventArgs e)
         {
-            this.ActiveControl = this.labelDefaultFocus;
-        }
-
-        private void OnTextBoxSpecificFateNameTextChanged(object sender, EventArgs e)
-        {
-            OracleSettings.Instance.SpecificFate = this.textBoxSpecificFateNameSetting.Text;
-        }
-
-        private void OnZoneChangingEnabledChanged(object sender, EventArgs e)
-        {
-            OracleSettings.Instance.ChangeZonesEnabled = this.checkBoxZoneChangingEnabledSetting.Checked;
-        }
-
-        private void SetComponentValues()
-        {
-            this.labelVersionInformation.Text = "Current Version: " + Oracle.Version;
-
-            this.comboBoxOracleModeSetting.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
-            this.tabControllerOracleMode.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
-            this.textBoxSpecificFateNameSetting.Text = OracleSettings.Instance.SpecificFate;
-
-            this.comboBoxFateSelectStrategySetting.SelectedIndex = (int) OracleSettings.Instance.FateSelectMode;
-
-            this.comboBoxDowntimeBehaviourSetting.SelectedIndex = (int) OracleSettings.Instance.FateWaitMode;
-
-            this.numericUpDownMobMaxLevelAboveSetting.Value = OracleSettings.Instance.MobMaximumLevelAbove;
-            this.numericUpDownMobMinLevelBelowSetting.Value = OracleSettings.Instance.MobMinimumLevelBelow;
-
-            this.checkBoxZoneChangingEnabledSetting.Checked = OracleSettings.Instance.ChangeZonesEnabled;
-            this.checkBoxBindHomePointSetting.Checked = OracleSettings.Instance.BindHomePoint;
-            this.ColumnAetheryte.DataSource = GenerateAetheryteNameTable();
-            this.ColumnAetheryte.DisplayMember = "Name";
-            this.ColumnAetheryte.ValueMember = "Id";
-
-            foreach (var item in OracleSettings.Instance.ZoneLevels)
-            {
-                this.dataGridViewZoneChangeSettings.Rows.Add(item.Key, item.Value.ToString());
-            }
-
-            this.dataGridViewZoneChangeSettings.CellValueChanged += this.OnDataGridViewCellValueChanged;
-
-            this.textBoxLowDurationFateSetting.TextAlign(HorizontalAlignment.Center);
-
             try
             {
-                this.labelDowntimeCurrentZoneValue.Text = WorldManager.ZoneId.ToString();
-                if (OracleSettings.Instance.FateWaitLocations.ContainsKey(WorldManager.ZoneId))
+                var zoneId = WorldManager.ZoneId;
+                var location = Core.Player.Location;
+
+                if (OracleSettings.Instance.FateWaitLocations.ContainsKey(zoneId))
                 {
-                    var waitLocation = OracleSettings.Instance.FateWaitLocations.FirstOrDefault(loc => loc.Key == WorldManager.ZoneId).Value;
-                    this.labelDowntimeWaitLocationValue.Text = waitLocation.ToString();
+                    OracleSettings.Instance.FateWaitLocations.Remove(zoneId);
                 }
+
+                OracleSettings.Instance.FateWaitLocations.Add(zoneId, location);
             }
             catch (NullReferenceException)
             {
                 // This will only occur if the form is created outside of RebornBuddy.
             }
+        }
+
+        private void OnSpecificFateNameChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.SpecificFateName = this.textBoxSpecificFateNameSetting.Text;
+        }
+
+        private void OnTabPageClick(object sender, EventArgs e)
+        {
+            this.ActiveControl = this.labelDefaultFocus;
+        }
+
+        private void OnWaitForChainFatesChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.WaitForChainFates = this.checkBoxWaitForChainFateSetting.Checked;
+        }
+
+        private void OnZoneChangingEnabledChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.ZoneChangingEnabled = this.checkBoxZoneChangingEnabledSetting.Checked;
         }
     }
 }

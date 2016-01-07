@@ -48,7 +48,6 @@ namespace Oracle.Settings
         private int bossEngagePercentage;
         private bool bossFatesEnabled;
         private int chainFateWaitTimeout;
-        private bool changeZonesEnabled;
         private bool collectFatesEnabled;
         private int collectFateTurnInAtAmount;
         private bool debugEnabled;
@@ -66,19 +65,20 @@ namespace Oracle.Settings
         private bool killFatesEnabled;
         private double landingTimeOut;
         private bool listHooksOnStart;
-        private int lowRemainingDuration;
+        private int lowRemainingFateDuration;
         private int megaBossEngagePercentage;
         private bool megaBossFatesEnabled;
         private int mobMaximumLevelAbove;
         private int mobMinimumLevelBelow;
         private OracleOperationMode oracleOperationMode;
         private bool runProblematicFates;
-        private bool skipFirstFlightNode;
-        private string specificFate;
+        private string specificFateName;
         private bool teleportIfQuicker;
         private int teleportMinimumDistanceDelta;
-        private bool waitAtFateForProgress;
+        private bool waitAtBossFateForProgress;
+        private bool waitAtMegaBossFateForProgress;
         private bool waitForChainFates;
+        private bool zoneChangingEnabled;
         private Dictionary<uint, uint> zoneLevels;
 
         private OracleSettings()
@@ -215,19 +215,6 @@ namespace Oracle.Settings
             set
             {
                 this.chainFateWaitTimeout = value;
-                this.Save();
-            }
-        }
-
-        [DefaultValue(true)]
-        [Setting]
-        public bool ChangeZonesEnabled
-        {
-            get { return this.changeZonesEnabled; }
-
-            set
-            {
-                this.changeZonesEnabled = value;
                 this.Save();
             }
         }
@@ -454,13 +441,13 @@ namespace Oracle.Settings
 
         [DefaultValue(180)]
         [Setting]
-        public int LowRemainingDuration
+        public int LowRemainingFateDuration
         {
-            get { return this.lowRemainingDuration; }
+            get { return this.lowRemainingFateDuration; }
 
             set
             {
-                this.lowRemainingDuration = value;
+                this.lowRemainingFateDuration = value;
                 this.Save();
             }
         }
@@ -543,28 +530,15 @@ namespace Oracle.Settings
             }
         }
 
-        [DefaultValue(true)]
-        [Setting]
-        public bool SkipFirstFlightNode
-        {
-            get { return this.skipFirstFlightNode; }
-
-            set
-            {
-                this.skipFirstFlightNode = value;
-                this.Save();
-            }
-        }
-
         [DefaultValue("")]
         [Setting]
-        public string SpecificFate
+        public string SpecificFateName
         {
-            get { return this.specificFate; }
+            get { return this.specificFateName; }
 
             set
             {
-                this.specificFate = value;
+                this.specificFateName = value;
                 this.Save();
             }
         }
@@ -597,13 +571,26 @@ namespace Oracle.Settings
 
         [DefaultValue(false)]
         [Setting]
-        public bool WaitAtFateForProgress
+        public bool WaitAtBossFateForProgress
         {
-            get { return this.waitAtFateForProgress; }
+            get { return this.waitAtBossFateForProgress; }
 
             set
             {
-                this.waitAtFateForProgress = value;
+                this.waitAtBossFateForProgress = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool WaitAtMegaBossFateForProgress
+        {
+            get { return this.waitAtMegaBossFateForProgress; }
+
+            set
+            {
+                this.waitAtMegaBossFateForProgress = value;
                 this.Save();
             }
         }
@@ -617,6 +604,19 @@ namespace Oracle.Settings
             set
             {
                 this.waitForChainFates = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool ZoneChangingEnabled
+        {
+            get { return this.zoneChangingEnabled; }
+
+            set
+            {
+                this.zoneChangingEnabled = value;
                 this.Save();
             }
         }

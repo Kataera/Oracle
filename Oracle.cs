@@ -207,6 +207,7 @@ namespace Oracle
             foreach (var hook in TreeHooks.Instance.Hooks)
             {
                 Logger.SendDebugLog(hook.Key + ": " + hook.Value.Count + " Composite(s).");
+
                 var count = 0;
                 foreach (var composite in hook.Value)
                 {

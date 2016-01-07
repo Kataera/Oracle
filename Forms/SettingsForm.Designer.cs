@@ -104,14 +104,14 @@ namespace Oracle.Forms
             this.labelDowntimeCurrentZone = new System.Windows.Forms.Label();
             this.labelDowntimeMoveToLocation = new System.Windows.Forms.Label();
             this.tabPageDowntimeGrindMobs = new System.Windows.Forms.TabPage();
-            this.numericUpDownMobMaxLevelAboveSetting = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownMobMinLevelBelowSetting = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMobMaximumLevelAboveSetting = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMobMinimumLevelBelowSetting = new System.Windows.Forms.NumericUpDown();
             this.labelMobMaxLevelAboveSetting = new System.Windows.Forms.Label();
             this.labelMobMinLevelBelowSetting = new System.Windows.Forms.Label();
             this.labelDowntimeGrindMobs = new System.Windows.Forms.Label();
             this.tabPageDowntimeDoNothing = new System.Windows.Forms.TabPage();
             this.labelDowntimeDoNothing = new System.Windows.Forms.Label();
-            this.comboBoxDowntimeBehaviourSetting = new System.Windows.Forms.ComboBox();
+            this.comboBoxFateWaitModeSetting = new System.Windows.Forms.ComboBox();
             this.labelDowntimeBehaviourSetting = new System.Windows.Forms.Label();
             this.labelDowntimeTitle = new System.Windows.Forms.Label();
             this.tabPageZoneChanging = new System.Windows.Forms.TabPage();
@@ -131,10 +131,12 @@ namespace Oracle.Forms
             this.tabFateSettings = new System.Windows.Forms.TabPage();
             this.tabControllerFate = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPageGeneral = new System.Windows.Forms.TabPage();
+            this.checkBoxWaitForChainFateSetting = new MaterialSkin.Controls.MaterialCheckBox();
+            this.labelWaitForChainFateSetting = new System.Windows.Forms.Label();
             this.labelLowDurationTimeSettingSuffix = new System.Windows.Forms.Label();
-            this.textBoxLowDurationFateSetting = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.textBoxLowRemainingFateDurationSetting = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.labelLowDurationTimeSetting = new System.Windows.Forms.Label();
-            this.checkBoxIgnoreLowDurationFateSetting = new MaterialSkin.Controls.MaterialCheckBox();
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting = new MaterialSkin.Controls.MaterialCheckBox();
             this.labelIgnoreLowDurationFatesSetting = new System.Windows.Forms.Label();
             this.checkBoxRunProblematicFatesSetting = new MaterialSkin.Controls.MaterialCheckBox();
             this.labelRunProblematicFatesWarning = new System.Windows.Forms.Label();
@@ -145,16 +147,28 @@ namespace Oracle.Forms
             this.labelFateMinimumLevelBelowSetting = new System.Windows.Forms.Label();
             this.labelGeneralFateSettingsTitle = new System.Windows.Forms.Label();
             this.tabPageKillFates = new System.Windows.Forms.TabPage();
+            this.checkBoxKillFatesEnabledSetting = new MaterialSkin.Controls.MaterialCheckBox();
+            this.labelKillFatesEnabledSetting = new System.Windows.Forms.Label();
             this.labelKillFatesTitle = new System.Windows.Forms.Label();
             this.tabPageCollectFates = new System.Windows.Forms.TabPage();
+            this.checkBoxCollectFatesEnabledSetting = new MaterialSkin.Controls.MaterialCheckBox();
+            this.labelCollectFatesEnabledSetting = new System.Windows.Forms.Label();
             this.labelCollectFatesTitle = new System.Windows.Forms.Label();
             this.tabPageEscortFates = new System.Windows.Forms.TabPage();
+            this.checkBoxEscortFatesEnabledSetting = new MaterialSkin.Controls.MaterialCheckBox();
+            this.labelEscortFatesEnabledSetting = new System.Windows.Forms.Label();
             this.labelEscortFatesTitle = new System.Windows.Forms.Label();
             this.tabPageDefenceFates = new System.Windows.Forms.TabPage();
+            this.checkBoxDefenceFatesEnabledSetting = new MaterialSkin.Controls.MaterialCheckBox();
+            this.labelDefenceFatesEnabledSetting = new System.Windows.Forms.Label();
             this.labelDefenceFatesTitle = new System.Windows.Forms.Label();
             this.tabPageBossFates = new System.Windows.Forms.TabPage();
+            this.checkBoxBossFatesEnabledSetting = new MaterialSkin.Controls.MaterialCheckBox();
+            this.labelBossFatesEnabledSetting = new System.Windows.Forms.Label();
             this.labelBossFatesTitle = new System.Windows.Forms.Label();
             this.tabPageMegaBossFates = new System.Windows.Forms.TabPage();
+            this.checkBoxMegaBossFatesEnabledSetting = new MaterialSkin.Controls.MaterialCheckBox();
+            this.labelMegaBossFatesEnabledSetting = new System.Windows.Forms.Label();
             this.labelMegaBossFatesTitle = new System.Windows.Forms.Label();
             this.tabSelectorFate = new MaterialSkin.Controls.MaterialTabSelectorVertical();
             this.tabNavigationSettings = new System.Windows.Forms.TabPage();
@@ -207,8 +221,8 @@ namespace Oracle.Forms
             this.tabPageDowntimeReturnToAetheryte.SuspendLayout();
             this.tabPageDowntimeMoveToLocation.SuspendLayout();
             this.tabPageDowntimeGrindMobs.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMobMaxLevelAboveSetting)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMobMinLevelBelowSetting)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMobMaximumLevelAboveSetting)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMobMinimumLevelBelowSetting)).BeginInit();
             this.tabPageDowntimeDoNothing.SuspendLayout();
             this.tabPageZoneChanging.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewZoneChangeSettings)).BeginInit();
@@ -438,7 +452,7 @@ namespace Oracle.Forms
             this.textBoxSpecificFateNameSetting.UseSystemPasswordChar = false;
             this.textBoxSpecificFateNameSetting.Enter += new System.EventHandler(this.OnEnterSpecificFateName);
             this.textBoxSpecificFateNameSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
-            this.textBoxSpecificFateNameSetting.TextChanged += new System.EventHandler(this.OnTextBoxSpecificFateNameTextChanged);
+            this.textBoxSpecificFateNameSetting.TextChanged += new System.EventHandler(this.OnSpecificFateNameChanged);
             // 
             // labelOracleModeSpecificFate
             // 
@@ -556,7 +570,7 @@ namespace Oracle.Forms
             this.comboBoxOracleModeSetting.Size = new System.Drawing.Size(121, 28);
             this.comboBoxOracleModeSetting.TabIndex = 2;
             this.comboBoxOracleModeSetting.TabStop = false;
-            this.comboBoxOracleModeSetting.SelectedIndexChanged += new System.EventHandler(this.OnOracleModeSelectedIndexChanged);
+            this.comboBoxOracleModeSetting.SelectedIndexChanged += new System.EventHandler(this.OnOracleModeChanged);
             // 
             // labelOracleModeTitle
             // 
@@ -640,7 +654,7 @@ namespace Oracle.Forms
             // 
             this.tabPageDowntime.BackColor = System.Drawing.Color.White;
             this.tabPageDowntime.Controls.Add(this.tabControllerDowntime);
-            this.tabPageDowntime.Controls.Add(this.comboBoxDowntimeBehaviourSetting);
+            this.tabPageDowntime.Controls.Add(this.comboBoxFateWaitModeSetting);
             this.tabPageDowntime.Controls.Add(this.labelDowntimeBehaviourSetting);
             this.tabPageDowntime.Controls.Add(this.labelDowntimeTitle);
             this.tabPageDowntime.Location = new System.Drawing.Point(4, 22);
@@ -725,7 +739,7 @@ namespace Oracle.Forms
             this.buttonDowntimeSetLocation.TabIndex = 8;
             this.buttonDowntimeSetLocation.Text = "Set Current Location";
             this.buttonDowntimeSetLocation.UseVisualStyleBackColor = false;
-            this.buttonDowntimeSetLocation.Click += new System.EventHandler(this.OnButtonDowntimeSetLocationClick);
+            this.buttonDowntimeSetLocation.Click += new System.EventHandler(this.OnSetLocationClick);
             // 
             // buttonDowntimeRefreshZone
             // 
@@ -814,8 +828,8 @@ namespace Oracle.Forms
             // tabPageDowntimeGrindMobs
             // 
             this.tabPageDowntimeGrindMobs.BackColor = System.Drawing.Color.White;
-            this.tabPageDowntimeGrindMobs.Controls.Add(this.numericUpDownMobMaxLevelAboveSetting);
-            this.tabPageDowntimeGrindMobs.Controls.Add(this.numericUpDownMobMinLevelBelowSetting);
+            this.tabPageDowntimeGrindMobs.Controls.Add(this.numericUpDownMobMaximumLevelAboveSetting);
+            this.tabPageDowntimeGrindMobs.Controls.Add(this.numericUpDownMobMinimumLevelBelowSetting);
             this.tabPageDowntimeGrindMobs.Controls.Add(this.labelMobMaxLevelAboveSetting);
             this.tabPageDowntimeGrindMobs.Controls.Add(this.labelMobMinLevelBelowSetting);
             this.tabPageDowntimeGrindMobs.Controls.Add(this.labelDowntimeGrindMobs);
@@ -825,39 +839,39 @@ namespace Oracle.Forms
             this.tabPageDowntimeGrindMobs.TabIndex = 2;
             this.tabPageDowntimeGrindMobs.Text = "Grind Mobs";
             // 
-            // numericUpDownMobMaxLevelAboveSetting
+            // numericUpDownMobMaximumLevelAboveSetting
             // 
-            this.numericUpDownMobMaxLevelAboveSetting.AutoSize = true;
-            this.numericUpDownMobMaxLevelAboveSetting.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.numericUpDownMobMaxLevelAboveSetting.Location = new System.Drawing.Point(232, 84);
-            this.numericUpDownMobMaxLevelAboveSetting.Maximum = new decimal(new int[] {
+            this.numericUpDownMobMaximumLevelAboveSetting.AutoSize = true;
+            this.numericUpDownMobMaximumLevelAboveSetting.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.numericUpDownMobMaximumLevelAboveSetting.Location = new System.Drawing.Point(232, 84);
+            this.numericUpDownMobMaximumLevelAboveSetting.Maximum = new decimal(new int[] {
             59,
             0,
             0,
             0});
-            this.numericUpDownMobMaxLevelAboveSetting.Name = "numericUpDownMobMaxLevelAboveSetting";
-            this.numericUpDownMobMaxLevelAboveSetting.Size = new System.Drawing.Size(46, 23);
-            this.numericUpDownMobMaxLevelAboveSetting.TabIndex = 8;
-            this.numericUpDownMobMaxLevelAboveSetting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDownMobMaxLevelAboveSetting.ValueChanged += new System.EventHandler(this.OnMobMaxLevelAboveValueChanged);
-            this.numericUpDownMobMaxLevelAboveSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
+            this.numericUpDownMobMaximumLevelAboveSetting.Name = "numericUpDownMobMaximumLevelAboveSetting";
+            this.numericUpDownMobMaximumLevelAboveSetting.Size = new System.Drawing.Size(46, 23);
+            this.numericUpDownMobMaximumLevelAboveSetting.TabIndex = 8;
+            this.numericUpDownMobMaximumLevelAboveSetting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownMobMaximumLevelAboveSetting.ValueChanged += new System.EventHandler(this.OnMobMaximumLevelAboveChanged);
+            this.numericUpDownMobMaximumLevelAboveSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
             // 
-            // numericUpDownMobMinLevelBelowSetting
+            // numericUpDownMobMinimumLevelBelowSetting
             // 
-            this.numericUpDownMobMinLevelBelowSetting.AutoSize = true;
-            this.numericUpDownMobMinLevelBelowSetting.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.numericUpDownMobMinLevelBelowSetting.Location = new System.Drawing.Point(232, 54);
-            this.numericUpDownMobMinLevelBelowSetting.Maximum = new decimal(new int[] {
+            this.numericUpDownMobMinimumLevelBelowSetting.AutoSize = true;
+            this.numericUpDownMobMinimumLevelBelowSetting.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.numericUpDownMobMinimumLevelBelowSetting.Location = new System.Drawing.Point(232, 54);
+            this.numericUpDownMobMinimumLevelBelowSetting.Maximum = new decimal(new int[] {
             59,
             0,
             0,
             0});
-            this.numericUpDownMobMinLevelBelowSetting.Name = "numericUpDownMobMinLevelBelowSetting";
-            this.numericUpDownMobMinLevelBelowSetting.Size = new System.Drawing.Size(46, 23);
-            this.numericUpDownMobMinLevelBelowSetting.TabIndex = 7;
-            this.numericUpDownMobMinLevelBelowSetting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDownMobMinLevelBelowSetting.ValueChanged += new System.EventHandler(this.OnMobMinLevelBelowValueChanged);
-            this.numericUpDownMobMinLevelBelowSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
+            this.numericUpDownMobMinimumLevelBelowSetting.Name = "numericUpDownMobMinimumLevelBelowSetting";
+            this.numericUpDownMobMinimumLevelBelowSetting.Size = new System.Drawing.Size(46, 23);
+            this.numericUpDownMobMinimumLevelBelowSetting.TabIndex = 7;
+            this.numericUpDownMobMinimumLevelBelowSetting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownMobMinimumLevelBelowSetting.ValueChanged += new System.EventHandler(this.OnMobMinimumLevelBelowChanged);
+            this.numericUpDownMobMinimumLevelBelowSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
             // 
             // labelMobMaxLevelAboveSetting
             // 
@@ -922,24 +936,24 @@ namespace Oracle.Forms
             this.labelDowntimeDoNothing.Text = "The Do Nothing behaviour will stand still when there\'s no viable FATEs active. Th" +
     "e bot will defend itself if attacked.";
             // 
-            // comboBoxDowntimeBehaviourSetting
+            // comboBoxFateWaitModeSetting
             // 
-            this.comboBoxDowntimeBehaviourSetting.BackColor = System.Drawing.Color.White;
-            this.comboBoxDowntimeBehaviourSetting.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxDowntimeBehaviourSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBoxDowntimeBehaviourSetting.ForeColor = System.Drawing.Color.Black;
-            this.comboBoxDowntimeBehaviourSetting.FormattingEnabled = true;
-            this.comboBoxDowntimeBehaviourSetting.Items.AddRange(new object[] {
+            this.comboBoxFateWaitModeSetting.BackColor = System.Drawing.Color.White;
+            this.comboBoxFateWaitModeSetting.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxFateWaitModeSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxFateWaitModeSetting.ForeColor = System.Drawing.Color.Black;
+            this.comboBoxFateWaitModeSetting.FormattingEnabled = true;
+            this.comboBoxFateWaitModeSetting.Items.AddRange(new object[] {
             "Return to Aetheryte",
             "Move to Location",
             "Grind Mobs",
             "Do Nothing"});
-            this.comboBoxDowntimeBehaviourSetting.Location = new System.Drawing.Point(171, 63);
-            this.comboBoxDowntimeBehaviourSetting.Name = "comboBoxDowntimeBehaviourSetting";
-            this.comboBoxDowntimeBehaviourSetting.Size = new System.Drawing.Size(160, 28);
-            this.comboBoxDowntimeBehaviourSetting.TabIndex = 7;
-            this.comboBoxDowntimeBehaviourSetting.TabStop = false;
-            this.comboBoxDowntimeBehaviourSetting.SelectedIndexChanged += new System.EventHandler(this.OnDowntimeBehaviourSelectedIndexChanged);
+            this.comboBoxFateWaitModeSetting.Location = new System.Drawing.Point(171, 63);
+            this.comboBoxFateWaitModeSetting.Name = "comboBoxFateWaitModeSetting";
+            this.comboBoxFateWaitModeSetting.Size = new System.Drawing.Size(160, 28);
+            this.comboBoxFateWaitModeSetting.TabIndex = 7;
+            this.comboBoxFateWaitModeSetting.TabStop = false;
+            this.comboBoxFateWaitModeSetting.SelectedIndexChanged += new System.EventHandler(this.OnFateWaitModeChanged);
             // 
             // labelDowntimeBehaviourSetting
             // 
@@ -999,7 +1013,7 @@ namespace Oracle.Forms
             this.checkBoxBindHomePointSetting.TabIndex = 15;
             this.checkBoxBindHomePointSetting.Text = "Bind Home Point";
             this.checkBoxBindHomePointSetting.UseVisualStyleBackColor = true;
-            this.checkBoxBindHomePointSetting.CheckedChanged += new System.EventHandler(this.OnBindHomePointSettingChanged);
+            this.checkBoxBindHomePointSetting.CheckedChanged += new System.EventHandler(this.OnBindHomePointChanged);
             // 
             // labelBindHomePointSetting
             // 
@@ -1024,7 +1038,7 @@ namespace Oracle.Forms
             this.buttonResetZoneLevelsToDefault.TabIndex = 13;
             this.buttonResetZoneLevelsToDefault.Text = "Reset to Default";
             this.buttonResetZoneLevelsToDefault.UseVisualStyleBackColor = true;
-            this.buttonResetZoneLevelsToDefault.Click += new System.EventHandler(this.OnButtonResetZoneLevelsToDefaultClick);
+            this.buttonResetZoneLevelsToDefault.Click += new System.EventHandler(this.OnResetZoneLevelsToDefaultClick);
             // 
             // labelZoneChangeTip
             // 
@@ -1281,10 +1295,12 @@ namespace Oracle.Forms
             // tabPageGeneral
             // 
             this.tabPageGeneral.BackColor = System.Drawing.Color.White;
+            this.tabPageGeneral.Controls.Add(this.checkBoxWaitForChainFateSetting);
+            this.tabPageGeneral.Controls.Add(this.labelWaitForChainFateSetting);
             this.tabPageGeneral.Controls.Add(this.labelLowDurationTimeSettingSuffix);
-            this.tabPageGeneral.Controls.Add(this.textBoxLowDurationFateSetting);
+            this.tabPageGeneral.Controls.Add(this.textBoxLowRemainingFateDurationSetting);
             this.tabPageGeneral.Controls.Add(this.labelLowDurationTimeSetting);
-            this.tabPageGeneral.Controls.Add(this.checkBoxIgnoreLowDurationFateSetting);
+            this.tabPageGeneral.Controls.Add(this.checkBoxIgnoreLowDurationUnstartedFateSetting);
             this.tabPageGeneral.Controls.Add(this.labelIgnoreLowDurationFatesSetting);
             this.tabPageGeneral.Controls.Add(this.checkBoxRunProblematicFatesSetting);
             this.tabPageGeneral.Controls.Add(this.labelRunProblematicFatesWarning);
@@ -1303,72 +1319,102 @@ namespace Oracle.Forms
             this.tabPageGeneral.Text = "General";
             this.tabPageGeneral.Click += new System.EventHandler(this.OnTabPageClick);
             // 
+            // checkBoxWaitForChainFateSetting
+            // 
+            this.checkBoxWaitForChainFateSetting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxWaitForChainFateSetting.AutoSize = true;
+            this.checkBoxWaitForChainFateSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxWaitForChainFateSetting.Depth = 0;
+            this.checkBoxWaitForChainFateSetting.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.checkBoxWaitForChainFateSetting.Location = new System.Drawing.Point(225, 142);
+            this.checkBoxWaitForChainFateSetting.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBoxWaitForChainFateSetting.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.checkBoxWaitForChainFateSetting.MouseState = MaterialSkin.MouseState.Hover;
+            this.checkBoxWaitForChainFateSetting.Name = "checkBoxWaitForChainFateSetting";
+            this.checkBoxWaitForChainFateSetting.Ripple = true;
+            this.checkBoxWaitForChainFateSetting.Size = new System.Drawing.Size(30, 30);
+            this.checkBoxWaitForChainFateSetting.TabIndex = 20;
+            this.checkBoxWaitForChainFateSetting.Text = "Wait For Follow-Up FATEs";
+            this.checkBoxWaitForChainFateSetting.UseVisualStyleBackColor = true;
+            this.checkBoxWaitForChainFateSetting.CheckedChanged += new System.EventHandler(this.OnWaitForChainFatesChanged);
+            // 
+            // labelWaitForChainFateSetting
+            // 
+            this.labelWaitForChainFateSetting.AutoSize = true;
+            this.labelWaitForChainFateSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelWaitForChainFateSetting.Location = new System.Drawing.Point(15, 148);
+            this.labelWaitForChainFateSetting.Name = "labelWaitForChainFateSetting";
+            this.labelWaitForChainFateSetting.Size = new System.Drawing.Size(183, 18);
+            this.labelWaitForChainFateSetting.TabIndex = 19;
+            this.labelWaitForChainFateSetting.Text = "Wait For Follow-Up FATEs:";
+            // 
             // labelLowDurationTimeSettingSuffix
             // 
             this.labelLowDurationTimeSettingSuffix.AutoSize = true;
             this.labelLowDurationTimeSettingSuffix.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelLowDurationTimeSettingSuffix.Location = new System.Drawing.Point(208, 234);
+            this.labelLowDurationTimeSettingSuffix.Location = new System.Drawing.Point(277, 274);
             this.labelLowDurationTimeSettingSuffix.Name = "labelLowDurationTimeSettingSuffix";
             this.labelLowDurationTimeSettingSuffix.Size = new System.Drawing.Size(68, 20);
             this.labelLowDurationTimeSettingSuffix.TabIndex = 18;
             this.labelLowDurationTimeSettingSuffix.Text = "seconds";
             // 
-            // textBoxLowDurationFateSetting
+            // textBoxLowRemainingFateDurationSetting
             // 
-            this.textBoxLowDurationFateSetting.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.textBoxLowDurationFateSetting.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.textBoxLowDurationFateSetting.Depth = 0;
-            this.textBoxLowDurationFateSetting.Hint = "";
-            this.textBoxLowDurationFateSetting.Location = new System.Drawing.Point(162, 236);
-            this.textBoxLowDurationFateSetting.MaxLength = 4;
-            this.textBoxLowDurationFateSetting.MouseState = MaterialSkin.MouseState.Hover;
-            this.textBoxLowDurationFateSetting.Name = "textBoxLowDurationFateSetting";
-            this.textBoxLowDurationFateSetting.PasswordChar = '\0';
-            this.textBoxLowDurationFateSetting.SelectedText = "";
-            this.textBoxLowDurationFateSetting.SelectionLength = 0;
-            this.textBoxLowDurationFateSetting.SelectionStart = 0;
-            this.textBoxLowDurationFateSetting.Size = new System.Drawing.Size(43, 25);
-            this.textBoxLowDurationFateSetting.TabIndex = 17;
-            this.textBoxLowDurationFateSetting.TabStop = false;
-            this.textBoxLowDurationFateSetting.UseSystemPasswordChar = false;
-            this.textBoxLowDurationFateSetting.Enter += new System.EventHandler(this.OnEnterLowDurationFate);
-            this.textBoxLowDurationFateSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
-            this.textBoxLowDurationFateSetting.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnLowDurationFateSettingKeyPress);
+            this.textBoxLowRemainingFateDurationSetting.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.textBoxLowRemainingFateDurationSetting.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBoxLowRemainingFateDurationSetting.Depth = 0;
+            this.textBoxLowRemainingFateDurationSetting.Hint = "";
+            this.textBoxLowRemainingFateDurationSetting.Location = new System.Drawing.Point(228, 276);
+            this.textBoxLowRemainingFateDurationSetting.MaxLength = 4;
+            this.textBoxLowRemainingFateDurationSetting.MouseState = MaterialSkin.MouseState.Hover;
+            this.textBoxLowRemainingFateDurationSetting.Name = "textBoxLowRemainingFateDurationSetting";
+            this.textBoxLowRemainingFateDurationSetting.PasswordChar = '\0';
+            this.textBoxLowRemainingFateDurationSetting.SelectedText = "";
+            this.textBoxLowRemainingFateDurationSetting.SelectionLength = 0;
+            this.textBoxLowRemainingFateDurationSetting.SelectionStart = 0;
+            this.textBoxLowRemainingFateDurationSetting.Size = new System.Drawing.Size(43, 25);
+            this.textBoxLowRemainingFateDurationSetting.TabIndex = 17;
+            this.textBoxLowRemainingFateDurationSetting.TabStop = false;
+            this.textBoxLowRemainingFateDurationSetting.UseSystemPasswordChar = false;
+            this.textBoxLowRemainingFateDurationSetting.Enter += new System.EventHandler(this.OnEnterLowRemainingFateDuration);
+            this.textBoxLowRemainingFateDurationSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
+            this.textBoxLowRemainingFateDurationSetting.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnLowDurationFateSettingKeyPress);
+            this.textBoxLowRemainingFateDurationSetting.TextChanged += new System.EventHandler(this.OnLowRemainingFateDurationChanged);
             // 
             // labelLowDurationTimeSetting
             // 
             this.labelLowDurationTimeSetting.AutoSize = true;
             this.labelLowDurationTimeSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelLowDurationTimeSetting.Location = new System.Drawing.Point(15, 236);
+            this.labelLowDurationTimeSetting.Location = new System.Drawing.Point(15, 276);
             this.labelLowDurationTimeSetting.Name = "labelLowDurationTimeSetting";
-            this.labelLowDurationTimeSetting.Size = new System.Drawing.Size(141, 18);
+            this.labelLowDurationTimeSetting.Size = new System.Drawing.Size(179, 18);
             this.labelLowDurationTimeSetting.TabIndex = 16;
-            this.labelLowDurationTimeSetting.Text = "Low Duration Value:";
+            this.labelLowDurationTimeSetting.Text = "Low Duration Time Value:";
             // 
-            // checkBoxIgnoreLowDurationFateSetting
+            // checkBoxIgnoreLowDurationUnstartedFateSetting
             // 
-            this.checkBoxIgnoreLowDurationFateSetting.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBoxIgnoreLowDurationFateSetting.AutoSize = true;
-            this.checkBoxIgnoreLowDurationFateSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBoxIgnoreLowDurationFateSetting.Depth = 0;
-            this.checkBoxIgnoreLowDurationFateSetting.Font = new System.Drawing.Font("Roboto Medium", 11F);
-            this.checkBoxIgnoreLowDurationFateSetting.Location = new System.Drawing.Point(208, 190);
-            this.checkBoxIgnoreLowDurationFateSetting.Margin = new System.Windows.Forms.Padding(0);
-            this.checkBoxIgnoreLowDurationFateSetting.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.checkBoxIgnoreLowDurationFateSetting.MouseState = MaterialSkin.MouseState.Hover;
-            this.checkBoxIgnoreLowDurationFateSetting.Name = "checkBoxIgnoreLowDurationFateSetting";
-            this.checkBoxIgnoreLowDurationFateSetting.Ripple = true;
-            this.checkBoxIgnoreLowDurationFateSetting.Size = new System.Drawing.Size(30, 30);
-            this.checkBoxIgnoreLowDurationFateSetting.TabIndex = 15;
-            this.checkBoxIgnoreLowDurationFateSetting.Text = "Run Problematic FATEs";
-            this.checkBoxIgnoreLowDurationFateSetting.UseVisualStyleBackColor = true;
-            this.checkBoxIgnoreLowDurationFateSetting.CheckedChanged += new System.EventHandler(this.OnIgnoreLowDurationFateChanged);
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.AutoSize = true;
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.Depth = 0;
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.Location = new System.Drawing.Point(225, 230);
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.MouseState = MaterialSkin.MouseState.Hover;
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.Name = "checkBoxIgnoreLowDurationUnstartedFateSetting";
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.Ripple = true;
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.Size = new System.Drawing.Size(30, 30);
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.TabIndex = 15;
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.Text = "Run Problematic FATEs";
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.UseVisualStyleBackColor = true;
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.CheckedChanged += new System.EventHandler(this.OnIgnoreLowDurationUnstartedFateChanged);
             // 
             // labelIgnoreLowDurationFatesSetting
             // 
             this.labelIgnoreLowDurationFatesSetting.AutoSize = true;
             this.labelIgnoreLowDurationFatesSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelIgnoreLowDurationFatesSetting.Location = new System.Drawing.Point(15, 196);
+            this.labelIgnoreLowDurationFatesSetting.Location = new System.Drawing.Point(15, 236);
             this.labelIgnoreLowDurationFatesSetting.Name = "labelIgnoreLowDurationFatesSetting";
             this.labelIgnoreLowDurationFatesSetting.Size = new System.Drawing.Size(190, 18);
             this.labelIgnoreLowDurationFatesSetting.TabIndex = 14;
@@ -1381,7 +1427,7 @@ namespace Oracle.Forms
             this.checkBoxRunProblematicFatesSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBoxRunProblematicFatesSetting.Depth = 0;
             this.checkBoxRunProblematicFatesSetting.Font = new System.Drawing.Font("Roboto Medium", 11F);
-            this.checkBoxRunProblematicFatesSetting.Location = new System.Drawing.Point(208, 142);
+            this.checkBoxRunProblematicFatesSetting.Location = new System.Drawing.Point(225, 182);
             this.checkBoxRunProblematicFatesSetting.Margin = new System.Windows.Forms.Padding(0);
             this.checkBoxRunProblematicFatesSetting.MouseLocation = new System.Drawing.Point(-1, -1);
             this.checkBoxRunProblematicFatesSetting.MouseState = MaterialSkin.MouseState.Hover;
@@ -1398,7 +1444,7 @@ namespace Oracle.Forms
             this.labelRunProblematicFatesWarning.AutoSize = true;
             this.labelRunProblematicFatesWarning.Font = new System.Drawing.Font("Roboto", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelRunProblematicFatesWarning.ForeColor = System.Drawing.Color.Maroon;
-            this.labelRunProblematicFatesWarning.Location = new System.Drawing.Point(15, 166);
+            this.labelRunProblematicFatesWarning.Location = new System.Drawing.Point(15, 206);
             this.labelRunProblematicFatesWarning.Name = "labelRunProblematicFatesWarning";
             this.labelRunProblematicFatesWarning.Size = new System.Drawing.Size(160, 14);
             this.labelRunProblematicFatesWarning.TabIndex = 12;
@@ -1408,7 +1454,7 @@ namespace Oracle.Forms
             // 
             this.labelRunProblematicFatesSetting.AutoSize = true;
             this.labelRunProblematicFatesSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelRunProblematicFatesSetting.Location = new System.Drawing.Point(15, 148);
+            this.labelRunProblematicFatesSetting.Location = new System.Drawing.Point(15, 188);
             this.labelRunProblematicFatesSetting.Name = "labelRunProblematicFatesSetting";
             this.labelRunProblematicFatesSetting.Size = new System.Drawing.Size(168, 18);
             this.labelRunProblematicFatesSetting.TabIndex = 11;
@@ -1428,7 +1474,8 @@ namespace Oracle.Forms
             this.numericUpDownFateMaximumLevelAboveSetting.Size = new System.Drawing.Size(46, 23);
             this.numericUpDownFateMaximumLevelAboveSetting.TabIndex = 10;
             this.numericUpDownFateMaximumLevelAboveSetting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDownFateMaximumLevelAboveSetting.ValueChanged += new System.EventHandler(this.OnFateMaxLevelAboveValueChanged);
+            this.numericUpDownFateMaximumLevelAboveSetting.ValueChanged += new System.EventHandler(this.OnFateMaximumLevelAboveChanged);
+            this.numericUpDownFateMaximumLevelAboveSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
             // 
             // labelFateMaximumLevelAboveSetting
             // 
@@ -1454,6 +1501,8 @@ namespace Oracle.Forms
             this.numericUpDownFateMinimumLevelBelowSetting.Size = new System.Drawing.Size(46, 23);
             this.numericUpDownFateMinimumLevelBelowSetting.TabIndex = 8;
             this.numericUpDownFateMinimumLevelBelowSetting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownFateMinimumLevelBelowSetting.ValueChanged += new System.EventHandler(this.OnFateMinimumLevelBelowChanged);
+            this.numericUpDownFateMinimumLevelBelowSetting.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnEnterKeyDownDropFocus);
             // 
             // labelFateMinimumLevelBelowSetting
             // 
@@ -1479,6 +1528,8 @@ namespace Oracle.Forms
             // tabPageKillFates
             // 
             this.tabPageKillFates.BackColor = System.Drawing.Color.White;
+            this.tabPageKillFates.Controls.Add(this.checkBoxKillFatesEnabledSetting);
+            this.tabPageKillFates.Controls.Add(this.labelKillFatesEnabledSetting);
             this.tabPageKillFates.Controls.Add(this.labelKillFatesTitle);
             this.tabPageKillFates.Location = new System.Drawing.Point(4, 22);
             this.tabPageKillFates.Margin = new System.Windows.Forms.Padding(0);
@@ -1488,6 +1539,35 @@ namespace Oracle.Forms
             this.tabPageKillFates.TabIndex = 1;
             this.tabPageKillFates.Text = "Kill FATEs";
             this.tabPageKillFates.Click += new System.EventHandler(this.OnTabPageClick);
+            // 
+            // checkBoxKillFatesEnabledSetting
+            // 
+            this.checkBoxKillFatesEnabledSetting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxKillFatesEnabledSetting.AutoSize = true;
+            this.checkBoxKillFatesEnabledSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxKillFatesEnabledSetting.Depth = 0;
+            this.checkBoxKillFatesEnabledSetting.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.checkBoxKillFatesEnabledSetting.Location = new System.Drawing.Point(153, 62);
+            this.checkBoxKillFatesEnabledSetting.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBoxKillFatesEnabledSetting.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.checkBoxKillFatesEnabledSetting.MouseState = MaterialSkin.MouseState.Hover;
+            this.checkBoxKillFatesEnabledSetting.Name = "checkBoxKillFatesEnabledSetting";
+            this.checkBoxKillFatesEnabledSetting.Ripple = true;
+            this.checkBoxKillFatesEnabledSetting.Size = new System.Drawing.Size(30, 30);
+            this.checkBoxKillFatesEnabledSetting.TabIndex = 21;
+            this.checkBoxKillFatesEnabledSetting.Text = "Kill FATEs Enabled";
+            this.checkBoxKillFatesEnabledSetting.UseVisualStyleBackColor = true;
+            this.checkBoxKillFatesEnabledSetting.CheckedChanged += new System.EventHandler(this.OnKillFatesEnabledChanged);
+            // 
+            // labelKillFatesEnabledSetting
+            // 
+            this.labelKillFatesEnabledSetting.AutoSize = true;
+            this.labelKillFatesEnabledSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelKillFatesEnabledSetting.Location = new System.Drawing.Point(15, 68);
+            this.labelKillFatesEnabledSetting.Name = "labelKillFatesEnabledSetting";
+            this.labelKillFatesEnabledSetting.Size = new System.Drawing.Size(135, 18);
+            this.labelKillFatesEnabledSetting.TabIndex = 7;
+            this.labelKillFatesEnabledSetting.Text = "Kill FATEs Enabled:";
             // 
             // labelKillFatesTitle
             // 
@@ -1503,6 +1583,8 @@ namespace Oracle.Forms
             // tabPageCollectFates
             // 
             this.tabPageCollectFates.BackColor = System.Drawing.Color.White;
+            this.tabPageCollectFates.Controls.Add(this.checkBoxCollectFatesEnabledSetting);
+            this.tabPageCollectFates.Controls.Add(this.labelCollectFatesEnabledSetting);
             this.tabPageCollectFates.Controls.Add(this.labelCollectFatesTitle);
             this.tabPageCollectFates.Location = new System.Drawing.Point(4, 22);
             this.tabPageCollectFates.Margin = new System.Windows.Forms.Padding(0);
@@ -1511,6 +1593,35 @@ namespace Oracle.Forms
             this.tabPageCollectFates.TabIndex = 2;
             this.tabPageCollectFates.Text = "Collect FATEs";
             this.tabPageCollectFates.Click += new System.EventHandler(this.OnTabPageClick);
+            // 
+            // checkBoxCollectFatesEnabledSetting
+            // 
+            this.checkBoxCollectFatesEnabledSetting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxCollectFatesEnabledSetting.AutoSize = true;
+            this.checkBoxCollectFatesEnabledSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxCollectFatesEnabledSetting.Depth = 0;
+            this.checkBoxCollectFatesEnabledSetting.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.checkBoxCollectFatesEnabledSetting.Location = new System.Drawing.Point(178, 62);
+            this.checkBoxCollectFatesEnabledSetting.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBoxCollectFatesEnabledSetting.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.checkBoxCollectFatesEnabledSetting.MouseState = MaterialSkin.MouseState.Hover;
+            this.checkBoxCollectFatesEnabledSetting.Name = "checkBoxCollectFatesEnabledSetting";
+            this.checkBoxCollectFatesEnabledSetting.Ripple = true;
+            this.checkBoxCollectFatesEnabledSetting.Size = new System.Drawing.Size(30, 30);
+            this.checkBoxCollectFatesEnabledSetting.TabIndex = 23;
+            this.checkBoxCollectFatesEnabledSetting.Text = "Collect FATEs Enabled";
+            this.checkBoxCollectFatesEnabledSetting.UseVisualStyleBackColor = true;
+            this.checkBoxCollectFatesEnabledSetting.CheckedChanged += new System.EventHandler(this.OnCollectFatesEnabledChanged);
+            // 
+            // labelCollectFatesEnabledSetting
+            // 
+            this.labelCollectFatesEnabledSetting.AutoSize = true;
+            this.labelCollectFatesEnabledSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCollectFatesEnabledSetting.Location = new System.Drawing.Point(15, 68);
+            this.labelCollectFatesEnabledSetting.Name = "labelCollectFatesEnabledSetting";
+            this.labelCollectFatesEnabledSetting.Size = new System.Drawing.Size(160, 18);
+            this.labelCollectFatesEnabledSetting.TabIndex = 22;
+            this.labelCollectFatesEnabledSetting.Text = "Collect FATEs Enabled:";
             // 
             // labelCollectFatesTitle
             // 
@@ -1526,6 +1637,8 @@ namespace Oracle.Forms
             // tabPageEscortFates
             // 
             this.tabPageEscortFates.BackColor = System.Drawing.Color.White;
+            this.tabPageEscortFates.Controls.Add(this.checkBoxEscortFatesEnabledSetting);
+            this.tabPageEscortFates.Controls.Add(this.labelEscortFatesEnabledSetting);
             this.tabPageEscortFates.Controls.Add(this.labelEscortFatesTitle);
             this.tabPageEscortFates.Location = new System.Drawing.Point(4, 22);
             this.tabPageEscortFates.Margin = new System.Windows.Forms.Padding(0);
@@ -1534,6 +1647,35 @@ namespace Oracle.Forms
             this.tabPageEscortFates.TabIndex = 3;
             this.tabPageEscortFates.Text = "Escort FATEs";
             this.tabPageEscortFates.Click += new System.EventHandler(this.OnTabPageClick);
+            // 
+            // checkBoxEscortFatesEnabledSetting
+            // 
+            this.checkBoxEscortFatesEnabledSetting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxEscortFatesEnabledSetting.AutoSize = true;
+            this.checkBoxEscortFatesEnabledSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxEscortFatesEnabledSetting.Depth = 0;
+            this.checkBoxEscortFatesEnabledSetting.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.checkBoxEscortFatesEnabledSetting.Location = new System.Drawing.Point(173, 62);
+            this.checkBoxEscortFatesEnabledSetting.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBoxEscortFatesEnabledSetting.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.checkBoxEscortFatesEnabledSetting.MouseState = MaterialSkin.MouseState.Hover;
+            this.checkBoxEscortFatesEnabledSetting.Name = "checkBoxEscortFatesEnabledSetting";
+            this.checkBoxEscortFatesEnabledSetting.Ripple = true;
+            this.checkBoxEscortFatesEnabledSetting.Size = new System.Drawing.Size(30, 30);
+            this.checkBoxEscortFatesEnabledSetting.TabIndex = 23;
+            this.checkBoxEscortFatesEnabledSetting.Text = "Escort FATEs Enabled";
+            this.checkBoxEscortFatesEnabledSetting.UseVisualStyleBackColor = true;
+            this.checkBoxEscortFatesEnabledSetting.CheckedChanged += new System.EventHandler(this.OnEscortFatesEnabledChanged);
+            // 
+            // labelEscortFatesEnabledSetting
+            // 
+            this.labelEscortFatesEnabledSetting.AutoSize = true;
+            this.labelEscortFatesEnabledSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelEscortFatesEnabledSetting.Location = new System.Drawing.Point(15, 68);
+            this.labelEscortFatesEnabledSetting.Name = "labelEscortFatesEnabledSetting";
+            this.labelEscortFatesEnabledSetting.Size = new System.Drawing.Size(155, 18);
+            this.labelEscortFatesEnabledSetting.TabIndex = 22;
+            this.labelEscortFatesEnabledSetting.Text = "Escort FATEs Enabled:";
             // 
             // labelEscortFatesTitle
             // 
@@ -1549,6 +1691,8 @@ namespace Oracle.Forms
             // tabPageDefenceFates
             // 
             this.tabPageDefenceFates.BackColor = System.Drawing.Color.White;
+            this.tabPageDefenceFates.Controls.Add(this.checkBoxDefenceFatesEnabledSetting);
+            this.tabPageDefenceFates.Controls.Add(this.labelDefenceFatesEnabledSetting);
             this.tabPageDefenceFates.Controls.Add(this.labelDefenceFatesTitle);
             this.tabPageDefenceFates.Location = new System.Drawing.Point(4, 22);
             this.tabPageDefenceFates.Margin = new System.Windows.Forms.Padding(0);
@@ -1557,6 +1701,35 @@ namespace Oracle.Forms
             this.tabPageDefenceFates.TabIndex = 4;
             this.tabPageDefenceFates.Text = "Defence FATEs";
             this.tabPageDefenceFates.Click += new System.EventHandler(this.OnTabPageClick);
+            // 
+            // checkBoxDefenceFatesEnabledSetting
+            // 
+            this.checkBoxDefenceFatesEnabledSetting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxDefenceFatesEnabledSetting.AutoSize = true;
+            this.checkBoxDefenceFatesEnabledSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxDefenceFatesEnabledSetting.Depth = 0;
+            this.checkBoxDefenceFatesEnabledSetting.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.checkBoxDefenceFatesEnabledSetting.Location = new System.Drawing.Point(186, 62);
+            this.checkBoxDefenceFatesEnabledSetting.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBoxDefenceFatesEnabledSetting.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.checkBoxDefenceFatesEnabledSetting.MouseState = MaterialSkin.MouseState.Hover;
+            this.checkBoxDefenceFatesEnabledSetting.Name = "checkBoxDefenceFatesEnabledSetting";
+            this.checkBoxDefenceFatesEnabledSetting.Ripple = true;
+            this.checkBoxDefenceFatesEnabledSetting.Size = new System.Drawing.Size(30, 30);
+            this.checkBoxDefenceFatesEnabledSetting.TabIndex = 23;
+            this.checkBoxDefenceFatesEnabledSetting.Text = "Defence FATEs Enabled";
+            this.checkBoxDefenceFatesEnabledSetting.UseVisualStyleBackColor = true;
+            this.checkBoxDefenceFatesEnabledSetting.CheckedChanged += new System.EventHandler(this.OnDefenceFatesEnabledChanged);
+            // 
+            // labelDefenceFatesEnabledSetting
+            // 
+            this.labelDefenceFatesEnabledSetting.AutoSize = true;
+            this.labelDefenceFatesEnabledSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDefenceFatesEnabledSetting.Location = new System.Drawing.Point(15, 68);
+            this.labelDefenceFatesEnabledSetting.Name = "labelDefenceFatesEnabledSetting";
+            this.labelDefenceFatesEnabledSetting.Size = new System.Drawing.Size(168, 18);
+            this.labelDefenceFatesEnabledSetting.TabIndex = 22;
+            this.labelDefenceFatesEnabledSetting.Text = "Defence FATEs Enabled:";
             // 
             // labelDefenceFatesTitle
             // 
@@ -1572,6 +1745,8 @@ namespace Oracle.Forms
             // tabPageBossFates
             // 
             this.tabPageBossFates.BackColor = System.Drawing.Color.White;
+            this.tabPageBossFates.Controls.Add(this.checkBoxBossFatesEnabledSetting);
+            this.tabPageBossFates.Controls.Add(this.labelBossFatesEnabledSetting);
             this.tabPageBossFates.Controls.Add(this.labelBossFatesTitle);
             this.tabPageBossFates.Location = new System.Drawing.Point(4, 22);
             this.tabPageBossFates.Margin = new System.Windows.Forms.Padding(0);
@@ -1580,6 +1755,35 @@ namespace Oracle.Forms
             this.tabPageBossFates.TabIndex = 5;
             this.tabPageBossFates.Text = "Boss FATEs";
             this.tabPageBossFates.Click += new System.EventHandler(this.OnTabPageClick);
+            // 
+            // checkBoxBossFatesEnabledSetting
+            // 
+            this.checkBoxBossFatesEnabledSetting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxBossFatesEnabledSetting.AutoSize = true;
+            this.checkBoxBossFatesEnabledSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxBossFatesEnabledSetting.Depth = 0;
+            this.checkBoxBossFatesEnabledSetting.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.checkBoxBossFatesEnabledSetting.Location = new System.Drawing.Point(165, 62);
+            this.checkBoxBossFatesEnabledSetting.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBoxBossFatesEnabledSetting.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.checkBoxBossFatesEnabledSetting.MouseState = MaterialSkin.MouseState.Hover;
+            this.checkBoxBossFatesEnabledSetting.Name = "checkBoxBossFatesEnabledSetting";
+            this.checkBoxBossFatesEnabledSetting.Ripple = true;
+            this.checkBoxBossFatesEnabledSetting.Size = new System.Drawing.Size(30, 30);
+            this.checkBoxBossFatesEnabledSetting.TabIndex = 23;
+            this.checkBoxBossFatesEnabledSetting.Text = "Boss FATEs Enabled";
+            this.checkBoxBossFatesEnabledSetting.UseVisualStyleBackColor = true;
+            this.checkBoxBossFatesEnabledSetting.CheckedChanged += new System.EventHandler(this.OnBossFatesEnabledChanged);
+            // 
+            // labelBossFatesEnabledSetting
+            // 
+            this.labelBossFatesEnabledSetting.AutoSize = true;
+            this.labelBossFatesEnabledSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelBossFatesEnabledSetting.Location = new System.Drawing.Point(15, 68);
+            this.labelBossFatesEnabledSetting.Name = "labelBossFatesEnabledSetting";
+            this.labelBossFatesEnabledSetting.Size = new System.Drawing.Size(147, 18);
+            this.labelBossFatesEnabledSetting.TabIndex = 22;
+            this.labelBossFatesEnabledSetting.Text = "Boss FATEs Enabled:";
             // 
             // labelBossFatesTitle
             // 
@@ -1595,13 +1799,44 @@ namespace Oracle.Forms
             // tabPageMegaBossFates
             // 
             this.tabPageMegaBossFates.BackColor = System.Drawing.Color.White;
+            this.tabPageMegaBossFates.Controls.Add(this.checkBoxMegaBossFatesEnabledSetting);
+            this.tabPageMegaBossFates.Controls.Add(this.labelMegaBossFatesEnabledSetting);
             this.tabPageMegaBossFates.Controls.Add(this.labelMegaBossFatesTitle);
-            this.tabPageMegaBossFates.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMegaBossFates.Location = new System.Drawing.Point(4, 54);
             this.tabPageMegaBossFates.Name = "tabPageMegaBossFates";
-            this.tabPageMegaBossFates.Size = new System.Drawing.Size(666, 423);
+            this.tabPageMegaBossFates.Size = new System.Drawing.Size(666, 391);
             this.tabPageMegaBossFates.TabIndex = 6;
             this.tabPageMegaBossFates.Text = "Mega-Boss FATEs";
             this.tabPageMegaBossFates.Click += new System.EventHandler(this.OnTabPageClick);
+            // 
+            // checkBoxMegaBossFatesEnabledSetting
+            // 
+            this.checkBoxMegaBossFatesEnabledSetting.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxMegaBossFatesEnabledSetting.AutoSize = true;
+            this.checkBoxMegaBossFatesEnabledSetting.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxMegaBossFatesEnabledSetting.Depth = 0;
+            this.checkBoxMegaBossFatesEnabledSetting.Font = new System.Drawing.Font("Roboto Medium", 11F);
+            this.checkBoxMegaBossFatesEnabledSetting.Location = new System.Drawing.Point(209, 62);
+            this.checkBoxMegaBossFatesEnabledSetting.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBoxMegaBossFatesEnabledSetting.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.checkBoxMegaBossFatesEnabledSetting.MouseState = MaterialSkin.MouseState.Hover;
+            this.checkBoxMegaBossFatesEnabledSetting.Name = "checkBoxMegaBossFatesEnabledSetting";
+            this.checkBoxMegaBossFatesEnabledSetting.Ripple = true;
+            this.checkBoxMegaBossFatesEnabledSetting.Size = new System.Drawing.Size(30, 30);
+            this.checkBoxMegaBossFatesEnabledSetting.TabIndex = 23;
+            this.checkBoxMegaBossFatesEnabledSetting.Text = "Mega-Boss FATEs Enabled";
+            this.checkBoxMegaBossFatesEnabledSetting.UseVisualStyleBackColor = true;
+            this.checkBoxMegaBossFatesEnabledSetting.CheckedChanged += new System.EventHandler(this.OnMegaBossFatesEnabledChanged);
+            // 
+            // labelMegaBossFatesEnabledSetting
+            // 
+            this.labelMegaBossFatesEnabledSetting.AutoSize = true;
+            this.labelMegaBossFatesEnabledSetting.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMegaBossFatesEnabledSetting.Location = new System.Drawing.Point(15, 68);
+            this.labelMegaBossFatesEnabledSetting.Name = "labelMegaBossFatesEnabledSetting";
+            this.labelMegaBossFatesEnabledSetting.Size = new System.Drawing.Size(191, 18);
+            this.labelMegaBossFatesEnabledSetting.TabIndex = 22;
+            this.labelMegaBossFatesEnabledSetting.Text = "Mega-Boss FATEs Enabled:";
             // 
             // labelMegaBossFatesTitle
             // 
@@ -2132,8 +2367,8 @@ namespace Oracle.Forms
             this.tabPageDowntimeMoveToLocation.ResumeLayout(false);
             this.tabPageDowntimeGrindMobs.ResumeLayout(false);
             this.tabPageDowntimeGrindMobs.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMobMaxLevelAboveSetting)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMobMinLevelBelowSetting)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMobMaximumLevelAboveSetting)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMobMinimumLevelBelowSetting)).EndInit();
             this.tabPageDowntimeDoNothing.ResumeLayout(false);
             this.tabPageZoneChanging.ResumeLayout(false);
             this.tabPageZoneChanging.PerformLayout();
@@ -2274,7 +2509,7 @@ namespace Oracle.Forms
         private System.Windows.Forms.Label labelFateSelectStrategySetting;
         private System.Windows.Forms.ComboBox comboBoxFateSelectStrategySetting;
         private System.Windows.Forms.Label labelFateSelectionDescription;
-        private System.Windows.Forms.ComboBox comboBoxDowntimeBehaviourSetting;
+        private System.Windows.Forms.ComboBox comboBoxFateWaitModeSetting;
         private System.Windows.Forms.Label labelDowntimeBehaviourSetting;
         private MaterialSkin.Controls.MaterialTabControl tabControllerDowntime;
         private System.Windows.Forms.TabPage tabPageDowntimeReturnToAetheryte;
@@ -2295,8 +2530,8 @@ namespace Oracle.Forms
         private System.Windows.Forms.Label labelZoneChangeEnabledSetting;
         private System.Windows.Forms.Label labelMobMaxLevelAboveSetting;
         private System.Windows.Forms.Label labelMobMinLevelBelowSetting;
-        private System.Windows.Forms.NumericUpDown numericUpDownMobMinLevelBelowSetting;
-        private System.Windows.Forms.NumericUpDown numericUpDownMobMaxLevelAboveSetting;
+        private System.Windows.Forms.NumericUpDown numericUpDownMobMinimumLevelBelowSetting;
+        private System.Windows.Forms.NumericUpDown numericUpDownMobMaximumLevelAboveSetting;
         private System.Windows.Forms.DataGridView dataGridViewZoneChangeSettings;
         private System.Windows.Forms.Label labelZoneChangeTip;
         private MaterialSkin.Controls.MaterialRaisedButton buttonResetZoneLevelsToDefault;
@@ -2312,10 +2547,24 @@ namespace Oracle.Forms
         private MaterialSkin.Controls.MaterialCheckBox checkBoxRunProblematicFatesSetting;
         private System.Windows.Forms.Label labelRunProblematicFatesWarning;
         private System.Windows.Forms.Label labelRunProblematicFatesSetting;
-        private MaterialSkin.Controls.MaterialCheckBox checkBoxIgnoreLowDurationFateSetting;
+        private MaterialSkin.Controls.MaterialCheckBox checkBoxIgnoreLowDurationUnstartedFateSetting;
         private System.Windows.Forms.Label labelIgnoreLowDurationFatesSetting;
         private System.Windows.Forms.Label labelLowDurationTimeSetting;
-        private MaterialSkin.Controls.MaterialSingleLineTextField textBoxLowDurationFateSetting;
+        private MaterialSkin.Controls.MaterialSingleLineTextField textBoxLowRemainingFateDurationSetting;
         private System.Windows.Forms.Label labelLowDurationTimeSettingSuffix;
+        private MaterialSkin.Controls.MaterialCheckBox checkBoxWaitForChainFateSetting;
+        private Label labelWaitForChainFateSetting;
+        private MaterialSkin.Controls.MaterialCheckBox checkBoxKillFatesEnabledSetting;
+        private Label labelKillFatesEnabledSetting;
+        private MaterialSkin.Controls.MaterialCheckBox checkBoxCollectFatesEnabledSetting;
+        private Label labelCollectFatesEnabledSetting;
+        private MaterialSkin.Controls.MaterialCheckBox checkBoxEscortFatesEnabledSetting;
+        private Label labelEscortFatesEnabledSetting;
+        private MaterialSkin.Controls.MaterialCheckBox checkBoxDefenceFatesEnabledSetting;
+        private Label labelDefenceFatesEnabledSetting;
+        private MaterialSkin.Controls.MaterialCheckBox checkBoxBossFatesEnabledSetting;
+        private Label labelBossFatesEnabledSetting;
+        private MaterialSkin.Controls.MaterialCheckBox checkBoxMegaBossFatesEnabledSetting;
+        private Label labelMegaBossFatesEnabledSetting;
     }
 }
