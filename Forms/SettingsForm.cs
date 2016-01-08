@@ -108,15 +108,59 @@ namespace Oracle.Forms
         private void ConfigureControls()
         {
             this.labelVersionInformation.Text = "Current Version: " + Oracle.Version;
+            this.ConfigureGeneralTabControls();
+            this.ConfigureFateTabControls();
+            this.ConfigureRuntimeDependentControls();
+        }
 
-            // General settings
+        private void ConfigureFateTabControls()
+        {
+            // General FATE settings.
+            this.numericUpDownFateMinimumLevelBelowSetting.Value = OracleSettings.Instance.FateMinimumLevelBelow;
+            this.numericUpDownFateMaximumLevelAboveSetting.Value = OracleSettings.Instance.FateMaximumLevelAbove;
+            this.checkBoxWaitForChainFateSetting.Checked = OracleSettings.Instance.WaitForChainFates;
+            this.textBoxChainFateWaitTimeoutSetting.Text = OracleSettings.Instance.ChainFateWaitTimeout.ToString();
+            this.textBoxChainFateWaitTimeoutSetting.TextAlign(HorizontalAlignment.Center);
+            this.checkBoxIgnoreLowDurationUnstartedFateSetting.Checked = OracleSettings.Instance.IgnoreLowDurationUnstartedFates;
+            this.textBoxLowRemainingFateDurationSetting.Text = OracleSettings.Instance.LowRemainingFateDuration.ToString();
+            this.textBoxLowRemainingFateDurationSetting.TextAlign(HorizontalAlignment.Center);
+            this.checkBoxRunProblematicFatesSetting.Checked = OracleSettings.Instance.RunProblematicFates;
+
+            // Kill FATE settings.
+            this.checkBoxKillFatesEnabledSetting.Checked = OracleSettings.Instance.KillFatesEnabled;
+
+            // Collect FATE settings.
+            this.checkBoxCollectFatesEnabledSetting.Checked = OracleSettings.Instance.CollectFatesEnabled;
+
+            // Escort FATE settings.
+            this.checkBoxEscortFatesEnabledSetting.Checked = OracleSettings.Instance.EscortFatesEnabled;
+
+            // Defence FATE settings.
+            this.checkBoxDefenceFatesEnabledSetting.Checked = OracleSettings.Instance.DefenceFatesEnabled;
+
+            // Boss FATE settings.
+            this.checkBoxBossFatesEnabledSetting.Checked = OracleSettings.Instance.BossFatesEnabled;
+
+            // Mega-Boss FATE settings.
+            this.checkBoxMegaBossFatesEnabledSetting.Checked = OracleSettings.Instance.MegaBossFatesEnabled;
+        }
+
+        private void ConfigureGeneralTabControls()
+        {
+            // Oracle Mode settings.
             this.comboBoxOracleModeSetting.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
             this.tabControllerOracleMode.SelectedIndex = (int) OracleSettings.Instance.OracleOperationMode;
             this.textBoxSpecificFateNameSetting.Text = OracleSettings.Instance.SpecificFateName;
+
+            // Fate Selection settings.
             this.comboBoxFateSelectStrategySetting.SelectedIndex = (int) OracleSettings.Instance.FateSelectMode;
+
+            // Downtime settings.
             this.comboBoxFateWaitModeSetting.SelectedIndex = (int) OracleSettings.Instance.FateWaitMode;
             this.numericUpDownMobMaximumLevelAboveSetting.Value = OracleSettings.Instance.MobMaximumLevelAbove;
             this.numericUpDownMobMinimumLevelBelowSetting.Value = OracleSettings.Instance.MobMinimumLevelBelow;
+
+            // Zone Changing settings.
             this.checkBoxZoneChangingEnabledSetting.Checked = OracleSettings.Instance.ZoneChangingEnabled;
             this.checkBoxBindHomePointSetting.Checked = OracleSettings.Instance.BindHomePoint;
             this.ColumnAetheryte.DataSource = GenerateAetheryteNameTable();
@@ -128,23 +172,10 @@ namespace Oracle.Forms
             }
 
             this.dataGridViewZoneChangeSettings.CellValueChanged += this.OnDataGridViewCellValueChanged;
+        }
 
-            // FATE settings
-            this.numericUpDownFateMinimumLevelBelowSetting.Value = OracleSettings.Instance.FateMinimumLevelBelow;
-            this.numericUpDownFateMaximumLevelAboveSetting.Value = OracleSettings.Instance.FateMaximumLevelAbove;
-            this.checkBoxRunProblematicFatesSetting.Checked = OracleSettings.Instance.RunProblematicFates;
-            this.checkBoxIgnoreLowDurationUnstartedFateSetting.Checked = OracleSettings.Instance.IgnoreLowDurationUnstartedFates;
-            this.textBoxLowRemainingFateDurationSetting.Text = OracleSettings.Instance.LowRemainingFateDuration.ToString();
-            this.textBoxLowRemainingFateDurationSetting.TextAlign(HorizontalAlignment.Center);
-            this.checkBoxWaitForChainFateSetting.Checked = OracleSettings.Instance.WaitForChainFates;
-            this.checkBoxKillFatesEnabledSetting.Checked = OracleSettings.Instance.KillFatesEnabled;
-            this.checkBoxCollectFatesEnabledSetting.Checked = OracleSettings.Instance.CollectFatesEnabled;
-            this.checkBoxEscortFatesEnabledSetting.Checked = OracleSettings.Instance.EscortFatesEnabled;
-            this.checkBoxDefenceFatesEnabledSetting.Checked = OracleSettings.Instance.DefenceFatesEnabled;
-            this.checkBoxBossFatesEnabledSetting.Checked = OracleSettings.Instance.BossFatesEnabled;
-            this.checkBoxMegaBossFatesEnabledSetting.Checked = OracleSettings.Instance.MegaBossFatesEnabled;
-
-            // RebornBuddy dependent settings
+        private void ConfigureRuntimeDependentControls()
+        {
             try
             {
                 this.labelDowntimeCurrentZoneValue.Text = WorldManager.ZoneId.ToString();
@@ -185,6 +216,19 @@ namespace Oracle.Forms
         private void OnBossFatesEnabledChanged(object sender, EventArgs e)
         {
             OracleSettings.Instance.BossFatesEnabled = this.checkBoxBossFatesEnabledSetting.Checked;
+        }
+
+        private void OnChainFateWaitTimeChanged(object sender, EventArgs e)
+        {
+            OracleSettings.Instance.ChainFateWaitTimeout = int.Parse(this.textBoxChainFateWaitTimeoutSetting.Text);
+        }
+
+        private void OnChainFateWaitTimeKeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
 
         private void OnCloseButtonClick(object sender, EventArgs e)
@@ -292,6 +336,11 @@ namespace Oracle.Forms
             Process.Start(startInfo);
         }
 
+        private void OnEnterChainFateWaitTime(object sender, EventArgs e)
+        {
+            this.textBoxChainFateWaitTimeoutSetting.SelectAll();
+        }
+
         private void OnEnterKeyDownDropFocus(object sender, KeyEventArgs e)
         {
             if (e.KeyCode != Keys.Enter)
@@ -351,7 +400,7 @@ namespace Oracle.Forms
             OracleSettings.Instance.KillFatesEnabled = this.checkBoxKillFatesEnabledSetting.Checked;
         }
 
-        private void OnLowDurationFateSettingKeyPress(object sender, KeyPressEventArgs e)
+        private void OnLowDurationFateKeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
