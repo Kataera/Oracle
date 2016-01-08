@@ -63,10 +63,10 @@ namespace Oracle.Behaviour.Tasks.Utilities
                     {
                         using (var sr = new StreamReader(gzip))
                         {
-                            Logger.SendLog("Unpacking the mesh file.");
+                            Logger.SendDebugLog("Unpacking the mesh file.");
                             var json = await Coroutine.ExternalTask(sr.ReadToEndAsync());
 
-                            Logger.SendLog("Deserialising the mesh file.");
+                            Logger.SendDebugLog("Deserialising the mesh file.");
                             var flightMesh =
                                 await
                                     Coroutine.ExternalTask(Task.Factory.StartNew(() => JsonConvert.DeserializeObject<OracleFlightMesh>(json)));

@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -103,7 +104,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                     }
                     else
                     {
-                        Logger.SendLog("Timed out trying to teleport, running to FATE instead.");
+                        Logger.SendErrorLog("Timed out trying to teleport, running to FATE instead.");
                     }
                 }
             }
@@ -139,18 +140,100 @@ namespace Oracle.Behaviour.Tasks.Utilities
             Navigator.Stop();
         }
 
-        private static Vector3 GenerateLandingSpot()
+        private static async Task<IEnumerable<Vector3>> GenerateFlightPath(FateData currentFate)
         {
-            var currentFate = OracleManager.GetCurrentFateData();
-            return MathEx.GetPointAt(currentFate.Location, currentFate.Radius * Convert.ToSingle(MathEx.Random(0.1, 0.3)),
-                Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.25 * Math.PI, 0.25 * Math.PI)));
+            Logger.SendLog("Generating new flight path to FATE.");
+            var flightPathTimer = Stopwatch.StartNew();
+
+            var aStar = new AStarNavigator(OracleManager.ZoneFlightMesh.Graph);
+            var startingNode = GetClosestNodeToLocation(Core.Player.Location);
+            var endingNode = GetClosestNodeToFate(currentFate);
+
+            if (startingNode == null || endingNode == null)
+            {
+                Logger.SendErrorLog("Couldn't generate a flight path to the FATE, blacklisting it and selecting another.");
+                Blacklist.Add(currentFate.Id, BlacklistFlags.Node, currentFate.TimeLeft, "Could not generate flight path.");
+                await ClearFate("Couldn't generate a flight path to the FATE");
+                return null;
+            }
+
+            var path = aStar.GeneratePath(startingNode.Position, endingNode.Position).ToList();
+
+            if (!path.Any())
+            {
+                Logger.SendErrorLog("Couldn't generate a flight path to the FATE, blacklisting it and selecting another.");
+                Blacklist.Add(currentFate.Id, BlacklistFlags.Node, currentFate.TimeLeft, "Could not generate flight path.");
+                await ClearFate("Couldn't generate a flight path to the FATE");
+                return null;
+            }
+
+            // Skip first node if we can to prevent bot-like mid-air direction change.
+            if (path.Count > 1)
+            {
+                Vector3 collision;
+                if (!WorldManager.Raycast(Core.Player.Location, path[1], out collision))
+                {
+                    Logger.SendDebugLog("Skipping first node, no collision detected.");
+                    path.Remove(path.First());
+                }
+                else
+                {
+                    Logger.SendDebugLog("Not skipping first node, collision detected at: " + collision);
+                }
+            }
+
+            flightPathTimer.Stop();
+            Logger.SendDebugLog("Flight path generated in " + flightPathTimer.ElapsedMilliseconds + " ms.");
+
+            return path;
         }
 
-        private static Node GetClosestEndingNodeToFate(FateData fate)
+        private static async Task<Vector3> GenerateLandingSpot()
+        {
+            Logger.SendDebugLog("Generating a landing spot.");
+
+            var currentFate = OracleManager.GetCurrentFateData();
+            var elevatedFateLocation = currentFate.Location;
+            elevatedFateLocation.Y = Core.Player.Location.Y;
+
+            var potentialLandingLocation = MathEx.GetPointAt(elevatedFateLocation,
+                currentFate.Radius * Convert.ToSingle(MathEx.Random(0.5, 0.9)),
+                Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.25 * Math.PI, 0.25 * Math.PI)));
+
+            while (await CommonTasks.CanLand(potentialLandingLocation) != CanLandResult.Yes)
+            {
+                potentialLandingLocation = MathEx.GetPointAt(elevatedFateLocation,
+                    currentFate.Radius * Convert.ToSingle(MathEx.Random(0.5, 0.9)),
+                    Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.25 * Math.PI, 0.25 * Math.PI)));
+
+                await Coroutine.Yield();
+            }
+
+            Vector3 collision;
+            if (WorldManager.Raycast(Core.Player.Location, potentialLandingLocation, out collision))
+            {
+                Logger.SendDebugLog("Landing spot generation failed: there's obstacles in the way.");
+                return Core.Player.Location;
+            }
+
+            Logger.SendDebugLog("Landing spot generation succeeded.");
+            return potentialLandingLocation;
+        }
+
+        private static Node GetClosestNodeToFate(FateData fate)
         {
             var potentialNodes = OracleManager.ZoneFlightMesh.Graph.Nodes
                                               .OrderBy(kvp => kvp.Value.Position.Distance(fate.Location))
                                               .Where(kvp => kvp.Value.Position.Y > fate.Location.Y);
+
+            return potentialNodes.FirstOrDefault().Value;
+        }
+
+        private static Node GetClosestNodeToLocation(Vector3 location)
+        {
+            var potentialNodes = OracleManager.ZoneFlightMesh.Graph.Nodes
+                                              .OrderBy(kvp => kvp.Value.Position.Distance(location))
+                                              .Where(kvp => kvp.Value.Position.Y > location.Y);
 
             return potentialNodes.FirstOrDefault().Value;
         }
@@ -172,20 +255,25 @@ namespace Oracle.Behaviour.Tasks.Utilities
         {
             Navigator.PlayerMover.MoveStop();
 
-            var landingSpot = GenerateLandingSpot();
-            Logger.SendLog("Attempting to land at: " + landingSpot);
-            while (Core.Player.Distance2D(landingSpot) > 2f)
+            var landingSpot = await GenerateLandingSpot();
+            if (!landingSpot.Equals(Core.Player.Location))
             {
-                Navigator.PlayerMover.MoveTowards(landingSpot);
-                await Coroutine.Yield();
+                Logger.SendLog("Moving to " + landingSpot + " in order to land.");
+                while (Core.Player.Location.Distance2D(landingSpot) > 2f)
+                {
+                    Navigator.PlayerMover.MoveTowards(landingSpot);
+                    await Coroutine.Yield();
+                }
+
+                Navigator.PlayerMover.MoveStop();
             }
 
-            Navigator.PlayerMover.MoveStop();
+            Logger.SendLog("Attempting to land.");
             await Coroutine.Wait(TimeSpan.FromSeconds(OracleSettings.Instance.LandingTimeOut), () => CommonTasks.Land().IsCompleted);
 
             if (MovementManager.IsFlying)
             {
-                Logger.SendLog("Landing failed, trying another location.");
+                Logger.SendErrorLog("Landing failed, trying another location.");
                 await Land();
                 return true;
             }
@@ -204,47 +292,12 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return true;
             }
 
-            Logger.SendLog("Generating new flight path to FATE.");
-            var flightPathTimer = Stopwatch.StartNew();
             var originalFateLocation = currentFate.Location;
-            var aStar = new AStarNavigator(OracleManager.ZoneFlightMesh.Graph);
-            var endingNode = GetClosestEndingNodeToFate(currentFate);
-
-            if (endingNode == null)
+            var path = await GenerateFlightPath(currentFate);
+            if (path == null)
             {
-                Logger.SendErrorLog("Couldn't generate a flight path to the FATE, blacklisting it and selecting another.");
-                Blacklist.Add(currentFate.Id, BlacklistFlags.Node, currentFate.TimeLeft, "Could not generate flight path.");
-                await ClearFate("Couldn't generate a flight path to the FATE");
-                return true;
+                return false;
             }
-
-            var path = aStar.GeneratePath(Core.Player.Location, endingNode.Position).ToList();
-
-            if (!path.Any())
-            {
-                Logger.SendErrorLog("Couldn't generate a flight path to the FATE, blacklisting it and selecting another.");
-                Blacklist.Add(currentFate.Id, BlacklistFlags.Node, currentFate.TimeLeft, "Could not generate flight path.");
-                await ClearFate("Couldn't generate a flight path to the FATE");
-                return true;
-            }
-
-            // Skip first node if we can to prevent bot-like mid-air direction change.
-            if (path.Count > 1)
-            {
-                Vector3 collision;
-                if (!WorldManager.Raycast(Core.Player.Location, path[1], out collision))
-                {
-                    Logger.SendDebugLog("Skipping first node, no collision detected.");
-                    path.Remove(path.First());
-                }
-                else
-                {
-                    Logger.SendDebugLog("Not skipping first node, collision detected at: " + collision);
-                }
-            }
-
-            flightPathTimer.Stop();
-            Logger.SendLog("Flight path generated in " + flightPathTimer.ElapsedMilliseconds + " ms.");
 
             if (!MovementManager.IsFlying)
             {
@@ -283,7 +336,6 @@ namespace Oracle.Behaviour.Tasks.Utilities
                     if (Core.Player.Location.Distance2D(currentFate.Location) < Core.Player.Location.Distance2D(step))
                     {
                         Logger.SendDebugLog("FATE centre is closer than next hop. Ending navigation early.");
-
                         await Land();
                         return true;
                     }

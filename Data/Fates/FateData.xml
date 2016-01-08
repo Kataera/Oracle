@@ -3933,6 +3933,7 @@
     <Level>50</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <PreferredTargetId>4010</PreferredTargetId>
     <ChainID>841</ChainID>
   </Fate>
   <Fate>
