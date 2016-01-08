@@ -23,6 +23,7 @@ namespace MaterialSkin.Controls
         public const int WmRbuttondown = 0x0204;
         private const int ActionBarHeight = 40;
         private const int BorderWidth = 7;
+        private const int CsDropshadow = 0x00020000;
         private const int Htbottom = 15;
         private const int Htbottomleft = 16;
         private const int Htbottomright = 17;
@@ -53,6 +54,8 @@ namespace MaterialSkin.Controls
         private const int WsMinimizebox = 0x20000;
         private const int WsSysmenu = 0x00080000;
 
+        public bool Maximized;
+
         private readonly Cursor[] resizeCursors =
         {
             Cursors.SizeNESW, Cursors.SizeWE, Cursors.SizeNWSE, Cursors.SizeWE,
@@ -75,8 +78,6 @@ namespace MaterialSkin.Controls
         private ButtonState buttonState = ButtonState.None;
         private bool headerMouseDown;
         private Rectangle maxButtonBounds;
-
-        private bool maximized;
 
         private Rectangle minButtonBounds;
         private Point previousLocation;
@@ -146,7 +147,8 @@ namespace MaterialSkin.Controls
 
                 // WS_SYSMENU: Trigger the creation of the system menu
                 // WS_MINIMIZEBOX: Allow minimizing from taskbar
-                par.Style = par.Style | WsMinimizebox | WsSysmenu; // Turn on the WS_MINIMIZEBOX style flag
+                par.Style |= WsMinimizebox | WsSysmenu; // Turn on the WS_MINIMIZEBOX style flag
+                par.ClassStyle |= CsDropshadow;
                 return par;
             }
         }
@@ -188,7 +190,7 @@ namespace MaterialSkin.Controls
             }
             this.UpdateButtons(e);
 
-            if (e.Button == MouseButtons.Left && !this.maximized)
+            if (e.Button == MouseButtons.Left && !this.Maximized)
             {
                 this.ResizeForm(this.resizeDir);
             }
@@ -221,28 +223,28 @@ namespace MaterialSkin.Controls
                 var isChildUnderMouse = this.GetChildAtPoint(e.Location) != null;
 
                 if (e.Location.X < BorderWidth && e.Location.Y > this.Height - BorderWidth && !isChildUnderMouse &&
-                    !this.maximized)
+                    !this.Maximized)
                 {
                     this.resizeDir = ResizeDirection.BottomLeft;
                     this.Cursor = Cursors.SizeNESW;
                 }
-                else if (e.Location.X < BorderWidth && !isChildUnderMouse && !this.maximized)
+                else if (e.Location.X < BorderWidth && !isChildUnderMouse && !this.Maximized)
                 {
                     this.resizeDir = ResizeDirection.Left;
                     this.Cursor = Cursors.SizeWE;
                 }
                 else if (e.Location.X > this.Width - BorderWidth && e.Location.Y > this.Height - BorderWidth &&
-                         !isChildUnderMouse && !this.maximized)
+                         !isChildUnderMouse && !this.Maximized)
                 {
                     this.resizeDir = ResizeDirection.BottomRight;
                     this.Cursor = Cursors.SizeNWSE;
                 }
-                else if (e.Location.X > this.Width - BorderWidth && !isChildUnderMouse && !this.maximized)
+                else if (e.Location.X > this.Width - BorderWidth && !isChildUnderMouse && !this.Maximized)
                 {
                     this.resizeDir = ResizeDirection.Right;
                     this.Cursor = Cursors.SizeWE;
                 }
-                else if (e.Location.Y > this.Height - BorderWidth && !isChildUnderMouse && !this.maximized)
+                else if (e.Location.Y > this.Height - BorderWidth && !isChildUnderMouse && !this.Maximized)
                 {
                     this.resizeDir = ResizeDirection.Bottom;
                     this.Cursor = Cursors.SizeNS;
@@ -403,9 +405,9 @@ namespace MaterialSkin.Controls
 
             if (m.Msg == WmLbuttondblclk)
             {
-                this.MaximizeWindow(!this.maximized);
+                this.MaximizeWindow(!this.Maximized);
             }
-            else if (m.Msg == WmMousemove && this.maximized &&
+            else if (m.Msg == WmMousemove && this.Maximized &&
                      (this.statusBarBounds.Contains(this.PointToClient(Cursor.Position))
                       || this.actionBarBounds.Contains(this.PointToClient(Cursor.Position))) &&
                      !(this.minButtonBounds.Contains(this.PointToClient(Cursor.Position))
@@ -414,7 +416,7 @@ namespace MaterialSkin.Controls
             {
                 if (this.headerMouseDown)
                 {
-                    this.maximized = false;
+                    this.Maximized = false;
                     this.headerMouseDown = false;
 
                     var mousePoint = this.PointToClient(Cursor.Position);
@@ -446,7 +448,7 @@ namespace MaterialSkin.Controls
                        || this.maxButtonBounds.Contains(this.PointToClient(Cursor.Position))
                        || this.xButtonBounds.Contains(this.PointToClient(Cursor.Position))))
             {
-                if (!this.maximized)
+                if (!this.Maximized)
                 {
                     ReleaseCapture();
                     SendMessage(this.Handle, WmNclbuttondown, HtCaption, 0);
@@ -508,7 +510,7 @@ namespace MaterialSkin.Controls
                 return;
             }
 
-            this.maximized = maximize;
+            this.Maximized = maximize;
 
             if (maximize)
             {
@@ -619,7 +621,7 @@ namespace MaterialSkin.Controls
 
                     if (oldState == ButtonState.MaxDown)
                     {
-                        this.MaximizeWindow(!this.maximized);
+                        this.MaximizeWindow(!this.Maximized);
                     }
                 }
                 else if (this.ControlBox && this.xButtonBounds.Contains(e.Location))

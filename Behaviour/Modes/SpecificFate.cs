@@ -38,7 +38,7 @@ namespace Oracle.Behaviour.Modes
     {
         public static async Task<bool> Main()
         {
-            if (OracleSettings.Instance.SpecificFate == string.Empty)
+            if (OracleSettings.Instance.SpecificFateName == string.Empty)
             {
                 Logger.SendErrorLog("Please set a specific FATE before starting the bot.");
                 TreeRoot.Stop("No FATE set.");

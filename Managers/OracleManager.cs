@@ -177,7 +177,7 @@ namespace Oracle.Managers
             }
 
             if (OracleSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate
-                && !fate.Name.Equals(OracleSettings.Instance.SpecificFate))
+                && !fate.Name.Equals(OracleSettings.Instance.SpecificFateName))
             {
                 return false;
             }
@@ -194,7 +194,7 @@ namespace Oracle.Managers
 
             if (OracleSettings.Instance.IgnoreLowDurationUnstartedFates)
             {
-                if (Math.Abs(fate.Progress) < 0.5f && fate.TimeLeft < TimeSpan.FromSeconds(OracleSettings.Instance.LowRemainingDuration))
+                if (Math.Abs(fate.Progress) < 0.5f && fate.TimeLeft < TimeSpan.FromSeconds(OracleSettings.Instance.LowRemainingFateDuration))
                 {
                     return false;
                 }
@@ -220,12 +220,12 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (fate.Level > Core.Player.ClassLevel + OracleSettings.Instance.FateMaxLevelsAbove)
+            if (fate.Level > Core.Player.ClassLevel + OracleSettings.Instance.FateMaximumLevelAbove)
             {
                 return false;
             }
 
-            if (fate.Level < Core.Player.ClassLevel - OracleSettings.Instance.FateMaxLevelsBelow)
+            if (fate.Level < Core.Player.ClassLevel - OracleSettings.Instance.FateMinimumLevelBelow)
             {
                 return false;
             }
@@ -235,11 +235,6 @@ namespace Oracle.Managers
 
         public static bool FateProgressionMet(FateData fate)
         {
-            if (OracleSettings.Instance.WaitAtFateForProgress)
-            {
-                return true;
-            }
-
             if (OracleDatabase.GetFateFromFateData(fate).Type != FateType.Boss
                 && OracleDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
             {
@@ -252,8 +247,20 @@ namespace Oracle.Managers
                 return true;
             }
 
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss
+                && OracleSettings.Instance.WaitAtBossFateForProgress)
+            {
+                return true;
+            }
+
             if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss
                 && fate.Progress >= OracleSettings.Instance.MegaBossEngagePercentage)
+            {
+                return true;
+            }
+
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss
+                && OracleSettings.Instance.WaitAtMegaBossFateForProgress)
             {
                 return true;
             }

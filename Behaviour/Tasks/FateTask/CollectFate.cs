@@ -22,6 +22,7 @@
     along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -60,6 +61,11 @@ namespace Oracle.Behaviour.Tasks.FateTask
             {
                 if (GameObjectManager.GetObjectByNPCId(oracleFate.NpcId) != null)
                 {
+                    if (Core.Player.InCombat)
+                    {
+                        return false;
+                    }
+
                     if (fateItemCount >= OracleSettings.Instance.CollectFateTurnInAtAmount)
                     {
                         Logger.SendLog("Turning in what we've collected.");
@@ -68,7 +74,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 }
             }
 
-            if (currentFate.Status != FateStatus.NOTACTIVE && currentFate.Status == FateStatus.COMPLETE)
+            if (currentFate.Status != FateStatus.NOTACTIVE && currentFate.TimeLeft < TimeSpan.FromMinutes(1))
             {
                 if (Core.Player.InCombat)
                 {
@@ -77,8 +83,13 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
                 if (fateItemCount >= 1)
                 {
-                    Logger.SendLog("FATE is complete, turning in remaining items.");
+                    Logger.SendLog("FATE is ending, turning in remaining items.");
                     await TurnInFateItems(GameObjectManager.GetObjectByNPCId(oracleFate.NpcId));
+
+                    if (fateItemCount >= 1)
+                    {
+                        return false;
+                    }
                 }
 
                 await ClearFate();
@@ -100,7 +111,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static async Task ClearFate()
         {
-            await OracleManager.ClearCurrentFate("Current FATE is finished.");
+            await OracleManager.ClearCurrentFate("Current FATE is ending or is finished.");
         }
 
         private static bool IsViableTarget(BattleCharacter target)
@@ -155,7 +166,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static async Task<bool> TurnInFateItems(GameObject turnInNpc)
         {
-            if (Core.Player.Distance2D(turnInNpc.Location) > 5f)
+            if (Core.Player.Distance2D(turnInNpc.Location) > 4f)
             {
                 await MoveToTurnInNpc(turnInNpc);
             }
@@ -166,7 +177,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
             }
 
             turnInNpc.Interact();
-            await Coroutine.Sleep(500);
+            await Coroutine.Sleep(OracleSettings.Instance.ActionDelay);
             var result = await SkipDialogue.Main() && await TurnInItem.Main() && await SkipDialogue.Main();
 
             if (result)

@@ -43,6 +43,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -105,7 +106,46 @@
     <Compile Include="Behaviour\Tasks\ZoneChangeHandler.cs" />
     <Compile Include="Data\OracleFlightMesh.cs" />
     <Compile Include="Enumerations\OracleOperationMode.cs" />
+    <Compile Include="Forms\MaterialSkin\Controls\MaterialCheckbox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\MaterialSkin\Controls\MaterialContextMenuStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\MaterialSkin\Controls\MaterialDivider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\MaterialSkin\Controls\MaterialFlatButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\MaterialSkin\Controls\MaterialForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MaterialSkin\Controls\MaterialLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\MaterialSkin\Controls\MaterialListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\MaterialSkin\Controls\MaterialPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\MaterialSkin\Controls\MaterialRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\MaterialSkin\Controls\MaterialRaisedButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\MaterialSkin\Controls\MaterialSingleLineTextField.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\MaterialSkin\Controls\MaterialTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\MaterialSkin\Controls\MaterialTabSelector.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\MaterialSkin\Controls\MaterialTabSelectorVertical.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Managers\OracleManager.cs" />
@@ -130,58 +170,6 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Forms\MaterialSkin\ColorScheme.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialCheckbox.cs">
-      <SubType>Component</SubType>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialContextMenuStrip.cs">
-      <SubType>Component</SubType>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialDivider.cs">
-      <SubType>Component</SubType>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialFlatButton.cs">
-      <SubType>Component</SubType>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialForm.cs">
-      <SubType>Form</SubType>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialLabel.cs">
-      <SubType>Component</SubType>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialListView.cs">
-      <SubType>Component</SubType>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialRadioButton.cs">
-      <SubType>Component</SubType>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialRaisedButton.cs">
-      <SubType>Component</SubType>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialSingleLineTextField.cs">
-      <SubType>Component</SubType>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialTabControl.cs">
-      <SubType>Component</SubType>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialTabSelector.cs">
-      <SubType>Component</SubType>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialTabSelectorVertical.cs">
-      <SubType>Component</SubType>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Forms\MaterialSkin\DrawHelper.cs">
@@ -216,7 +204,6 @@
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

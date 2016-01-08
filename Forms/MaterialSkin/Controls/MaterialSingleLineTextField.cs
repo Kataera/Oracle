@@ -595,6 +595,11 @@ namespace MaterialSkin.Controls
             this.baseTextBox.SelectAll();
         }
 
+        public void TextAlign(HorizontalAlignment alignment)
+        {
+            this.baseTextBox.TextAlign = alignment;
+        }
+
         protected override void OnCreateControl()
         {
             base.OnCreateControl();

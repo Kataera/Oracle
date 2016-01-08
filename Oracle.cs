@@ -23,7 +23,6 @@
 */
 
 using System;
-using System.Linq;
 using System.Reflection;
 
 using ff14bot.AClasses;
@@ -34,6 +33,7 @@ using ff14bot.Navigation;
 
 using Oracle.Behaviour;
 using Oracle.Behaviour.PoiHooks;
+using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Enumerations;
 using Oracle.Forms;
 using Oracle.Helpers;
@@ -50,8 +50,6 @@ namespace Oracle
         private static bool playerFaceTargetOnAction;
 
         private static bool playerFlightMode;
-
-        private static bool reenableFlightPlugin;
 
         private static Composite root;
 
@@ -106,7 +104,7 @@ namespace Oracle
         {
             Logger.SendLog("Initialising Oracle.");
 
-            // TODO: Implement rest of Updater.
+            // TODO: Implement.
             if (Updater.UpdateIsAvailable())
             {
                 Logger.SendLog("An update for Oracle is available.");
@@ -181,6 +179,11 @@ namespace Oracle
             OracleManager.OracleDatabase = null;
             OracleManager.ZoneFlightMesh = null;
 
+            if (LoadFlightMesh.MeshFileStream != null)
+            {
+                LoadFlightMesh.MeshFileStream.Dispose();
+            }
+
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
             if (navProvider != null)
             {
@@ -188,6 +191,7 @@ namespace Oracle
             }
 
             Navigator.NavigationProvider = null;
+
             CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
             Blacklist.Flush();
 
@@ -203,6 +207,7 @@ namespace Oracle
             foreach (var hook in TreeHooks.Instance.Hooks)
             {
                 Logger.SendDebugLog(hook.Key + ": " + hook.Value.Count + " Composite(s).");
+
                 var count = 0;
                 foreach (var composite in hook.Value)
                 {

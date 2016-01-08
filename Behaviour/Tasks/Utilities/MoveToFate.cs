@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,6 +35,7 @@ using Clio.Utilities;
 using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Enums;
+using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Settings;
@@ -55,6 +57,24 @@ namespace Oracle.Behaviour.Tasks.Utilities
             if (!ignoreCombat && GameObjectManager.Attackers.Any(attacker => attacker.IsValid) && !Core.Player.IsMounted)
             {
                 return false;
+            }
+
+            if (!ignoreCombat)
+            {
+                if (OracleManager.ZoneFlightMesh == null || OracleManager.ZoneFlightMesh.ZoneId != WorldManager.ZoneId)
+                {
+                    const ushort dravanianHinterlands = 398;
+                    const ushort churningMists = 400;
+
+                    if (WorldManager.ZoneId == dravanianHinterlands || WorldManager.ZoneId == churningMists)
+                    {
+                        await LoadFlightMesh.Main();
+                    }
+                    else
+                    {
+                        OracleManager.ZoneFlightMesh = null;
+                    }
+                }
             }
 
             if (!ignoreCombat && OracleSettings.Instance.TeleportIfQuicker && currentFate.IsValid)
@@ -85,13 +105,13 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 await Mount.MountUp();
             }
 
-            if (!WorldManager.CanFly || OracleManager.ZoneFlightMesh == null)
+            if (!ignoreCombat && WorldManager.CanFly && OracleManager.ZoneFlightMesh != null)
             {
-                await MoveWithNavigator(ignoreCombat);
+                await MoveWithFlightMesh();
             }
             else
             {
-                await MoveWithFlightMesh();
+                await MoveWithNavigator(ignoreCombat);
             }
 
             return true;
@@ -104,18 +124,27 @@ namespace Oracle.Behaviour.Tasks.Utilities
             Navigator.Stop();
         }
 
+        private static async Task ClearFate(string reason)
+        {
+            OracleManager.SetDoNotWaitFlag(true);
+            await OracleManager.ClearCurrentFate(reason, false);
+            Navigator.Stop();
+        }
+
         private static Vector3 GenerateLandingSpot()
         {
             var currentFate = OracleManager.GetCurrentFateData();
-            return MathEx.GetPointAt(currentFate.Location, currentFate.Radius * Convert.ToSingle(MathEx.Random(0.5, 1)),
+            return MathEx.GetPointAt(currentFate.Location, currentFate.Radius * Convert.ToSingle(MathEx.Random(0.1, 0.3)),
                 Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.25 * Math.PI, 0.25 * Math.PI)));
         }
 
-        private static Node GetClosestNodeToLocation(Vector3 location)
+        private static Node GetClosestEndingNodeToFate(FateData fate)
         {
-            return OracleManager.ZoneFlightMesh.Graph.Nodes
-                                .OrderBy(kvp => kvp.Value.Position.Distance(location))
-                                .FirstOrDefault(kvp => kvp.Value.Position.Y > location.Y).Value;
+            var potentialNodes = OracleManager.ZoneFlightMesh.Graph.Nodes
+                                              .OrderBy(kvp => kvp.Value.Position.Distance(fate.Location))
+                                              .Where(kvp => kvp.Value.Position.Y > fate.Location.Y);
+
+            return potentialNodes.FirstOrDefault().Value;
         }
 
         private static bool IsMountNeeded()
@@ -133,13 +162,9 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
         private static async Task<bool> Land()
         {
-            var landingSpot = GenerateLandingSpot();
-            while (await CommonTasks.CanLand(landingSpot) != CanLandResult.Yes)
-            {
-                landingSpot = GenerateLandingSpot();
-                await Coroutine.Yield();
-            }
+            Navigator.PlayerMover.MoveStop();
 
+            var landingSpot = GenerateLandingSpot();
             Logger.SendLog("Attempting to land at: " + landingSpot);
             while (Core.Player.Distance2D(landingSpot) > 2f)
             {
@@ -148,11 +173,13 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             Navigator.PlayerMover.MoveStop();
-            await CommonTasks.Land();
+            await Coroutine.Wait(TimeSpan.FromSeconds(OracleSettings.Instance.LandingTimeOut), () => CommonTasks.Land().IsCompleted);
 
             if (MovementManager.IsFlying)
             {
-                return false;
+                Logger.SendLog("Landing failed, trying another location.");
+                await Land();
+                return true;
             }
 
             Logger.SendLog("Landing successful.");
@@ -170,20 +197,55 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             Logger.SendLog("Generating new flight path to FATE.");
+            var flightPathTimer = Stopwatch.StartNew();
+            var originalFateLocation = currentFate.Location;
+            var aStar = new AStarNavigator(OracleManager.ZoneFlightMesh.Graph);
+            var endingNode = GetClosestEndingNodeToFate(currentFate);
+
+            if (endingNode == null)
+            {
+                Logger.SendErrorLog("Couldn't generate a flight path to the FATE, blacklisting it and selecting another.");
+                Blacklist.Add(currentFate.Id, BlacklistFlags.Node, currentFate.TimeLeft, "Could not generate flight path.");
+                await ClearFate("Couldn't generate a flight path to the FATE");
+                return true;
+            }
+
+            var path = aStar.GeneratePath(Core.Player.Location, endingNode.Position).ToList();
+
+            if (!path.Any())
+            {
+                Logger.SendErrorLog("Couldn't generate a flight path to the FATE, blacklisting it and selecting another.");
+                Blacklist.Add(currentFate.Id, BlacklistFlags.Node, currentFate.TimeLeft, "Could not generate flight path.");
+                await ClearFate("Couldn't generate a flight path to the FATE");
+                return true;
+            }
+
+            // Skip first node if we can to prevent bot-like mid-air direction change.
+            if (path.Count > 1)
+            {
+                Vector3 collision;
+                if (!WorldManager.Raycast(Core.Player.Location, path.First(), out collision))
+                {
+                    Logger.SendDebugLog("Skipping first node, no collision detected.");
+                    path.Remove(path.First());
+                }
+                else
+                {
+                    Logger.SendDebugLog("Not skipping first node, collision detected at: " + collision);
+                }
+            }
+
+            flightPathTimer.Stop();
+            Logger.SendLog("Flight path generated in " + flightPathTimer.ElapsedMilliseconds + " ms.");
 
             if (!MovementManager.IsFlying)
             {
                 await CommonTasks.TakeOff();
             }
 
-            var currentFateLocation = currentFate.Location;
-            var aStar = new AStarNavigator(OracleManager.ZoneFlightMesh.Graph);
-            var closestNode = GetClosestNodeToLocation(currentFateLocation);
-            var path = aStar.GeneratePath(Core.Player.Location, closestNode.Position);
-
             foreach (var step in path)
             {
-                while (Core.Player.Distance(step) > 1f)
+                while (Core.Player.Distance(step) > 2f)
                 {
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
@@ -209,10 +271,19 @@ namespace Oracle.Behaviour.Tasks.Utilities
                         await CommonTasks.TakeOff();
                     }
 
-                    // Did FATE move?
-                    currentFateLocation = currentFate.Location;
-                    if (!Equals(GetClosestNodeToLocation(currentFateLocation), closestNode))
+                    // Avoid overshooting the centre of the FATE.
+                    if (Core.Player.Location.Distance2D(currentFate.Location) < Core.Player.Location.Distance2D(step))
                     {
+                        Logger.SendDebugLog("FATE centre is closer than next hop. Ending navigation early.");
+
+                        await Land();
+                        return true;
+                    }
+
+                    // Did FATE move?
+                    if (currentFate.Location.Distance(originalFateLocation) > 50f)
+                    {
+                        Logger.SendDebugLog("FATE has moved significantly, recalculating flight path.");
                         await MoveWithFlightMesh();
                         return true;
                     }
@@ -223,11 +294,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 }
             }
 
-            while (MovementManager.IsFlying)
-            {
-                await Land();
-            }
-
+            await Land();
             return true;
         }
 

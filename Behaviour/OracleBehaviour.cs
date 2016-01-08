@@ -28,7 +28,6 @@ using Clio.Utilities;
 
 using ff14bot;
 using ff14bot.Helpers;
-using ff14bot.Managers;
 
 using Oracle.Behaviour.Modes;
 using Oracle.Behaviour.Tasks;
@@ -63,23 +62,9 @@ namespace Oracle.Behaviour
                 await BuildOracleDatabase.Main();
             }
 
-            // Temporary code, will fully implement when rest of meshes are finished.
-            if (OracleManager.ZoneFlightMesh == null || OracleManager.ZoneFlightMesh.ZoneId != WorldManager.ZoneId)
-            {
-                if (WorldManager.ZoneId == 400)
-                {
-                    await LoadFlightMesh.Main();
-                }
-                else
-                {
-                    OracleManager.ZoneFlightMesh = null;
-                }
-            }
-
             if (Poi.Current == null)
             {
                 Poi.Current = new Poi(Vector3.Zero, PoiType.None);
-
                 return false;
             }
 

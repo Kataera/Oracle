@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.IO;
+using System.Reflection;
 
 using Clio.Utilities;
 
@@ -40,17 +41,13 @@ namespace Oracle.Settings
         private static readonly object SyncRoot = new object();
         private static volatile OracleSettings instance;
 
-        public List<uint> BlacklistedFates;
-        public List<uint> BlacklistedMobs;
-        public Dictionary<uint, Vector3> FateWaitLocations;
-        public Dictionary<uint, uint> ZoneLevels;
-
         private int actionDelay;
         private bool bindHomePoint;
+        private List<uint> blacklistedFates;
+        private List<uint> blacklistedMobs;
         private int bossEngagePercentage;
         private bool bossFatesEnabled;
         private int chainFateWaitTimeout;
-        private bool changeZonesEnabled;
         private bool collectFatesEnabled;
         private int collectFateTurnInAtAmount;
         private bool debugEnabled;
@@ -59,25 +56,30 @@ namespace Oracle.Settings
         private bool fateDelayMovement;
         private int fateDelayMovementMaximum;
         private int fateDelayMovementMinimum;
-        private int fateMaxLevelsAbove;
-        private int fateMaxLevelsBelow;
+        private int fateMaximumLevelAbove;
+        private int fateMinimumLevelBelow;
         private FateSelectMode fateSelectMode;
+        private Dictionary<uint, Vector3> fateWaitLocations;
         private FateWaitMode fateWaitMode;
         private bool ignoreLowDurationUnstartedFates;
         private bool killFatesEnabled;
+        private double landingTimeOut;
         private bool listHooksOnStart;
-        private int lowRemainingDuration;
+        private int lowRemainingFateDuration;
         private int megaBossEngagePercentage;
         private bool megaBossFatesEnabled;
         private int mobMaximumLevelAbove;
-        private int mobMaximumLevelBelow;
+        private int mobMinimumLevelBelow;
         private OracleOperationMode oracleOperationMode;
         private bool runProblematicFates;
-        private string specificFate;
+        private string specificFateName;
         private bool teleportIfQuicker;
         private int teleportMinimumDistanceDelta;
-        private bool waitAtFateForProgress;
+        private bool waitAtBossFateForProgress;
+        private bool waitAtMegaBossFateForProgress;
         private bool waitForChainFates;
+        private bool zoneChangingEnabled;
+        private Dictionary<uint, uint> zoneLevels;
 
         private OracleSettings()
             : base(Path.Combine(SettingsPath, "OracleSettings.json"))
@@ -154,6 +156,30 @@ namespace Oracle.Settings
             }
         }
 
+        [Setting]
+        public List<uint> BlacklistedFates
+        {
+            get { return this.blacklistedFates; }
+
+            set
+            {
+                this.blacklistedFates = value;
+                this.Save();
+            }
+        }
+
+        [Setting]
+        public List<uint> BlacklistedMobs
+        {
+            get { return this.blacklistedMobs; }
+
+            set
+            {
+                this.blacklistedMobs = value;
+                this.Save();
+            }
+        }
+
         [DefaultValue(0)]
         [Setting]
         public int BossEngagePercentage
@@ -189,19 +215,6 @@ namespace Oracle.Settings
             set
             {
                 this.chainFateWaitTimeout = value;
-                this.Save();
-            }
-        }
-
-        [DefaultValue(true)]
-        [Setting]
-        public bool ChangeZonesEnabled
-        {
-            get { return this.changeZonesEnabled; }
-
-            set
-            {
-                this.changeZonesEnabled = value;
                 this.Save();
             }
         }
@@ -312,26 +325,26 @@ namespace Oracle.Settings
 
         [DefaultValue(4)]
         [Setting]
-        public int FateMaxLevelsAbove
+        public int FateMaximumLevelAbove
         {
-            get { return this.fateMaxLevelsAbove; }
+            get { return this.fateMaximumLevelAbove; }
 
             set
             {
-                this.fateMaxLevelsAbove = value;
+                this.fateMaximumLevelAbove = value;
                 this.Save();
             }
         }
 
         [DefaultValue(8)]
         [Setting]
-        public int FateMaxLevelsBelow
+        public int FateMinimumLevelBelow
         {
-            get { return this.fateMaxLevelsBelow; }
+            get { return this.fateMinimumLevelBelow; }
 
             set
             {
-                this.fateMaxLevelsBelow = value;
+                this.fateMinimumLevelBelow = value;
                 this.Save();
             }
         }
@@ -345,6 +358,18 @@ namespace Oracle.Settings
             set
             {
                 this.fateSelectMode = value;
+                this.Save();
+            }
+        }
+
+        [Setting]
+        public Dictionary<uint, Vector3> FateWaitLocations
+        {
+            get { return this.fateWaitLocations; }
+
+            set
+            {
+                this.fateWaitLocations = value;
                 this.Save();
             }
         }
@@ -388,6 +413,19 @@ namespace Oracle.Settings
             }
         }
 
+        [DefaultValue(10)]
+        [Setting]
+        public double LandingTimeOut
+        {
+            get { return this.landingTimeOut; }
+
+            set
+            {
+                this.landingTimeOut = value;
+                this.Save();
+            }
+        }
+
         [DefaultValue(false)]
         [Setting]
         public bool ListHooksOnStart
@@ -403,13 +441,13 @@ namespace Oracle.Settings
 
         [DefaultValue(180)]
         [Setting]
-        public int LowRemainingDuration
+        public int LowRemainingFateDuration
         {
-            get { return this.lowRemainingDuration; }
+            get { return this.lowRemainingFateDuration; }
 
             set
             {
-                this.lowRemainingDuration = value;
+                this.lowRemainingFateDuration = value;
                 this.Save();
             }
         }
@@ -455,13 +493,13 @@ namespace Oracle.Settings
 
         [DefaultValue(6)]
         [Setting]
-        public int MobMaximumLevelBelow
+        public int MobMinimumLevelBelow
         {
-            get { return this.mobMaximumLevelBelow; }
+            get { return this.mobMinimumLevelBelow; }
 
             set
             {
-                this.mobMaximumLevelBelow = value;
+                this.mobMinimumLevelBelow = value;
                 this.Save();
             }
         }
@@ -494,13 +532,13 @@ namespace Oracle.Settings
 
         [DefaultValue("")]
         [Setting]
-        public string SpecificFate
+        public string SpecificFateName
         {
-            get { return this.specificFate; }
+            get { return this.specificFateName; }
 
             set
             {
-                this.specificFate = value;
+                this.specificFateName = value;
                 this.Save();
             }
         }
@@ -533,13 +571,26 @@ namespace Oracle.Settings
 
         [DefaultValue(false)]
         [Setting]
-        public bool WaitAtFateForProgress
+        public bool WaitAtBossFateForProgress
         {
-            get { return this.waitAtFateForProgress; }
+            get { return this.waitAtBossFateForProgress; }
 
             set
             {
-                this.waitAtFateForProgress = value;
+                this.waitAtBossFateForProgress = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool WaitAtMegaBossFateForProgress
+        {
+            get { return this.waitAtMegaBossFateForProgress; }
+
+            set
+            {
+                this.waitAtMegaBossFateForProgress = value;
                 this.Save();
             }
         }
@@ -557,7 +608,40 @@ namespace Oracle.Settings
             }
         }
 
-        private void PopulateMobBlacklist()
+        [DefaultValue(true)]
+        [Setting]
+        public bool ZoneChangingEnabled
+        {
+            get { return this.zoneChangingEnabled; }
+
+            set
+            {
+                this.zoneChangingEnabled = value;
+                this.Save();
+            }
+        }
+
+        [Setting]
+        public Dictionary<uint, uint> ZoneLevels
+        {
+            get { return this.zoneLevels; }
+
+            set
+            {
+                this.zoneLevels = value;
+                this.Save();
+            }
+        }
+
+        public static T GetDefaultValue<T>(string propertyName)
+        {
+            var property = typeof (OracleSettings).GetProperty(propertyName);
+            var attribute = (DefaultValueAttribute) property.GetCustomAttribute(typeof (DefaultValueAttribute));
+
+            return (T) attribute.Value;
+        }
+
+        public void PopulateMobBlacklist()
         {
             // Heavensward S-Rank Hunts.
             const uint kaiserBehemoth = 4374;
@@ -740,7 +824,7 @@ namespace Oracle.Settings
             this.BlacklistedMobs.Sort();
         }
 
-        private void PopulateZoneLevels()
+        public void PopulateZoneLevels()
         {
             const uint aleport = 14;
             const uint campDragonhead = 23;

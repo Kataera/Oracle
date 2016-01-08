@@ -41,6 +41,8 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class LoadFlightMesh
     {
+        public static FileStream MeshFileStream { get; set; }
+
         public static async Task<bool> Main()
         {
             Logger.SendLog("Loading flight mesh for the current zone.");
@@ -55,9 +57,9 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             if (File.Exists(path))
             {
-                using (var fs = new FileStream(path, FileMode.Open))
+                using (MeshFileStream = new FileStream(path, FileMode.Open))
                 {
-                    using (var gzip = new GZipStream(fs, CompressionMode.Decompress))
+                    using (var gzip = new GZipStream(MeshFileStream, CompressionMode.Decompress))
                     {
                         using (var sr = new StreamReader(gzip))
                         {
@@ -75,8 +77,8 @@ namespace Oracle.Behaviour.Tasks.Utilities
                     }
                 }
             }
-            Logger.SendErrorLog("Could not find a mesh file for zone " + zoneId + ".");
 
+            Logger.SendErrorLog("Could not find a mesh file for zone " + zoneId + ".");
             return null;
         }
     }

@@ -51,7 +51,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
             if (currentFate.Status != FateStatus.NOTACTIVE && currentFate.Progress < OracleSettings.Instance.MegaBossEngagePercentage)
             {
-                if (!OracleSettings.Instance.WaitAtFateForProgress)
+                if (!OracleSettings.Instance.WaitAtMegaBossFateForProgress)
                 {
                     await OracleManager.ClearCurrentFate("Current FATE progress reset below minimum level.", false);
                 }

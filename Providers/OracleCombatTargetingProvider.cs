@@ -180,6 +180,11 @@ namespace Oracle.Providers
 
         private static bool ReadyToTurnIn()
         {
+            if (Core.Player.InCombat)
+            {
+                return false;
+            }
+
             var currentFate = OracleManager.GetCurrentFateData();
             if (currentFate == null)
             {
