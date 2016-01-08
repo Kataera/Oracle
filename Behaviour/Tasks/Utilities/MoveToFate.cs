@@ -65,14 +65,22 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 {
                     const ushort dravanianHinterlands = 398;
                     const ushort churningMists = 400;
+                    const ushort seaOfClouds = 401;
 
-                    if (WorldManager.ZoneId == dravanianHinterlands || WorldManager.ZoneId == churningMists)
+                    switch (WorldManager.ZoneId)
                     {
-                        await LoadFlightMesh.Main();
-                    }
-                    else
-                    {
-                        OracleManager.ZoneFlightMesh = null;
+                        case dravanianHinterlands:
+                            await LoadFlightMesh.Main();
+                            break;
+                        case churningMists:
+                            await LoadFlightMesh.Main();
+                            break;
+                        case seaOfClouds:
+                            await LoadFlightMesh.Main();
+                            break;
+                        default:
+                            OracleManager.ZoneFlightMesh = null;
+                            break;
                     }
                 }
             }
