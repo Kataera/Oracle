@@ -232,7 +232,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             if (path.Count > 1)
             {
                 Vector3 collision;
-                if (!WorldManager.Raycast(Core.Player.Location, path.First(), out collision))
+                if (!WorldManager.Raycast(Core.Player.Location, path[1], out collision))
                 {
                     Logger.SendDebugLog("Skipping first node, no collision detected.");
                     path.Remove(path.First());
