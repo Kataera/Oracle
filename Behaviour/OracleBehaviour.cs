@@ -59,7 +59,7 @@ namespace Oracle.Behaviour
 
             if (OracleFateManager.OracleDatabase == null)
             {
-                await BuildOracleDatabase.Main();
+                await LoadOracleDatabase.Main();
             }
 
             if (Poi.Current == null)

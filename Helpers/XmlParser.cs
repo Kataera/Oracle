@@ -25,6 +25,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Schema;
 
@@ -50,21 +51,21 @@ namespace Oracle.Helpers
         private static FateSupportLevel fateSupportLevel;
         private static FateType fateType;
 
-        public static OracleDatabase GetFateDatabase()
+        public static async Task<OracleDatabase> GetFateDatabase()
         {
             if (database == null)
             {
-                ParseFateData();
+                await ParseFateData();
             }
 
             return database;
         }
 
-        public static OracleDatabase GetFateDatabase(bool forceReparse)
+        public static async Task<OracleDatabase> GetFateDatabase(bool forceReparse)
         {
             if (forceReparse || database == null)
             {
-                ParseFateData();
+                await ParseFateData();
             }
 
             return database;
@@ -113,7 +114,7 @@ namespace Oracle.Helpers
             return xmlDocument;
         }
 
-        private static void ParseFateData()
+        private static async Task ParseFateData()
         {
             fateDataXml = GetXmlDocument();
             database = new OracleDatabase();

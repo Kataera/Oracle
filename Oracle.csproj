@@ -104,7 +104,7 @@
     <Compile Include="Behaviour\Tasks\FateTask\KillFate.cs" />
     <Compile Include="Behaviour\PoiHooks\SetWaitPoi.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\ReturnToAetheryte.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\BuildOracleDatabase.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\LoadOracleDatabase.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\MoveToFate.cs" />
     <Compile Include="Behaviour\Tasks\ZoneChangeHandler.cs" />
     <Compile Include="Data\OracleFlightMesh.cs" />

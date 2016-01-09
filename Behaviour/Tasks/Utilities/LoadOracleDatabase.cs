@@ -29,7 +29,7 @@ using Oracle.Managers;
 
 namespace Oracle.Behaviour.Tasks.Utilities
 {
-    internal static class BuildOracleDatabase
+    internal static class LoadOracleDatabase
     {
         public static async Task<bool> Main()
         {
@@ -39,9 +39,9 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return true;
             }
 
-            Logger.SendLog("Building Oracle's FATE database, this may take a few seconds.");
-            OracleFateManager.OracleDatabase = XmlParser.GetFateDatabase(true);
-            Logger.SendLog("Oracle's FATE database has been built successfully.");
+            Logger.SendLog("Loading Oracle's FATE database.");
+            OracleFateManager.OracleDatabase = await XmlParser.GetFateDatabase(true);
+            Logger.SendLog("Oracle's FATE database loaded successfully.");
 
             return true;
         }
