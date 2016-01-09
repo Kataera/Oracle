@@ -170,7 +170,7 @@ You should have received a copy of the GNU General Public License along with Ora
 
 Donations are in no way expected nor required for developing and maintaining Oracle; I do it only for fun and programming experience. I don't want anyone to feel pressured to donate, especially since I'm financially comfortable and do not need donations to support myself.
 
-If you do decide to donate, thank you very much!</value>
+With that in mind, if you still wish to donate, it's greatly appreciated!</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
