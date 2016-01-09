@@ -38,7 +38,7 @@ namespace Oracle.Behaviour.Modes
     {
         public static async Task<bool> Main()
         {
-            if (OracleSettings.Instance.ZoneChangingEnabled && OracleManager.ZoneChangeNeeded())
+            if (OracleSettings.Instance.ZoneChangingEnabled && OracleFateManager.ZoneChangeNeeded())
             {
                 if (Core.Player.InCombat)
                 {
@@ -55,7 +55,7 @@ namespace Oracle.Behaviour.Modes
                 await CombatHandler.HandleCombat();
             }
 
-            else if (Poi.Current.Type == PoiType.Fate || OracleManager.CurrentFateId != 0)
+            else if (Poi.Current.Type == PoiType.Fate || OracleFateManager.CurrentFateId != 0)
             {
                 await FateHandler.HandleFate();
             }

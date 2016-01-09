@@ -80,7 +80,7 @@ namespace Oracle.Behaviour.PoiHooks.WaitSelect
             var location = Vector3.Zero;
 
             // Vectors are non-nullable, so return zeroed location and handle in task.
-            if (OracleSettings.Instance.FateWaitLocations.ContainsKey(WorldManager.ZoneId))
+            if (!OracleSettings.Instance.FateWaitLocations.ContainsKey(WorldManager.ZoneId))
             {
                 return location;
             }

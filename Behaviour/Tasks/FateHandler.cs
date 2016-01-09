@@ -42,27 +42,27 @@ namespace Oracle.Behaviour.Tasks
     {
         public static async Task<bool> HandleFate()
         {
-            var currentFate = OracleManager.GetCurrentFateData();
+            var currentFate = OracleFateManager.GetCurrentFateData();
 
             if (currentFate != null && currentFate.Status == FateStatus.NOTACTIVE)
             {
-                await OracleManager.ClearCurrentFate("FATE is no longer active.");
+                await OracleFateManager.ClearCurrentFate("FATE is no longer active.");
                 return false;
             }
 
             if (currentFate != null && Core.Player.Distance(currentFate.Location) > currentFate.Radius * 1.05f)
             {
-                await MoveToFate.Main(false);
+                await MoveToFate.MoveToCurrentFate(false);
 
-                if (OracleManager.CurrentFateId == 0)
+                if (OracleFateManager.CurrentFateId == 0)
                 {
                     return true;
                 }
             }
 
-            if (OracleManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted)
+            if (OracleFateManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted)
             {
-                OracleManager.ClearPoi("We're being attacked.", false);
+                OracleFateManager.ClearPoi("We're being attacked.", false);
                 return true;
             }
 
@@ -77,7 +77,7 @@ namespace Oracle.Behaviour.Tasks
 
         private static async Task<bool> RunFate()
         {
-            var oracleFate = OracleManager.OracleDatabase.GetFateFromId(OracleManager.CurrentFateId);
+            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
 
             switch (oracleFate.Type)
             {
@@ -104,10 +104,10 @@ namespace Oracle.Behaviour.Tasks
                     break;
             }
 
-            var currentFate = OracleManager.GetCurrentFateData();
+            var currentFate = OracleFateManager.GetCurrentFateData();
             if (currentFate == null)
             {
-                await OracleManager.ClearCurrentFate("Cannot determine FATE type and FateData is null");
+                await OracleFateManager.ClearCurrentFate("Cannot determine FATE type and FateData is null");
                 return true;
             }
 
@@ -133,7 +133,7 @@ namespace Oracle.Behaviour.Tasks
 
             Logger.SendDebugLog("Cannot determine FATE type, blacklisting.");
             Blacklist.Add(currentFate.Id, BlacklistFlags.Node, TimeSpan.MaxValue, "Cannot determine FATE type.");
-            await OracleManager.ClearCurrentFate("Cannot determine FATE type.");
+            await OracleFateManager.ClearCurrentFate("Cannot determine FATE type.");
 
             return false;
         }

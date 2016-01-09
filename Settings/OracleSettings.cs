@@ -61,6 +61,7 @@ namespace Oracle.Settings
         private FateSelectMode fateSelectMode;
         private Dictionary<uint, Vector3> fateWaitLocations;
         private FateWaitMode fateWaitMode;
+        private bool flightPathPostProcessingEnabled;
         private bool ignoreLowDurationUnstartedFates;
         private bool killFatesEnabled;
         private double landingTimeOut;
@@ -383,6 +384,19 @@ namespace Oracle.Settings
             set
             {
                 this.fateWaitMode = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool FlightPathPostProcessingEnabled
+        {
+            get { return this.flightPathPostProcessingEnabled; }
+
+            set
+            {
+                this.flightPathPostProcessingEnabled = value;
                 this.Save();
             }
         }
@@ -826,19 +840,19 @@ namespace Oracle.Settings
 
         public void PopulateZoneLevels()
         {
-            const uint aleport = 14;
-            const uint campDragonhead = 23;
-            const uint ceruleumProcessingPlant = 22;
-            const uint costaDelSol = 11;
-            const uint falconsNest = 71;
-            const uint hawthorneHut = 4;
-            const uint horizon = 17;
-            const uint idyllshire = 75;
-            const uint moghome = 78;
-            const uint quarrymill = 5;
-            const uint tailfeather = 76;
+            const ushort aleport = 14;
+            const ushort campCloudtop = 72;
+            const ushort campDragonhead = 23;
+            const ushort ceruleumProcessingPlant = 22;
+            const ushort costaDelSol = 11;
+            const ushort hawthorneHut = 4;
+            const ushort horizon = 17;
+            const ushort idyllshire = 75;
+            const ushort moghome = 78;
+            const ushort quarrymill = 5;
+            const ushort tailfeather = 76;
 
-            for (uint i = 1; i < 60; i++)
+            for (ushort i = 1; i < 60; i++)
             {
                 // 1-12: Western Thanalan (Horizon).
                 if (i < 12)
@@ -882,10 +896,10 @@ namespace Oracle.Settings
                     this.ZoneLevels.Add(i, ceruleumProcessingPlant);
                 }
 
-                // 50-52: Coerthas Western Highlands (Falcon's Nest).
+                // 50-52: The Sea of Clouds (Camp Cloudtop).
                 else if (i < 52)
                 {
-                    this.ZoneLevels.Add(i, falconsNest);
+                    this.ZoneLevels.Add(i, campCloudtop);
                 }
 
                 // 52-54: The Dravanian Forelands (Tailfeather).

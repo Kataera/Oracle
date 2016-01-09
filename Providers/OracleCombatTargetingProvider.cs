@@ -54,7 +54,7 @@ namespace Oracle.Providers
 
         private static bool Filter(bool inCombat, BattleCharacter battleCharacter)
         {
-            var currentFate = OracleManager.GetCurrentFateData();
+            var currentFate = OracleFateManager.GetCurrentFateData();
             var blacklistEntry = Blacklist.GetEntry(battleCharacter);
 
             if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible
@@ -110,12 +110,12 @@ namespace Oracle.Providers
         private static double GetWeight(BattleCharacter battleCharacter)
         {
             var weight = 1800 - (battleCharacter.Distance(Core.Player) * 50);
-            var currentFate = OracleManager.GetCurrentFateData();
+            var currentFate = OracleFateManager.GetCurrentFateData();
             var oracleFate = new Fate();
 
             if (currentFate != null)
             {
-                oracleFate = OracleManager.OracleDatabase.GetFateFromFateData(currentFate);
+                oracleFate = OracleFateManager.OracleDatabase.GetFateFromFateData(currentFate);
             }
 
             // If FATE has a preferred target, prioritise it if we're out of combat.
@@ -185,13 +185,13 @@ namespace Oracle.Providers
                 return false;
             }
 
-            var currentFate = OracleManager.GetCurrentFateData();
+            var currentFate = OracleFateManager.GetCurrentFateData();
             if (currentFate == null)
             {
                 return false;
             }
 
-            var oracleFate = OracleManager.OracleDatabase.GetFateFromId(currentFate.Id);
+            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(currentFate.Id);
             if (oracleFate.Type != FateType.Collect)
             {
                 return false;
