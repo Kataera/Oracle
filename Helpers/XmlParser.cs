@@ -24,10 +24,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Schema;
+
+using Buddy.Coroutines;
 
 using ff14bot.Settings;
 
@@ -124,10 +127,9 @@ namespace Oracle.Helpers
                 return;
             }
 
-            // Parse fate data.
             try
             {
-                // Parse each node.
+                var yieldTimer = Stopwatch.StartNew();
                 foreach (XmlNode currentNode in fateDataXml.DocumentElement.ChildNodes)
                 {
                     // Ensure nodes are instantiated.
@@ -198,6 +200,13 @@ namespace Oracle.Helpers
                     }
 
                     database.AddFateToDatabase(CreateFate());
+
+                    // Yield approximately 30 times per second.
+                    if (yieldTimer.Elapsed > TimeSpan.FromMilliseconds(33))
+                    {
+                        await Coroutine.Yield();
+                        yieldTimer.Restart();
+                    }
                 }
             }
             catch (FormatException exception)
