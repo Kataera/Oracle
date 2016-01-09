@@ -44,7 +44,7 @@ namespace Oracle.Behaviour.PoiHooks
 
             Composite[] composites =
             {
-                new HookExecutor("SetDeathPoi"), new Decorator(check => !OracleManager.DeathFlag, new HookExecutor("SetCombatPoi")),
+                new HookExecutor("SetDeathPoi"), new Decorator(check => !OracleFateManager.DeathFlag, new HookExecutor("SetCombatPoi")),
                 new HookExecutor(
                     "SetFatePoi",
                     "A hook that selects a viable FATE based in user settings and assigns it as the Poi.",

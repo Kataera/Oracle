@@ -37,15 +37,15 @@ namespace Oracle.Behaviour.Tasks
     {
         public static async Task<bool> HandleWait()
         {
-            if (OracleManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted)
+            if (OracleFateManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted)
             {
-                OracleManager.ClearPoi("We're being attacked.", false);
+                OracleFateManager.ClearPoi("We're being attacked.", false);
                 return true;
             }
 
-            if (await OracleManager.AnyViableFates())
+            if (await OracleFateManager.AnyViableFates())
             {
-                OracleManager.ClearPoi("Viable FATE detected.");
+                OracleFateManager.ClearPoi("Viable FATE detected.");
                 return true;
             }
 

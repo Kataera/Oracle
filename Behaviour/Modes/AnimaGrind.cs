@@ -186,7 +186,7 @@ namespace Oracle.Behaviour.Modes
                 return true;
             }
 
-            if (Poi.Current.Type == PoiType.Fate || OracleManager.CurrentFateId != 0)
+            if (Poi.Current.Type == PoiType.Fate || OracleFateManager.CurrentFateId != 0)
             {
                 await FateHandler.HandleFate();
             }

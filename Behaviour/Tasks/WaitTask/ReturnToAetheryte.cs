@@ -66,10 +66,10 @@ namespace Oracle.Behaviour.Tasks.WaitTask
         {
             while (Core.Player.Location.Distance2D(Poi.Current.Location) > 15f)
             {
-                if (await OracleManager.AnyViableFates())
+                if (await OracleFateManager.AnyViableFates())
                 {
                     Navigator.Stop();
-                    OracleManager.ClearPoi("Found a FATE.");
+                    OracleFateManager.ClearPoi("Found a FATE.");
                     return true;
                 }
 
@@ -98,10 +98,10 @@ namespace Oracle.Behaviour.Tasks.WaitTask
             var result = Navigator.MoveToPointWithin(Poi.Current.Location, 15f, "Moving to Aetheryte");
             while (result != MoveResult.Done || result != MoveResult.ReachedDestination)
             {
-                if (await OracleManager.AnyViableFates())
+                if (await OracleFateManager.AnyViableFates())
                 {
                     Navigator.Stop();
-                    OracleManager.ClearPoi("Found a FATE.");
+                    OracleFateManager.ClearPoi("Found a FATE.");
                     return true;
                 }
 

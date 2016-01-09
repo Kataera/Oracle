@@ -41,7 +41,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
     {
         public static async Task<bool> Main()
         {
-            var currentFate = OracleManager.GetCurrentFateData();
+            var currentFate = OracleFateManager.GetCurrentFateData();
 
             if (currentFate == null || currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
             {
@@ -53,7 +53,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
             {
                 if (!OracleSettings.Instance.WaitAtMegaBossFateForProgress)
                 {
-                    await OracleManager.ClearCurrentFate("Current FATE progress reset below minimum level.", false);
+                    await OracleFateManager.ClearCurrentFate("Current FATE progress reset below minimum level.", false);
                 }
                 else
                 {
@@ -80,17 +80,17 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static async Task ClearFate()
         {
-            await OracleManager.ClearCurrentFate("Current FATE is finished.");
+            await OracleFateManager.ClearCurrentFate("Current FATE is finished.");
         }
 
         private static bool IsViableTarget(BattleCharacter target)
         {
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleManager.CurrentFateId;
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleFateManager.CurrentFateId;
         }
 
         private static void SelectTarget()
         {
-            var oracleFate = OracleManager.OracleDatabase.GetFateFromId(OracleManager.CurrentFateId);
+            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
             BattleCharacter target = null;
 
             if (oracleFate.PreferredTargetId.Any())

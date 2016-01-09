@@ -57,14 +57,14 @@ namespace Oracle.Behaviour.PoiHooks
 
             if (IsFateSet())
             {
-                if (OracleManager.GetCurrentFateData() == null)
+                if (OracleFateManager.GetCurrentFateData() == null)
                 {
                     return true;
                 }
 
                 if (!IsFatePoiSet() && Poi.Current.Type != PoiType.Death && !GameObjectManager.Attackers.Any())
                 {
-                    Poi.Current = new Poi(OracleManager.GetCurrentFateData(), PoiType.Fate);
+                    Poi.Current = new Poi(OracleFateManager.GetCurrentFateData(), PoiType.Fate);
                 }
 
                 return true;
@@ -90,19 +90,19 @@ namespace Oracle.Behaviour.PoiHooks
                 await SelectFate();
             }
 
-            if (OracleManager.GetCurrentFateData() != null && OracleSettings.Instance.FateDelayMovement
-                && !OracleManager.DoNotWaitBeforeMovingFlag)
+            if (OracleFateManager.GetCurrentFateData() != null && OracleSettings.Instance.FateDelayMovement
+                && !OracleFateManager.DoNotWaitBeforeMovingFlag)
             {
                 await WaitBeforeMoving();
             }
 
-            OracleManager.SetDoNotWaitFlag(false);
+            OracleFateManager.DoNotWaitBeforeMovingFlag = false;
             return IsFateSet() && IsFatePoiSet();
         }
 
         private static bool IsFatePoiSet()
         {
-            if (Poi.Current.Type != PoiType.Fate || Poi.Current.Fate.Id != OracleManager.GetCurrentFateData().Id)
+            if (Poi.Current.Type != PoiType.Fate || Poi.Current.Fate.Id != OracleFateManager.GetCurrentFateData().Id)
             {
                 return false;
             }
@@ -112,7 +112,7 @@ namespace Oracle.Behaviour.PoiHooks
 
         private static bool IsFateSet()
         {
-            if (OracleManager.CurrentFateId == 0)
+            if (OracleFateManager.CurrentFateId == 0)
             {
                 return false;
             }
@@ -145,12 +145,12 @@ namespace Oracle.Behaviour.PoiHooks
 
         private static bool PreviousFateChained()
         {
-            if (OracleManager.PreviousFateId == 0)
+            if (OracleFateManager.PreviousFateId == 0)
             {
                 return false;
             }
 
-            if (OracleManager.OracleDatabase.GetFateFromId(OracleManager.PreviousFateId).ChainIdSuccess != 0)
+            if (OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainIdSuccess != 0)
             {
                 return true;
             }
@@ -160,18 +160,18 @@ namespace Oracle.Behaviour.PoiHooks
 
         private static async Task<bool> SelectChainFate()
         {
-            if (OracleManager.PreviousFateId == 0)
+            if (OracleFateManager.PreviousFateId == 0)
             {
                 return false;
             }
 
-            var chainIdSuccess = OracleManager.OracleDatabase.GetFateFromId(OracleManager.PreviousFateId).ChainIdSuccess;
+            var chainIdSuccess = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainIdSuccess;
             if (chainIdSuccess == 0)
             {
                 return false;
             }
 
-            var successFate = OracleManager.OracleDatabase.GetFateFromId(chainIdSuccess);
+            var successFate = OracleFateManager.OracleDatabase.GetFateFromId(chainIdSuccess);
             if (!IsFateTypeEnabled(successFate))
             {
                 Logger.SendLog("Not waiting for the next FATE in the chain: its type is not enabled.");
@@ -191,7 +191,7 @@ namespace Oracle.Behaviour.PoiHooks
             else if (chainFateTimer.Elapsed > TimeSpan.FromSeconds(OracleSettings.Instance.ChainFateWaitTimeout))
             {
                 Logger.SendLog("Timed out waiting for the next FATE in the chain to appear.");
-                OracleManager.PreviousFateId = 0;
+                OracleFateManager.PreviousFateId = 0;
                 chainFateTimer.Reset();
             }
 
@@ -203,7 +203,7 @@ namespace Oracle.Behaviour.PoiHooks
             }
 
             Logger.SendLog("Selected FATE: '" + successFateData.Name + "'.");
-            OracleManager.CurrentFateId = successFateData.Id;
+            OracleFateManager.CurrentFateId = successFateData.Id;
             Poi.Current = new Poi(successFateData, PoiType.Fate);
             chainFateTimer.Reset();
             return true;
@@ -242,7 +242,7 @@ namespace Oracle.Behaviour.PoiHooks
             }
 
             Logger.SendLog("Selected FATE: '" + specificFate.Name + "'.");
-            OracleManager.CurrentFateId = specificFate.Id;
+            OracleFateManager.CurrentFateId = specificFate.Id;
             Poi.Current = new Poi(specificFate, PoiType.Fate);
             return true;
         }
@@ -250,7 +250,7 @@ namespace Oracle.Behaviour.PoiHooks
         private static async Task<bool> WaitBeforeMoving()
         {
             var rng = new Random();
-            var currentFate = OracleManager.GetCurrentFateData();
+            var currentFate = OracleFateManager.GetCurrentFateData();
             var minTime = OracleSettings.Instance.FateDelayMovementMinimum * 1000;
             var maxTime = OracleSettings.Instance.FateDelayMovementMaximum * 1000;
             var randomWaitTime = rng.Next(minTime, maxTime);

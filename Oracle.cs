@@ -174,10 +174,10 @@ namespace Oracle
         public override void Stop()
         {
             // Clean up all botbase internal variables.
-            OracleManager.CurrentFateId = 0;
-            OracleManager.PreviousFateId = 0;
-            OracleManager.OracleDatabase = null;
-            OracleManager.ZoneFlightMesh = null;
+            OracleFateManager.CurrentFateId = 0;
+            OracleFateManager.PreviousFateId = 0;
+            OracleFateManager.OracleDatabase = null;
+            OracleMovementManager.ZoneFlightMesh = null;
 
             if (LoadFlightMesh.MeshFileStream != null)
             {

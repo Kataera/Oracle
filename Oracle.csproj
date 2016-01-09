@@ -89,6 +89,7 @@
     <Compile Include="Behaviour\Tasks\Utilities\BlacklistMob.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LoadFlightMesh.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\Mount.cs" />
+    <Compile Include="Managers\OracleMovementManager.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SelectGrindTarget.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\Teleport.cs" />
     <Compile Include="Behaviour\Tasks\WaitHandler.cs" />
@@ -150,7 +151,7 @@
     <Compile Include="Forms\MaterialSkin\Controls\MaterialTabSelectorVertical.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Managers\OracleManager.cs" />
+    <Compile Include="Managers\OracleFateManager.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LevelSync.cs" />
     <Compile Include="Behaviour\Tasks\FateTask\MegaBossFate.cs" />
     <Compile Include="Behaviour\PoiHooks\SetFatePoi.cs" />

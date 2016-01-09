@@ -34,13 +34,13 @@ namespace Oracle.Behaviour.Tasks.Utilities
         public static async Task<bool> Main()
         {
             // Make sure we actually need to populate the data, since XML parsing is very expensive.
-            if (OracleManager.OracleDatabase != null)
+            if (OracleFateManager.OracleDatabase != null)
             {
                 return true;
             }
 
             Logger.SendLog("Building Oracle's FATE database, this may take a few seconds.");
-            OracleManager.OracleDatabase = XmlParser.GetFateDatabase(true);
+            OracleFateManager.OracleDatabase = XmlParser.GetFateDatabase(true);
             Logger.SendLog("Oracle's FATE database has been built successfully.");
 
             return true;

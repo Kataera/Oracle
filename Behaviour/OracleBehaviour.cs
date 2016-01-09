@@ -55,9 +55,9 @@ namespace Oracle.Behaviour
 
         private static async Task<bool> Main()
         {
-            OracleManager.UpdateGameCache();
+            OracleFateManager.UpdateGameCache();
 
-            if (OracleManager.OracleDatabase == null)
+            if (OracleFateManager.OracleDatabase == null)
             {
                 await BuildOracleDatabase.Main();
             }
@@ -68,17 +68,17 @@ namespace Oracle.Behaviour
                 return false;
             }
 
-            if (Poi.Current.Type == PoiType.Death || OracleManager.DeathFlag || Core.Player.IsDead)
+            if (Poi.Current.Type == PoiType.Death || OracleFateManager.DeathFlag || Core.Player.IsDead)
             {
                 if (Poi.Current.Type == PoiType.Death || Core.Player.IsDead)
                 {
                     Logger.SendLog("We died, attempting to recover.");
-                    OracleManager.DeathFlag = true;
+                    OracleFateManager.DeathFlag = true;
                 }
-                else if (OracleManager.DeathFlag)
+                else if (OracleFateManager.DeathFlag)
                 {
                     await DeathHandler.HandleDeath();
-                    OracleManager.DeathFlag = false;
+                    OracleFateManager.DeathFlag = false;
                 }
 
                 return false;

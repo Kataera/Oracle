@@ -43,14 +43,13 @@ using Oracle.Settings;
 
 namespace Oracle.Managers
 {
-    internal static class OracleManager
+    internal static class OracleFateManager
     {
         internal static uint CurrentFateId { get; set; }
         internal static bool DeathFlag { get; set; }
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
         internal static OracleDatabase OracleDatabase { get; set; }
         internal static uint PreviousFateId { get; set; }
-        internal static OracleFlightMesh ZoneFlightMesh { get; set; }
 
         public static async Task<bool> AnyViableFates()
         {
@@ -310,11 +309,6 @@ namespace Oracle.Managers
             return
                 GameObjectManager.Attackers.Any(
                     mob => mob.IsValid && mob.HasTarget && mob.CurrentTargetId == Core.Player.ObjectId && !mob.IsFateGone);
-        }
-
-        public static void SetDoNotWaitFlag(bool flag)
-        {
-            DoNotWaitBeforeMovingFlag = flag;
         }
 
         public static void UpdateGameCache()

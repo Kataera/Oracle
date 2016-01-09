@@ -122,7 +122,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             if (Core.Player.InCombat)
             {
-                OracleManager.ClearPoi("We're in combat and need to teleport.");
+                OracleFateManager.ClearPoi("We're in combat and need to teleport.");
             }
 
             return true;

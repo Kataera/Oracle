@@ -49,7 +49,7 @@ namespace Oracle.Behaviour.Modes
                 await CombatHandler.HandleCombat();
             }
 
-            else if (Poi.Current.Type == PoiType.Fate || OracleManager.CurrentFateId != 0)
+            else if (Poi.Current.Type == PoiType.Fate || OracleFateManager.CurrentFateId != 0)
             {
                 await FateHandler.HandleFate();
             }

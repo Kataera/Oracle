@@ -52,21 +52,21 @@ namespace Oracle.Behaviour.Tasks
 
             if (!currentBc.IsValid)
             {
-                OracleManager.ClearPoi("Targeted unit is not valid.", false);
+                OracleFateManager.ClearPoi("Targeted unit is not valid.", false);
                 return true;
             }
 
             if (!currentBc.IsFate && !currentBc.IsDead && GameObjectManager.Attackers.All(mob => mob.ObjectId != currentBc.ObjectId)
-                && OracleManager.CurrentFateId != 0)
+                && OracleFateManager.CurrentFateId != 0)
             {
-                OracleManager.ClearPoi("Targeted unit is not in combat with us, nor part of the current FATE.", false);
+                OracleFateManager.ClearPoi("Targeted unit is not in combat with us, nor part of the current FATE.", false);
                 return true;
             }
 
             // If target is not a FATE mob and is tapped by someone else.
             if (!currentBc.IsFate && currentBc.TappedByOther)
             {
-                OracleManager.ClearPoi("Targeted unit is not a FATE mob and is tapped by someone else.");
+                OracleFateManager.ClearPoi("Targeted unit is not a FATE mob and is tapped by someone else.");
                 Blacklist.Add(currentBc, BlacklistFlags.Combat, TimeSpan.FromSeconds(30), "Tapped by another person.");
                 Core.Player.ClearTarget();
 
@@ -108,7 +108,7 @@ namespace Oracle.Behaviour.Tasks
                     }
                     else if (GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
                     {
-                        await MoveToFate.Main(true);
+                        await MoveToFate.MoveToCurrentFate(true);
                         await LevelSync.Main(fate);
                     }
                 }
