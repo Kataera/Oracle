@@ -79,6 +79,12 @@ namespace Oracle.Managers
             foreach (var step in path)
             {
                 var processedStep = !path.Last().Equals(step) ? ProcessFlightStep(step) : step;
+                if (Core.Player.Location.Distance2D(currentFate.Location) < Core.Player.Location.Distance2D(processedStep))
+                {
+                    Logger.SendDebugLog("FATE centre is closer than next hop. Ending navigation early.");
+                    break;
+                }
+
                 while (Core.Player.Distance(processedStep) > 2f)
                 {
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
@@ -103,14 +109,6 @@ namespace Oracle.Managers
                     {
                         Navigator.PlayerMover.MoveStop();
                         await CommonTasks.TakeOff();
-                    }
-
-                    // Avoid overshooting the centre of the FATE.
-                    if (Core.Player.Location.Distance2D(currentFate.Location) < Core.Player.Location.Distance2D(processedStep))
-                    {
-                        Logger.SendDebugLog("FATE centre is closer than next hop. Ending navigation early.");
-                        await LandInFateArea();
-                        return true;
                     }
 
                     // Did FATE move?
@@ -149,6 +147,7 @@ namespace Oracle.Managers
                 await Mount.MountUp();
             }
 
+            // Ensure precision isn't too strong, else we get flip-flopping.
             if (precision < 2f)
             {
                 precision = 2f;
@@ -168,7 +167,13 @@ namespace Oracle.Managers
             foreach (var step in path)
             {
                 var processedStep = !path.Last().Equals(step) ? ProcessFlightStep(step) : step;
-                while (Core.Player.Location.Distance(processedStep) > precision)
+                if (Core.Player.Location.Distance(location) < Core.Player.Location.Distance(processedStep))
+                {
+                    Logger.SendDebugLog("Destination is closer than next hop. Ending navigation early.");
+                    break;
+                }
+
+                while (Core.Player.Location.Distance(processedStep) > 2f)
                 {
                     if (!Core.Player.IsMounted && Actionmanager.AvailableMounts.Any())
                     {
@@ -192,6 +197,15 @@ namespace Oracle.Managers
                     await Coroutine.Yield();
                 }
             }
+
+            // Move to destination.
+            while (Core.Player.Location.Distance(location) > precision)
+            {
+                Navigator.PlayerMover.MoveTowards(location);
+                await Coroutine.Yield();
+            }
+
+            Navigator.PlayerMover.MoveStop();
 
             if (land && MovementManager.IsFlying && await CommonTasks.CanLand(Core.Player.Location) == CanLandResult.Yes)
             {
@@ -390,7 +404,6 @@ namespace Oracle.Managers
                 }
             }
 
-            path.Add(destination);
             flightPathTimer.Stop();
             Logger.SendDebugLog("Flight path generated in " + flightPathTimer.ElapsedMilliseconds + " ms.");
 
