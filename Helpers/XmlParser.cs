@@ -74,7 +74,7 @@ namespace Oracle.Helpers
         {
             var fate = new Fate
             {
-                ChainIdSuccess = fateChainId,
+                ChainId = fateChainId,
                 Id = fateId,
                 ItemId = fateCollectItemId,
                 Level = fateLevel,

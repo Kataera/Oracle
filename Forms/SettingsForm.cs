@@ -435,6 +435,18 @@ namespace Oracle.Forms
             this.ActiveControl = this.labelDefaultFocus;
         }
 
+        private void OnRefreshZoneClick(object sender, EventArgs e)
+        {
+            try
+            {
+                this.labelDowntimeCurrentZoneValue.Text = WorldManager.ZoneId.ToString();
+            }
+            catch (NullReferenceException)
+            {
+                // This will only occur if the form is created outside of RebornBuddy.
+            }
+        }
+
         private void OnResetZoneLevelsToDefaultClick(object sender, EventArgs e)
         {
             var result = MessageBox.Show("Are you sure you wish to set the zone levels to their default setting?", "Warning",
@@ -477,6 +489,9 @@ namespace Oracle.Forms
                 }
 
                 OracleSettings.Instance.FateWaitLocations.Add(zoneId, location);
+                OracleSettings.Instance.Save();
+
+                this.labelDowntimeWaitLocationValue.Text = location.ToString();
             }
             catch (NullReferenceException)
             {

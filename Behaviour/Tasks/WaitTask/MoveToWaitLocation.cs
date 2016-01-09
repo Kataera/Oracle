@@ -24,7 +24,10 @@
 
 using System.Threading.Tasks;
 
-using Oracle.Helpers;
+using ff14bot;
+using ff14bot.Helpers;
+
+using Oracle.Managers;
 
 namespace Oracle.Behaviour.Tasks.WaitTask
 {
@@ -32,9 +35,23 @@ namespace Oracle.Behaviour.Tasks.WaitTask
     {
         public static async Task<bool> Main()
         {
-            // TODO: Implement.
-            Logger.SendLog("'Move to location' is not yet implemented, defaulting to 'Return to Aetheryte'.");
-            await ReturnToAetheryte.Main();
+            if (Core.Player.Location.Distance2D(Poi.Current.Location) < 15f)
+            {
+                return true;
+            }
+
+            if (!OracleMovementManager.IsFlightMeshLoaded())
+            {
+                await OracleMovementManager.LoadFlightMeshIfAvailable();
+
+                if (!OracleMovementManager.IsFlightMeshLoaded())
+                {
+                    await OracleMovementManager.NavigateToLocation(Poi.Current.Location, 15f);
+                    return true;
+                }
+            }
+
+            await OracleMovementManager.FlyToLocation(Poi.Current.Location, 15f, false);
             return true;
         }
     }

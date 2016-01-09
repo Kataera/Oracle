@@ -78,7 +78,9 @@ namespace Oracle.Managers
 
             foreach (var step in path)
             {
-                while (Core.Player.Distance(step) > 2f)
+                var processedStep = ProcessFlightStep(step);
+
+                while (Core.Player.Distance(processedStep) > 2f)
                 {
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                     {
@@ -105,7 +107,7 @@ namespace Oracle.Managers
                     }
 
                     // Avoid overshooting the centre of the FATE.
-                    if (Core.Player.Location.Distance2D(currentFate.Location) < Core.Player.Location.Distance2D(step))
+                    if (Core.Player.Location.Distance2D(currentFate.Location) < Core.Player.Location.Distance2D(processedStep))
                     {
                         Logger.SendDebugLog("FATE centre is closer than next hop. Ending navigation early.");
                         await LandInFateArea();
@@ -120,8 +122,8 @@ namespace Oracle.Managers
                         return true;
                     }
 
-                    Logger.SendLog("Flying to hop: " + step);
-                    Navigator.PlayerMover.MoveTowards(step);
+                    Logger.SendLog("Flying to hop: " + processedStep);
+                    Navigator.PlayerMover.MoveTowards(processedStep);
                     await Coroutine.Yield();
                 }
             }
@@ -151,7 +153,16 @@ namespace Oracle.Managers
             var path = await GenerateFlightPathToLocation(location);
             foreach (var step in path)
             {
-                while (Core.Player.Location.Distance(step) > precision)
+                var processedStep = ProcessFlightStep(step);
+
+                if (OracleSettings.Instance.FlightPathPostProcessingEnabled)
+                {
+                    processedStep.X += Convert.ToSingle(MathEx.Random(-5, 5));
+                    processedStep.Y += Convert.ToSingle(MathEx.Random(-5, 5));
+                    processedStep.Z += Convert.ToSingle(MathEx.Random(-5, 5));
+                }
+
+                while (Core.Player.Location.Distance(processedStep) > precision)
                 {
                     if (!Core.Player.IsMounted && Actionmanager.AvailableMounts.Any())
                     {
@@ -170,7 +181,7 @@ namespace Oracle.Managers
                         await CommonTasks.TakeOff();
                     }
 
-                    Navigator.PlayerMover.MoveTowards(step);
+                    Navigator.PlayerMover.MoveTowards(processedStep);
                     await Coroutine.Yield();
                 }
             }
@@ -181,6 +192,11 @@ namespace Oracle.Managers
             }
 
             return true;
+        }
+
+        public static bool IsFlightMeshLoaded()
+        {
+            return ZoneFlightMesh != null && ZoneFlightMesh.ZoneId == WorldManager.ZoneId;
         }
 
         public static bool IsMountNeeded(float distance)
@@ -431,7 +447,7 @@ namespace Oracle.Managers
             var landingLocation = await GetFateLandingLocation();
             if (!landingLocation.Equals(Core.Player.Location))
             {
-                Logger.SendLog("Moving to " + landingLocation + " in order to land.");
+                Logger.SendLog("Flying to " + landingLocation + " in order to land.");
                 while (Core.Player.Location.Distance2D(landingLocation) > 2f)
                 {
                     Navigator.PlayerMover.MoveTowards(landingLocation);
@@ -453,6 +469,27 @@ namespace Oracle.Managers
 
             Logger.SendLog("Landing successful.");
             return true;
+        }
+
+        private static Vector3 ProcessFlightStep(Vector3 step)
+        {
+            if (!OracleSettings.Instance.FlightPathPostProcessingEnabled)
+            {
+                return step;
+            }
+
+            var processedStep = step;
+            processedStep.X += Convert.ToSingle(MathEx.Random(-5, 5));
+            processedStep.Y += Convert.ToSingle(MathEx.Random(-5, 5));
+            processedStep.Z += Convert.ToSingle(MathEx.Random(-5, 5));
+
+            Vector3 collision;
+            if (WorldManager.Raycast(Core.Player.Location, processedStep, out collision))
+            {
+                return step;
+            }
+
+            return processedStep;
         }
     }
 }

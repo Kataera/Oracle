@@ -150,7 +150,7 @@ namespace Oracle.Behaviour.PoiHooks
                 return false;
             }
 
-            if (OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainIdSuccess != 0)
+            if (OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainId != 0)
             {
                 return true;
             }
@@ -165,20 +165,20 @@ namespace Oracle.Behaviour.PoiHooks
                 return false;
             }
 
-            var chainIdSuccess = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainIdSuccess;
-            if (chainIdSuccess == 0)
+            var chainId = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainId;
+            if (chainId == 0)
             {
                 return false;
             }
 
-            var successFate = OracleFateManager.OracleDatabase.GetFateFromId(chainIdSuccess);
-            if (!IsFateTypeEnabled(successFate))
+            var chainOracleFateInfo = OracleFateManager.OracleDatabase.GetFateFromId(chainId);
+            if (!IsFateTypeEnabled(chainOracleFateInfo))
             {
                 Logger.SendLog("Not waiting for the next FATE in the chain: its type is not enabled.");
                 return false;
             }
 
-            if (OracleSettings.Instance.BlacklistedFates.Contains(chainIdSuccess))
+            if (OracleSettings.Instance.BlacklistedFates.Contains(chainId))
             {
                 Logger.SendLog("Not waiting for the next FATE in the chain: it is contained in the user blacklist.");
                 return false;
@@ -196,15 +196,24 @@ namespace Oracle.Behaviour.PoiHooks
             }
 
             Logger.SendLog("Waiting for the follow up FATE.");
-            var successFateData = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainIdSuccess);
-            if (successFateData == null)
+            var chainFateData = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainId);
+            if (chainFateData == null)
             {
                 return false;
             }
 
-            Logger.SendLog("Selected FATE: '" + successFateData.Name + "'.");
-            OracleFateManager.CurrentFateId = successFateData.Id;
-            Poi.Current = new Poi(successFateData, PoiType.Fate);
+            // Fix for FATEs that spawn instantly after the previous ends.
+            if (chainFateData.Name.Equals(string.Empty))
+            {
+                Logger.SendLog("Selected FATE: '" + chainOracleFateInfo.Name + "'.");
+            }
+            else
+            {
+                Logger.SendLog("Selected FATE: '" + chainFateData.Name + "'.");
+            }
+
+            OracleFateManager.CurrentFateId = chainFateData.Id;
+            Poi.Current = new Poi(chainFateData, PoiType.Fate);
             chainFateTimer.Reset();
             return true;
         }

@@ -61,6 +61,7 @@ namespace Oracle.Settings
         private FateSelectMode fateSelectMode;
         private Dictionary<uint, Vector3> fateWaitLocations;
         private FateWaitMode fateWaitMode;
+        private bool flightPathPostProcessingEnabled;
         private bool ignoreLowDurationUnstartedFates;
         private bool killFatesEnabled;
         private double landingTimeOut;
@@ -383,6 +384,19 @@ namespace Oracle.Settings
             set
             {
                 this.fateWaitMode = value;
+                this.Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool FlightPathPostProcessingEnabled
+        {
+            get { return this.flightPathPostProcessingEnabled; }
+
+            set
+            {
+                this.flightPathPostProcessingEnabled = value;
                 this.Save();
             }
         }

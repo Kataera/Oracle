@@ -30,7 +30,7 @@ namespace Oracle.Data
 {
     internal struct Fate
     {
-        public uint ChainIdSuccess { get; set; }
+        public uint ChainId { get; set; }
         public uint Id { get; set; }
         public uint ItemId { get; set; }
         public uint Level { get; set; }

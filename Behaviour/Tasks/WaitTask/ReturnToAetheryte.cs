@@ -22,18 +22,10 @@
     along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
-using System.Linq;
 using System.Threading.Tasks;
 
-using Buddy.Coroutines;
-
 using ff14bot;
-using ff14bot.Behavior;
-using ff14bot.Enums;
 using ff14bot.Helpers;
-using ff14bot.Managers;
-using ff14bot.Navigation;
-using ff14bot.Settings;
 
 using Oracle.Managers;
 
@@ -48,80 +40,18 @@ namespace Oracle.Behaviour.Tasks.WaitTask
                 return true;
             }
 
-            // Support for ExBuddy's flight navigator, which was having problems with MoveToPointWithin.
-            if (PluginManager.GetEnabledPlugins().Contains("EnableFlight"))
+            if (!OracleMovementManager.IsFlightMeshLoaded())
             {
-                await MoveCloseToAetheryte();
-            }
-            else
-            {
-                await MoveToRandomPointNearAetheryte();
-            }
+                await OracleMovementManager.LoadFlightMeshIfAvailable();
 
-            Navigator.Clear();
-            return true;
-        }
-
-        private static async Task<bool> MoveCloseToAetheryte()
-        {
-            while (Core.Player.Location.Distance2D(Poi.Current.Location) > 15f)
-            {
-                if (await OracleFateManager.AnyViableFates())
+                if (!OracleMovementManager.IsFlightMeshLoaded())
                 {
-                    Navigator.Stop();
-                    OracleFateManager.ClearPoi("Found a FATE.");
+                    await OracleMovementManager.NavigateToLocation(Poi.Current.Location, 15f);
                     return true;
                 }
-
-                if (!Core.Player.IsMounted
-                    && Core.Player.Distance(Poi.Current.Location) > CharacterSettings.Instance.MountDistance)
-                {
-                    Navigator.PlayerMover.MoveStop();
-                    if (Core.Player.InCombat)
-                    {
-                        return false;
-                    }
-
-                    await CommonBehaviors.CreateMountBehavior().ExecuteCoroutine();
-                }
-
-                Navigator.MoveTo(Poi.Current.Location, "Moving to Aetheryte");
-                await Coroutine.Yield();
             }
 
-            Navigator.Clear();
-            return true;
-        }
-
-        private static async Task<bool> MoveToRandomPointNearAetheryte()
-        {
-            var result = Navigator.MoveToPointWithin(Poi.Current.Location, 15f, "Moving to Aetheryte");
-            while (result != MoveResult.Done || result != MoveResult.ReachedDestination)
-            {
-                if (await OracleFateManager.AnyViableFates())
-                {
-                    Navigator.Stop();
-                    OracleFateManager.ClearPoi("Found a FATE.");
-                    return true;
-                }
-
-                if (!Core.Player.IsMounted
-                    && Core.Player.Distance(Poi.Current.Location) > CharacterSettings.Instance.MountDistance)
-                {
-                    Navigator.PlayerMover.MoveStop();
-                    if (Core.Player.InCombat)
-                    {
-                        return false;
-                    }
-
-                    await CommonBehaviors.CreateMountBehavior().ExecuteCoroutine();
-                }
-
-                result = Navigator.MoveToPointWithin(Poi.Current.Location, 15f, "Moving to Aetheryte");
-                await Coroutine.Yield();
-            }
-
-            Navigator.Clear();
+            await OracleMovementManager.FlyToLocation(Poi.Current.Location, 15f, true);
             return true;
         }
     }
