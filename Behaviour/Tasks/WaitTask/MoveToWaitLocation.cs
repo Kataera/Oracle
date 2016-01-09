@@ -35,7 +35,7 @@ namespace Oracle.Behaviour.Tasks.WaitTask
     {
         public static async Task<bool> Main()
         {
-            if (Core.Player.Location.Distance2D(Poi.Current.Location) < 15f)
+            if (Core.Player.Location.Distance(Poi.Current.Location) < 15f)
             {
                 return true;
             }
@@ -46,12 +46,12 @@ namespace Oracle.Behaviour.Tasks.WaitTask
 
                 if (!OracleMovementManager.IsFlightMeshLoaded())
                 {
-                    await OracleMovementManager.NavigateToLocation(Poi.Current.Location, 15f);
+                    await OracleMovementManager.NavigateToLocation(Poi.Current.Location, 10f);
                     return true;
                 }
             }
 
-            await OracleMovementManager.FlyToLocation(Poi.Current.Location, 15f, false);
+            await OracleMovementManager.FlyToLocation(Poi.Current.Location, 5f, false);
             return true;
         }
     }

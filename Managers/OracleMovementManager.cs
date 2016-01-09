@@ -141,6 +141,11 @@ namespace Oracle.Managers
 
             if (!Core.Player.IsMounted)
             {
+                if (Core.Player.InCombat)
+                {
+                    return false;
+                }
+
                 await Mount.MountUp();
             }
 
@@ -150,6 +155,16 @@ namespace Oracle.Managers
             }
 
             var path = await GenerateFlightPathToLocation(location);
+            if (path == null)
+            {
+                return false;
+            }
+
+            if (!MovementManager.IsFlying)
+            {
+                await CommonTasks.TakeOff();
+            }
+
             foreach (var step in path)
             {
                 var processedStep = !path.Last().Equals(step) ? ProcessFlightStep(step) : step;
@@ -178,7 +193,7 @@ namespace Oracle.Managers
                 }
             }
 
-            if (MovementManager.IsFlying && await CommonTasks.CanLand(Core.Player.Location) == CanLandResult.Yes)
+            if (land && MovementManager.IsFlying && await CommonTasks.CanLand(Core.Player.Location) == CanLandResult.Yes)
             {
                 await CommonTasks.Land();
             }
@@ -339,7 +354,7 @@ namespace Oracle.Managers
 
         private static async Task<IEnumerable<Vector3>> GenerateFlightPathToLocation(Vector3 destination)
         {
-            Logger.SendLog("Generating new flight path to FATE.");
+            Logger.SendLog("Generating new flight path to " + destination);
             var flightPathTimer = Stopwatch.StartNew();
 
             var aStar = new AStarNavigator(ZoneFlightMesh.Graph);
@@ -387,7 +402,7 @@ namespace Oracle.Managers
             // Pick a location that is in the general direction we're facing.
             return MathEx.GetPointAt(location,
                 radius * Convert.ToSingle(MathEx.Random(0.5, 0.9)),
-                Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.25 * Math.PI, 0.25 * Math.PI)));
+                Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.4 * Math.PI, 0.4 * Math.PI)));
         }
 
         private static Node GetClosestNodeToFate(FateData fate)

@@ -129,7 +129,6 @@ namespace Oracle.Helpers
 
             try
             {
-                var yieldTimer = Stopwatch.StartNew();
                 foreach (XmlNode currentNode in fateDataXml.DocumentElement.ChildNodes)
                 {
                     // Ensure nodes are instantiated.
@@ -200,13 +199,6 @@ namespace Oracle.Helpers
                     }
 
                     database.AddFateToDatabase(CreateFate());
-
-                    // Yield approximately 30 times per second.
-                    if (yieldTimer.Elapsed > TimeSpan.FromMilliseconds(30))
-                    {
-                        await Coroutine.Yield();
-                        yieldTimer.Restart();
-                    }
                 }
             }
             catch (FormatException exception)
