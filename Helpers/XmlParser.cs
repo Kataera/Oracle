@@ -202,7 +202,7 @@ namespace Oracle.Helpers
                     database.AddFateToDatabase(CreateFate());
 
                     // Yield approximately 30 times per second.
-                    if (yieldTimer.Elapsed > TimeSpan.FromMilliseconds(33))
+                    if (yieldTimer.Elapsed > TimeSpan.FromMilliseconds(30))
                     {
                         await Coroutine.Yield();
                         yieldTimer.Restart();

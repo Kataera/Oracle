@@ -78,8 +78,7 @@ namespace Oracle.Managers
 
             foreach (var step in path)
             {
-                var processedStep = ProcessFlightStep(step);
-
+                var processedStep = !path.Last().Equals(step) ? ProcessFlightStep(step) : step;
                 while (Core.Player.Distance(processedStep) > 2f)
                 {
                     if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
@@ -153,15 +152,7 @@ namespace Oracle.Managers
             var path = await GenerateFlightPathToLocation(location);
             foreach (var step in path)
             {
-                var processedStep = ProcessFlightStep(step);
-
-                if (OracleSettings.Instance.FlightPathPostProcessingEnabled)
-                {
-                    processedStep.X += Convert.ToSingle(MathEx.Random(-5, 5));
-                    processedStep.Y += Convert.ToSingle(MathEx.Random(-5, 5));
-                    processedStep.Z += Convert.ToSingle(MathEx.Random(-5, 5));
-                }
-
+                var processedStep = !path.Last().Equals(step) ? ProcessFlightStep(step) : step;
                 while (Core.Player.Location.Distance(processedStep) > precision)
                 {
                     if (!Core.Player.IsMounted && Actionmanager.AvailableMounts.Any())
