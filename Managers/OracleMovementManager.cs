@@ -133,7 +133,7 @@ namespace Oracle.Managers
 
         public static async Task<bool> FlyToLocation(Vector3 location, float precision, bool land)
         {
-            if (!await LoadFlightMeshIfAvailable())
+            if (!IsFlightMeshLoaded())
             {
                 await NavigateToLocation(location, precision);
                 return true;
@@ -172,6 +172,7 @@ namespace Oracle.Managers
                         await CommonTasks.TakeOff();
                     }
 
+                    Logger.SendLog("Flying to hop: " + processedStep);
                     Navigator.PlayerMover.MoveTowards(processedStep);
                     await Coroutine.Yield();
                 }
@@ -217,7 +218,7 @@ namespace Oracle.Managers
                 }
             }
 
-            return false;
+            return true;
         }
 
         public static async Task<bool> NavigateToCurrentFate(bool ignoreCombat)

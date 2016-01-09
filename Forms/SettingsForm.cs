@@ -369,7 +369,7 @@ namespace Oracle.Forms
 
         private void OnFateMaximumLevelAboveChanged(object sender, EventArgs e)
         {
-            OracleSettings.Instance.FateMaximumLevelAbove = Convert.ToInt32(this.numericUpDownMobMaximumLevelAboveSetting.Value);
+            OracleSettings.Instance.FateMaximumLevelAbove = Convert.ToInt32(this.numericUpDownFateMaximumLevelAboveSetting.Value);
         }
 
         private void OnFateMinimumLevelBelowChanged(object sender, EventArgs e)

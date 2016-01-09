@@ -58,12 +58,12 @@ namespace Oracle.Forms
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabSelectorMain = new MaterialSkin.Controls.MaterialTabSelector();
             this.tabControllerMain = new MaterialSkin.Controls.MaterialTabControl();
             this.tabGeneralSettings = new System.Windows.Forms.TabPage();
@@ -839,9 +839,9 @@ namespace Oracle.Forms
             this.tabPageDowntimeGrindMobs.Controls.Add(this.labelMobMaxLevelAboveSetting);
             this.tabPageDowntimeGrindMobs.Controls.Add(this.labelMobMinLevelBelowSetting);
             this.tabPageDowntimeGrindMobs.Controls.Add(this.labelDowntimeGrindMobs);
-            this.tabPageDowntimeGrindMobs.Location = new System.Drawing.Point(4, 22);
+            this.tabPageDowntimeGrindMobs.Location = new System.Drawing.Point(4, 29);
             this.tabPageDowntimeGrindMobs.Name = "tabPageDowntimeGrindMobs";
-            this.tabPageDowntimeGrindMobs.Size = new System.Drawing.Size(647, 257);
+            this.tabPageDowntimeGrindMobs.Size = new System.Drawing.Size(647, 250);
             this.tabPageDowntimeGrindMobs.TabIndex = 2;
             this.tabPageDowntimeGrindMobs.Text = "Grind Mobs";
             // 
@@ -913,7 +913,7 @@ namespace Oracle.Forms
             this.labelDowntimeGrindMobs.ForeColor = System.Drawing.Color.Black;
             this.labelDowntimeGrindMobs.Location = new System.Drawing.Point(10, 0);
             this.labelDowntimeGrindMobs.Name = "labelDowntimeGrindMobs";
-            this.labelDowntimeGrindMobs.Size = new System.Drawing.Size(631, 47);
+            this.labelDowntimeGrindMobs.Size = new System.Drawing.Size(631, 40);
             this.labelDowntimeGrindMobs.TabIndex = 0;
             this.labelDowntimeGrindMobs.Text = "The Grind Mobs behaviour will kill nearby enemy mobs when there are no viable FAT" +
     "Es active. You can blacklist mobs in the Blacklist tab.";
@@ -1063,8 +1063,8 @@ namespace Oracle.Forms
             // 
             this.dataGridViewZoneChangeSettings.AllowUserToAddRows = false;
             this.dataGridViewZoneChangeSettings.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle13.BackColor = System.Drawing.Color.White;
-            this.dataGridViewZoneChangeSettings.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle31.BackColor = System.Drawing.Color.White;
+            this.dataGridViewZoneChangeSettings.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle31;
             this.dataGridViewZoneChangeSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -1072,14 +1072,14 @@ namespace Oracle.Forms
             this.dataGridViewZoneChangeSettings.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dataGridViewZoneChangeSettings.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dataGridViewZoneChangeSettings.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.MediumSlateBlue;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewZoneChangeSettings.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle32.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle32.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle32.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle32.SelectionBackColor = System.Drawing.Color.MediumSlateBlue;
+            dataGridViewCellStyle32.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewZoneChangeSettings.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle32;
             this.dataGridViewZoneChangeSettings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewZoneChangeSettings.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnLevel,
@@ -1090,23 +1090,23 @@ namespace Oracle.Forms
             this.dataGridViewZoneChangeSettings.Location = new System.Drawing.Point(17, 108);
             this.dataGridViewZoneChangeSettings.Name = "dataGridViewZoneChangeSettings";
             this.dataGridViewZoneChangeSettings.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle17.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewZoneChangeSettings.RowHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle35.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle35.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle35.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle35.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            dataGridViewCellStyle35.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle35.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewZoneChangeSettings.RowHeadersDefaultCellStyle = dataGridViewCellStyle35;
             this.dataGridViewZoneChangeSettings.RowHeadersVisible = false;
             this.dataGridViewZoneChangeSettings.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle18.BackColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle18.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle18.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.White;
-            this.dataGridViewZoneChangeSettings.RowsDefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle36.BackColor = System.Drawing.Color.WhiteSmoke;
+            dataGridViewCellStyle36.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle36.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            dataGridViewCellStyle36.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
+            dataGridViewCellStyle36.SelectionForeColor = System.Drawing.Color.White;
+            this.dataGridViewZoneChangeSettings.RowsDefaultCellStyle = dataGridViewCellStyle36;
             this.dataGridViewZoneChangeSettings.RowTemplate.Height = 26;
             this.dataGridViewZoneChangeSettings.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewZoneChangeSettings.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -1119,12 +1119,12 @@ namespace Oracle.Forms
             // 
             // ColumnLevel
             // 
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle15.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.White;
-            this.ColumnLevel.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle33.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle33.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle33.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
+            dataGridViewCellStyle33.SelectionForeColor = System.Drawing.Color.White;
+            this.ColumnLevel.DefaultCellStyle = dataGridViewCellStyle33;
             this.ColumnLevel.HeaderText = "Level";
             this.ColumnLevel.Name = "ColumnLevel";
             this.ColumnLevel.ReadOnly = true;
@@ -1133,12 +1133,12 @@ namespace Oracle.Forms
             // ColumnAetheryte
             // 
             this.ColumnAetheryte.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle16.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle16.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.White;
-            this.ColumnAetheryte.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle34.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle34.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle34.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(73)))), ((int)(((byte)(171)))));
+            dataGridViewCellStyle34.SelectionForeColor = System.Drawing.Color.White;
+            this.ColumnAetheryte.DefaultCellStyle = dataGridViewCellStyle34;
             this.ColumnAetheryte.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.ColumnAetheryte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ColumnAetheryte.HeaderText = "Aetheryte";
@@ -1265,11 +1265,11 @@ namespace Oracle.Forms
             this.tabFateSettings.BackColor = System.Drawing.Color.White;
             this.tabFateSettings.Controls.Add(this.tabControllerFate);
             this.tabFateSettings.Controls.Add(this.tabSelectorFate);
-            this.tabFateSettings.Location = new System.Drawing.Point(4, 22);
+            this.tabFateSettings.Location = new System.Drawing.Point(4, 29);
             this.tabFateSettings.Margin = new System.Windows.Forms.Padding(0);
             this.tabFateSettings.Name = "tabFateSettings";
             this.tabFateSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFateSettings.Size = new System.Drawing.Size(842, 495);
+            this.tabFateSettings.Size = new System.Drawing.Size(842, 488);
             this.tabFateSettings.TabIndex = 1;
             this.tabFateSettings.Text = "Fate Settings";
             this.tabFateSettings.Click += new System.EventHandler(this.OnTabPageClick);
