@@ -425,7 +425,7 @@ namespace Oracle.Managers
         private static Node GetClosestNodeToFate(FateData fate)
         {
             var potentialNodes = ZoneFlightMesh.Graph.Nodes.OrderBy(kvp => kvp.Value.Position.Distance(fate.Location))
-                                               .Where(kvp => kvp.Value.Position.Y > fate.Location.Y);
+                                               .Where(kvp => kvp.Value.Position.Y > fate.Location.Y + 10);
 
             return potentialNodes.FirstOrDefault().Value;
         }
@@ -433,7 +433,7 @@ namespace Oracle.Managers
         private static Node GetClosestNodeToLocation(Vector3 location)
         {
             var potentialNodes = ZoneFlightMesh.Graph.Nodes.OrderBy(kvp => kvp.Value.Position.Distance(location))
-                                               .Where(kvp => kvp.Value.Position.Y > location.Y);
+                                               .Where(kvp => kvp.Value.Position.Y > location.Y + 10);
 
             return potentialNodes.FirstOrDefault().Value;
         }
