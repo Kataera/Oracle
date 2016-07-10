@@ -35,7 +35,6 @@ using Oracle.Behaviour;
 using Oracle.Behaviour.PoiHooks;
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Enumerations;
-using Oracle.Forms;
 using Oracle.Helpers;
 using Oracle.Managers;
 using Oracle.Providers;
@@ -52,8 +51,6 @@ namespace Oracle
         private static bool playerFlightMode;
 
         private static Composite root;
-
-        private static SettingsForm settingsForm;
 
         public override string EnglishName
         {
@@ -113,21 +110,7 @@ namespace Oracle
 
         public override void OnButtonPress()
         {
-            if (settingsForm == null || settingsForm.IsDisposed)
-            {
-                settingsForm = new SettingsForm();
-            }
-
-            try
-            {
-                settingsForm.Show();
-                settingsForm.Activate();
-            }
-            catch (ArgumentOutOfRangeException exception)
-            {
-                Logger.SendErrorLog("Error opening the settings window.");
-                Logger.SendDebugLog("ArgumentOutOfRangeException thrown.\n\n" + exception);
-            }
+            // TODO
         }
 
         public override void Start()

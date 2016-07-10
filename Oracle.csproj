@@ -61,9 +61,6 @@
     <None Include="Data\Meshes\zone_400.gz" />
     <None Include="Data\Meshes\zone_401.gz" />
     <None Include="Data\Meshes\zone_402.gz" />
-    <None Include="Forms\MaterialSkin\LICENSE">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </None>
     <None Include="README.md" />
     <None Include="Resources\Fonts\Roboto-Medium.ttf" />
     <None Include="Resources\Fonts\Roboto-Regular.ttf" />
@@ -110,48 +107,6 @@
     <Compile Include="Behaviour\Tasks\ZoneChangeHandler.cs" />
     <Compile Include="Data\OracleFlightMesh.cs" />
     <Compile Include="Enumerations\OracleOperationMode.cs" />
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialCheckbox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialContextMenuStrip.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialDivider.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialFlatButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialLabel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialPictureBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialRadioButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialRaisedButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialSingleLineTextField.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialTabControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialTabSelector.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialTabSelectorVertical.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Managers\OracleFateManager.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LevelSync.cs" />
     <Compile Include="Behaviour\Tasks\FateTask\MegaBossFate.cs" />
@@ -164,34 +119,6 @@
     <Compile Include="Enumerations\FateSelectMode.cs" />
     <Compile Include="Enumerations\FateSupportLevel.cs" />
     <Compile Include="Enumerations\FateType.cs" />
-    <Compile Include="Forms\MaterialSkin\Animations\AnimationDirection.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Animations\AnimationManager.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Animations\Animations.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\ColorScheme.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\DrawHelper.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\IMaterialControl.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\MaterialSkinManager.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\SettingsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SettingsForm.Designer.cs">
-      <DependentUpon>SettingsForm.cs</DependentUpon>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\Updater.cs" />
     <Compile Include="Helpers\XmlParser.cs" />
@@ -204,9 +131,6 @@
     <Compile Include="Oracle.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\SettingsForm.resx">
-      <DependentUpon>SettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
