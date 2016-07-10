@@ -272,10 +272,19 @@ namespace Oracle.Behaviour.PoiHooks
 
         private static bool ZoneChangeNeeded()
         {
+            const ushort dravanianHinterlands = 399;
+            const ushort idyllshire = 478;
+
             uint aetheryteId;
             OracleSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
 
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
+            {
+                return false;
+            }
+
+            // Special case for Idyllshire/Dravanian Hinterlands.
+            if (WorldManager.ZoneId == dravanianHinterlands && WorldManager.GetZoneForAetheryteId(aetheryteId) == idyllshire)
             {
                 return false;
             }
