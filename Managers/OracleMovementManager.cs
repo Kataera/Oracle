@@ -232,6 +232,7 @@ namespace Oracle.Managers
                 const ushort dravanianHinterlands = 398;
                 const ushort churningMists = 400;
                 const ushort seaOfClouds = 401;
+                const ushort azysLla = 402;
 
                 switch (WorldManager.ZoneId)
                 {
@@ -242,6 +243,9 @@ namespace Oracle.Managers
                         await LoadFlightMesh.Main();
                         return true;
                     case seaOfClouds:
+                        await LoadFlightMesh.Main();
+                        return true;
+                    case azysLla:
                         await LoadFlightMesh.Main();
                         return true;
                 }
