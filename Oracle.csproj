@@ -60,6 +60,7 @@
     <None Include="Data\Meshes\zone_398.gz" />
     <None Include="Data\Meshes\zone_400.gz" />
     <None Include="Data\Meshes\zone_401.gz" />
+    <None Include="Data\Meshes\zone_402.gz" />
     <None Include="Forms\MaterialSkin\LICENSE">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </None>
