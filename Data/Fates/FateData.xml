@@ -4524,4 +4524,31 @@
     <CollectItemId>2001940</CollectItemId>
     <NpcId>4662</NpcId>
   </Fate>
+  <Fate>
+    <ID>942</ID>
+    <Name>Eggstract and Eggspedite</Name>
+    <Level>1</Level>
+    <Type>&Collect;</Type>
+    <OracleSupport>&FullSupport;</OracleSupport>
+    <CollectItemId>2001972</CollectItemId>
+    <NpcId>4792</NpcId>
+  </Fate>
+  <Fate>
+    <ID>943</ID>
+    <Name>Eggstract and Eggspedite</Name>
+    <Level>1</Level>
+    <Type>&Collect;</Type>
+    <OracleSupport>&FullSupport;</OracleSupport>
+    <CollectItemId>2001972</CollectItemId>
+    <NpcId>4792</NpcId>
+  </Fate>
+  <Fate>
+    <ID>944</ID>
+    <Name>Eggstract and Eggspedite</Name>
+    <Level>1</Level>
+    <Type>&Collect;</Type>
+    <OracleSupport>&FullSupport;</OracleSupport>
+    <CollectItemId>2001972</CollectItemId>
+    <NpcId>4792</NpcId>
+  </Fate>
 </Fates>
