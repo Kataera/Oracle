@@ -242,9 +242,7 @@ Settings.StyleCop
 # Oracle Test project
 OracleTest/
 
-# Oracle solution
-Oracle.sln
-Oracle.csproj.DotSettings
+# Git Hook workaround
 Properties/AssemblyInfo.cs
 
 # Project notes
