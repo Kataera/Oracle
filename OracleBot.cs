@@ -22,7 +22,6 @@
     along with Oracle. If not, see http://www.gnu.org/licenses/.
 */
 
-using System;
 using System.Reflection;
 
 using ff14bot.AClasses;
@@ -39,12 +38,13 @@ using Oracle.Helpers;
 using Oracle.Managers;
 using Oracle.Providers;
 using Oracle.Settings;
+using Oracle.UI;
 
 using TreeSharp;
 
 namespace Oracle
 {
-    public class Oracle : BotBase
+    public class OracleBot : BotBase
     {
         private static bool playerFaceTargetOnAction;
 
@@ -111,6 +111,8 @@ namespace Oracle
         public override void OnButtonPress()
         {
             // TODO
+            var settingsWindow = new UI.Settings();
+            settingsWindow.Show();
         }
 
         public override void Start()

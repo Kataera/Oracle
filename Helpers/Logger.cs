@@ -41,7 +41,7 @@ namespace Oracle.Helpers
 
         internal static void SendDebugLog(string log)
         {
-            log = "[Oracle v" + Oracle.Version + "] [DEBUG]: " + log;
+            log = "[Oracle v" + OracleBot.Version + "] [DEBUG]: " + log;
 
             if (log.Equals(LastLog))
             {
@@ -62,7 +62,7 @@ namespace Oracle.Helpers
 
         internal static void SendErrorLog(string log)
         {
-            log = "[Oracle v" + Oracle.Version + "] [ERROR]: " + log;
+            log = "[Oracle v" + OracleBot.Version + "] [ERROR]: " + log;
 
             if (log.Equals(LastLog))
             {
@@ -75,7 +75,7 @@ namespace Oracle.Helpers
 
         internal static void SendLog(string log)
         {
-            log = "[Oracle v" + Oracle.Version + "]: " + log;
+            log = "[Oracle v" + OracleBot.Version + "]: " + log;
 
             if (log.Equals(LastLog))
             {
