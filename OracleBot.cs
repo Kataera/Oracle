@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 using ff14bot.AClasses;
 using ff14bot.Behavior;
@@ -99,6 +100,10 @@ namespace Oracle
                     break;
                 case OracleOperationMode.AnimaGrind:
                     Logger.SendLog("Starting Oracle in Anima grind mode.");
+                    break;
+                default:
+                    Logger.SendErrorLog("No setting chosen for operation mode. Defaulting to FATE grind mode.");
+                    Logger.SendLog("Starting Oracle in FATE grind mode.");
                     break;
             }
         }

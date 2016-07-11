@@ -1,6 +1,4 @@
-﻿// Wrapper botbase for Oracle.
-
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Windows.Media;
@@ -18,9 +16,11 @@ namespace Oracle
     public class OracleLoader : BotBase
     {
         private const string BotbaseClass = "Oracle.OracleBot";
-        private static BotBase oracleBotBase;
-        private static readonly string ProjectAssembly = Path.Combine(Environment.CurrentDirectory, @"BotBases\Oracle\Oracle.dll");
+        private static readonly string OracleDllPath = Path.Combine(Environment.CurrentDirectory, @"BotBases\Oracle\Oracle.dll");
+        private static readonly Assembly OracleDll = Assembly.LoadFile(OracleDllPath);
         private static readonly Color LogColor = Color.FromRgb(179, 179, 255);
+
+        private static BotBase oracleBotBase;
 
         public OracleLoader()
         {
@@ -89,7 +89,7 @@ namespace Oracle
             {
                 if (oracleBotBase == null)
                 {
-                    oracleBotBase = (BotBase)LoadOracle();
+                    oracleBotBase = (BotBase) LoadOracle();
                 }
 
                 return oracleBotBase?.WantButton ?? true;
@@ -98,16 +98,14 @@ namespace Oracle
 
         private static object LoadOracle()
         {
-            var dll = Assembly.LoadFile(ProjectAssembly);
-
             Type baseType;
             try
             {
-                baseType = dll.GetType(BotbaseClass);
+                baseType = OracleDll.GetType(BotbaseClass);
             }
             catch (Exception e)
             {
-                Logging.Write(e.ToString());
+                SendLog(e.ToString());
                 return null;
             }
 
@@ -118,7 +116,7 @@ namespace Oracle
             }
             catch (Exception e)
             {
-                Logging.Write(e.ToString());
+                SendLog(e.ToString());
                 return null;
             }
 
