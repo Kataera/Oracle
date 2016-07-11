@@ -1,28 +1,4 @@
-﻿/*
-    #################
-    ##   License   ##
-    #################
-
-    Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
-
-    This file is part of Oracle.
-
-    Oracle is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Oracle is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Oracle. If not, see http://www.gnu.org/licenses/.
-*/
-
-using System.Reflection;
+﻿using System.Reflection;
 
 using ff14bot.AClasses;
 using ff14bot.Behavior;
@@ -38,7 +14,6 @@ using Oracle.Helpers;
 using Oracle.Managers;
 using Oracle.Providers;
 using Oracle.Settings;
-using Oracle.UI;
 
 using TreeSharp;
 
@@ -52,66 +27,38 @@ namespace Oracle
 
         private static Composite root;
 
-        public override string EnglishName
-        {
-            get { return "Oracle"; }
-        }
+        private static UI.Settings settingsWindow;
 
-        public override bool IsAutonomous
-        {
-            get { return true; }
-        }
+        public override string EnglishName => "Oracle";
 
-        public override string Name
-        {
-            get { return "Oracle"; }
-        }
+        public override bool IsAutonomous => true;
 
-        public override PulseFlags PulseFlags
-        {
-            get { return PulseFlags.All; }
-        }
+        public override string Name => "Oracle";
 
-        public override bool RequiresProfile
-        {
-            get { return false; }
-        }
+        public override PulseFlags PulseFlags => PulseFlags.All;
 
-        public override Composite Root
-        {
-            get { return root; }
-        }
+        public override bool RequiresProfile => false;
 
-        public override bool WantButton
-        {
-            get { return true; }
-        }
+        public override Composite Root => root;
 
-        internal static string Version
-        {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.Major + "."
-                       + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
-                       + Assembly.GetExecutingAssembly().GetName().Version.Revision;
-            }
-        }
+        public override bool WantButton => true;
+
+        internal static string Version => Assembly.GetExecutingAssembly().GetName().Version.Major + "."
+                                          + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
+                                          + Assembly.GetExecutingAssembly().GetName().Version.Revision;
 
         public override void Initialize()
         {
             Logger.SendLog("Initialising Oracle.");
-
-            // TODO: Implement.
-            if (Updater.UpdateIsAvailable())
-            {
-                Logger.SendLog("An update for Oracle is available.");
-            }
         }
 
         public override void OnButtonPress()
         {
-            // TODO
-            var settingsWindow = new UI.Settings();
+            if (settingsWindow == null)
+            {
+                settingsWindow = new UI.Settings();
+            }
+
             settingsWindow.Show();
         }
 
@@ -170,10 +117,7 @@ namespace Oracle
             }
 
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
-            if (navProvider != null)
-            {
-                navProvider.Dispose();
-            }
+            navProvider?.Dispose();
 
             Navigator.NavigationProvider = null;
 

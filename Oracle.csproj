@@ -136,7 +136,6 @@
     <Compile Include="Enumerations\FateSupportLevel.cs" />
     <Compile Include="Enumerations\FateType.cs" />
     <Compile Include="Helpers\Logger.cs" />
-    <Compile Include="Helpers\Updater.cs" />
     <Compile Include="Helpers\XmlParser.cs" />
     <Compile Include="OracleLoader.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

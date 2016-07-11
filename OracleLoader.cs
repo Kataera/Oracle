@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Wrapper botbase for Oracle.
+
+using System;
 using System.IO;
 using System.Reflection;
 using System.Windows.Media;
