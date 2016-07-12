@@ -94,6 +94,9 @@
     <None Include="Data\Meshes\zone_398.gz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Meshes\zone_399.gz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Meshes\zone_400.gz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
