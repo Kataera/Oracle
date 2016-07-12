@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 
 using ff14bot.AClasses;
@@ -42,24 +43,67 @@ namespace Oracle
 
         public override Composite Root => root;
 
+        internal static string Version
+            =>
+                Assembly.GetExecutingAssembly().GetName().Version.Major + "." + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
+                + Assembly.GetExecutingAssembly().GetName().Version.Revision;
+
         public override bool WantButton => true;
 
-        internal static string Version => Assembly.GetExecutingAssembly().GetName().Version.Major + "."
-                                          + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
-                                          + Assembly.GetExecutingAssembly().GetName().Version.Revision;
+        private static void AddAssemblyResolveHandler()
+        {
+            var botbaseAssembly = Assembly.GetExecutingAssembly();
+
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, e) =>
+            {
+                var missing = new AssemblyName(e.Name);
+
+                // Sometimes the WPF assembly resolver cannot even find the executing assembly. :|
+                if (missing.FullName == botbaseAssembly.FullName)
+                {
+                    return botbaseAssembly;
+                }
+
+                var botbaseFolder = Path.Combine(Environment.CurrentDirectory, @"BotBases\Oracle\");
+                var missingPath = Path.Combine(botbaseFolder, missing.Name + ".dll");
+
+                // If we find the DLL in Oracle's folder, load and return it.
+                return File.Exists(missingPath) ? Assembly.LoadFrom(missingPath) : null;
+            };
+        }
 
         public override void Initialize()
         {
             Logger.SendLog("Initialising Oracle.");
         }
 
+        private static void ListHooks()
+        {
+            Logger.SendDebugLog("Listing RebornBuddy hooks.");
+            foreach (var hook in TreeHooks.Instance.Hooks)
+            {
+                Logger.SendDebugLog(hook.Key + ": " + hook.Value.Count + " Composite(s).");
+
+                var count = 0;
+                foreach (var composite in hook.Value)
+                {
+                    count++;
+                    Logger.SendDebugLog("\tComposite " + count + ": " + composite + ".");
+                }
+
+                Logger.SendDebugLog(string.Empty);
+            }
+        }
+
         public override void OnButtonPress()
         {
-            if (settingsWindow == null)
+            if (settingsWindow != null && settingsWindow.IsVisible)
             {
-                settingsWindow = new UI.Settings();
+                return;
             }
 
+            AddAssemblyResolveHandler();
+            settingsWindow = new UI.Settings();
             settingsWindow.Show();
         }
 
@@ -133,24 +177,6 @@ namespace Oracle
             GameSettingsManager.FlightMode = playerFlightMode;
 
             Logger.SendLog("Stopping Oracle.");
-        }
-
-        private static void ListHooks()
-        {
-            Logger.SendDebugLog("Listing RebornBuddy hooks.");
-            foreach (var hook in TreeHooks.Instance.Hooks)
-            {
-                Logger.SendDebugLog(hook.Key + ": " + hook.Value.Count + " Composite(s).");
-
-                var count = 0;
-                foreach (var composite in hook.Value)
-                {
-                    count++;
-                    Logger.SendDebugLog("\tComposite " + count + ": " + composite + ".");
-                }
-
-                Logger.SendDebugLog(string.Empty);
-            }
         }
     }
 }
