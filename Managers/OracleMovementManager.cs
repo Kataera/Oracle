@@ -203,31 +203,38 @@ namespace Oracle.Managers
 
         public static async Task<bool> LoadFlightMeshIfAvailable()
         {
-            if (ZoneFlightMesh == null || ZoneFlightMesh.ZoneId != WorldManager.ZoneId)
+            if (ZoneFlightMesh != null && ZoneFlightMesh.ZoneId == WorldManager.ZoneId)
             {
-                const ushort dravanianHinterlands = 398;
-                const ushort churningMists = 400;
-                const ushort seaOfClouds = 401;
-                const ushort azysLla = 402;
-
-                switch (WorldManager.ZoneId)
-                {
-                    case dravanianHinterlands:
-                        await LoadFlightMesh.Main();
-                        return true;
-                    case churningMists:
-                        await LoadFlightMesh.Main();
-                        return true;
-                    case seaOfClouds:
-                        await LoadFlightMesh.Main();
-                        return true;
-                    case azysLla:
-                        await LoadFlightMesh.Main();
-                        return true;
-                }
+                return true;
             }
 
-            return true;
+            const ushort dravanianForelands = 398;
+            const ushort dravanianHinterlands = 399;
+            const ushort churningMists = 400;
+            const ushort seaOfClouds = 401;
+            const ushort azysLla = 402;
+
+            switch (WorldManager.ZoneId)
+            {
+                case dravanianForelands:
+                    await LoadFlightMesh.Main();
+                    return true;
+                case dravanianHinterlands:
+                    await LoadFlightMesh.Main();
+                    return true;
+                case churningMists:
+                    await LoadFlightMesh.Main();
+                    return true;
+                case seaOfClouds:
+                    await LoadFlightMesh.Main();
+                    return true;
+                case azysLla:
+                    await LoadFlightMesh.Main();
+                    return true;
+                default:
+                    Logger.SendDebugLog("No flight mesh available for current zone.");
+                    return true;
+            }
         }
 
         public static async Task<bool> NavigateToCurrentFate(bool ignoreCombat)
