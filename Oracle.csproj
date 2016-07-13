@@ -75,6 +75,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
@@ -105,6 +106,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
+    <None Include="Resources\Images\Crystal.psd" />
+    <None Include="Resources\Images\Logo.psd" />
     <None Include="UI\App.config">
       <SubType>Designer</SubType>
     </None>
