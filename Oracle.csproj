@@ -83,28 +83,27 @@
     <Content Include="Data\Fates\FateData.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Images\Logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\Fates\FateData.xsd">
+    <Content Include="Data\Fates\FateData.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Meshes\zone_398.gz">
+    </Content>
+    <Content Include="Data\Meshes\zone_398.gz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Meshes\zone_399.gz">
+    </Content>
+    <Content Include="Data\Meshes\zone_399.gz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Meshes\zone_400.gz">
+    </Content>
+    <Content Include="Data\Meshes\zone_400.gz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Meshes\zone_401.gz">
+    </Content>
+    <Content Include="Data\Meshes\zone_401.gz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Meshes\zone_402.gz">
+    </Content>
+    <Content Include="Data\Meshes\zone_402.gz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="packages.config" />
     <None Include="UI\App.config">
       <SubType>Designer</SubType>
@@ -187,7 +186,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Page Include="UI\App.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -197,6 +195,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>

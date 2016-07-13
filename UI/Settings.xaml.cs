@@ -60,5 +60,13 @@ namespace Oracle.UI
         {
             WindowState = WindowState.Minimized;
         }
+
+        private void ControlPanel_OnMouseDownPanel_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
     }
 }
