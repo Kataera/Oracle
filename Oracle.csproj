@@ -83,8 +83,7 @@
     <Content Include="Data\Fates\FateData.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Images\Logo.png" />
-    <Content Include="Resources\Images\PayPal.png" />
+    <Resource Include="Resources\Images\Logo.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Fates\FateData.xsd">
@@ -107,8 +106,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="Resources\Fonts\Roboto-Medium.ttf" />
-    <None Include="Resources\Fonts\Roboto-Regular.ttf" />
     <None Include="UI\App.config">
       <SubType>Designer</SubType>
     </None>
