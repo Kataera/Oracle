@@ -84,9 +84,86 @@ namespace Oracle.Providers
             return !inCombat;
         }
 
+        private static bool PlayerIsMelee()
+        {
+            switch (Core.Player.CurrentJob)
+            {
+                case ClassJobType.Adventurer:
+                    return false;
+                case ClassJobType.Gladiator:
+                    return true;
+                case ClassJobType.Pugilist:
+                    return true;
+                case ClassJobType.Marauder:
+                    return true;
+                case ClassJobType.Lancer:
+                    return true;
+                case ClassJobType.Archer:
+                    return false;
+                case ClassJobType.Conjurer:
+                    return false;
+                case ClassJobType.Thaumaturge:
+                    return false;
+                case ClassJobType.Carpenter:
+                    return false;
+                case ClassJobType.Blacksmith:
+                    return false;
+                case ClassJobType.Armorer:
+                    return false;
+                case ClassJobType.Goldsmith:
+                    return false;
+                case ClassJobType.Leatherworker:
+                    return false;
+                case ClassJobType.Weaver:
+                    return false;
+                case ClassJobType.Alchemist:
+                    return false;
+                case ClassJobType.Culinarian:
+                    return false;
+                case ClassJobType.Miner:
+                    return false;
+                case ClassJobType.Botanist:
+                    return false;
+                case ClassJobType.Fisher:
+                    return false;
+                case ClassJobType.Paladin:
+                    return true;
+                case ClassJobType.Monk:
+                    return true;
+                case ClassJobType.Warrior:
+                    return true;
+                case ClassJobType.Dragoon:
+                    return true;
+                case ClassJobType.Bard:
+                    return false;
+                case ClassJobType.WhiteMage:
+                    return false;
+                case ClassJobType.BlackMage:
+                    return false;
+                case ClassJobType.Arcanist:
+                    return false;
+                case ClassJobType.Summoner:
+                    return false;
+                case ClassJobType.Scholar:
+                    return false;
+                case ClassJobType.Rogue:
+                    return true;
+                case ClassJobType.Ninja:
+                    return true;
+                case ClassJobType.Machinist:
+                    return false;
+                case ClassJobType.DarkKnight:
+                    return true;
+                case ClassJobType.Astrologian:
+                    return false;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         private static double GetWeight(BattleCharacter battleCharacter)
         {
-            var weight = 1800 - (battleCharacter.Distance(Core.Player) * 50);
+            var weight = 1800f;
             var currentFate = OracleFateManager.GetCurrentFateData();
             var oracleFate = new Fate();
 
@@ -96,15 +173,14 @@ namespace Oracle.Providers
             }
 
             // If FATE has a preferred target, prioritise it if we're out of combat.
-            if (oracleFate.PreferredTargetId != null && oracleFate.PreferredTargetId.Contains(battleCharacter.NpcId)
-                && !Core.Player.InCombat)
+            if (oracleFate.PreferredTargetId != null && oracleFate.PreferredTargetId.Contains(battleCharacter.NpcId) && !Core.Player.InCombat)
             {
                 weight += 2000;
             }
 
             if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)
             {
-                weight += 350;
+                weight += 150;
             }
 
             if (battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Core.Player.ObjectId)
@@ -114,32 +190,27 @@ namespace Oracle.Providers
 
             if (Chocobo.Object != null && battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Chocobo.Object.ObjectId)
             {
-                weight += 500;
+                weight += 400;
             }
 
             if (!battleCharacter.TappedByOther)
             {
-                weight += 100;
-            }
-
-            if (currentFate != null && battleCharacter.FateId == currentFate.Id)
-            {
-                weight += 210;
-            }
-
-            if (GameObjectManager.Attackers.Contains(battleCharacter))
-            {
-                weight += 110;
+                weight += 200;
             }
 
             if (battleCharacter.CurrentTargetId == Core.Player.ObjectId)
             {
-                weight += 1000 / Convert.ToSingle(battleCharacter.CurrentHealth) * 3000;
+                weight += (1000 / Convert.ToSingle(battleCharacter.CurrentHealth)) * 3000;
             }
 
             if (!battleCharacter.InCombat)
             {
                 weight += 130;
+            }
+
+            if (PlayerIsMelee())
+            {
+                weight-= battleCharacter.Distance(Core.Player) * 50;
             }
 
             return weight;

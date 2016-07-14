@@ -443,7 +443,7 @@ namespace Oracle.Managers
             Logger.SendDebugLog("Generating a landing spot.");
             var potentialLandingLocation = GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
 
-            while (await CommonTasks.CanLand(potentialLandingLocation) != CanLandResult.Yes)
+            while (await CommonTasks.CanLand(potentialLandingLocation) == CanLandResult.No)
             {
                 potentialLandingLocation = GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
                 await Coroutine.Yield();

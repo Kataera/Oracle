@@ -3224,6 +3224,7 @@
     <Level>54</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+	<LandingRadius>0.6</LandingRadius>
   </Fate>
   <Fate>
     <ID>728</ID>
@@ -3254,6 +3255,7 @@
     <Level>54</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+	<LandingRadius>0.5</LandingRadius>
   </Fate>
   <Fate>
     <ID>736</ID>
