@@ -52,9 +52,10 @@ namespace Oracle.Managers
                 await CommonTasks.TakeOff();
             }
 
-            foreach (var step in path)
+            var enumerablePath = path as IList<Vector3> ?? path.ToList();
+            foreach (var step in enumerablePath)
             {
-                var processedStep = !path.Last().Equals(step) ? ProcessFlightStep(step) : step;
+                var processedStep = !enumerablePath.Last().Equals(step) ? ProcessFlightStep(step) : step;
                 if (Core.Player.Location.Distance2D(currentFate.Location) < Core.Player.Location.Distance2D(processedStep))
                 {
                     Logger.SendDebugLog("FATE centre is closer than next hop. Ending navigation early.");
@@ -140,9 +141,10 @@ namespace Oracle.Managers
                 await CommonTasks.TakeOff();
             }
 
-            foreach (var step in path)
+            var enumerablePath = path as IList<Vector3> ?? path.ToList();
+            foreach (var step in enumerablePath)
             {
-                var processedStep = !path.Last().Equals(step) ? ProcessFlightStep(step) : step;
+                var processedStep = !enumerablePath.Last().Equals(step) ? ProcessFlightStep(step) : step;
                 if (Core.Player.Location.Distance(location) < Core.Player.Location.Distance(processedStep))
                 {
                     Logger.SendDebugLog("Destination is closer than next hop. Ending navigation early.");
@@ -208,6 +210,7 @@ namespace Oracle.Managers
                 return true;
             }
 
+            const ushort coerthasWesternHighlands = 397;
             const ushort dravanianForelands = 398;
             const ushort dravanianHinterlands = 399;
             const ushort churningMists = 400;
@@ -216,19 +219,28 @@ namespace Oracle.Managers
 
             switch (WorldManager.ZoneId)
             {
+                case coerthasWesternHighlands:
+                    Logger.SendLog("Loading the Coerthas Western Highlands flight mesh.");
+                    await LoadFlightMesh.Main();
+                    return true;
                 case dravanianForelands:
+                    Logger.SendLog("Loading The Dravanian Forelands flight mesh.");
                     await LoadFlightMesh.Main();
                     return true;
                 case dravanianHinterlands:
+                    Logger.SendLog("Loading The Dravanian Hinterlands flight mesh.");
                     await LoadFlightMesh.Main();
                     return true;
                 case churningMists:
+                    Logger.SendLog("Loading The Churning Mists flight mesh.");
                     await LoadFlightMesh.Main();
                     return true;
                 case seaOfClouds:
+                    Logger.SendLog("Loading The Sea of Clouds flight mesh.");
                     await LoadFlightMesh.Main();
                     return true;
                 case azysLla:
+                    Logger.SendLog("Loading the Azys Lla flight mesh.");
                     await LoadFlightMesh.Main();
                     return true;
                 default:
@@ -491,12 +503,7 @@ namespace Oracle.Managers
             processedStep.Z += Convert.ToSingle(MathEx.Random(-5, 5));
 
             Vector3 collision;
-            if (WorldManager.Raycast(Core.Player.Location, processedStep, out collision))
-            {
-                return step;
-            }
-
-            return processedStep;
+            return WorldManager.Raycast(Core.Player.Location, processedStep, out collision) ? step : processedStep;
         }
     }
 }

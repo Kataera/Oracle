@@ -105,6 +105,9 @@
     <Content Include="Data\Meshes\zone_402.gz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\Meshes\zone_397.gz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Resources\Images\Crystal.psd" />
     <None Include="Resources\Images\Logo.psd" />

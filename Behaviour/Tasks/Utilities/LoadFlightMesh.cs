@@ -21,8 +21,6 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
         public static async Task<bool> Main()
         {
-            Logger.SendLog("Loading flight mesh for the current zone.");
-
             OracleMovementManager.ZoneFlightMesh = await LoadMesh(WorldManager.ZoneId);
             return true;
         }
