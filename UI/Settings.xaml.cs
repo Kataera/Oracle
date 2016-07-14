@@ -4,19 +4,19 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 
+using MaterialDesignThemes.Wpf;
+
 namespace Oracle.UI
 {
     /// <summary>
     ///     Interaction logic for Settings.xaml
     /// </summary>
-    public partial class Settings : Window
+    public partial class Settings
     {
-
         public Settings()
         {
             InitializeComponent();
-
-            SourceInitialized += win_SourceInitialized;
+            SourceInitialized += SourceInitialised;
         }
 
         private void CloseWindowButton_Click(object sender, RoutedEventArgs e)
@@ -24,7 +24,7 @@ namespace Oracle.UI
             Close();
         }
 
-        private void ControlPanel_OnMouseDownPanel_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void NavigationPanel_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -32,17 +32,16 @@ namespace Oracle.UI
             }
         }
 
-        [DllImport("user32")]
-        private static extern bool GetMonitorInfo(IntPtr hMonitor, MonitorInfo lpmi);
-
         private void MaximiseWindowButton_Click(object sender, RoutedEventArgs e)
         {
             switch (WindowState)
             {
                 case WindowState.Normal:
+                    MaximiseWindowIcon.Kind = PackIconKind.WindowRestore;
                     WindowState = WindowState.Maximized;
                     break;
                 case WindowState.Maximized:
+                    MaximiseWindowIcon.Kind = PackIconKind.WindowMaximize;
                     WindowState = WindowState.Normal;
                     break;
                 case WindowState.Minimized:
@@ -57,10 +56,7 @@ namespace Oracle.UI
             WindowState = WindowState.Minimized;
         }
 
-        [DllImport("User32")]
-        private static extern IntPtr MonitorFromWindow(IntPtr handle, int flags);
-
-        private void NavigationPanel_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void ControlPanel_OnMouseDownPanel_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -68,13 +64,19 @@ namespace Oracle.UI
             }
         }
 
-        private void win_SourceInitialized(object sender, EventArgs e)
+        private void SourceInitialised(object sender, EventArgs e)
         {
             var handle = new WindowInteropHelper(this).Handle;
-            HwndSource.FromHwnd(handle)?.AddHook(WindowProc);
+            var hwndSource = HwndSource.FromHwnd(handle);
+            hwndSource?.AddHook(WindowProc);
         }
 
-        private static IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private static IntPtr WindowProc(
+              IntPtr hwnd,
+              int msg,
+              IntPtr wParam,
+              IntPtr lParam,
+              ref bool handled)
         {
             if (msg != 0x0024) return (IntPtr) 0;
 
@@ -84,11 +86,10 @@ namespace Oracle.UI
             return (IntPtr) 0;
         }
 
-        private static void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
+        private static void WmGetMinMaxInfo(System.IntPtr hwnd, System.IntPtr lParam)
         {
-            var mmi = (MinMaxInfo) Marshal.PtrToStructure(lParam, typeof(MinMaxInfo));
-
-            // Adjust the maximized size and position to fit the work area of the correct monitor
+            // Adjust the maximized size and position to fit the work area of the correct monitor.
+            var minMaxInfo = (MinMaxInfo)Marshal.PtrToStructure(lParam, typeof(MinMaxInfo));
             const int monitorDefaultToNearest = 0x00000002;
             var monitor = MonitorFromWindow(hwnd, monitorDefaultToNearest);
 
@@ -96,16 +97,22 @@ namespace Oracle.UI
             {
                 var monitorInfo = new MonitorInfo();
                 GetMonitorInfo(monitor, monitorInfo);
-
                 var rcWorkArea = monitorInfo.rcWork;
                 var rcMonitorArea = monitorInfo.rcMonitor;
-                mmi.ptMaxPosition.x = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
-                mmi.ptMaxPosition.y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
-                mmi.ptMaxSize.x = Math.Abs(rcWorkArea.right - rcWorkArea.left);
-                mmi.ptMaxSize.y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
+                minMaxInfo.ptMaxPosition.x = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
+                minMaxInfo.ptMaxPosition.y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
+                minMaxInfo.ptMaxSize.x = Math.Abs(rcWorkArea.right - rcWorkArea.left);
+                minMaxInfo.ptMaxSize.y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
             }
 
-            Marshal.StructureToPtr(mmi, lParam, true);
+            Marshal.StructureToPtr(minMaxInfo, lParam, true);
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct Point
+        {
+            public int x;
+            public int y;
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -116,58 +123,32 @@ namespace Oracle.UI
             public Point ptMaxPosition;
             private readonly Point ptMinTrackSize;
             private readonly Point ptMaxTrackSize;
-        }
+        };
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        private class MonitorInfo
-        {
-            public readonly Rect rcMonitor = new Rect();
-            public readonly Rect rcWork = new Rect();
-            public int cbSize = Marshal.SizeOf(typeof(MonitorInfo));
+        public class MonitorInfo
+        {        
+            public int cbSize = Marshal.SizeOf(typeof(MonitorInfo));           
+            public Rectangle rcMonitor = new Rectangle();          
+            public Rectangle rcWork = new Rectangle();         
             public int dwFlags = 0;
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct Point
-        {
-            public int x;
-            public int y;
-        }
-
         [StructLayout(LayoutKind.Sequential, Pack = 0)]
-        private struct Rect
+        public struct Rectangle
         {
-            private bool Equals(Rect other)
-            {
-                return left == other.left && top == other.top && right == other.right && bottom == other.bottom;
-            }
+            public int left;
+            public int top;
+            public int right;
+            public int bottom;
 
-            public override bool Equals(object obj)
-            {
-                if (ReferenceEquals(null, obj)) return false;
+            public static readonly Rectangle Empty;
 
-                return obj is Rect && Equals((Rect) obj);
-            }
+            public int Width => Math.Abs(right - left);
 
-            public override int GetHashCode()
-            {
-                unchecked
-                {
-                    var hashCode = left;
-                    hashCode = (hashCode * 397) ^ top;
-                    hashCode = (hashCode * 397) ^ right;
-                    hashCode = (hashCode * 397) ^ bottom;
-                    return hashCode;
-                }
-            }
+            public int Height => bottom - top;
 
-            public readonly int left;
-            public readonly int top;
-            public readonly int right;
-            public readonly int bottom;
-            private static readonly Rect Empty;
-
-            public Rect(int left, int top, int right, int bottom)
+            public Rectangle(int left, int top, int right, int bottom)
             {
                 this.left = left;
                 this.top = top;
@@ -175,23 +156,21 @@ namespace Oracle.UI
                 this.bottom = bottom;
             }
 
-            public Rect(Rect rcSrc)
+            public Rectangle(Rectangle rectangle)
             {
-                left = rcSrc.left;
-                top = rcSrc.top;
-                right = rcSrc.right;
-                bottom = rcSrc.bottom;
+                this.left = rectangle.left;
+                this.top = rectangle.top;
+                this.right = rectangle.right;
+                this.bottom = rectangle.bottom;
             }
 
-            public static bool operator ==(Rect rect1, Rect rect2)
-            {
-                return rect1.left == rect2.left && rect1.top == rect2.top && rect1.right == rect2.right && rect1.bottom == rect2.bottom;
-            }
-
-            public static bool operator !=(Rect rect1, Rect rect2)
-            {
-                return !(rect1 == rect2);
-            }
+            public bool IsEmpty => left >= right || top >= bottom;
         }
+
+        [DllImport("user32")]
+        internal static extern bool GetMonitorInfo(IntPtr hMonitor, MonitorInfo lpmi);
+
+        [DllImport("User32")]
+        internal static extern IntPtr MonitorFromWindow(IntPtr handle, int flags);
     }
 }
