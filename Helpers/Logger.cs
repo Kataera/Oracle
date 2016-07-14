@@ -1,28 +1,4 @@
-﻿/*
-    #################
-    ##   License   ##
-    #################
-
-    Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
-
-    This file is part of Oracle.
-
-    Oracle is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Oracle is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Oracle. If not, see http://www.gnu.org/licenses/.
-*/
-
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 using ff14bot.Helpers;
 
@@ -41,7 +17,7 @@ namespace Oracle.Helpers
 
         internal static void SendDebugLog(string log)
         {
-            log = "[Oracle v" + Oracle.Version + "] [DEBUG]: " + log;
+            log = "[Oracle v" + OracleBot.Version + "] [DEBUG]: " + log;
 
             if (log.Equals(LastLog))
             {
@@ -62,7 +38,7 @@ namespace Oracle.Helpers
 
         internal static void SendErrorLog(string log)
         {
-            log = "[Oracle v" + Oracle.Version + "] [ERROR]: " + log;
+            log = "[Oracle v" + OracleBot.Version + "] [ERROR]: " + log;
 
             if (log.Equals(LastLog))
             {
@@ -75,7 +51,7 @@ namespace Oracle.Helpers
 
         internal static void SendLog(string log)
         {
-            log = "[Oracle v" + Oracle.Version + "]: " + log;
+            log = "[Oracle v" + OracleBot.Version + "]: " + log;
 
             if (log.Equals(LastLog))
             {

@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>Oracle</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -24,7 +24,7 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -35,38 +35,86 @@
   <PropertyGroup>
     <RootNamespace>Oracle</RootNamespace>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <NoWarn>CS1998</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.0.0.638, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\MaterialDesignThemes.2.0.0.638\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="RebornBuddy, Version=1.0.345.0, Culture=neutral, PublicKeyToken=48d7174f8a943034, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\RebornBuddy.exe</HintPath>
+      <HintPath>..\..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\RebornBuddy.exe</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Fates\FateData.xml" />
-    <Content Include="Resources\Images\Logo.png" />
-    <Content Include="Resources\Images\PayPal.png" />
+    <Content Include="Data\Fates\FateData.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\Fates\FateData.xsd">
+    <Content Include="Data\Fates\FateData.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Meshes\zone_398.gz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Meshes\zone_399.gz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Meshes\zone_400.gz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Meshes\zone_401.gz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Meshes\zone_402.gz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Meshes\zone_397.gz">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
+    <None Include="Resources\Images\Crystal.psd" />
+    <None Include="Resources\Images\Logo.psd" />
+    <None Include="UI\App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Data\Meshes\zone_398.gz" />
-    <None Include="Data\Meshes\zone_400.gz" />
-    <None Include="Data\Meshes\zone_401.gz" />
-    <None Include="Data\Meshes\zone_402.gz" />
-    <None Include="Forms\MaterialSkin\LICENSE">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </None>
-    <None Include="README.md" />
-    <None Include="Resources\Fonts\Roboto-Medium.ttf" />
-    <None Include="Resources\Fonts\Roboto-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviour\Modes\AnimaGrind.cs" />
@@ -110,48 +158,6 @@
     <Compile Include="Behaviour\Tasks\ZoneChangeHandler.cs" />
     <Compile Include="Data\OracleFlightMesh.cs" />
     <Compile Include="Enumerations\OracleOperationMode.cs" />
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialCheckbox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialContextMenuStrip.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialDivider.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialFlatButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialLabel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialPictureBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialRadioButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialRaisedButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialSingleLineTextField.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialTabControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialTabSelector.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Controls\MaterialTabSelectorVertical.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Managers\OracleFateManager.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LevelSync.cs" />
     <Compile Include="Behaviour\Tasks\FateTask\MegaBossFate.cs" />
@@ -164,54 +170,42 @@
     <Compile Include="Enumerations\FateSelectMode.cs" />
     <Compile Include="Enumerations\FateSupportLevel.cs" />
     <Compile Include="Enumerations\FateType.cs" />
-    <Compile Include="Forms\MaterialSkin\Animations\AnimationDirection.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Animations\AnimationManager.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\Animations\Animations.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\ColorScheme.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\DrawHelper.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\IMaterialControl.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\MaterialSkin\MaterialSkinManager.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Forms\SettingsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SettingsForm.Designer.cs">
-      <DependentUpon>SettingsForm.cs</DependentUpon>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
     <Compile Include="Helpers\Logger.cs" />
-    <Compile Include="Helpers\Updater.cs" />
     <Compile Include="Helpers\XmlParser.cs" />
+    <Compile Include="OracleLoader.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs" />
     <Compile Include="Providers\OracleCombatTargetingProvider.cs" />
     <Compile Include="Settings\OracleSettings.cs" />
-    <Compile Include="Oracle.cs" />
+    <Compile Include="OracleBot.cs" />
+    <Compile Include="UI\App.xaml.cs" />
+    <Compile Include="UI\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\SettingsForm.resx">
-      <DependentUpon>SettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="UI\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Logo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />

@@ -1,28 +1,4 @@
-﻿/*
-    #################
-    ##   License   ##
-    #################
-
-    Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
-
-    This file is part of Oracle.
-
-    Oracle is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Oracle is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Oracle. If not, see http://www.gnu.org/licenses/.
-*/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -72,8 +48,7 @@ namespace Oracle.Managers
             if (!WorldManager.CanFly)
             {
                 var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
-                var navResults =
-                    await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+                var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
 
                 foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
                 {
@@ -175,8 +150,7 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (OracleSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate
-                && !fate.Name.Equals(OracleSettings.Instance.SpecificFateName))
+            if (OracleSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate && !fate.Name.Equals(OracleSettings.Instance.SpecificFateName))
             {
                 return false;
             }
@@ -234,32 +208,27 @@ namespace Oracle.Managers
 
         public static bool FateProgressionMet(FateData fate)
         {
-            if (OracleDatabase.GetFateFromFateData(fate).Type != FateType.Boss
-                && OracleDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
+            if (OracleDatabase.GetFateFromFateData(fate).Type != FateType.Boss && OracleDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss
-                && fate.Progress >= OracleSettings.Instance.BossEngagePercentage)
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss && fate.Progress >= OracleSettings.Instance.BossEngagePercentage)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss
-                && OracleSettings.Instance.WaitAtBossFateForProgress)
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss && OracleSettings.Instance.WaitAtBossFateForProgress)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss
-                && fate.Progress >= OracleSettings.Instance.MegaBossEngagePercentage)
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && fate.Progress >= OracleSettings.Instance.MegaBossEngagePercentage)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss
-                && OracleSettings.Instance.WaitAtMegaBossFateForProgress)
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && OracleSettings.Instance.WaitAtMegaBossFateForProgress)
             {
                 return true;
             }
@@ -274,8 +243,7 @@ namespace Oracle.Managers
             if (!WorldManager.CanFly)
             {
                 var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
-                var navResults =
-                    await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+                var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
 
                 foreach (var result in navResults.Where(result => result.CanNavigate != 0))
                 {
@@ -299,6 +267,11 @@ namespace Oracle.Managers
             return FateManager.GetFateById(CurrentFateId);
         }
 
+        public static Fate GetCurrentOracleFate()
+        {
+            return OracleDatabase.GetFateFromId(CurrentFateId);
+        }
+
         public static FateData GetPreviousFateData()
         {
             return FateManager.GetFateById(PreviousFateId);
@@ -306,9 +279,7 @@ namespace Oracle.Managers
 
         public static bool IsPlayerBeingAttacked()
         {
-            return
-                GameObjectManager.Attackers.Any(
-                    mob => mob.IsValid && mob.HasTarget && mob.CurrentTargetId == Core.Player.ObjectId && !mob.IsFateGone);
+            return GameObjectManager.Attackers.Any(mob => mob.IsValid && mob.HasTarget && mob.CurrentTargetId == Core.Player.ObjectId && !mob.IsFateGone);
         }
 
         public static void UpdateGameCache()

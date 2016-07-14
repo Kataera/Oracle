@@ -1,28 +1,4 @@
-﻿/*
-    #################
-    ##   License   ##
-    #################
-
-    Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
-
-    This file is part of Oracle.
-
-    Oracle is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Oracle is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Oracle. If not, see http://www.gnu.org/licenses/.
-*/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -76,9 +52,10 @@ namespace Oracle.Managers
                 await CommonTasks.TakeOff();
             }
 
-            foreach (var step in path)
+            var enumerablePath = path as IList<Vector3> ?? path.ToList();
+            foreach (var step in enumerablePath)
             {
-                var processedStep = !path.Last().Equals(step) ? ProcessFlightStep(step) : step;
+                var processedStep = !enumerablePath.Last().Equals(step) ? ProcessFlightStep(step) : step;
                 if (Core.Player.Location.Distance2D(currentFate.Location) < Core.Player.Location.Distance2D(processedStep))
                 {
                     Logger.SendDebugLog("FATE centre is closer than next hop. Ending navigation early.");
@@ -164,9 +141,10 @@ namespace Oracle.Managers
                 await CommonTasks.TakeOff();
             }
 
-            foreach (var step in path)
+            var enumerablePath = path as IList<Vector3> ?? path.ToList();
+            foreach (var step in enumerablePath)
             {
-                var processedStep = !path.Last().Equals(step) ? ProcessFlightStep(step) : step;
+                var processedStep = !enumerablePath.Last().Equals(step) ? ProcessFlightStep(step) : step;
                 if (Core.Player.Location.Distance(location) < Core.Player.Location.Distance(processedStep))
                 {
                     Logger.SendDebugLog("Destination is closer than next hop. Ending navigation early.");
@@ -227,31 +205,48 @@ namespace Oracle.Managers
 
         public static async Task<bool> LoadFlightMeshIfAvailable()
         {
-            if (ZoneFlightMesh == null || ZoneFlightMesh.ZoneId != WorldManager.ZoneId)
+            if (ZoneFlightMesh != null && ZoneFlightMesh.ZoneId == WorldManager.ZoneId)
             {
-                const ushort dravanianHinterlands = 398;
-                const ushort churningMists = 400;
-                const ushort seaOfClouds = 401;
-                const ushort azysLla = 402;
-
-                switch (WorldManager.ZoneId)
-                {
-                    case dravanianHinterlands:
-                        await LoadFlightMesh.Main();
-                        return true;
-                    case churningMists:
-                        await LoadFlightMesh.Main();
-                        return true;
-                    case seaOfClouds:
-                        await LoadFlightMesh.Main();
-                        return true;
-                    case azysLla:
-                        await LoadFlightMesh.Main();
-                        return true;
-                }
+                return true;
             }
 
-            return true;
+            const ushort coerthasWesternHighlands = 397;
+            const ushort dravanianForelands = 398;
+            const ushort dravanianHinterlands = 399;
+            const ushort churningMists = 400;
+            const ushort seaOfClouds = 401;
+            const ushort azysLla = 402;
+
+            switch (WorldManager.ZoneId)
+            {
+                case coerthasWesternHighlands:
+                    Logger.SendLog("Loading the Coerthas Western Highlands flight mesh.");
+                    await LoadFlightMesh.Main();
+                    return true;
+                case dravanianForelands:
+                    Logger.SendLog("Loading The Dravanian Forelands flight mesh.");
+                    await LoadFlightMesh.Main();
+                    return true;
+                case dravanianHinterlands:
+                    Logger.SendLog("Loading The Dravanian Hinterlands flight mesh.");
+                    await LoadFlightMesh.Main();
+                    return true;
+                case churningMists:
+                    Logger.SendLog("Loading The Churning Mists flight mesh.");
+                    await LoadFlightMesh.Main();
+                    return true;
+                case seaOfClouds:
+                    Logger.SendLog("Loading The Sea of Clouds flight mesh.");
+                    await LoadFlightMesh.Main();
+                    return true;
+                case azysLla:
+                    Logger.SendLog("Loading the Azys Lla flight mesh.");
+                    await LoadFlightMesh.Main();
+                    return true;
+                default:
+                    Logger.SendDebugLog("No flight mesh available for current zone.");
+                    return true;
+            }
         }
 
         public static async Task<bool> NavigateToCurrentFate(bool ignoreCombat)
@@ -440,20 +435,29 @@ namespace Oracle.Managers
 
         private static async Task<Vector3> GetFateLandingLocation()
         {
+            var oracleFate = OracleFateManager.GetCurrentOracleFate();
             var currentFate = OracleFateManager.GetCurrentFateData();
             var elevatedFateLocation = currentFate.Location;
             elevatedFateLocation.Y = Core.Player.Location.Y;
 
             Logger.SendDebugLog("Generating a landing spot.");
-            var potentialLandingLocation = GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius);
+            var potentialLandingLocation = GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
 
-            while (await CommonTasks.CanLand(potentialLandingLocation) != CanLandResult.Yes)
+            while (await CommonTasks.CanLand(potentialLandingLocation) == CanLandResult.No)
             {
-                potentialLandingLocation = GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius);
+                potentialLandingLocation = GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
                 await Coroutine.Yield();
             }
 
+            // Raycast from generated location to ground to get position closer to ground.
             Vector3 collision;
+            var groundVector = new Vector3(potentialLandingLocation.X, potentialLandingLocation.Y - 100, potentialLandingLocation.Z);
+            if (WorldManager.Raycast(potentialLandingLocation, groundVector, out collision))
+            {
+                potentialLandingLocation = new Vector3(collision.X, collision.Y + Convert.ToSingle(MathEx.Random(7, 13)), collision.Z);
+            }
+
+            // Raycast to generated location from current location to check we can move there.
             if (WorldManager.Raycast(Core.Player.Location, potentialLandingLocation, out collision))
             {
                 Logger.SendDebugLog("Landing spot generation failed: there's obstacles in the way.");
@@ -503,17 +507,12 @@ namespace Oracle.Managers
             }
 
             var processedStep = step;
-            processedStep.X += Convert.ToSingle(MathEx.Random(-5, 5));
-            processedStep.Y += Convert.ToSingle(MathEx.Random(-5, 5));
-            processedStep.Z += Convert.ToSingle(MathEx.Random(-5, 5));
+            processedStep.X += Convert.ToSingle(MathEx.Random(-2.5, 2.5));
+            processedStep.Y += Convert.ToSingle(MathEx.Random(-2.5, 2.5));
+            processedStep.Z += Convert.ToSingle(MathEx.Random(-2.5, 2.5));
 
             Vector3 collision;
-            if (WorldManager.Raycast(Core.Player.Location, processedStep, out collision))
-            {
-                return step;
-            }
-
-            return processedStep;
+            return WorldManager.Raycast(Core.Player.Location, processedStep, out collision) ? step : processedStep;
         }
     }
 }

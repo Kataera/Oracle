@@ -1,28 +1,5 @@
-﻿/*
-    #################
-    ##   License   ##
-    #################
-
-    Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
-
-    This file is part of Oracle.
-
-    Oracle is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Oracle is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Oracle. If not, see http://www.gnu.org/licenses/.
-*/
-
-using System;
+﻿using System;
+using System.IO;
 using System.Reflection;
 
 using ff14bot.AClasses;
@@ -35,7 +12,6 @@ using Oracle.Behaviour;
 using Oracle.Behaviour.PoiHooks;
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Enumerations;
-using Oracle.Forms;
 using Oracle.Helpers;
 using Oracle.Managers;
 using Oracle.Providers;
@@ -45,7 +21,7 @@ using TreeSharp;
 
 namespace Oracle
 {
-    public class Oracle : BotBase
+    public class OracleBot : BotBase
     {
         private static bool playerFaceTargetOnAction;
 
@@ -53,81 +29,82 @@ namespace Oracle
 
         private static Composite root;
 
-        private static SettingsForm settingsForm;
+        private static UI.Settings settingsWindow;
 
-        public override string EnglishName
-        {
-            get { return "Oracle"; }
-        }
+        public override string EnglishName => "Oracle";
 
-        public override bool IsAutonomous
-        {
-            get { return true; }
-        }
+        public override bool IsAutonomous => true;
 
-        public override string Name
-        {
-            get { return "Oracle"; }
-        }
+        public override string Name => "Oracle";
 
-        public override PulseFlags PulseFlags
-        {
-            get { return PulseFlags.All; }
-        }
+        public override PulseFlags PulseFlags => PulseFlags.All;
 
-        public override bool RequiresProfile
-        {
-            get { return false; }
-        }
+        public override bool RequiresProfile => false;
 
-        public override Composite Root
-        {
-            get { return root; }
-        }
-
-        public override bool WantButton
-        {
-            get { return true; }
-        }
+        public override Composite Root => root;
 
         internal static string Version
+            =>
+                Assembly.GetExecutingAssembly().GetName().Version.Major + "." + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
+                + Assembly.GetExecutingAssembly().GetName().Version.Revision;
+
+        public override bool WantButton => true;
+
+        private static void AddAssemblyResolveHandler()
         {
-            get
+            var botbaseAssembly = Assembly.GetExecutingAssembly();
+
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, e) =>
             {
-                return Assembly.GetExecutingAssembly().GetName().Version.Major + "."
-                       + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
-                       + Assembly.GetExecutingAssembly().GetName().Version.Revision;
-            }
+                var missing = new AssemblyName(e.Name);
+
+                // Sometimes the WPF assembly resolver cannot even find the executing assembly. :|
+                if (missing.FullName == botbaseAssembly.FullName)
+                {
+                    return botbaseAssembly;
+                }
+
+                var botbaseFolder = Path.Combine(Environment.CurrentDirectory, @"BotBases\Oracle\");
+                var missingPath = Path.Combine(botbaseFolder, missing.Name + ".dll");
+
+                // If we find the DLL in Oracle's folder, load and return it.
+                return File.Exists(missingPath) ? Assembly.LoadFrom(missingPath) : null;
+            };
         }
 
         public override void Initialize()
         {
             Logger.SendLog("Initialising Oracle.");
+        }
 
-            // TODO: Implement.
-            if (Updater.UpdateIsAvailable())
+        private static void ListHooks()
+        {
+            Logger.SendDebugLog("Listing RebornBuddy hooks.");
+            foreach (var hook in TreeHooks.Instance.Hooks)
             {
-                Logger.SendLog("An update for Oracle is available.");
+                Logger.SendDebugLog(hook.Key + ": " + hook.Value.Count + " Composite(s).");
+
+                var count = 0;
+                foreach (var composite in hook.Value)
+                {
+                    count++;
+                    Logger.SendDebugLog("\tComposite " + count + ": " + composite + ".");
+                }
+
+                Logger.SendDebugLog(string.Empty);
             }
         }
 
         public override void OnButtonPress()
         {
-            if (settingsForm == null || settingsForm.IsDisposed)
+            if (settingsWindow != null && settingsWindow.IsVisible)
             {
-                settingsForm = new SettingsForm();
+                return;
             }
 
-            try
-            {
-                settingsForm.Show();
-                settingsForm.Activate();
-            }
-            catch (ArgumentOutOfRangeException exception)
-            {
-                Logger.SendErrorLog("Error opening the settings window.");
-                Logger.SendDebugLog("ArgumentOutOfRangeException thrown.\n\n" + exception);
-            }
+            AddAssemblyResolveHandler();
+            settingsWindow = new UI.Settings();
+            settingsWindow.Show();
         }
 
         public override void Start()
@@ -168,6 +145,10 @@ namespace Oracle
                 case OracleOperationMode.AnimaGrind:
                     Logger.SendLog("Starting Oracle in Anima grind mode.");
                     break;
+                default:
+                    Logger.SendErrorLog("No setting chosen for operation mode. Defaulting to FATE grind mode.");
+                    Logger.SendLog("Starting Oracle in FATE grind mode.");
+                    break;
             }
         }
 
@@ -185,10 +166,7 @@ namespace Oracle
             }
 
             var navProvider = Navigator.NavigationProvider as GaiaNavigator;
-            if (navProvider != null)
-            {
-                navProvider.Dispose();
-            }
+            navProvider?.Dispose();
 
             Navigator.NavigationProvider = null;
 
@@ -199,24 +177,6 @@ namespace Oracle
             GameSettingsManager.FlightMode = playerFlightMode;
 
             Logger.SendLog("Stopping Oracle.");
-        }
-
-        private static void ListHooks()
-        {
-            Logger.SendDebugLog("Listing RebornBuddy hooks.");
-            foreach (var hook in TreeHooks.Instance.Hooks)
-            {
-                Logger.SendDebugLog(hook.Key + ": " + hook.Value.Count + " Composite(s).");
-
-                var count = 0;
-                foreach (var composite in hook.Value)
-                {
-                    count++;
-                    Logger.SendDebugLog("\tComposite " + count + ": " + composite + ".");
-                }
-
-                Logger.SendDebugLog(string.Empty);
-            }
         }
     }
 }

@@ -1,29 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-    #################
-    ##   License   ##
-    #################
-
-    Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
-
-    This file is part of Oracle.
-
-    Oracle is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Oracle is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Oracle. If not, see http://www.gnu.org/licenses/.
--->
-
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <xs:import namespace="http://www.w3.org/2001/XMLSchema-instance" />
@@ -42,6 +18,7 @@
         <xs:element ref="Level" maxOccurs="1" minOccurs="1" />
         <xs:element ref="Type" maxOccurs="1" minOccurs="1" />
         <xs:element ref="OracleSupport" maxOccurs="1" minOccurs="1" />
+		<xs:element ref="LandingRadius" maxOccurs="1" minOccurs="0" />
         <xs:element ref="CollectItemId" maxOccurs="1" minOccurs="0" />
         <xs:element ref="NpcId" maxOccurs="1" minOccurs="0" />
         <xs:element ref="PreferredTargetId" maxOccurs="unbounded" minOccurs="0" />
@@ -89,6 +66,14 @@
         <xs:minInclusive value="0" />
         <xs:maxInclusive value="4" />
         <xs:totalDigits value="1" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+    <xs:element name="LandingRadius">
+    <xs:simpleType>
+      <xs:restriction base="xs:float">
+        <xs:minInclusive value="0.0" />
+        <xs:maxInclusive value="1.0" />
       </xs:restriction>
     </xs:simpleType>
   </xs:element>

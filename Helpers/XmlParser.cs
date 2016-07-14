@@ -1,28 +1,4 @@
-﻿/*
-    #################
-    ##   License   ##
-    #################
-
-    Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
-
-    This file is part of Oracle.
-
-    Oracle is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Oracle is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Oracle. If not, see http://www.gnu.org/licenses/.
-*/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -44,6 +20,7 @@ namespace Oracle.Helpers
         private static bool fateDataInvalidFlag;
         private static XmlDocument fateDataXml;
         private static uint fateId;
+        private static float fateLandingRadius;
         private static uint fateLevel;
         private static string fateName;
         private static uint fateNpcId;
@@ -78,6 +55,7 @@ namespace Oracle.Helpers
                 ChainId = fateChainId,
                 Id = fateId,
                 ItemId = fateCollectItemId,
+                LandingRadius = fateLandingRadius,
                 Level = fateLevel,
                 Name = fateName,
                 NpcId = fateNpcId,
@@ -134,6 +112,7 @@ namespace Oracle.Helpers
                     fateLevel = 0;
                     fateType = FateType.Null;
                     fateSupportLevel = FateSupportLevel.Unsupported;
+                    fateLandingRadius = 1f;
                     fateCollectItemId = 0;
                     fateNpcId = 0;
                     fatePreferredTargetId = new List<uint>();
@@ -162,6 +141,11 @@ namespace Oracle.Helpers
                     if (currentNode["OracleSupport"] != null)
                     {
                         fateSupportLevel = (FateSupportLevel) int.Parse(currentNode["OracleSupport"].InnerText);
+                    }
+
+                    if (currentNode["LandingRadius"] != null)
+                    {
+                        fateLandingRadius = float.Parse(currentNode["LandingRadius"].InnerText);
                     }
 
                     if (currentNode["CollectItemId"] != null)

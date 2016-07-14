@@ -1,0 +1,111 @@
+﻿<Window x:Class="Oracle.UI.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="#EEEEEE"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        mc:Ignorable="d"
+        Title="Oracle"
+        Height="800"
+        Width="1200"
+        MinHeight="600"
+        MinWidth="800"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        BorderThickness="2"
+        BorderBrush="#826BFF"
+        ResizeMode="CanResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <materialDesign:ColorZone Name="NavigationPanel" Padding="8" materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                  Mode="PrimaryDark" DockPanel.Dock="Left" MouseDown="NavigationPanel_OnMouseDown"
+                                  VerticalAlignment="Stretch" Grid.Column="0">
+            <Image Source="/Oracle;component/Resources/Images/Logo.png" Height="80" Width="250"
+                   HorizontalAlignment="Center" VerticalAlignment="Top" RenderOptions.BitmapScalingMode="HighQuality"
+                   Stretch="Fill" />
+        </materialDesign:ColorZone>
+        <StackPanel Name="ContentPanel" Grid.Column="1">
+            <materialDesign:ColorZone Name="ControlPanel" Padding="8" materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                      Mode="Light" DockPanel.Dock="Top"
+                                      MouseDown="ControlPanel_OnMouseDownPanel_OnMouseDown" VerticalAlignment="Stretch">
+                <DockPanel>
+                    <Grid Name="NavigationLocation" HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Margin="20, 0, 0, 0" VerticalAlignment="Center"
+                                   FontSize="16" Foreground="{StaticResource PrimaryHueDarkBrush}"
+                                   Grid.Column="0">
+                            Oracle
+                        </TextBlock>
+                        <TextBlock Margin="20, 0, 0, 0" VerticalAlignment="Center"
+                                   FontSize="16" Foreground="{StaticResource PrimaryHueLightBrush}"
+                                   Grid.Column="1">
+                            /
+                        </TextBlock>
+                        <TextBlock Margin="20, 0, 0, 0" VerticalAlignment="Center"
+                                   FontSize="16" Foreground="{StaticResource PrimaryHueDarkBrush}"
+                                   Grid.Column="2">
+                            Location
+                        </TextBlock>
+                    </Grid>
+                    <Grid Margin="0,0,0,5" HorizontalAlignment="Right" Name="WindowControls">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Button Name="MinimiseWindowButton" Style="{StaticResource MaterialDesignFlatButton}"
+                                Grid.Column="0" Click="MinimiseWindowButton_Click">
+                            <materialDesign:PackIcon Name="MinimiseWindowIcon" Kind="WindowMinimize" />
+                        </Button>
+                        <Button Name="MaximiseWindowButton" Style="{StaticResource MaterialDesignFlatButton}"
+                                Grid.Column="1" Click="MaximiseWindowButton_Click">
+                            <materialDesign:PackIcon Name="MaximiseWindowIcon" Kind="WindowMaximize" />
+                        </Button>
+                        <Button Name="CloseWindowButton" Style="{StaticResource MaterialDesignFlatButton}"
+                                Grid.Column="2" Click="CloseWindowButton_Click">
+                            <materialDesign:PackIcon Name="CloseWindowIcon" Kind="WindowClose" />
+                        </Button>
+                    </Grid>
+                </DockPanel>
+            </materialDesign:ColorZone>
+            <ContentControl Margin="16" Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" />
+        </StackPanel>
+    </Grid>
+</Window>

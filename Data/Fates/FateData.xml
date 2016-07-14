@@ -1,29 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-    #################
-    ##   License   ##
-    #################
-
-    Oracle - An improved FATE bot for RebornBuddy
-    Copyright © 2015-2016 Caitlin Howarth (a.k.a. Kataera)
-
-    This file is part of Oracle.
-
-    Oracle is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Oracle is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Oracle. If not, see http://www.gnu.org/licenses/.
--->
-
 <!DOCTYPE Fates[
 
 <!-- Fate types -->
@@ -3248,6 +3224,7 @@
     <Level>54</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+	<LandingRadius>0.6</LandingRadius>
   </Fate>
   <Fate>
     <ID>728</ID>
@@ -3278,6 +3255,7 @@
     <Level>54</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+	<LandingRadius>0.5</LandingRadius>
   </Fate>
   <Fate>
     <ID>736</ID>
@@ -3343,6 +3321,7 @@
     <Level>55</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+	<LandingRadius>0.5</LandingRadius>
   </Fate>
   <Fate>
     <ID>748</ID>
@@ -4099,7 +4078,7 @@
     <ID>868</ID>
     <Name>Darkscale Descendeth</Name>
     <Level>55</Level>
-    <Type>&Defence;</Type>
+    <Type>&MegaBoss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
     <ChainID>869</ChainID>
   </Fate>
@@ -4107,7 +4086,7 @@
     <ID>869</ID>
     <Name>Darkscale Disappeareth</Name>
     <Level>55</Level>
-    <Type>&Defence;</Type>
+    <Type>&MegaBoss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
     <ChainID>870</ChainID>
   </Fate>
@@ -4115,7 +4094,7 @@
     <ID>870</ID>
     <Name>Darkscale Devoureth</Name>
     <Level>55</Level>
-    <Type>&Defence;</Type>
+    <Type>&MegaBoss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
   </Fate>
   <Fate>
