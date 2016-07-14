@@ -18,7 +18,7 @@
         MinHeight="600"
         MinWidth="800"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
+        WindowStyle="SingleBorderWindow"
         BorderThickness="2"
         BorderBrush="#826BFF"
         ResizeMode="CanResize">
@@ -43,9 +43,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <WindowChrome.WindowChrome>
-        <WindowChrome
-            CaptionHeight="0"
-            ResizeBorderThickness="5" />
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
     <Grid>
         <Grid.ColumnDefinitions>
