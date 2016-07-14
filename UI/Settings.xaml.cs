@@ -24,13 +24,16 @@ namespace Oracle.UI
             Close();
         }
 
-        private void NavigationPanel_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void ControlPanel_OnMouseDownPanel_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 DragMove();
             }
         }
+
+        [DllImport("user32")]
+        internal static extern bool GetMonitorInfo(IntPtr hMonitor, MonitorInfo lpmi);
 
         private void MaximiseWindowButton_Click(object sender, RoutedEventArgs e)
         {
@@ -56,7 +59,10 @@ namespace Oracle.UI
             WindowState = WindowState.Minimized;
         }
 
-        private void ControlPanel_OnMouseDownPanel_OnMouseDown(object sender, MouseButtonEventArgs e)
+        [DllImport("User32")]
+        internal static extern IntPtr MonitorFromWindow(IntPtr handle, int flags);
+
+        private void NavigationPanel_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -71,12 +77,7 @@ namespace Oracle.UI
             hwndSource?.AddHook(WindowProc);
         }
 
-        private static IntPtr WindowProc(
-              IntPtr hwnd,
-              int msg,
-              IntPtr wParam,
-              IntPtr lParam,
-              ref bool handled)
+        private static IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg != 0x0024) return (IntPtr) 0;
 
@@ -86,10 +87,10 @@ namespace Oracle.UI
             return (IntPtr) 0;
         }
 
-        private static void WmGetMinMaxInfo(System.IntPtr hwnd, System.IntPtr lParam)
+        private static void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
         {
             // Adjust the maximized size and position to fit the work area of the correct monitor.
-            var minMaxInfo = (MinMaxInfo)Marshal.PtrToStructure(lParam, typeof(MinMaxInfo));
+            var minMaxInfo = (MinMaxInfo) Marshal.PtrToStructure(lParam, typeof(MinMaxInfo));
             const int monitorDefaultToNearest = 0x00000002;
             var monitor = MonitorFromWindow(hwnd, monitorDefaultToNearest);
 
@@ -166,11 +167,5 @@ namespace Oracle.UI
 
             public bool IsEmpty => left >= right || top >= bottom;
         }
-
-        [DllImport("user32")]
-        internal static extern bool GetMonitorInfo(IntPtr hMonitor, MonitorInfo lpmi);
-
-        [DllImport("User32")]
-        internal static extern IntPtr MonitorFromWindow(IntPtr handle, int flags);
     }
 }
