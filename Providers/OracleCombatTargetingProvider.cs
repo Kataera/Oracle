@@ -134,7 +134,7 @@ namespace Oracle.Providers
 
             if (battleCharacter.CurrentTargetId == Core.Player.ObjectId)
             {
-                weight -= Convert.ToSingle(battleCharacter.CurrentHealth) / 100;
+                weight += 1000 / Convert.ToSingle(battleCharacter.CurrentHealth) * 3000;
             }
 
             if (!battleCharacter.InCombat)
