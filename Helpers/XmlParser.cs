@@ -20,6 +20,7 @@ namespace Oracle.Helpers
         private static bool fateDataInvalidFlag;
         private static XmlDocument fateDataXml;
         private static uint fateId;
+        private static float fateLandingRadius;
         private static uint fateLevel;
         private static string fateName;
         private static uint fateNpcId;
@@ -54,6 +55,7 @@ namespace Oracle.Helpers
                 ChainId = fateChainId,
                 Id = fateId,
                 ItemId = fateCollectItemId,
+                LandingRadius = fateLandingRadius,
                 Level = fateLevel,
                 Name = fateName,
                 NpcId = fateNpcId,
@@ -110,6 +112,7 @@ namespace Oracle.Helpers
                     fateLevel = 0;
                     fateType = FateType.Null;
                     fateSupportLevel = FateSupportLevel.Unsupported;
+                    fateLandingRadius = 1f;
                     fateCollectItemId = 0;
                     fateNpcId = 0;
                     fatePreferredTargetId = new List<uint>();
@@ -138,6 +141,11 @@ namespace Oracle.Helpers
                     if (currentNode["OracleSupport"] != null)
                     {
                         fateSupportLevel = (FateSupportLevel) int.Parse(currentNode["OracleSupport"].InnerText);
+                    }
+
+                    if (currentNode["LandingRadius"] != null)
+                    {
+                        fateLandingRadius = float.Parse(currentNode["LandingRadius"].InnerText);
                     }
 
                     if (currentNode["CollectItemId"] != null)

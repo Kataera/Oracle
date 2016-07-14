@@ -3319,6 +3319,7 @@
     <Level>55</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+	<LandingRadius>0.5</LandingRadius>
   </Fate>
   <Fate>
     <ID>748</ID>
@@ -4075,7 +4076,7 @@
     <ID>868</ID>
     <Name>Darkscale Descendeth</Name>
     <Level>55</Level>
-    <Type>&Defence;</Type>
+    <Type>&MegaBoss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
     <ChainID>869</ChainID>
   </Fate>
@@ -4083,7 +4084,7 @@
     <ID>869</ID>
     <Name>Darkscale Disappeareth</Name>
     <Level>55</Level>
-    <Type>&Defence;</Type>
+    <Type>&MegaBoss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
     <ChainID>870</ChainID>
   </Fate>
@@ -4091,7 +4092,7 @@
     <ID>870</ID>
     <Name>Darkscale Devoureth</Name>
     <Level>55</Level>
-    <Type>&Defence;</Type>
+    <Type>&MegaBoss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
   </Fate>
   <Fate>

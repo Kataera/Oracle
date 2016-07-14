@@ -9,6 +9,7 @@ namespace Oracle.Data
         public uint ChainId { get; set; }
         public uint Id { get; set; }
         public uint ItemId { get; set; }
+        public float LandingRadius { get; set; }
         public uint Level { get; set; }
         public string Name { get; set; }
         public uint NpcId { get; set; }

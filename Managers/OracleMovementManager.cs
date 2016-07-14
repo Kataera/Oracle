@@ -435,16 +435,17 @@ namespace Oracle.Managers
 
         private static async Task<Vector3> GetFateLandingLocation()
         {
+            var oracleFate = OracleFateManager.GetCurrentOracleFate();
             var currentFate = OracleFateManager.GetCurrentFateData();
             var elevatedFateLocation = currentFate.Location;
             elevatedFateLocation.Y = Core.Player.Location.Y;
 
             Logger.SendDebugLog("Generating a landing spot.");
-            var potentialLandingLocation = GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius);
+            var potentialLandingLocation = GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
 
             while (await CommonTasks.CanLand(potentialLandingLocation) != CanLandResult.Yes)
             {
-                potentialLandingLocation = GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius);
+                potentialLandingLocation = GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
                 await Coroutine.Yield();
             }
 
@@ -453,6 +454,13 @@ namespace Oracle.Managers
             {
                 Logger.SendDebugLog("Landing spot generation failed: there's obstacles in the way.");
                 return Core.Player.Location;
+            }
+
+            // Raycast from generated location to ground to get position closer to ground.
+            var groundVector = new Vector3(potentialLandingLocation.X, potentialLandingLocation.Y - 100, potentialLandingLocation.Z);
+            if (WorldManager.Raycast(potentialLandingLocation, groundVector, out collision))
+            {
+                potentialLandingLocation = new Vector3(collision.X, collision.Y + Convert.ToSingle(MathEx.Random(7, 13)), collision.Z);
             }
 
             Logger.SendDebugLog("Landing spot generation succeeded.");
@@ -498,9 +506,9 @@ namespace Oracle.Managers
             }
 
             var processedStep = step;
-            processedStep.X += Convert.ToSingle(MathEx.Random(-5, 5));
-            processedStep.Y += Convert.ToSingle(MathEx.Random(-5, 5));
-            processedStep.Z += Convert.ToSingle(MathEx.Random(-5, 5));
+            processedStep.X += Convert.ToSingle(MathEx.Random(-2.5, 2.5));
+            processedStep.Y += Convert.ToSingle(MathEx.Random(-2.5, 2.5));
+            processedStep.Z += Convert.ToSingle(MathEx.Random(-2.5, 2.5));
 
             Vector3 collision;
             return WorldManager.Raycast(Core.Player.Location, processedStep, out collision) ? step : processedStep;

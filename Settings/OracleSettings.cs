@@ -58,52 +58,32 @@ namespace Oracle.Settings
         private bool zoneChangingEnabled;
         private Dictionary<uint, uint> zoneLevels;
 
-        private OracleSettings()
-            : base(Path.Combine(SettingsPath, "OracleSettings.json"))
+        private OracleSettings() : base(Path.Combine(SettingsPath, @"/Oracle/OracleSettings.json"))
         {
-            if (this.BlacklistedFates == null)
+            if (BlacklistedFates == null)
             {
-                this.BlacklistedFates = new List<uint>();
-                this.Save();
+                BlacklistedFates = new List<uint>();
+                Save();
             }
 
-            if (this.BlacklistedMobs == null)
+            if (BlacklistedMobs == null)
             {
-                this.BlacklistedMobs = new List<uint>();
-                this.PopulateMobBlacklist();
-                this.Save();
+                BlacklistedMobs = new List<uint>();
+                PopulateMobBlacklist();
+                Save();
             }
 
-            if (this.FateWaitLocations == null)
+            if (FateWaitLocations == null)
             {
-                this.FateWaitLocations = new Dictionary<uint, Vector3>();
-                this.Save();
+                FateWaitLocations = new Dictionary<uint, Vector3>();
+                Save();
             }
 
-            if (this.ZoneLevels == null)
+            if (ZoneLevels == null)
             {
-                this.ZoneLevels = new Dictionary<uint, uint>();
-                this.PopulateZoneLevels();
-                this.Save();
-            }
-        }
-
-        public static OracleSettings Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    lock (SyncRoot)
-                    {
-                        if (instance == null)
-                        {
-                            instance = new OracleSettings();
-                        }
-                    }
-                }
-
-                return instance;
+                ZoneLevels = new Dictionary<uint, uint>();
+                PopulateZoneLevels();
+                Save();
             }
         }
 
@@ -111,12 +91,15 @@ namespace Oracle.Settings
         [Setting]
         public int ActionDelay
         {
-            get { return this.actionDelay; }
+            get
+            {
+                return actionDelay;
+            }
 
             set
             {
-                this.actionDelay = value;
-                this.Save();
+                actionDelay = value;
+                Save();
             }
         }
 
@@ -124,36 +107,45 @@ namespace Oracle.Settings
         [Setting]
         public bool BindHomePoint
         {
-            get { return this.bindHomePoint; }
+            get
+            {
+                return bindHomePoint;
+            }
 
             set
             {
-                this.bindHomePoint = value;
-                this.Save();
+                bindHomePoint = value;
+                Save();
             }
         }
 
         [Setting]
         public List<uint> BlacklistedFates
         {
-            get { return this.blacklistedFates; }
+            get
+            {
+                return blacklistedFates;
+            }
 
             set
             {
-                this.blacklistedFates = value;
-                this.Save();
+                blacklistedFates = value;
+                Save();
             }
         }
 
         [Setting]
         public List<uint> BlacklistedMobs
         {
-            get { return this.blacklistedMobs; }
+            get
+            {
+                return blacklistedMobs;
+            }
 
             set
             {
-                this.blacklistedMobs = value;
-                this.Save();
+                blacklistedMobs = value;
+                Save();
             }
         }
 
@@ -161,12 +153,15 @@ namespace Oracle.Settings
         [Setting]
         public int BossEngagePercentage
         {
-            get { return this.bossEngagePercentage; }
+            get
+            {
+                return bossEngagePercentage;
+            }
 
             set
             {
-                this.bossEngagePercentage = value;
-                this.Save();
+                bossEngagePercentage = value;
+                Save();
             }
         }
 
@@ -174,12 +169,15 @@ namespace Oracle.Settings
         [Setting]
         public bool BossFatesEnabled
         {
-            get { return this.bossFatesEnabled; }
+            get
+            {
+                return bossFatesEnabled;
+            }
 
             set
             {
-                this.bossFatesEnabled = value;
-                this.Save();
+                bossFatesEnabled = value;
+                Save();
             }
         }
 
@@ -187,12 +185,15 @@ namespace Oracle.Settings
         [Setting]
         public int ChainFateWaitTimeout
         {
-            get { return this.chainFateWaitTimeout; }
+            get
+            {
+                return chainFateWaitTimeout;
+            }
 
             set
             {
-                this.chainFateWaitTimeout = value;
-                this.Save();
+                chainFateWaitTimeout = value;
+                Save();
             }
         }
 
@@ -200,12 +201,15 @@ namespace Oracle.Settings
         [Setting]
         public bool CollectFatesEnabled
         {
-            get { return this.collectFatesEnabled; }
+            get
+            {
+                return collectFatesEnabled;
+            }
 
             set
             {
-                this.collectFatesEnabled = value;
-                this.Save();
+                collectFatesEnabled = value;
+                Save();
             }
         }
 
@@ -213,12 +217,15 @@ namespace Oracle.Settings
         [Setting]
         public int CollectFateTurnInAtAmount
         {
-            get { return this.collectFateTurnInAtAmount; }
+            get
+            {
+                return collectFateTurnInAtAmount;
+            }
 
             set
             {
-                this.collectFateTurnInAtAmount = value;
-                this.Save();
+                collectFateTurnInAtAmount = value;
+                Save();
             }
         }
 
@@ -226,12 +233,15 @@ namespace Oracle.Settings
         [Setting]
         public bool DebugEnabled
         {
-            get { return this.debugEnabled; }
+            get
+            {
+                return debugEnabled;
+            }
 
             set
             {
-                this.debugEnabled = value;
-                this.Save();
+                debugEnabled = value;
+                Save();
             }
         }
 
@@ -239,12 +249,15 @@ namespace Oracle.Settings
         [Setting]
         public bool DefenceFatesEnabled
         {
-            get { return this.defenceFatesEnabled; }
+            get
+            {
+                return defenceFatesEnabled;
+            }
 
             set
             {
-                this.defenceFatesEnabled = value;
-                this.Save();
+                defenceFatesEnabled = value;
+                Save();
             }
         }
 
@@ -252,12 +265,15 @@ namespace Oracle.Settings
         [Setting]
         public bool EscortFatesEnabled
         {
-            get { return this.escortFatesEnabled; }
+            get
+            {
+                return escortFatesEnabled;
+            }
 
             set
             {
-                this.escortFatesEnabled = value;
-                this.Save();
+                escortFatesEnabled = value;
+                Save();
             }
         }
 
@@ -265,12 +281,15 @@ namespace Oracle.Settings
         [Setting]
         public bool FateDelayMovement
         {
-            get { return this.fateDelayMovement; }
+            get
+            {
+                return fateDelayMovement;
+            }
 
             set
             {
-                this.fateDelayMovement = value;
-                this.Save();
+                fateDelayMovement = value;
+                Save();
             }
         }
 
@@ -278,12 +297,15 @@ namespace Oracle.Settings
         [Setting]
         public int FateDelayMovementMaximum
         {
-            get { return this.fateDelayMovementMaximum; }
+            get
+            {
+                return fateDelayMovementMaximum;
+            }
 
             set
             {
-                this.fateDelayMovementMaximum = value;
-                this.Save();
+                fateDelayMovementMaximum = value;
+                Save();
             }
         }
 
@@ -291,12 +313,15 @@ namespace Oracle.Settings
         [Setting]
         public int FateDelayMovementMinimum
         {
-            get { return this.fateDelayMovementMinimum; }
+            get
+            {
+                return fateDelayMovementMinimum;
+            }
 
             set
             {
-                this.fateDelayMovementMinimum = value;
-                this.Save();
+                fateDelayMovementMinimum = value;
+                Save();
             }
         }
 
@@ -304,12 +329,15 @@ namespace Oracle.Settings
         [Setting]
         public int FateMaximumLevelAbove
         {
-            get { return this.fateMaximumLevelAbove; }
+            get
+            {
+                return fateMaximumLevelAbove;
+            }
 
             set
             {
-                this.fateMaximumLevelAbove = value;
-                this.Save();
+                fateMaximumLevelAbove = value;
+                Save();
             }
         }
 
@@ -317,12 +345,15 @@ namespace Oracle.Settings
         [Setting]
         public int FateMinimumLevelBelow
         {
-            get { return this.fateMinimumLevelBelow; }
+            get
+            {
+                return fateMinimumLevelBelow;
+            }
 
             set
             {
-                this.fateMinimumLevelBelow = value;
-                this.Save();
+                fateMinimumLevelBelow = value;
+                Save();
             }
         }
 
@@ -330,24 +361,30 @@ namespace Oracle.Settings
         [Setting]
         public FateSelectMode FateSelectMode
         {
-            get { return this.fateSelectMode; }
+            get
+            {
+                return fateSelectMode;
+            }
 
             set
             {
-                this.fateSelectMode = value;
-                this.Save();
+                fateSelectMode = value;
+                Save();
             }
         }
 
         [Setting]
         public Dictionary<uint, Vector3> FateWaitLocations
         {
-            get { return this.fateWaitLocations; }
+            get
+            {
+                return fateWaitLocations;
+            }
 
             set
             {
-                this.fateWaitLocations = value;
-                this.Save();
+                fateWaitLocations = value;
+                Save();
             }
         }
 
@@ -355,12 +392,15 @@ namespace Oracle.Settings
         [Setting]
         public FateWaitMode FateWaitMode
         {
-            get { return this.fateWaitMode; }
+            get
+            {
+                return fateWaitMode;
+            }
 
             set
             {
-                this.fateWaitMode = value;
-                this.Save();
+                fateWaitMode = value;
+                Save();
             }
         }
 
@@ -368,12 +408,15 @@ namespace Oracle.Settings
         [Setting]
         public bool FlightPathPostProcessingEnabled
         {
-            get { return this.flightPathPostProcessingEnabled; }
+            get
+            {
+                return flightPathPostProcessingEnabled;
+            }
 
             set
             {
-                this.flightPathPostProcessingEnabled = value;
-                this.Save();
+                flightPathPostProcessingEnabled = value;
+                Save();
             }
         }
 
@@ -381,12 +424,36 @@ namespace Oracle.Settings
         [Setting]
         public bool IgnoreLowDurationUnstartedFates
         {
-            get { return this.ignoreLowDurationUnstartedFates; }
+            get
+            {
+                return ignoreLowDurationUnstartedFates;
+            }
 
             set
             {
-                this.ignoreLowDurationUnstartedFates = value;
-                this.Save();
+                ignoreLowDurationUnstartedFates = value;
+                Save();
+            }
+        }
+
+        public static OracleSettings Instance
+        {
+            get
+            {
+                if (instance != null)
+                {
+                    return instance;
+                }
+
+                lock (SyncRoot)
+                {
+                    if (instance == null)
+                    {
+                        instance = new OracleSettings();
+                    }
+                }
+
+                return instance;
             }
         }
 
@@ -394,12 +461,15 @@ namespace Oracle.Settings
         [Setting]
         public bool KillFatesEnabled
         {
-            get { return this.killFatesEnabled; }
+            get
+            {
+                return killFatesEnabled;
+            }
 
             set
             {
-                this.killFatesEnabled = value;
-                this.Save();
+                killFatesEnabled = value;
+                Save();
             }
         }
 
@@ -407,12 +477,15 @@ namespace Oracle.Settings
         [Setting]
         public double LandingTimeOut
         {
-            get { return this.landingTimeOut; }
+            get
+            {
+                return landingTimeOut;
+            }
 
             set
             {
-                this.landingTimeOut = value;
-                this.Save();
+                landingTimeOut = value;
+                Save();
             }
         }
 
@@ -420,12 +493,15 @@ namespace Oracle.Settings
         [Setting]
         public bool ListHooksOnStart
         {
-            get { return this.listHooksOnStart; }
+            get
+            {
+                return listHooksOnStart;
+            }
 
             set
             {
-                this.listHooksOnStart = value;
-                this.Save();
+                listHooksOnStart = value;
+                Save();
             }
         }
 
@@ -433,12 +509,15 @@ namespace Oracle.Settings
         [Setting]
         public int LowRemainingFateDuration
         {
-            get { return this.lowRemainingFateDuration; }
+            get
+            {
+                return lowRemainingFateDuration;
+            }
 
             set
             {
-                this.lowRemainingFateDuration = value;
-                this.Save();
+                lowRemainingFateDuration = value;
+                Save();
             }
         }
 
@@ -446,12 +525,15 @@ namespace Oracle.Settings
         [Setting]
         public int MegaBossEngagePercentage
         {
-            get { return this.megaBossEngagePercentage; }
+            get
+            {
+                return megaBossEngagePercentage;
+            }
 
             set
             {
-                this.megaBossEngagePercentage = value;
-                this.Save();
+                megaBossEngagePercentage = value;
+                Save();
             }
         }
 
@@ -459,12 +541,15 @@ namespace Oracle.Settings
         [Setting]
         public bool MegaBossFatesEnabled
         {
-            get { return this.megaBossFatesEnabled; }
+            get
+            {
+                return megaBossFatesEnabled;
+            }
 
             set
             {
-                this.megaBossFatesEnabled = value;
-                this.Save();
+                megaBossFatesEnabled = value;
+                Save();
             }
         }
 
@@ -472,12 +557,15 @@ namespace Oracle.Settings
         [Setting]
         public int MobMaximumLevelAbove
         {
-            get { return this.mobMaximumLevelAbove; }
+            get
+            {
+                return mobMaximumLevelAbove;
+            }
 
             set
             {
-                this.mobMaximumLevelAbove = value;
-                this.Save();
+                mobMaximumLevelAbove = value;
+                Save();
             }
         }
 
@@ -485,12 +573,15 @@ namespace Oracle.Settings
         [Setting]
         public int MobMinimumLevelBelow
         {
-            get { return this.mobMinimumLevelBelow; }
+            get
+            {
+                return mobMinimumLevelBelow;
+            }
 
             set
             {
-                this.mobMinimumLevelBelow = value;
-                this.Save();
+                mobMinimumLevelBelow = value;
+                Save();
             }
         }
 
@@ -498,12 +589,15 @@ namespace Oracle.Settings
         [Setting]
         public OracleOperationMode OracleOperationMode
         {
-            get { return this.oracleOperationMode; }
+            get
+            {
+                return oracleOperationMode;
+            }
 
             set
             {
-                this.oracleOperationMode = value;
-                this.Save();
+                oracleOperationMode = value;
+                Save();
             }
         }
 
@@ -511,12 +605,15 @@ namespace Oracle.Settings
         [Setting]
         public bool RunProblematicFates
         {
-            get { return this.runProblematicFates; }
+            get
+            {
+                return runProblematicFates;
+            }
 
             set
             {
-                this.runProblematicFates = value;
-                this.Save();
+                runProblematicFates = value;
+                Save();
             }
         }
 
@@ -524,12 +621,15 @@ namespace Oracle.Settings
         [Setting]
         public string SpecificFateName
         {
-            get { return this.specificFateName; }
+            get
+            {
+                return specificFateName;
+            }
 
             set
             {
-                this.specificFateName = value;
-                this.Save();
+                specificFateName = value;
+                Save();
             }
         }
 
@@ -537,12 +637,15 @@ namespace Oracle.Settings
         [Setting]
         public bool TeleportIfQuicker
         {
-            get { return this.teleportIfQuicker; }
+            get
+            {
+                return teleportIfQuicker;
+            }
 
             set
             {
-                this.teleportIfQuicker = value;
-                this.Save();
+                teleportIfQuicker = value;
+                Save();
             }
         }
 
@@ -550,12 +653,15 @@ namespace Oracle.Settings
         [Setting]
         public int TeleportMinimumDistanceDelta
         {
-            get { return this.teleportMinimumDistanceDelta; }
+            get
+            {
+                return teleportMinimumDistanceDelta;
+            }
 
             set
             {
-                this.teleportMinimumDistanceDelta = value;
-                this.Save();
+                teleportMinimumDistanceDelta = value;
+                Save();
             }
         }
 
@@ -563,12 +669,15 @@ namespace Oracle.Settings
         [Setting]
         public bool WaitAtBossFateForProgress
         {
-            get { return this.waitAtBossFateForProgress; }
+            get
+            {
+                return waitAtBossFateForProgress;
+            }
 
             set
             {
-                this.waitAtBossFateForProgress = value;
-                this.Save();
+                waitAtBossFateForProgress = value;
+                Save();
             }
         }
 
@@ -576,12 +685,15 @@ namespace Oracle.Settings
         [Setting]
         public bool WaitAtMegaBossFateForProgress
         {
-            get { return this.waitAtMegaBossFateForProgress; }
+            get
+            {
+                return waitAtMegaBossFateForProgress;
+            }
 
             set
             {
-                this.waitAtMegaBossFateForProgress = value;
-                this.Save();
+                waitAtMegaBossFateForProgress = value;
+                Save();
             }
         }
 
@@ -589,12 +701,15 @@ namespace Oracle.Settings
         [Setting]
         public bool WaitForChainFates
         {
-            get { return this.waitForChainFates; }
+            get
+            {
+                return waitForChainFates;
+            }
 
             set
             {
-                this.waitForChainFates = value;
-                this.Save();
+                waitForChainFates = value;
+                Save();
             }
         }
 
@@ -602,216 +717,332 @@ namespace Oracle.Settings
         [Setting]
         public bool ZoneChangingEnabled
         {
-            get { return this.zoneChangingEnabled; }
+            get
+            {
+                return zoneChangingEnabled;
+            }
 
             set
             {
-                this.zoneChangingEnabled = value;
-                this.Save();
+                zoneChangingEnabled = value;
+                Save();
             }
         }
 
         [Setting]
         public Dictionary<uint, uint> ZoneLevels
         {
-            get { return this.zoneLevels; }
+            get
+            {
+                return zoneLevels;
+            }
 
             set
             {
-                this.zoneLevels = value;
-                this.Save();
+                zoneLevels = value;
+                Save();
             }
         }
 
         public static T GetDefaultValue<T>(string propertyName)
         {
-            var property = typeof (OracleSettings).GetProperty(propertyName);
-            var attribute = (DefaultValueAttribute) property.GetCustomAttribute(typeof (DefaultValueAttribute));
+            var property = typeof(OracleSettings).GetProperty(propertyName);
+            var attribute = (DefaultValueAttribute) property.GetCustomAttribute(typeof(DefaultValueAttribute));
 
             return (T) attribute.Value;
         }
 
         public void PopulateMobBlacklist()
         {
-            // Heavensward S-Rank Hunts.
+            /*
+             * -------------------------
+             * Heavensward S-Rank Hunts
+             * -------------------------
+             */
+
             const uint kaiserBehemoth = 4374;
+            BlacklistedMobs.Add(kaiserBehemoth);
+
             const uint senmurv = 4375;
+            BlacklistedMobs.Add(senmurv);
+
             const uint thePaleRider = 4376;
+            BlacklistedMobs.Add(thePaleRider);
+
             const uint gandarewa = 4377;
+            BlacklistedMobs.Add(gandarewa);
+
             const uint birdOfParadise = 4378;
+            BlacklistedMobs.Add(birdOfParadise);
+
             const uint leucrotta = 4380;
-            this.BlacklistedMobs.Add(kaiserBehemoth);
-            this.BlacklistedMobs.Add(senmurv);
-            this.BlacklistedMobs.Add(thePaleRider);
-            this.BlacklistedMobs.Add(gandarewa);
-            this.BlacklistedMobs.Add(birdOfParadise);
-            this.BlacklistedMobs.Add(leucrotta);
+            BlacklistedMobs.Add(leucrotta);
 
-            // Heavensward A-Rank Hunts.
+            /*
+             * -------------------------
+             * Heavensward A-Rank Hunts
+             * -------------------------
+             */
+
             const uint mirka = 4362;
+            BlacklistedMobs.Add(mirka);
+
             const uint lyuba = 4363;
+            BlacklistedMobs.Add(lyuba);
+
             const uint pylraster = 4364;
+            BlacklistedMobs.Add(pylraster);
+
             const uint lordOfTheWyverns = 4365;
+            BlacklistedMobs.Add(lordOfTheWyverns);
+
             const uint slipkinxSteeljoints = 4366;
+            BlacklistedMobs.Add(slipkinxSteeljoints);
+
             const uint stolas = 4367;
+            BlacklistedMobs.Add(stolas);
+
             const uint bune = 4368;
+            BlacklistedMobs.Add(bune);
+
             const uint agathos = 4369;
+            BlacklistedMobs.Add(agathos);
+
             const uint enkelados = 4370;
+            BlacklistedMobs.Add(enkelados);
+
             const uint sisiutl = 4371;
+            BlacklistedMobs.Add(sisiutl);
+
             const uint campacti = 4372;
+            BlacklistedMobs.Add(campacti);
+
             const uint stenchBlossom = 4373;
-            this.BlacklistedMobs.Add(mirka);
-            this.BlacklistedMobs.Add(lyuba);
-            this.BlacklistedMobs.Add(pylraster);
-            this.BlacklistedMobs.Add(lordOfTheWyverns);
-            this.BlacklistedMobs.Add(slipkinxSteeljoints);
-            this.BlacklistedMobs.Add(stolas);
-            this.BlacklistedMobs.Add(bune);
-            this.BlacklistedMobs.Add(agathos);
-            this.BlacklistedMobs.Add(enkelados);
-            this.BlacklistedMobs.Add(sisiutl);
-            this.BlacklistedMobs.Add(campacti);
-            this.BlacklistedMobs.Add(stenchBlossom);
+            BlacklistedMobs.Add(stenchBlossom);
 
-            // Heavensward B-Rank Hunts.
+            /*
+             * -------------------------
+             * Heavensward B-Rank Hunts
+             * -------------------------
+             */
+
             const uint alteci = 4350;
+            BlacklistedMobs.Add(alteci);
+
             const uint kreutzet = 4351;
+            BlacklistedMobs.Add(kreutzet);
+
             const uint gnathCometdrone = 4352;
+            BlacklistedMobs.Add(gnathCometdrone);
+
             const uint thextera = 4353;
+            BlacklistedMobs.Add(thextera);
+
             const uint pterygotus = 4354;
+            BlacklistedMobs.Add(pterygotus);
+
             const uint gigantopithecus = 4355;
+            BlacklistedMobs.Add(gigantopithecus);
+
             const uint scitalis = 4356;
+            BlacklistedMobs.Add(scitalis);
+
             const uint theScarecrow = 4357;
+            BlacklistedMobs.Add(theScarecrow);
+
             const uint squonk = 4358;
+            BlacklistedMobs.Add(squonk);
+
             const uint sanuValiOfDancingWings = 4359;
+            BlacklistedMobs.Add(sanuValiOfDancingWings);
+
             const uint lycidas = 4360;
+            BlacklistedMobs.Add(lycidas);
+
             const uint omni = 4361;
-            this.BlacklistedMobs.Add(alteci);
-            this.BlacklistedMobs.Add(kreutzet);
-            this.BlacklistedMobs.Add(gnathCometdrone);
-            this.BlacklistedMobs.Add(thextera);
-            this.BlacklistedMobs.Add(pterygotus);
-            this.BlacklistedMobs.Add(gigantopithecus);
-            this.BlacklistedMobs.Add(scitalis);
-            this.BlacklistedMobs.Add(theScarecrow);
-            this.BlacklistedMobs.Add(squonk);
-            this.BlacklistedMobs.Add(sanuValiOfDancingWings);
-            this.BlacklistedMobs.Add(lycidas);
-            this.BlacklistedMobs.Add(omni);
+            BlacklistedMobs.Add(omni);
 
-            // A Realm Reborn S-Rank Hunts.
+            /*
+             * ---------------------------
+             * A Realm Reborn S-Rank Hunts
+             * ---------------------------
+             */
+
             const uint agrippaTheMighty = 2969;
+            BlacklistedMobs.Add(agrippaTheMighty);
+
             const uint bonnacon = 2965;
+            BlacklistedMobs.Add(bonnacon);
+
             const uint brontes = 2958;
+            BlacklistedMobs.Add(brontes);
+
             const uint croakadile = 2963;
+            BlacklistedMobs.Add(croakadile);
+
             const uint croqueMitaine = 2962;
+            BlacklistedMobs.Add(croqueMitaine);
+
             const uint garlok = 2964;
+            BlacklistedMobs.Add(garlok);
+
             const uint laideronnette = 2953;
+            BlacklistedMobs.Add(laideronnette);
+
             const uint lampalagua = 2959;
+            BlacklistedMobs.Add(lampalagua);
+
             const uint mahisha = 2967;
+            BlacklistedMobs.Add(mahisha);
+
             const uint mindflayer = 2955;
+            BlacklistedMobs.Add(mindflayer);
+
             const uint minhocao = 2961;
+            BlacklistedMobs.Add(minhocao);
+
             const uint nandi = 2966;
+            BlacklistedMobs.Add(nandi);
+
             const uint nunyunuwi = 2960;
+            BlacklistedMobs.Add(nunyunuwi);
+
             const uint safat = 2968;
+            BlacklistedMobs.Add(safat);
+
             const uint thousandcastTheda = 2956;
+            BlacklistedMobs.Add(thousandcastTheda);
+
             const uint wulgaru = 2954;
+            BlacklistedMobs.Add(wulgaru);
+
             const uint zonaSeeker = 2957;
-            this.BlacklistedMobs.Add(agrippaTheMighty);
-            this.BlacklistedMobs.Add(bonnacon);
-            this.BlacklistedMobs.Add(brontes);
-            this.BlacklistedMobs.Add(croakadile);
-            this.BlacklistedMobs.Add(croqueMitaine);
-            this.BlacklistedMobs.Add(garlok);
-            this.BlacklistedMobs.Add(laideronnette);
-            this.BlacklistedMobs.Add(lampalagua);
-            this.BlacklistedMobs.Add(mahisha);
-            this.BlacklistedMobs.Add(mindflayer);
-            this.BlacklistedMobs.Add(minhocao);
-            this.BlacklistedMobs.Add(nandi);
-            this.BlacklistedMobs.Add(nunyunuwi);
-            this.BlacklistedMobs.Add(safat);
-            this.BlacklistedMobs.Add(thousandcastTheda);
-            this.BlacklistedMobs.Add(wulgaru);
-            this.BlacklistedMobs.Add(zonaSeeker);
+            BlacklistedMobs.Add(zonaSeeker);
 
-            // A Realm Reborn A-Rank Hunts.
+            /*
+             * ---------------------------
+             * A Realm Reborn A-Rank Hunts
+             * ---------------------------
+             */
+
             const uint alectryon = 2940;
+            BlacklistedMobs.Add(alectryon);
+
             const uint cornu = 2950;
+            BlacklistedMobs.Add(cornu);
+
             const uint dalvagsFinalFlame = 2944;
+            BlacklistedMobs.Add(dalvagsFinalFlame);
+
             const uint forneus = 2936;
+            BlacklistedMobs.Add(forneus);
+
             const uint ghedeTiMalice = 2938;
+            BlacklistedMobs.Add(ghedeTiMalice);
+
             const uint girtab = 2939;
+            BlacklistedMobs.Add(girtab);
+
             const uint hellsclaw = 2947;
+            BlacklistedMobs.Add(hellsclaw);
+
             const uint kurrea = 2952;
+            BlacklistedMobs.Add(kurrea);
+
             const uint maahes = 2942;
+            BlacklistedMobs.Add(maahes);
+
             const uint marberry = 2949;
+            BlacklistedMobs.Add(marberry);
+
             const uint marraco = 2951;
+            BlacklistedMobs.Add(marraco);
+
             const uint melt = 2937;
+            BlacklistedMobs.Add(melt);
+
             const uint nahn = 2948;
+            BlacklistedMobs.Add(nahn);
+
             const uint unktehi = 2946;
+            BlacklistedMobs.Add(unktehi);
+
             const uint vogaalJa = 2945;
+            BlacklistedMobs.Add(vogaalJa);
+
             const uint sabotenderBailarina = 2941;
+            BlacklistedMobs.Add(sabotenderBailarina);
+
             const uint zanigoh = 2943;
-            this.BlacklistedMobs.Add(alectryon);
-            this.BlacklistedMobs.Add(cornu);
-            this.BlacklistedMobs.Add(dalvagsFinalFlame);
-            this.BlacklistedMobs.Add(forneus);
-            this.BlacklistedMobs.Add(ghedeTiMalice);
-            this.BlacklistedMobs.Add(girtab);
-            this.BlacklistedMobs.Add(hellsclaw);
-            this.BlacklistedMobs.Add(kurrea);
-            this.BlacklistedMobs.Add(maahes);
-            this.BlacklistedMobs.Add(marberry);
-            this.BlacklistedMobs.Add(marraco);
-            this.BlacklistedMobs.Add(melt);
-            this.BlacklistedMobs.Add(nahn);
-            this.BlacklistedMobs.Add(unktehi);
-            this.BlacklistedMobs.Add(vogaalJa);
-            this.BlacklistedMobs.Add(sabotenderBailarina);
-            this.BlacklistedMobs.Add(zanigoh);
+            BlacklistedMobs.Add(zanigoh);
 
-            // A Realm Reborn B-Rank Hunts.
+            /*
+             * ---------------------------
+             * A Realm Reborn B-Rank Hunts
+             * ---------------------------
+             */
+
             const uint albinTheAshen = 2926;
+            BlacklistedMobs.Add(albinTheAshen);
+
             const uint barbastelle = 2929;
+            BlacklistedMobs.Add(barbastelle);
+
             const uint bloodyMary = 2930;
+            BlacklistedMobs.Add(bloodyMary);
+
             const uint darkHelmet = 2931;
+            BlacklistedMobs.Add(darkHelmet);
+
             const uint flameSergeantDalvag = 2927;
+            BlacklistedMobs.Add(flameSergeantDalvag);
+
             const uint gatling = 2925;
+            BlacklistedMobs.Add(gatling);
+
             const uint leechKing = 2935;
+            BlacklistedMobs.Add(leechKing);
+
             const uint monarchOgrefly = 2921;
+            BlacklistedMobs.Add(monarchOgrefly);
+
             const uint myradrosh = 2932;
+            BlacklistedMobs.Add(myradrosh);
+
             const uint naul = 2934;
+            BlacklistedMobs.Add(naul);
+
             const uint ovjang = 2924;
+            BlacklistedMobs.Add(ovjang);
+
             const uint phecda = 2922;
+            BlacklistedMobs.Add(phecda);
+
             const uint sewerSyrup = 2923;
+            BlacklistedMobs.Add(sewerSyrup);
+
             const uint skogsFru = 2928;
+            BlacklistedMobs.Add(skogsFru);
+
             const uint stingingSophie = 2920;
+            BlacklistedMobs.Add(stingingSophie);
+
             const uint vuokho = 2933;
+            BlacklistedMobs.Add(vuokho);
+
             const uint whiteJoker = 2919;
-            this.BlacklistedMobs.Add(albinTheAshen);
-            this.BlacklistedMobs.Add(barbastelle);
-            this.BlacklistedMobs.Add(bloodyMary);
-            this.BlacklistedMobs.Add(darkHelmet);
-            this.BlacklistedMobs.Add(flameSergeantDalvag);
-            this.BlacklistedMobs.Add(gatling);
-            this.BlacklistedMobs.Add(leechKing);
-            this.BlacklistedMobs.Add(monarchOgrefly);
-            this.BlacklistedMobs.Add(myradrosh);
-            this.BlacklistedMobs.Add(naul);
-            this.BlacklistedMobs.Add(ovjang);
-            this.BlacklistedMobs.Add(phecda);
-            this.BlacklistedMobs.Add(sewerSyrup);
-            this.BlacklistedMobs.Add(skogsFru);
-            this.BlacklistedMobs.Add(stingingSophie);
-            this.BlacklistedMobs.Add(vuokho);
-            this.BlacklistedMobs.Add(whiteJoker);
+            BlacklistedMobs.Add(whiteJoker);
 
-            // Elite mobs.
+            /*
+             * ----------
+             * Elite Mobs
+             * ----------
+             */
+
             const uint scarredAntelope = 1992;
-            this.BlacklistedMobs.Add(scarredAntelope);
+            BlacklistedMobs.Add(scarredAntelope);
 
-            this.BlacklistedMobs.Sort();
+            BlacklistedMobs.Sort();
         }
 
         public void PopulateZoneLevels()
@@ -833,67 +1064,67 @@ namespace Oracle.Settings
                 // 1-12: Western Thanalan (Horizon).
                 if (i < 12)
                 {
-                    this.ZoneLevels.Add(i, horizon);
+                    ZoneLevels.Add(i, horizon);
                 }
 
                 // 12-18: Western La Noscea (Aleport).
                 else if (i < 18)
                 {
-                    this.ZoneLevels.Add(i, aleport);
+                    ZoneLevels.Add(i, aleport);
                 }
 
                 // 18-24: East Shroud (The Hawthorne Hut).
                 else if (i < 24)
                 {
-                    this.ZoneLevels.Add(i, hawthorneHut);
+                    ZoneLevels.Add(i, hawthorneHut);
                 }
 
                 // 24-29: South Shroud (Quarrymill).
                 else if (i < 29)
                 {
-                    this.ZoneLevels.Add(i, quarrymill);
+                    ZoneLevels.Add(i, quarrymill);
                 }
 
                 // 29-36: Eastern La Noscea (Costa del Sol).
                 else if (i < 36)
                 {
-                    this.ZoneLevels.Add(i, costaDelSol);
+                    ZoneLevels.Add(i, costaDelSol);
                 }
 
                 // 36-45: Coerthas Central Highlands (Camp Dragonhead).
                 else if (i < 45)
                 {
-                    this.ZoneLevels.Add(i, campDragonhead);
+                    ZoneLevels.Add(i, campDragonhead);
                 }
 
                 // 45-50: Northern Thanalan (Ceruleum Processing Plant).
                 else if (i < 50)
                 {
-                    this.ZoneLevels.Add(i, ceruleumProcessingPlant);
+                    ZoneLevels.Add(i, ceruleumProcessingPlant);
                 }
 
                 // 50-52: The Sea of Clouds (Camp Cloudtop).
                 else if (i < 52)
                 {
-                    this.ZoneLevels.Add(i, campCloudtop);
+                    ZoneLevels.Add(i, campCloudtop);
                 }
 
                 // 52-54: The Dravanian Forelands (Tailfeather).
                 else if (i < 54)
                 {
-                    this.ZoneLevels.Add(i, tailfeather);
+                    ZoneLevels.Add(i, tailfeather);
                 }
 
                 // 54-58: The Churning Mists (Moghome)
                 else if (i < 58)
                 {
-                    this.ZoneLevels.Add(i, moghome);
+                    ZoneLevels.Add(i, moghome);
                 }
 
                 // 58-60: Dravanian Hinterlands (Idyllshire).
                 else
                 {
-                    this.ZoneLevels.Add(i, idyllshire);
+                    ZoneLevels.Add(i, idyllshire);
                 }
             }
         }

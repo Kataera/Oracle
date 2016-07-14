@@ -18,6 +18,7 @@
         <xs:element ref="Level" maxOccurs="1" minOccurs="1" />
         <xs:element ref="Type" maxOccurs="1" minOccurs="1" />
         <xs:element ref="OracleSupport" maxOccurs="1" minOccurs="1" />
+		<xs:element ref="LandingRadius" maxOccurs="1" minOccurs="0" />
         <xs:element ref="CollectItemId" maxOccurs="1" minOccurs="0" />
         <xs:element ref="NpcId" maxOccurs="1" minOccurs="0" />
         <xs:element ref="PreferredTargetId" maxOccurs="unbounded" minOccurs="0" />
@@ -65,6 +66,14 @@
         <xs:minInclusive value="0" />
         <xs:maxInclusive value="4" />
         <xs:totalDigits value="1" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+    <xs:element name="LandingRadius">
+    <xs:simpleType>
+      <xs:restriction base="xs:float">
+        <xs:minInclusive value="0.0" />
+        <xs:maxInclusive value="1.0" />
       </xs:restriction>
     </xs:simpleType>
   </xs:element>

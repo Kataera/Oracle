@@ -48,8 +48,7 @@ namespace Oracle.Managers
             if (!WorldManager.CanFly)
             {
                 var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
-                var navResults =
-                    await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+                var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
 
                 foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
                 {
@@ -151,8 +150,7 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (OracleSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate
-                && !fate.Name.Equals(OracleSettings.Instance.SpecificFateName))
+            if (OracleSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate && !fate.Name.Equals(OracleSettings.Instance.SpecificFateName))
             {
                 return false;
             }
@@ -210,32 +208,27 @@ namespace Oracle.Managers
 
         public static bool FateProgressionMet(FateData fate)
         {
-            if (OracleDatabase.GetFateFromFateData(fate).Type != FateType.Boss
-                && OracleDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
+            if (OracleDatabase.GetFateFromFateData(fate).Type != FateType.Boss && OracleDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss
-                && fate.Progress >= OracleSettings.Instance.BossEngagePercentage)
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss && fate.Progress >= OracleSettings.Instance.BossEngagePercentage)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss
-                && OracleSettings.Instance.WaitAtBossFateForProgress)
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss && OracleSettings.Instance.WaitAtBossFateForProgress)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss
-                && fate.Progress >= OracleSettings.Instance.MegaBossEngagePercentage)
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && fate.Progress >= OracleSettings.Instance.MegaBossEngagePercentage)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss
-                && OracleSettings.Instance.WaitAtMegaBossFateForProgress)
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && OracleSettings.Instance.WaitAtMegaBossFateForProgress)
             {
                 return true;
             }
@@ -250,8 +243,7 @@ namespace Oracle.Managers
             if (!WorldManager.CanFly)
             {
                 var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
-                var navResults =
-                    await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+                var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
 
                 foreach (var result in navResults.Where(result => result.CanNavigate != 0))
                 {
@@ -275,6 +267,11 @@ namespace Oracle.Managers
             return FateManager.GetFateById(CurrentFateId);
         }
 
+        public static Fate GetCurrentOracleFate()
+        {
+            return OracleDatabase.GetFateFromId(CurrentFateId);
+        }
+
         public static FateData GetPreviousFateData()
         {
             return FateManager.GetFateById(PreviousFateId);
@@ -282,9 +279,7 @@ namespace Oracle.Managers
 
         public static bool IsPlayerBeingAttacked()
         {
-            return
-                GameObjectManager.Attackers.Any(
-                    mob => mob.IsValid && mob.HasTarget && mob.CurrentTargetId == Core.Player.ObjectId && !mob.IsFateGone);
+            return GameObjectManager.Attackers.Any(mob => mob.IsValid && mob.HasTarget && mob.CurrentTargetId == Core.Player.ObjectId && !mob.IsFateGone);
         }
 
         public static void UpdateGameCache()
