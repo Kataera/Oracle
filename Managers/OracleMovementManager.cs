@@ -449,18 +449,19 @@ namespace Oracle.Managers
                 await Coroutine.Yield();
             }
 
-            Vector3 collision;
-            if (WorldManager.Raycast(Core.Player.Location, potentialLandingLocation, out collision))
-            {
-                Logger.SendDebugLog("Landing spot generation failed: there's obstacles in the way.");
-                return Core.Player.Location;
-            }
-
             // Raycast from generated location to ground to get position closer to ground.
+            Vector3 collision;
             var groundVector = new Vector3(potentialLandingLocation.X, potentialLandingLocation.Y - 100, potentialLandingLocation.Z);
             if (WorldManager.Raycast(potentialLandingLocation, groundVector, out collision))
             {
                 potentialLandingLocation = new Vector3(collision.X, collision.Y + Convert.ToSingle(MathEx.Random(7, 13)), collision.Z);
+            }
+
+            // Raycast to generated location from current location to check we can move there.
+            if (WorldManager.Raycast(Core.Player.Location, potentialLandingLocation, out collision))
+            {
+                Logger.SendDebugLog("Landing spot generation failed: there's obstacles in the way.");
+                return Core.Player.Location;
             }
 
             Logger.SendDebugLog("Landing spot generation succeeded.");

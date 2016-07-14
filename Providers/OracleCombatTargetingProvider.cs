@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using ff14bot;
@@ -133,7 +134,7 @@ namespace Oracle.Providers
 
             if (battleCharacter.CurrentTargetId == Core.Player.ObjectId)
             {
-                weight += 100f - battleCharacter.CurrentHealthPercent;
+                weight -= Convert.ToSingle(battleCharacter.CurrentHealth) / 100;
             }
 
             if (!battleCharacter.InCombat)
