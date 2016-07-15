@@ -9,7 +9,7 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
-        Background="#EEEEEE"
+        Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
         Title="Oracle"
@@ -30,15 +30,7 @@
                 <ResourceDictionary
                     Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary
-                    Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.DeepPurple.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+                    Source="Theme/Colours.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -50,62 +42,161 @@
             <ColumnDefinition Width="300" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <materialDesign:ColorZone Name="NavigationPanel" Padding="8" materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                  Mode="PrimaryDark" DockPanel.Dock="Left" MouseDown="NavigationPanel_OnMouseDown"
-                                  VerticalAlignment="Stretch" Grid.Column="0">
-            <Image Source="/Oracle;component/Resources/Images/Logo.png" Height="80" Width="250"
-                   HorizontalAlignment="Center" VerticalAlignment="Top" RenderOptions.BitmapScalingMode="HighQuality"
-                   Stretch="Fill" />
-        </materialDesign:ColorZone>
-        <StackPanel Name="ContentPanel" Grid.Column="1">
-            <materialDesign:ColorZone Name="ControlPanel" Padding="8" materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                      Mode="Light" DockPanel.Dock="Top"
-                                      MouseDown="ControlPanel_OnMouseDownPanel_OnMouseDown" VerticalAlignment="Stretch">
-                <DockPanel>
-                    <Grid Name="NavigationLocation" HorizontalAlignment="Left">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Margin="20, 0, 0, 0" VerticalAlignment="Center"
-                                   FontSize="16" Foreground="{StaticResource PrimaryHueDarkBrush}"
-                                   Grid.Column="0">
-                            Oracle
-                        </TextBlock>
-                        <TextBlock Margin="20, 0, 0, 0" VerticalAlignment="Center"
-                                   FontSize="16" Foreground="{StaticResource PrimaryHueLightBrush}"
-                                   Grid.Column="1">
-                            /
-                        </TextBlock>
-                        <TextBlock Margin="20, 0, 0, 0" VerticalAlignment="Center"
-                                   FontSize="16" Foreground="{StaticResource PrimaryHueDarkBrush}"
-                                   Grid.Column="2">
-                            Location
-                        </TextBlock>
-                    </Grid>
-                    <Grid Margin="0,0,0,5" HorizontalAlignment="Right" Name="WindowControls">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Button Name="MinimiseWindowButton" Style="{StaticResource MaterialDesignFlatButton}"
-                                Grid.Column="0" Click="MinimiseWindowButton_Click">
-                            <materialDesign:PackIcon Name="MinimiseWindowIcon" Kind="WindowMinimize" />
-                        </Button>
-                        <Button Name="MaximiseWindowButton" Style="{StaticResource MaterialDesignFlatButton}"
-                                Grid.Column="1" Click="MaximiseWindowButton_Click">
-                            <materialDesign:PackIcon Name="MaximiseWindowIcon" Kind="WindowMaximize" />
-                        </Button>
-                        <Button Name="CloseWindowButton" Style="{StaticResource MaterialDesignFlatButton}"
-                                Grid.Column="2" Click="CloseWindowButton_Click">
-                            <materialDesign:PackIcon Name="CloseWindowIcon" Kind="WindowClose" />
-                        </Button>
+        <Grid Grid.Column="0" ZIndex="1">
+            <materialDesign:ColorZone Name="NavigationPanel" Padding="8"
+                                      materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                                      Mode="PrimaryMid" DockPanel.Dock="Left" MouseDown="NavigationPanel_OnMouseDown"
+                                      VerticalAlignment="Stretch">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Image Source="/Oracle;component/Resources/Images/Logo.png" Height="80" Width="280"
+                           HorizontalAlignment="Center" VerticalAlignment="Top"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           Stretch="Fill" Grid.Row="0" />
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" BorderThickness="2"
+                                  MouseDown="NavigationPanel_OnMouseDown">
+                        <StackPanel Orientation="Vertical">
+                            <Expander Margin="16,30,16,16" IsExpanded="True" HorizontalAlignment="Stretch">
+                                <Expander.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <materialDesign:PackIcon Kind="Settings" Grid.Column="0" Height="20" Width="20"
+                                                                 VerticalAlignment="Center" Foreground="#B7F4F4" />
+                                        <TextBlock Text="General Settings" VerticalAlignment="Center" Margin="7,0,0,0"
+                                                   FontSize="16" FontWeight="Bold" Grid.Column="1"
+                                                   TextDecorations="{x:Null}" Foreground="#B7F4F4" />
+                                    </Grid>
+                                </Expander.Header>
+                                <ListBox Margin="30,8">
+                                    <Grid Margin="0,-4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <materialDesign:PackIcon Kind="CardsOutline" Grid.Column="0" Height="16"
+                                                                 Width="16"
+                                                                 VerticalAlignment="Center" Foreground="#B7F4F4" />
+                                        <TextBlock Text="Oracle Mode" VerticalAlignment="Center" Grid.Column="1"
+                                                   Margin="7,0,0,0" FontSize="14" Foreground="#B7F4F4" />
+                                    </Grid>
+                                    <Grid Margin="0,-4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <materialDesign:PackIcon Kind="Selection" Grid.Column="0" Height="16"
+                                                                 Width="16"
+                                                                 VerticalAlignment="Center" Foreground="#B7F4F4" />
+                                        <TextBlock Text="FATE Selection" VerticalAlignment="Center" Grid.Column="1"
+                                                   Margin="7,0,0,0" FontSize="14" Foreground="#B7F4F4" />
+                                    </Grid>
+                                    <Grid Margin="0,-4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <materialDesign:PackIcon Kind="Sleep" Grid.Column="0" Height="16" Width="16"
+                                                                 VerticalAlignment="Center" Foreground="#B7F4F4" />
+                                        <TextBlock Text="Downtime" VerticalAlignment="Center" Grid.Column="1"
+                                                   Margin="7,0,0,0" FontSize="14" Foreground="#B7F4F4" />
+                                    </Grid>
+                                    <Grid Margin="0,-4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <materialDesign:PackIcon Kind="Earth" Grid.Column="0" Height="16" Width="16"
+                                                                 VerticalAlignment="Center" Foreground="#B7F4F4" />
+                                        <TextBlock Text="Zone Changing" VerticalAlignment="Center" Grid.Column="1"
+                                                   Margin="7,0,0,0" FontSize="14" Foreground="#B7F4F4" />
+                                    </Grid>
+                                </ListBox>
+                            </Expander>
+                            <TextBlock Text="Oracle Version: 1.0.0" Margin="0,8,0,0" />
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </materialDesign:ColorZone>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" ZIndex="1">
+                <materialDesign:ColorZone Grid.Row="0" Padding="8" Name="ControlPanel"
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                                          Mode="Standard" DockPanel.Dock="Top"
+                                          MouseDown="ControlPanel_OnMouseDownPanel_OnMouseDown"
+                                          VerticalAlignment="Stretch">
+                    <DockPanel>
+                        <Grid Name="NavigationLocation" HorizontalAlignment="Left">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Margin="20, 0, 0, 0" VerticalAlignment="Center"
+                                       FontSize="16" Foreground="{StaticResource PrimaryHueDarkBrush}"
+                                       Grid.Column="0">
+                                Oracle
+                            </TextBlock>
+                            <TextBlock Margin="20, 0, 0, 0" VerticalAlignment="Center"
+                                       FontSize="16" Foreground="{StaticResource PrimaryHueLightBrush}"
+                                       Grid.Column="1">
+                                /
+                            </TextBlock>
+                            <TextBlock Margin="20, 0, 0, 0" VerticalAlignment="Center"
+                                       FontSize="16" Foreground="{StaticResource PrimaryHueDarkBrush}"
+                                       Grid.Column="2">
+                                Location
+                            </TextBlock>
+                        </Grid>
+                        <Grid Margin="0,0,0,5" HorizontalAlignment="Right">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Button Name="MinimiseWindowButton" Style="{StaticResource MaterialDesignFlatButton}"
+                                    Grid.Column="0" Click="MinimiseWindowButton_Click">
+                                <materialDesign:PackIcon Name="MinimiseWindowIcon" Kind="WindowMinimize" />
+                            </Button>
+                            <Button Name="MaximiseWindowButton" Style="{StaticResource MaterialDesignFlatButton}"
+                                    Grid.Column="1" Click="MaximiseWindowButton_Click">
+                                <materialDesign:PackIcon Name="MaximiseWindowIcon" Kind="WindowMaximize" />
+                            </Button>
+                            <Button Name="CloseWindowButton" Style="{StaticResource MaterialDesignFlatButton}"
+                                    Grid.Column="2" Click="CloseWindowButton_Click">
+                                <materialDesign:PackIcon Name="CloseWindowIcon" Kind="WindowClose" />
+                            </Button>
+                        </Grid>
+                    </DockPanel>
+                </materialDesign:ColorZone>
+            </Grid>
+            <Separator Grid.Row="1" Margin="0" Background="{DynamicResource MaterialDesignPaper}">
+                <Separator.Effect>
+                    <DropShadowEffect BlurRadius="15" ShadowDepth="2" RenderingBias="Quality" Direction="90" />
+                </Separator.Effect>
+            </Separator>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <DockPanel Dock="Left">
+                    <Grid VerticalAlignment="Stretch" Background="{DynamicResource PrimaryHueLightBrush}" Width="1"
+                          Margin="-1,0,0,0">
+                        <Grid.Effect>
+                            <DropShadowEffect BlurRadius="15" ShadowDepth="2" RenderingBias="Quality" Direction="90" />
+                        </Grid.Effect>
                     </Grid>
                 </DockPanel>
-            </materialDesign:ColorZone>
-            <ContentControl Margin="16" Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" />
-        </StackPanel>
+                <ContentControl Margin="16" Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" />
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
