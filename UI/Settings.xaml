@@ -19,7 +19,7 @@
         MinWidth="800"
         WindowStartupLocation="CenterScreen"
         WindowStyle="SingleBorderWindow"
-        BorderThickness="2"
+        BorderThickness="1"
         BorderBrush="#262A2A"
         ResizeMode="CanResize">
     <Window.Resources>
@@ -422,7 +422,7 @@
                         </Grid.Effect>
                     </Grid>
                 </DockPanel>
-                <ContentControl Margin="16" Content="" />
+                <ContentPresenter Margin="16"/>
             </StackPanel>
         </Grid>
     </Grid>
