@@ -59,7 +59,7 @@
                     <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" BorderThickness="2"
                                   MouseDown="NavigationPanel_OnMouseDown">
                         <StackPanel Orientation="Vertical">
-                            <Expander Margin="16,30,16,0" IsExpanded="True" HorizontalAlignment="Stretch">
+                            <Expander Name="GeneralSettingsExpander" Margin="16,30,16,0" IsExpanded="True" HorizontalAlignment="Stretch">
                                 <Expander.Header>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -73,7 +73,7 @@
                                                    TextDecorations="{x:Null}" Foreground="#262A2A" />
                                     </Grid>
                                 </Expander.Header>
-                                <ListBox Margin="30,8">
+                                <ListBox x:Name="GeneralSettingsListBox" Margin="30,8">
                                     <Grid Margin="0,-4">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
@@ -118,7 +118,7 @@
                                     </Grid>
                                 </ListBox>
                             </Expander>
-                            <Expander Margin="16,8,16,0" IsExpanded="False" HorizontalAlignment="Stretch">
+                            <Expander Name="FateSettingsExpander" Margin="16,8,16,0" IsExpanded="False" HorizontalAlignment="Stretch">
                                 <Expander.Header>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -207,7 +207,7 @@
                                     </Grid>
                                 </ListBox>
                             </Expander>
-                            <Expander Margin="16,8,16,0" IsExpanded="False" HorizontalAlignment="Stretch">
+                            <Expander Name="NavigationSettingsExpander" Margin="16,8,16,0" IsExpanded="False" HorizontalAlignment="Stretch">
                                 <Expander.Header>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -256,7 +256,7 @@
                                     </Grid>
                                 </ListBox>
                             </Expander>
-                            <Expander Margin="16,8,16,0" IsExpanded="False" HorizontalAlignment="Stretch">
+                            <Expander Name="BlacklistSettingsExpander" Margin="16,8,16,0" IsExpanded="False" HorizontalAlignment="Stretch">
                                 <Expander.Header>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -295,7 +295,7 @@
                                     </Grid>
                                 </ListBox>
                             </Expander>
-                            <Expander Margin="16,8,16,0" IsExpanded="False" HorizontalAlignment="Stretch">
+                            <Expander Name="AuthenticationSettingsExpander" Margin="16,8,16,0" IsExpanded="False" HorizontalAlignment="Stretch">
                                 <Expander.Header>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -422,7 +422,7 @@
                         </Grid.Effect>
                     </Grid>
                 </DockPanel>
-                <ContentControl Margin="16" Content="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.Content}" />
+                <ContentControl Margin="16" Content="" />
             </StackPanel>
         </Grid>
     </Grid>

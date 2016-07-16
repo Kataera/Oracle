@@ -183,6 +183,9 @@
     <Compile Include="Settings\OracleSettings.cs" />
     <Compile Include="OracleBot.cs" />
     <Compile Include="UI\App.xaml.cs" />
+    <Compile Include="UI\Pages\OracleMode.xaml.cs">
+      <DependentUpon>OracleMode.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -198,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UI\Pages\OracleMode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Theme\Colours.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -210,9 +217,7 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Logo.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\Pages\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />

@@ -22,6 +22,29 @@ namespace Oracle.UI
         {
             InitializeComponent();
             SourceInitialized += Settings_SourceInitialized;
+
+            // Add expander events after initialising the window to prevent null references.
+            GeneralSettingsExpander.Expanded += GeneralSettingsExpander_OnExpanded;
+            FateSettingsExpander.Expanded += FateSettingsExpander_OnExpanded;
+            NavigationSettingsExpander.Expanded += NavigationSettingsExpander_OnExpanded;
+            BlacklistSettingsExpander.Expanded += BlacklistSettingsExpander_OnExpanded;
+            AuthenticationSettingsExpander.Expanded += AuthenticationSettingsExpander_OnExpanded;
+        }
+
+        private void AuthenticationSettingsExpander_OnExpanded(object sender, RoutedEventArgs e)
+        {
+            GeneralSettingsExpander.IsExpanded = false;
+            FateSettingsExpander.IsExpanded = false;
+            NavigationSettingsExpander.IsExpanded = false;
+            BlacklistSettingsExpander.IsExpanded = false;
+        }
+
+        private void BlacklistSettingsExpander_OnExpanded(object sender, RoutedEventArgs e)
+        {
+            GeneralSettingsExpander.IsExpanded = false;
+            FateSettingsExpander.IsExpanded = false;
+            NavigationSettingsExpander.IsExpanded = false;
+            AuthenticationSettingsExpander.IsExpanded = false;
         }
 
         private void CloseWindowButton_Click(object sender, RoutedEventArgs e)
@@ -35,6 +58,22 @@ namespace Oracle.UI
             {
                 DragMove();
             }
+        }
+
+        private void FateSettingsExpander_OnExpanded(object sender, RoutedEventArgs e)
+        {
+            GeneralSettingsExpander.IsExpanded = false;
+            NavigationSettingsExpander.IsExpanded = false;
+            BlacklistSettingsExpander.IsExpanded = false;
+            AuthenticationSettingsExpander.IsExpanded = false;
+        }
+
+        private void GeneralSettingsExpander_OnExpanded(object sender, RoutedEventArgs e)
+        {
+            FateSettingsExpander.IsExpanded = false;
+            NavigationSettingsExpander.IsExpanded = false;
+            BlacklistSettingsExpander.IsExpanded = false;
+            AuthenticationSettingsExpander.IsExpanded = false;
         }
 
         [DllImport("user32.dll")]
@@ -80,6 +119,14 @@ namespace Oracle.UI
             {
                 DragMove();
             }
+        }
+
+        private void NavigationSettingsExpander_OnExpanded(object sender, RoutedEventArgs e)
+        {
+            GeneralSettingsExpander.IsExpanded = false;
+            FateSettingsExpander.IsExpanded = false;
+            BlacklistSettingsExpander.IsExpanded = false;
+            AuthenticationSettingsExpander.IsExpanded = false;
         }
 
         private void Settings_SourceInitialized(object sender, EventArgs e)
