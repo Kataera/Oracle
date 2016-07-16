@@ -210,6 +210,9 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Logo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI\Pages\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />
