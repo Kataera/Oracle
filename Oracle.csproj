@@ -85,6 +85,12 @@
     <Content Include="Data\Fates\FateData.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\Azys Lla.png" />
+    <Resource Include="Resources\Images\Churning Mists.png" />
+    <Resource Include="Resources\Images\Dravanian Hinterlands.png" />
+    <Resource Include="Resources\Images\Dravanian Forelands.png" />
+    <Resource Include="Resources\Images\Coerthas Western Highlands.png" />
+    <Resource Include="Resources\Images\Sea of Clouds.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Fates\FateData.xsd">
@@ -183,6 +189,9 @@
     <Compile Include="Settings\OracleSettings.cs" />
     <Compile Include="OracleBot.cs" />
     <Compile Include="UI\App.xaml.cs" />
+    <Compile Include="UI\Pages\Flight.xaml.cs">
+      <DependentUpon>Flight.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Pages\OracleMode.xaml.cs">
       <DependentUpon>OracleMode.xaml</DependentUpon>
     </Compile>
@@ -200,6 +209,10 @@
     <Page Include="UI\App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Pages\Flight.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Pages\OracleMode.xaml">
       <SubType>Designer</SubType>

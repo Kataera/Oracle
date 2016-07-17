@@ -43,7 +43,9 @@ namespace Oracle.UI
         protected void HideAllButtons()
         {
             if (windowHandle == null)
-                throw new InvalidOperationException("The window has not yet been completely initialized");
+            {
+                throw new InvalidOperationException("The window has not yet been completely initialised.");
+            }
 
             SetWindowLong(windowHandle, GwlStyle, GetWindowLong(windowHandle, GwlStyle) & ~WsSysmenu);
         }
