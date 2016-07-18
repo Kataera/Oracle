@@ -30,11 +30,17 @@ namespace Oracle.Managers
     {
         internal static OracleFlightMesh ZoneFlightMesh { get; set; }
 
+        private static async Task ClearExpiredFate()
+        {
+            OracleFateManager.DoNotWaitBeforeMovingFlag = true;
+            await OracleFateManager.ClearCurrentFate("FATE ended before we got there.", false);
+            Navigator.Stop();
+        }
+
         public static async Task<bool> FlyToCurrentFate()
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
-            if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE
-                || currentFate.Status == FateStatus.NOTACTIVE)
+            if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
             {
                 await ClearExpiredFate();
                 return true;
@@ -193,130 +199,6 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static bool IsFlightMeshLoaded()
-        {
-            return ZoneFlightMesh != null && ZoneFlightMesh.ZoneId == WorldManager.ZoneId;
-        }
-
-        public static bool IsMountNeeded(float distance)
-        {
-            return distance > CharacterSettings.Instance.MountDistance;
-        }
-
-        public static async Task<bool> LoadFlightMeshIfAvailable()
-        {
-            if (ZoneFlightMesh != null && ZoneFlightMesh.ZoneId == WorldManager.ZoneId)
-            {
-                return true;
-            }
-
-            const ushort coerthasWesternHighlands = 397;
-            const ushort dravanianForelands = 398;
-            const ushort dravanianHinterlands = 399;
-            const ushort churningMists = 400;
-            const ushort seaOfClouds = 401;
-            const ushort azysLla = 402;
-
-            switch (WorldManager.ZoneId)
-            {
-                case coerthasWesternHighlands:
-                    Logger.SendLog("Loading the Coerthas Western Highlands flight mesh.");
-                    await LoadFlightMesh.Main();
-                    return true;
-                case dravanianForelands:
-                    Logger.SendLog("Loading The Dravanian Forelands flight mesh.");
-                    await LoadFlightMesh.Main();
-                    return true;
-                case dravanianHinterlands:
-                    Logger.SendLog("Loading The Dravanian Hinterlands flight mesh.");
-                    await LoadFlightMesh.Main();
-                    return true;
-                case churningMists:
-                    Logger.SendLog("Loading The Churning Mists flight mesh.");
-                    await LoadFlightMesh.Main();
-                    return true;
-                case seaOfClouds:
-                    Logger.SendLog("Loading The Sea of Clouds flight mesh.");
-                    await LoadFlightMesh.Main();
-                    return true;
-                case azysLla:
-                    Logger.SendLog("Loading the Azys Lla flight mesh.");
-                    await LoadFlightMesh.Main();
-                    return true;
-                default:
-                    Logger.SendDebugLog("No flight mesh available for current zone.");
-                    return true;
-            }
-        }
-
-        public static async Task<bool> NavigateToCurrentFate(bool ignoreCombat)
-        {
-            var currentFate = OracleFateManager.GetCurrentFateData();
-            if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE
-                || currentFate.Status == FateStatus.NOTACTIVE)
-            {
-                await ClearExpiredFate();
-                return true;
-            }
-
-            if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
-            {
-                await ClearExpiredFate();
-                return true;
-            }
-
-            var currentFateLocation = currentFate.Location;
-            var currentFateRadius = currentFate.Radius;
-
-            while (Core.Player.Distance(currentFateLocation) > currentFateRadius * 0.75f)
-            {
-                if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
-                {
-                    await ClearExpiredFate();
-                    Navigator.Stop();
-                    return true;
-                }
-
-                var distanceToFateBoundary = Core.Player.Location.Distance2D(currentFateLocation) - currentFateRadius;
-                if (!Core.Player.IsMounted && IsMountNeeded(distanceToFateBoundary) && Actionmanager.AvailableMounts.Any())
-                {
-                    Navigator.Stop();
-                    if (!ignoreCombat && Core.Player.InCombat)
-                    {
-                        return true;
-                    }
-
-                    await Mount.MountUp();
-                }
-
-                currentFateLocation = currentFate.Location;
-                Navigator.MoveToPointWithin(currentFateLocation, currentFateRadius * 0.5f, currentFate.Name);
-                await Coroutine.Yield();
-            }
-
-            Navigator.Stop();
-            return true;
-        }
-
-        public static async Task<bool> NavigateToLocation(Vector3 location, float precision)
-        {
-            while (Core.Player.Location.Distance(location) > precision)
-            {
-                Navigator.MoveTo(location);
-                await Coroutine.Yield();
-            }
-
-            Navigator.Clear();
-            return true;
-        }
-
-        private static async Task ClearExpiredFate()
-        {
-            OracleFateManager.DoNotWaitBeforeMovingFlag = true;
-            await OracleFateManager.ClearCurrentFate("FATE ended before we got there.", false);
-            Navigator.Stop();
-        }
-
         private static async Task<IEnumerable<Vector3>> GenerateFlightPathToFate(FateData currentFate)
         {
             Logger.SendLog("Generating new flight path to FATE.");
@@ -413,22 +295,22 @@ namespace Oracle.Managers
         {
             // Pick a location that is in the general direction we're facing.
             return MathEx.GetPointAt(location,
-                radius * Convert.ToSingle(MathEx.Random(0.5, 0.9)),
-                Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.4 * Math.PI, 0.4 * Math.PI)));
+                                     radius * Convert.ToSingle(MathEx.Random(0.5, 0.9)),
+                                     Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.4 * Math.PI, 0.4 * Math.PI)));
         }
 
         private static Node GetClosestNodeToFate(FateData fate)
         {
-            var potentialNodes = ZoneFlightMesh.Graph.Nodes.OrderBy(kvp => kvp.Value.Position.Distance(fate.Location))
-                                               .Where(kvp => kvp.Value.Position.Y > fate.Location.Y + 10);
+            var potentialNodes =
+                ZoneFlightMesh.Graph.Nodes.OrderBy(kvp => kvp.Value.Position.Distance(fate.Location)).Where(kvp => kvp.Value.Position.Y > fate.Location.Y + 10);
 
             return potentialNodes.FirstOrDefault().Value;
         }
 
         private static Node GetClosestNodeToLocation(Vector3 location)
         {
-            var potentialNodes = ZoneFlightMesh.Graph.Nodes.OrderBy(kvp => kvp.Value.Position.Distance(location))
-                                               .Where(kvp => kvp.Value.Position.Y > location.Y + 10);
+            var potentialNodes =
+                ZoneFlightMesh.Graph.Nodes.OrderBy(kvp => kvp.Value.Position.Distance(location)).Where(kvp => kvp.Value.Position.Y > location.Y + 10);
 
             return potentialNodes.FirstOrDefault().Value;
         }
@@ -468,6 +350,16 @@ namespace Oracle.Managers
             return potentialLandingLocation;
         }
 
+        public static bool IsFlightMeshLoaded()
+        {
+            return ZoneFlightMesh != null && ZoneFlightMesh.ZoneId == WorldManager.ZoneId;
+        }
+
+        public static bool IsMountNeeded(float distance)
+        {
+            return distance > CharacterSettings.Instance.MountDistance;
+        }
+
         private static async Task<bool> LandInFateArea()
         {
             Navigator.PlayerMover.MoveStop();
@@ -496,6 +388,150 @@ namespace Oracle.Managers
             }
 
             Logger.SendLog("Landing successful.");
+            return true;
+        }
+
+        public static async Task<bool> LoadFlightMeshIfAvailable()
+        {
+            if (ZoneFlightMesh != null && ZoneFlightMesh.ZoneId == WorldManager.ZoneId)
+            {
+                return true;
+            }
+
+            // TODO: Place these in an enum.
+            const ushort coerthasWesternHighlands = 397;
+            const ushort dravanianForelands = 398;
+            const ushort dravanianHinterlands = 399;
+            const ushort churningMists = 400;
+            const ushort seaOfClouds = 401;
+            const ushort azysLla = 402;
+
+            switch (WorldManager.ZoneId)
+            {
+                case coerthasWesternHighlands:
+                    if (!OracleSettings.Instance.FlightCoerthasWesternHighlandsEnabled)
+                    {
+                        Logger.SendDebugLog("Flight mesh is available, but disabled for Coerthas Western Highlands.");
+                        return true;
+                    }
+
+                    Logger.SendLog("Loading the Coerthas Western Highlands flight mesh.");
+                    await LoadFlightMesh.Main();
+                    return true;
+
+                case dravanianForelands:
+                    if (!OracleSettings.Instance.FlightDravanianForelandsEnabled)
+                    {
+                        Logger.SendDebugLog("Flight mesh is available, but disabled for The Dravanian Forelands.");
+                        return true;
+                    }
+
+                    Logger.SendLog("Loading The Dravanian Forelands flight mesh.");
+                    await LoadFlightMesh.Main();
+                    return true;
+                case dravanianHinterlands:
+                    if (!OracleSettings.Instance.FlightDravanianForelandsEnabled)
+                    {
+                        Logger.SendDebugLog("Flight mesh is available, but disabled for The Dravanian Hinterlands.");
+                        return true;
+                    }
+
+                    Logger.SendLog("Loading The Dravanian Hinterlands flight mesh.");
+                    await LoadFlightMesh.Main();
+                    return true;
+                case churningMists:
+                    if (!OracleSettings.Instance.FlightChurningMistsEnabled)
+                    {
+                        Logger.SendDebugLog("Flight mesh is available, but disabled for The Churning Mists.");
+                        return true;
+                    }
+
+                    Logger.SendLog("Loading The Churning Mists flight mesh.");
+                    await LoadFlightMesh.Main();
+                    return true;
+                case seaOfClouds:
+                    if (!OracleSettings.Instance.FlightSeaOfCloudsEnabled)
+                    {
+                        Logger.SendDebugLog("Flight mesh is available, but disabled for The Sea of Clouds.");
+                        return true;
+                    }
+
+                    Logger.SendLog("Loading The Sea of Clouds flight mesh.");
+                    await LoadFlightMesh.Main();
+                    return true;
+                case azysLla:
+                    if (!OracleSettings.Instance.FlightAzysLlaEnabled)
+                    {
+                        Logger.SendDebugLog("Flight mesh is available, but disabled for Azys Lla.");
+                        return true;
+                    }
+
+                    Logger.SendLog("Loading the Azys Lla flight mesh.");
+                    await LoadFlightMesh.Main();
+                    return true;
+                default:
+                    Logger.SendDebugLog("No flight mesh available for current zone (ID: " + WorldManager.ZoneId + ").");
+                    return true;
+            }
+        }
+
+        public static async Task<bool> NavigateToCurrentFate(bool ignoreCombat)
+        {
+            var currentFate = OracleFateManager.GetCurrentFateData();
+            if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
+            {
+                await ClearExpiredFate();
+                return true;
+            }
+
+            if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
+            {
+                await ClearExpiredFate();
+                return true;
+            }
+
+            var currentFateLocation = currentFate.Location;
+            var currentFateRadius = currentFate.Radius;
+
+            while (Core.Player.Distance(currentFateLocation) > currentFateRadius * 0.75f)
+            {
+                if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
+                {
+                    await ClearExpiredFate();
+                    Navigator.Stop();
+                    return true;
+                }
+
+                var distanceToFateBoundary = Core.Player.Location.Distance2D(currentFateLocation) - currentFateRadius;
+                if (!Core.Player.IsMounted && IsMountNeeded(distanceToFateBoundary) && Actionmanager.AvailableMounts.Any())
+                {
+                    Navigator.Stop();
+                    if (!ignoreCombat && Core.Player.InCombat)
+                    {
+                        return true;
+                    }
+
+                    await Mount.MountUp();
+                }
+
+                currentFateLocation = currentFate.Location;
+                Navigator.MoveToPointWithin(currentFateLocation, currentFateRadius * 0.5f, currentFate.Name);
+                await Coroutine.Yield();
+            }
+
+            Navigator.Stop();
+            return true;
+        }
+
+        public static async Task<bool> NavigateToLocation(Vector3 location, float precision)
+        {
+            while (Core.Player.Location.Distance(location) > precision)
+            {
+                Navigator.MoveTo(location);
+                await Coroutine.Yield();
+            }
+
+            Navigator.Clear();
             return true;
         }
 

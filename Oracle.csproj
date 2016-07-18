@@ -70,7 +70,7 @@
     <Reference Include="RebornBuddy, Version=1.0.345.0, Culture=neutral, PublicKeyToken=48d7174f8a943034, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\RebornBuddy.exe</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -85,12 +85,18 @@
     <Content Include="Data\Fates\FateData.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Images\Azys Lla.png" />
-    <Resource Include="Resources\Images\Churning Mists.png" />
-    <Resource Include="Resources\Images\Dravanian Hinterlands.png" />
-    <Resource Include="Resources\Images\Dravanian Forelands.png" />
-    <Resource Include="Resources\Images\Coerthas Western Highlands.png" />
-    <Resource Include="Resources\Images\Sea of Clouds.png" />
+    <Resource Include="Resources\Images\Flight\CoerthasWesternHighlands.png" />
+    <Resource Include="Resources\Images\Flight\DravanianForelands.png" />
+    <Resource Include="Resources\Images\Flight\DravanianHinterlands.png" />
+    <Resource Include="Resources\Images\Flight\SeaOfClouds.png" />
+    <Resource Include="Resources\Images\Flight\ChurningMists.png" />
+    <Resource Include="Resources\Images\Flight\AzysLla.png" />
+    <None Include="Resources\Images\SourceImages\Azys Lla.png" />
+    <None Include="Resources\Images\SourceImages\Churning Mists.png" />
+    <None Include="Resources\Images\SourceImages\Dravanian Hinterlands.png" />
+    <None Include="Resources\Images\SourceImages\Dravanian Forelands.png" />
+    <None Include="Resources\Images\SourceImages\Coerthas Western Highlands.png" />
+    <None Include="Resources\Images\SourceImages\Sea of Clouds.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Fates\FateData.xsd">
@@ -116,8 +122,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
-    <None Include="Resources\Images\Crystal.psd" />
-    <None Include="Resources\Images\Logo.psd" />
+    <None Include="Resources\Images\SourceImages\Crystal.psd" />
+    <None Include="Resources\Images\SourceImages\Logo.psd" />
     <None Include="UI\App.config">
       <SubType>Designer</SubType>
     </None>

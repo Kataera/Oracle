@@ -1,180 +1,445 @@
 ﻿<UserControl x:Class="Oracle.UI.Pages.Flight"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d"
+             d:DesignHeight="900" d:DesignWidth="900">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.GroupBox.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.GroupBox.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
                 <ResourceDictionary
                     Source="../Theme/Colours.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <WrapPanel Margin="0 0 8 8" ItemWidth="428">
-        <materialDesign:Card Width="420" Margin="4,2,4,16" Height="270">
-            <Grid VerticalAlignment="Stretch" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Image Source="/Oracle;component/Resources/Images/Coerthas Western Highlands.png" Grid.RowSpan="5" StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
-                <TextBlock Grid.Column="1" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="16,16,16,2" TextWrapping="Wrap">Coerthas Western Highlands</TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Margin="16 0 16 8" Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                       VerticalAlignment="Center">Enables or disables the flight mesh system for Coerthas Western Highlands.</TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Margin="16 0 16 8" Foreground="#1BBA3C"
-                                       VerticalAlignment="Center" FontWeight="Bold">Recommended Setting: On</TextBlock>
-                <Border Grid.Column="1" Grid.Row="3" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}">
-                    <Grid Margin="8">
-                        <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}" VerticalAlignment="Center"
-                          ToolTip="Default ToggleButton Style"/>
-                    </Grid>
-                </Border>
-            </Grid>
-        </materialDesign:Card>
-        <materialDesign:Card Width="420" Margin="4,2,4,16" Height="270">
-            <Grid VerticalAlignment="Stretch" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="150" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="16 16 16 2">The Sea of Clouds</TextBlock>
-                <TextBlock Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Margin="16 0 16 8" Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                       VerticalAlignment="Center">Enables or disables the flight mesh system for The Sea of Clouds.</TextBlock>
-                <TextBlock Grid.Column="0" Grid.Row="2" TextWrapping="Wrap" Margin="16 0 16 8" Foreground="#1BBA3C"
-                                       VerticalAlignment="Center" FontWeight="Bold">Recommended Setting: On</TextBlock>
-                <Border Grid.Column="0" Grid.Row="3" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}">
-                    <Grid Margin="8">
-                        <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}" VerticalAlignment="Center"
-                          ToolTip="Default ToggleButton Style"/>
-                    </Grid>
-                </Border>
-                <Image Grid.Column="1" Grid.Row="0" Source="/Oracle;component/Resources/Images/Sea of Clouds.png" Grid.RowSpan="5" StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
-            </Grid>
-        </materialDesign:Card>
-        <materialDesign:Card Width="420" Margin="4,2,4,16" Height="270">
-            <Grid VerticalAlignment="Stretch" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Image Source="/Oracle;component/Resources/Images/Dravanian Forelands.png" Grid.RowSpan="5" StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
-                <TextBlock Grid.Column="1" TextWrapping="Wrap" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="16 16 16 2" >The Dravanian Forelands</TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Margin="16 0 16 8" Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                       VerticalAlignment="Center">Enables or disables the flight mesh system for The Dravanian Forelands.</TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Margin="16 0 16 8" Foreground="#1BBA3C"
-                                       VerticalAlignment="Center" FontWeight="Bold">Recommended Setting: On</TextBlock>
-                <Border Grid.Column="1" Grid.Row="3" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}">
-                    <Grid Margin="8">
-                        <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}" VerticalAlignment="Center"
-                          ToolTip="Default ToggleButton Style"/>
-                    </Grid>
-                </Border>
-            </Grid>
-        </materialDesign:Card>
-        <materialDesign:Card Width="420" Margin="4,2,4,16" Height="270">
-            <Grid VerticalAlignment="Stretch" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="150" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="16 16 16 2">The Churning Mists</TextBlock>
-                <TextBlock Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Margin="16 0 16 8" Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                       VerticalAlignment="Center">Enables or disables the flight mesh system for The Churning Mists.</TextBlock>
-                <TextBlock Grid.Column="0" Grid.Row="2" TextWrapping="Wrap" Margin="16 0 16 8" Foreground="#1BBA3C"
-                                       VerticalAlignment="Center" FontWeight="Bold">Recommended Setting: On</TextBlock>
-                <Border Grid.Column="0" Grid.Row="3" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}">
-                    <Grid Margin="8">
-                        <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}" VerticalAlignment="Center"
-                          ToolTip="Default ToggleButton Style"/>
-                    </Grid>
-                </Border>
-                <Image Grid.Column="1" Grid.Row="0" Source="/Oracle;component/Resources/Images/Churning Mists.png" Grid.RowSpan="5" StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
-            </Grid>
-        </materialDesign:Card>
-        <materialDesign:Card Width="420" Margin="4,2,4,16" Height="270">
-            <Grid VerticalAlignment="Stretch" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Image Source="/Oracle;component/Resources/Images/Dravanian Hinterlands.png" Grid.RowSpan="5" StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
-                <TextBlock Grid.Column="1" TextWrapping="Wrap" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="16 16 16 2" >The Dravanian Hinterlands</TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Margin="16 0 16 8" Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                       VerticalAlignment="Center">Enables or disables the flight mesh system for The Dravanian Hinterlands.</TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Margin="16 0 16 8" Foreground="#1BBA3C"
-                                       VerticalAlignment="Center" FontWeight="Bold">Recommended Setting: On</TextBlock>
-                <Border Grid.Column="1" Grid.Row="3" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}">
-                    <Grid Margin="8">
-                        <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}" VerticalAlignment="Center"
-                          ToolTip="Default ToggleButton Style"/>
-                    </Grid>
-                </Border>
-            </Grid>
-        </materialDesign:Card>
-        <materialDesign:Card Width="420" Margin="4,2,4,16" Height="270">
-            <Grid VerticalAlignment="Stretch" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="150" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="16 16 16 2">Azys Lla</TextBlock>
-                <TextBlock Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Margin="16 0 16 8" Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                       VerticalAlignment="Center">Enables or disables the flight mesh system for Azys Lla.</TextBlock>
-                <TextBlock Grid.Column="0" Grid.Row="2" TextWrapping="Wrap" Margin="16 0 16 8" Foreground="#1BBA3C"
-                                       VerticalAlignment="Center" FontWeight="Bold">Recommended Setting: On</TextBlock>
-                <Border Grid.Column="0" Grid.Row="3" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}">
-                    <Grid Margin="8">
-                        <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}" VerticalAlignment="Center"
-                          ToolTip="Default ToggleButton Style"/>
-                    </Grid>
-                </Border>
-                <Image Grid.Column="1" Grid.Row="0" Source="/Oracle;component/Resources/Images/Azys Lla.png" Grid.RowSpan="5" StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
-            </Grid>
-        </materialDesign:Card>
-    </WrapPanel>
+    <StackPanel>
+        <Grid Margin="6,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" TextWrapping="Wrap" Grid.Row="0">Flight Navigation Settings</TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="1,6,0,2"
+                       Foreground="{DynamicResource MaterialDesignBodyLight}"
+                       VerticalAlignment="Center" Grid.Row="1" MaxWidth="450">
+                These settings concern the usage of Oracle's in-built mesh navigator for flying. It's advised that you do not alter these settings unless you know what you're doing.
+            </TextBlock>
+            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" x:Name="ResetAllButton" Grid.Row="2"
+                    HorizontalAlignment="Left" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                    Margin="0,16,0,0">
+                <Button.CommandParameter>
+
+                    <GroupBox Header="Warning" Style="{DynamicResource MaterialDesignCardGroupBox}" Margin="0">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="AlertCircleOutline" Height="32" Width="32"
+                                                             VerticalAlignment="Center" />
+                                    <TextBlock Margin="8,0,0,0" VerticalAlignment="Center"
+                                               Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                               Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <StackPanel Margin="16" Width="300">
+                            <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource MaterialDesignBodyDark}"
+                                       VerticalAlignment="Center">
+                                Are you sure you wish to reset all settings on this page to their default values?
+                            </TextBlock>
+                            <Grid Margin="16,24,16,0" Width="200" HorizontalAlignment="Center"
+                                  VerticalAlignment="Bottom">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="ResetAllButtonConfirm"
+                                        Style="{StaticResource MaterialDesignFlatButton}" IsCancel="False"
+                                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                        HorizontalAlignment="Center" Grid.Column="0"
+                                        Click="ResetAllButtonConfirm_OnClick">
+                                    Yes
+                                </Button>
+                                <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True"
+                                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                        HorizontalAlignment="Center" Grid.Column="1">
+                                    Cancel
+                                </Button>
+                            </Grid>
+
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!--
+                    <StackPanel Margin="16">
+                        <TextBlock TextWrapping="Wrap" Margin="1,6,0,10"
+                               Foreground="{DynamicResource MaterialDesignBodyDark}"
+                               VerticalAlignment="Center">
+                        Are you sure you wish to reset all settings on this page to their default values?
+                        </TextBlock>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
+                                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                        HorizontalAlignment="Center">Yes</Button>
+                    </StackPanel>
+                    -->
+                </Button.CommandParameter>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="BackupRestore" VerticalAlignment="Center" />
+                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">Reset All Settings To Default</TextBlock>
+                </StackPanel>
+            </Button>
+        </Grid>
+        <WrapPanel Margin="0 0 8 8" ItemWidth="428">
+            <materialDesign:Card Width="420" Margin="4,2,4,8" Height="270">
+                <Grid VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Oracle;component/Resources/Images/Flight/CoerthasWesternHighlands.png"
+                           Grid.RowSpan="5"
+                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
+                    <TextBlock Grid.Column="1" Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                               Margin="16,16,16,2"
+                               TextWrapping="Wrap">
+                        Coerthas Western Highlands
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Margin="16 0 16 8"
+                               Foreground="{DynamicResource MaterialDesignBodyLight}"
+                               VerticalAlignment="Center">
+                        <TextBlock.Inlines>
+                            <Run Text="Enables or disables the flight mesh system for" />
+                            <Run FontStyle="Italic" Text="Coerthas Western Highlands." />
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Margin="16 0 16 8"
+                               VerticalAlignment="Center" FontWeight="Bold">
+                        <TextBlock.Inlines>
+                            <Run Text="Recommended Setting:" />
+                            <Run Foreground="#1BBA3C" Text="On" />
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                    <Border Grid.Column="1" Grid.Row="3" BorderThickness="0 1 0 0"
+                            BorderBrush="{DynamicResource MaterialDesignDivider}">
+                        <Grid Margin="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}" Grid.Column="0"
+                                    x:Name="CoerthasWesternHighlandsDefaultButton"
+                                    Click="CoerthasWesternHighlandsDefaultButton_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="BackupRestore" VerticalAlignment="Center" />
+                                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">Default</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <ToggleButton Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                          VerticalAlignment="Center" x:Name="CoerthasWesternHighlandsSetting"
+                                          Click="CoerthasWesternHighlandsSetting_OnClick" />
+                        </Grid>
+                    </Border>
+                </Grid>
+            </materialDesign:Card>
+            <materialDesign:Card Width="420" Margin="4,2,4,8" Height="270">
+                <Grid VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Oracle;component/Resources/Images/Flight/SeaOfClouds.png" Grid.RowSpan="5"
+                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
+                    <TextBlock Grid.Column="1" TextWrapping="Wrap"
+                               Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                               Margin="16 16 16 2">
+                        The Sea of Clouds
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Margin="16 0 16 8"
+                               Foreground="{DynamicResource MaterialDesignBodyLight}"
+                               VerticalAlignment="Center">
+                        <TextBlock.Inlines>
+                            <Run Text="Enables or disables the flight mesh system for" />
+                            <Run FontStyle="Italic" Text="The Sea of Clouds." />
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Margin="16 0 16 8"
+                               VerticalAlignment="Center" FontWeight="Bold">
+                        <TextBlock.Inlines>
+                            <Run Text="Recommended Setting:" />
+                            <Run Foreground="#1BBA3C" Text="On" />
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                    <Border Grid.Column="1" Grid.Row="3" BorderThickness="0 1 0 0"
+                            BorderBrush="{DynamicResource MaterialDesignDivider}">
+                        <Grid Margin="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}" Grid.Column="0"
+                                    x:Name="SeaOfCloudsDefaultButton" Click="SeaOfCloudsDefaultButton_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="BackupRestore" VerticalAlignment="Center" />
+                                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">Default</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <ToggleButton Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                          VerticalAlignment="Center" x:Name="SeaOfCloudsSetting"
+                                          Click="SeaOfCloudsSetting_OnClick" />
+                        </Grid>
+                    </Border>
+                </Grid>
+            </materialDesign:Card>
+            <materialDesign:Card Width="420" Margin="4,2,4,8" Height="270">
+                <Grid VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Oracle;component/Resources/Images/Flight/DravanianForelands.png" Grid.RowSpan="5"
+                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
+                    <TextBlock Grid.Column="1" TextWrapping="Wrap"
+                               Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                               Margin="16 16 16 2">
+                        The Dravanian Forelands
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Margin="16 0 16 8"
+                               Foreground="{DynamicResource MaterialDesignBodyLight}"
+                               VerticalAlignment="Center">
+                        <TextBlock.Inlines>
+                            <Run Text="Enables or disables the flight mesh system for" />
+                            <Run FontStyle="Italic" Text="The Dravanian Forelands." />
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Margin="16 0 16 8"
+                               VerticalAlignment="Center" FontWeight="Bold">
+                        <TextBlock.Inlines>
+                            <Run Text="Recommended Setting:" />
+                            <Run Foreground="#1BBA3C" Text="On" />
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                    <Border Grid.Column="1" Grid.Row="3" BorderThickness="0 1 0 0"
+                            BorderBrush="{DynamicResource MaterialDesignDivider}">
+                        <Grid Margin="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}" Grid.Column="0"
+                                    x:Name="DravanianForelandsDefaultButton"
+                                    Click="DravanianForelandsDefaultButton_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="BackupRestore" VerticalAlignment="Center" />
+                                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">Default</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <ToggleButton Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                          VerticalAlignment="Center" x:Name="DravanianForelandsSetting"
+                                          Click="DravanianForelandsSetting_OnClick" />
+                        </Grid>
+                    </Border>
+                </Grid>
+            </materialDesign:Card>
+            <materialDesign:Card Width="420" Margin="4,2,4,8" Height="270">
+                <Grid VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Oracle;component/Resources/Images/Flight/ChurningMists.png" Grid.RowSpan="5"
+                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
+                    <TextBlock Grid.Column="1" TextWrapping="Wrap"
+                               Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                               Margin="16 16 16 2">
+                        The Churning Mists
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Margin="16 0 16 8"
+                               Foreground="{DynamicResource MaterialDesignBodyLight}"
+                               VerticalAlignment="Center">
+                        <TextBlock.Inlines>
+                            <Run Text="Enables or disables the flight mesh system for" />
+                            <Run FontStyle="Italic" Text="The Churning Mists." />
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Margin="16 0 16 8"
+                               VerticalAlignment="Center" FontWeight="Bold">
+                        <TextBlock.Inlines>
+                            <Run Text="Recommended Setting:" />
+                            <Run Foreground="#1BBA3C" Text="On" />
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                    <Border Grid.Column="1" Grid.Row="3" BorderThickness="0 1 0 0"
+                            BorderBrush="{DynamicResource MaterialDesignDivider}">
+                        <Grid Margin="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}" Grid.Column="0"
+                                    x:Name="ChurningMistsDefaultButton" Click="ChurningMistsDefaultButton_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="BackupRestore" VerticalAlignment="Center" />
+                                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">Default</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <ToggleButton Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                          VerticalAlignment="Center" x:Name="ChurningMistsSetting"
+                                          Click="ChurningMistsSetting_OnClick" />
+                        </Grid>
+                    </Border>
+                </Grid>
+            </materialDesign:Card>
+            <materialDesign:Card Width="420" Margin="4,2,4,8" Height="270">
+                <Grid VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Oracle;component/Resources/Images/Flight/DravanianHinterlands.png" Grid.RowSpan="5"
+                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
+                    <TextBlock Grid.Column="1" TextWrapping="Wrap"
+                               Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                               Margin="16 16 16 2">
+                        The Dravanian Hinterlands
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Margin="16 0 16 8"
+                               Foreground="{DynamicResource MaterialDesignBodyLight}"
+                               VerticalAlignment="Center">
+                        <TextBlock.Inlines>
+                            <Run Text="Enables or disables the flight mesh system for" />
+                            <Run FontStyle="Italic" Text="The Dravanian Hinterlands." />
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Margin="16 0 16 8"
+                               VerticalAlignment="Center" FontWeight="Bold">
+                        <TextBlock.Inlines>
+                            <Run Text="Recommended Setting:" />
+                            <Run Foreground="#1BBA3C" Text="On" />
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                    <Border Grid.Column="1" Grid.Row="3" BorderThickness="0 1 0 0"
+                            BorderBrush="{DynamicResource MaterialDesignDivider}">
+                        <Grid Margin="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}" Grid.Column="0"
+                                    x:Name="DravanianHinterlandsDefaultButton"
+                                    Click="DravanianHinterlandsDefaultButton_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="BackupRestore" VerticalAlignment="Center" />
+                                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">Default</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <ToggleButton Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                          VerticalAlignment="Center" x:Name="DravanianHinterlandsSetting"
+                                          Click="DravanianHinterlandsSetting_OnClick" />
+                        </Grid>
+                    </Border>
+                </Grid>
+            </materialDesign:Card>
+            <materialDesign:Card Width="420" Margin="4,2,4,8" Height="270">
+                <Grid VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Oracle;component/Resources/Images/Flight/AzysLla.png" Grid.RowSpan="5"
+                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
+                    <TextBlock Grid.Column="1" TextWrapping="Wrap"
+                               Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                               Margin="16 16 16 2">
+                        Azys Lla
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Margin="16 0 16 8"
+                               Foreground="{DynamicResource MaterialDesignBodyLight}"
+                               VerticalAlignment="Center">
+                        <TextBlock.Inlines>
+                            <Run Text="Enables or disables the flight mesh system for" />
+                            <Run FontStyle="Italic" Text="Azys Lla." />
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Margin="16 0 16 8"
+                               VerticalAlignment="Center" FontWeight="Bold">
+                        <TextBlock.Inlines>
+                            <Run Text="Recommended Setting:" />
+                            <Run Foreground="#1BBA3C" Text="On" />
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                    <Border Grid.Column="1" Grid.Row="3" BorderThickness="0 1 0 0"
+                            BorderBrush="{DynamicResource MaterialDesignDivider}">
+                        <Grid Margin="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}" Grid.Column="0"
+                                    x:Name="AzysLlaDefaultButton" Click="AzysLlaDefaultButton_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="BackupRestore" VerticalAlignment="Center" />
+                                    <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">Default</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <ToggleButton Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                          VerticalAlignment="Center" x:Name="AzysLlaSetting"
+                                          Click="AzysLlaSetting_OnClick" />
+                        </Grid>
+                    </Border>
+                </Grid>
+            </materialDesign:Card>
+        </WrapPanel>
+    </StackPanel>
 </UserControl>

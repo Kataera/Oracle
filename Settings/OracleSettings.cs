@@ -37,7 +37,13 @@ namespace Oracle.Settings
         private FateSelectMode fateSelectMode;
         private Dictionary<uint, Vector3> fateWaitLocations;
         private FateWaitMode fateWaitMode;
+        private bool flightAzysLlaEnabled;
+        private bool flightChurningMistsEnabled;
+        private bool flightCoerthasWesternHighlandsEnabled;
+        private bool flightDravanianForelandsEnabled;
+        private bool flightDravanianHinterlandsEnabled;
         private bool flightPathPostProcessingEnabled;
+        private bool flightSeaOfCloudsEnabled;
         private bool ignoreLowDurationUnstartedFates;
         private bool killFatesEnabled;
         private double landingTimeOut;
@@ -406,6 +412,86 @@ namespace Oracle.Settings
 
         [DefaultValue(true)]
         [Setting]
+        public bool FlightAzysLlaEnabled
+        {
+            get
+            {
+                return flightAzysLlaEnabled;
+            }
+
+            set
+            {
+                flightAzysLlaEnabled = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool FlightChurningMistsEnabled
+        {
+            get
+            {
+                return flightChurningMistsEnabled;
+            }
+
+            set
+            {
+                flightChurningMistsEnabled = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool FlightCoerthasWesternHighlandsEnabled
+        {
+            get
+            {
+                return flightCoerthasWesternHighlandsEnabled;
+            }
+
+            set
+            {
+                flightCoerthasWesternHighlandsEnabled = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool FlightDravanianForelandsEnabled
+        {
+            get
+            {
+                return flightDravanianForelandsEnabled;
+            }
+
+            set
+            {
+                flightDravanianForelandsEnabled = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool FlightDravanianHinterlandsEnabled
+        {
+            get
+            {
+                return flightDravanianHinterlandsEnabled;
+            }
+
+            set
+            {
+                flightDravanianHinterlandsEnabled = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
         public bool FlightPathPostProcessingEnabled
         {
             get
@@ -416,6 +502,22 @@ namespace Oracle.Settings
             set
             {
                 flightPathPostProcessingEnabled = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool FlightSeaOfCloudsEnabled
+        {
+            get
+            {
+                return flightSeaOfCloudsEnabled;
+            }
+
+            set
+            {
+                flightSeaOfCloudsEnabled = value;
                 Save();
             }
         }
