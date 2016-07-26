@@ -150,7 +150,7 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (OracleSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate && !fate.Name.Equals(OracleSettings.Instance.SpecificFateName))
+            if (OracleSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate && !OracleSettings.Instance.SpecificFates.Contains(fate.Id))
             {
                 return false;
             }

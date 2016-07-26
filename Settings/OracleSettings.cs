@@ -55,7 +55,7 @@ namespace Oracle.Settings
         private int mobMinimumLevelBelow;
         private OracleOperationMode oracleOperationMode;
         private bool runProblematicFates;
-        private string specificFateName;
+        private List<uint> specificFates;
         private bool teleportIfQuicker;
         private int teleportMinimumDistanceDelta;
         private bool waitAtBossFateForProgress;
@@ -82,6 +82,12 @@ namespace Oracle.Settings
             if (FateWaitLocations == null)
             {
                 FateWaitLocations = new Dictionary<uint, Vector3>();
+                Save();
+            }
+
+            if (SpecificFates == null)
+            {
+                SpecificFates = new List<uint>();
                 Save();
             }
 
@@ -719,18 +725,17 @@ namespace Oracle.Settings
             }
         }
 
-        [DefaultValue("")]
         [Setting]
-        public string SpecificFateName
+        public List<uint> SpecificFates
         {
             get
             {
-                return specificFateName;
+                return specificFates;
             }
 
             set
             {
-                specificFateName = value;
+                specificFates = value;
                 Save();
             }
         }

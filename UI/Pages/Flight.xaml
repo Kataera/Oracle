@@ -26,10 +26,6 @@
     </UserControl.Resources>
     <StackPanel>
         <Grid Margin="6,0,0,20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -38,14 +34,13 @@
             <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" TextWrapping="Wrap" Grid.Row="0">Flight Navigation Settings</TextBlock>
             <TextBlock TextWrapping="Wrap" Margin="1,6,0,2"
                        Foreground="{DynamicResource MaterialDesignBodyLight}"
-                       VerticalAlignment="Center" Grid.Row="1" MaxWidth="450">
+                       VerticalAlignment="Center" Grid.Row="1">
                 These settings concern the usage of Oracle's in-built mesh navigator for flying to FATEs. It's strongly advised that you do not alter these settings unless you have a good idea of what you're doing.
             </TextBlock>
             <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" x:Name="ResetAllButton" Grid.Row="2"
                     HorizontalAlignment="Left" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
                     Margin="0,16,0,0">
                 <Button.CommandParameter>
-
                     <GroupBox Header="Warning" Style="{DynamicResource MaterialDesignCardGroupBox}" Margin="0">
                         <GroupBox.HeaderTemplate>
                             <DataTemplate>
@@ -106,7 +101,8 @@
                     </Grid.ColumnDefinitions>
                     <Image Source="/Oracle;component/Resources/Images/Flight/CoerthasWesternHighlands.png"
                            Grid.RowSpan="5"
-                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
+                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill"
+                           RenderOptions.BitmapScalingMode="HighQuality" />
                     <TextBlock Grid.Column="1" Style="{StaticResource MaterialDesignHeadlineTextBlock}"
                                Margin="16,16,16,2"
                                TextWrapping="Wrap">
@@ -136,7 +132,7 @@
                             </Grid.ColumnDefinitions>
                             <Button Style="{DynamicResource MaterialDesignFlatButton}" Grid.Column="0"
                                     x:Name="CoerthasWesternHighlandsDefaultButton"
-                                    Click="CoerthasWesternHighlandsDefaultButton_Click">
+                                    Click="CoerthasWesternHighlandsDefaultButton_Click" HorizontalAlignment="Left">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="BackupRestore" VerticalAlignment="Center" />
                                     <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">Default</TextBlock>
@@ -162,7 +158,8 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="/Oracle;component/Resources/Images/Flight/SeaOfClouds.png" Grid.RowSpan="5"
-                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
+                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill"
+                           RenderOptions.BitmapScalingMode="HighQuality" />
                     <TextBlock Grid.Column="1" TextWrapping="Wrap"
                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
                                Margin="16 16 16 2">
@@ -191,7 +188,8 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Button Style="{DynamicResource MaterialDesignFlatButton}" Grid.Column="0"
-                                    x:Name="SeaOfCloudsDefaultButton" Click="SeaOfCloudsDefaultButton_Click">
+                                    x:Name="SeaOfCloudsDefaultButton" Click="SeaOfCloudsDefaultButton_Click"
+                                    HorizontalAlignment="Left">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="BackupRestore" VerticalAlignment="Center" />
                                     <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">Default</TextBlock>
@@ -217,7 +215,8 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="/Oracle;component/Resources/Images/Flight/DravanianForelands.png" Grid.RowSpan="5"
-                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
+                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill"
+                           RenderOptions.BitmapScalingMode="HighQuality" />
                     <TextBlock Grid.Column="1" TextWrapping="Wrap"
                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
                                Margin="16 16 16 2">
@@ -247,7 +246,7 @@
                             </Grid.ColumnDefinitions>
                             <Button Style="{DynamicResource MaterialDesignFlatButton}" Grid.Column="0"
                                     x:Name="DravanianForelandsDefaultButton"
-                                    Click="DravanianForelandsDefaultButton_Click">
+                                    Click="DravanianForelandsDefaultButton_Click" HorizontalAlignment="Left">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="BackupRestore" VerticalAlignment="Center" />
                                     <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">Default</TextBlock>
@@ -273,7 +272,8 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="/Oracle;component/Resources/Images/Flight/ChurningMists.png" Grid.RowSpan="5"
-                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
+                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill"
+                           RenderOptions.BitmapScalingMode="HighQuality" />
                     <TextBlock Grid.Column="1" TextWrapping="Wrap"
                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
                                Margin="16 16 16 2">
@@ -302,7 +302,8 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Button Style="{DynamicResource MaterialDesignFlatButton}" Grid.Column="0"
-                                    x:Name="ChurningMistsDefaultButton" Click="ChurningMistsDefaultButton_Click">
+                                    x:Name="ChurningMistsDefaultButton" Click="ChurningMistsDefaultButton_Click"
+                                    HorizontalAlignment="Left">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="BackupRestore" VerticalAlignment="Center" />
                                     <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">Default</TextBlock>
@@ -328,7 +329,8 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="/Oracle;component/Resources/Images/Flight/DravanianHinterlands.png" Grid.RowSpan="5"
-                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
+                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill"
+                           RenderOptions.BitmapScalingMode="HighQuality" />
                     <TextBlock Grid.Column="1" TextWrapping="Wrap"
                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
                                Margin="16 16 16 2">
@@ -358,7 +360,7 @@
                             </Grid.ColumnDefinitions>
                             <Button Style="{DynamicResource MaterialDesignFlatButton}" Grid.Column="0"
                                     x:Name="DravanianHinterlandsDefaultButton"
-                                    Click="DravanianHinterlandsDefaultButton_Click">
+                                    Click="DravanianHinterlandsDefaultButton_Click" HorizontalAlignment="Left">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="BackupRestore" VerticalAlignment="Center" />
                                     <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">Default</TextBlock>
@@ -384,7 +386,8 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="/Oracle;component/Resources/Images/Flight/AzysLla.png" Grid.RowSpan="5"
-                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill" />
+                           StretchDirection="Both" VerticalAlignment="Stretch" Stretch="UniformToFill"
+                           RenderOptions.BitmapScalingMode="HighQuality" />
                     <TextBlock Grid.Column="1" TextWrapping="Wrap"
                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
                                Margin="16 16 16 2">
@@ -413,7 +416,8 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Button Style="{DynamicResource MaterialDesignFlatButton}" Grid.Column="0"
-                                    x:Name="AzysLlaDefaultButton" Click="AzysLlaDefaultButton_Click">
+                                    x:Name="AzysLlaDefaultButton" Click="AzysLlaDefaultButton_Click"
+                                    HorizontalAlignment="Left">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="BackupRestore" VerticalAlignment="Center" />
                                     <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">Default</TextBlock>

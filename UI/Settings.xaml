@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:oracleControl="clr-namespace:Oracle.UI.Pages"
+        xmlns:domain="clr-namespace:Oracle.UI.Pages.Domain"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -35,6 +36,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    <Window.DataContext>
+        <domain:SpecificFateGridViewModel />
+    </Window.DataContext>
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
@@ -460,7 +464,7 @@
                 <ScrollViewer Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled" Margin="16,16,0,0">
                     <ContentControl>
-                        <oracleControl:Flight Margin="0,0,16,16" />
+                        <oracleControl:OracleMode Margin="0,0,16,16" />
                     </ContentControl>
                 </ScrollViewer>
             </Grid>

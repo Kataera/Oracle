@@ -85,6 +85,8 @@
     <Content Include="Data\Fates\FateData.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\OracleMode\SpecificFateBanner.jpg" />
+    <Resource Include="Resources\Images\OracleMode\ModeBanner.jpg" />
     <Resource Include="Resources\Images\Logo.png" />
     <Resource Include="Resources\Images\Flight\CoerthasWesternHighlands.png" />
     <Resource Include="Resources\Images\Flight\DravanianForelands.png" />
@@ -196,6 +198,8 @@
     <Compile Include="Settings\OracleSettings.cs" />
     <Compile Include="OracleBot.cs" />
     <Compile Include="UI\App.xaml.cs" />
+    <Compile Include="UI\Pages\Domain\SpecificFateGridViewModel.cs" />
+    <Compile Include="UI\Pages\Domain\FateViewModel.cs" />
     <Compile Include="UI\Pages\Flight.xaml.cs">
       <DependentUpon>Flight.xaml</DependentUpon>
     </Compile>
