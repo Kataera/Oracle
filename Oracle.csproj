@@ -85,6 +85,7 @@
     <Content Include="Data\Fates\FateData.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\Logo.png" />
     <Resource Include="Resources\Images\Flight\CoerthasWesternHighlands.png" />
     <Resource Include="Resources\Images\Flight\DravanianForelands.png" />
     <Resource Include="Resources\Images\Flight\DravanianHinterlands.png" />
@@ -232,9 +233,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Logo.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />

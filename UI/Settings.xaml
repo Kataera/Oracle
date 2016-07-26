@@ -21,7 +21,7 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="SingleBorderWindow"
         BorderThickness="1"
-        BorderBrush="#262A2A"
+        BorderBrush="#45279F"
         ResizeMode="CanResize">
     <Window.Resources>
         <ResourceDictionary>
@@ -45,17 +45,17 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" ZIndex="1">
-                <materialDesign:ColorZone Name="NavigationPanel" Padding="8"
+                <materialDesign:ColorZone Name="NavigationPanel"
                                           materialDesign:ShadowAssist.ShadowDepth="Depth0"
                                           Mode="PrimaryMid" DockPanel.Dock="Left"
                                           MouseDown="NavigationPanel_OnMouseDown"
                                           VerticalAlignment="Stretch">
-                    <Grid>
+                    <Grid Margin="8">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Image Source="/Oracle;component/Resources/Images/Logo.png" Height="80" Width="280"
+                        <Image Source="/Oracle;component/Resources/Images/Logo.png" Height="140" Width="240"
                                HorizontalAlignment="Center" VerticalAlignment="Top"
                                RenderOptions.BitmapScalingMode="HighQuality"
                                Stretch="Fill" Grid.Row="0" />
@@ -72,11 +72,11 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="Settings" Grid.Column="0" Height="20"
                                                                      Width="20"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="General Settings" VerticalAlignment="Center"
                                                        Margin="7,0,0,0"
-                                                       FontSize="16" FontWeight="Bold" Grid.Column="1"
-                                                       TextDecorations="{x:Null}" Foreground="#262A2A" />
+                                                       FontSize="18" Grid.Column="1"
+                                                       TextDecorations="{x:Null}" Foreground="#E0E9F2" />
                                         </Grid>
                                     </Expander.Header>
                                     <ListBox x:Name="GeneralSettingsListBox" Margin="30,8">
@@ -88,9 +88,9 @@
                                             <materialDesign:PackIcon Kind="Numeric1BoxMultipleOutline" Grid.Column="0"
                                                                      Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Oracle Mode" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                         <Grid Margin="0,-4">
                                             <Grid.ColumnDefinitions>
@@ -99,9 +99,9 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="Selection" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="FATE Selection" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                         <Grid Margin="0,-4">
                                             <Grid.ColumnDefinitions>
@@ -110,9 +110,9 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="Sleep" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Downtime" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                         <Grid Margin="0,-4">
                                             <Grid.ColumnDefinitions>
@@ -121,9 +121,9 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="Earth" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Zone Changing" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                     </ListBox>
                                 </Expander>
@@ -137,10 +137,10 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="BlurRadial" Grid.Column="0" Height="20"
                                                                      Width="20"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="FATE Settings" VerticalAlignment="Center" Margin="7,0,0,0"
-                                                       FontSize="16" FontWeight="Bold" Grid.Column="1"
-                                                       TextDecorations="{x:Null}" Foreground="#262A2A" />
+                                                       FontSize="18" Grid.Column="1"
+                                                       TextDecorations="{x:Null}" Foreground="#E0E9F2" />
                                         </Grid>
                                     </Expander.Header>
                                     <ListBox Margin="30,8">
@@ -151,10 +151,10 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="CardsOutline" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="General FATE Settings" VerticalAlignment="Center"
                                                        Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                         <Grid Margin="0,-4">
                                             <Grid.ColumnDefinitions>
@@ -163,9 +163,9 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="Sword" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Kill FATEs" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                         <Grid Margin="0,-4">
                                             <Grid.ColumnDefinitions>
@@ -174,9 +174,9 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="Flower" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Collect FATEs" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                         <Grid Margin="0,-4">
                                             <Grid.ColumnDefinitions>
@@ -185,9 +185,9 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="RoadVariant" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Escort FATEs" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                         <Grid Margin="0,-4">
                                             <Grid.ColumnDefinitions>
@@ -196,9 +196,9 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="HumanHandsUp" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Defence FATEs" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                         <Grid Margin="0,-4">
                                             <Grid.ColumnDefinitions>
@@ -207,9 +207,9 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="EmoticonDevil" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Boss FATEs" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                         <Grid Margin="0,-4">
                                             <Grid.ColumnDefinitions>
@@ -218,10 +218,10 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="Ghost" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Mega-Boss FATEs" VerticalAlignment="Center"
                                                        Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                     </ListBox>
                                 </Expander>
@@ -235,11 +235,11 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="Navigation" Grid.Column="0" Height="20"
                                                                      Width="20"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Navigation Settings" VerticalAlignment="Center"
                                                        Margin="7,0,0,0"
-                                                       FontSize="16" FontWeight="Bold" Grid.Column="1"
-                                                       TextDecorations="{x:Null}" Foreground="#262A2A" />
+                                                       FontSize="18" Grid.Column="1"
+                                                       TextDecorations="{x:Null}" Foreground="#E0E9F2" />
                                         </Grid>
                                     </Expander.Header>
                                     <ListBox Margin="30,8">
@@ -250,9 +250,9 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="ArrowAll" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Movement" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                         <Grid Margin="0,-4">
                                             <Grid.ColumnDefinitions>
@@ -261,9 +261,9 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="Airplane" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Flight" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                         <Grid Margin="0,-4">
                                             <Grid.ColumnDefinitions>
@@ -272,9 +272,9 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="Spotlight" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Teleportation" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                     </ListBox>
                                 </Expander>
@@ -288,11 +288,11 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="FlashOff" Grid.Column="0" Height="20"
                                                                      Width="20"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Blacklist Settings" VerticalAlignment="Center"
                                                        Margin="7,0,0,0"
-                                                       FontSize="16" FontWeight="Bold" Grid.Column="1"
-                                                       TextDecorations="{x:Null}" Foreground="#262A2A" />
+                                                       FontSize="18" Grid.Column="1"
+                                                       TextDecorations="{x:Null}" Foreground="#E0E9F2" />
                                         </Grid>
                                     </Expander.Header>
                                     <ListBox Margin="30,8">
@@ -303,9 +303,9 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="StarOff" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="FATE Blacklist" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                         <Grid Margin="0,-4">
                                             <Grid.ColumnDefinitions>
@@ -314,9 +314,9 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="PawOff" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Mob Blacklist" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                     </ListBox>
                                 </Expander>
@@ -330,11 +330,11 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="AccountSettingsVariant" Grid.Column="0"
                                                                      Height="20" Width="20"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Authentication Settings" VerticalAlignment="Center"
                                                        Margin="7,0,0,0"
-                                                       FontSize="16" FontWeight="Bold" Grid.Column="1"
-                                                       TextDecorations="{x:Null}" Foreground="#262A2A" />
+                                                       FontSize="18" Grid.Column="1"
+                                                       TextDecorations="{x:Null}" Foreground="#E0E9F2" />
                                         </Grid>
                                     </Expander.Header>
                                     <ListBox Margin="30,8">
@@ -345,9 +345,9 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="KeyVariant" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Oracle Key" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                         <Grid Margin="0,-4">
                                             <Grid.ColumnDefinitions>
@@ -356,9 +356,9 @@
                                             </Grid.ColumnDefinitions>
                                             <materialDesign:PackIcon Kind="Discord" Grid.Column="0" Height="16"
                                                                      Width="16"
-                                                                     VerticalAlignment="Center" Foreground="#262A2A" />
+                                                                     VerticalAlignment="Center" Foreground="#E0E9F2" />
                                             <TextBlock Text="Support" VerticalAlignment="Center" Grid.Column="1"
-                                                       Margin="7,0,0,0" FontSize="14" Foreground="#262A2A" />
+                                                       Margin="7,0,0,0" FontSize="14" Foreground="#E0E9F2" />
                                         </Grid>
                                     </ListBox>
                                 </Expander>

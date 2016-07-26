@@ -39,7 +39,7 @@
             <TextBlock TextWrapping="Wrap" Margin="1,6,0,2"
                        Foreground="{DynamicResource MaterialDesignBodyLight}"
                        VerticalAlignment="Center" Grid.Row="1" MaxWidth="450">
-                These settings concern the usage of Oracle's in-built mesh navigator for flying. It's advised that you do not alter these settings unless you know what you're doing.
+                These settings concern the usage of Oracle's in-built mesh navigator for flying to FATEs. It's strongly advised that you do not alter these settings unless you have a good idea of what you're doing.
             </TextBlock>
             <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" x:Name="ResetAllButton" Grid.Row="2"
                     HorizontalAlignment="Left" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
@@ -82,22 +82,8 @@
                                     Cancel
                                 </Button>
                             </Grid>
-
                         </StackPanel>
                     </GroupBox>
-
-                    <!--
-                    <StackPanel Margin="16">
-                        <TextBlock TextWrapping="Wrap" Margin="1,6,0,10"
-                               Foreground="{DynamicResource MaterialDesignBodyDark}"
-                               VerticalAlignment="Center">
-                        Are you sure you wish to reset all settings on this page to their default values?
-                        </TextBlock>
-                        <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
-                                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                                        HorizontalAlignment="Center">Yes</Button>
-                    </StackPanel>
-                    -->
                 </Button.CommandParameter>
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="BackupRestore" VerticalAlignment="Center" />
