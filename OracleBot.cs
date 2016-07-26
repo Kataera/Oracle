@@ -7,6 +7,7 @@ using ff14bot.Behavior;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+using ff14bot.Objects;
 
 using Oracle.Behaviour;
 using Oracle.Behaviour.PoiHooks;
@@ -144,6 +145,9 @@ namespace Oracle
                     break;
                 case OracleOperationMode.AnimaGrind:
                     Logger.SendLog("Starting Oracle in Anima grind mode.");
+                    break;
+                case OracleOperationMode.YokaiWatchGrind:
+                    Logger.SendLog("Starting Oracle in Yo-kai Watch grind mode. You cannot use your Chocobo for this.");
                     break;
                 default:
                     Logger.SendErrorLog("No setting chosen for operation mode. Defaulting to FATE grind mode.");

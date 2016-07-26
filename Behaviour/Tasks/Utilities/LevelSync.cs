@@ -21,7 +21,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return fate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced && fate.Within2D(Core.Player.Location);
         }
 
-        public static async Task<bool> Main(FateData fate)
+        public static async Task<bool> SyncLevel(FateData fate)
         {
             if (!IsLevelSyncNeeded(fate))
             {
@@ -34,6 +34,13 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 Logger.SendLog("Synced to level " + fate.MaxLevel + " to participate in FATE.");
             }
 
+            return true;
+        }
+
+        public static async Task<bool> DesyncLevel()
+        {
+
+            ToDoList.LevelSync();
             return true;
         }
     }

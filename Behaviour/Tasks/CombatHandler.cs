@@ -80,12 +80,12 @@ namespace Oracle.Behaviour.Tasks
                 {
                     if (fate.Within2D(Core.Player.Location))
                     {
-                        await LevelSync.Main(fate);
+                        await LevelSync.SyncLevel(fate);
                     }
                     else if (GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
                     {
                         await MoveToFate.MoveToCurrentFate(true);
-                        await LevelSync.Main(fate);
+                        await LevelSync.SyncLevel(fate);
                     }
                 }
             }

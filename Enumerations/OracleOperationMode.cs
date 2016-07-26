@@ -1,5 +1,8 @@
-﻿namespace Oracle.Enumerations
+﻿using System;
+
+namespace Oracle.Enumerations
 {
+    [Serializable]
     internal enum OracleOperationMode
     {
         FateGrind,
@@ -10,6 +13,8 @@
 
         AnimusGrind,
 
-        AnimaGrind
+        AnimaGrind,
+
+        YokaiWatchGrind
     }
 }

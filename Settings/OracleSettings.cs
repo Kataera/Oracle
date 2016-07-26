@@ -64,7 +64,7 @@ namespace Oracle.Settings
         private bool zoneChangingEnabled;
         private Dictionary<uint, uint> zoneLevels;
 
-        private OracleSettings() : base(Path.Combine(SettingsPath, @"/Oracle/OracleSettings.json"))
+        private OracleSettings() : base(Path.Combine(SettingsPath, @"Oracle\OracleSettings.json"))
         {
             if (BlacklistedFates == null)
             {

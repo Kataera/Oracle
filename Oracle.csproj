@@ -70,7 +70,7 @@
     <Reference Include="RebornBuddy, Version=1.0.345.0, Culture=neutral, PublicKeyToken=48d7174f8a943034, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\RebornBuddy.exe</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -82,9 +82,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Fates\FateData.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Data\Fates\FateData.xml" />
     <Resource Include="Resources\Images\OracleMode\SpecificFateBanner.jpg" />
     <Resource Include="Resources\Images\OracleMode\ModeBanner.jpg" />
     <Resource Include="Resources\Images\Logo.png" />
@@ -94,6 +92,9 @@
     <Resource Include="Resources\Images\Flight\SeaOfClouds.png" />
     <Resource Include="Resources\Images\Flight\ChurningMists.png" />
     <Resource Include="Resources\Images\Flight\AzysLla.png" />
+    <Content Include="Data\Fates\FateData.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\Images\SourceImages\Azys Lla.png" />
     <None Include="Resources\Images\SourceImages\Churning Mists.png" />
     <None Include="Resources\Images\SourceImages\Dravanian Hinterlands.png" />
@@ -104,7 +105,6 @@
   <ItemGroup>
     <Content Include="Data\Fates\FateData.xsd">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Meshes\zone_398.gz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -137,6 +137,7 @@
     <Compile Include="Behaviour\Modes\FateGrind.cs" />
     <Compile Include="Behaviour\Modes\SpecificFate.cs" />
     <Compile Include="Behaviour\Modes\AnimusGrind.cs" />
+    <Compile Include="Behaviour\Modes\YokaiWatchGrind.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\GrindMobs.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\MoveToWaitLocation.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\WaitInPlace.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Behaviour\Tasks\Utilities\BlacklistMob.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LoadFlightMesh.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\Mount.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\SummonMinion.cs" />
     <Compile Include="Managers\OracleMovementManager.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SelectGrindTarget.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\Teleport.cs" />
@@ -186,7 +188,6 @@
     <Compile Include="Enumerations\FateSupportLevel.cs" />
     <Compile Include="Enumerations\FateType.cs" />
     <Compile Include="Helpers\Logger.cs" />
-    <Compile Include="Helpers\XmlParser.cs" />
     <Compile Include="OracleLoader.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>

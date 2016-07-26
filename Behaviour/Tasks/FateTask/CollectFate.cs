@@ -87,6 +87,10 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static async Task ClearFate()
         {
+            // Band-aid fix to stop a bug where the bot waits after turning in last items when FATE ends.
+            // TODO: Look into why this is happening and fix properly.
+            await LevelSync.DesyncLevel();
+
             await OracleFateManager.ClearCurrentFate("Current FATE is ending or is finished.");
         }
 

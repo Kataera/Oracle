@@ -293,6 +293,11 @@ namespace Oracle.Managers
         {
             const ushort dravanianHinterlands = 399;
 
+            if (!OracleSettings.Instance.ZoneChangingEnabled)
+            {
+                return false;
+            }
+
             if (Core.Player.IsLevelSynced || Core.Player.IsDead)
             {
                 return false;

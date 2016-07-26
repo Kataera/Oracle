@@ -14,7 +14,7 @@ namespace Oracle.Behaviour.Modes
     {
         public static async Task<bool> Main()
         {
-            if (OracleSettings.Instance.ZoneChangingEnabled && OracleFateManager.ZoneChangeNeeded())
+            if (OracleFateManager.ZoneChangeNeeded())
             {
                 if (Core.Player.InCombat)
                 {

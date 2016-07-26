@@ -13,8 +13,10 @@ namespace Oracle.Behaviour.Tasks.Utilities
     {
         public static async Task<bool> Main(string minionName)
         {
-            // TODO: Check command and minion names in different locales.
             Logger.SendDebugLog("Summoning " + minionName + ".");
+
+            ChatManager.SendChat("/minion");
+            await Coroutine.Sleep(TimeSpan.FromSeconds(1));
             ChatManager.SendChat("/minion \"" + minionName + "\"");
             await Coroutine.Sleep(TimeSpan.FromSeconds(5));
 
