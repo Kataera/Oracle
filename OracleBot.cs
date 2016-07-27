@@ -135,7 +135,7 @@ namespace Oracle
                     Logger.SendLog("Starting Oracle in FATE grind mode.");
                     break;
                 case OracleOperationMode.SpecificFate:
-                    Logger.SendLog("Starting Oracle in specific FATE mode.");
+                    Logger.SendLog("Starting Oracle in specific FATE(s) mode.");
                     break;
                 case OracleOperationMode.AtmaGrind:
                     Logger.SendLog("Starting Oracle in Atma grind mode.");
@@ -176,6 +176,7 @@ namespace Oracle
 
             CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
             Blacklist.Flush();
+            Chocobo.BlockSummon = false;
 
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;
