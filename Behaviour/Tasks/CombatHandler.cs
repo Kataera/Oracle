@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -6,6 +7,7 @@ using ff14bot;
 using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
+using ff14bot.Objects;
 
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Enumerations;
@@ -17,6 +19,10 @@ namespace Oracle.Behaviour.Tasks
 {
     internal static class CombatHandler
     {
+        private static BattleCharacter mostRecentBc;
+        private static uint lastHpValue;
+        private static Stopwatch noDamageTimeout;
+
         public static async Task<bool> HandleCombat()
         {
             var currentBc = Poi.Current.BattleCharacter;
@@ -30,6 +36,29 @@ namespace Oracle.Behaviour.Tasks
             {
                 OracleFateManager.ClearPoi("Targeted unit is not valid.", false);
                 return true;
+            }
+
+            if (mostRecentBc == null || mostRecentBc != currentBc)
+            {
+                mostRecentBc = currentBc;
+                lastHpValue = mostRecentBc.CurrentHealth;
+                noDamageTimeout = Stopwatch.StartNew();
+            }
+
+            if (lastHpValue != mostRecentBc.CurrentHealth)
+            {
+                noDamageTimeout.Restart();
+                lastHpValue = mostRecentBc.CurrentHealth;
+            }
+
+            if (noDamageTimeout.Elapsed > TimeSpan.FromSeconds(OracleSettings.Instance.CombatNoDamageTimeout))
+            {
+                OracleFateManager.ClearPoi("Mob's HP has not changed in " + OracleSettings.Instance.CombatNoDamageTimeout + " seconds, blacklisting and selecting a new mob.");
+                Blacklist.Add(currentBc, BlacklistFlags.Combat, TimeSpan.FromMinutes(30), "No damage taken timeout triggered.");
+                mostRecentBc = null;
+                noDamageTimeout = null;
+
+                Core.Player.ClearTarget();
             }
 
             if (!currentBc.IsFate && !currentBc.IsDead && GameObjectManager.Attackers.All(mob => mob.ObjectId != currentBc.ObjectId)

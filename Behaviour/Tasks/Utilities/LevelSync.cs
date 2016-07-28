@@ -6,6 +6,7 @@ using ff14bot.Managers;
 using ff14bot.RemoteWindows;
 
 using Oracle.Helpers;
+using Oracle.Managers;
 
 namespace Oracle.Behaviour.Tasks.Utilities
 {
@@ -18,7 +19,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            return fate.MaxLevel < Core.Player.ClassLevel && !Core.Player.IsLevelSynced && fate.Within2D(Core.Player.Location);
+            return fate.MaxLevel < OracleFateManager.GetTrueLevel() && !Core.Player.IsLevelSynced && fate.Within2D(Core.Player.Location);
         }
 
         public static async Task<bool> SyncLevel(FateData fate)

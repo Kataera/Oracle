@@ -26,6 +26,7 @@ namespace Oracle.Settings
         private int chainFateWaitTimeout;
         private bool collectFatesEnabled;
         private int collectFateTurnInAtAmount;
+        private int combatNoDamageTimeout;
         private bool debugEnabled;
         private bool defenceFatesEnabled;
         private bool escortFatesEnabled;
@@ -56,6 +57,7 @@ namespace Oracle.Settings
         private OracleOperationMode oracleOperationMode;
         private bool runProblematicFates;
         private List<uint> specificFates;
+        private int targetListCacheDuration;
         private bool teleportIfQuicker;
         private int teleportMinimumDistanceDelta;
         private bool waitAtBossFateForProgress;
@@ -237,6 +239,22 @@ namespace Oracle.Settings
             set
             {
                 collectFateTurnInAtAmount = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(15)]
+        [Setting]
+        public int CombatNoDamageTimeout
+        {
+            get
+            {
+                return combatNoDamageTimeout;
+            }
+
+            set
+            {
+                combatNoDamageTimeout = value;
                 Save();
             }
         }
@@ -736,6 +754,22 @@ namespace Oracle.Settings
             set
             {
                 specificFates = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(2500)]
+        [Setting]
+        public int TargetListCacheDuration
+        {
+            get
+            {
+                return targetListCacheDuration;
+            }
+
+            set
+            {
+                targetListCacheDuration = value;
                 Save();
             }
         }

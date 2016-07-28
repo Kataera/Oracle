@@ -13,6 +13,7 @@ using ff14bot.Navigation;
 
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Helpers;
+using Oracle.Managers;
 using Oracle.Settings;
 
 namespace Oracle.Behaviour.Tasks
@@ -25,7 +26,7 @@ namespace Oracle.Behaviour.Tasks
         public static async Task<bool> HandleZoneChange()
         {
             uint aetheryteId;
-            OracleSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
+            OracleSettings.Instance.ZoneLevels.TryGetValue(OracleFateManager.GetTrueLevel(), out aetheryteId);
 
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
             {
@@ -40,7 +41,7 @@ namespace Oracle.Behaviour.Tasks
             }
 
             var zoneName = WorldManager.AvailableLocations.FirstOrDefault(teleport => teleport.AetheryteId == aetheryteId).Name;
-            Logger.SendLog("Character is level " + Core.Player.ClassLevel + ", teleporting to " + zoneName + ".");
+            Logger.SendLog("Character is level " + OracleFateManager.GetTrueLevel() + ", teleporting to " + zoneName + ".");
             await Teleport.TeleportToAetheryte(aetheryteId);
 
             if (WorldManager.ZoneId != WorldManager.GetZoneForAetheryteId(aetheryteId))
