@@ -32,7 +32,6 @@ namespace Oracle.Behaviour.Tasks.Utilities
                         Logger.SendDebugLog("Deserialising the database file.");
                         var oracleDatabase = await Coroutine.ExternalTask(Task.Factory.StartNew(() => JsonConvert.DeserializeObject<OracleDatabase>(json)));
 
-                        Logger.SendLog("Oracle database loaded successfully!");
                         return oracleDatabase;
                     }
                 }

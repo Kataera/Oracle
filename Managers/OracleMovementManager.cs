@@ -527,6 +527,17 @@ namespace Oracle.Managers
         {
             while (Core.Player.Location.Distance(location) > precision)
             {
+                if (!Core.Player.IsMounted && IsMountNeeded(Core.Player.Location.Distance(location)) && Actionmanager.AvailableMounts.Any())
+                {
+                    Navigator.Stop();
+                    if (Core.Player.InCombat)
+                    {
+                        return true;
+                    }
+
+                    await Mount.MountUp();
+                }
+
                 Navigator.MoveTo(location);
                 await Coroutine.Yield();
             }
