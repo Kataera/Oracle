@@ -112,11 +112,11 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> FlyToLocation(Vector3 location, float precision, bool land)
+        public static async Task<bool> FlyToLocation(Vector3 location, float precision, bool land, bool stopOnFateSpawn)
         {
             if (!IsFlightMeshLoaded())
             {
-                await NavigateToLocation(location, precision);
+                await NavigateToLocation(location, precision, stopOnFateSpawn);
                 return true;
             }
 
@@ -174,6 +174,12 @@ namespace Oracle.Managers
                     {
                         Navigator.PlayerMover.MoveStop();
                         await CommonTasks.TakeOff();
+                    }
+
+                    if (stopOnFateSpawn && await OracleFateManager.AnyViableFates())
+                    {
+                        Navigator.PlayerMover.MoveStop();
+                        OracleFateManager.ClearPoi("FATE found.");
                     }
 
                     Logger.SendLog("Flying to hop: " + processedStep);
@@ -523,7 +529,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> NavigateToLocation(Vector3 location, float precision)
+        public static async Task<bool> NavigateToLocation(Vector3 location, float precision, bool stopOnFateSpawn)
         {
             while (Core.Player.Location.Distance(location) > precision)
             {
@@ -536,6 +542,12 @@ namespace Oracle.Managers
                     }
 
                     await Mount.MountUp();
+                }
+
+                if (stopOnFateSpawn && await OracleFateManager.AnyViableFates())
+                {
+                    Navigator.Stop();
+                    OracleFateManager.ClearPoi("FATE found.");
                 }
 
                 Navigator.MoveTo(location);
