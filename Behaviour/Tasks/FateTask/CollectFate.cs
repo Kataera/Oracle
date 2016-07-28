@@ -105,6 +105,16 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
             while (Core.Player.Distance2D(turnInNpc.Location) > 3f)
             {
+                if (!Core.Player.IsMounted && OracleMovementManager.IsMountNeeded(Core.Player.Location.Distance(turnInNpc.Location))
+                    && Actionmanager.AvailableMounts.Any())
+                {
+                    Navigator.Stop();
+                    if (!Core.Player.InCombat)
+                    {
+                        await Mount.MountUp();
+                    }
+                }
+
                 Navigator.MoveTo(turnInNpc.Location, "Moving to NPC.");
                 await Coroutine.Yield();
             }
