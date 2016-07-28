@@ -8,25 +8,26 @@ using Oracle.Helpers;
 
 namespace Oracle.Data
 {
+    [Serializable]
     internal class OracleDatabase
     {
-        private readonly Dictionary<uint, Fate> fateDatabase;
-
         public OracleDatabase()
         {
-            this.fateDatabase = new Dictionary<uint, Fate>();
+            FateDictionary = new Dictionary<uint, Fate>();
         }
 
-        public OracleDatabase(Dictionary<uint, Fate> fateDatabase)
+        public OracleDatabase(Dictionary<uint, Fate> fateDictionary)
         {
-            this.fateDatabase = fateDatabase;
+            FateDictionary = fateDictionary;
         }
+
+        public Dictionary<uint, Fate> FateDictionary { get; }
 
         public void AddFateToDatabase(Fate fate)
         {
             try
             {
-                this.fateDatabase.Add(fate.Id, fate);
+                FateDictionary.Add(fate.Id, fate);
             }
             catch (ArgumentNullException exception)
             {
@@ -45,7 +46,7 @@ namespace Oracle.Data
             Fate fate;
             try
             {
-                if (this.fateDatabase.TryGetValue(fateData.Id, out fate))
+                if (FateDictionary.TryGetValue(fateData.Id, out fate))
                 {
                     return fate;
                 }
@@ -68,7 +69,7 @@ namespace Oracle.Data
             Fate fate;
             try
             {
-                if (this.fateDatabase.TryGetValue(id, out fate))
+                if (FateDictionary.TryGetValue(id, out fate))
                 {
                     return fate;
                 }

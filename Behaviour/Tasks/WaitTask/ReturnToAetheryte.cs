@@ -22,12 +22,12 @@ namespace Oracle.Behaviour.Tasks.WaitTask
 
                 if (!OracleMovementManager.IsFlightMeshLoaded())
                 {
-                    await OracleMovementManager.NavigateToLocation(Poi.Current.Location, 15f);
+                    await OracleMovementManager.NavigateToLocation(Poi.Current.Location, 15f, true);
                     return true;
                 }
             }
 
-            await OracleMovementManager.FlyToLocation(Poi.Current.Location, 15f, true);
+            await OracleMovementManager.FlyToLocation(Poi.Current.Location, 15f, true, true);
             return true;
         }
     }

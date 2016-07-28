@@ -615,6 +615,7 @@
     <Level>26</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <PreferredTargetId>1242</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>196</ID>
@@ -1606,6 +1607,7 @@
     <Level>49</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+	<PreferredTargetId>1506</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>431</ID>
@@ -1636,6 +1638,7 @@
     <Level>32</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+	<PreferredTargetId>884</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>437</ID>
@@ -2163,7 +2166,7 @@
     <Name>Bad Hair Day</Name>
     <Level>42</Level>
     <Type>&Boss;</Type>
-    <OracleSupport>&FullSupport;</OracleSupport>
+    <OracleSupport>&Problematic;</OracleSupport>
   </Fate>
   <Fate>
     <ID>543</ID>
@@ -2546,7 +2549,7 @@
     <Name>The Squirrel Trapper's Wife</Name>
     <Level>43</Level>
     <Type>&Boss;</Type>
-    <OracleSupport>&FullSupport;</OracleSupport>
+    <OracleSupport>&Problematic;</OracleSupport>
   </Fate>
   <Fate>
     <ID>610</ID>
@@ -2569,6 +2572,7 @@
     <Level>44</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <PreferredTargetId>1663</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>615</ID>
@@ -4529,5 +4533,19 @@
     <OracleSupport>&FullSupport;</OracleSupport>
     <CollectItemId>2001972</CollectItemId>
     <NpcId>4792</NpcId>
+  </Fate>
+  <Fate>
+    <ID>945</ID>
+    <Name>In Deep Water</Name>
+    <Level>30</Level>
+    <Type>&Kill;</Type>
+    <OracleSupport>&FullSupport;</OracleSupport>
+  </Fate>
+  <Fate>
+    <ID>946</ID>
+    <Name>Trial By Fire</Name>
+    <Level>30</Level>
+    <Type>&Kill;</Type>
+    <OracleSupport>&FullSupport;</OracleSupport>
   </Fate>
 </Fates>

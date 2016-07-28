@@ -1,10 +1,15 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 
 using MaterialDesignThemes.Wpf;
+
+using Oracle.Data;
 
 namespace Oracle.UI
 {
@@ -13,9 +18,15 @@ namespace Oracle.UI
     /// </summary>
     public partial class Settings
     {
+        private const int GwlStyle = -16;
+
+        private const int WsSysmenu = 0x80000;
+        private IntPtr windowHandle;
+
         public Settings()
         {
             InitializeComponent();
+            SourceInitialized += Settings_SourceInitialized;
         }
 
         private void CloseWindowButton_Click(object sender, RoutedEventArgs e)
@@ -31,15 +42,30 @@ namespace Oracle.UI
             }
         }
 
+        [DllImport("user32.dll")]
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+        protected void HideAllButtons()
+        {
+            if (windowHandle == null)
+            {
+                throw new InvalidOperationException("The window has not yet been completely initialised.");
+            }
+
+            SetWindowLong(windowHandle, GwlStyle, GetWindowLong(windowHandle, GwlStyle) & ~WsSysmenu);
+        }
+
         private void MaximiseWindowButton_Click(object sender, RoutedEventArgs e)
         {
             switch (WindowState)
             {
                 case WindowState.Normal:
+
                     MaximiseWindowIcon.Kind = PackIconKind.WindowRestore;
                     WindowState = WindowState.Maximized;
                     break;
                 case WindowState.Maximized:
+
                     MaximiseWindowIcon.Kind = PackIconKind.WindowMaximize;
                     WindowState = WindowState.Normal;
                     break;
@@ -62,5 +88,14 @@ namespace Oracle.UI
                 DragMove();
             }
         }
+
+        private void Settings_SourceInitialized(object sender, EventArgs e)
+        {
+            windowHandle = new WindowInteropHelper(this).Handle;
+            HideAllButtons();
+        }
+
+        [DllImport("user32.dll")]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
     }
 }

@@ -7,10 +7,13 @@ using ff14bot.Behavior;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+using ff14bot.Objects;
 
 using Oracle.Behaviour;
+using Oracle.Behaviour.Modes;
 using Oracle.Behaviour.PoiHooks;
 using Oracle.Behaviour.Tasks.Utilities;
+using Oracle.Data;
 using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Managers;
@@ -107,6 +110,17 @@ namespace Oracle
             settingsWindow.Show();
         }
 
+        private static void ResetBotbaseVariables()
+        {
+            OracleFateManager.CurrentFateId = 0;
+            OracleFateManager.PreviousFateId = 0;
+            OracleFateManager.OracleDatabase = null;
+
+            OracleMovementManager.ZoneFlightMesh = null;
+
+            YokaiWatchGrind.ResetIgnoredYokai();
+        }
+
         public override void Start()
         {
             Navigator.NavigationProvider = new GaiaNavigator();
@@ -134,7 +148,7 @@ namespace Oracle
                     Logger.SendLog("Starting Oracle in FATE grind mode.");
                     break;
                 case OracleOperationMode.SpecificFate:
-                    Logger.SendLog("Starting Oracle in specific FATE mode.");
+                    Logger.SendLog("Starting Oracle in specific FATE(s) mode.");
                     break;
                 case OracleOperationMode.AtmaGrind:
                     Logger.SendLog("Starting Oracle in Atma grind mode.");
@@ -145,6 +159,9 @@ namespace Oracle
                 case OracleOperationMode.AnimaGrind:
                     Logger.SendLog("Starting Oracle in Anima grind mode.");
                     break;
+                case OracleOperationMode.YokaiWatchGrind:
+                    Logger.SendLog("Starting Oracle in Yo-kai Watch grind mode. You cannot use your chocobo in this mode.");
+                    break;
                 default:
                     Logger.SendErrorLog("No setting chosen for operation mode. Defaulting to FATE grind mode.");
                     Logger.SendLog("Starting Oracle in FATE grind mode.");
@@ -154,11 +171,7 @@ namespace Oracle
 
         public override void Stop()
         {
-            // Clean up all botbase internal variables.
-            OracleFateManager.CurrentFateId = 0;
-            OracleFateManager.PreviousFateId = 0;
-            OracleFateManager.OracleDatabase = null;
-            OracleMovementManager.ZoneFlightMesh = null;
+            ResetBotbaseVariables();
 
             if (LoadFlightMesh.MeshFileStream != null)
             {
@@ -172,6 +185,7 @@ namespace Oracle
 
             CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
             Blacklist.Flush();
+            Chocobo.BlockSummon = false;
 
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;

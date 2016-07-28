@@ -20,12 +20,12 @@ namespace Oracle.Providers
     {
         public List<BattleCharacter> GetObjectsByWeight()
         {
-            var allTargets = GameObjectManager.GetObjectsOfType<BattleCharacter>().ToArray();
             if (ReadyToTurnIn())
             {
                 return new List<BattleCharacter>();
             }
 
+            var allTargets = GameObjectManager.GetObjectsOfType<BattleCharacter>().ToArray();
             return allTargets.Where(bc => Filter(Core.Player.InCombat, bc)).OrderByDescending(GetWeight).ToList();
         }
 
@@ -208,7 +208,8 @@ namespace Oracle.Providers
                 weight += 130;
             }
 
-            if (PlayerIsMelee())
+            // Prefer nearer targets in combat if melee, and always out of combat.
+            if (PlayerIsMelee() || !Core.Player.InCombat)
             {
                 weight-= battleCharacter.Distance(Core.Player) * 50;
             }
@@ -223,7 +224,7 @@ namespace Oracle.Providers
                 return false;
             }
 
-            return FateManager.GetFateById(battleCharacter.FateId).MaxLevel < Core.Player.ClassLevel;
+            return FateManager.GetFateById(battleCharacter.FateId).MaxLevel < OracleFateManager.GetTrueLevel();
         }
 
         private static bool ReadyToTurnIn()
@@ -251,12 +252,7 @@ namespace Oracle.Providers
             }
 
             var fateItemCount = ConditionParser.ItemCount(oracleFate.ItemId);
-            if (fateItemCount >= OracleSettings.Instance.CollectFateTurnInAtAmount)
-            {
-                return true;
-            }
-
-            return false;
+            return fateItemCount >= OracleSettings.Instance.CollectFateTurnInAtAmount;
         }
     }
 }

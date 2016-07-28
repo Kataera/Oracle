@@ -1,8 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-using ff14bot;
 using ff14bot.Behavior;
-using ff14bot.Managers;
 
 using Oracle.Behaviour.PoiHooks.WaitSelect;
 using Oracle.Enumerations;
@@ -21,7 +19,7 @@ namespace Oracle.Behaviour.PoiHooks
                 return false;
             }
 
-            if (ZoneChangeNeeded())
+            if (OracleFateManager.ZoneChangeNeeded())
             {
                 return false;
             }
@@ -52,24 +50,6 @@ namespace Oracle.Behaviour.PoiHooks
             }
 
             return false;
-        }
-
-        private static bool ZoneChangeNeeded()
-        {
-            uint aetheryteId;
-            OracleSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
-
-            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
-            {
-                return false;
-            }
-
-            if (WorldManager.GetZoneForAetheryteId(aetheryteId) == WorldManager.ZoneId)
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }

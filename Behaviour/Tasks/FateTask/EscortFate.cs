@@ -178,10 +178,14 @@ namespace Oracle.Behaviour.Tasks.FateTask
             {
                 var currentFate = OracleFateManager.GetCurrentFateData();
 
-                if (timeout.Elapsed > TimeSpan.FromSeconds(5))
+                if (timeout.Elapsed > TimeSpan.FromSeconds(10))
                 {
                     Navigator.PlayerMover.MoveStop();
                     timeout.Reset();
+
+                    Logger.SendDebugLog("Timed out while attempting to move to random location, navigating back to FATE centre.");
+                    await MoveToFateCentre();
+
                     return true;
                 }
 
@@ -190,6 +194,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
                     Navigator.PlayerMover.MoveStop();
                     timeout.Reset();
                     await ClearFate();
+
                     return true;
                 }
 

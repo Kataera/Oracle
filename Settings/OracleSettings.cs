@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
+using System.Windows.Forms;
 
 using Clio.Utilities;
 
@@ -26,6 +27,7 @@ namespace Oracle.Settings
         private int chainFateWaitTimeout;
         private bool collectFatesEnabled;
         private int collectFateTurnInAtAmount;
+        private int combatNoDamageTimeout;
         private bool debugEnabled;
         private bool defenceFatesEnabled;
         private bool escortFatesEnabled;
@@ -37,7 +39,13 @@ namespace Oracle.Settings
         private FateSelectMode fateSelectMode;
         private Dictionary<uint, Vector3> fateWaitLocations;
         private FateWaitMode fateWaitMode;
+        private bool flightAzysLlaEnabled;
+        private bool flightChurningMistsEnabled;
+        private bool flightCoerthasWesternHighlandsEnabled;
+        private bool flightDravanianForelandsEnabled;
+        private bool flightDravanianHinterlandsEnabled;
         private bool flightPathPostProcessingEnabled;
+        private bool flightSeaOfCloudsEnabled;
         private bool ignoreLowDurationUnstartedFates;
         private bool killFatesEnabled;
         private double landingTimeOut;
@@ -49,7 +57,8 @@ namespace Oracle.Settings
         private int mobMinimumLevelBelow;
         private OracleOperationMode oracleOperationMode;
         private bool runProblematicFates;
-        private string specificFateName;
+        private List<uint> specificFates;
+        private int targetListCacheDuration;
         private bool teleportIfQuicker;
         private int teleportMinimumDistanceDelta;
         private bool waitAtBossFateForProgress;
@@ -57,8 +66,34 @@ namespace Oracle.Settings
         private bool waitForChainFates;
         private bool zoneChangingEnabled;
         private Dictionary<uint, uint> zoneLevels;
+        private int yokaiJibanyanMedalsToFarm;
+        private int yokaiKomasanMedalsToFarm;
+        private int yokaiUsapyonMedalsToFarm;
+        private int yokaiWhisperMedalsToFarm;
+        private int yokaiShogunyanMedalsToFarm;
+        private int yokaiHovernyanMedalsToFarm;
+        private int yokaiKomajiroMedalsToFarm;
+        private int yokaiNokoMedalsToFarm;
+        private int yokaiVenoctMedalsToFarm;
+        private int yokaiKyubiMedalsToFarm;
+        private int yokaiRobonyanMedalsToFarm;
+        private int yokaiBlizzariaMedalsToFarm;
+        private int yokaiManjimuttMedalsToFarm;
+        private int yokaiJibanyanZoneChoice;
+        private int yokaiKomasanZoneChoice;
+        private int yokaiManjimuttZoneChoice;
+        private int yokaiBlizzariaZoneChoice;
+        private int yokaiKyubiZoneChoice;
+        private int yokaiUsapyonZoneChoice;
+        private int yokaiWhisperZoneChoice;
+        private int yokaiShogunyanZoneChoice;
+        private int yokaiHovernyanZoneChoice;
+        private int yokaiKomajiroZoneChoice;
+        private int yokaiNokoZoneChoice;
+        private int yokaiVenoctZoneChoice;
+        private int yokaiRobonyanZoneChoice;
 
-        private OracleSettings() : base(Path.Combine(SettingsPath, @"/Oracle/OracleSettings.json"))
+        private OracleSettings() : base(Path.Combine(SettingsPath, @"Oracle\OracleSettings.json"))
         {
             if (BlacklistedFates == null)
             {
@@ -76,6 +111,12 @@ namespace Oracle.Settings
             if (FateWaitLocations == null)
             {
                 FateWaitLocations = new Dictionary<uint, Vector3>();
+                Save();
+            }
+
+            if (SpecificFates == null)
+            {
+                SpecificFates = new List<uint>();
                 Save();
             }
 
@@ -225,6 +266,22 @@ namespace Oracle.Settings
             set
             {
                 collectFateTurnInAtAmount = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(15)]
+        [Setting]
+        public int CombatNoDamageTimeout
+        {
+            get
+            {
+                return combatNoDamageTimeout;
+            }
+
+            set
+            {
+                combatNoDamageTimeout = value;
                 Save();
             }
         }
@@ -406,6 +463,86 @@ namespace Oracle.Settings
 
         [DefaultValue(true)]
         [Setting]
+        public bool FlightAzysLlaEnabled
+        {
+            get
+            {
+                return flightAzysLlaEnabled;
+            }
+
+            set
+            {
+                flightAzysLlaEnabled = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool FlightChurningMistsEnabled
+        {
+            get
+            {
+                return flightChurningMistsEnabled;
+            }
+
+            set
+            {
+                flightChurningMistsEnabled = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool FlightCoerthasWesternHighlandsEnabled
+        {
+            get
+            {
+                return flightCoerthasWesternHighlandsEnabled;
+            }
+
+            set
+            {
+                flightCoerthasWesternHighlandsEnabled = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool FlightDravanianForelandsEnabled
+        {
+            get
+            {
+                return flightDravanianForelandsEnabled;
+            }
+
+            set
+            {
+                flightDravanianForelandsEnabled = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool FlightDravanianHinterlandsEnabled
+        {
+            get
+            {
+                return flightDravanianHinterlandsEnabled;
+            }
+
+            set
+            {
+                flightDravanianHinterlandsEnabled = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
         public bool FlightPathPostProcessingEnabled
         {
             get
@@ -416,6 +553,22 @@ namespace Oracle.Settings
             set
             {
                 flightPathPostProcessingEnabled = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool FlightSeaOfCloudsEnabled
+        {
+            get
+            {
+                return flightSeaOfCloudsEnabled;
+            }
+
+            set
+            {
+                flightSeaOfCloudsEnabled = value;
                 Save();
             }
         }
@@ -617,18 +770,33 @@ namespace Oracle.Settings
             }
         }
 
-        [DefaultValue("")]
         [Setting]
-        public string SpecificFateName
+        public List<uint> SpecificFates
         {
             get
             {
-                return specificFateName;
+                return specificFates;
             }
 
             set
             {
-                specificFateName = value;
+                specificFates = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(2500)]
+        [Setting]
+        public int TargetListCacheDuration
+        {
+            get
+            {
+                return targetListCacheDuration;
+            }
+
+            set
+            {
+                targetListCacheDuration = value;
                 Save();
             }
         }
@@ -740,6 +908,422 @@ namespace Oracle.Settings
             set
             {
                 zoneLevels = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiJibanyanMedalsToFarm
+        {
+            get
+            {
+                return yokaiJibanyanMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiJibanyanMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiKomasanMedalsToFarm
+        {
+            get
+            {
+                return yokaiKomasanMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiKomasanMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiUsapyonMedalsToFarm
+        {
+            get
+            {
+                return yokaiUsapyonMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiUsapyonMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiWhisperMedalsToFarm
+        {
+            get
+            {
+                return yokaiWhisperMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiWhisperMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiShogunyanMedalsToFarm
+        {
+            get
+            {
+                return yokaiShogunyanMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiShogunyanMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiHovernyanMedalsToFarm
+        {
+            get
+            {
+                return yokaiHovernyanMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiHovernyanMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiKomajiroMedalsToFarm
+        {
+            get
+            {
+                return yokaiKomajiroMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiKomajiroMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiNokoMedalsToFarm
+        {
+            get
+            {
+                return yokaiNokoMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiNokoMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiVenoctMedalsToFarm
+        {
+            get
+            {
+                return yokaiVenoctMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiVenoctMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiKyubiMedalsToFarm
+        {
+            get
+            {
+                return yokaiKyubiMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiKyubiMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiRobonyanMedalsToFarm
+        {
+            get
+            {
+                return yokaiRobonyanMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiRobonyanMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiBlizzariaMedalsToFarm
+        {
+            get
+            {
+                return yokaiBlizzariaMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiBlizzariaMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiManjimuttMedalsToFarm
+        {
+            get
+            {
+                return yokaiManjimuttMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiManjimuttMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiJibanyanZoneChoice
+        {
+            get
+            {
+                return yokaiJibanyanZoneChoice;
+            }
+
+            set
+            {
+                yokaiJibanyanZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiKomasanZoneChoice
+        {
+            get
+            {
+                return yokaiKomasanZoneChoice;
+            }
+
+            set
+            {
+                yokaiKomasanZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiUsapyonZoneChoice
+        {
+            get
+            {
+                return yokaiUsapyonZoneChoice;
+            }
+
+            set
+            {
+                yokaiUsapyonZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(3)]
+        [Setting]
+        public int YokaiWhisperZoneChoice
+        {
+            get
+            {
+                return yokaiWhisperZoneChoice;
+            }
+
+            set
+            {
+                yokaiWhisperZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiShogunyanZoneChoice
+        {
+            get
+            {
+                return yokaiShogunyanZoneChoice;
+            }
+
+            set
+            {
+                yokaiShogunyanZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiHovernyanZoneChoice
+        {
+            get
+            {
+                return yokaiHovernyanZoneChoice;
+            }
+
+            set
+            {
+                yokaiHovernyanZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiKomajiroZoneChoice
+        {
+            get
+            {
+                return yokaiKomajiroZoneChoice;
+            }
+
+            set
+            {
+                yokaiKomajiroZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiNokoZoneChoice
+        {
+            get
+            {
+                return yokaiNokoZoneChoice;
+            }
+
+            set
+            {
+                yokaiNokoZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiVenoctZoneChoice
+        {
+            get
+            {
+                return yokaiVenoctZoneChoice;
+            }
+
+            set
+            {
+                yokaiVenoctZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiKyubiZoneChoice
+        {
+            get
+            {
+                return yokaiKyubiZoneChoice;
+            }
+
+            set
+            {
+                yokaiKyubiZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiRobonyanZoneChoice
+        {
+            get
+            {
+                return yokaiRobonyanZoneChoice;
+            }
+
+            set
+            {
+                yokaiRobonyanZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiBlizzariaZoneChoice
+        {
+            get
+            {
+                return yokaiBlizzariaZoneChoice;
+            }
+
+            set
+            {
+                yokaiBlizzariaZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiManjimuttZoneChoice
+        {
+            get
+            {
+                return yokaiManjimuttZoneChoice;
+            }
+
+            set
+            {
+                yokaiManjimuttZoneChoice = value;
                 Save();
             }
         }

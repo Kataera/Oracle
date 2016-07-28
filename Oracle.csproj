@@ -83,13 +83,31 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Fates\FateData.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\OracleMode\SpecificFateBanner.jpg" />
+    <Resource Include="Resources\Images\OracleMode\ModeBanner.jpg" />
+    <Resource Include="Resources\Images\Logo.png" />
+    <Resource Include="Resources\Images\Flight\CoerthasWesternHighlands.png" />
+    <Resource Include="Resources\Images\Flight\DravanianForelands.png" />
+    <Resource Include="Resources\Images\Flight\DravanianHinterlands.png" />
+    <Resource Include="Resources\Images\Flight\SeaOfClouds.png" />
+    <Resource Include="Resources\Images\Flight\ChurningMists.png" />
+    <Resource Include="Resources\Images\Flight\AzysLla.png" />
+    <Content Include="Data\Fates\FateData.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\Images\SourceImages\Azys Lla.png" />
+    <None Include="Resources\Images\SourceImages\Churning Mists.png" />
+    <None Include="Resources\Images\SourceImages\Dravanian Hinterlands.png" />
+    <None Include="Resources\Images\SourceImages\Dravanian Forelands.png" />
+    <None Include="Resources\Images\SourceImages\Coerthas Western Highlands.png" />
+    <None Include="Resources\Images\SourceImages\Sea of Clouds.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Fates\FateData.xsd">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Meshes\zone_398.gz">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -110,8 +128,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
-    <None Include="Resources\Images\Crystal.psd" />
-    <None Include="Resources\Images\Logo.psd" />
+    <None Include="Resources\Images\SourceImages\Crystal.psd" />
+    <None Include="Resources\Images\SourceImages\Logo.psd" />
     <None Include="UI\App.config">
       <SubType>Designer</SubType>
     </None>
@@ -122,6 +140,7 @@
     <Compile Include="Behaviour\Modes\FateGrind.cs" />
     <Compile Include="Behaviour\Modes\SpecificFate.cs" />
     <Compile Include="Behaviour\Modes\AnimusGrind.cs" />
+    <Compile Include="Behaviour\Modes\YokaiWatchGrind.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\GrindMobs.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\MoveToWaitLocation.cs" />
     <Compile Include="Behaviour\PoiHooks\WaitSelect\WaitInPlace.cs" />
@@ -138,6 +157,10 @@
     <Compile Include="Behaviour\Tasks\Utilities\BlacklistMob.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LoadFlightMesh.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\Mount.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\SummonMinion.cs" />
+    <Compile Include="Data\YokaiMinion.cs" />
+    <Compile Include="Enumerations\Yokai.cs" />
+    <Compile Include="Helpers\XmlParser.cs" />
     <Compile Include="Managers\OracleMovementManager.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SelectGrindTarget.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\Teleport.cs" />
@@ -171,7 +194,6 @@
     <Compile Include="Enumerations\FateSupportLevel.cs" />
     <Compile Include="Enumerations\FateType.cs" />
     <Compile Include="Helpers\Logger.cs" />
-    <Compile Include="Helpers\XmlParser.cs" />
     <Compile Include="OracleLoader.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -183,6 +205,14 @@
     <Compile Include="Settings\OracleSettings.cs" />
     <Compile Include="OracleBot.cs" />
     <Compile Include="UI\App.xaml.cs" />
+    <Compile Include="UI\Pages\Domain\SpecificFateGridViewModel.cs" />
+    <Compile Include="UI\Pages\Domain\FateViewModel.cs" />
+    <Compile Include="UI\Pages\Flight.xaml.cs">
+      <DependentUpon>Flight.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pages\OracleMode.xaml.cs">
+      <DependentUpon>OracleMode.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -198,14 +228,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UI\Pages\Flight.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Pages\OracleMode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Theme\Colours.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UI\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Logo.png" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />

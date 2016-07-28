@@ -46,7 +46,7 @@ namespace Oracle.Behaviour.PoiHooks
                 return true;
             }
 
-            if (ZoneChangeNeeded())
+            if (OracleFateManager.ZoneChangeNeeded())
             {
                 return false;
             }
@@ -219,7 +219,7 @@ namespace Oracle.Behaviour.PoiHooks
 
         private static async Task<bool> SelectSpecificFate()
         {
-            var specificFate = FateManager.ActiveFates.FirstOrDefault(result => result.Name.Equals(OracleSettings.Instance.SpecificFateName));
+            var specificFate = FateManager.ActiveFates.FirstOrDefault(result => result.Name.Equals(OracleSettings.Instance.SpecificFates));
 
             if (specificFate == null)
             {
@@ -242,33 +242,6 @@ namespace Oracle.Behaviour.PoiHooks
 
             Logger.SendLog("Waiting " + Math.Round(randomWaitTime / 1000f, 2) + " seconds before moving to FATE.");
             await Coroutine.Wait(randomWaitTime, () => currentFate.Status == FateStatus.NOTACTIVE || Core.Player.InCombat);
-
-            return true;
-        }
-
-        private static bool ZoneChangeNeeded()
-        {
-            const ushort dravanianHinterlands = 399;
-            const ushort idyllshire = 478;
-
-            uint aetheryteId;
-            OracleSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
-
-            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
-            {
-                return false;
-            }
-
-            // Special case for Idyllshire/Dravanian Hinterlands.
-            if (WorldManager.ZoneId == dravanianHinterlands && WorldManager.GetZoneForAetheryteId(aetheryteId) == idyllshire)
-            {
-                return false;
-            }
-
-            if (WorldManager.GetZoneForAetheryteId(aetheryteId) == WorldManager.ZoneId)
-            {
-                return false;
-            }
 
             return true;
         }

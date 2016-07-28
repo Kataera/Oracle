@@ -28,6 +28,7 @@ namespace Oracle.Helpers
         private static FateSupportLevel fateSupportLevel;
         private static FateType fateType;
 
+        [Obsolete("Xml parsing is deprecated, retrieve data from JSON deserialising instead.")]
         public static async Task<OracleDatabase> GetFateDatabase()
         {
             if (database == null)
@@ -38,6 +39,7 @@ namespace Oracle.Helpers
             return database;
         }
 
+        [Obsolete("Xml parsing is deprecated, retrieve data from JSON deserialising instead.")]
         public static async Task<OracleDatabase> GetFateDatabase(bool forceReparse)
         {
             if (forceReparse || database == null)
@@ -48,6 +50,7 @@ namespace Oracle.Helpers
             return database;
         }
 
+        [Obsolete("Xml parsing is deprecated, retrieve data from JSON deserialising instead.")]
         private static Fate CreateFate()
         {
             var fate = new Fate
@@ -67,6 +70,7 @@ namespace Oracle.Helpers
             return fate;
         }
 
+        [Obsolete("Xml parsing is deprecated, retrieve data from JSON deserialising instead.")]
         private static XmlDocument GetXmlDocument()
         {
             fateDataInvalidFlag = false;
@@ -92,6 +96,7 @@ namespace Oracle.Helpers
             return xmlDocument;
         }
 
+        [Obsolete("Xml parsing is deprecated, retrieve data from JSON deserialising instead.")]
         private static async Task ParseFateData()
         {
             fateDataXml = GetXmlDocument();
@@ -135,12 +140,12 @@ namespace Oracle.Helpers
 
                     if (currentNode["Type"] != null)
                     {
-                        fateType = (FateType) int.Parse(currentNode["Type"].InnerText);
+                        fateType = (FateType)int.Parse(currentNode["Type"].InnerText);
                     }
 
                     if (currentNode["OracleSupport"] != null)
                     {
-                        fateSupportLevel = (FateSupportLevel) int.Parse(currentNode["OracleSupport"].InnerText);
+                        fateSupportLevel = (FateSupportLevel)int.Parse(currentNode["OracleSupport"].InnerText);
                     }
 
                     if (currentNode["LandingRadius"] != null)
@@ -194,6 +199,7 @@ namespace Oracle.Helpers
             }
         }
 
+        [Obsolete("Xml parsing is deprecated, retrieve data from JSON deserialising instead.")]
         private static void ValidationEventHandler(object sender, ValidationEventArgs args)
         {
             Logger.SendDebugLog("ValidationEvent occurred.");

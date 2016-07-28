@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
 using ff14bot;
 using ff14bot.Helpers;
@@ -14,9 +15,9 @@ namespace Oracle.Behaviour.Modes
     {
         public static async Task<bool> Main()
         {
-            if (OracleSettings.Instance.SpecificFateName == string.Empty)
+            if (!OracleSettings.Instance.SpecificFates.Any())
             {
-                Logger.SendErrorLog("Please set a specific FATE before starting the bot.");
+                Logger.SendErrorLog("Please set at least one FATE to search for before starting the bot.");
                 TreeRoot.Stop("No FATE set.");
             }
 

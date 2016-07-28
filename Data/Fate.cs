@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Oracle.Enumerations;
 
 namespace Oracle.Data
 {
+    [Serializable]
     internal struct Fate
     {
         public uint ChainId { get; set; }

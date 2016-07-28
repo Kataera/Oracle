@@ -59,7 +59,7 @@ namespace Oracle.Behaviour.Modes
 
             if (!ConditionParser.HasAtLeast(LuminousIceCrystal, 3))
             {
-                if (Core.Player.ClassLevel < 50)
+                if (OracleFateManager.GetTrueLevel() < 50)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in Coerthas Western Highlands.");
                     TreeRoot.Stop("Too low level to continue.");
@@ -75,7 +75,7 @@ namespace Oracle.Behaviour.Modes
 
             else if (!ConditionParser.HasAtLeast(LuminousWindCrystal, 3))
             {
-                if (Core.Player.ClassLevel < 50)
+                if (OracleFateManager.GetTrueLevel() < 50)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Sea of Clouds.");
                     TreeRoot.Stop("Too low level to continue.");
@@ -91,7 +91,7 @@ namespace Oracle.Behaviour.Modes
 
             else if (!ConditionParser.HasAtLeast(LuminousEarthCrystal, 3))
             {
-                if (Core.Player.ClassLevel < 50)
+                if (OracleFateManager.GetTrueLevel() < 50)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Dravanian Forelands.");
                     TreeRoot.Stop("Too low level to continue.");
@@ -107,7 +107,7 @@ namespace Oracle.Behaviour.Modes
 
             else if (!ConditionParser.HasAtLeast(LuminousLightningCrystal, 3))
             {
-                if (Core.Player.ClassLevel < 52)
+                if (OracleFateManager.GetTrueLevel() < 52)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Churning Mists.");
                     TreeRoot.Stop("Too low level to continue.");
@@ -123,7 +123,7 @@ namespace Oracle.Behaviour.Modes
 
             else if (!ConditionParser.HasAtLeast(LuminousWaterCrystal, 3))
             {
-                if (Core.Player.ClassLevel < 54)
+                if (OracleFateManager.GetTrueLevel() < 54)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Dravanian Hinterlands.");
                     TreeRoot.Stop("Too low level to continue.");
@@ -139,7 +139,7 @@ namespace Oracle.Behaviour.Modes
 
             else if (!ConditionParser.HasAtLeast(LuminousFireCrystal, 3))
             {
-                if (Core.Player.ClassLevel < 55)
+                if (OracleFateManager.GetTrueLevel() < 55)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in Azys Lla.");
                     TreeRoot.Stop("Too low level to continue.");

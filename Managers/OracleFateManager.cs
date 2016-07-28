@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Buddy.Coroutines;
 
 using ff14bot;
+using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
@@ -22,6 +23,7 @@ namespace Oracle.Managers
     internal static class OracleFateManager
     {
         internal static uint CurrentFateId { get; set; }
+
         internal static bool DeathFlag { get; set; }
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
         internal static OracleDatabase OracleDatabase { get; set; }
@@ -150,7 +152,7 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (OracleSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate && !fate.Name.Equals(OracleSettings.Instance.SpecificFateName))
+            if (OracleSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate && !OracleSettings.Instance.SpecificFates.Contains(fate.Id))
             {
                 return false;
             }
@@ -193,12 +195,12 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (fate.Level > Core.Player.ClassLevel + OracleSettings.Instance.FateMaximumLevelAbove)
+            if (fate.Level > GetTrueLevel() + OracleSettings.Instance.FateMaximumLevelAbove)
             {
                 return false;
             }
 
-            if (fate.Level < Core.Player.ClassLevel - OracleSettings.Instance.FateMinimumLevelBelow)
+            if (fate.Level < GetTrueLevel() - OracleSettings.Instance.FateMinimumLevelBelow)
             {
                 return false;
             }
@@ -262,6 +264,83 @@ namespace Oracle.Managers
             return activeFates;
         }
 
+        public static ClassJobType GetBaseClass(ClassJobType job)
+        {
+            switch (job)
+            {
+                case ClassJobType.Adventurer:
+                    return ClassJobType.Adventurer;
+                case ClassJobType.Gladiator:
+                    return ClassJobType.Gladiator;
+                case ClassJobType.Pugilist:
+                    return ClassJobType.Pugilist;
+                case ClassJobType.Marauder:
+                    return ClassJobType.Marauder;
+                case ClassJobType.Lancer:
+                    return ClassJobType.Lancer;
+                case ClassJobType.Archer:
+                    return ClassJobType.Archer;
+                case ClassJobType.Conjurer:
+                    return ClassJobType.Conjurer;
+                case ClassJobType.Thaumaturge:
+                    return ClassJobType.Thaumaturge;
+                case ClassJobType.Carpenter:
+                    return ClassJobType.Carpenter;
+                case ClassJobType.Blacksmith:
+                    return ClassJobType.Blacksmith;
+                case ClassJobType.Armorer:
+                    return ClassJobType.Armorer;
+                case ClassJobType.Goldsmith:
+                    return ClassJobType.Goldsmith;
+                case ClassJobType.Leatherworker:
+                    return ClassJobType.Leatherworker;
+                case ClassJobType.Weaver:
+                    return ClassJobType.Weaver;
+                case ClassJobType.Alchemist:
+                    return ClassJobType.Alchemist;
+                case ClassJobType.Culinarian:
+                    return ClassJobType.Culinarian;
+                case ClassJobType.Miner:
+                    return ClassJobType.Miner;
+                case ClassJobType.Botanist:
+                    return ClassJobType.Botanist;
+                case ClassJobType.Fisher:
+                    return ClassJobType.Fisher;
+                case ClassJobType.Paladin:
+                    return ClassJobType.Gladiator;
+                case ClassJobType.Monk:
+                    return ClassJobType.Pugilist;
+                case ClassJobType.Warrior:
+                    return ClassJobType.Marauder;
+                case ClassJobType.Dragoon:
+                    return ClassJobType.Lancer;
+                case ClassJobType.Bard:
+                    return ClassJobType.Archer;
+                case ClassJobType.WhiteMage:
+                    return ClassJobType.Conjurer;
+                case ClassJobType.BlackMage:
+                    return ClassJobType.Thaumaturge;
+                case ClassJobType.Arcanist:
+                    return ClassJobType.Arcanist;
+                case ClassJobType.Summoner:
+                    return ClassJobType.Arcanist;
+                case ClassJobType.Scholar:
+                    return ClassJobType.Arcanist;
+                case ClassJobType.Rogue:
+                    return ClassJobType.Rogue;
+                case ClassJobType.Ninja:
+                    return ClassJobType.Rogue;
+                case ClassJobType.Machinist:
+                    return ClassJobType.Machinist;
+                case ClassJobType.DarkKnight:
+                    return ClassJobType.DarkKnight;
+                case ClassJobType.Astrologian:
+                    return ClassJobType.Astrologian;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(job), job, null);
+            }
+        }
+
         public static FateData GetCurrentFateData()
         {
             return FateManager.GetFateById(CurrentFateId);
@@ -275,6 +354,14 @@ namespace Oracle.Managers
         public static FateData GetPreviousFateData()
         {
             return FateManager.GetFateById(PreviousFateId);
+        }
+
+        public static uint GetTrueLevel()
+        {
+            var baseClass = GetBaseClass(Core.Player.CurrentJob);
+            var trueLevel = Core.Player.Levels.FirstOrDefault(kvp => kvp.Key == baseClass).Value;
+
+            return trueLevel != 0 ? trueLevel : Core.Player.ClassLevel;
         }
 
         public static bool IsPlayerBeingAttacked()
@@ -293,6 +380,11 @@ namespace Oracle.Managers
         {
             const ushort dravanianHinterlands = 399;
 
+            if (!OracleSettings.Instance.ZoneChangingEnabled)
+            {
+                return false;
+            }
+
             if (Core.Player.IsLevelSynced || Core.Player.IsDead)
             {
                 return false;
@@ -304,7 +396,7 @@ namespace Oracle.Managers
             }
 
             uint aetheryteId;
-            OracleSettings.Instance.ZoneLevels.TryGetValue(Core.Player.ClassLevel, out aetheryteId);
+            OracleSettings.Instance.ZoneLevels.TryGetValue(GetTrueLevel(), out aetheryteId);
 
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
             {

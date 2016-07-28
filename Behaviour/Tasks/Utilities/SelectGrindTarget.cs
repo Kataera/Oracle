@@ -15,6 +15,7 @@ using ff14bot.Objects;
 using NeoGaia.ConnectionHandler;
 
 using Oracle.Helpers;
+using Oracle.Managers;
 using Oracle.Settings;
 
 namespace Oracle.Behaviour.Tasks.Utilities
@@ -96,12 +97,12 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            if (Core.Player.ClassLevel - OracleSettings.Instance.MobMinimumLevelBelow > battleCharacter.ClassLevel)
+            if (OracleFateManager.GetTrueLevel() - OracleSettings.Instance.MobMinimumLevelBelow > battleCharacter.ClassLevel)
             {
                 return false;
             }
 
-            if (Core.Player.ClassLevel + OracleSettings.Instance.MobMaximumLevelAbove < battleCharacter.ClassLevel)
+            if (OracleFateManager.GetTrueLevel() + OracleSettings.Instance.MobMaximumLevelAbove < battleCharacter.ClassLevel)
             {
                 return false;
             }

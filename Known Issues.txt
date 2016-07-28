@@ -1,0 +1,13 @@
+Oracle Known Issues:
+
+Occasionally when pulling mobs during a FATE, Oracle will pull one mob then immediately switch targets and pull another. I know why this is happening, however solving it is difficult since it revolves around how often RebornBuddy polls the target provider. For now this is being mitigated by caching the target list for a short duration.
+
+If the cast of teleport gets interrupted when trying to save time, Oracle will not try and recast it.
+
+Issue with teleporting to save time if more than one aetheryte. Seems to only consider one aetheryte rather than both.
+
+Will sometimes get memory read exceptions if a plugin pulls the character away from a FATE currently in progress (e.g. Agil). No way to solve this other than blocking the main RebornBuddy behaviour tree, which is highly undesirable.
+
+Oracle will rarely wait for a follow up FATE even if it didn't manage to get to preceeding FATE. As soon as it pops up, or after the wait timeout occurs, it will return back to normal operation.
+
+Oracle will run to a FATE before teleporting to the next zone in Yo-kai Watch Grind mode.

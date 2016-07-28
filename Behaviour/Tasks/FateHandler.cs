@@ -44,7 +44,7 @@ namespace Oracle.Behaviour.Tasks
 
             if (currentFate != null && LevelSync.IsLevelSyncNeeded(currentFate))
             {
-                await LevelSync.Main(currentFate);
+                await LevelSync.SyncLevel(currentFate);
                 return true;
             }
 
