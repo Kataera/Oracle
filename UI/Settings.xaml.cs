@@ -1,15 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 
 using MaterialDesignThemes.Wpf;
-
-using Oracle.Data;
 
 namespace Oracle.UI
 {

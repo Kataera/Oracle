@@ -43,9 +43,8 @@ namespace Oracle.Behaviour.Modes
 
             if (ConditionParser.GetQuestStep(AnimaQuest) != AnimaQuestStep)
             {
-                Logger.SendErrorLog(
-                    "You are not at the correct step of 'Soul Without Life'. You must be at the objective that says " +
-                    "\"Deliver the astral nodule and umbral nodule to Ardashir in Azys Lla.\" to run in Anima grind mode.");
+                Logger.SendErrorLog("You are not at the correct step of 'Soul Without Life'. You must be at the objective that says "
+                                    + "\"Deliver the astral nodule and umbral nodule to Ardashir in Azys Lla.\" to run in Anima grind mode.");
 
                 TreeRoot.Stop("Not at required step of quest.");
                 return true;

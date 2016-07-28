@@ -50,8 +50,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             var distanceToFateBoundary = Core.Player.Location.Distance2D(currentFate.Location) - currentFate.Radius;
-            if (!ignoreCombat && OracleMovementManager.IsMountNeeded(distanceToFateBoundary) && !Core.Player.IsMounted
-                && currentFate.IsValid)
+            if (!ignoreCombat && OracleMovementManager.IsMountNeeded(distanceToFateBoundary) && !Core.Player.IsMounted && currentFate.IsValid)
             {
                 await Mount.MountUp();
             }

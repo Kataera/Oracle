@@ -128,6 +128,7 @@ namespace Oracle.Behaviour.Tasks
                 Navigator.MoveTo(location, "Leaving Idyllshire");
                 await Coroutine.Yield();
             }
+
             Navigator.Stop();
             Core.Player.SetFacing(0.9709215f);
             MovementManager.MoveForwardStart();

@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
-using System.Windows.Forms;
 
 using Clio.Utilities;
 
@@ -64,34 +63,34 @@ namespace Oracle.Settings
         private bool waitAtBossFateForProgress;
         private bool waitAtMegaBossFateForProgress;
         private bool waitForChainFates;
+        private int yokaiBlizzariaMedalsToFarm;
+        private int yokaiBlizzariaZoneChoice;
+        private int yokaiHovernyanMedalsToFarm;
+        private int yokaiHovernyanZoneChoice;
+        private int yokaiJibanyanMedalsToFarm;
+        private int yokaiJibanyanZoneChoice;
+        private int yokaiKomajiroMedalsToFarm;
+        private int yokaiKomajiroZoneChoice;
+        private int yokaiKomasanMedalsToFarm;
+        private int yokaiKomasanZoneChoice;
+        private int yokaiKyubiMedalsToFarm;
+        private int yokaiKyubiZoneChoice;
+        private int yokaiManjimuttMedalsToFarm;
+        private int yokaiManjimuttZoneChoice;
+        private int yokaiNokoMedalsToFarm;
+        private int yokaiNokoZoneChoice;
+        private int yokaiRobonyanMedalsToFarm;
+        private int yokaiRobonyanZoneChoice;
+        private int yokaiShogunyanMedalsToFarm;
+        private int yokaiShogunyanZoneChoice;
+        private int yokaiUsapyonMedalsToFarm;
+        private int yokaiUsapyonZoneChoice;
+        private int yokaiVenoctMedalsToFarm;
+        private int yokaiVenoctZoneChoice;
+        private int yokaiWhisperMedalsToFarm;
+        private int yokaiWhisperZoneChoice;
         private bool zoneChangingEnabled;
         private Dictionary<uint, uint> zoneLevels;
-        private int yokaiJibanyanMedalsToFarm;
-        private int yokaiKomasanMedalsToFarm;
-        private int yokaiUsapyonMedalsToFarm;
-        private int yokaiWhisperMedalsToFarm;
-        private int yokaiShogunyanMedalsToFarm;
-        private int yokaiHovernyanMedalsToFarm;
-        private int yokaiKomajiroMedalsToFarm;
-        private int yokaiNokoMedalsToFarm;
-        private int yokaiVenoctMedalsToFarm;
-        private int yokaiKyubiMedalsToFarm;
-        private int yokaiRobonyanMedalsToFarm;
-        private int yokaiBlizzariaMedalsToFarm;
-        private int yokaiManjimuttMedalsToFarm;
-        private int yokaiJibanyanZoneChoice;
-        private int yokaiKomasanZoneChoice;
-        private int yokaiManjimuttZoneChoice;
-        private int yokaiBlizzariaZoneChoice;
-        private int yokaiKyubiZoneChoice;
-        private int yokaiUsapyonZoneChoice;
-        private int yokaiWhisperZoneChoice;
-        private int yokaiShogunyanZoneChoice;
-        private int yokaiHovernyanZoneChoice;
-        private int yokaiKomajiroZoneChoice;
-        private int yokaiNokoZoneChoice;
-        private int yokaiVenoctZoneChoice;
-        private int yokaiRobonyanZoneChoice;
 
         private OracleSettings() : base(Path.Combine(SettingsPath, @"Oracle\OracleSettings.json"))
         {
@@ -881,6 +880,422 @@ namespace Oracle.Settings
             }
         }
 
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiBlizzariaMedalsToFarm
+        {
+            get
+            {
+                return yokaiBlizzariaMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiBlizzariaMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiBlizzariaZoneChoice
+        {
+            get
+            {
+                return yokaiBlizzariaZoneChoice;
+            }
+
+            set
+            {
+                yokaiBlizzariaZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiHovernyanMedalsToFarm
+        {
+            get
+            {
+                return yokaiHovernyanMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiHovernyanMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiHovernyanZoneChoice
+        {
+            get
+            {
+                return yokaiHovernyanZoneChoice;
+            }
+
+            set
+            {
+                yokaiHovernyanZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiJibanyanMedalsToFarm
+        {
+            get
+            {
+                return yokaiJibanyanMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiJibanyanMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiJibanyanZoneChoice
+        {
+            get
+            {
+                return yokaiJibanyanZoneChoice;
+            }
+
+            set
+            {
+                yokaiJibanyanZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiKomajiroMedalsToFarm
+        {
+            get
+            {
+                return yokaiKomajiroMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiKomajiroMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiKomajiroZoneChoice
+        {
+            get
+            {
+                return yokaiKomajiroZoneChoice;
+            }
+
+            set
+            {
+                yokaiKomajiroZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiKomasanMedalsToFarm
+        {
+            get
+            {
+                return yokaiKomasanMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiKomasanMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiKomasanZoneChoice
+        {
+            get
+            {
+                return yokaiKomasanZoneChoice;
+            }
+
+            set
+            {
+                yokaiKomasanZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiKyubiMedalsToFarm
+        {
+            get
+            {
+                return yokaiKyubiMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiKyubiMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiKyubiZoneChoice
+        {
+            get
+            {
+                return yokaiKyubiZoneChoice;
+            }
+
+            set
+            {
+                yokaiKyubiZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiManjimuttMedalsToFarm
+        {
+            get
+            {
+                return yokaiManjimuttMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiManjimuttMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiManjimuttZoneChoice
+        {
+            get
+            {
+                return yokaiManjimuttZoneChoice;
+            }
+
+            set
+            {
+                yokaiManjimuttZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiNokoMedalsToFarm
+        {
+            get
+            {
+                return yokaiNokoMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiNokoMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiNokoZoneChoice
+        {
+            get
+            {
+                return yokaiNokoZoneChoice;
+            }
+
+            set
+            {
+                yokaiNokoZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiRobonyanMedalsToFarm
+        {
+            get
+            {
+                return yokaiRobonyanMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiRobonyanMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiRobonyanZoneChoice
+        {
+            get
+            {
+                return yokaiRobonyanZoneChoice;
+            }
+
+            set
+            {
+                yokaiRobonyanZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiShogunyanMedalsToFarm
+        {
+            get
+            {
+                return yokaiShogunyanMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiShogunyanMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiShogunyanZoneChoice
+        {
+            get
+            {
+                return yokaiShogunyanZoneChoice;
+            }
+
+            set
+            {
+                yokaiShogunyanZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiUsapyonMedalsToFarm
+        {
+            get
+            {
+                return yokaiUsapyonMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiUsapyonMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiUsapyonZoneChoice
+        {
+            get
+            {
+                return yokaiUsapyonZoneChoice;
+            }
+
+            set
+            {
+                yokaiUsapyonZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiVenoctMedalsToFarm
+        {
+            get
+            {
+                return yokaiVenoctMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiVenoctMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiVenoctZoneChoice
+        {
+            get
+            {
+                return yokaiVenoctZoneChoice;
+            }
+
+            set
+            {
+                yokaiVenoctZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiWhisperMedalsToFarm
+        {
+            get
+            {
+                return yokaiWhisperMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiWhisperMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(3)]
+        [Setting]
+        public int YokaiWhisperZoneChoice
+        {
+            get
+            {
+                return yokaiWhisperZoneChoice;
+            }
+
+            set
+            {
+                yokaiWhisperZoneChoice = value;
+                Save();
+            }
+        }
+
         [DefaultValue(true)]
         [Setting]
         public bool ZoneChangingEnabled
@@ -908,422 +1323,6 @@ namespace Oracle.Settings
             set
             {
                 zoneLevels = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(0)]
-        [Setting]
-        public int YokaiJibanyanMedalsToFarm
-        {
-            get
-            {
-                return yokaiJibanyanMedalsToFarm;
-            }
-
-            set
-            {
-                yokaiJibanyanMedalsToFarm = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(0)]
-        [Setting]
-        public int YokaiKomasanMedalsToFarm
-        {
-            get
-            {
-                return yokaiKomasanMedalsToFarm;
-            }
-
-            set
-            {
-                yokaiKomasanMedalsToFarm = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(0)]
-        [Setting]
-        public int YokaiUsapyonMedalsToFarm
-        {
-            get
-            {
-                return yokaiUsapyonMedalsToFarm;
-            }
-
-            set
-            {
-                yokaiUsapyonMedalsToFarm = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(0)]
-        [Setting]
-        public int YokaiWhisperMedalsToFarm
-        {
-            get
-            {
-                return yokaiWhisperMedalsToFarm;
-            }
-
-            set
-            {
-                yokaiWhisperMedalsToFarm = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(0)]
-        [Setting]
-        public int YokaiShogunyanMedalsToFarm
-        {
-            get
-            {
-                return yokaiShogunyanMedalsToFarm;
-            }
-
-            set
-            {
-                yokaiShogunyanMedalsToFarm = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(0)]
-        [Setting]
-        public int YokaiHovernyanMedalsToFarm
-        {
-            get
-            {
-                return yokaiHovernyanMedalsToFarm;
-            }
-
-            set
-            {
-                yokaiHovernyanMedalsToFarm = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(0)]
-        [Setting]
-        public int YokaiKomajiroMedalsToFarm
-        {
-            get
-            {
-                return yokaiKomajiroMedalsToFarm;
-            }
-
-            set
-            {
-                yokaiKomajiroMedalsToFarm = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(0)]
-        [Setting]
-        public int YokaiNokoMedalsToFarm
-        {
-            get
-            {
-                return yokaiNokoMedalsToFarm;
-            }
-
-            set
-            {
-                yokaiNokoMedalsToFarm = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(0)]
-        [Setting]
-        public int YokaiVenoctMedalsToFarm
-        {
-            get
-            {
-                return yokaiVenoctMedalsToFarm;
-            }
-
-            set
-            {
-                yokaiVenoctMedalsToFarm = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(0)]
-        [Setting]
-        public int YokaiKyubiMedalsToFarm
-        {
-            get
-            {
-                return yokaiKyubiMedalsToFarm;
-            }
-
-            set
-            {
-                yokaiKyubiMedalsToFarm = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(0)]
-        [Setting]
-        public int YokaiRobonyanMedalsToFarm
-        {
-            get
-            {
-                return yokaiRobonyanMedalsToFarm;
-            }
-
-            set
-            {
-                yokaiRobonyanMedalsToFarm = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(0)]
-        [Setting]
-        public int YokaiBlizzariaMedalsToFarm
-        {
-            get
-            {
-                return yokaiBlizzariaMedalsToFarm;
-            }
-
-            set
-            {
-                yokaiBlizzariaMedalsToFarm = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(0)]
-        [Setting]
-        public int YokaiManjimuttMedalsToFarm
-        {
-            get
-            {
-                return yokaiManjimuttMedalsToFarm;
-            }
-
-            set
-            {
-                yokaiManjimuttMedalsToFarm = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(1)]
-        [Setting]
-        public int YokaiJibanyanZoneChoice
-        {
-            get
-            {
-                return yokaiJibanyanZoneChoice;
-            }
-
-            set
-            {
-                yokaiJibanyanZoneChoice = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(1)]
-        [Setting]
-        public int YokaiKomasanZoneChoice
-        {
-            get
-            {
-                return yokaiKomasanZoneChoice;
-            }
-
-            set
-            {
-                yokaiKomasanZoneChoice = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(1)]
-        [Setting]
-        public int YokaiUsapyonZoneChoice
-        {
-            get
-            {
-                return yokaiUsapyonZoneChoice;
-            }
-
-            set
-            {
-                yokaiUsapyonZoneChoice = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(3)]
-        [Setting]
-        public int YokaiWhisperZoneChoice
-        {
-            get
-            {
-                return yokaiWhisperZoneChoice;
-            }
-
-            set
-            {
-                yokaiWhisperZoneChoice = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(1)]
-        [Setting]
-        public int YokaiShogunyanZoneChoice
-        {
-            get
-            {
-                return yokaiShogunyanZoneChoice;
-            }
-
-            set
-            {
-                yokaiShogunyanZoneChoice = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(1)]
-        [Setting]
-        public int YokaiHovernyanZoneChoice
-        {
-            get
-            {
-                return yokaiHovernyanZoneChoice;
-            }
-
-            set
-            {
-                yokaiHovernyanZoneChoice = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(1)]
-        [Setting]
-        public int YokaiKomajiroZoneChoice
-        {
-            get
-            {
-                return yokaiKomajiroZoneChoice;
-            }
-
-            set
-            {
-                yokaiKomajiroZoneChoice = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(1)]
-        [Setting]
-        public int YokaiNokoZoneChoice
-        {
-            get
-            {
-                return yokaiNokoZoneChoice;
-            }
-
-            set
-            {
-                yokaiNokoZoneChoice = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(1)]
-        [Setting]
-        public int YokaiVenoctZoneChoice
-        {
-            get
-            {
-                return yokaiVenoctZoneChoice;
-            }
-
-            set
-            {
-                yokaiVenoctZoneChoice = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(1)]
-        [Setting]
-        public int YokaiKyubiZoneChoice
-        {
-            get
-            {
-                return yokaiKyubiZoneChoice;
-            }
-
-            set
-            {
-                yokaiKyubiZoneChoice = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(1)]
-        [Setting]
-        public int YokaiRobonyanZoneChoice
-        {
-            get
-            {
-                return yokaiRobonyanZoneChoice;
-            }
-
-            set
-            {
-                yokaiRobonyanZoneChoice = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(1)]
-        [Setting]
-        public int YokaiBlizzariaZoneChoice
-        {
-            get
-            {
-                return yokaiBlizzariaZoneChoice;
-            }
-
-            set
-            {
-                yokaiBlizzariaZoneChoice = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(1)]
-        [Setting]
-        public int YokaiManjimuttZoneChoice
-        {
-            get
-            {
-                return yokaiManjimuttZoneChoice;
-            }
-
-            set
-            {
-                yokaiManjimuttZoneChoice = value;
                 Save();
             }
         }

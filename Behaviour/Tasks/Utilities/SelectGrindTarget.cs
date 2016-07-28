@@ -38,8 +38,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 if (!WorldManager.CanFly)
                 {
                     var navRequest = targets.Select(target => new CanFullyNavigateTarget {Id = target.ObjectId, Position = target.Location});
-                    var navResults =
-                        await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+                    var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
 
                     var viableTargets = new Dictionary<BattleCharacter, float>();
                     foreach (var result in navResults)
@@ -50,8 +49,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                             if (blacklistEntry == null)
                             {
                                 var mob = GameObjectManager.GetObjectByObjectId(result.Id);
-                                Logger.SendDebugLog("Blacklisting " + mob.Name + " (" + mob.ObjectId.ToString("X")
-                                                    + "). It can't be navigated to.");
+                                Logger.SendDebugLog("Blacklisting " + mob.Name + " (" + mob.ObjectId.ToString("X") + "). It can't be navigated to.");
                                 Blacklist.Add(mob, BlacklistFlags.Combat, TimeSpan.FromMinutes(15), "Can't navigate to mob.");
                             }
                         }
@@ -86,8 +84,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
         private static bool MobFilter(BattleCharacter battleCharacter)
         {
-            if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible
-                || battleCharacter.CurrentHealthPercent <= 0f)
+            if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible || battleCharacter.CurrentHealthPercent <= 0f)
             {
                 return false;
             }

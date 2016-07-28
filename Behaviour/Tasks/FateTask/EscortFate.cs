@@ -24,47 +24,6 @@ namespace Oracle.Behaviour.Tasks.FateTask
         private static TimeSpan? movementCooldown;
         private static Stopwatch movementTimer;
 
-        public static async Task<bool> Main()
-        {
-            var currentFate = OracleFateManager.GetCurrentFateData();
-            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
-
-            if (currentFate == null || currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
-            {
-                await ClearFate();
-                return true;
-            }
-
-            if (movementTimer == null)
-            {
-                movementTimer = Stopwatch.StartNew();
-            }
-
-            if (movementCooldown == null)
-            {
-                movementCooldown = GetRandomTimeSpan();
-            }
-
-            if (currentFate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
-            {
-                SelectTarget();
-            }
-            else if (currentFate.Status != FateStatus.NOTACTIVE)
-            {
-                var escortNpc = GameObjectManager.GetObjectByNPCId(oracleFate.NpcId)
-                                ?? GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
-
-                if (escortNpc == null)
-                {
-                    await MoveToFateCentre();
-                    return true;
-                }
-                await MoveToNpc(escortNpc);
-            }
-
-            return true;
-        }
-
         private static bool AnyViableTargets()
         {
             return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableTarget).Any();
@@ -124,6 +83,48 @@ namespace Oracle.Behaviour.Tasks.FateTask
             return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleFateManager.CurrentFateId;
         }
 
+        public static async Task<bool> Main()
+        {
+            var currentFate = OracleFateManager.GetCurrentFateData();
+            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
+
+            if (currentFate == null || currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
+            {
+                await ClearFate();
+                return true;
+            }
+
+            if (movementTimer == null)
+            {
+                movementTimer = Stopwatch.StartNew();
+            }
+
+            if (movementCooldown == null)
+            {
+                movementCooldown = GetRandomTimeSpan();
+            }
+
+            if (currentFate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
+            {
+                SelectTarget();
+            }
+            else if (currentFate.Status != FateStatus.NOTACTIVE)
+            {
+                var escortNpc = GameObjectManager.GetObjectByNPCId(oracleFate.NpcId)
+                                ?? GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
+
+                if (escortNpc == null)
+                {
+                    await MoveToFateCentre();
+                    return true;
+                }
+
+                await MoveToNpc(escortNpc);
+            }
+
+            return true;
+        }
+
         private static async Task<bool> MoveToFateCentre()
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
@@ -166,8 +167,8 @@ namespace Oracle.Behaviour.Tasks.FateTask
             var rng = new Random();
             const float radius = 3f;
             const float radiusSquared = radius * radius;
-            var xOffset = Convert.ToSingle(((2 * rng.NextDouble()) - 1.0) * radius);
-            var zOffset = Convert.ToSingle(((2 * rng.NextDouble()) - 1.0) * Math.Sqrt(radiusSquared - (xOffset * xOffset)));
+            var xOffset = Convert.ToSingle((2 * rng.NextDouble() - 1.0) * radius);
+            var zOffset = Convert.ToSingle((2 * rng.NextDouble() - 1.0) * Math.Sqrt(radiusSquared - xOffset * xOffset));
             var location = new Vector3(npc.Location.X + xOffset, npc.Location.Y, npc.Location.Z + zOffset);
 
             Logger.SendDebugLog("NPC Location: " + npc.Location + ", Moving to: " + location);

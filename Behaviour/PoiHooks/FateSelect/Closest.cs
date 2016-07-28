@@ -19,11 +19,10 @@ namespace Oracle.Behaviour.PoiHooks.FateSelect
             }
 
             var activeFates = await OracleFateManager.GetActiveFateDistances();
-            var closestFates =
-                activeFates.OrderBy(kvp => kvp.Value - (kvp.Key.Radius * 0.75)).Where(fate => OracleFateManager.FateFilter(fate.Key));
+            var closestFates = activeFates.OrderBy(kvp => kvp.Value - kvp.Key.Radius * 0.75).Where(fate => OracleFateManager.FateFilter(fate.Key));
             foreach (var fate in closestFates)
             {
-                var distance = Math.Round(fate.Value - (fate.Key.Radius * 0.75f), 0);
+                var distance = Math.Round(fate.Value - fate.Key.Radius * 0.75f, 0);
 
                 if (distance > 0)
                 {

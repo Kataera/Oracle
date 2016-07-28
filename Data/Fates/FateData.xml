@@ -1607,7 +1607,7 @@
     <Level>49</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-	<PreferredTargetId>1506</PreferredTargetId>
+    <PreferredTargetId>1506</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>431</ID>
@@ -1638,7 +1638,7 @@
     <Level>32</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-	<PreferredTargetId>884</PreferredTargetId>
+    <PreferredTargetId>884</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>437</ID>
@@ -3228,7 +3228,7 @@
     <Level>54</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-	<LandingRadius>0.6</LandingRadius>
+    <LandingRadius>0.6</LandingRadius>
   </Fate>
   <Fate>
     <ID>728</ID>
@@ -3259,7 +3259,7 @@
     <Level>54</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-	<LandingRadius>0.5</LandingRadius>
+    <LandingRadius>0.5</LandingRadius>
   </Fate>
   <Fate>
     <ID>736</ID>
@@ -3325,7 +3325,7 @@
     <Level>55</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
-	<LandingRadius>0.5</LandingRadius>
+    <LandingRadius>0.5</LandingRadius>
   </Fate>
   <Fate>
     <ID>748</ID>

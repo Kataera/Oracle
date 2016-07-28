@@ -24,6 +24,49 @@ namespace Oracle.Behaviour.PoiHooks
     {
         private static Stopwatch chainFateTimer;
 
+        private static bool IsFatePoiSet()
+        {
+            if (Poi.Current.Type != PoiType.Fate || Poi.Current.Fate.Id != OracleFateManager.GetCurrentFateData().Id)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool IsFateSet()
+        {
+            if (OracleFateManager.CurrentFateId == 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool IsFateTypeEnabled(Fate oracleFate)
+        {
+            switch (oracleFate.Type)
+            {
+                case FateType.Kill:
+                    return OracleSettings.Instance.KillFatesEnabled;
+                case FateType.Collect:
+                    return OracleSettings.Instance.CollectFatesEnabled;
+                case FateType.Escort:
+                    return OracleSettings.Instance.EscortFatesEnabled;
+                case FateType.Defence:
+                    return OracleSettings.Instance.DefenceFatesEnabled;
+                case FateType.Boss:
+                    return OracleSettings.Instance.BossFatesEnabled;
+                case FateType.MegaBoss:
+                    return OracleSettings.Instance.MegaBossFatesEnabled;
+                case FateType.Null:
+                    return true;
+            }
+
+            return true;
+        }
+
         public static async Task<bool> Main()
         {
             if (CommonBehaviors.IsLoading)
@@ -66,57 +109,13 @@ namespace Oracle.Behaviour.PoiHooks
                 await SelectFate();
             }
 
-            if (OracleFateManager.GetCurrentFateData() != null && OracleSettings.Instance.FateDelayMovement
-                && !OracleFateManager.DoNotWaitBeforeMovingFlag)
+            if (OracleFateManager.GetCurrentFateData() != null && OracleSettings.Instance.FateDelayMovement && !OracleFateManager.DoNotWaitBeforeMovingFlag)
             {
                 await WaitBeforeMoving();
             }
 
             OracleFateManager.DoNotWaitBeforeMovingFlag = false;
             return IsFateSet() && IsFatePoiSet();
-        }
-
-        private static bool IsFatePoiSet()
-        {
-            if (Poi.Current.Type != PoiType.Fate || Poi.Current.Fate.Id != OracleFateManager.GetCurrentFateData().Id)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private static bool IsFateSet()
-        {
-            if (OracleFateManager.CurrentFateId == 0)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private static bool IsFateTypeEnabled(Fate oracleFate)
-        {
-            switch (oracleFate.Type)
-            {
-                case FateType.Kill:
-                    return OracleSettings.Instance.KillFatesEnabled;
-                case FateType.Collect:
-                    return OracleSettings.Instance.CollectFatesEnabled;
-                case FateType.Escort:
-                    return OracleSettings.Instance.EscortFatesEnabled;
-                case FateType.Defence:
-                    return OracleSettings.Instance.DefenceFatesEnabled;
-                case FateType.Boss:
-                    return OracleSettings.Instance.BossFatesEnabled;
-                case FateType.MegaBoss:
-                    return OracleSettings.Instance.MegaBossFatesEnabled;
-                case FateType.Null:
-                    return true;
-            }
-
-            return true;
         }
 
         private static bool PreviousFateChained()

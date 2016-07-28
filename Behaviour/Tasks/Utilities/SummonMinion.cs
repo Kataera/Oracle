@@ -13,10 +13,19 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class SummonMinion
     {
-        private static void RefreshObjectManagerCache()
+        public static async Task<bool> IsMinionSummoned(string minionName)
         {
-            GameObjectManager.Clear();
-            GameObjectManager.Update();
+            if (Core.Player.IsMounted)
+            {
+                return true;
+            }
+
+            // Ensure GameObjectManager data is fresh.
+            RefreshObjectManagerCache();
+
+            // For some reason, the player's minion always has an ObjectId of 1.
+            var minionObject = GameObjectManager.GetObjectByObjectId(1);
+            return minionObject != null && minionObject.EnglishName.Equals(minionName);
         }
 
         public static async Task<SummonMinionResult> Main(string minionName)
@@ -59,19 +68,10 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return SummonMinionResult.NoMinionActive;
         }
 
-        public static async Task<bool> IsMinionSummoned(string minionName)
+        private static void RefreshObjectManagerCache()
         {
-            if (Core.Player.IsMounted)
-            {
-                return true;
-            }
-
-            // Ensure GameObjectManager data is fresh.
-            RefreshObjectManagerCache();
-
-            // For some reason, the player's minion always has an ObjectId of 1.
-            var minionObject = GameObjectManager.GetObjectByObjectId(1);
-            return minionObject != null && minionObject.EnglishName.Equals(minionName);
+            GameObjectManager.Clear();
+            GameObjectManager.Update();
         }
     }
 

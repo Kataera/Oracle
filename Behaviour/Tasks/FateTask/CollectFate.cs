@@ -21,6 +21,25 @@ namespace Oracle.Behaviour.Tasks.FateTask
 {
     internal static class CollectFate
     {
+        private static bool AnyViableTargets()
+        {
+            return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableTarget).Any();
+        }
+
+        private static async Task ClearFate()
+        {
+            // Band-aid fix to stop a bug where the bot waits after turning in last items when FATE ends.
+            // TODO: Look into why this is happening and fix properly.
+            await LevelSync.DesyncLevel();
+
+            await OracleFateManager.ClearCurrentFate("Current FATE is ending or is finished.");
+        }
+
+        private static bool IsViableTarget(BattleCharacter target)
+        {
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleFateManager.CurrentFateId;
+        }
+
         public static async Task<bool> Main()
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
@@ -78,25 +97,6 @@ namespace Oracle.Behaviour.Tasks.FateTask
             }
 
             return true;
-        }
-
-        private static bool AnyViableTargets()
-        {
-            return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableTarget).Any();
-        }
-
-        private static async Task ClearFate()
-        {
-            // Band-aid fix to stop a bug where the bot waits after turning in last items when FATE ends.
-            // TODO: Look into why this is happening and fix properly.
-            await LevelSync.DesyncLevel();
-
-            await OracleFateManager.ClearCurrentFate("Current FATE is ending or is finished.");
-        }
-
-        private static bool IsViableTarget(BattleCharacter target)
-        {
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleFateManager.CurrentFateId;
         }
 
         private static async Task<bool> MoveToTurnInNpc(GameObject turnInNpc)

@@ -12,6 +12,12 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class LevelSync
     {
+        public static async Task<bool> DesyncLevel()
+        {
+            ToDoList.LevelSync();
+            return true;
+        }
+
         public static bool IsLevelSyncNeeded(FateData fate)
         {
             if (!fate.IsValid || fate.Status == FateStatus.NOTACTIVE || fate.Status == FateStatus.COMPLETE)
@@ -35,13 +41,6 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 Logger.SendLog("Synced to level " + fate.MaxLevel + " to participate in FATE.");
             }
 
-            return true;
-        }
-
-        public static async Task<bool> DesyncLevel()
-        {
-
-            ToDoList.LevelSync();
             return true;
         }
     }

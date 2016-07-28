@@ -14,6 +14,20 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class TurnInItem
     {
+        private static BagSlot GetBagSlotFromItemId(uint itemId)
+        {
+            BagSlot bagSlot = null;
+            foreach (var bagslot in InventoryManager.FilledSlots)
+            {
+                if (bagslot.TrueItemId == itemId)
+                {
+                    bagSlot = bagslot;
+                }
+            }
+
+            return bagSlot;
+        }
+
         public static async Task<bool> Main()
         {
             if (!Request.IsOpen)
@@ -52,20 +66,6 @@ namespace Oracle.Behaviour.Tasks.Utilities
             await Coroutine.Sleep(OracleSettings.Instance.ActionDelay);
 
             return true;
-        }
-
-        private static BagSlot GetBagSlotFromItemId(uint itemId)
-        {
-            BagSlot bagSlot = null;
-            foreach (var bagslot in InventoryManager.FilledSlots)
-            {
-                if (bagslot.TrueItemId == itemId)
-                {
-                    bagSlot = bagslot;
-                }
-            }
-
-            return bagSlot;
         }
     }
 }
