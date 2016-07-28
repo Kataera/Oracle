@@ -51,9 +51,11 @@ namespace Oracle.Behaviour.Tasks
                 lastHpValue = mostRecentBc.CurrentHealth;
             }
 
-            if (noDamageTimeout.Elapsed > TimeSpan.FromSeconds(OracleSettings.Instance.CombatNoDamageTimeout))
+            if (noDamageTimeout.Elapsed > TimeSpan.FromSeconds(OracleSettings.Instance.CombatNoDamageTimeout)
+                && currentBc.CurrentTargetId != Core.Player.ObjectId && currentBc.IsValid && !currentBc.IsDead)
             {
-                OracleFateManager.ClearPoi("Mob's HP has not changed in " + OracleSettings.Instance.CombatNoDamageTimeout + " seconds, blacklisting and selecting a new mob.");
+                OracleFateManager.ClearPoi("Mob's HP has not changed in " + OracleSettings.Instance.CombatNoDamageTimeout
+                                           + " seconds, blacklisting and selecting a new mob.");
                 Blacklist.Add(currentBc, BlacklistFlags.Combat, TimeSpan.FromMinutes(30), "No damage taken timeout triggered.");
                 mostRecentBc = null;
                 noDamageTimeout = null;

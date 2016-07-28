@@ -250,6 +250,8 @@ namespace Oracle.Behaviour.Modes
                         ignoreNoko = true;
                     }
                 }
+
+                await TeleportIfNeeded(GetMedalZone(Yokai.Noko));
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Venoct.MedalItemId, OracleSettings.Instance.YokaiVenoctMedalsToFarm) && !ignoreVenoct)
             {
@@ -356,12 +358,7 @@ namespace Oracle.Behaviour.Modes
         {
             if (!Core.Player.InCombat && WorldManager.ZoneId != zone)
             {
-                var aetheryte = WorldManager.AetheryteIdsForZone(zone).FirstOrDefault();
-                if (aetheryte != null)
-                {
-                    var aetheryteId = aetheryte.Item1;
-                    await Teleport.TeleportToAetheryte(aetheryteId);
-                }
+                await ZoneChangeHandler.HandleZoneChange(zone);
             }
         }
     }

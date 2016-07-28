@@ -615,6 +615,7 @@
     <Level>26</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <PreferredTargetId>1242</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>196</ID>
@@ -2165,7 +2166,7 @@
     <Name>Bad Hair Day</Name>
     <Level>42</Level>
     <Type>&Boss;</Type>
-    <OracleSupport>&FullSupport;</OracleSupport>
+    <OracleSupport>&Problematic;</OracleSupport>
   </Fate>
   <Fate>
     <ID>543</ID>
