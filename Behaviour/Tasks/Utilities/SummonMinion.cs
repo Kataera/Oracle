@@ -30,17 +30,13 @@ namespace Oracle.Behaviour.Tasks.Utilities
                     Logger.SendLog(minionName + " has been summoned successfully!");
                     return true;
                 }
-                else
-                {
-                    Logger.SendLog("The wrong minion is currently active, assuming " + minionName + " has not been learned yet.");
-                    return false;
-                }
-            }
-            else
-            {
-                Logger.SendErrorLog("No pet active, assuming " + minionName + " has not been learned yet.");
+
+                Logger.SendLog("The wrong minion is currently active, assuming " + minionName + " has not been learned yet.");
                 return false;
             }
+
+            Logger.SendErrorLog("No pet active, assuming " + minionName + " has not been learned yet.");
+            return false;
         }
     }
 }

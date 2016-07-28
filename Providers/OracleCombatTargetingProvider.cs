@@ -208,7 +208,8 @@ namespace Oracle.Providers
                 weight += 130;
             }
 
-            if (PlayerIsMelee())
+            // Prefer nearer targets in combat if melee, and always out of combat.
+            if (PlayerIsMelee() || !Core.Player.InCombat)
             {
                 weight-= battleCharacter.Distance(Core.Player) * 50;
             }
