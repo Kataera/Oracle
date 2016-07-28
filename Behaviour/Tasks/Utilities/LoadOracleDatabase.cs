@@ -43,7 +43,6 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
         public static async Task<bool> Main()
         {
-            // Make sure we actually need to populate the data, since XML parsing is very expensive.
             if (OracleFateManager.OracleDatabase != null)
             {
                 return true;
@@ -58,16 +57,18 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
         private static async Task SerialiseFateData()
         {
-            Logger.SendDebugLog("Generating FateData.json");
+            Logger.SendDebugLog("Parsing XML data for conversion.");
+            var fateDb = await XmlParser.GetFateDatabase();
 
             try
             {
-                var json = JsonConvert.SerializeObject(OracleFateManager.OracleDatabase, Formatting.None);
+                Logger.SendDebugLog("Generating FateData.json");
+                var json = JsonConvert.SerializeObject(fateDb, Formatting.None);
                 File.WriteAllText(GlobalSettings.Instance.BotBasePath + @"\Oracle\Data\Fates\FateData.json", json);
             }
             catch (Exception e)
             {
-                Logger.SendErrorLog("Could not save mesh. Exception:\n" + e);
+                Logger.SendErrorLog("Could not save data. Exception:\n" + e);
             }
         }
     }

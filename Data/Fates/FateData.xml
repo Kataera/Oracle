@@ -2548,7 +2548,7 @@
     <Name>The Squirrel Trapper's Wife</Name>
     <Level>43</Level>
     <Type>&Boss;</Type>
-    <OracleSupport>&FullSupport;</OracleSupport>
+    <OracleSupport>&Problematic;</OracleSupport>
   </Fate>
   <Fate>
     <ID>610</ID>
