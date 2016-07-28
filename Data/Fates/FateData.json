@@ -2656,7 +2656,9 @@
       "Level": 49,
       "Name": "Return to Cinder",
       "NpcId": 0,
-      "PreferredTargetId": [],
+      "PreferredTargetId": [
+        1506
+      ],
       "SupportLevel": 0,
       "Type": 4
     },

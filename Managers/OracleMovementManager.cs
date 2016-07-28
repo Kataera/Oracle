@@ -180,6 +180,7 @@ namespace Oracle.Managers
                     {
                         Navigator.PlayerMover.MoveStop();
                         OracleFateManager.ClearPoi("FATE found.");
+                        return true;
                     }
 
                     Logger.SendLog("Flying to hop: " + processedStep);
@@ -548,6 +549,7 @@ namespace Oracle.Managers
                 {
                     Navigator.Stop();
                     OracleFateManager.ClearPoi("FATE found.");
+                    return true;
                 }
 
                 Navigator.MoveTo(location);

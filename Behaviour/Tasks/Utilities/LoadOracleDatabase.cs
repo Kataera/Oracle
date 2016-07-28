@@ -62,7 +62,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             try
             {
-                var json = JsonConvert.SerializeObject(OracleFateManager.OracleDatabase, Formatting.Indented);
+                var json = JsonConvert.SerializeObject(OracleFateManager.OracleDatabase, Formatting.None);
                 File.WriteAllText(GlobalSettings.Instance.BotBasePath + @"\Oracle\Data\Fates\FateData.json", json);
             }
             catch (Exception e)

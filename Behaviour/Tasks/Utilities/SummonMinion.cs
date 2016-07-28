@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 
 using Buddy.Coroutines;
 
+using ff14bot;
+using ff14bot.Behavior;
 using ff14bot.Managers;
 
 using Oracle.Helpers;
@@ -11,15 +13,33 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class SummonMinion
     {
-        public static async Task<bool> Main(string minionName)
+        private static void RefreshObjectManagerCache()
         {
-            Logger.SendDebugLog("Summoning " + minionName + ".");
+            GameObjectManager.Clear();
+            GameObjectManager.Update();
+        }
+
+        public static async Task<SummonMinionResult> Main(string minionName)
+        {
+            Logger.SendLog("Summoning " + minionName + ".");
+
+            if (Core.Player.IsMounted)
+            {
+                await CommonTasks.StopAndDismount();
+            }
+
+            if (GameObjectManager.GetObjectByObjectId(1) != null)
+            {
+                ChatManager.SendChat("/minion");
+                await Coroutine.Wait(TimeSpan.FromSeconds(5), () => GameObjectManager.GetObjectByObjectId(1) == null);
+            }
 
             // Only way to summon minion with current RebornBuddy API is through a chat command.
-            ChatManager.SendChat("/minion");
-            await Coroutine.Sleep(TimeSpan.FromSeconds(1));
             ChatManager.SendChat("/minion \"" + minionName + "\"");
-            await Coroutine.Sleep(TimeSpan.FromSeconds(5));
+            await Coroutine.Wait(TimeSpan.FromSeconds(5), () => GameObjectManager.GetObjectByObjectId(1) != null);
+
+            // Ensure GameObjectManager data is fresh.
+            RefreshObjectManagerCache();
 
             // For some reason, the player's minion always has an ObjectId of 1.
             var minionObject = GameObjectManager.GetObjectByObjectId(1);
@@ -28,15 +48,39 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 if (minionObject.EnglishName.Equals(minionName))
                 {
                     Logger.SendLog(minionName + " has been summoned successfully!");
-                    return true;
+                    return SummonMinionResult.Success;
                 }
 
-                Logger.SendLog("The wrong minion is currently active, assuming " + minionName + " has not been learned yet.");
-                return false;
+                Logger.SendLog("The wrong minion is currently active, expected " + minionName + ".");
+                return SummonMinionResult.WrongMinionActive;
             }
 
-            Logger.SendErrorLog("No pet active, assuming " + minionName + " has not been learned yet.");
-            return false;
+            Logger.SendErrorLog("No minion active, expected " + minionName + ".");
+            return SummonMinionResult.NoMinionActive;
         }
+
+        public static async Task<bool> IsMinionSummoned(string minionName)
+        {
+            if (Core.Player.IsMounted)
+            {
+                return true;
+            }
+
+            // Ensure GameObjectManager data is fresh.
+            RefreshObjectManagerCache();
+
+            // For some reason, the player's minion always has an ObjectId of 1.
+            var minionObject = GameObjectManager.GetObjectByObjectId(1);
+            return minionObject != null && minionObject.EnglishName.Equals(minionName);
+        }
+    }
+
+    internal enum SummonMinionResult
+    {
+        Success,
+
+        WrongMinionActive,
+
+        NoMinionActive
     }
 }

@@ -156,6 +156,7 @@
     <Compile Include="Behaviour\Tasks\Utilities\Mount.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SummonMinion.cs" />
     <Compile Include="Data\YokaiMinion.cs" />
+    <Compile Include="Enumerations\Yokai.cs" />
     <Compile Include="Managers\OracleMovementManager.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SelectGrindTarget.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\Teleport.cs" />

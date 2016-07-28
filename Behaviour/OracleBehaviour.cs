@@ -74,6 +74,9 @@ namespace Oracle.Behaviour
                 case OracleOperationMode.AnimaGrind:
                     await AnimaGrind.Main();
                     break;
+                case OracleOperationMode.YokaiWatchGrind:
+                    await YokaiWatchGrind.Main();
+                    break;
             }
 
             // Always return false to not block the tree.
