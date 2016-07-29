@@ -38,7 +38,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 await Coroutine.Yield();
             }
 
-            await Coroutine.Sleep(OracleSettings.Instance.ActionDelay);
+            await Coroutine.Sleep(MainSettings.Instance.ActionDelay);
             return true;
         }
     }

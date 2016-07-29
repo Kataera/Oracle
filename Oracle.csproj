@@ -206,8 +206,13 @@
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs" />
     <Compile Include="Providers\OracleCombatTargetingProvider.cs" />
-    <Compile Include="Settings\OracleSettings.cs" />
+    <Compile Include="Settings\BlacklistSettings.cs" />
+    <Compile Include="Settings\WaitSettings.cs" />
+    <Compile Include="Settings\FateSettings.cs" />
+    <Compile Include="Settings\MainSettings.cs" />
     <Compile Include="OracleBot.cs" />
+    <Compile Include="Settings\MovementSettings.cs" />
+    <Compile Include="Settings\YokaiSettings.cs" />
     <Compile Include="UI\App.xaml.cs" />
     <Compile Include="UI\Pages\Domain\SpecificFateGridViewModel.cs" />
     <Compile Include="UI\Pages\Domain\FateViewModel.cs" />

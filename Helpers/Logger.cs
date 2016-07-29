@@ -9,22 +9,20 @@ namespace Oracle.Helpers
     internal static class Logger
     {
         private static readonly Color LoggerDebugColour = Color.FromRgb(238, 223, 88);
-
         private static readonly Color LoggerErrorColour = Color.FromRgb(255, 25, 117);
-
         private static readonly Color LoggerRegularColour = Color.FromRgb(179, 179, 255);
-        private static string LastLog;
+        private static string lastLog;
 
         internal static void SendDebugLog(string log)
         {
             log = "[Oracle v" + OracleBot.Version + "] [DEBUG]: " + log;
 
-            if (log.Equals(LastLog))
+            if (log.Equals(lastLog))
             {
                 return;
             }
 
-            if (!OracleSettings.Instance.DebugEnabled)
+            if (!MainSettings.Instance.DebugEnabled)
             {
                 Logging.WriteQuiet(LoggerDebugColour, log);
             }
@@ -33,33 +31,33 @@ namespace Oracle.Helpers
                 Logging.Write(LoggerDebugColour, log);
             }
 
-            LastLog = log;
+            lastLog = log;
         }
 
         internal static void SendErrorLog(string log)
         {
             log = "[Oracle v" + OracleBot.Version + "] [ERROR]: " + log;
 
-            if (log.Equals(LastLog))
+            if (log.Equals(lastLog))
             {
                 return;
             }
 
             Logging.Write(LoggerErrorColour, log);
-            LastLog = log;
+            lastLog = log;
         }
 
         internal static void SendLog(string log)
         {
             log = "[Oracle v" + OracleBot.Version + "]: " + log;
 
-            if (log.Equals(LastLog))
+            if (log.Equals(lastLog))
             {
                 return;
             }
 
             Logging.Write(LoggerRegularColour, log);
-            LastLog = log;
+            lastLog = log;
         }
     }
 }

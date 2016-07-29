@@ -49,7 +49,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             var distanceFromPlayer = await GetDistanceFromPlayer(fate);
-            var teleportMinDistance = OracleSettings.Instance.TeleportMinimumDistanceDelta;
+            var teleportMinDistance = MovementSettings.Instance.MinDistanceToTeleport;
 
             Logger.SendDebugLog("Distance to navigate to FATE from player location is ~" + Math.Round(distanceFromPlayer, 0) + " yalms.");
             Logger.SendDebugLog("Distance to navigate to FATE from closest aetheryte location is ~" + Math.Round(aetheryte.Distance, 0) + " yalms.");

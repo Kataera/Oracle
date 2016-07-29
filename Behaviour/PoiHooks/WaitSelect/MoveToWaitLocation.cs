@@ -22,13 +22,13 @@ namespace Oracle.Behaviour.PoiHooks.WaitSelect
         {
             if (!WorldManager.CanFly)
             {
-                if (!OracleSettings.Instance.FateWaitLocations.ContainsKey(WorldManager.ZoneId))
+                if (!WaitSettings.Instance.FateWaitLocations.ContainsKey(WorldManager.ZoneId))
                 {
                     Logger.SendErrorLog("No wait location has been set. Check the 'downtime' section under 'General Settings' and set the location you wish.");
                     return false;
                 }
 
-                var locations = OracleSettings.Instance.FateWaitLocations;
+                var locations = WaitSettings.Instance.FateWaitLocations;
                 var navRequest =
                     locations.Select(target => new CanFullyNavigateTarget {Id = target.Key, Position = target.Value})
                              .Where(target => target.Id == WorldManager.ZoneId);
@@ -49,14 +49,14 @@ namespace Oracle.Behaviour.PoiHooks.WaitSelect
             var location = Vector3.Zero;
 
             // Vectors are non-nullable, so return zeroed location and handle in task.
-            if (!OracleSettings.Instance.FateWaitLocations.ContainsKey(WorldManager.ZoneId))
+            if (!WaitSettings.Instance.FateWaitLocations.ContainsKey(WorldManager.ZoneId))
             {
                 return location;
             }
 
             if (!Blacklist.Contains(WorldManager.ZoneId))
             {
-                location = OracleSettings.Instance.FateWaitLocations.FirstOrDefault(result => result.Key == WorldManager.ZoneId).Value;
+                location = WaitSettings.Instance.FateWaitLocations.FirstOrDefault(result => result.Key == WorldManager.ZoneId).Value;
             }
 
             return location;

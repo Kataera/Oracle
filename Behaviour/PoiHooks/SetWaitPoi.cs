@@ -25,7 +25,7 @@ namespace Oracle.Behaviour.PoiHooks
             }
 
             OracleFateManager.DoNotWaitBeforeMovingFlag = false;
-            switch (OracleSettings.Instance.FateWaitMode)
+            switch (WaitSettings.Instance.FateWaitMode)
             {
                 case FateWaitMode.ReturnToAetheryte:
                     await ReturnToAetheryte.Main();

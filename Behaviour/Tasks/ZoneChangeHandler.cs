@@ -26,7 +26,7 @@ namespace Oracle.Behaviour.Tasks
         public static async Task<bool> HandleZoneChange()
         {
             uint aetheryteId;
-            OracleSettings.Instance.ZoneLevels.TryGetValue(OracleFateManager.GetTrueLevel(), out aetheryteId);
+            MovementSettings.Instance.ZoneLevels.TryGetValue(OracleFateManager.GetTrueLevel(), out aetheryteId);
 
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
             {
@@ -49,7 +49,7 @@ namespace Oracle.Behaviour.Tasks
                 return true;
             }
 
-            if (OracleSettings.Instance.BindHomePoint)
+            if (MovementSettings.Instance.BindHomePoint)
             {
                 await BindHomePoint.Main(aetheryteId);
             }
@@ -104,7 +104,7 @@ namespace Oracle.Behaviour.Tasks
                 return true;
             }
 
-            if (OracleSettings.Instance.BindHomePoint)
+            if (MovementSettings.Instance.BindHomePoint)
             {
                 await BindHomePoint.Main(aetheryteId);
             }

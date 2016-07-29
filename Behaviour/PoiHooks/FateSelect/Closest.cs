@@ -22,7 +22,7 @@ namespace Oracle.Behaviour.PoiHooks.FateSelect
             }
 
             var fateDistances = await OracleFateManager.GetActiveFateDistances();
-            if (OracleSettings.Instance.TeleportIfQuicker && OracleSettings.Instance.FateSelectClosestDistanceConsiderAetheryte)
+            if (MovementSettings.Instance.TeleportIfQuicker && MovementSettings.Instance.ConsiderAetheryteFateDistances)
             {
                 Logger.SendDebugLog("Taking into account the distance to a FATE if we teleport to it.");
 
@@ -37,13 +37,13 @@ namespace Oracle.Behaviour.PoiHooks.FateSelect
                 // Don't teleport for FATEs above a set percentage.
                 foreach (var fateDistance in await OracleFateManager.GetActiveFateDistances())
                 {
-                    if (fateDistance.Key.Progress < OracleSettings.Instance.TeleportMaxFateProgress)
+                    if (fateDistance.Key.Progress < MovementSettings.Instance.FateProgressTeleportLimit)
                     {
                         continue;
                     }
 
                     Logger.SendDebugLog("Ignoring teleport distance for " + fateDistance.Key.Name + ", its progress (" + fateDistance.Key.Progress
-                                        + "%) exceeds " + OracleSettings.Instance.TeleportMaxFateProgress + "%.");
+                                        + "%) exceeds " + MovementSettings.Instance.FateProgressTeleportLimit + "%.");
                     combinedDistances.Remove(fateDistance.Key);
                 }
 
@@ -58,7 +58,7 @@ namespace Oracle.Behaviour.PoiHooks.FateSelect
                         }
 
                         // Add the minimum distance delta to ensure we don't teleport if distance saved is under that amount.
-                        if (fateDistance.Value + OracleSettings.Instance.TeleportMinimumDistanceDelta >= currentDistance)
+                        if (fateDistance.Value + MovementSettings.Instance.MinDistanceToTeleport >= currentDistance)
                         {
                             continue;
                         }

@@ -40,15 +40,15 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 return true;
             }
 
-            if (currentFate.Status != FateStatus.NOTACTIVE && currentFate.Progress < OracleSettings.Instance.MegaBossEngagePercentage)
+            if (currentFate.Status != FateStatus.NOTACTIVE && currentFate.Progress < FateSettings.Instance.MegaBossEngagePercentage)
             {
-                if (!OracleSettings.Instance.WaitAtMegaBossFateForProgress)
+                if (!FateSettings.Instance.WaitAtMegaBossForProgress)
                 {
                     await OracleFateManager.ClearCurrentFate("Current FATE progress reset below minimum level.", false);
                 }
                 else
                 {
-                    Logger.SendLog("Current FATE progress is too low, waiting for it to reach " + OracleSettings.Instance.MegaBossEngagePercentage + "%.");
+                    Logger.SendLog("Current FATE progress is too low, waiting for it to reach " + FateSettings.Instance.MegaBossEngagePercentage + "%.");
                 }
 
                 return true;

@@ -61,7 +61,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
                         return false;
                     }
 
-                    if (fateItemCount >= OracleSettings.Instance.CollectFateTurnInAtAmount)
+                    if (fateItemCount >= FateSettings.Instance.CollectTurnInAmount)
                     {
                         Logger.SendLog("Turning in what we've collected.");
                         await TurnInFateItems(GameObjectManager.GetObjectByNPCId(oracleFate.NpcId));
@@ -167,7 +167,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
             }
 
             turnInNpc.Interact();
-            await Coroutine.Sleep(OracleSettings.Instance.ActionDelay);
+            await Coroutine.Sleep(MainSettings.Instance.ActionDelay);
             var result = await SkipDialogue.Main() && await TurnInItem.Main() && await SkipDialogue.Main();
 
             if (result)

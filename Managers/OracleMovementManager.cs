@@ -388,7 +388,7 @@ namespace Oracle.Managers
             }
 
             Logger.SendLog("Attempting to land.");
-            await Coroutine.Wait(TimeSpan.FromSeconds(OracleSettings.Instance.LandingTimeOut), () => CommonTasks.Land().IsCompleted);
+            await Coroutine.Wait(TimeSpan.FromMilliseconds(MovementSettings.Instance.LandingTimeOut), () => CommonTasks.Land().IsCompleted);
 
             if (MovementManager.IsFlying)
             {
@@ -419,7 +419,7 @@ namespace Oracle.Managers
             switch (WorldManager.ZoneId)
             {
                 case coerthasWesternHighlands:
-                    if (!OracleSettings.Instance.FlightCoerthasWesternHighlandsEnabled)
+                    if (!MovementSettings.Instance.CoerthasWesternHighlandsFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for Coerthas Western Highlands.");
                         return true;
@@ -430,7 +430,7 @@ namespace Oracle.Managers
                     return true;
 
                 case dravanianForelands:
-                    if (!OracleSettings.Instance.FlightDravanianForelandsEnabled)
+                    if (!MovementSettings.Instance.DravanianForelandsFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for The Dravanian Forelands.");
                         return true;
@@ -440,7 +440,7 @@ namespace Oracle.Managers
                     await LoadFlightMesh.Main();
                     return true;
                 case dravanianHinterlands:
-                    if (!OracleSettings.Instance.FlightDravanianForelandsEnabled)
+                    if (!MovementSettings.Instance.DravanianForelandsFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for The Dravanian Hinterlands.");
                         return true;
@@ -450,7 +450,7 @@ namespace Oracle.Managers
                     await LoadFlightMesh.Main();
                     return true;
                 case churningMists:
-                    if (!OracleSettings.Instance.FlightChurningMistsEnabled)
+                    if (!MovementSettings.Instance.ChurningMistsFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for The Churning Mists.");
                         return true;
@@ -460,7 +460,7 @@ namespace Oracle.Managers
                     await LoadFlightMesh.Main();
                     return true;
                 case seaOfClouds:
-                    if (!OracleSettings.Instance.FlightSeaOfCloudsEnabled)
+                    if (!MovementSettings.Instance.SeaOfCloudsFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for The Sea of Clouds.");
                         return true;
@@ -470,7 +470,7 @@ namespace Oracle.Managers
                     await LoadFlightMesh.Main();
                     return true;
                 case azysLla:
-                    if (!OracleSettings.Instance.FlightAzysLlaEnabled)
+                    if (!MovementSettings.Instance.AzysLlaFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for Azys Lla.");
                         return true;
@@ -572,7 +572,7 @@ namespace Oracle.Managers
 
         private static Vector3 ProcessFlightStep(Vector3 step)
         {
-            if (!OracleSettings.Instance.FlightPathPostProcessingEnabled)
+            if (!MovementSettings.Instance.ProcessFlightPath)
             {
                 return step;
             }

@@ -250,7 +250,7 @@ namespace Oracle.Providers
             }
 
             var fateItemCount = ConditionParser.ItemCount(oracleFate.ItemId);
-            return fateItemCount >= OracleSettings.Instance.CollectFateTurnInAtAmount;
+            return fateItemCount >= FateSettings.Instance.CollectTurnInAmount;
         }
     }
 }

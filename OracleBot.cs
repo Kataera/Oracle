@@ -136,12 +136,12 @@ namespace Oracle
             TreeHooks.Instance.AddHook("TreeStart", OracleBehaviour.Behaviour);
             TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
 
-            if (OracleSettings.Instance.ListHooksOnStart && OracleSettings.Instance.DebugEnabled)
+            if (MainSettings.Instance.ListHooksOnStart && MainSettings.Instance.DebugEnabled)
             {
                 ListHooks();
             }
 
-            switch (OracleSettings.Instance.OracleOperationMode)
+            switch (MainSettings.Instance.OracleOperationMode)
             {
                 case OracleOperationMode.FateGrind:
                     Logger.SendLog("Starting Oracle in FATE grind mode.");

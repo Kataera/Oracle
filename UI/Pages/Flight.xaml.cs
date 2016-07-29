@@ -32,7 +32,7 @@ namespace Oracle.UI.Pages
         {
             if (AzysLlaSetting.IsChecked != null)
             {
-                OracleSettings.Instance.FlightAzysLlaEnabled = (bool) AzysLlaSetting.IsChecked;
+                MovementSettings.Instance.AzysLlaFlight = (bool) AzysLlaSetting.IsChecked;
             }
         }
 
@@ -45,7 +45,7 @@ namespace Oracle.UI.Pages
         {
             if (ChurningMistsSetting.IsChecked != null)
             {
-                OracleSettings.Instance.FlightChurningMistsEnabled = (bool) ChurningMistsSetting.IsChecked;
+                MovementSettings.Instance.ChurningMistsFlight = (bool) ChurningMistsSetting.IsChecked;
             }
         }
 
@@ -58,7 +58,7 @@ namespace Oracle.UI.Pages
         {
             if (CoerthasWesternHighlandsSetting.IsChecked != null)
             {
-                OracleSettings.Instance.FlightCoerthasWesternHighlandsEnabled = (bool) CoerthasWesternHighlandsSetting.IsChecked;
+                MovementSettings.Instance.CoerthasWesternHighlandsFlight = (bool) CoerthasWesternHighlandsSetting.IsChecked;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Oracle.UI.Pages
         {
             if (DravanianForelandsSetting.IsChecked != null)
             {
-                OracleSettings.Instance.FlightDravanianForelandsEnabled = (bool) DravanianForelandsSetting.IsChecked;
+                MovementSettings.Instance.DravanianForelandsFlight = (bool) DravanianForelandsSetting.IsChecked;
             }
         }
 
@@ -84,7 +84,7 @@ namespace Oracle.UI.Pages
         {
             if (DravanianHinterlandsSetting.IsChecked != null)
             {
-                OracleSettings.Instance.FlightDravanianHinterlandsEnabled = (bool) DravanianHinterlandsSetting.IsChecked;
+                MovementSettings.Instance.DravanianHinterlandsFlight = (bool) DravanianHinterlandsSetting.IsChecked;
             }
         }
 
@@ -100,12 +100,12 @@ namespace Oracle.UI.Pages
 
         private void RetrieveSettings()
         {
-            AzysLlaSetting.IsChecked = OracleSettings.Instance.FlightAzysLlaEnabled;
-            ChurningMistsSetting.IsChecked = OracleSettings.Instance.FlightChurningMistsEnabled;
-            CoerthasWesternHighlandsSetting.IsChecked = OracleSettings.Instance.FlightCoerthasWesternHighlandsEnabled;
-            DravanianForelandsSetting.IsChecked = OracleSettings.Instance.FlightDravanianForelandsEnabled;
-            DravanianHinterlandsSetting.IsChecked = OracleSettings.Instance.FlightDravanianHinterlandsEnabled;
-            SeaOfCloudsSetting.IsChecked = OracleSettings.Instance.FlightSeaOfCloudsEnabled;
+            AzysLlaSetting.IsChecked = MovementSettings.Instance.AzysLlaFlight;
+            ChurningMistsSetting.IsChecked = MovementSettings.Instance.ChurningMistsFlight;
+            CoerthasWesternHighlandsSetting.IsChecked = MovementSettings.Instance.CoerthasWesternHighlandsFlight;
+            DravanianForelandsSetting.IsChecked = MovementSettings.Instance.DravanianForelandsFlight;
+            DravanianHinterlandsSetting.IsChecked = MovementSettings.Instance.DravanianHinterlandsFlight;
+            SeaOfCloudsSetting.IsChecked = MovementSettings.Instance.SeaOfCloudsFlight;
         }
 
         private void SeaOfCloudsDefaultButton_Click(object sender, RoutedEventArgs e)
@@ -117,44 +117,44 @@ namespace Oracle.UI.Pages
         {
             if (SeaOfCloudsSetting.IsChecked != null)
             {
-                OracleSettings.Instance.FlightSeaOfCloudsEnabled = (bool) SeaOfCloudsSetting.IsChecked;
+                MovementSettings.Instance.SeaOfCloudsFlight = (bool) SeaOfCloudsSetting.IsChecked;
             }
         }
 
         private void SetAzysLlaSetting(bool value)
         {
             AzysLlaSetting.IsChecked = value;
-            OracleSettings.Instance.FlightAzysLlaEnabled = value;
+            MovementSettings.Instance.AzysLlaFlight = value;
         }
 
         private void SetChurningMistsSetting(bool value)
         {
             ChurningMistsSetting.IsChecked = value;
-            OracleSettings.Instance.FlightChurningMistsEnabled = value;
+            MovementSettings.Instance.ChurningMistsFlight = value;
         }
 
         private void SetCoerthasWesternHighlandsSetting(bool value)
         {
             CoerthasWesternHighlandsSetting.IsChecked = value;
-            OracleSettings.Instance.FlightCoerthasWesternHighlandsEnabled = value;
+            MovementSettings.Instance.CoerthasWesternHighlandsFlight = value;
         }
 
         private void SetDravanianForelandsSetting(bool value)
         {
             DravanianForelandsSetting.IsChecked = value;
-            OracleSettings.Instance.FlightDravanianForelandsEnabled = value;
+            MovementSettings.Instance.DravanianForelandsFlight = value;
         }
 
         private void SetDravanianHinterlandsSetting(bool value)
         {
             DravanianHinterlandsSetting.IsChecked = value;
-            OracleSettings.Instance.FlightDravanianHinterlandsEnabled = value;
+            MovementSettings.Instance.DravanianHinterlandsFlight = value;
         }
 
         private void SetSeaOfCloudsSetting(bool value)
         {
             SeaOfCloudsSetting.IsChecked = value;
-            OracleSettings.Instance.FlightSeaOfCloudsEnabled = value;
+            MovementSettings.Instance.SeaOfCloudsFlight = value;
         }
     }
 }

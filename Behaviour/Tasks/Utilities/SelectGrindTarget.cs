@@ -94,12 +94,12 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            if (OracleFateManager.GetTrueLevel() - OracleSettings.Instance.MobMinimumLevelBelow > battleCharacter.ClassLevel)
+            if (OracleFateManager.GetTrueLevel() - WaitSettings.Instance.MobGrindMinLevelBelow > battleCharacter.ClassLevel)
             {
                 return false;
             }
 
-            if (OracleFateManager.GetTrueLevel() + OracleSettings.Instance.MobMaximumLevelAbove < battleCharacter.ClassLevel)
+            if (OracleFateManager.GetTrueLevel() + WaitSettings.Instance.MobGrindMaxLevelAbove < battleCharacter.ClassLevel)
             {
                 return false;
             }
@@ -124,7 +124,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            if (OracleSettings.Instance.BlacklistedMobs.Contains(battleCharacter.NpcId))
+            if (BlacklistSettings.Instance.BlacklistedMobs.Contains(battleCharacter.NpcId))
             {
                 return false;
             }

@@ -44,7 +44,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             ToDoList.LevelSync();
-            await Coroutine.Wait(TimeSpan.FromMilliseconds(OracleSettings.Instance.ActionDelay), () => Core.Player.IsLevelSynced);
+            await Coroutine.Wait(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay), () => Core.Player.IsLevelSynced);
 
             if (Core.Player.IsLevelSynced)
             {

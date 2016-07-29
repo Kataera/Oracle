@@ -26,7 +26,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             await OracleMovementManager.LoadFlightMeshIfAvailable();
 
-            if (!ignoreCombat && OracleSettings.Instance.TeleportIfQuicker && currentFate.IsValid)
+            if (!ignoreCombat && MovementSettings.Instance.TeleportIfQuicker && currentFate.IsValid)
             {
                 if (await Teleport.FasterToTeleport(currentFate))
                 {
