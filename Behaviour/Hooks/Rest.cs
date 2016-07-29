@@ -6,6 +6,7 @@ using ff14bot.Managers;
 using ff14bot.Navigation;
 
 using Oracle.Helpers;
+using Oracle.Managers;
 using Oracle.Settings;
 
 using TreeSharp;
@@ -31,6 +32,12 @@ namespace Oracle.Behaviour.Hooks
 
             if (Poi.Current.Type != PoiType.Kill)
             {
+                return false;
+            }
+
+            if (!Poi.Current.BattleCharacter.IsValid)
+            {
+                OracleFateManager.ClearPoi("Mob is no longer valid.");
                 return false;
             }
 
