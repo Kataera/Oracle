@@ -59,7 +59,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
             else
             {
-                Logger.SendDebugLog("The distance reduction from teleporting is ~" + Math.Round(distanceFromPlayer - aetheryte.Distance, 2) + " yalms.");
+                Logger.SendDebugLog("The distance reduction from teleporting is " + Math.Round(distanceFromPlayer - aetheryte.Distance, 2) + " yalms.");
             }
 
             if (distanceFromPlayer - aetheryte.Distance > MovementSettings.Instance.MinDistanceToTeleport)

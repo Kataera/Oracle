@@ -34,7 +34,6 @@ namespace Oracle.Behaviour.Hooks.FateSelect
                     fateDistancesFromAetherytes.Add(await OracleFateManager.GetActiveFateDistances(aetheryte.Item2));
                 }
 
-                // Don't teleport for FATEs above a set percentage.
                 foreach (var fateDistance in await OracleFateManager.GetActiveFateDistances())
                 {
                     if (fateDistance.Key.Progress < MovementSettings.Instance.FateProgressTeleportLimit)
@@ -44,7 +43,6 @@ namespace Oracle.Behaviour.Hooks.FateSelect
 
                     Logger.SendDebugLog("Ignoring teleport distance for " + fateDistance.Key.Name + ", its progress (" + fateDistance.Key.Progress
                                         + "%) equals or exceeds " + MovementSettings.Instance.FateProgressTeleportLimit + "%.");
-                    combinedDistances.Remove(fateDistance.Key);
                 }
 
                 foreach (var aetheryteDistanceDict in fateDistancesFromAetherytes)
@@ -56,6 +54,13 @@ namespace Oracle.Behaviour.Hooks.FateSelect
                         {
                             continue;
                         }
+
+                        if (fateDistance.Key.Progress < MovementSettings.Instance.FateProgressTeleportLimit)
+                        {
+                            continue;
+                        }
+
+                        combinedDistances.Remove(fateDistance.Key);
 
                         // Add the minimum distance delta to ensure we don't teleport if distance saved is under that amount.
                         if (fateDistance.Value + MovementSettings.Instance.MinDistanceToTeleport >= currentDistance)
