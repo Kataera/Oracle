@@ -15,7 +15,7 @@ namespace Oracle.Behaviour.Modes
     {
         public static async Task<bool> Main()
         {
-            if (!OracleSettings.Instance.SpecificFates.Any())
+            if (!FateSettings.Instance.SpecificFateList.Any())
             {
                 Logger.SendErrorLog("Please set at least one FATE to search for before starting the bot.");
                 TreeRoot.Stop("No FATE set.");

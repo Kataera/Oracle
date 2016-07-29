@@ -22,6 +22,17 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class Teleport
     {
+        private static Aetheryte[] AllTuplesToAetherytes(IReadOnlyList<Tuple<uint, Vector3>> tuples, Vector3 location)
+        {
+            var results = new Aetheryte[tuples.Count];
+            for (var i = 0; i < tuples.Count; i++)
+            {
+                results[i] = TupleToAetheryte(tuples[i], location);
+            }
+
+            return results;
+        }
+
         public static async Task<bool> FasterToTeleport(FateData fate)
         {
             if (WorldManager.CanFly)
@@ -38,12 +49,9 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             var distanceFromPlayer = await GetDistanceFromPlayer(fate);
-            var teleportMinDistance = OracleSettings.Instance.TeleportMinimumDistanceDelta;
-
-            Logger.SendDebugLog("Distance to navigate to FATE from player location is ~" + Math.Round(distanceFromPlayer, 0) + " yalms.");
-            Logger.SendDebugLog("Distance to navigate to FATE from closest aetheryte location is ~" + Math.Round(aetheryte.Distance, 0)
-                                + " yalms.");
-            Logger.SendDebugLog("Minimum reduction in distance to use teleport is " + teleportMinDistance + " yalms.");
+            Logger.SendDebugLog("Distance to navigate to FATE from player location is " + Math.Round(distanceFromPlayer, 2) + " yalms.");
+            Logger.SendDebugLog("Distance to navigate to FATE from closest aetheryte location is " + Math.Round(aetheryte.Distance, 2) + " yalms.");
+            Logger.SendDebugLog("Minimum reduction in distance to use teleport is " + MovementSettings.Instance.MinDistanceToTeleport + " yalms.");
 
             if (distanceFromPlayer - aetheryte.Distance <= 0)
             {
@@ -51,11 +59,10 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
             else
             {
-                Logger.SendDebugLog("The distance reduction from teleporting is ~" + Math.Round(distanceFromPlayer - aetheryte.Distance, 0)
-                                    + " yalms.");
+                Logger.SendDebugLog("The distance reduction from teleporting is " + Math.Round(distanceFromPlayer - aetheryte.Distance, 2) + " yalms.");
             }
 
-            if (distanceFromPlayer - aetheryte.Distance > teleportMinDistance)
+            if (distanceFromPlayer - aetheryte.Distance > MovementSettings.Instance.MinDistanceToTeleport)
             {
                 return true;
             }
@@ -71,11 +78,62 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return closestAetheryte;
         }
 
+        private static async Task<float> GetDistanceFromPlayer(FateData fate)
+        {
+            float distanceFromPlayer = 0;
+
+            if (!WorldManager.CanFly)
+            {
+                var navRequest = new List<CanFullyNavigateTarget> {new CanFullyNavigateTarget {Id = fate.ObjectId, Position = fate.Location}};
+                var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+                var navResult = navResults.FirstOrDefault();
+
+                if (navResult != null)
+                {
+                    distanceFromPlayer = navResult.PathLength;
+                }
+            }
+            else
+            {
+                distanceFromPlayer = fate.Location.Distance(Core.Player.Location);
+            }
+
+            return distanceFromPlayer;
+        }
+
+        private static async Task<Aetheryte[]> GetNavigableAetherytes(FateData fate)
+        {
+            Aetheryte[] viableAetherytes;
+
+            var allAetherytes = AllTuplesToAetherytes(OracleFateManager.GetAetheryteIdsForZone(WorldManager.ZoneId), fate.Location);
+            var viableAetheryteList = new List<Aetheryte>();
+
+            if (!WorldManager.CanFly)
+            {
+                var navRequest = allAetherytes.Select(target => new CanFullyNavigateTarget {Id = target.Id, Position = target.Location});
+                var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, fate.Location, WorldManager.ZoneId);
+
+                foreach (var navResult in navResults.Where(result => result.CanNavigate != 0))
+                {
+                    var aetheryte = allAetherytes.FirstOrDefault(result => result.Id == navResult.Id);
+                    aetheryte.Distance = navResult.PathLength;
+                    viableAetheryteList.Add(aetheryte);
+                    await Coroutine.Yield();
+                }
+
+                viableAetherytes = viableAetheryteList.ToArray();
+            }
+            else
+            {
+                viableAetherytes = allAetherytes;
+            }
+
+            return viableAetherytes;
+        }
+
         public static async Task<bool> TeleportToAetheryte(uint aetheryteId)
         {
-            await
-                CommonBehaviors.CreateTeleportBehavior(vr => aetheryteId, vr => WorldManager.GetZoneForAetheryteId(aetheryteId))
-                               .ExecuteCoroutine();
+            await CommonBehaviors.CreateTeleportBehavior(vr => aetheryteId, vr => WorldManager.GetZoneForAetheryteId(aetheryteId)).ExecuteCoroutine();
             await Coroutine.Wait(TimeSpan.FromSeconds(10), () => !Core.Player.IsCasting || Core.Player.InCombat);
             await Coroutine.Wait(TimeSpan.FromSeconds(2), () => Core.Player.InCombat);
             await Coroutine.Wait(TimeSpan.MaxValue, () => !CommonBehaviors.IsLoading || Core.Player.InCombat);
@@ -104,92 +162,9 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return true;
         }
 
-        private static Aetheryte[] AllTuplesToAetherytes(IReadOnlyList<Tuple<uint, Vector3>> tuples, Vector3 location)
-        {
-            var results = new Aetheryte[tuples.Count];
-            for (var i = 0; i < tuples.Count; i++)
-            {
-                results[i] = TupleToAetheryte(tuples[i], location);
-            }
-
-            return results;
-        }
-
-        private static async Task<float> GetDistanceFromPlayer(FateData fate)
-        {
-            float distanceFromPlayer = 0;
-
-            if (!WorldManager.CanFly)
-            {
-                var navRequest = new List<CanFullyNavigateTarget>
-                {
-                    new CanFullyNavigateTarget {Id = fate.ObjectId, Position = fate.Location}
-                };
-                var navResults =
-                    await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
-                var navResult = navResults.FirstOrDefault();
-
-                if (navResult != null)
-                {
-                    distanceFromPlayer = navResult.PathLength - (fate.Radius * 0.75f);
-                }
-            }
-            else
-            {
-                distanceFromPlayer = fate.Location.Distance(Core.Player.Location) - (fate.Radius * 0.75f);
-            }
-
-            return distanceFromPlayer;
-        }
-
-        private static async Task<Aetheryte[]> GetNavigableAetherytes(FateData fate)
-        {
-            Aetheryte[] viableAetherytes;
-
-            var allAetherytes = AllTuplesToAetherytes(WorldManager.AetheryteIdsForZone(WorldManager.ZoneId), fate.Location);
-            var viableAetheryteList = new List<Aetheryte>();
-
-            if (!WorldManager.CanFly)
-            {
-                var navRequest = allAetherytes.Select(target => new CanFullyNavigateTarget {Id = target.Id, Position = target.Location});
-                var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, fate.Location, WorldManager.ZoneId);
-
-                foreach (var navResult in navResults.Where(result => result.CanNavigate != 0))
-                {
-                    var aetheryte = allAetherytes.FirstOrDefault(result => result.Id == navResult.Id);
-                    aetheryte.Distance = navResult.PathLength - (fate.Radius * 0.75f);
-                    viableAetheryteList.Add(aetheryte);
-                    await Coroutine.Yield();
-                }
-
-                viableAetherytes = viableAetheryteList.ToArray();
-            }
-            else
-            {
-                viableAetherytes = allAetherytes;
-            }
-
-            return viableAetherytes;
-        }
-
-        private static Aetheryte TupleToAetheryte(Tuple<uint, Vector3> tuple, float distance)
-        {
-            return new Aetheryte
-            {
-                Distance = distance,
-                Id = tuple.Item1,
-                Location = tuple.Item2
-            };
-        }
-
         private static Aetheryte TupleToAetheryte(Tuple<uint, Vector3> tuple, Vector3 location)
         {
-            return new Aetheryte
-            {
-                Distance = tuple.Item2.Distance(location),
-                Id = tuple.Item1,
-                Location = tuple.Item2
-            };
+            return new Aetheryte {Distance = tuple.Item2.Distance(location), Id = tuple.Item1, Location = tuple.Item2};
         }
 
         public struct Aetheryte

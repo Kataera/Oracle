@@ -57,7 +57,7 @@ namespace Oracle.Behaviour
                 return false;
             }
 
-            switch (OracleSettings.Instance.OracleOperationMode)
+            switch (MainSettings.Instance.OracleOperationMode)
             {
                 case OracleOperationMode.FateGrind:
                     await FateGrind.Main();

@@ -18,6 +18,11 @@ namespace Oracle.Behaviour.Tasks.Utilities
         private static uint currentTargetId;
         private static uint lastHealthLevel;
 
+        private static GameObject GetTargetFromId(uint objectId)
+        {
+            return GameObjectManager.GetObjectByObjectId(objectId);
+        }
+
         public static async Task<bool> IsBlacklistNeeded()
         {
             if (blacklistTimer == null)
@@ -73,11 +78,6 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             return true;
-        }
-
-        private static GameObject GetTargetFromId(uint objectId)
-        {
-            return GameObjectManager.GetObjectByObjectId(objectId);
         }
     }
 }

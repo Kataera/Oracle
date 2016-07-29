@@ -6,7 +6,6 @@ using ff14bot.Helpers;
 using Oracle.Behaviour.Tasks;
 using Oracle.Helpers;
 using Oracle.Managers;
-using Oracle.Settings;
 
 namespace Oracle.Behaviour.Modes
 {

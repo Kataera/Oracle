@@ -51,16 +51,17 @@ namespace Oracle.Behaviour.Tasks
                 lastHpValue = mostRecentBc.CurrentHealth;
             }
 
-            if (noDamageTimeout.Elapsed > TimeSpan.FromSeconds(OracleSettings.Instance.CombatNoDamageTimeout)
+            if (noDamageTimeout.Elapsed > TimeSpan.FromMilliseconds(MainSettings.Instance.CombatNoDamageTimeout)
                 && currentBc.CurrentTargetId != Core.Player.ObjectId && currentBc.IsValid && !currentBc.IsDead)
             {
-                OracleFateManager.ClearPoi("Mob's HP has not changed in " + OracleSettings.Instance.CombatNoDamageTimeout
+                OracleFateManager.ClearPoi("Mob's HP has not changed in " + MainSettings.Instance.CombatNoDamageTimeout / 1000
                                            + " seconds, blacklisting and selecting a new mob.");
-                Blacklist.Add(currentBc, BlacklistFlags.Combat, TimeSpan.FromMinutes(30), "No damage taken timeout triggered.");
+                Blacklist.Add(currentBc, BlacklistFlags.Combat, TimeSpan.FromMinutes(1), "No damage taken timeout triggered.");
                 mostRecentBc = null;
                 noDamageTimeout = null;
 
                 Core.Player.ClearTarget();
+                return true;
             }
 
             if (!currentBc.IsFate && !currentBc.IsDead && GameObjectManager.Attackers.All(mob => mob.ObjectId != currentBc.ObjectId)
@@ -77,7 +78,7 @@ namespace Oracle.Behaviour.Tasks
                 Blacklist.Add(currentBc, BlacklistFlags.Combat, TimeSpan.FromSeconds(30), "Tapped by another person.");
                 Core.Player.ClearTarget();
 
-                if (OracleSettings.Instance.FateWaitMode == FateWaitMode.GrindMobs)
+                if (WaitSettings.Instance.FateWaitMode == FateWaitMode.GrindMobs)
                 {
                     var target = await SelectGrindTarget.Main();
                     if (target == null)

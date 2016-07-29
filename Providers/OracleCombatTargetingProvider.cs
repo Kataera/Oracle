@@ -34,8 +34,7 @@ namespace Oracle.Providers
             var currentFate = OracleFateManager.GetCurrentFateData();
             var blacklistEntry = Blacklist.GetEntry(battleCharacter);
 
-            if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible
-                || battleCharacter.CurrentHealthPercent <= 0f)
+            if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible || battleCharacter.CurrentHealthPercent <= 0f)
             {
                 return false;
             }
@@ -55,8 +54,7 @@ namespace Oracle.Providers
                 return false;
             }
 
-            if (IsLevelSyncNeeded(battleCharacter)
-                && !FateManager.GetFateById(battleCharacter.FateId).Within2D(battleCharacter.Location))
+            if (IsLevelSyncNeeded(battleCharacter) && !FateManager.GetFateById(battleCharacter.FateId).Within2D(battleCharacter.Location))
             {
                 return false;
             }
@@ -82,6 +80,72 @@ namespace Oracle.Providers
             }
 
             return !inCombat;
+        }
+
+        private static double GetWeight(BattleCharacter battleCharacter)
+        {
+            var weight = 1800f;
+            var currentFate = OracleFateManager.GetCurrentFateData();
+            var oracleFate = new Fate();
+
+            if (currentFate != null)
+            {
+                oracleFate = OracleFateManager.OracleDatabase.GetFateFromFateData(currentFate);
+            }
+
+            // If FATE has a preferred target, prioritise it if we're out of combat.
+            if (oracleFate.PreferredTargetId != null && oracleFate.PreferredTargetId.Contains(battleCharacter.NpcId) && !Core.Player.InCombat)
+            {
+                weight += 2000;
+            }
+
+            if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)
+            {
+                weight += 150;
+            }
+
+            if (battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Core.Player.ObjectId)
+            {
+                weight += 750;
+            }
+
+            if (Chocobo.Object != null && battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Chocobo.Object.ObjectId)
+            {
+                weight += 400;
+            }
+
+            if (!battleCharacter.TappedByOther)
+            {
+                weight += 200;
+            }
+
+            if (battleCharacter.CurrentTargetId == Core.Player.ObjectId)
+            {
+                weight += 1000 / Convert.ToSingle(battleCharacter.CurrentHealth) * 3000;
+            }
+
+            if (!battleCharacter.InCombat)
+            {
+                weight += 130;
+            }
+
+            // Prefer nearer targets in combat if melee, and always out of combat.
+            if (PlayerIsMelee() || !Core.Player.InCombat)
+            {
+                weight -= battleCharacter.Distance(Core.Player) * 50;
+            }
+
+            return weight;
+        }
+
+        private static bool IsLevelSyncNeeded(GameObject battleCharacter)
+        {
+            if (battleCharacter.FateId == 0)
+            {
+                return false;
+            }
+
+            return FateManager.GetFateById(battleCharacter.FateId).MaxLevel < OracleFateManager.GetTrueLevel();
         }
 
         private static bool PlayerIsMelee()
@@ -161,72 +225,6 @@ namespace Oracle.Providers
             }
         }
 
-        private static double GetWeight(BattleCharacter battleCharacter)
-        {
-            var weight = 1800f;
-            var currentFate = OracleFateManager.GetCurrentFateData();
-            var oracleFate = new Fate();
-
-            if (currentFate != null)
-            {
-                oracleFate = OracleFateManager.OracleDatabase.GetFateFromFateData(currentFate);
-            }
-
-            // If FATE has a preferred target, prioritise it if we're out of combat.
-            if (oracleFate.PreferredTargetId != null && oracleFate.PreferredTargetId.Contains(battleCharacter.NpcId) && !Core.Player.InCombat)
-            {
-                weight += 2000;
-            }
-
-            if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)
-            {
-                weight += 150;
-            }
-
-            if (battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Core.Player.ObjectId)
-            {
-                weight += 750;
-            }
-
-            if (Chocobo.Object != null && battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Chocobo.Object.ObjectId)
-            {
-                weight += 400;
-            }
-
-            if (!battleCharacter.TappedByOther)
-            {
-                weight += 200;
-            }
-
-            if (battleCharacter.CurrentTargetId == Core.Player.ObjectId)
-            {
-                weight += (1000 / Convert.ToSingle(battleCharacter.CurrentHealth)) * 3000;
-            }
-
-            if (!battleCharacter.InCombat)
-            {
-                weight += 130;
-            }
-
-            // Prefer nearer targets in combat if melee, and always out of combat.
-            if (PlayerIsMelee() || !Core.Player.InCombat)
-            {
-                weight-= battleCharacter.Distance(Core.Player) * 50;
-            }
-
-            return weight;
-        }
-
-        private static bool IsLevelSyncNeeded(GameObject battleCharacter)
-        {
-            if (battleCharacter.FateId == 0)
-            {
-                return false;
-            }
-
-            return FateManager.GetFateById(battleCharacter.FateId).MaxLevel < OracleFateManager.GetTrueLevel();
-        }
-
         private static bool ReadyToTurnIn()
         {
             if (Core.Player.InCombat)
@@ -252,7 +250,7 @@ namespace Oracle.Providers
             }
 
             var fateItemCount = ConditionParser.ItemCount(oracleFate.ItemId);
-            return fateItemCount >= OracleSettings.Instance.CollectFateTurnInAtAmount;
+            return fateItemCount >= FateSettings.Instance.CollectTurnInAmount;
         }
     }
 }

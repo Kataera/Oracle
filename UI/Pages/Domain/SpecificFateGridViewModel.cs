@@ -46,7 +46,7 @@ namespace Oracle.UI.Pages.Domain
 
         private static ObservableCollection<FateViewModel> CreateData()
         {
-            var specificFates = OracleSettings.Instance.SpecificFates;
+            var specificFates = FateSettings.Instance.SpecificFateList;
             var collection = new ObservableCollection<FateViewModel>();
             foreach (var fate in specificFates)
             {

@@ -17,6 +17,11 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class BindHomePoint
     {
+        private static GameObject GetAetheryteObject(uint aetheryteId)
+        {
+            return GameObjectManager.GameObjects.FirstOrDefault(obj => obj.Type == GameObjectType.AetheryteObject && obj.NpcId == aetheryteId);
+        }
+
         public static async Task<bool> Main(uint aetheryteId)
         {
             Logger.SendLog("Binding to the aetheryte crystal.");
@@ -51,21 +56,15 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             aetheryteObject.Interact();
-            await Coroutine.Sleep(OracleSettings.Instance.ActionDelay);
+            await Coroutine.Sleep(MainSettings.Instance.ActionDelay);
             SelectString.ClickLineContains("Set Home Point");
-            await Coroutine.Sleep(OracleSettings.Instance.ActionDelay);
+            await Coroutine.Sleep(MainSettings.Instance.ActionDelay);
             SelectYesno.ClickYes();
-            await Coroutine.Sleep(OracleSettings.Instance.ActionDelay);
+            await Coroutine.Sleep(MainSettings.Instance.ActionDelay);
 
             Logger.SendLog("Home point bound successfully.");
 
             return true;
-        }
-
-        private static GameObject GetAetheryteObject(uint aetheryteId)
-        {
-            return
-                GameObjectManager.GameObjects.FirstOrDefault(obj => obj.Type == GameObjectType.AetheryteObject && obj.NpcId == aetheryteId);
         }
     }
 }

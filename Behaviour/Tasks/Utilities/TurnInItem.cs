@@ -14,6 +14,20 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class TurnInItem
     {
+        private static BagSlot GetBagSlotFromItemId(uint itemId)
+        {
+            BagSlot bagSlot = null;
+            foreach (var bagslot in InventoryManager.FilledSlots)
+            {
+                if (bagslot.TrueItemId == itemId)
+                {
+                    bagSlot = bagslot;
+                }
+            }
+
+            return bagSlot;
+        }
+
         public static async Task<bool> Main()
         {
             if (!Request.IsOpen)
@@ -38,7 +52,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             Logger.SendLog("Attempting to hand over " + turnInBagSlot.Count + " of the item '" + turnInBagSlot.Name + "'.");
             turnInBagSlot.Handover();
 
-            await Coroutine.Sleep(OracleSettings.Instance.ActionDelay);
+            await Coroutine.Sleep(MainSettings.Instance.ActionDelay);
             if (!Request.IsOpen || !Request.HandOverButtonClickable)
             {
                 Logger.SendErrorLog("Hand over failed.");
@@ -49,23 +63,9 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             Logger.SendDebugLog("Pressing 'Hand Over' button.");
             Request.HandOver();
-            await Coroutine.Sleep(OracleSettings.Instance.ActionDelay);
+            await Coroutine.Sleep(MainSettings.Instance.ActionDelay);
 
             return true;
-        }
-
-        private static BagSlot GetBagSlotFromItemId(uint itemId)
-        {
-            BagSlot bagSlot = null;
-            foreach (var bagslot in InventoryManager.FilledSlots)
-            {
-                if (bagslot.TrueItemId == itemId)
-                {
-                    bagSlot = bagslot;
-                }
-            }
-
-            return bagSlot;
         }
     }
 }

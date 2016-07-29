@@ -2,13 +2,13 @@
 
 using ff14bot.Behavior;
 
-using Oracle.Behaviour.PoiHooks.WaitSelect;
+using Oracle.Behaviour.Hooks.WaitSelect;
 using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Managers;
 using Oracle.Settings;
 
-namespace Oracle.Behaviour.PoiHooks
+namespace Oracle.Behaviour.Hooks
 {
     internal static class SetWaitPoi
     {
@@ -25,7 +25,7 @@ namespace Oracle.Behaviour.PoiHooks
             }
 
             OracleFateManager.DoNotWaitBeforeMovingFlag = false;
-            switch (OracleSettings.Instance.FateWaitMode)
+            switch (WaitSettings.Instance.FateWaitMode)
             {
                 case FateWaitMode.ReturnToAetheryte:
                     await ReturnToAetheryte.Main();

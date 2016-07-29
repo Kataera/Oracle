@@ -10,10 +10,9 @@ using ff14bot.Navigation;
 using ff14bot.Objects;
 
 using Oracle.Behaviour;
+using Oracle.Behaviour.Hooks;
 using Oracle.Behaviour.Modes;
-using Oracle.Behaviour.PoiHooks;
 using Oracle.Behaviour.Tasks.Utilities;
-using Oracle.Data;
 using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Managers;
@@ -137,12 +136,18 @@ namespace Oracle
             TreeHooks.Instance.AddHook("TreeStart", OracleBehaviour.Behaviour);
             TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
 
-            if (OracleSettings.Instance.ListHooksOnStart && OracleSettings.Instance.DebugEnabled)
+            if (MainSettings.Instance.OverrideRestBehaviour)
+            {
+                Logger.SendDebugLog("Overriding the combat routine rest behaviour.");
+                TreeHooks.Instance.ReplaceHook("Rest", Rest.Behaviour);
+            }
+
+            if (MainSettings.Instance.ListHooksOnStart && MainSettings.Instance.DebugEnabled)
             {
                 ListHooks();
             }
 
-            switch (OracleSettings.Instance.OracleOperationMode)
+            switch (MainSettings.Instance.OracleOperationMode)
             {
                 case OracleOperationMode.FateGrind:
                     Logger.SendLog("Starting Oracle in FATE grind mode.");
@@ -189,6 +194,12 @@ namespace Oracle
 
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;
+
+            if (MainSettings.Instance.OverrideRestBehaviour)
+            {
+                Logger.SendDebugLog("Restoring the combat routine rest behaviour.");
+                TreeHooks.Instance.ReplaceHook("Rest", RoutineManager.Current.RestBehavior);
+            }
 
             Logger.SendLog("Stopping Oracle.");
         }

@@ -15,40 +15,6 @@ namespace Oracle.Behaviour.Tasks.FateTask
 {
     internal static class MegaBossFate
     {
-        public static async Task<bool> Main()
-        {
-            var currentFate = OracleFateManager.GetCurrentFateData();
-
-            if (currentFate == null || currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
-            {
-                await ClearFate();
-                return true;
-            }
-
-            if (currentFate.Status != FateStatus.NOTACTIVE && currentFate.Progress < OracleSettings.Instance.MegaBossEngagePercentage)
-            {
-                if (!OracleSettings.Instance.WaitAtMegaBossFateForProgress)
-                {
-                    await OracleFateManager.ClearCurrentFate("Current FATE progress reset below minimum level.", false);
-                }
-                else
-                {
-                    Logger.SendLog(
-                        "Current FATE progress is too low, waiting for it to reach "
-                        + OracleSettings.Instance.MegaBossEngagePercentage + "%.");
-                }
-
-                return true;
-            }
-
-            if (currentFate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
-            {
-                SelectTarget();
-            }
-
-            return true;
-        }
-
         private static bool AnyViableTargets()
         {
             return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableTarget).Any();
@@ -62,6 +28,38 @@ namespace Oracle.Behaviour.Tasks.FateTask
         private static bool IsViableTarget(BattleCharacter target)
         {
             return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleFateManager.CurrentFateId;
+        }
+
+        public static async Task<bool> Main()
+        {
+            var currentFate = OracleFateManager.GetCurrentFateData();
+
+            if (currentFate == null || currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
+            {
+                await ClearFate();
+                return true;
+            }
+
+            if (currentFate.Status != FateStatus.NOTACTIVE && currentFate.Progress < FateSettings.Instance.MegaBossEngagePercentage)
+            {
+                if (!FateSettings.Instance.WaitAtMegaBossForProgress)
+                {
+                    await OracleFateManager.ClearCurrentFate("Current FATE progress reset below minimum level.", false);
+                }
+                else
+                {
+                    Logger.SendLog("Current FATE progress is too low, waiting for it to reach " + FateSettings.Instance.MegaBossEngagePercentage + "%.");
+                }
+
+                return true;
+            }
+
+            if (currentFate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
+            {
+                SelectTarget();
+            }
+
+            return true;
         }
 
         private static void SelectTarget()

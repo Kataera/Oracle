@@ -39,6 +39,7 @@ namespace Oracle.Managers
 
         public static async Task<bool> FlyToCurrentFate()
         {
+            OracleFateManager.ReachedCurrentFate = false;
             var currentFate = OracleFateManager.GetCurrentFateData();
             if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
             {
@@ -109,6 +110,8 @@ namespace Oracle.Managers
             }
 
             await LandInFateArea();
+
+            OracleFateManager.ReachedCurrentFate = true;
             return true;
         }
 
@@ -385,7 +388,7 @@ namespace Oracle.Managers
             }
 
             Logger.SendLog("Attempting to land.");
-            await Coroutine.Wait(TimeSpan.FromSeconds(OracleSettings.Instance.LandingTimeOut), () => CommonTasks.Land().IsCompleted);
+            await Coroutine.Wait(TimeSpan.FromMilliseconds(MovementSettings.Instance.LandingTimeOut), () => CommonTasks.Land().IsCompleted);
 
             if (MovementManager.IsFlying)
             {
@@ -416,7 +419,7 @@ namespace Oracle.Managers
             switch (WorldManager.ZoneId)
             {
                 case coerthasWesternHighlands:
-                    if (!OracleSettings.Instance.FlightCoerthasWesternHighlandsEnabled)
+                    if (!MovementSettings.Instance.CoerthasWesternHighlandsFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for Coerthas Western Highlands.");
                         return true;
@@ -427,7 +430,7 @@ namespace Oracle.Managers
                     return true;
 
                 case dravanianForelands:
-                    if (!OracleSettings.Instance.FlightDravanianForelandsEnabled)
+                    if (!MovementSettings.Instance.DravanianForelandsFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for The Dravanian Forelands.");
                         return true;
@@ -437,7 +440,7 @@ namespace Oracle.Managers
                     await LoadFlightMesh.Main();
                     return true;
                 case dravanianHinterlands:
-                    if (!OracleSettings.Instance.FlightDravanianForelandsEnabled)
+                    if (!MovementSettings.Instance.DravanianForelandsFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for The Dravanian Hinterlands.");
                         return true;
@@ -447,7 +450,7 @@ namespace Oracle.Managers
                     await LoadFlightMesh.Main();
                     return true;
                 case churningMists:
-                    if (!OracleSettings.Instance.FlightChurningMistsEnabled)
+                    if (!MovementSettings.Instance.ChurningMistsFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for The Churning Mists.");
                         return true;
@@ -457,7 +460,7 @@ namespace Oracle.Managers
                     await LoadFlightMesh.Main();
                     return true;
                 case seaOfClouds:
-                    if (!OracleSettings.Instance.FlightSeaOfCloudsEnabled)
+                    if (!MovementSettings.Instance.SeaOfCloudsFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for The Sea of Clouds.");
                         return true;
@@ -467,7 +470,7 @@ namespace Oracle.Managers
                     await LoadFlightMesh.Main();
                     return true;
                 case azysLla:
-                    if (!OracleSettings.Instance.FlightAzysLlaEnabled)
+                    if (!MovementSettings.Instance.AzysLlaFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for Azys Lla.");
                         return true;
@@ -484,6 +487,7 @@ namespace Oracle.Managers
 
         public static async Task<bool> NavigateToCurrentFate(bool ignoreCombat)
         {
+            OracleFateManager.ReachedCurrentFate = false;
             var currentFate = OracleFateManager.GetCurrentFateData();
             if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
             {
@@ -497,10 +501,10 @@ namespace Oracle.Managers
                 return true;
             }
 
-            var currentFateLocation = currentFate.Location;
+            var cachedFateLocation = currentFate.Location;
             var currentFateRadius = currentFate.Radius;
 
-            while (Core.Player.Distance(currentFateLocation) > currentFateRadius * 0.75f)
+            while (Core.Player.Distance(cachedFateLocation) > currentFateRadius * 0.75f)
             {
                 if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                 {
@@ -509,7 +513,7 @@ namespace Oracle.Managers
                     return true;
                 }
 
-                var distanceToFateBoundary = Core.Player.Location.Distance2D(currentFateLocation) - currentFateRadius;
+                var distanceToFateBoundary = Core.Player.Location.Distance2D(cachedFateLocation) - currentFateRadius;
                 if (!Core.Player.IsMounted && IsMountNeeded(distanceToFateBoundary) && Actionmanager.AvailableMounts.Any())
                 {
                     Navigator.Stop();
@@ -521,12 +525,18 @@ namespace Oracle.Managers
                     await Mount.MountUp();
                 }
 
-                currentFateLocation = currentFate.Location;
-                Navigator.MoveToPointWithin(currentFateLocation, currentFateRadius * 0.5f, currentFate.Name);
+                // Throttle navigator path generation requests.
+                if (cachedFateLocation.Distance2D(currentFate.Location) > 25)
+                {
+                    cachedFateLocation = currentFate.Location;
+                }
+
+                Navigator.MoveToPointWithin(cachedFateLocation, currentFateRadius * 0.5f, currentFate.Name);
                 await Coroutine.Yield();
             }
 
             Navigator.Stop();
+            OracleFateManager.ReachedCurrentFate = true;
             return true;
         }
 
@@ -562,7 +572,7 @@ namespace Oracle.Managers
 
         private static Vector3 ProcessFlightStep(Vector3 step)
         {
-            if (!OracleSettings.Instance.FlightPathPostProcessingEnabled)
+            if (!MovementSettings.Instance.ProcessFlightPath)
             {
                 return step;
             }

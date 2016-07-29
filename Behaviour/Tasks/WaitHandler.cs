@@ -30,7 +30,7 @@ namespace Oracle.Behaviour.Tasks
 
         private static async Task<bool> RunWait()
         {
-            switch (OracleSettings.Instance.FateWaitMode)
+            switch (WaitSettings.Instance.FateWaitMode)
             {
                 case FateWaitMode.ReturnToAetheryte:
                     await ReturnToAetheryte.Main();

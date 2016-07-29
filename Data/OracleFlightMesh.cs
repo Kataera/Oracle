@@ -6,8 +6,8 @@ namespace Oracle.Data
     {
         public OracleFlightMesh(uint zoneId, Graph graph)
         {
-            this.ZoneId = zoneId;
-            this.Graph = graph;
+            ZoneId = zoneId;
+            Graph = graph;
         }
 
         public Graph Graph { get; set; }

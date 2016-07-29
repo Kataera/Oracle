@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Buddy.Coroutines;
@@ -6,6 +7,7 @@ using Buddy.Coroutines;
 using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Managers;
+using ff14bot.Objects;
 
 using Oracle.Helpers;
 
@@ -13,10 +15,37 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class SummonMinion
     {
-        private static void RefreshObjectManagerCache()
+        public static GameObject CurrentMinion => GameObjectManager.GetObjectByObjectId(1);
+
+        public static bool CanSummonMinion()
         {
-            GameObjectManager.Clear();
-            GameObjectManager.Update();
+            if (Core.Player.IsMounted)
+            {
+                return false;
+            }
+
+            if (Core.Player.InCombat)
+            {
+                return false;
+            }
+
+            if (GameObjectManager.Attackers.Any())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static async Task<bool> IsMinionSummoned(string minionName)
+        {
+            if (Core.Player.IsMounted)
+            {
+                return true;
+            }
+
+            RefreshObjectManagerCache();
+            return CurrentMinion != null && CurrentMinion.EnglishName.Equals(minionName);
         }
 
         public static async Task<SummonMinionResult> Main(string minionName)
@@ -28,24 +57,20 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 await CommonTasks.StopAndDismount();
             }
 
-            if (GameObjectManager.GetObjectByObjectId(1) != null)
+            if (CurrentMinion != null)
             {
                 ChatManager.SendChat("/minion");
-                await Coroutine.Wait(TimeSpan.FromSeconds(5), () => GameObjectManager.GetObjectByObjectId(1) == null);
+                await Coroutine.Wait(TimeSpan.FromSeconds(5), () => CurrentMinion == null);
             }
 
             // Only way to summon minion with current RebornBuddy API is through a chat command.
             ChatManager.SendChat("/minion \"" + minionName + "\"");
-            await Coroutine.Wait(TimeSpan.FromSeconds(5), () => GameObjectManager.GetObjectByObjectId(1) != null);
+            await Coroutine.Wait(TimeSpan.FromSeconds(5), () => CurrentMinion != null);
 
-            // Ensure GameObjectManager data is fresh.
             RefreshObjectManagerCache();
-
-            // For some reason, the player's minion always has an ObjectId of 1.
-            var minionObject = GameObjectManager.GetObjectByObjectId(1);
-            if (minionObject != null)
+            if (CurrentMinion != null)
             {
-                if (minionObject.EnglishName.Equals(minionName))
+                if (CurrentMinion.EnglishName.Equals(minionName))
                 {
                     Logger.SendLog(minionName + " has been summoned successfully!");
                     return SummonMinionResult.Success;
@@ -59,19 +84,10 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return SummonMinionResult.NoMinionActive;
         }
 
-        public static async Task<bool> IsMinionSummoned(string minionName)
+        private static void RefreshObjectManagerCache()
         {
-            if (Core.Player.IsMounted)
-            {
-                return true;
-            }
-
-            // Ensure GameObjectManager data is fresh.
-            RefreshObjectManagerCache();
-
-            // For some reason, the player's minion always has an ObjectId of 1.
-            var minionObject = GameObjectManager.GetObjectByObjectId(1);
-            return minionObject != null && minionObject.EnglishName.Equals(minionName);
+            GameObjectManager.Clear();
+            GameObjectManager.Update();
         }
     }
 

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 using Buddy.Coroutines;
 
+using Clio.Utilities;
+
 using ff14bot;
 using ff14bot.Enums;
 using ff14bot.Helpers;
@@ -28,6 +30,7 @@ namespace Oracle.Managers
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
         internal static OracleDatabase OracleDatabase { get; set; }
         internal static uint PreviousFateId { get; set; }
+        internal static bool ReachedCurrentFate { get; set; }
 
         public static async Task<bool> AnyViableFates()
         {
@@ -122,37 +125,37 @@ namespace Oracle.Managers
         {
             var oracleFateData = OracleDatabase.GetFateFromFateData(fate);
 
-            if (oracleFateData.Type == FateType.Boss && !OracleSettings.Instance.BossFatesEnabled)
+            if (oracleFateData.Type == FateType.Boss && !FateSettings.Instance.BossFatesEnabled)
             {
                 return false;
             }
 
-            if (oracleFateData.Type == FateType.Collect && !OracleSettings.Instance.CollectFatesEnabled)
+            if (oracleFateData.Type == FateType.Collect && !FateSettings.Instance.CollectFatesEnabled)
             {
                 return false;
             }
 
-            if (oracleFateData.Type == FateType.Defence && !OracleSettings.Instance.DefenceFatesEnabled)
+            if (oracleFateData.Type == FateType.Defence && !FateSettings.Instance.DefenceFatesEnabled)
             {
                 return false;
             }
 
-            if (oracleFateData.Type == FateType.Escort && !OracleSettings.Instance.EscortFatesEnabled)
+            if (oracleFateData.Type == FateType.Escort && !FateSettings.Instance.EscortFatesEnabled)
             {
                 return false;
             }
 
-            if (oracleFateData.Type == FateType.Kill && !OracleSettings.Instance.KillFatesEnabled)
+            if (oracleFateData.Type == FateType.Kill && !FateSettings.Instance.KillFatesEnabled)
             {
                 return false;
             }
 
-            if (oracleFateData.Type == FateType.MegaBoss && !OracleSettings.Instance.MegaBossFatesEnabled)
+            if (oracleFateData.Type == FateType.MegaBoss && !FateSettings.Instance.MegaBossFatesEnabled)
             {
                 return false;
             }
 
-            if (OracleSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate && !OracleSettings.Instance.SpecificFates.Contains(fate.Id))
+            if (MainSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate && !FateSettings.Instance.SpecificFateList.Contains(fate.Id))
             {
                 return false;
             }
@@ -162,14 +165,14 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (OracleSettings.Instance.BlacklistedFates.Contains(fate.Id))
+            if (BlacklistSettings.Instance.BlacklistedFates.Contains(fate.Id))
             {
                 return false;
             }
 
-            if (OracleSettings.Instance.IgnoreLowDurationUnstartedFates)
+            if (FateSettings.Instance.IgnoreLowDuration)
             {
-                if (Math.Abs(fate.Progress) < 0.5f && fate.TimeLeft < TimeSpan.FromSeconds(OracleSettings.Instance.LowRemainingFateDuration))
+                if (Math.Abs(fate.Progress) < 0.5f && fate.TimeLeft < TimeSpan.FromSeconds(FateSettings.Instance.LowFateDuration))
                 {
                     return false;
                 }
@@ -180,7 +183,7 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (oracleFateData.SupportLevel == FateSupportLevel.Problematic && !OracleSettings.Instance.RunProblematicFates)
+            if (oracleFateData.SupportLevel == FateSupportLevel.Problematic && !FateSettings.Instance.RunProblematicFates)
             {
                 return false;
             }
@@ -195,12 +198,13 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (fate.Level > GetTrueLevel() + OracleSettings.Instance.FateMaximumLevelAbove)
+            if (fate.Level > GetTrueLevel() + FateSettings.Instance.FateMaxLevelAbove)
             {
                 return false;
             }
 
-            if (fate.Level < GetTrueLevel() - OracleSettings.Instance.FateMinimumLevelBelow)
+            if (fate.Level < GetTrueLevel() - FateSettings.Instance.FateMinLevelBelow
+                && MainSettings.Instance.OracleOperationMode == OracleOperationMode.FateGrind)
             {
                 return false;
             }
@@ -215,22 +219,22 @@ namespace Oracle.Managers
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss && fate.Progress >= OracleSettings.Instance.BossEngagePercentage)
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss && fate.Progress >= FateSettings.Instance.BossEngagePercentage)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss && OracleSettings.Instance.WaitAtBossFateForProgress)
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss && FateSettings.Instance.WaitAtBossForProgress)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && fate.Progress >= OracleSettings.Instance.MegaBossEngagePercentage)
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && fate.Progress >= FateSettings.Instance.MegaBossEngagePercentage)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && OracleSettings.Instance.WaitAtMegaBossFateForProgress)
+            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && FateSettings.Instance.WaitAtMegaBossForProgress)
             {
                 return true;
             }
@@ -262,6 +266,48 @@ namespace Oracle.Managers
             }
 
             return activeFates;
+        }
+
+        public static async Task<Dictionary<FateData, float>> GetActiveFateDistances(Vector3 location)
+        {
+            var activeFates = new Dictionary<FateData, float>();
+
+            if (!WorldManager.CanFly)
+            {
+                var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
+                var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, location, WorldManager.ZoneId);
+
+                foreach (var result in navResults.Where(result => result.CanNavigate != 0))
+                {
+                    activeFates.Add(FateManager.GetFateById(result.Id), result.PathLength);
+                    await Coroutine.Yield();
+                }
+            }
+            else
+            {
+                foreach (var fate in FateManager.ActiveFates)
+                {
+                    activeFates.Add(fate, fate.Location.Distance(location));
+                }
+            }
+
+            return activeFates;
+        }
+
+        public static Tuple<uint, Vector3>[] GetAetheryteIdsForZone(uint zoneId)
+        {
+            var baseResults = WorldManager.AetheryteIdsForZone(zoneId).ToList();
+            foreach (var result in WorldManager.AetheryteIdsForZone(zoneId))
+            {
+                if (result.Item1 == 19)
+                {
+                    baseResults.Remove(result);
+                    baseResults.Add(new Tuple<uint, Vector3>(19, new Vector3(-168.7496f, 26.1383f, -418.8336f)));
+                }
+            }
+
+            baseResults.Sort((x, y) => y.Item1.CompareTo(x.Item1));
+            return baseResults.ToArray();
         }
 
         public static ClassJobType GetBaseClass(ClassJobType job)
@@ -380,7 +426,12 @@ namespace Oracle.Managers
         {
             const ushort dravanianHinterlands = 399;
 
-            if (!OracleSettings.Instance.ZoneChangingEnabled)
+            if (MainSettings.Instance.OracleOperationMode != OracleOperationMode.FateGrind)
+            {
+                return false;
+            }
+
+            if (!MovementSettings.Instance.ChangeZones)
             {
                 return false;
             }
@@ -396,7 +447,7 @@ namespace Oracle.Managers
             }
 
             uint aetheryteId;
-            OracleSettings.Instance.ZoneLevels.TryGetValue(GetTrueLevel(), out aetheryteId);
+            MovementSettings.Instance.ZoneLevels.TryGetValue(GetTrueLevel(), out aetheryteId);
 
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
             {

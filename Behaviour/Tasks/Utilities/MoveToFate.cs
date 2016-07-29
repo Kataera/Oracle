@@ -26,10 +26,16 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             await OracleMovementManager.LoadFlightMeshIfAvailable();
 
-            if (!ignoreCombat && OracleSettings.Instance.TeleportIfQuicker && currentFate.IsValid)
+            if (!ignoreCombat && MovementSettings.Instance.TeleportIfQuicker && currentFate.IsValid)
             {
                 if (await Teleport.FasterToTeleport(currentFate))
                 {
+                    if (GameObjectManager.Attackers.Any(attacker => attacker.IsValid))
+                    {
+                        OracleFateManager.ClearPoi("We're under attack and can't teleport.");
+                        return false;
+                    }
+
                     await Coroutine.Wait(TimeSpan.FromSeconds(10), WorldManager.CanTeleport);
                     if (WorldManager.CanTeleport())
                     {
@@ -50,8 +56,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             var distanceToFateBoundary = Core.Player.Location.Distance2D(currentFate.Location) - currentFate.Radius;
-            if (!ignoreCombat && OracleMovementManager.IsMountNeeded(distanceToFateBoundary) && !Core.Player.IsMounted
-                && currentFate.IsValid)
+            if (!ignoreCombat && OracleMovementManager.IsMountNeeded(distanceToFateBoundary) && !Core.Player.IsMounted && currentFate.IsValid)
             {
                 await Mount.MountUp();
             }

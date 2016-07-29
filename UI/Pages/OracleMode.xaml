@@ -264,21 +264,22 @@
                     <TextBlock Grid.Row="2" TextWrapping="Wrap" Margin="16,0,16,20"
                                Foreground="{DynamicResource MaterialDesignBodyLight}"
                                VerticalAlignment="Center">
-                               The current list of FATEs that Oracle will search for in Specific FATE(s) mode.
+                        The current list of FATEs that Oracle will search for in Specific FATE(s) mode.
                     </TextBlock>
                     <Separator Grid.Row="3" BorderBrush="{DynamicResource MaterialDesignDivider}" />
                     <DataGrid Grid.Row="4" Margin="8" ItemsSource="{Binding Items}" CanUserSortColumns="True"
-                                  CanUserAddRows="False" AutoGenerateColumns="False">
+                              CanUserAddRows="False" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <materialDesign:MaterialDataGridTextColumn Binding="{Binding Name}"
-                                                                           Header="FATE Name" IsReadOnly="True"/>
+                                                                       Header="FATE Name" IsReadOnly="True" />
                             <materialDesign:MaterialDataGridTextColumn Binding="{Binding FateId}"
-                                                                           Header="FATE Id"
-                                                                           EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" IsReadOnly="True" />
+                                                                       Header="FATE Id"
+                                                                       EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                                                       IsReadOnly="True" />
                             <DataGridCheckBoxColumn Binding="{Binding IsSelected}"
-                                                        Header="Enabled"
-                                                        ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
-                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}" />
+                                                    Header="Enabled"
+                                                    ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                                    EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
