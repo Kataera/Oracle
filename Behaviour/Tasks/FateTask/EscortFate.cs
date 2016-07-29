@@ -113,7 +113,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 var escortNpc = GameObjectManager.GetObjectByNPCId(oracleFate.NpcId)
                                 ?? GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
 
-                if (escortNpc == null || Core.Player.Distance2D(escortNpc.Location) >= currentFate.Radius * 0.75)
+                if (escortNpc == null || Core.Player.Distance2D(escortNpc.Location) >= currentFate.Radius * 0.9)
                 {
                     await MoveToFateCentre();
                     return true;
@@ -146,12 +146,12 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 }
 
                 // Throttle navigator path generation requests.
-                if (cachedLocation.Distance2D(currentFate.Location) > 15)
+                if (cachedLocation.Distance2D(currentFate.Location) > 25)
                 {
                     cachedLocation = currentFate.Location;
                 }
 
-                Navigator.MoveToPointWithin(cachedLocation, currentFate.Radius * 0.2f, "FATE centre");
+                Navigator.MoveToPointWithin(cachedLocation, currentFate.Radius * 0.5f, "FATE centre");
                 await Coroutine.Yield();
             }
 

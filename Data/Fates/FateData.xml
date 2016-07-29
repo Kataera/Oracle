@@ -1549,6 +1549,7 @@
     <Level>28</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <PreferredTargetId>883</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>420</ID>
