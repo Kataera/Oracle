@@ -135,7 +135,8 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 return true;
             }
 
-            while (Core.Player.Distance2D(currentFate.Location) > currentFate.Radius * 0.2f)
+            var cachedLocation = currentFate.Location;
+            while (Core.Player.Distance2D(cachedLocation) > currentFate.Radius * 0.2f)
             {
                 if (currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
                 {
@@ -144,7 +145,13 @@ namespace Oracle.Behaviour.Tasks.FateTask
                     return true;
                 }
 
-                Navigator.MoveToPointWithin(currentFate.Location, currentFate.Radius * 0.2f, "FATE centre");
+                // Throttle navigator path generation.
+                if (cachedLocation.Distance2D(currentFate.Location) > 10)
+                {
+                    cachedLocation = currentFate.Location;
+                }
+
+                Navigator.MoveToPointWithin(cachedLocation, currentFate.Radius * 0.2f, "FATE centre");
                 await Coroutine.Yield();
             }
 

@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+
+using Buddy.Coroutines;
 
 using ff14bot;
 using ff14bot.Enums;
@@ -7,6 +10,7 @@ using ff14bot.RemoteWindows;
 
 using Oracle.Helpers;
 using Oracle.Managers;
+using Oracle.Settings;
 
 namespace Oracle.Behaviour.Tasks.Utilities
 {
@@ -14,7 +18,11 @@ namespace Oracle.Behaviour.Tasks.Utilities
     {
         public static async Task<bool> DesyncLevel()
         {
-            ToDoList.LevelSync();
+            if (Core.Player.IsLevelSynced)
+            {
+                ToDoList.LevelSync();
+            }
+
             return true;
         }
 
@@ -36,6 +44,8 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             ToDoList.LevelSync();
+            await Coroutine.Wait(TimeSpan.FromMilliseconds(OracleSettings.Instance.ActionDelay), () => Core.Player.IsLevelSynced);
+
             if (Core.Player.IsLevelSynced)
             {
                 Logger.SendLog("Synced to level " + fate.MaxLevel + " to participate in FATE.");
