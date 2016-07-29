@@ -35,7 +35,7 @@ namespace Oracle.Behaviour.PoiHooks.FateSelect
                 }
 
                 // Don't teleport for FATEs above a set percentage.
-                foreach (var fateDistance in combinedDistances)
+                foreach (var fateDistance in await OracleFateManager.GetActiveFateDistances())
                 {
                     if (fateDistance.Key.Progress < OracleSettings.Instance.TeleportMaxFateProgress)
                     {

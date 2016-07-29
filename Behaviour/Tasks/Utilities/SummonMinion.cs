@@ -44,7 +44,6 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return true;
             }
 
-            // Ensure GameObjectManager data is fresh.
             RefreshObjectManagerCache();
             return CurrentMinion != null && CurrentMinion.EnglishName.Equals(minionName);
         }
@@ -68,9 +67,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             ChatManager.SendChat("/minion \"" + minionName + "\"");
             await Coroutine.Wait(TimeSpan.FromSeconds(5), () => CurrentMinion != null);
 
-            // Ensure GameObjectManager data is fresh.
             RefreshObjectManagerCache();
-
             if (CurrentMinion != null)
             {
                 if (CurrentMinion.EnglishName.Equals(minionName))
