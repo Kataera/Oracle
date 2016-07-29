@@ -113,13 +113,13 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 var escortNpc = GameObjectManager.GetObjectByNPCId(oracleFate.NpcId)
                                 ?? GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
 
-                if (escortNpc == null)
+                if (escortNpc == null || Core.Player.Distance2D(escortNpc.Location) >= currentFate.Radius * 0.75)
                 {
                     await MoveToFateCentre();
                     return true;
                 }
 
-                await MoveToNpc(escortNpc);
+                await MoveToFateCentre();
             }
 
             return true;
@@ -186,7 +186,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
             {
                 var currentFate = OracleFateManager.GetCurrentFateData();
 
-                if (timeout.Elapsed > TimeSpan.FromSeconds(10))
+                if (timeout.Elapsed > TimeSpan.FromSeconds(5))
                 {
                     Navigator.PlayerMover.MoveStop();
                     timeout.Reset();

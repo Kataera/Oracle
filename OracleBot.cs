@@ -10,8 +10,8 @@ using ff14bot.Navigation;
 using ff14bot.Objects;
 
 using Oracle.Behaviour;
+using Oracle.Behaviour.Hooks;
 using Oracle.Behaviour.Modes;
-using Oracle.Behaviour.PoiHooks;
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Enumerations;
 using Oracle.Helpers;
@@ -135,6 +135,12 @@ namespace Oracle
             root = BrainBehavior.CreateBrain();
             TreeHooks.Instance.AddHook("TreeStart", OracleBehaviour.Behaviour);
             TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
+
+            if (MainSettings.Instance.OverrideRestBehaviour)
+            {
+                Logger.SendDebugLog("Overriding the combat routine rest behaviour.");
+                TreeHooks.Instance.ReplaceHook("Rest", Rest.Behaviour);
+            }
 
             if (MainSettings.Instance.ListHooksOnStart && MainSettings.Instance.DebugEnabled)
             {

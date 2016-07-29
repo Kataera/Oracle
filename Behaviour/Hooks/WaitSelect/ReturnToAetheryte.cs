@@ -14,7 +14,7 @@ using NeoGaia.ConnectionHandler;
 using Oracle.Helpers;
 using Oracle.Managers;
 
-namespace Oracle.Behaviour.PoiHooks.WaitSelect
+namespace Oracle.Behaviour.Hooks.WaitSelect
 {
     internal static class ReturnToAetheryte
     {

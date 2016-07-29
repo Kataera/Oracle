@@ -11,14 +11,14 @@ using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 
-using Oracle.Behaviour.PoiHooks.FateSelect;
+using Oracle.Behaviour.Hooks.FateSelect;
 using Oracle.Data;
 using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Managers;
 using Oracle.Settings;
 
-namespace Oracle.Behaviour.PoiHooks
+namespace Oracle.Behaviour.Hooks
 {
     internal static class SetFatePoi
     {

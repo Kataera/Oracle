@@ -4,7 +4,7 @@ using Oracle.Managers;
 
 using TreeSharp;
 
-namespace Oracle.Behaviour.PoiHooks
+namespace Oracle.Behaviour.Hooks
 {
     internal static class SelectPoiType
     {

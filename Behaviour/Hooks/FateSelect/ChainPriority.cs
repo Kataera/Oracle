@@ -1,4 +1,4 @@
-﻿namespace Oracle.Behaviour.PoiHooks.FateSelect
+﻿namespace Oracle.Behaviour.Hooks.FateSelect
 {
     internal static class ChainPriority
     {

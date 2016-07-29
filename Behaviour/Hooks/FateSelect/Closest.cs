@@ -10,7 +10,7 @@ using Oracle.Helpers;
 using Oracle.Managers;
 using Oracle.Settings;
 
-namespace Oracle.Behaviour.PoiHooks.FateSelect
+namespace Oracle.Behaviour.Hooks.FateSelect
 {
     internal static class Closest
     {
@@ -43,7 +43,7 @@ namespace Oracle.Behaviour.PoiHooks.FateSelect
                     }
 
                     Logger.SendDebugLog("Ignoring teleport distance for " + fateDistance.Key.Name + ", its progress (" + fateDistance.Key.Progress
-                                        + "%) exceeds " + MovementSettings.Instance.FateProgressTeleportLimit + "%.");
+                                        + "%) equals or exceeds " + MovementSettings.Instance.FateProgressTeleportLimit + "%.");
                     combinedDistances.Remove(fateDistance.Key);
                 }
 
@@ -71,14 +71,12 @@ namespace Oracle.Behaviour.PoiHooks.FateSelect
                 fateDistances = combinedDistances;
             }
 
-            var closestFates = fateDistances.OrderBy(kvp => kvp.Value - kvp.Key.Radius * 0.75).Where(fate => OracleFateManager.FateFilter(fate.Key));
+            var closestFates = fateDistances.OrderBy(kvp => kvp.Value).Where(fate => OracleFateManager.FateFilter(fate.Key)).ToArray();
             foreach (var fate in closestFates)
             {
-                var distance = Math.Round(fate.Value - fate.Key.Radius * 0.75f, 0);
-
-                if (distance > 0)
+                if (fate.Value > 0)
                 {
-                    Logger.SendDebugLog("Found FATE '" + fate.Key.Name + "'. Distance to it is ~" + distance + " yalms.");
+                    Logger.SendDebugLog("Found FATE '" + fate.Key.Name + "'. Distance to it is " + Math.Round(fate.Value, 2) + " yalms.");
                 }
                 else
                 {

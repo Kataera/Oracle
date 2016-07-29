@@ -49,11 +49,9 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             var distanceFromPlayer = await GetDistanceFromPlayer(fate);
-            var teleportMinDistance = MovementSettings.Instance.MinDistanceToTeleport;
-
-            Logger.SendDebugLog("Distance to navigate to FATE from player location is ~" + Math.Round(distanceFromPlayer, 0) + " yalms.");
-            Logger.SendDebugLog("Distance to navigate to FATE from closest aetheryte location is ~" + Math.Round(aetheryte.Distance, 0) + " yalms.");
-            Logger.SendDebugLog("Minimum reduction in distance to use teleport is " + teleportMinDistance + " yalms.");
+            Logger.SendDebugLog("Distance to navigate to FATE from player location is " + Math.Round(distanceFromPlayer, 2) + " yalms.");
+            Logger.SendDebugLog("Distance to navigate to FATE from closest aetheryte location is " + Math.Round(aetheryte.Distance, 2) + " yalms.");
+            Logger.SendDebugLog("Minimum reduction in distance to use teleport is " + MovementSettings.Instance.MinDistanceToTeleport + " yalms.");
 
             if (distanceFromPlayer - aetheryte.Distance <= 0)
             {
@@ -61,10 +59,10 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
             else
             {
-                Logger.SendDebugLog("The distance reduction from teleporting is ~" + Math.Round(distanceFromPlayer - aetheryte.Distance, 0) + " yalms.");
+                Logger.SendDebugLog("The distance reduction from teleporting is ~" + Math.Round(distanceFromPlayer - aetheryte.Distance, 2) + " yalms.");
             }
 
-            if (distanceFromPlayer - aetheryte.Distance > teleportMinDistance)
+            if (distanceFromPlayer - aetheryte.Distance > MovementSettings.Instance.MinDistanceToTeleport)
             {
                 return true;
             }
@@ -92,12 +90,12 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
                 if (navResult != null)
                 {
-                    distanceFromPlayer = navResult.PathLength - fate.Radius * 0.75f;
+                    distanceFromPlayer = navResult.PathLength;
                 }
             }
             else
             {
-                distanceFromPlayer = fate.Location.Distance(Core.Player.Location) - fate.Radius * 0.75f;
+                distanceFromPlayer = fate.Location.Distance(Core.Player.Location);
             }
 
             return distanceFromPlayer;
@@ -118,7 +116,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 foreach (var navResult in navResults.Where(result => result.CanNavigate != 0))
                 {
                     var aetheryte = allAetherytes.FirstOrDefault(result => result.Id == navResult.Id);
-                    aetheryte.Distance = navResult.PathLength - fate.Radius * 0.75f;
+                    aetheryte.Distance = navResult.PathLength;
                     viableAetheryteList.Add(aetheryte);
                     await Coroutine.Yield();
                 }
@@ -162,11 +160,6 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             return true;
-        }
-
-        private static Aetheryte TupleToAetheryte(Tuple<uint, Vector3> tuple, float distance)
-        {
-            return new Aetheryte {Distance = distance, Id = tuple.Item1, Location = tuple.Item2};
         }
 
         private static Aetheryte TupleToAetheryte(Tuple<uint, Vector3> tuple, Vector3 location)

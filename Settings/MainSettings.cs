@@ -19,6 +19,9 @@ namespace Oracle.Settings
         private bool debugEnabled;
         private bool listHooksOnStart;
         private OracleOperationMode oracleOperationMode;
+        private bool overrideRestBehaviour;
+        private int restHealthPercent;
+        private int restManaPercent;
         private int targetListCacheDuration;
 
         private MainSettings() : base(Path.Combine(SettingsPath, @"Oracle\MainSettings.json"))
@@ -122,6 +125,54 @@ namespace Oracle.Settings
             set
             {
                 oracleOperationMode = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool OverrideRestBehaviour
+        {
+            get
+            {
+                return overrideRestBehaviour;
+            }
+
+            set
+            {
+                overrideRestBehaviour = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(50)]
+        [Setting]
+        public int RestHealthPercent
+        {
+            get
+            {
+                return restHealthPercent;
+            }
+
+            set
+            {
+                restHealthPercent = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(30)]
+        [Setting]
+        public int RestManaPercent
+        {
+            get
+            {
+                return restManaPercent;
+            }
+
+            set
+            {
+                restManaPercent = value;
                 Save();
             }
         }

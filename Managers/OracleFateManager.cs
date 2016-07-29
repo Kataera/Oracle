@@ -203,7 +203,8 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (fate.Level < GetTrueLevel() - FateSettings.Instance.FateMinLevelBelow)
+            if (fate.Level < GetTrueLevel() - FateSettings.Instance.FateMinLevelBelow
+                && MainSettings.Instance.OracleOperationMode == OracleOperationMode.FateGrind)
             {
                 return false;
             }
@@ -424,6 +425,11 @@ namespace Oracle.Managers
         public static bool ZoneChangeNeeded()
         {
             const ushort dravanianHinterlands = 399;
+
+            if (MainSettings.Instance.OracleOperationMode != OracleOperationMode.FateGrind)
+            {
+                return false;
+            }
 
             if (!MovementSettings.Instance.ChangeZones)
             {
