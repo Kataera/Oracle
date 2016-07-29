@@ -24,15 +24,29 @@ namespace Oracle.Behaviour.PoiHooks.FateSelect
             var fateDistances = await OracleFateManager.GetActiveFateDistances();
             if (OracleSettings.Instance.TeleportIfQuicker && OracleSettings.Instance.FateSelectClosestDistanceConsiderAetheryte)
             {
-                var fateDistancesFromAetherytes = new List<Dictionary<FateData, float>>();
+                Logger.SendDebugLog("Taking into account the distance to a FATE if we teleport to it.");
 
+                var combinedDistances = fateDistances;
+                var fateDistancesFromAetherytes = new List<Dictionary<FateData, float>>();
                 foreach (var aetheryte in
                     OracleFateManager.GetAetheryteIdsForZone(WorldManager.ZoneId).Where(item => WorldManager.KnownAetheryteIds.Contains(item.Item1)))
                 {
                     fateDistancesFromAetherytes.Add(await OracleFateManager.GetActiveFateDistances(aetheryte.Item2));
                 }
 
-                var combinedDistances = fateDistances;
+                // Don't teleport for FATEs above a set percentage.
+                foreach (var fateDistance in combinedDistances)
+                {
+                    if (fateDistance.Key.Progress < OracleSettings.Instance.TeleportMaxFateProgress)
+                    {
+                        continue;
+                    }
+
+                    Logger.SendDebugLog("Ignoring teleport distance for " + fateDistance.Key.Name + ", its progress (" + fateDistance.Key.Progress
+                                        + "%) exceeds " + OracleSettings.Instance.TeleportMaxFateProgress + "%.");
+                    combinedDistances.Remove(fateDistance.Key);
+                }
+
                 foreach (var aetheryteDistanceDict in fateDistancesFromAetherytes)
                 {
                     foreach (var fateDistance in aetheryteDistanceDict)
@@ -45,12 +59,6 @@ namespace Oracle.Behaviour.PoiHooks.FateSelect
 
                         // Add the minimum distance delta to ensure we don't teleport if distance saved is under that amount.
                         if (fateDistance.Value + OracleSettings.Instance.TeleportMinimumDistanceDelta >= currentDistance)
-                        {
-                            continue;
-                        }
-
-                        // Don't teleport for FATEs above a set percentage.
-                        if (fateDistance.Key.Progress >= OracleSettings.Instance.TeleportMaxFateProgress)
                         {
                             continue;
                         }

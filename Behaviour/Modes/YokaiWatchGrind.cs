@@ -151,7 +151,7 @@ namespace Oracle.Behaviour.Modes
 
             if (!ConditionParser.HasAtLeast(YokaiMinions.Jibanyan.MedalItemId, OracleSettings.Instance.YokaiJibanyanMedalsToFarm) && !ignoreJibanyan)
             {
-                if (!Core.Player.IsMounted && !Core.Player.InCombat && !await SummonMinion.IsMinionSummoned(YokaiMinions.Jibanyan.EnglishName))
+                if (SummonMinion.CanSummonMinion() && !await SummonMinion.IsMinionSummoned(YokaiMinions.Jibanyan.EnglishName))
                 {
                     var summonMinionResult = await SummonMinion.Main(YokaiMinions.Jibanyan.EnglishName);
                     if (summonMinionResult != SummonMinionResult.Success)
@@ -164,7 +164,7 @@ namespace Oracle.Behaviour.Modes
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Komasan.MedalItemId, OracleSettings.Instance.YokaiKomasanMedalsToFarm) && !ignoreKomasan)
             {
-                if (!Core.Player.IsMounted && !Core.Player.InCombat && !await SummonMinion.IsMinionSummoned(YokaiMinions.Komasan.EnglishName))
+                if (SummonMinion.CanSummonMinion() && !await SummonMinion.IsMinionSummoned(YokaiMinions.Komasan.EnglishName))
                 {
                     var summonMinionResult = await SummonMinion.Main(YokaiMinions.Komasan.EnglishName);
                     if (summonMinionResult != SummonMinionResult.Success)
@@ -177,7 +177,7 @@ namespace Oracle.Behaviour.Modes
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Usapyon.MedalItemId, OracleSettings.Instance.YokaiUsapyonMedalsToFarm) && !ignoreUsapyon)
             {
-                if (!Core.Player.IsMounted && !Core.Player.InCombat && !await SummonMinion.IsMinionSummoned(YokaiMinions.Usapyon.EnglishName))
+                if (SummonMinion.CanSummonMinion() && !await SummonMinion.IsMinionSummoned(YokaiMinions.Usapyon.EnglishName))
                 {
                     var summonMinionResult = await SummonMinion.Main(YokaiMinions.Usapyon.EnglishName);
                     if (summonMinionResult != SummonMinionResult.Success)
@@ -190,7 +190,7 @@ namespace Oracle.Behaviour.Modes
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Whisper.MedalItemId, OracleSettings.Instance.YokaiWhisperMedalsToFarm) && !ignoreWhisper)
             {
-                if (!Core.Player.IsMounted && !Core.Player.InCombat && !await SummonMinion.IsMinionSummoned(YokaiMinions.Whisper.EnglishName))
+                if (SummonMinion.CanSummonMinion() && !await SummonMinion.IsMinionSummoned(YokaiMinions.Whisper.EnglishName))
                 {
                     var summonMinionResult = await SummonMinion.Main(YokaiMinions.Whisper.EnglishName);
                     if (summonMinionResult != SummonMinionResult.Success)
@@ -203,7 +203,7 @@ namespace Oracle.Behaviour.Modes
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Shogunyan.MedalItemId, OracleSettings.Instance.YokaiShogunyanMedalsToFarm) && !ignoreShogunyan)
             {
-                if (!Core.Player.IsMounted && !Core.Player.InCombat && !await SummonMinion.IsMinionSummoned(YokaiMinions.Shogunyan.EnglishName))
+                if (SummonMinion.CanSummonMinion() && !await SummonMinion.IsMinionSummoned(YokaiMinions.Shogunyan.EnglishName))
                 {
                     var summonMinionResult = await SummonMinion.Main(YokaiMinions.Shogunyan.EnglishName);
                     if (summonMinionResult != SummonMinionResult.Success)
@@ -216,7 +216,7 @@ namespace Oracle.Behaviour.Modes
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Hovernyan.MedalItemId, OracleSettings.Instance.YokaiHovernyanMedalsToFarm) && !ignoreHovernyan)
             {
-                if (!Core.Player.IsMounted && !Core.Player.InCombat && !await SummonMinion.IsMinionSummoned(YokaiMinions.Hovernyan.EnglishName))
+                if (SummonMinion.CanSummonMinion() && !await SummonMinion.IsMinionSummoned(YokaiMinions.Hovernyan.EnglishName))
                 {
                     var summonMinionResult = await SummonMinion.Main(YokaiMinions.Hovernyan.EnglishName);
                     if (summonMinionResult != SummonMinionResult.Success)
@@ -229,7 +229,7 @@ namespace Oracle.Behaviour.Modes
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Komajiro.MedalItemId, OracleSettings.Instance.YokaiKomajiroMedalsToFarm) && !ignoreKomajiro)
             {
-                if (!Core.Player.IsMounted && !Core.Player.InCombat && !await SummonMinion.IsMinionSummoned(YokaiMinions.Komajiro.EnglishName))
+                if (SummonMinion.CanSummonMinion() && !await SummonMinion.IsMinionSummoned(YokaiMinions.Komajiro.EnglishName))
                 {
                     var summonMinionResult = await SummonMinion.Main(YokaiMinions.Komajiro.EnglishName);
                     if (summonMinionResult != SummonMinionResult.Success)
@@ -242,7 +242,7 @@ namespace Oracle.Behaviour.Modes
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Noko.MedalItemId, OracleSettings.Instance.YokaiNokoMedalsToFarm) && !ignoreNoko)
             {
-                if (!Core.Player.IsMounted && !Core.Player.InCombat && !await SummonMinion.IsMinionSummoned(YokaiMinions.Noko.EnglishName))
+                if (SummonMinion.CanSummonMinion() && !await SummonMinion.IsMinionSummoned(YokaiMinions.Noko.EnglishName))
                 {
                     var summonMinionResult = await SummonMinion.Main(YokaiMinions.Noko.EnglishName);
                     if (summonMinionResult != SummonMinionResult.Success)
@@ -255,7 +255,7 @@ namespace Oracle.Behaviour.Modes
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Venoct.MedalItemId, OracleSettings.Instance.YokaiVenoctMedalsToFarm) && !ignoreVenoct)
             {
-                if (!Core.Player.IsMounted && !Core.Player.InCombat && !await SummonMinion.IsMinionSummoned(YokaiMinions.Venoct.EnglishName))
+                if (SummonMinion.CanSummonMinion() && !await SummonMinion.IsMinionSummoned(YokaiMinions.Venoct.EnglishName))
                 {
                     var summonMinionResult = await SummonMinion.Main(YokaiMinions.Venoct.EnglishName);
                     if (summonMinionResult != SummonMinionResult.Success)
@@ -268,7 +268,7 @@ namespace Oracle.Behaviour.Modes
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Kyubi.MedalItemId, OracleSettings.Instance.YokaiKyubiMedalsToFarm) && !ignoreKyubi)
             {
-                if (!Core.Player.IsMounted && !Core.Player.InCombat && !await SummonMinion.IsMinionSummoned(YokaiMinions.Kyubi.EnglishName))
+                if (SummonMinion.CanSummonMinion() && !await SummonMinion.IsMinionSummoned(YokaiMinions.Kyubi.EnglishName))
                 {
                     var summonMinionResult = await SummonMinion.Main(YokaiMinions.Kyubi.EnglishName);
                     if (summonMinionResult != SummonMinionResult.Success)
@@ -281,7 +281,7 @@ namespace Oracle.Behaviour.Modes
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Robonyan.MedalItemId, OracleSettings.Instance.YokaiRobonyanMedalsToFarm) && !ignoreRobonyan)
             {
-                if (!Core.Player.IsMounted && !Core.Player.InCombat && !await SummonMinion.IsMinionSummoned(YokaiMinions.Robonyan.EnglishName))
+                if (SummonMinion.CanSummonMinion() && !await SummonMinion.IsMinionSummoned(YokaiMinions.Robonyan.EnglishName))
                 {
                     var summonMinionResult = await SummonMinion.Main(YokaiMinions.Robonyan.EnglishName);
                     if (summonMinionResult != SummonMinionResult.Success)
@@ -294,7 +294,7 @@ namespace Oracle.Behaviour.Modes
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Blizzaria.MedalItemId, OracleSettings.Instance.YokaiBlizzariaMedalsToFarm) && !ignoreBlizzaria)
             {
-                if (!Core.Player.IsMounted && !Core.Player.InCombat && !await SummonMinion.IsMinionSummoned(YokaiMinions.Blizzaria.EnglishName))
+                if (SummonMinion.CanSummonMinion() && !await SummonMinion.IsMinionSummoned(YokaiMinions.Blizzaria.EnglishName))
                 {
                     var summonMinionResult = await SummonMinion.Main(YokaiMinions.Blizzaria.EnglishName);
                     if (summonMinionResult != SummonMinionResult.Success)
@@ -307,7 +307,7 @@ namespace Oracle.Behaviour.Modes
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Manjimutt.MedalItemId, OracleSettings.Instance.YokaiManjimuttMedalsToFarm) && !ignoreManjimutt)
             {
-                if (!Core.Player.IsMounted && !Core.Player.InCombat && !await SummonMinion.IsMinionSummoned(YokaiMinions.Manjimutt.EnglishName))
+                if (SummonMinion.CanSummonMinion() && !await SummonMinion.IsMinionSummoned(YokaiMinions.Manjimutt.EnglishName))
                 {
                     var summonMinionResult = await SummonMinion.Main(YokaiMinions.Manjimutt.EnglishName);
                     if (summonMinionResult != SummonMinionResult.Success)
