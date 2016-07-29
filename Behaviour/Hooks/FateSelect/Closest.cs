@@ -42,7 +42,7 @@ namespace Oracle.Behaviour.Hooks.FateSelect
                     }
 
                     Logger.SendDebugLog("Ignoring teleport distance for " + fateDistance.Key.Name + ", its progress (" + fateDistance.Key.Progress
-                                        + "%) equals or exceeds " + MovementSettings.Instance.FateProgressTeleportLimit + "%.");
+                                        + "%) equals or exceeds the limit (" + MovementSettings.Instance.FateProgressTeleportLimit + ")%.");
                 }
 
                 foreach (var aetheryteDistanceDict in fateDistancesFromAetherytes)

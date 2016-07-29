@@ -195,6 +195,12 @@ namespace Oracle
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;
 
+            if (MainSettings.Instance.OverrideRestBehaviour)
+            {
+                Logger.SendDebugLog("Restoring the combat routine rest behaviour.");
+                TreeHooks.Instance.ReplaceHook("Rest", RoutineManager.Current.RestBehavior);
+            }
+
             Logger.SendLog("Stopping Oracle.");
         }
     }
