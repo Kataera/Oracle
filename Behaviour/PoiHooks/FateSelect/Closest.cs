@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 using ff14bot.Helpers;
+using ff14bot.Managers;
 
 using Oracle.Helpers;
 using Oracle.Managers;
+using Oracle.Settings;
 
 namespace Oracle.Behaviour.PoiHooks.FateSelect
 {
@@ -18,8 +21,44 @@ namespace Oracle.Behaviour.PoiHooks.FateSelect
                 return false;
             }
 
-            var activeFates = await OracleFateManager.GetActiveFateDistances();
-            var closestFates = activeFates.OrderBy(kvp => kvp.Value - kvp.Key.Radius * 0.75).Where(fate => OracleFateManager.FateFilter(fate.Key));
+            var fateDistances = await OracleFateManager.GetActiveFateDistances();
+            if (OracleSettings.Instance.TeleportIfQuicker && OracleSettings.Instance.FateSelectClosestDistanceConsiderAetheryte)
+            {
+                var fateDistancesFromAetherytes = new List<Dictionary<FateData, float>>();
+
+                foreach (
+                    var aetheryte in
+                        OracleFateManager.GetAetheryteIdsForZone(WorldManager.ZoneId).Where(item => WorldManager.KnownAetheryteIds.Contains(item.Item1)))
+                {
+                    fateDistancesFromAetherytes.Add(await OracleFateManager.GetActiveFateDistances(aetheryte.Item2));
+                }
+
+                var combinedDistances = fateDistances;
+                foreach (var aetheryteDistanceDict in fateDistancesFromAetherytes)
+                {
+                    foreach (var fateDistance in aetheryteDistanceDict)
+                    {
+                        float currentDistance;
+                        if (!combinedDistances.TryGetValue(fateDistance.Key, out currentDistance))
+                        {
+                            continue;
+                        }
+
+                        // Add the minimum distance delta to ensure we don't teleport if distance saved is under that amount.
+                        if (fateDistance.Value + OracleSettings.Instance.TeleportMinimumDistanceDelta >= currentDistance)
+                        {
+                            continue;
+                        }
+
+                        combinedDistances.Remove(fateDistance.Key);
+                        combinedDistances.Add(fateDistance.Key, fateDistance.Value);
+                    }
+                }
+
+                fateDistances = combinedDistances;
+            }
+
+            var closestFates = fateDistances.OrderBy(kvp => kvp.Value - kvp.Key.Radius * 0.75).Where(fate => OracleFateManager.FateFilter(fate.Key));
             foreach (var fate in closestFates)
             {
                 var distance = Math.Round(fate.Value - fate.Key.Radius * 0.75f, 0);

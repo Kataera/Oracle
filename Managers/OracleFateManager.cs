@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 using Buddy.Coroutines;
 
+using Clio.Utilities;
+
 using ff14bot;
 using ff14bot.Enums;
 using ff14bot.Helpers;
@@ -28,6 +30,7 @@ namespace Oracle.Managers
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
         internal static OracleDatabase OracleDatabase { get; set; }
         internal static uint PreviousFateId { get; set; }
+        internal static bool ReachedCurrentFate { get; set; }
 
         public static async Task<bool> AnyViableFates()
         {
@@ -262,6 +265,48 @@ namespace Oracle.Managers
             }
 
             return activeFates;
+        }
+
+        public static async Task<Dictionary<FateData, float>> GetActiveFateDistances(Vector3 location)
+        {
+            var activeFates = new Dictionary<FateData, float>();
+
+            if (!WorldManager.CanFly)
+            {
+                var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
+                var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, location, WorldManager.ZoneId);
+
+                foreach (var result in navResults.Where(result => result.CanNavigate != 0))
+                {
+                    activeFates.Add(FateManager.GetFateById(result.Id), result.PathLength);
+                    await Coroutine.Yield();
+                }
+            }
+            else
+            {
+                foreach (var fate in FateManager.ActiveFates)
+                {
+                    activeFates.Add(fate, fate.Location.Distance(location));
+                }
+            }
+
+            return activeFates;
+        }
+
+        public static Tuple<uint, Vector3>[] GetAetheryteIdsForZone(uint zoneId)
+        {
+            var baseResults = WorldManager.AetheryteIdsForZone(zoneId).ToList();
+            foreach (var result in WorldManager.AetheryteIdsForZone(zoneId))
+            {
+                if (result.Item1 == 19)
+                {
+                    baseResults.Remove(result);
+                    baseResults.Add(new Tuple<uint, Vector3>(19, new Vector3(-168.7496f, 26.1383f, -418.8336f)));
+                }
+            }
+
+            baseResults.Sort((x, y) => y.Item1.CompareTo(x.Item1));
+            return baseResults.ToArray();
         }
 
         public static ClassJobType GetBaseClass(ClassJobType job)

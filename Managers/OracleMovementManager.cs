@@ -39,6 +39,7 @@ namespace Oracle.Managers
 
         public static async Task<bool> FlyToCurrentFate()
         {
+            OracleFateManager.ReachedCurrentFate = false;
             var currentFate = OracleFateManager.GetCurrentFateData();
             if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
             {
@@ -109,6 +110,8 @@ namespace Oracle.Managers
             }
 
             await LandInFateArea();
+
+            OracleFateManager.ReachedCurrentFate = true;
             return true;
         }
 
@@ -484,6 +487,7 @@ namespace Oracle.Managers
 
         public static async Task<bool> NavigateToCurrentFate(bool ignoreCombat)
         {
+            OracleFateManager.ReachedCurrentFate = false;
             var currentFate = OracleFateManager.GetCurrentFateData();
             if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
             {
@@ -527,6 +531,7 @@ namespace Oracle.Managers
             }
 
             Navigator.Stop();
+            OracleFateManager.ReachedCurrentFate = true;
             return true;
         }
 

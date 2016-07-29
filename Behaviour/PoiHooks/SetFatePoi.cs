@@ -146,6 +146,12 @@ namespace Oracle.Behaviour.PoiHooks
                 return false;
             }
 
+            if (!OracleFateManager.ReachedCurrentFate)
+            {
+                Logger.SendLog("Not waiting for the next FATE in the chain: we didn't reach the previous FATE.");
+                return false;
+            }
+
             var chainOracleFateInfo = OracleFateManager.OracleDatabase.GetFateFromId(chainId);
             if (!IsFateTypeEnabled(chainOracleFateInfo))
             {
@@ -218,6 +224,7 @@ namespace Oracle.Behaviour.PoiHooks
 
         private static async Task<bool> SelectSpecificFate()
         {
+            // TODO: Fix.
             var specificFate = FateManager.ActiveFates.FirstOrDefault(result => result.Name.Equals(OracleSettings.Instance.SpecificFates));
 
             if (specificFate == null)

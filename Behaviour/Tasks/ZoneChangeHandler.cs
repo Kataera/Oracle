@@ -72,7 +72,7 @@ namespace Oracle.Behaviour.Tasks
             }
             else
             {
-                var aetheryte = WorldManager.AetheryteIdsForZone(zoneId).FirstOrDefault();
+                var aetheryte = OracleFateManager.GetAetheryteIdsForZone(zoneId).FirstOrDefault();
                 if (aetheryte == null)
                 {
                     Logger.SendErrorLog("There's no aetherytes for this zone.");

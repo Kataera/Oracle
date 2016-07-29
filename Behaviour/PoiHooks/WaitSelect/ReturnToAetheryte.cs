@@ -12,6 +12,7 @@ using ff14bot.Navigation;
 using NeoGaia.ConnectionHandler;
 
 using Oracle.Helpers;
+using Oracle.Managers;
 
 namespace Oracle.Behaviour.PoiHooks.WaitSelect
 {
@@ -24,7 +25,7 @@ namespace Oracle.Behaviour.PoiHooks.WaitSelect
                 return true;
             }
 
-            var aetherytes = WorldManager.AetheryteIdsForZone(WorldManager.ZoneId);
+            var aetherytes = OracleFateManager.GetAetheryteIdsForZone(WorldManager.ZoneId);
             var navRequest = aetherytes.Select(target => new CanFullyNavigateTarget {Id = target.Item1, Position = target.Item2});
             var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
 
@@ -42,7 +43,7 @@ namespace Oracle.Behaviour.PoiHooks.WaitSelect
 
         private static Vector3 GetClosestAetheryteLocation()
         {
-            var aetherytes = WorldManager.AetheryteIdsForZone(WorldManager.ZoneId);
+            var aetherytes = OracleFateManager.GetAetheryteIdsForZone(WorldManager.ZoneId);
             var playerLocation = Core.Player.Location;
             var location = Vector3.Zero;
 

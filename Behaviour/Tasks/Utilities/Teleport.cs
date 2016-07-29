@@ -107,7 +107,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
         {
             Aetheryte[] viableAetherytes;
 
-            var allAetherytes = AllTuplesToAetherytes(WorldManager.AetheryteIdsForZone(WorldManager.ZoneId), fate.Location);
+            var allAetherytes = AllTuplesToAetherytes(OracleFateManager.GetAetheryteIdsForZone(WorldManager.ZoneId), fate.Location);
             var viableAetheryteList = new List<Aetheryte>();
 
             if (!WorldManager.CanFly)

@@ -35,6 +35,7 @@ namespace Oracle.Settings
         private int fateDelayMovementMinimum;
         private int fateMaximumLevelAbove;
         private int fateMinimumLevelBelow;
+        private bool fateSelectClosestDistanceConsiderAetheryte;
         private FateSelectMode fateSelectMode;
         private Dictionary<uint, Vector3> fateWaitLocations;
         private FateWaitMode fateWaitMode;
@@ -409,6 +410,22 @@ namespace Oracle.Settings
             set
             {
                 fateMinimumLevelBelow = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool FateSelectClosestDistanceConsiderAetheryte
+        {
+            get
+            {
+                return fateSelectClosestDistanceConsiderAetheryte;
+            }
+
+            set
+            {
+                fateSelectClosestDistanceConsiderAetheryte = value;
                 Save();
             }
         }
