@@ -30,6 +30,12 @@ namespace Oracle.Behaviour.Tasks.Utilities
             {
                 if (await Teleport.FasterToTeleport(currentFate))
                 {
+                    if (GameObjectManager.Attackers.Any(attacker => attacker.IsValid))
+                    {
+                        OracleFateManager.ClearPoi("We're under attack and can't teleport.");
+                        return false;
+                    }
+
                     await Coroutine.Wait(TimeSpan.FromSeconds(10), WorldManager.CanTeleport);
                     if (WorldManager.CanTeleport())
                     {

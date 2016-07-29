@@ -26,9 +26,8 @@ namespace Oracle.Behaviour.PoiHooks.FateSelect
             {
                 var fateDistancesFromAetherytes = new List<Dictionary<FateData, float>>();
 
-                foreach (
-                    var aetheryte in
-                        OracleFateManager.GetAetheryteIdsForZone(WorldManager.ZoneId).Where(item => WorldManager.KnownAetheryteIds.Contains(item.Item1)))
+                foreach (var aetheryte in
+                    OracleFateManager.GetAetheryteIdsForZone(WorldManager.ZoneId).Where(item => WorldManager.KnownAetheryteIds.Contains(item.Item1)))
                 {
                     fateDistancesFromAetherytes.Add(await OracleFateManager.GetActiveFateDistances(aetheryte.Item2));
                 }
@@ -46,6 +45,12 @@ namespace Oracle.Behaviour.PoiHooks.FateSelect
 
                         // Add the minimum distance delta to ensure we don't teleport if distance saved is under that amount.
                         if (fateDistance.Value + OracleSettings.Instance.TeleportMinimumDistanceDelta >= currentDistance)
+                        {
+                            continue;
+                        }
+
+                        // Don't teleport for FATEs above a set percentage.
+                        if (fateDistance.Key.Progress >= OracleSettings.Instance.TeleportMaxFateProgress)
                         {
                             continue;
                         }

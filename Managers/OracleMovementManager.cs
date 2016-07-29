@@ -501,10 +501,10 @@ namespace Oracle.Managers
                 return true;
             }
 
-            var currentFateLocation = currentFate.Location;
+            var cachedFateLocation = currentFate.Location;
             var currentFateRadius = currentFate.Radius;
 
-            while (Core.Player.Distance(currentFateLocation) > currentFateRadius * 0.75f)
+            while (Core.Player.Distance(cachedFateLocation) > currentFateRadius * 0.75f)
             {
                 if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                 {
@@ -513,7 +513,7 @@ namespace Oracle.Managers
                     return true;
                 }
 
-                var distanceToFateBoundary = Core.Player.Location.Distance2D(currentFateLocation) - currentFateRadius;
+                var distanceToFateBoundary = Core.Player.Location.Distance2D(cachedFateLocation) - currentFateRadius;
                 if (!Core.Player.IsMounted && IsMountNeeded(distanceToFateBoundary) && Actionmanager.AvailableMounts.Any())
                 {
                     Navigator.Stop();
@@ -525,8 +525,13 @@ namespace Oracle.Managers
                     await Mount.MountUp();
                 }
 
-                currentFateLocation = currentFate.Location;
-                Navigator.MoveToPointWithin(currentFateLocation, currentFateRadius * 0.5f, currentFate.Name);
+                // Throttle navigator path generation requests.
+                if (cachedFateLocation.Distance2D(currentFate.Location) > 15)
+                {
+                    cachedFateLocation = currentFate.Location;
+                }
+
+                Navigator.MoveToPointWithin(cachedFateLocation, currentFateRadius * 0.5f, currentFate.Name);
                 await Coroutine.Yield();
             }
 

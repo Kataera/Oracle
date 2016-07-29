@@ -59,6 +59,7 @@ namespace Oracle.Settings
         private bool runProblematicFates;
         private List<uint> specificFates;
         private int targetListCacheDuration;
+        private float teleportFateMaxProgress;
         private bool teleportIfQuicker;
         private int teleportMinimumDistanceDelta;
         private bool waitAtBossFateForProgress;
@@ -829,6 +830,22 @@ namespace Oracle.Settings
             set
             {
                 teleportIfQuicker = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(50f)]
+        [Setting]
+        public float TeleportMaxFateProgress
+        {
+            get
+            {
+                return teleportFateMaxProgress;
+            }
+
+            set
+            {
+                teleportFateMaxProgress = value;
                 Save();
             }
         }
