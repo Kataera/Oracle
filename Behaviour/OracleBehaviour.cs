@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 using Clio.Utilities;
 
@@ -77,6 +78,8 @@ namespace Oracle.Behaviour
                 case OracleOperationMode.YokaiWatchGrind:
                     await YokaiWatchGrind.Main();
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             // Always return false to not block the tree.

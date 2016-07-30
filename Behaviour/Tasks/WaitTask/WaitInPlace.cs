@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 
+using ff14bot;
 using ff14bot.Helpers;
 
 using Oracle.Managers;
@@ -10,7 +11,7 @@ namespace Oracle.Behaviour.Tasks.WaitTask
     {
         public static async Task<bool> Main()
         {
-            if (OracleFateManager.IsPlayerBeingAttacked())
+            if (Core.Player.InCombat)
             {
                 OracleFateManager.ClearPoi("We're being attacked.", false);
                 return true;
