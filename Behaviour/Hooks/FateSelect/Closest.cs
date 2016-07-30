@@ -55,7 +55,7 @@ namespace Oracle.Behaviour.Hooks.FateSelect
                             continue;
                         }
 
-                        if (fateDistance.Key.Psrogress >= MovementSettings.Instance.FateProgressTeleportLimit)
+                        if (fateDistance.Key.Progress >= MovementSettings.Instance.FateProgressTeleportLimit)
                         {
                             continue;
                         }
