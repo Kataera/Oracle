@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+
+using Buddy.Coroutines;
 
 using ff14bot;
 using ff14bot.Helpers;
@@ -22,8 +25,9 @@ namespace Oracle.Behaviour.Hooks
             return new ActionRunCoroutine(coroutine => Main());
         }
 
-        private static void RefreshObjectCache()
+        private static async Task RefreshObjectCache()
         {
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
             GameObjectManager.Clear();
             GameObjectManager.Update();
         }
@@ -41,7 +45,7 @@ namespace Oracle.Behaviour.Hooks
                 return false;
             }
 
-            RefreshObjectCache();
+            await RefreshObjectCache();
             if (!Poi.Current.BattleCharacter.IsValid || Poi.Current.BattleCharacter.IsDead)
             {
                 OracleFateManager.ClearPoi("Mob is no longer valid.", false);

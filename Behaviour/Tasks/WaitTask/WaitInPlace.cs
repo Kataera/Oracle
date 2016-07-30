@@ -10,6 +10,12 @@ namespace Oracle.Behaviour.Tasks.WaitTask
     {
         public static async Task<bool> Main()
         {
+            if (OracleFateManager.IsPlayerBeingAttacked())
+            {
+                OracleFateManager.ClearPoi("We're being attacked.", false);
+                return true;
+            }
+
             if (Poi.Current.Type != PoiType.Wait)
             {
                 return false;
