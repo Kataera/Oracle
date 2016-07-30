@@ -504,7 +504,7 @@ namespace Oracle.Managers
             var cachedFateLocation = currentFate.Location;
             var currentFateRadius = currentFate.Radius;
 
-            while (Core.Player.Distance(cachedFateLocation) > currentFateRadius * 0.75f)
+            while (Core.Player.Distance(cachedFateLocation) > currentFateRadius * 0.6f)
             {
                 if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                 {

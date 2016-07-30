@@ -1717,6 +1717,7 @@
     <Level>32</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <PreferredTargetId>885</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>456</ID>
