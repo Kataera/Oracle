@@ -31,7 +31,7 @@ namespace Oracle.Behaviour.Tasks
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
             {
                 Logger.SendErrorLog("Can't find requested teleport destination, make sure you've unlocked it.");
-                TreeRoot.Stop("Cannot teleport to destination.");
+                OracleBot.StopOracle("Cannot teleport to destination.");
                 return false;
             }
 
@@ -76,7 +76,7 @@ namespace Oracle.Behaviour.Tasks
                 if (aetheryte == null)
                 {
                     Logger.SendErrorLog("There's no aetherytes for this zone.");
-                    TreeRoot.Stop("Cannot teleport to destination.");
+                    OracleBot.StopOracle("Cannot teleport to destination.");
                     return false;
                 }
 
@@ -86,7 +86,7 @@ namespace Oracle.Behaviour.Tasks
             if (!WorldManager.HasAetheryteId(aetheryteId))
             {
                 Logger.SendErrorLog("Can't find requested teleport destination, make sure you've unlocked it.");
-                TreeRoot.Stop("Cannot teleport to destination.");
+                OracleBot.StopOracle("Cannot teleport to destination.");
                 return false;
             }
 

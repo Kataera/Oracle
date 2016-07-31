@@ -46,7 +46,7 @@ namespace Oracle.Behaviour.Modes
                 {
                     Logger.SendErrorLog(
                                         "You do not have a Yo-kai Watch in your inventory or armory. Please pick one up by doing the event introduction quest prior to starting the bot.");
-                    TreeRoot.Stop("Character does not have a Yo-kai Watch.");
+                    OracleBot.StopOracle("Character does not have a Yo-kai Watch.");
                 }
 
                 Logger.SendLog("Equipping the Yo-kai Watch.");
@@ -321,7 +321,7 @@ namespace Oracle.Behaviour.Modes
             else
             {
                 Logger.SendLog("We've farmed all the medals we need for all minions! Stopping Oracle.");
-                TreeRoot.Stop("We're done!");
+                OracleBot.StopOracle("We are done!");
             }
 
             if (Poi.Current.Type == PoiType.Fate || OracleFateManager.CurrentFateId != 0)

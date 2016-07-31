@@ -25,13 +25,6 @@ namespace Oracle.Behaviour.Hooks
             return new ActionRunCoroutine(coroutine => Main());
         }
 
-        private static async Task RefreshObjectCache()
-        {
-            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
-            GameObjectManager.Clear();
-            GameObjectManager.Update();
-        }
-
         internal static async Task<bool> Main()
         {
             if (Core.Player.CurrentHealthPercent >= MainSettings.Instance.RestHealthPercent
@@ -60,6 +53,13 @@ namespace Oracle.Behaviour.Hooks
             Logger.SendLog("Resting until HP is over " + MainSettings.Instance.RestHealthPercent + "% and mana is over " + MainSettings.Instance.RestManaPercent
                            + "%.");
             return true;
+        }
+
+        private static async Task RefreshObjectCache()
+        {
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
+            GameObjectManager.Clear();
+            GameObjectManager.Update();
         }
     }
 }

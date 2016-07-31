@@ -1,7 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
-using ff14bot;
 using ff14bot.Helpers;
+using ff14bot.Managers;
 
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Helpers;
@@ -13,7 +14,7 @@ namespace Oracle.Behaviour.Tasks.WaitTask
     {
         public static async Task<bool> Main()
         {
-            if (Core.Player.InCombat && Poi.Current.Type != PoiType.Kill)
+            if (GameObjectManager.Attackers.Any() && Poi.Current.Type != PoiType.Kill)
             {
                 OracleFateManager.ClearPoi("We're being attacked.", false);
                 return true;

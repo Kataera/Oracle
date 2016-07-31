@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-using ff14bot.AClasses;
+using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Helpers;
 using ff14bot.Managers;
@@ -23,34 +23,37 @@ using TreeSharp;
 
 namespace Oracle
 {
-    public class OracleBot : BotBase
+    public class OracleBot
     {
         private static bool playerFaceTargetOnAction;
-
         private static bool playerFlightMode;
-
         private static Composite root;
-
         private static UI.Settings settingsWindow;
 
-        public override string EnglishName => "Oracle";
+        private static readonly string VersionPath = Path.Combine(Environment.CurrentDirectory, @"BotBases\Oracle\version.txt");
 
-        public override bool IsAutonomous => true;
-
-        public override string Name => "Oracle";
-
-        public override PulseFlags PulseFlags => PulseFlags.All;
-
-        public override bool RequiresProfile => false;
-
-        public override Composite Root => root;
+        public Composite Root => root;
 
         internal static string Version
-            =>
-                Assembly.GetExecutingAssembly().GetName().Version.Major + "." + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
-                + Assembly.GetExecutingAssembly().GetName().Version.Revision;
+        {
+            get
+            {
+                if (!File.Exists(VersionPath))
+                {
+                    return null;
+                }
 
-        public override bool WantButton => true;
+                try
+                {
+                    var version = File.ReadAllText(VersionPath);
+                    return version;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
 
         private static void AddAssemblyResolveHandler()
         {
@@ -74,7 +77,12 @@ namespace Oracle
             };
         }
 
-        public override void Initialize()
+        public Composite GetRoot()
+        {
+            return Root;
+        }
+
+        public void Initialize()
         {
             Logger.SendLog("Initialising Oracle.");
         }
@@ -97,7 +105,7 @@ namespace Oracle
             }
         }
 
-        public override void OnButtonPress()
+        public void OnButtonPress()
         {
             if (settingsWindow != null && settingsWindow.IsVisible)
             {
@@ -120,7 +128,7 @@ namespace Oracle
             YokaiWatchGrind.ResetIgnoredYokai();
         }
 
-        public override void Start()
+        public void Start()
         {
             Navigator.NavigationProvider = new GaiaNavigator();
             Navigator.PlayerMover = new SlideMover();
@@ -138,7 +146,7 @@ namespace Oracle
 
             if (MainSettings.Instance.OverrideRestBehaviour)
             {
-                Logger.SendDebugLog("Overriding the combat routine rest behaviour.");
+                Logger.SendDebugLog("Replacing the combat routine's rest behaviour.");
                 TreeHooks.Instance.ReplaceHook("Rest", Rest.Behaviour);
             }
 
@@ -174,7 +182,7 @@ namespace Oracle
             }
         }
 
-        public override void Stop()
+        public void Stop()
         {
             ResetBotbaseVariables();
 
@@ -197,11 +205,16 @@ namespace Oracle
 
             if (MainSettings.Instance.OverrideRestBehaviour)
             {
-                Logger.SendDebugLog("Restoring the combat routine rest behaviour.");
+                Logger.SendDebugLog("Restoring the combat routine's rest behaviour.");
                 TreeHooks.Instance.ReplaceHook("Rest", RoutineManager.Current.RestBehavior);
             }
 
             Logger.SendLog("Stopping Oracle.");
+        }
+
+        internal static void StopOracle(string reason)
+        {
+            TreeRoot.Stop(" " + reason);
         }
     }
 }

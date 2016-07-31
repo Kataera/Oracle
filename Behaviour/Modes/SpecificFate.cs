@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
-using ff14bot;
 using ff14bot.Helpers;
 
 using Oracle.Behaviour.Tasks;
@@ -18,7 +17,7 @@ namespace Oracle.Behaviour.Modes
             if (!FateSettings.Instance.SpecificFateList.Any())
             {
                 Logger.SendErrorLog("Please set at least one FATE to search for before starting the bot.");
-                TreeRoot.Stop("No FATE set.");
+                OracleBot.StopOracle("No FATE set.");
             }
 
             if (Poi.Current.Type == PoiType.Kill)

@@ -97,10 +97,8 @@ namespace Oracle.Behaviour.Hooks
             if (PreviousFateChained() && MainSettings.Instance.OracleOperationMode != OracleOperationMode.SpecificFate)
             {
                 await SelectChainFate();
-                return true;
             }
-
-            if (MainSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate)
+            else if (MainSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate)
             {
                 await SelectSpecificFate();
             }

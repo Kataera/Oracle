@@ -37,7 +37,7 @@ namespace Oracle.Behaviour.Modes
             {
                 Logger.SendErrorLog("You do not have the quest 'Soul Without Life', which is required to run in Anima grind mode.");
 
-                TreeRoot.Stop("Required quest is not picked up.");
+                OracleBot.StopOracle("Required quest is not picked up.");
                 return true;
             }
 
@@ -46,7 +46,7 @@ namespace Oracle.Behaviour.Modes
                 Logger.SendErrorLog("You are not at the correct step of 'Soul Without Life'. You must be at the objective that says "
                                     + "\"Deliver the astral nodule and umbral nodule to Ardashir in Azys Lla.\" to run in Anima grind mode.");
 
-                TreeRoot.Stop("Not at required step of quest.");
+                OracleBot.StopOracle("Not at required step of quest.");
                 return true;
             }
 
@@ -61,7 +61,7 @@ namespace Oracle.Behaviour.Modes
                 if (OracleFateManager.GetTrueLevel() < 50)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in Coerthas Western Highlands.");
-                    TreeRoot.Stop("Too low level to continue.");
+                    OracleBot.StopOracle("Too low level to continue.");
                     return true;
                 }
 
@@ -77,7 +77,7 @@ namespace Oracle.Behaviour.Modes
                 if (OracleFateManager.GetTrueLevel() < 50)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Sea of Clouds.");
-                    TreeRoot.Stop("Too low level to continue.");
+                    OracleBot.StopOracle("Too low level to continue.");
                     return true;
                 }
 
@@ -93,7 +93,7 @@ namespace Oracle.Behaviour.Modes
                 if (OracleFateManager.GetTrueLevel() < 50)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Dravanian Forelands.");
-                    TreeRoot.Stop("Too low level to continue.");
+                    OracleBot.StopOracle("Too low level to continue.");
                     return true;
                 }
 
@@ -109,7 +109,7 @@ namespace Oracle.Behaviour.Modes
                 if (OracleFateManager.GetTrueLevel() < 52)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Churning Mists.");
-                    TreeRoot.Stop("Too low level to continue.");
+                    OracleBot.StopOracle("Too low level to continue.");
                     return true;
                 }
 
@@ -125,7 +125,7 @@ namespace Oracle.Behaviour.Modes
                 if (OracleFateManager.GetTrueLevel() < 54)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Dravanian Hinterlands.");
-                    TreeRoot.Stop("Too low level to continue.");
+                    OracleBot.StopOracle("Too low level to continue.");
                     return true;
                 }
 
@@ -141,7 +141,7 @@ namespace Oracle.Behaviour.Modes
                 if (OracleFateManager.GetTrueLevel() < 55)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in Azys Lla.");
-                    TreeRoot.Stop("Too low level to continue.");
+                    OracleBot.StopOracle("Too low level to continue.");
                     return true;
                 }
 
@@ -157,7 +157,7 @@ namespace Oracle.Behaviour.Modes
                 Logger.SendLog("You have gathered all the crystals needed! Teleporting to Limsa Lominsa and stopping Oracle.");
                 await Teleport.TeleportToAetheryte(8);
 
-                TreeRoot.Stop("We are done!");
+                OracleBot.StopOracle("We are done!");
                 return true;
             }
 
