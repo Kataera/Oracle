@@ -96,7 +96,7 @@ namespace Oracle.Providers
             // If FATE has a preferred target, prioritise it if we're out of combat.
             if (oracleFate.PreferredTargetId != null && oracleFate.PreferredTargetId.Contains(battleCharacter.NpcId) && !Core.Player.InCombat)
             {
-                weight += 2000;
+                weight += 20000;
             }
 
             if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)
@@ -132,7 +132,7 @@ namespace Oracle.Providers
             // Prefer nearer targets in combat if melee, and always out of combat.
             if (PlayerIsMelee() || !Core.Player.InCombat)
             {
-                weight -= battleCharacter.Distance(Core.Player) * 50;
+                weight -= battleCharacter.Distance(Core.Player) * 30;
             }
 
             return weight;

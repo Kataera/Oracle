@@ -504,7 +504,7 @@ namespace Oracle.Managers
             var cachedFateLocation = currentFate.Location;
             var currentFateRadius = currentFate.Radius;
 
-            while (Core.Player.Distance(cachedFateLocation) > currentFateRadius * 0.6f)
+            while (Core.Player.Distance(cachedFateLocation) > currentFateRadius * 0.5f)
             {
                 if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                 {
@@ -531,7 +531,7 @@ namespace Oracle.Managers
                     cachedFateLocation = currentFate.Location;
                 }
 
-                Navigator.MoveToPointWithin(cachedFateLocation, currentFateRadius * 0.5f, currentFate.Name);
+                Navigator.MoveToPointWithin(cachedFateLocation, currentFateRadius * 0.3f, currentFate.Name);
                 await Coroutine.Yield();
             }
 
