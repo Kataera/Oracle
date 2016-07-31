@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -364,7 +363,6 @@ namespace Oracle
             // TODO: Remove when Oracle is on Siune and uncomment the rest.
             updaterFinished = true;
             LoadOracle();
-            return;
 
             /*
             var stopwatch = Stopwatch.StartNew();
