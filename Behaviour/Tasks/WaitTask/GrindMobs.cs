@@ -14,7 +14,7 @@ namespace Oracle.Behaviour.Tasks.WaitTask
     {
         public static async Task<bool> Main()
         {
-            if (GameObjectManager.Attackers.Any() && Poi.Current.Type != PoiType.Kill)
+            if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone) && Poi.Current.Type != PoiType.Kill)
             {
                 OracleFateManager.ClearPoi("We're being attacked.", false);
                 return true;

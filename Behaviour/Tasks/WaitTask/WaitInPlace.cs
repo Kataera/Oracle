@@ -12,7 +12,7 @@ namespace Oracle.Behaviour.Tasks.WaitTask
     {
         public static async Task<bool> Main()
         {
-            if (GameObjectManager.Attackers.Any())
+            if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone))
             {
                 OracleFateManager.ClearPoi("We're being attacked.", false);
                 return true;

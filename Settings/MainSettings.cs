@@ -28,7 +28,7 @@ namespace Oracle.Settings
         {
         }
 
-        [DefaultValue(1500)]
+        [DefaultValue(1000)]
         [Setting]
         public int ActionDelay
         {

@@ -68,7 +68,7 @@ namespace Oracle.Behaviour.Modes
                 if (WorldManager.ZoneId != ZoneCoerthasWesternHighlands)
                 {
                     Logger.SendLog("We need more Luminous Ice Crystals. Teleporting to Coerthas Western Highlands.");
-                    await ZoneChangeHandler.HandleZoneChange(ZoneCoerthasWesternHighlands);
+                    await ZoneChange.HandleZoneChange(ZoneCoerthasWesternHighlands);
                 }
             }
 
@@ -84,7 +84,7 @@ namespace Oracle.Behaviour.Modes
                 if (WorldManager.ZoneId != ZoneSeaOfClouds)
                 {
                     Logger.SendLog("We need more Luminous Wind Crystals. Teleporting to The Sea of Clouds.");
-                    await ZoneChangeHandler.HandleZoneChange(ZoneSeaOfClouds);
+                    await ZoneChange.HandleZoneChange(ZoneSeaOfClouds);
                 }
             }
 
@@ -100,7 +100,7 @@ namespace Oracle.Behaviour.Modes
                 if (WorldManager.ZoneId != ZoneDravanianForelands)
                 {
                     Logger.SendLog("We need more Luminous Earth Crystals. Teleporting to The Dravanian Forelands.");
-                    await ZoneChangeHandler.HandleZoneChange(ZoneDravanianForelands);
+                    await ZoneChange.HandleZoneChange(ZoneDravanianForelands);
                 }
             }
 
@@ -116,7 +116,7 @@ namespace Oracle.Behaviour.Modes
                 if (WorldManager.ZoneId != ZoneChurningMists)
                 {
                     Logger.SendLog("We need more Luminous Lightning Crystals. Teleporting to The Churning Mists.");
-                    await ZoneChangeHandler.HandleZoneChange(ZoneChurningMists);
+                    await ZoneChange.HandleZoneChange(ZoneChurningMists);
                 }
             }
 
@@ -132,7 +132,7 @@ namespace Oracle.Behaviour.Modes
                 if (WorldManager.ZoneId != ZoneDravanianHinterlands)
                 {
                     Logger.SendLog("We need more Luminous Water Crystals. Teleporting to The Dravanian Hinterlands.");
-                    await ZoneChangeHandler.HandleZoneChange(ZoneDravanianHinterlands);
+                    await ZoneChange.HandleZoneChange(ZoneDravanianHinterlands);
                 }
             }
 
@@ -148,14 +148,14 @@ namespace Oracle.Behaviour.Modes
                 if (WorldManager.ZoneId != ZoneAzysLla)
                 {
                     Logger.SendLog("We need more Luminous Fire Crystals. Teleporting to Azys Lla.");
-                    await ZoneChangeHandler.HandleZoneChange(ZoneAzysLla);
+                    await ZoneChange.HandleZoneChange(ZoneAzysLla);
                 }
             }
 
             else if (!Core.Player.InCombat)
             {
                 Logger.SendLog("You have gathered all the crystals needed! Teleporting to Limsa Lominsa and stopping Oracle.");
-                await Teleport.TeleportToAetheryte(8);
+                await OracleTeleportManager.TeleportToAetheryte(8);
 
                 OracleBot.StopOracle("We are done!");
                 return true;

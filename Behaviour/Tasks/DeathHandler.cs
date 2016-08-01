@@ -13,7 +13,7 @@ namespace Oracle.Behaviour.Tasks
         {
             await Coroutine.Wait(TimeSpan.FromSeconds(5), () => CommonBehaviors.IsLoading);
             await CommonTasks.HandleLoading();
-            await Coroutine.Sleep(TimeSpan.FromSeconds(2));
+            await Coroutine.Sleep(TimeSpan.FromSeconds(1));
 
             return true;
         }

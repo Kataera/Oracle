@@ -9,6 +9,7 @@ using ff14bot.Settings;
 
 using Oracle.Data;
 using Oracle.Enumerations;
+using Oracle.Structs;
 
 namespace Oracle.Helpers
 {

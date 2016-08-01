@@ -4,6 +4,7 @@ using ff14bot;
 using ff14bot.Helpers;
 
 using Oracle.Behaviour.Tasks;
+using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Helpers;
 using Oracle.Managers;
 
@@ -21,7 +22,7 @@ namespace Oracle.Behaviour.Modes
                 }
 
                 Logger.SendLog("Zone change is needed.");
-                await ZoneChangeHandler.HandleZoneChange();
+                await ZoneChange.HandleZoneChange();
                 return true;
             }
 

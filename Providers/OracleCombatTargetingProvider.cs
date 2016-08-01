@@ -9,10 +9,10 @@ using ff14bot.Managers;
 using ff14bot.NeoProfiles;
 using ff14bot.Objects;
 
-using Oracle.Data;
 using Oracle.Enumerations;
 using Oracle.Managers;
 using Oracle.Settings;
+using Oracle.Structs;
 
 namespace Oracle.Providers
 {

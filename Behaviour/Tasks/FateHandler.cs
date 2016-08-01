@@ -7,7 +7,6 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 
 using Oracle.Behaviour.Tasks.FateTask;
-using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Managers;
@@ -28,7 +27,7 @@ namespace Oracle.Behaviour.Tasks
 
             if (currentFate != null && Core.Player.Distance(currentFate.Location) > currentFate.Radius * 1.05f)
             {
-                await MoveToFate.MoveToCurrentFate(false);
+                await OracleMovementManager.MoveToCurrentFate(false);
 
                 if (OracleFateManager.CurrentFateId == 0)
                 {
@@ -42,9 +41,9 @@ namespace Oracle.Behaviour.Tasks
                 return true;
             }
 
-            if (currentFate != null && LevelSync.IsLevelSyncNeeded(currentFate))
+            if (currentFate != null && OracleFateManager.IsLevelSyncNeeded(currentFate))
             {
-                await LevelSync.SyncLevel(currentFate);
+                await OracleFateManager.SyncLevel(currentFate);
                 return true;
             }
 

@@ -86,7 +86,7 @@ namespace Oracle.Managers
                             return true;
                         }
 
-                        await Mount.MountUp();
+                        await MountUp();
                     }
 
                     if (!MovementManager.IsFlying)
@@ -130,7 +130,7 @@ namespace Oracle.Managers
                     return false;
                 }
 
-                await Mount.MountUp();
+                await MountUp();
             }
 
             // Ensure precision isn't too strong, else we get flip-flopping.
@@ -170,7 +170,7 @@ namespace Oracle.Managers
                             return true;
                         }
 
-                        await Mount.MountUp();
+                        await MountUp();
                     }
 
                     if (!MovementManager.IsFlying)
@@ -485,6 +485,118 @@ namespace Oracle.Managers
             }
         }
 
+        public static async Task<bool> MountUp()
+        {
+            if (!Actionmanager.AvailableMounts.Any())
+            {
+                Logger.SendDebugLog("Character does not have any mount available, skipping mount task.");
+                return true;
+            }
+
+            if (MovementManager.IsMoving)
+            {
+                Navigator.PlayerMover.MoveStop();
+            }
+
+            while (!Core.Player.IsMounted)
+            {
+                if (GameObjectManager.Attackers.Any())
+                {
+                    return false;
+                }
+
+                if (Actionmanager.CanMount == 0)
+                {
+                    Actionmanager.Mount();
+                }
+
+                await Coroutine.Yield();
+            }
+
+            return true;
+        }
+
+        public static async Task<bool> MoveOutOfIdyllshire()
+        {
+            Logger.SendLog("We're in Idyllshire, moving to The Dravanian Hinterlands.");
+            await MountUp();
+
+            var location = new Vector3(142.6006f, 207f, 114.136f);
+            while (Core.Player.Distance(location) > 5f)
+            {
+                Navigator.MoveTo(location, "Leaving Idyllshire");
+                await Coroutine.Yield();
+            }
+
+            Navigator.Stop();
+            Core.Player.SetFacing(0.9709215f);
+            MovementManager.MoveForwardStart();
+
+            await Coroutine.Sleep(TimeSpan.FromSeconds(2));
+            await Coroutine.Wait(TimeSpan.MaxValue, () => !CommonBehaviors.IsLoading);
+            await Coroutine.Sleep(TimeSpan.FromSeconds(2));
+
+            return true;
+        }
+
+        public static async Task<bool> MoveToCurrentFate(bool ignoreCombat)
+        {
+            var currentFate = OracleFateManager.GetCurrentFateData();
+
+            if (!ignoreCombat && GameObjectManager.Attackers.Any(attacker => attacker.IsValid) && !Core.Player.IsMounted)
+            {
+                return false;
+            }
+
+            await LoadFlightMeshIfAvailable();
+
+            if (!ignoreCombat && MovementSettings.Instance.TeleportIfQuicker && currentFate.IsValid)
+            {
+                if (await OracleTeleportManager.FasterToTeleport(currentFate))
+                {
+                    if (GameObjectManager.Attackers.Any(attacker => attacker.IsValid))
+                    {
+                        OracleFateManager.ClearPoi("We're under attack and can't teleport.");
+                        return false;
+                    }
+
+                    await Coroutine.Wait(TimeSpan.FromSeconds(10), WorldManager.CanTeleport);
+                    if (WorldManager.CanTeleport())
+                    {
+                        Logger.SendLog("Teleporting to the closest aetheryte crystal to the FATE.");
+                        await OracleTeleportManager.TeleportToClosestAetheryte(currentFate);
+
+                        if (GameObjectManager.Attackers.Any(attacker => attacker.IsValid))
+                        {
+                            OracleFateManager.ClearPoi("We're under attack and can't teleport.");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        Logger.SendErrorLog("Timed out trying to teleport, running to FATE instead.");
+                    }
+                }
+            }
+
+            var distanceToFateBoundary = Core.Player.Location.Distance2D(currentFate.Location) - currentFate.Radius;
+            if (!ignoreCombat && IsMountNeeded(distanceToFateBoundary) && !Core.Player.IsMounted && currentFate.IsValid)
+            {
+                await MountUp();
+            }
+
+            if (!ignoreCombat && WorldManager.CanFly && ZoneFlightMesh != null)
+            {
+                await FlyToCurrentFate();
+            }
+            else
+            {
+                await NavigateToCurrentFate(ignoreCombat);
+            }
+
+            return true;
+        }
+
         public static async Task<bool> NavigateToCurrentFate(bool ignoreCombat)
         {
             OracleFateManager.ReachedCurrentFate = false;
@@ -504,7 +616,7 @@ namespace Oracle.Managers
             var cachedFateLocation = currentFate.Location;
             var currentFateRadius = currentFate.Radius;
 
-            while (Core.Player.Distance(cachedFateLocation) > currentFateRadius * 0.5f)
+            while (Core.Player.Distance(cachedFateLocation) > currentFateRadius * 0.65f)
             {
                 if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                 {
@@ -522,7 +634,7 @@ namespace Oracle.Managers
                         return true;
                     }
 
-                    await Mount.MountUp();
+                    await MountUp();
                 }
 
                 // Throttle navigator path generation requests.
@@ -552,7 +664,7 @@ namespace Oracle.Managers
                         return true;
                     }
 
-                    await Mount.MountUp();
+                    await MountUp();
                 }
 
                 if (stopOnFateSpawn && await OracleFateManager.AnyViableFates())

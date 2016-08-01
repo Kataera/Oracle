@@ -15,6 +15,7 @@ using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Managers;
 using Oracle.Settings;
+using Oracle.Structs;
 
 namespace Oracle.Behaviour.Modes
 {
@@ -411,7 +412,7 @@ namespace Oracle.Behaviour.Modes
         {
             if (!Core.Player.InCombat && WorldManager.ZoneId != zone)
             {
-                await ZoneChangeHandler.HandleZoneChange(zone);
+                await ZoneChange.HandleZoneChange(zone);
             }
         }
     }

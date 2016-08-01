@@ -5,6 +5,7 @@ using ff14bot.Managers;
 
 using Oracle.Enumerations;
 using Oracle.Helpers;
+using Oracle.Structs;
 
 namespace Oracle.Data
 {

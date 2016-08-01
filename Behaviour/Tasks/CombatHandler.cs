@@ -103,7 +103,7 @@ namespace Oracle.Behaviour.Tasks
                     return true;
                 }
 
-                if (!LevelSync.IsLevelSyncNeeded(fate))
+                if (!OracleFateManager.IsLevelSyncNeeded(fate))
                 {
                     return true;
                 }
@@ -112,12 +112,12 @@ namespace Oracle.Behaviour.Tasks
                 {
                     if (fate.Within2D(Core.Player.Location))
                     {
-                        await LevelSync.SyncLevel(fate);
+                        await OracleFateManager.SyncLevel(fate);
                     }
                     else if (GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
                     {
-                        await MoveToFate.MoveToCurrentFate(true);
-                        await LevelSync.SyncLevel(fate);
+                        await OracleMovementManager.MoveToCurrentFate(true);
+                        await OracleFateManager.SyncLevel(fate);
                     }
                 }
             }
