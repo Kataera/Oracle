@@ -365,10 +365,10 @@ namespace Oracle.Behaviour.Modes
             }
             else
             {
-                if (WorldManager.HasAetheryteId(62))
+                if (WorldManager.HasAetheryteId(62) && WorldManager.ZoneId != 144)
                 {
                     Logger.SendLog("We've farmed all the medals we need for all minions! Teleporting to The Gold Saucer and stopping.");
-                    await TeleportIfNeeded(62);
+                    await OracleTeleportManager.TeleportToAetheryte(62);
                 }
                 else
                 {
