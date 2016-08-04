@@ -63,6 +63,12 @@ namespace Oracle.Behaviour
                 case OracleOperationMode.FateGrind:
                     await FateGrind.Main();
                     break;
+                case OracleOperationMode.LevelMode:
+                    await Levelling.Main();
+                    break;
+                case OracleOperationMode.MultiLevelMode:
+                    await MultiLevelling.Main();
+                    break;
                 case OracleOperationMode.SpecificFate:
                     await SpecificFate.Main();
                     break;

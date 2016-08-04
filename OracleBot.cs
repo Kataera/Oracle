@@ -105,6 +105,41 @@ namespace Oracle
             }
         }
 
+        private static void LogCurrentMode()
+        {
+            switch (MainSettings.Instance.OracleOperationMode)
+            {
+                case OracleOperationMode.FateGrind:
+                    Logger.SendLog("Starting Oracle in FATE grind mode.");
+                    break;
+                case OracleOperationMode.LevelMode:
+                    Logger.SendLog("Starting Oracle in single-class levelling mode.");
+                    break;
+                case OracleOperationMode.MultiLevelMode:
+                    Logger.SendLog("Starting Oracle in multiple-class levelling mode.");
+                    break;
+                case OracleOperationMode.SpecificFate:
+                    Logger.SendLog("Starting Oracle in specific FATE(s) mode.");
+                    break;
+                case OracleOperationMode.AtmaGrind:
+                    Logger.SendLog("Starting Oracle in Atma grind mode.");
+                    break;
+                case OracleOperationMode.AnimusGrind:
+                    Logger.SendLog("Starting Oracle in Animus grind mode.");
+                    break;
+                case OracleOperationMode.AnimaGrind:
+                    Logger.SendLog("Starting Oracle in Anima grind mode.");
+                    break;
+                case OracleOperationMode.YokaiWatchGrind:
+                    Logger.SendLog("Starting Oracle in Yo-kai Watch grind mode. You cannot use your chocobo in this mode.");
+                    break;
+                default:
+                    Logger.SendErrorLog("No setting chosen for operation mode. Defaulting to FATE grind mode.");
+                    Logger.SendLog("Starting Oracle in FATE grind mode.");
+                    break;
+            }
+        }
+
         public void OnButtonPress()
         {
             if (settingsWindow != null && settingsWindow.IsVisible)
@@ -155,31 +190,7 @@ namespace Oracle
                 ListHooks();
             }
 
-            switch (MainSettings.Instance.OracleOperationMode)
-            {
-                case OracleOperationMode.FateGrind:
-                    Logger.SendLog("Starting Oracle in FATE grind mode.");
-                    break;
-                case OracleOperationMode.SpecificFate:
-                    Logger.SendLog("Starting Oracle in specific FATE(s) mode.");
-                    break;
-                case OracleOperationMode.AtmaGrind:
-                    Logger.SendLog("Starting Oracle in Atma grind mode.");
-                    break;
-                case OracleOperationMode.AnimusGrind:
-                    Logger.SendLog("Starting Oracle in Animus grind mode.");
-                    break;
-                case OracleOperationMode.AnimaGrind:
-                    Logger.SendLog("Starting Oracle in Anima grind mode.");
-                    break;
-                case OracleOperationMode.YokaiWatchGrind:
-                    Logger.SendLog("Starting Oracle in Yo-kai Watch grind mode. You cannot use your chocobo in this mode.");
-                    break;
-                default:
-                    Logger.SendErrorLog("No setting chosen for operation mode. Defaulting to FATE grind mode.");
-                    Logger.SendLog("Starting Oracle in FATE grind mode.");
-                    break;
-            }
+            LogCurrentMode();
         }
 
         public void Stop()
