@@ -1,10 +1,10 @@
 ﻿using Pathfinding;
 
-namespace Oracle.Data
+namespace Oracle.Data.Meshes
 {
-    internal class OracleFlightMesh
+    internal class FlightMesh
     {
-        public OracleFlightMesh(uint zoneId, Graph graph)
+        public FlightMesh(uint zoneId, Graph graph)
         {
             ZoneId = zoneId;
             Graph = graph;

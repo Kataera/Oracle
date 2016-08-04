@@ -7,17 +7,17 @@ using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Structs;
 
-namespace Oracle.Data
+namespace Oracle.Data.Fates
 {
     [Serializable]
-    internal class OracleDatabase
+    internal class FateDatabase
     {
-        public OracleDatabase()
+        public FateDatabase()
         {
             FateDictionary = new Dictionary<uint, Fate>();
         }
 
-        public OracleDatabase(Dictionary<uint, Fate> fateDictionary)
+        public FateDatabase(Dictionary<uint, Fate> fateDictionary)
         {
             FateDictionary = fateDictionary;
         }

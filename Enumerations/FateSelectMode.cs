@@ -5,12 +5,12 @@ namespace Oracle.Enumerations
     [Serializable]
     internal enum FateSelectMode
     {
-        Closest = 0,
+        Closest,
 
-        TypePriority = 1,
+        TypePriority,
 
-        ChainPriority = 2,
+        ChainPriority,
 
-        TypeAndChainPriority = TypePriority + ChainPriority
+        TypeAndChainPriority
     }
 }

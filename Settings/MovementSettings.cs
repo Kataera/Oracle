@@ -11,10 +11,9 @@ namespace Oracle.Settings
     {
         private static readonly object SyncRoot = new object();
         private static volatile MovementSettings instance;
-        private bool azysLlaFlight;
 
+        private bool azysLlaFlight;
         private bool bindHomePoint;
-        private bool changeZones;
         private bool churningMistsFlight;
         private bool coerthasWesternHighlandsFlight;
         private bool considerAetheryteFateDistances;
@@ -69,22 +68,6 @@ namespace Oracle.Settings
             set
             {
                 bindHomePoint = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(true)]
-        [Setting]
-        public bool ChangeZones
-        {
-            get
-            {
-                return changeZones;
-            }
-
-            set
-            {
-                changeZones = value;
                 Save();
             }
         }

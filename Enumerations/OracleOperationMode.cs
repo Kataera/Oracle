@@ -7,6 +7,10 @@ namespace Oracle.Enumerations
     {
         FateGrind,
 
+        LevelMode,
+
+        MultiLevelMode,
+
         SpecificFate,
 
         AtmaGrind,

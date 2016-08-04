@@ -16,7 +16,7 @@ using ff14bot.RemoteWindows;
 
 using NeoGaia.ConnectionHandler;
 
-using Oracle.Data;
+using Oracle.Data.Fates;
 using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Settings;
@@ -29,7 +29,7 @@ namespace Oracle.Managers
         internal static uint CurrentFateId { get; set; }
         internal static bool DeathFlag { get; set; }
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
-        internal static OracleDatabase OracleDatabase { get; set; }
+        internal static FateDatabase FateDatabase { get; set; }
         internal static uint PreviousFateId { get; set; }
         internal static bool ReachedCurrentFate { get; set; } = true;
 
@@ -112,7 +112,7 @@ namespace Oracle.Managers
 
         public static bool CurrentFateHasChain()
         {
-            var oracleFate = OracleDatabase.GetFateFromId(CurrentFateId);
+            var oracleFate = FateDatabase.GetFateFromId(CurrentFateId);
 
             if (oracleFate.ChainId != 0)
             {
@@ -134,7 +134,7 @@ namespace Oracle.Managers
 
         public static bool FateFilter(FateData fate)
         {
-            var oracleFateData = OracleDatabase.GetFateFromFateData(fate);
+            var oracleFateData = FateDatabase.GetFateFromFateData(fate);
 
             if (oracleFateData.Type == FateType.Boss && !FateSettings.Instance.BossFatesEnabled)
             {
@@ -225,27 +225,27 @@ namespace Oracle.Managers
 
         public static bool FateProgressionMet(FateData fate)
         {
-            if (OracleDatabase.GetFateFromFateData(fate).Type != FateType.Boss && OracleDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
+            if (FateDatabase.GetFateFromFateData(fate).Type != FateType.Boss && FateDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss && fate.Progress >= FateSettings.Instance.BossEngagePercentage)
+            if (FateDatabase.GetFateFromFateData(fate).Type == FateType.Boss && fate.Progress >= FateSettings.Instance.BossEngagePercentage)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss && FateSettings.Instance.WaitAtBossForProgress)
+            if (FateDatabase.GetFateFromFateData(fate).Type == FateType.Boss && FateSettings.Instance.WaitAtBossForProgress)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && fate.Progress >= FateSettings.Instance.MegaBossEngagePercentage)
+            if (FateDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && fate.Progress >= FateSettings.Instance.MegaBossEngagePercentage)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && FateSettings.Instance.WaitAtMegaBossForProgress)
+            if (FateDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && FateSettings.Instance.WaitAtMegaBossForProgress)
             {
                 return true;
             }
@@ -400,13 +400,13 @@ namespace Oracle.Managers
 
         public static FateData GetChainFate(FateData fate)
         {
-            var oracleFate = OracleDatabase.GetFateFromFateData(fate);
+            var oracleFate = FateDatabase.GetFateFromFateData(fate);
             return oracleFate.ChainId != 0 ? FateManager.GetFateById(oracleFate.ChainId) : null;
         }
 
         public static FateData GetChainFate(uint fateId)
         {
-            var oracleFate = OracleDatabase.GetFateFromId(fateId);
+            var oracleFate = FateDatabase.GetFateFromId(fateId);
             return oracleFate.ChainId != 0 ? FateManager.GetFateById(oracleFate.ChainId) : null;
         }
 
@@ -417,7 +417,7 @@ namespace Oracle.Managers
 
         public static Fate GetCurrentOracleFate()
         {
-            return OracleDatabase.GetFateFromId(CurrentFateId);
+            return FateDatabase.GetFateFromId(CurrentFateId);
         }
 
         public static FateData GetPreviousFateData()
@@ -478,7 +478,7 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (OracleDatabase.GetFateFromId(PreviousFateId).ChainId != 0)
+            if (FateDatabase.GetFateFromId(PreviousFateId).ChainId != 0)
             {
                 return true;
             }
@@ -523,7 +523,7 @@ namespace Oracle.Managers
                 return false;
             }
 
-            var chainId = OracleDatabase.GetFateFromId(PreviousFateId).ChainId;
+            var chainId = FateDatabase.GetFateFromId(PreviousFateId).ChainId;
             if (chainId == 0)
             {
                 return false;
@@ -535,7 +535,7 @@ namespace Oracle.Managers
                 return false;
             }
 
-            var chainOracleFateInfo = OracleDatabase.GetFateFromId(chainId);
+            var chainOracleFateInfo = FateDatabase.GetFateFromId(chainId);
             if (!IsFateTypeEnabled(chainOracleFateInfo))
             {
                 Logger.SendLog("Not waiting for the next FATE in the chain: its type is not enabled.");
@@ -556,11 +556,6 @@ namespace Oracle.Managers
             const ushort dravanianHinterlands = 399;
 
             if (MainSettings.Instance.OracleOperationMode != OracleOperationMode.FateGrind)
-            {
-                return false;
-            }
-
-            if (!MovementSettings.Instance.ChangeZones)
             {
                 return false;
             }

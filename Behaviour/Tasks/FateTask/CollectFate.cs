@@ -43,7 +43,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
         public static async Task<bool> Main()
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
-            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
+            var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
             var fateItemCount = ConditionParser.ItemCount(oracleFate.ItemId);
 
             if (currentFate == null)
@@ -125,7 +125,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static void SelectTarget()
         {
-            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
+            var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
             BattleCharacter target = null;
 
             if (oracleFate.PreferredTargetId.Any())

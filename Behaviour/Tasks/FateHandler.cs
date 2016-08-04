@@ -52,7 +52,7 @@ namespace Oracle.Behaviour.Tasks
 
         private static async Task<bool> RunFate()
         {
-            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
+            var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
 
             switch (oracleFate.Type)
             {

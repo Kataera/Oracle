@@ -18,7 +18,7 @@ using ff14bot.Navigation;
 using ff14bot.Settings;
 
 using Oracle.Behaviour.Tasks.Utilities;
-using Oracle.Data;
+using Oracle.Data.Meshes;
 using Oracle.Helpers;
 using Oracle.Settings;
 
@@ -28,7 +28,7 @@ namespace Oracle.Managers
 {
     internal static class OracleMovementManager
     {
-        internal static OracleFlightMesh ZoneFlightMesh { get; set; }
+        internal static FlightMesh ZoneFlightMesh { get; set; }
 
         private static async Task ClearExpiredFate()
         {

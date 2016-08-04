@@ -8,7 +8,7 @@ using ff14bot.Settings;
 
 using Newtonsoft.Json;
 
-using Oracle.Data;
+using Oracle.Data.Fates;
 using Oracle.Helpers;
 using Oracle.Managers;
 
@@ -16,7 +16,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class LoadOracleDatabase
     {
-        private static async Task<OracleDatabase> DeserialiseFateData()
+        private static async Task<FateDatabase> DeserialiseFateData()
         {
             var path = GlobalSettings.Instance.BotBasePath + @"\Oracle\Data\Fates\FateData.json";
 
@@ -30,7 +30,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                         var json = await Coroutine.ExternalTask(sr.ReadToEndAsync());
 
                         Logger.SendDebugLog("Deserialising the database file.");
-                        var oracleDatabase = await Coroutine.ExternalTask(Task.Factory.StartNew(() => JsonConvert.DeserializeObject<OracleDatabase>(json)));
+                        var oracleDatabase = await Coroutine.ExternalTask(Task.Factory.StartNew(() => JsonConvert.DeserializeObject<FateDatabase>(json)));
 
                         return oracleDatabase;
                     }
@@ -43,14 +43,14 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
         public static async Task<bool> Main()
         {
-            if (OracleFateManager.OracleDatabase != null)
+            if (OracleFateManager.FateDatabase != null)
             {
                 return true;
             }
 
             await SerialiseFateData();
             Logger.SendLog("Loading Oracle's FATE database.");
-            OracleFateManager.OracleDatabase = await DeserialiseFateData();
+            OracleFateManager.FateDatabase = await DeserialiseFateData();
             Logger.SendLog("Oracle's FATE database loaded successfully.");
 
             return true;

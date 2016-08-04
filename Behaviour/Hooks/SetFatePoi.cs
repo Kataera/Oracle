@@ -99,8 +99,8 @@ namespace Oracle.Behaviour.Hooks
                 return false;
             }
 
-            var chainId = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainId;
-            var chainOracleFateInfo = OracleFateManager.OracleDatabase.GetFateFromId(chainId);
+            var chainId = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainId;
+            var chainOracleFateInfo = OracleFateManager.FateDatabase.GetFateFromId(chainId);
             if (chainFateTimer == null || !chainFateTimer.IsRunning)
             {
                 chainFateTimer = Stopwatch.StartNew();

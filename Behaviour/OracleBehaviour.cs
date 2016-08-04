@@ -31,7 +31,7 @@ namespace Oracle.Behaviour
         {
             OracleFateManager.UpdateGameCache();
 
-            if (OracleFateManager.OracleDatabase == null)
+            if (OracleFateManager.FateDatabase == null)
             {
                 await LoadOracleDatabase.Main();
             }

@@ -90,7 +90,7 @@ namespace Oracle.Providers
 
             if (currentFate != null)
             {
-                oracleFate = OracleFateManager.OracleDatabase.GetFateFromFateData(currentFate);
+                oracleFate = OracleFateManager.FateDatabase.GetFateFromFateData(currentFate);
             }
 
             // If FATE has a preferred target, prioritise it if we're out of combat.
@@ -238,7 +238,7 @@ namespace Oracle.Providers
                 return false;
             }
 
-            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(currentFate.Id);
+            var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(currentFate.Id);
             if (oracleFate.Type != FateType.Collect)
             {
                 return false;

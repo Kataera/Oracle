@@ -121,7 +121,7 @@ namespace Oracle
         {
             OracleFateManager.CurrentFateId = 0;
             OracleFateManager.PreviousFateId = 0;
-            OracleFateManager.OracleDatabase = null;
+            OracleFateManager.FateDatabase = null;
 
             OracleMovementManager.ZoneFlightMesh = null;
 
