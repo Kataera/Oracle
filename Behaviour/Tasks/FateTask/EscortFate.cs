@@ -119,7 +119,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
                     return true;
                 }
 
-                await MoveToFateCentre();
+                await MoveToNpc(escortNpc);
             }
 
             return true;
