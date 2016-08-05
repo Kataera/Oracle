@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
 using ff14bot;
 using ff14bot.Helpers;
+using ff14bot.Managers;
 
 using Oracle.Behaviour.Tasks;
 using Oracle.Behaviour.Tasks.Utilities;
@@ -14,9 +16,15 @@ namespace Oracle.Behaviour.Modes
     {
         public static async Task<bool> Main()
         {
+            if (Poi.Current.Type == PoiType.Kill)
+            {
+                await CombatHandler.HandleCombat();
+                return true;
+            }
+
             if (OracleClassManager.ClassChangeNeeded())
             {
-                if (Core.Player.InCombat)
+                if (Core.Player.InCombat || GameObjectManager.Attackers.Any())
                 {
                     return true;
                 }
@@ -30,7 +38,7 @@ namespace Oracle.Behaviour.Modes
 
             if (OracleClassManager.ZoneChangeNeeded())
             {
-                if (Core.Player.InCombat)
+                if (Core.Player.InCombat || GameObjectManager.Attackers.Any())
                 {
                     return true;
                 }
@@ -40,12 +48,7 @@ namespace Oracle.Behaviour.Modes
                 return true;
             }
 
-            if (Poi.Current.Type == PoiType.Kill)
-            {
-                await CombatHandler.HandleCombat();
-            }
-
-            else if (Poi.Current.Type == PoiType.Fate || OracleFateManager.CurrentFateId != 0)
+            if (Poi.Current.Type == PoiType.Fate || OracleFateManager.CurrentFateId != 0)
             {
                 await FateHandler.HandleFate();
             }
