@@ -61,7 +61,7 @@ namespace Oracle.Managers
         public static bool FinishedLevelling()
         {
             var enabledLevels = Core.Player.Levels.OrderBy(kvp => kvp.Value).Where(kvp => IsClassJobEnabled(kvp.Key)).ToArray();
-            return enabledLevels.Any(kvp => kvp.Value < ClassSettings.Instance.MaxLevel);
+            return enabledLevels.All(kvp => kvp.Value >= ClassSettings.Instance.MaxLevel);
         }
 
         public static string GetClassJobName(ClassJobType job)
