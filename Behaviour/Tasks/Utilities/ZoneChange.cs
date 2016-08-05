@@ -1,37 +1,27 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
-using Buddy.Coroutines;
-
-using Clio.Utilities;
-
-using ff14bot;
-using ff14bot.Behavior;
 using ff14bot.Managers;
-using ff14bot.Navigation;
 
-using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Helpers;
 using Oracle.Managers;
 using Oracle.Settings;
 
-namespace Oracle.Behaviour.Tasks
+namespace Oracle.Behaviour.Tasks.Utilities
 {
-    internal static class ZoneChangeHandler
+    internal static class ZoneChange
     {
-        private const ushort DravanianHinterlands = 399;
-        private const uint IdyllshireAetheryte = 75;
-
         public static async Task<bool> HandleZoneChange()
         {
+            const uint idyllshireAetheryte = 75;
             uint aetheryteId;
-            MovementSettings.Instance.ZoneLevels.TryGetValue(OracleFateManager.GetTrueLevel(), out aetheryteId);
+
+            MovementSettings.Instance.ZoneLevels.TryGetValue(OracleClassManager.GetTrueLevel(), out aetheryteId);
 
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
             {
                 Logger.SendErrorLog("Can't find requested teleport destination, make sure you've unlocked it.");
-                TreeRoot.Stop("Cannot teleport to destination.");
+                OracleBot.StopOracle("Cannot teleport to destination.");
                 return false;
             }
 
@@ -41,8 +31,8 @@ namespace Oracle.Behaviour.Tasks
             }
 
             var zoneName = WorldManager.AvailableLocations.FirstOrDefault(teleport => teleport.AetheryteId == aetheryteId).Name;
-            Logger.SendLog("Character is level " + OracleFateManager.GetTrueLevel() + ", teleporting to " + zoneName + ".");
-            await Teleport.TeleportToAetheryte(aetheryteId);
+            Logger.SendLog("Character is level " + OracleClassManager.GetTrueLevel() + ", teleporting to " + zoneName + ".");
+            await OracleTeleportManager.TeleportToAetheryte(aetheryteId);
 
             if (WorldManager.ZoneId != WorldManager.GetZoneForAetheryteId(aetheryteId))
             {
@@ -54,9 +44,9 @@ namespace Oracle.Behaviour.Tasks
                 await BindHomePoint.Main(aetheryteId);
             }
 
-            if (aetheryteId == IdyllshireAetheryte)
+            if (aetheryteId == idyllshireAetheryte)
             {
-                await MoveOutOfIdyllshire();
+                await OracleMovementManager.MoveOutOfIdyllshire();
             }
 
             return true;
@@ -64,11 +54,13 @@ namespace Oracle.Behaviour.Tasks
 
         public static async Task<bool> HandleZoneChange(uint zoneId)
         {
+            const ushort dravanianHinterlands = 399;
+            const uint idyllshireAetheryte = 75;
             uint aetheryteId;
 
-            if (zoneId == DravanianHinterlands)
+            if (zoneId == dravanianHinterlands)
             {
-                aetheryteId = IdyllshireAetheryte;
+                aetheryteId = idyllshireAetheryte;
             }
             else
             {
@@ -76,7 +68,7 @@ namespace Oracle.Behaviour.Tasks
                 if (aetheryte == null)
                 {
                     Logger.SendErrorLog("There's no aetherytes for this zone.");
-                    TreeRoot.Stop("Cannot teleport to destination.");
+                    OracleBot.StopOracle("Cannot teleport to destination.");
                     return false;
                 }
 
@@ -86,7 +78,7 @@ namespace Oracle.Behaviour.Tasks
             if (!WorldManager.HasAetheryteId(aetheryteId))
             {
                 Logger.SendErrorLog("Can't find requested teleport destination, make sure you've unlocked it.");
-                TreeRoot.Stop("Cannot teleport to destination.");
+                OracleBot.StopOracle("Cannot teleport to destination.");
                 return false;
             }
 
@@ -97,7 +89,7 @@ namespace Oracle.Behaviour.Tasks
 
             var zoneName = WorldManager.AvailableLocations.FirstOrDefault(teleport => teleport.AetheryteId == aetheryteId).Name;
             Logger.SendLog("Teleporting to " + zoneName + ".");
-            await Teleport.TeleportToAetheryte(aetheryteId);
+            await OracleTeleportManager.TeleportToAetheryte(aetheryteId);
 
             if (WorldManager.ZoneId != WorldManager.GetZoneForAetheryteId(aetheryteId))
             {
@@ -109,33 +101,10 @@ namespace Oracle.Behaviour.Tasks
                 await BindHomePoint.Main(aetheryteId);
             }
 
-            if (aetheryteId == IdyllshireAetheryte)
+            if (aetheryteId == idyllshireAetheryte)
             {
-                await MoveOutOfIdyllshire();
+                await OracleMovementManager.MoveOutOfIdyllshire();
             }
-
-            return true;
-        }
-
-        private static async Task<bool> MoveOutOfIdyllshire()
-        {
-            Logger.SendLog("We're in Idyllshire, moving to The Dravanian Hinterlands.");
-            await Mount.MountUp();
-
-            var location = new Vector3(142.6006f, 207f, 114.136f);
-            while (Core.Player.Distance(location) > 5f)
-            {
-                Navigator.MoveTo(location, "Leaving Idyllshire");
-                await Coroutine.Yield();
-            }
-
-            Navigator.Stop();
-            Core.Player.SetFacing(0.9709215f);
-            MovementManager.MoveForwardStart();
-
-            await Coroutine.Sleep(TimeSpan.FromSeconds(2));
-            await Coroutine.Wait(TimeSpan.MaxValue, () => !CommonBehaviors.IsLoading);
-            await Coroutine.Sleep(TimeSpan.FromSeconds(2));
 
             return true;
         }

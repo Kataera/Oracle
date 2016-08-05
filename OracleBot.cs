@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-using ff14bot.AClasses;
+using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Helpers;
 using ff14bot.Managers;
@@ -23,34 +23,37 @@ using TreeSharp;
 
 namespace Oracle
 {
-    public class OracleBot : BotBase
+    public class OracleBot
     {
         private static bool playerFaceTargetOnAction;
-
         private static bool playerFlightMode;
-
         private static Composite root;
-
         private static UI.Settings settingsWindow;
 
-        public override string EnglishName => "Oracle";
+        private static readonly string VersionPath = Path.Combine(Environment.CurrentDirectory, @"BotBases\Oracle\version.txt");
 
-        public override bool IsAutonomous => true;
-
-        public override string Name => "Oracle";
-
-        public override PulseFlags PulseFlags => PulseFlags.All;
-
-        public override bool RequiresProfile => false;
-
-        public override Composite Root => root;
+        public Composite Root => root;
 
         internal static string Version
-            =>
-                Assembly.GetExecutingAssembly().GetName().Version.Major + "." + Assembly.GetExecutingAssembly().GetName().Version.Minor + "."
-                + Assembly.GetExecutingAssembly().GetName().Version.Revision;
+        {
+            get
+            {
+                if (!File.Exists(VersionPath))
+                {
+                    return null;
+                }
 
-        public override bool WantButton => true;
+                try
+                {
+                    var version = File.ReadAllText(VersionPath);
+                    return version;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
 
         private static void AddAssemblyResolveHandler()
         {
@@ -74,7 +77,12 @@ namespace Oracle
             };
         }
 
-        public override void Initialize()
+        public Composite GetRoot()
+        {
+            return Root;
+        }
+
+        public void Initialize()
         {
             Logger.SendLog("Initialising Oracle.");
         }
@@ -97,60 +105,18 @@ namespace Oracle
             }
         }
 
-        public override void OnButtonPress()
+        private static void LogCurrentMode()
         {
-            if (settingsWindow != null && settingsWindow.IsVisible)
-            {
-                return;
-            }
-
-            AddAssemblyResolveHandler();
-            settingsWindow = new UI.Settings();
-            settingsWindow.Show();
-        }
-
-        private static void ResetBotbaseVariables()
-        {
-            OracleFateManager.CurrentFateId = 0;
-            OracleFateManager.PreviousFateId = 0;
-            OracleFateManager.OracleDatabase = null;
-
-            OracleMovementManager.ZoneFlightMesh = null;
-
-            YokaiWatchGrind.ResetIgnoredYokai();
-        }
-
-        public override void Start()
-        {
-            Navigator.NavigationProvider = new GaiaNavigator();
-            Navigator.PlayerMover = new SlideMover();
-            CombatTargeting.Instance.Provider = new OracleCombatTargetingProvider();
-
-            playerFaceTargetOnAction = GameSettingsManager.FaceTargetOnAction;
-            playerFlightMode = GameSettingsManager.FlightMode;
-            GameSettingsManager.FaceTargetOnAction = true;
-            GameSettingsManager.FlightMode = true;
-
-            TreeHooks.Instance.ClearAll();
-            root = BrainBehavior.CreateBrain();
-            TreeHooks.Instance.AddHook("TreeStart", OracleBehaviour.Behaviour);
-            TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
-
-            if (MainSettings.Instance.OverrideRestBehaviour)
-            {
-                Logger.SendDebugLog("Overriding the combat routine rest behaviour.");
-                TreeHooks.Instance.ReplaceHook("Rest", Rest.Behaviour);
-            }
-
-            if (MainSettings.Instance.ListHooksOnStart && MainSettings.Instance.DebugEnabled)
-            {
-                ListHooks();
-            }
-
             switch (MainSettings.Instance.OracleOperationMode)
             {
                 case OracleOperationMode.FateGrind:
                     Logger.SendLog("Starting Oracle in FATE grind mode.");
+                    break;
+                case OracleOperationMode.LevelMode:
+                    Logger.SendLog("Starting Oracle in single-class levelling mode.");
+                    break;
+                case OracleOperationMode.MultiLevelMode:
+                    Logger.SendLog("Starting Oracle in multiple-class levelling mode.");
                     break;
                 case OracleOperationMode.SpecificFate:
                     Logger.SendLog("Starting Oracle in specific FATE(s) mode.");
@@ -174,7 +140,60 @@ namespace Oracle
             }
         }
 
-        public override void Stop()
+        public void OnButtonPress()
+        {
+            if (settingsWindow != null && settingsWindow.IsVisible)
+            {
+                return;
+            }
+
+            AddAssemblyResolveHandler();
+            settingsWindow = new UI.Settings();
+            settingsWindow.Show();
+        }
+
+        private static void ResetBotbaseVariables()
+        {
+            OracleFateManager.CurrentFateId = 0;
+            OracleFateManager.PreviousFateId = 0;
+            OracleFateManager.FateDatabase = null;
+
+            OracleMovementManager.ZoneFlightMesh = null;
+
+            YokaiWatchGrind.ResetIgnoredYokai();
+        }
+
+        public void Start()
+        {
+            Navigator.NavigationProvider = new GaiaNavigator();
+            Navigator.PlayerMover = new SlideMover();
+            CombatTargeting.Instance.Provider = new OracleCombatTargetingProvider();
+
+            playerFaceTargetOnAction = GameSettingsManager.FaceTargetOnAction;
+            playerFlightMode = GameSettingsManager.FlightMode;
+            GameSettingsManager.FaceTargetOnAction = true;
+            GameSettingsManager.FlightMode = true;
+
+            TreeHooks.Instance.ClearAll();
+            root = BrainBehavior.CreateBrain();
+            TreeHooks.Instance.AddHook("TreeStart", OracleBehaviour.Behaviour);
+            TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
+
+            if (MainSettings.Instance.OverrideRestBehaviour)
+            {
+                Logger.SendDebugLog("Replacing the combat routine's rest behaviour.");
+                TreeHooks.Instance.ReplaceHook("Rest", Rest.Behaviour);
+            }
+
+            if (MainSettings.Instance.ListHooksOnStart && MainSettings.Instance.DebugEnabled)
+            {
+                ListHooks();
+            }
+
+            LogCurrentMode();
+        }
+
+        public void Stop()
         {
             ResetBotbaseVariables();
 
@@ -197,11 +216,16 @@ namespace Oracle
 
             if (MainSettings.Instance.OverrideRestBehaviour)
             {
-                Logger.SendDebugLog("Restoring the combat routine rest behaviour.");
+                Logger.SendDebugLog("Restoring the combat routine's rest behaviour.");
                 TreeHooks.Instance.ReplaceHook("Rest", RoutineManager.Current.RestBehavior);
             }
 
             Logger.SendLog("Stopping Oracle.");
+        }
+
+        internal static void StopOracle(string reason)
+        {
+            TreeRoot.Stop(" " + reason);
         }
     }
 }

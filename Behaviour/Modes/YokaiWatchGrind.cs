@@ -20,6 +20,7 @@ namespace Oracle.Behaviour.Modes
 {
     public static class YokaiWatchGrind
     {
+        private const uint YokaiMedal = 15167;
         private const uint YokaiWatchItem = 15222;
         private const uint BracerSlotId = 10;
 
@@ -37,16 +38,15 @@ namespace Oracle.Behaviour.Modes
         private static bool ignoreBlizzaria;
         private static bool ignoreManjimutt;
 
-        private static async Task EquipYokaiWatch()
+        private static async Task EquipYokaiWatchIfNeeded()
         {
             var bracerSlot = InventoryManager.EquippedItems.FirstOrDefault(bs => bs.Slot == BracerSlotId);
             if (bracerSlot != null && bracerSlot.RawItemId != YokaiWatchItem)
             {
                 if (!ConditionParser.HasItem(15222))
                 {
-                    Logger.SendErrorLog(
-                                        "You do not have a Yo-kai Watch in your inventory or armory. Please pick one up by doing the event introduction quest prior to starting the bot.");
-                    TreeRoot.Stop("Character does not have a Yo-kai Watch.");
+                    Logger.SendErrorLog("You do not have a Yo-kai Watch in your inventory or armoury chest.");
+                    OracleBot.StopOracle("Character does not have a Yo-kai Watch.");
                 }
 
                 Logger.SendLog("Equipping the Yo-kai Watch.");
@@ -59,61 +59,61 @@ namespace Oracle.Behaviour.Modes
             }
         }
 
-        private static uint GetMedalZone(Yokai yokai)
+        private static uint GetMinionMedalZone(YokaiMinion yokai)
         {
-            YokaiMinion minion;
+            Structs.YokaiMinion minion;
             int zoneIndex;
             switch (yokai)
             {
-                case Yokai.Jibanyan:
+                case YokaiMinion.Jibanyan:
                     minion = YokaiMinions.Jibanyan;
                     zoneIndex = YokaiSettings.Instance.JibanyanZoneChoice;
                     break;
-                case Yokai.Komasan:
+                case YokaiMinion.Komasan:
                     minion = YokaiMinions.Komasan;
                     zoneIndex = YokaiSettings.Instance.KomasanZoneChoice;
                     break;
-                case Yokai.Usapyon:
+                case YokaiMinion.Usapyon:
                     minion = YokaiMinions.Usapyon;
                     zoneIndex = YokaiSettings.Instance.UsapyonZoneChoice;
                     break;
-                case Yokai.Whisper:
+                case YokaiMinion.Whisper:
                     minion = YokaiMinions.Whisper;
                     zoneIndex = YokaiSettings.Instance.WhisperZoneChoice;
                     break;
-                case Yokai.Shogunyan:
+                case YokaiMinion.Shogunyan:
                     minion = YokaiMinions.Shogunyan;
                     zoneIndex = YokaiSettings.Instance.ShogunyanZoneChoice;
                     break;
-                case Yokai.Hovernyan:
+                case YokaiMinion.Hovernyan:
                     minion = YokaiMinions.Hovernyan;
                     zoneIndex = YokaiSettings.Instance.HovernyanZoneChoice;
                     break;
-                case Yokai.Komajiro:
+                case YokaiMinion.Komajiro:
                     minion = YokaiMinions.Komajiro;
                     zoneIndex = YokaiSettings.Instance.KomajiroZoneChoice;
                     break;
-                case Yokai.Noko:
+                case YokaiMinion.Noko:
                     minion = YokaiMinions.Noko;
                     zoneIndex = YokaiSettings.Instance.NokoZoneChoice;
                     break;
-                case Yokai.Venoct:
+                case YokaiMinion.Venoct:
                     minion = YokaiMinions.Venoct;
                     zoneIndex = YokaiSettings.Instance.VenoctZoneChoice;
                     break;
-                case Yokai.Kyubi:
+                case YokaiMinion.Kyubi:
                     minion = YokaiMinions.Kyubi;
                     zoneIndex = YokaiSettings.Instance.KyubiZoneChoice;
                     break;
-                case Yokai.Robonyan:
+                case YokaiMinion.Robonyan:
                     minion = YokaiMinions.Robonyan;
                     zoneIndex = YokaiSettings.Instance.RobonyanZoneChoice;
                     break;
-                case Yokai.Blizzaria:
+                case YokaiMinion.Blizzaria:
                     minion = YokaiMinions.Blizzaria;
                     zoneIndex = YokaiSettings.Instance.BlizzariaZoneChoice;
                     break;
-                case Yokai.Manjimutt:
+                case YokaiMinion.Manjimutt:
                     minion = YokaiMinions.Manjimutt;
                     zoneIndex = YokaiSettings.Instance.ManjimuttZoneChoice;
                     break;
@@ -130,8 +130,42 @@ namespace Oracle.Behaviour.Modes
                 case 3:
                     return minion.MedalZoneThree;
                 default:
-                    Logger.SendErrorLog("Medal zone index out of bounds. Please let Kataera know this occured at the Oracle Discord server.");
                     return minion.MedalZoneOne;
+            }
+        }
+
+        private static uint GetNormalMedalZone()
+        {
+            switch (YokaiSettings.Instance.YokaiMedalZoneChoice)
+            {
+                case 1:
+                    return 134;
+                case 2:
+                    return 135;
+                case 3:
+                    return 138;
+                case 4:
+                    return 139;
+                case 5:
+                    return 140;
+                case 6:
+                    return 141;
+                case 7:
+                    return 145;
+                case 8:
+                    return 146;
+                case 9:
+                    return 148;
+                case 10:
+                    return 152;
+                case 11:
+                    return 153;
+                case 12:
+                    return 154;
+                case 13:
+                    return 180;
+                default:
+                    return 134;
             }
         }
 
@@ -149,6 +183,11 @@ namespace Oracle.Behaviour.Modes
                 return true;
             }
 
+            if (!ConditionParser.HasAtLeast(YokaiMedal, YokaiSettings.Instance.YokaiMedalsToFarm))
+            {
+                await EquipYokaiWatchIfNeeded();
+            }
+
             if (!ConditionParser.HasAtLeast(YokaiMinions.Jibanyan.MedalItemId, YokaiSettings.Instance.JibanyanMedalsToFarm) && !ignoreJibanyan)
             {
                 if (SummonMinion.CanSummonMinion() && !await SummonMinion.IsMinionSummoned(YokaiMinions.Jibanyan.EnglishName))
@@ -160,7 +199,7 @@ namespace Oracle.Behaviour.Modes
                     }
                 }
 
-                await TeleportIfNeeded(GetMedalZone(Yokai.Jibanyan));
+                await TeleportIfNeeded(GetMinionMedalZone(YokaiMinion.Jibanyan));
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Komasan.MedalItemId, YokaiSettings.Instance.KomasanMedalsToFarm) && !ignoreKomasan)
             {
@@ -173,7 +212,7 @@ namespace Oracle.Behaviour.Modes
                     }
                 }
 
-                await TeleportIfNeeded(GetMedalZone(Yokai.Komasan));
+                await TeleportIfNeeded(GetMinionMedalZone(YokaiMinion.Komasan));
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Usapyon.MedalItemId, YokaiSettings.Instance.UsapyonMedalsToFarm) && !ignoreUsapyon)
             {
@@ -186,7 +225,7 @@ namespace Oracle.Behaviour.Modes
                     }
                 }
 
-                await TeleportIfNeeded(GetMedalZone(Yokai.Usapyon));
+                await TeleportIfNeeded(GetMinionMedalZone(YokaiMinion.Usapyon));
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Whisper.MedalItemId, YokaiSettings.Instance.WhisperMedalsToFarm) && !ignoreWhisper)
             {
@@ -199,7 +238,7 @@ namespace Oracle.Behaviour.Modes
                     }
                 }
 
-                await TeleportIfNeeded(GetMedalZone(Yokai.Whisper));
+                await TeleportIfNeeded(GetMinionMedalZone(YokaiMinion.Whisper));
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Shogunyan.MedalItemId, YokaiSettings.Instance.ShogunyanMedalsToFarm) && !ignoreShogunyan)
             {
@@ -212,7 +251,7 @@ namespace Oracle.Behaviour.Modes
                     }
                 }
 
-                await TeleportIfNeeded(GetMedalZone(Yokai.Shogunyan));
+                await TeleportIfNeeded(GetMinionMedalZone(YokaiMinion.Shogunyan));
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Hovernyan.MedalItemId, YokaiSettings.Instance.HovernyanMedalsToFarm) && !ignoreHovernyan)
             {
@@ -225,7 +264,7 @@ namespace Oracle.Behaviour.Modes
                     }
                 }
 
-                await TeleportIfNeeded(GetMedalZone(Yokai.Hovernyan));
+                await TeleportIfNeeded(GetMinionMedalZone(YokaiMinion.Hovernyan));
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Komajiro.MedalItemId, YokaiSettings.Instance.KomajiroMedalsToFarm) && !ignoreKomajiro)
             {
@@ -238,7 +277,7 @@ namespace Oracle.Behaviour.Modes
                     }
                 }
 
-                await TeleportIfNeeded(GetMedalZone(Yokai.Komajiro));
+                await TeleportIfNeeded(GetMinionMedalZone(YokaiMinion.Komajiro));
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Noko.MedalItemId, YokaiSettings.Instance.NokoMedalsToFarm) && !ignoreNoko)
             {
@@ -251,7 +290,7 @@ namespace Oracle.Behaviour.Modes
                     }
                 }
 
-                await TeleportIfNeeded(GetMedalZone(Yokai.Noko));
+                await TeleportIfNeeded(GetMinionMedalZone(YokaiMinion.Noko));
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Venoct.MedalItemId, YokaiSettings.Instance.VenoctMedalsToFarm) && !ignoreVenoct)
             {
@@ -264,7 +303,7 @@ namespace Oracle.Behaviour.Modes
                     }
                 }
 
-                await TeleportIfNeeded(GetMedalZone(Yokai.Venoct));
+                await TeleportIfNeeded(GetMinionMedalZone(YokaiMinion.Venoct));
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Kyubi.MedalItemId, YokaiSettings.Instance.KyubiMedalsToFarm) && !ignoreKyubi)
             {
@@ -277,7 +316,7 @@ namespace Oracle.Behaviour.Modes
                     }
                 }
 
-                await TeleportIfNeeded(GetMedalZone(Yokai.Kyubi));
+                await TeleportIfNeeded(GetMinionMedalZone(YokaiMinion.Kyubi));
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Robonyan.MedalItemId, YokaiSettings.Instance.RobonyanMedalsToFarm) && !ignoreRobonyan)
             {
@@ -290,7 +329,7 @@ namespace Oracle.Behaviour.Modes
                     }
                 }
 
-                await TeleportIfNeeded(GetMedalZone(Yokai.Robonyan));
+                await TeleportIfNeeded(GetMinionMedalZone(YokaiMinion.Robonyan));
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Blizzaria.MedalItemId, YokaiSettings.Instance.BlizzariaMedalsToFarm) && !ignoreBlizzaria)
             {
@@ -303,7 +342,7 @@ namespace Oracle.Behaviour.Modes
                     }
                 }
 
-                await TeleportIfNeeded(GetMedalZone(Yokai.Blizzaria));
+                await TeleportIfNeeded(GetMinionMedalZone(YokaiMinion.Blizzaria));
             }
             else if (!ConditionParser.HasAtLeast(YokaiMinions.Manjimutt.MedalItemId, YokaiSettings.Instance.ManjimuttMedalsToFarm) && !ignoreManjimutt)
             {
@@ -316,12 +355,25 @@ namespace Oracle.Behaviour.Modes
                     }
                 }
 
-                await TeleportIfNeeded(GetMedalZone(Yokai.Manjimutt));
+                await TeleportIfNeeded(GetMinionMedalZone(YokaiMinion.Manjimutt));
+            }
+            else if (!ConditionParser.HasAtLeast(YokaiMedal, YokaiSettings.Instance.YokaiMedalsToFarm))
+            {
+                await TeleportIfNeeded(GetNormalMedalZone());
             }
             else
             {
-                Logger.SendLog("We've farmed all the medals we need for all minions! Stopping Oracle.");
-                TreeRoot.Stop("We're done!");
+                if (WorldManager.HasAetheryteId(62) && WorldManager.ZoneId != 144)
+                {
+                    Logger.SendLog("We've farmed all the medals we need for all minions! Teleporting to The Gold Saucer and stopping.");
+                    await OracleTeleportManager.TeleportToAetheryte(62);
+                }
+                else
+                {
+                    Logger.SendLog("We've farmed the medals we need for all minions! Stopping Oracle.");
+                }
+
+                OracleBot.StopOracle("We are done!");
             }
 
             if (Poi.Current.Type == PoiType.Fate || OracleFateManager.CurrentFateId != 0)
@@ -358,7 +410,7 @@ namespace Oracle.Behaviour.Modes
         {
             if (!Core.Player.InCombat && WorldManager.ZoneId != zone)
             {
-                await ZoneChangeHandler.HandleZoneChange(zone);
+                await ZoneChange.HandleZoneChange(zone);
             }
         }
     }

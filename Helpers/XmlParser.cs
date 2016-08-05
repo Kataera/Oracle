@@ -7,14 +7,15 @@ using System.Xml.Schema;
 
 using ff14bot.Settings;
 
-using Oracle.Data;
+using Oracle.Data.Fates;
 using Oracle.Enumerations;
+using Oracle.Structs;
 
 namespace Oracle.Helpers
 {
     internal static class XmlParser
     {
-        private static OracleDatabase database;
+        private static FateDatabase database;
         private static uint fateChainId;
         private static uint fateCollectItemId;
         private static bool fateDataInvalidFlag;
@@ -47,7 +48,7 @@ namespace Oracle.Helpers
             return fate;
         }
 
-        public static async Task<OracleDatabase> GetFateDatabase()
+        public static async Task<FateDatabase> GetFateDatabase()
         {
             if (database == null)
             {
@@ -57,7 +58,7 @@ namespace Oracle.Helpers
             return database;
         }
 
-        public static async Task<OracleDatabase> GetFateDatabase(bool forceReparse)
+        public static async Task<FateDatabase> GetFateDatabase(bool forceReparse)
         {
             if (forceReparse || database == null)
             {
@@ -95,7 +96,7 @@ namespace Oracle.Helpers
         private static async Task ParseFateData()
         {
             fateDataXml = GetXmlDocument();
-            database = new OracleDatabase();
+            database = new FateDatabase();
 
             if (fateDataInvalidFlag || fateDataXml.DocumentElement == null)
             {

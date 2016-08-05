@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+
+using Buddy.Coroutines;
 
 using ff14bot;
 using ff14bot.Helpers;
@@ -35,9 +38,10 @@ namespace Oracle.Behaviour.Hooks
                 return false;
             }
 
-            if (!Poi.Current.BattleCharacter.IsValid)
+            await RefreshObjectCache();
+            if (!Poi.Current.BattleCharacter.IsValid || Poi.Current.BattleCharacter.IsDead)
             {
-                OracleFateManager.ClearPoi("Mob is no longer valid.");
+                OracleFateManager.ClearPoi("Mob is no longer valid.", false);
                 return false;
             }
 
@@ -45,9 +49,17 @@ namespace Oracle.Behaviour.Hooks
             {
                 Navigator.PlayerMover.MoveStop();
             }
+
             Logger.SendLog("Resting until HP is over " + MainSettings.Instance.RestHealthPercent + "% and mana is over " + MainSettings.Instance.RestManaPercent
                            + "%.");
             return true;
+        }
+
+        private static async Task RefreshObjectCache()
+        {
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
+            GameObjectManager.Clear();
+            GameObjectManager.Update();
         }
     }
 }

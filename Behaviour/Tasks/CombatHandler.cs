@@ -51,8 +51,7 @@ namespace Oracle.Behaviour.Tasks
                 lastHpValue = mostRecentBc.CurrentHealth;
             }
 
-            if (noDamageTimeout.Elapsed > TimeSpan.FromMilliseconds(MainSettings.Instance.CombatNoDamageTimeout)
-                && currentBc.CurrentTargetId != Core.Player.ObjectId && currentBc.IsValid && !currentBc.IsDead)
+            if (ShouldBlacklistCombatPoi())
             {
                 OracleFateManager.ClearPoi("Mob's HP has not changed in " + MainSettings.Instance.CombatNoDamageTimeout / 1000
                                            + " seconds, blacklisting and selecting a new mob.");
@@ -103,7 +102,7 @@ namespace Oracle.Behaviour.Tasks
                     return true;
                 }
 
-                if (!LevelSync.IsLevelSyncNeeded(fate))
+                if (!OracleFateManager.IsLevelSyncNeeded(fate))
                 {
                     return true;
                 }
@@ -112,14 +111,51 @@ namespace Oracle.Behaviour.Tasks
                 {
                     if (fate.Within2D(Core.Player.Location))
                     {
-                        await LevelSync.SyncLevel(fate);
+                        await OracleFateManager.SyncLevel(fate);
                     }
                     else if (GameObjectManager.Attackers.Contains(Poi.Current.BattleCharacter))
                     {
-                        await MoveToFate.MoveToCurrentFate(true);
-                        await LevelSync.SyncLevel(fate);
+                        await OracleMovementManager.MoveToCurrentFate(true);
+                        await OracleFateManager.SyncLevel(fate);
                     }
                 }
+            }
+
+            return true;
+        }
+
+        private static bool ShouldBlacklistCombatPoi()
+        {
+            var currentBc = Poi.Current.BattleCharacter;
+
+            if (noDamageTimeout.Elapsed <= TimeSpan.FromMilliseconds(MainSettings.Instance.CombatNoDamageTimeout))
+            {
+                return false;
+            }
+
+            if (currentBc.CurrentTargetId == Core.Player.ObjectId)
+            {
+                return false;
+            }
+
+            if (!currentBc.IsValid)
+            {
+                return false;
+            }
+
+            if (currentBc.IsDead)
+            {
+                return false;
+            }
+
+            if (GameObjectManager.Attackers.Contains(currentBc))
+            {
+                return false;
+            }
+
+            if (OracleClassManager.ClassChangedTimer != null && OracleClassManager.ClassChangedTimer.Elapsed < TimeSpan.FromSeconds(30))
+            {
+                return false;
             }
 
             return true;

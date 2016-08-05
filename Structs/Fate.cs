@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using Oracle.Enumerations;
 
-namespace Oracle.Data
+namespace Oracle.Structs
 {
     [Serializable]
     internal struct Fate

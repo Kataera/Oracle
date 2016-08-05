@@ -55,12 +55,10 @@ namespace Oracle.Behaviour.Hooks.FateSelect
                             continue;
                         }
 
-                        if (fateDistance.Key.Progress < MovementSettings.Instance.FateProgressTeleportLimit)
+                        if (fateDistance.Key.Progress >= MovementSettings.Instance.FateProgressTeleportLimit)
                         {
                             continue;
                         }
-
-                        combinedDistances.Remove(fateDistance.Key);
 
                         // Add the minimum distance delta to ensure we don't teleport if distance saved is under that amount.
                         if (fateDistance.Value + MovementSettings.Instance.MinDistanceToTeleport >= currentDistance)

@@ -9,10 +9,10 @@ using ff14bot.Managers;
 using ff14bot.NeoProfiles;
 using ff14bot.Objects;
 
-using Oracle.Data;
 using Oracle.Enumerations;
 using Oracle.Managers;
 using Oracle.Settings;
+using Oracle.Structs;
 
 namespace Oracle.Providers
 {
@@ -90,13 +90,13 @@ namespace Oracle.Providers
 
             if (currentFate != null)
             {
-                oracleFate = OracleFateManager.OracleDatabase.GetFateFromFateData(currentFate);
+                oracleFate = OracleFateManager.FateDatabase.GetFateFromFateData(currentFate);
             }
 
             // If FATE has a preferred target, prioritise it if we're out of combat.
             if (oracleFate.PreferredTargetId != null && oracleFate.PreferredTargetId.Contains(battleCharacter.NpcId) && !Core.Player.InCombat)
             {
-                weight += 2000;
+                weight += 20000;
             }
 
             if (battleCharacter.Pointer == Core.Player.PrimaryTargetPtr)
@@ -132,7 +132,7 @@ namespace Oracle.Providers
             // Prefer nearer targets in combat if melee, and always out of combat.
             if (PlayerIsMelee() || !Core.Player.InCombat)
             {
-                weight -= battleCharacter.Distance(Core.Player) * 50;
+                weight -= battleCharacter.Distance(Core.Player) * 30;
             }
 
             return weight;
@@ -145,7 +145,7 @@ namespace Oracle.Providers
                 return false;
             }
 
-            return FateManager.GetFateById(battleCharacter.FateId).MaxLevel < OracleFateManager.GetTrueLevel();
+            return FateManager.GetFateById(battleCharacter.FateId).MaxLevel < OracleClassManager.GetTrueLevel();
         }
 
         private static bool PlayerIsMelee()
@@ -238,7 +238,7 @@ namespace Oracle.Providers
                 return false;
             }
 
-            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(currentFate.Id);
+            var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(currentFate.Id);
             if (oracleFate.Type != FateType.Collect)
             {
                 return false;

@@ -1,4 +1,6 @@
-﻿namespace Oracle.Data
+﻿using Oracle.Structs;
+
+namespace Oracle.Data
 {
     internal class YokaiMinions
     {
@@ -118,18 +120,5 @@
             MedalZoneTwo = 153,
             MedalZoneThree = 139
         };
-    }
-
-    internal struct YokaiMinion
-    {
-        public string EnglishName { get; set; }
-
-        public uint MedalItemId { get; set; }
-
-        public uint MedalZoneOne { get; set; }
-
-        public uint MedalZoneTwo { get; set; }
-
-        public uint MedalZoneThree { get; set; }
     }
 }

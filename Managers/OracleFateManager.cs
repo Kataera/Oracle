@@ -12,25 +12,26 @@ using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+using ff14bot.RemoteWindows;
 
 using NeoGaia.ConnectionHandler;
 
-using Oracle.Data;
+using Oracle.Data.Fates;
 using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Settings;
+using Oracle.Structs;
 
 namespace Oracle.Managers
 {
     internal static class OracleFateManager
     {
         internal static uint CurrentFateId { get; set; }
-
         internal static bool DeathFlag { get; set; }
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
-        internal static OracleDatabase OracleDatabase { get; set; }
+        internal static FateDatabase FateDatabase { get; set; }
         internal static uint PreviousFateId { get; set; }
-        internal static bool ReachedCurrentFate { get; set; }
+        internal static bool ReachedCurrentFate { get; set; } = true;
 
         public static async Task<bool> AnyViableFates()
         {
@@ -39,13 +40,13 @@ namespace Oracle.Managers
                 return false;
             }
 
-            await BlacklistBadFates();
-            if (FateManager.ActiveFates.Any(FateFilter))
+            if (WaitingForChainFate() && !FateManager.ActiveFates.Contains(GetChainFate(PreviousFateId)))
             {
-                return true;
+                return false;
             }
 
-            return false;
+            await BlacklistBadFates();
+            return FateManager.ActiveFates.Any(FateFilter);
         }
 
         public static async Task BlacklistBadFates()
@@ -111,7 +112,7 @@ namespace Oracle.Managers
 
         public static bool CurrentFateHasChain()
         {
-            var oracleFate = OracleDatabase.GetFateFromId(CurrentFateId);
+            var oracleFate = FateDatabase.GetFateFromId(CurrentFateId);
 
             if (oracleFate.ChainId != 0)
             {
@@ -121,9 +122,19 @@ namespace Oracle.Managers
             return false;
         }
 
+        public static async Task<bool> DesyncLevel()
+        {
+            if (Core.Player.IsLevelSynced)
+            {
+                ToDoList.LevelSync();
+            }
+
+            return true;
+        }
+
         public static bool FateFilter(FateData fate)
         {
-            var oracleFateData = OracleDatabase.GetFateFromFateData(fate);
+            var oracleFateData = FateDatabase.GetFateFromFateData(fate);
 
             if (oracleFateData.Type == FateType.Boss && !FateSettings.Instance.BossFatesEnabled)
             {
@@ -198,12 +209,12 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (fate.Level > GetTrueLevel() + FateSettings.Instance.FateMaxLevelAbove)
+            if (fate.Level > OracleClassManager.GetTrueLevel() + FateSettings.Instance.FateMaxLevelAbove)
             {
                 return false;
             }
 
-            if (fate.Level < GetTrueLevel() - FateSettings.Instance.FateMinLevelBelow
+            if (fate.Level < OracleClassManager.GetTrueLevel() - FateSettings.Instance.FateMinLevelBelow
                 && MainSettings.Instance.OracleOperationMode == OracleOperationMode.FateGrind)
             {
                 return false;
@@ -214,27 +225,27 @@ namespace Oracle.Managers
 
         public static bool FateProgressionMet(FateData fate)
         {
-            if (OracleDatabase.GetFateFromFateData(fate).Type != FateType.Boss && OracleDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
+            if (FateDatabase.GetFateFromFateData(fate).Type != FateType.Boss && FateDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss && fate.Progress >= FateSettings.Instance.BossEngagePercentage)
+            if (FateDatabase.GetFateFromFateData(fate).Type == FateType.Boss && fate.Progress >= FateSettings.Instance.BossEngagePercentage)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.Boss && FateSettings.Instance.WaitAtBossForProgress)
+            if (FateDatabase.GetFateFromFateData(fate).Type == FateType.Boss && FateSettings.Instance.WaitAtBossForProgress)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && fate.Progress >= FateSettings.Instance.MegaBossEngagePercentage)
+            if (FateDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && fate.Progress >= FateSettings.Instance.MegaBossEngagePercentage)
             {
                 return true;
             }
 
-            if (OracleDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && FateSettings.Instance.WaitAtMegaBossForProgress)
+            if (FateDatabase.GetFateFromFateData(fate).Type == FateType.MegaBoss && FateSettings.Instance.WaitAtMegaBossForProgress)
             {
                 return true;
             }
@@ -387,6 +398,18 @@ namespace Oracle.Managers
             }
         }
 
+        public static FateData GetChainFate(FateData fate)
+        {
+            var oracleFate = FateDatabase.GetFateFromFateData(fate);
+            return oracleFate.ChainId != 0 ? FateManager.GetFateById(oracleFate.ChainId) : null;
+        }
+
+        public static FateData GetChainFate(uint fateId)
+        {
+            var oracleFate = FateDatabase.GetFateFromId(fateId);
+            return oracleFate.ChainId != 0 ? FateManager.GetFateById(oracleFate.ChainId) : null;
+        }
+
         public static FateData GetCurrentFateData()
         {
             return FateManager.GetFateById(CurrentFateId);
@@ -394,7 +417,7 @@ namespace Oracle.Managers
 
         public static Fate GetCurrentOracleFate()
         {
-            return OracleDatabase.GetFateFromId(CurrentFateId);
+            return FateDatabase.GetFateFromId(CurrentFateId);
         }
 
         public static FateData GetPreviousFateData()
@@ -402,17 +425,75 @@ namespace Oracle.Managers
             return FateManager.GetFateById(PreviousFateId);
         }
 
-        public static uint GetTrueLevel()
+        public static bool IsFateTypeEnabled(Fate oracleFate)
         {
-            var baseClass = GetBaseClass(Core.Player.CurrentJob);
-            var trueLevel = Core.Player.Levels.FirstOrDefault(kvp => kvp.Key == baseClass).Value;
+            switch (oracleFate.Type)
+            {
+                case FateType.Kill:
+                    return FateSettings.Instance.KillFatesEnabled;
+                case FateType.Collect:
+                    return FateSettings.Instance.CollectFatesEnabled;
+                case FateType.Escort:
+                    return FateSettings.Instance.EscortFatesEnabled;
+                case FateType.Defence:
+                    return FateSettings.Instance.DefenceFatesEnabled;
+                case FateType.Boss:
+                    return FateSettings.Instance.BossFatesEnabled;
+                case FateType.MegaBoss:
+                    return FateSettings.Instance.MegaBossFatesEnabled;
+                case FateType.Null:
+                    return true;
+            }
 
-            return trueLevel != 0 ? trueLevel : Core.Player.ClassLevel;
+            return true;
+        }
+
+        public static bool IsLevelSyncNeeded(FateData fate)
+        {
+            if (!fate.IsValid || fate.Status == FateStatus.NOTACTIVE || fate.Status == FateStatus.COMPLETE)
+            {
+                return false;
+            }
+
+            return fate.MaxLevel < OracleClassManager.GetTrueLevel() && !Core.Player.IsLevelSynced && fate.Within2D(Core.Player.Location);
         }
 
         public static bool IsPlayerBeingAttacked()
         {
             return GameObjectManager.Attackers.Any(mob => mob.IsValid && mob.HasTarget && mob.CurrentTargetId == Core.Player.ObjectId && !mob.IsFateGone);
+        }
+
+        public static bool PreviousFateChained()
+        {
+            if (PreviousFateId == 0)
+            {
+                return false;
+            }
+
+            if (FateDatabase.GetFateFromId(PreviousFateId).ChainId != 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static async Task<bool> SyncLevel(FateData fate)
+        {
+            if (!IsLevelSyncNeeded(fate))
+            {
+                return false;
+            }
+
+            ToDoList.LevelSync();
+            await Coroutine.Wait(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay), () => Core.Player.IsLevelSynced);
+
+            if (Core.Player.IsLevelSynced)
+            {
+                Logger.SendLog("Synced to level " + fate.MaxLevel + " to participate in FATE.");
+            }
+
+            return true;
         }
 
         public static void UpdateGameCache()
@@ -422,46 +503,40 @@ namespace Oracle.Managers
             GameObjectManager.Update();
         }
 
-        public static bool ZoneChangeNeeded()
+        public static bool WaitingForChainFate()
         {
-            const ushort dravanianHinterlands = 399;
-
-            if (MainSettings.Instance.OracleOperationMode != OracleOperationMode.FateGrind)
+            if (!FateSettings.Instance.WaitForChain)
             {
                 return false;
             }
 
-            if (!MovementSettings.Instance.ChangeZones)
+            if (PreviousFateId == 0)
             {
                 return false;
             }
 
-            if (Core.Player.IsLevelSynced || Core.Player.IsDead)
+            var chainId = FateDatabase.GetFateFromId(PreviousFateId).ChainId;
+            if (chainId == 0)
             {
                 return false;
             }
 
-            if (Poi.Current.Type == PoiType.Kill || Poi.Current.Type == PoiType.Fate || CurrentFateId != 0)
+            if (!ReachedCurrentFate)
             {
+                Logger.SendLog("Not waiting for the next FATE in the chain: we didn't reach the previous FATE.");
                 return false;
             }
 
-            uint aetheryteId;
-            MovementSettings.Instance.ZoneLevels.TryGetValue(GetTrueLevel(), out aetheryteId);
-
-            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
+            var chainOracleFateInfo = FateDatabase.GetFateFromId(chainId);
+            if (!IsFateTypeEnabled(chainOracleFateInfo))
             {
+                Logger.SendLog("Not waiting for the next FATE in the chain: its type is not enabled.");
                 return false;
             }
 
-            if (WorldManager.GetZoneForAetheryteId(aetheryteId) == WorldManager.ZoneId)
+            if (BlacklistSettings.Instance.BlacklistedFates.Contains(chainId))
             {
-                return false;
-            }
-
-            // Handle Idyllshire.
-            if (aetheryteId == 75 && WorldManager.ZoneId == dravanianHinterlands)
-            {
+                Logger.SendLog("Not waiting for the next FATE in the chain: it is contained in the user blacklist.");
                 return false;
             }
 

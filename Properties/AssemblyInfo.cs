@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Oracle")]
-[assembly: AssemblyDescription("An improved FATE botbase for RebornBuddy.")]
+[assembly: AssemblyDescription("A feature-rich FATE botbase for RebornBuddy.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Oracle")]
-[assembly: AssemblyCopyright("Caitlin Howarth (a.k.a. Kataera)")]
+[assembly: AssemblyCopyright("Kataera")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,6 +33,6 @@ using System.Runtime.InteropServices;
 //      Revision
 //
 
-[assembly: AssemblyVersion("0.1.0.507")]
-[assembly: AssemblyFileVersion("0.1.0.507")]
+[assembly: AssemblyVersion("1.0.0")]
+[assembly: AssemblyFileVersion("1.0.0")]
 [assembly: NeutralResourcesLanguage("en-GB")]

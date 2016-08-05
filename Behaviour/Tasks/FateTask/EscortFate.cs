@@ -43,7 +43,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
         private static bool IsEscortNpc(BattleCharacter battleCharacter)
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
-            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
+            var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
 
             if (oracleFate.NpcId == battleCharacter.NpcId)
             {
@@ -86,7 +86,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
         public static async Task<bool> Main()
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
-            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
+            var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
 
             if (currentFate == null || currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
             {
@@ -113,13 +113,13 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 var escortNpc = GameObjectManager.GetObjectByNPCId(oracleFate.NpcId)
                                 ?? GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
 
-                if (escortNpc == null || Core.Player.Distance2D(escortNpc.Location) >= currentFate.Radius * 0.9)
+                if (escortNpc == null || !currentFate.Within2D(Core.Player.Location))
                 {
                     await MoveToFateCentre();
                     return true;
                 }
 
-                await MoveToFateCentre();
+                await MoveToNpc(escortNpc);
             }
 
             return true;
@@ -146,12 +146,12 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 }
 
                 // Throttle navigator path generation requests.
-                if (cachedLocation.Distance2D(currentFate.Location) > 25)
+                if (cachedLocation.Distance2D(currentFate.Location) > 10)
                 {
                     cachedLocation = currentFate.Location;
                 }
 
-                Navigator.MoveToPointWithin(cachedLocation, currentFate.Radius * 0.5f, "FATE centre");
+                Navigator.MoveToPointWithin(cachedLocation, currentFate.Radius * 0.2f, "FATE centre");
                 await Coroutine.Yield();
             }
 
@@ -220,7 +220,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static void SelectTarget()
         {
-            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
+            var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
             BattleCharacter target = null;
 
             if (oracleFate.PreferredTargetId.Any())

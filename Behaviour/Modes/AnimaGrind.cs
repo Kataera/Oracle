@@ -37,7 +37,7 @@ namespace Oracle.Behaviour.Modes
             {
                 Logger.SendErrorLog("You do not have the quest 'Soul Without Life', which is required to run in Anima grind mode.");
 
-                TreeRoot.Stop("Required quest is not picked up.");
+                OracleBot.StopOracle("Required quest is not picked up.");
                 return true;
             }
 
@@ -46,7 +46,7 @@ namespace Oracle.Behaviour.Modes
                 Logger.SendErrorLog("You are not at the correct step of 'Soul Without Life'. You must be at the objective that says "
                                     + "\"Deliver the astral nodule and umbral nodule to Ardashir in Azys Lla.\" to run in Anima grind mode.");
 
-                TreeRoot.Stop("Not at required step of quest.");
+                OracleBot.StopOracle("Not at required step of quest.");
                 return true;
             }
 
@@ -58,106 +58,106 @@ namespace Oracle.Behaviour.Modes
 
             if (!ConditionParser.HasAtLeast(LuminousIceCrystal, 3))
             {
-                if (OracleFateManager.GetTrueLevel() < 50)
+                if (OracleClassManager.GetTrueLevel() < 50)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in Coerthas Western Highlands.");
-                    TreeRoot.Stop("Too low level to continue.");
+                    OracleBot.StopOracle("Too low level to continue.");
                     return true;
                 }
 
                 if (WorldManager.ZoneId != ZoneCoerthasWesternHighlands)
                 {
                     Logger.SendLog("We need more Luminous Ice Crystals. Teleporting to Coerthas Western Highlands.");
-                    await ZoneChangeHandler.HandleZoneChange(ZoneCoerthasWesternHighlands);
+                    await ZoneChange.HandleZoneChange(ZoneCoerthasWesternHighlands);
                 }
             }
 
             else if (!ConditionParser.HasAtLeast(LuminousWindCrystal, 3))
             {
-                if (OracleFateManager.GetTrueLevel() < 50)
+                if (OracleClassManager.GetTrueLevel() < 50)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Sea of Clouds.");
-                    TreeRoot.Stop("Too low level to continue.");
+                    OracleBot.StopOracle("Too low level to continue.");
                     return true;
                 }
 
                 if (WorldManager.ZoneId != ZoneSeaOfClouds)
                 {
                     Logger.SendLog("We need more Luminous Wind Crystals. Teleporting to The Sea of Clouds.");
-                    await ZoneChangeHandler.HandleZoneChange(ZoneSeaOfClouds);
+                    await ZoneChange.HandleZoneChange(ZoneSeaOfClouds);
                 }
             }
 
             else if (!ConditionParser.HasAtLeast(LuminousEarthCrystal, 3))
             {
-                if (OracleFateManager.GetTrueLevel() < 50)
+                if (OracleClassManager.GetTrueLevel() < 50)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Dravanian Forelands.");
-                    TreeRoot.Stop("Too low level to continue.");
+                    OracleBot.StopOracle("Too low level to continue.");
                     return true;
                 }
 
                 if (WorldManager.ZoneId != ZoneDravanianForelands)
                 {
                     Logger.SendLog("We need more Luminous Earth Crystals. Teleporting to The Dravanian Forelands.");
-                    await ZoneChangeHandler.HandleZoneChange(ZoneDravanianForelands);
+                    await ZoneChange.HandleZoneChange(ZoneDravanianForelands);
                 }
             }
 
             else if (!ConditionParser.HasAtLeast(LuminousLightningCrystal, 3))
             {
-                if (OracleFateManager.GetTrueLevel() < 52)
+                if (OracleClassManager.GetTrueLevel() < 52)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Churning Mists.");
-                    TreeRoot.Stop("Too low level to continue.");
+                    OracleBot.StopOracle("Too low level to continue.");
                     return true;
                 }
 
                 if (WorldManager.ZoneId != ZoneChurningMists)
                 {
                     Logger.SendLog("We need more Luminous Lightning Crystals. Teleporting to The Churning Mists.");
-                    await ZoneChangeHandler.HandleZoneChange(ZoneChurningMists);
+                    await ZoneChange.HandleZoneChange(ZoneChurningMists);
                 }
             }
 
             else if (!ConditionParser.HasAtLeast(LuminousWaterCrystal, 3))
             {
-                if (OracleFateManager.GetTrueLevel() < 54)
+                if (OracleClassManager.GetTrueLevel() < 54)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in The Dravanian Hinterlands.");
-                    TreeRoot.Stop("Too low level to continue.");
+                    OracleBot.StopOracle("Too low level to continue.");
                     return true;
                 }
 
                 if (WorldManager.ZoneId != ZoneDravanianHinterlands)
                 {
                     Logger.SendLog("We need more Luminous Water Crystals. Teleporting to The Dravanian Hinterlands.");
-                    await ZoneChangeHandler.HandleZoneChange(ZoneDravanianHinterlands);
+                    await ZoneChange.HandleZoneChange(ZoneDravanianHinterlands);
                 }
             }
 
             else if (!ConditionParser.HasAtLeast(LuminousFireCrystal, 3))
             {
-                if (OracleFateManager.GetTrueLevel() < 55)
+                if (OracleClassManager.GetTrueLevel() < 55)
                 {
                     Logger.SendErrorLog("You are too low level to run FATEs in Azys Lla.");
-                    TreeRoot.Stop("Too low level to continue.");
+                    OracleBot.StopOracle("Too low level to continue.");
                     return true;
                 }
 
                 if (WorldManager.ZoneId != ZoneAzysLla)
                 {
                     Logger.SendLog("We need more Luminous Fire Crystals. Teleporting to Azys Lla.");
-                    await ZoneChangeHandler.HandleZoneChange(ZoneAzysLla);
+                    await ZoneChange.HandleZoneChange(ZoneAzysLla);
                 }
             }
 
             else if (!Core.Player.InCombat)
             {
                 Logger.SendLog("You have gathered all the crystals needed! Teleporting to Limsa Lominsa and stopping Oracle.");
-                await Teleport.TeleportToAetheryte(8);
+                await OracleTeleportManager.TeleportToAetheryte(8);
 
-                TreeRoot.Stop("We are done!");
+                OracleBot.StopOracle("We are done!");
                 return true;
             }
 

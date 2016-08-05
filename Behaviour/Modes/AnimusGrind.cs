@@ -1,7 +1,5 @@
 ﻿using System.Threading.Tasks;
 
-using ff14bot;
-
 using Oracle.Helpers;
 
 namespace Oracle.Behaviour.Modes
@@ -11,7 +9,7 @@ namespace Oracle.Behaviour.Modes
         public static async Task<bool> Main()
         {
             Logger.SendErrorLog("Animus grind mode is not yet implemented.");
-            TreeRoot.Stop("Animus grind mode is not yet implemented.");
+            OracleBot.StopOracle("Animus grind mode is not yet implemented.");
 
             return true;
         }

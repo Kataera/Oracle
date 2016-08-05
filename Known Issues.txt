@@ -11,3 +11,11 @@ Will sometimes get memory read exceptions if a plugin pulls the character away f
 Oracle will rarely wait for a follow up FATE even if it didn't manage to get to preceeding FATE. As soon as it pops up, or after the wait timeout occurs, it will return back to normal operation.
 
 Oracle will run to a FATE before teleporting to the next zone in Yo-kai Watch Grind mode.
+
+
+
+TODO:
+
+Refactor all tasks to use a result enumeration.
+
+Change target provider to target mobs attacking pets/companion.

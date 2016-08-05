@@ -608,6 +608,7 @@
     <Level>26</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <PreferredTargetId>1242</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>195</ID>
@@ -1717,6 +1718,7 @@
     <Level>32</Level>
     <Type>&Kill;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <PreferredTargetId>885</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>456</ID>
@@ -2426,6 +2428,7 @@
     <Level>41</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <PreferredTargetId>1702</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>588</ID>
@@ -2475,6 +2478,7 @@
     <Level>48</Level>
     <Type>&Boss;</Type>
     <OracleSupport>&FullSupport;</OracleSupport>
+    <PreferredTargetId>1670</PreferredTargetId>
   </Fate>
   <Fate>
     <ID>598</ID>

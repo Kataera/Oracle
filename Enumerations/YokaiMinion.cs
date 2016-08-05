@@ -1,6 +1,6 @@
 ﻿namespace Oracle.Enumerations
 {
-    internal enum Yokai
+    internal enum YokaiMinion
     {
         Jibanyan,
 

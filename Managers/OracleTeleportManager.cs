@@ -15,12 +15,11 @@ using ff14bot.Navigation;
 using NeoGaia.ConnectionHandler;
 
 using Oracle.Helpers;
-using Oracle.Managers;
 using Oracle.Settings;
 
-namespace Oracle.Behaviour.Tasks.Utilities
+namespace Oracle.Managers
 {
-    internal static class Teleport
+    internal static class OracleTeleportManager
     {
         private static Aetheryte[] AllTuplesToAetherytes(IReadOnlyList<Tuple<uint, Vector3>> tuples, Vector3 location)
         {

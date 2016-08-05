@@ -30,7 +30,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
         {
             // Band-aid fix to stop a bug where the bot waits after turning in last items when FATE ends.
             // TODO: Look into why this is happening and fix properly.
-            await LevelSync.DesyncLevel();
+            await OracleFateManager.DesyncLevel();
 
             await OracleFateManager.ClearCurrentFate("Current FATE is ending or is finished.");
         }
@@ -43,7 +43,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
         public static async Task<bool> Main()
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
-            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
+            var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
             var fateItemCount = ConditionParser.ItemCount(oracleFate.ItemId);
 
             if (currentFate == null)
@@ -111,7 +111,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
                     Navigator.Stop();
                     if (!Core.Player.InCombat)
                     {
-                        await Mount.MountUp();
+                        await OracleMovementManager.MountUp();
                     }
                 }
 
@@ -125,7 +125,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static void SelectTarget()
         {
-            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
+            var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
             BattleCharacter target = null;
 
             if (oracleFate.PreferredTargetId.Any())

@@ -9,7 +9,7 @@ using ff14bot.Settings;
 
 using Newtonsoft.Json;
 
-using Oracle.Data;
+using Oracle.Data.Meshes;
 using Oracle.Helpers;
 using Oracle.Managers;
 
@@ -19,7 +19,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
     {
         public static FileStream MeshFileStream { get; set; }
 
-        private static async Task<OracleFlightMesh> LoadMesh(ushort zoneId)
+        private static async Task<FlightMesh> LoadMesh(ushort zoneId)
         {
             var path = GlobalSettings.Instance.BotBasePath + @"\Oracle\Data\Meshes\zone_" + zoneId + ".gz";
 
@@ -35,7 +35,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                             var json = await Coroutine.ExternalTask(sr.ReadToEndAsync());
 
                             Logger.SendDebugLog("Deserialising the mesh file.");
-                            var flightMesh = await Coroutine.ExternalTask(Task.Factory.StartNew(() => JsonConvert.DeserializeObject<OracleFlightMesh>(json)));
+                            var flightMesh = await Coroutine.ExternalTask(Task.Factory.StartNew(() => JsonConvert.DeserializeObject<FlightMesh>(json)));
 
                             Logger.SendLog("Flight mesh loaded successfully!");
                             return flightMesh;

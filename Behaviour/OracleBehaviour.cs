@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 using Clio.Utilities;
 
@@ -30,7 +31,7 @@ namespace Oracle.Behaviour
         {
             OracleFateManager.UpdateGameCache();
 
-            if (OracleFateManager.OracleDatabase == null)
+            if (OracleFateManager.FateDatabase == null)
             {
                 await LoadOracleDatabase.Main();
             }
@@ -62,6 +63,12 @@ namespace Oracle.Behaviour
                 case OracleOperationMode.FateGrind:
                     await FateGrind.Main();
                     break;
+                case OracleOperationMode.LevelMode:
+                    await Levelling.Main();
+                    break;
+                case OracleOperationMode.MultiLevelMode:
+                    await MultiLevelling.Main();
+                    break;
                 case OracleOperationMode.SpecificFate:
                     await SpecificFate.Main();
                     break;
@@ -77,6 +84,8 @@ namespace Oracle.Behaviour
                 case OracleOperationMode.YokaiWatchGrind:
                     await YokaiWatchGrind.Main();
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             // Always return false to not block the tree.

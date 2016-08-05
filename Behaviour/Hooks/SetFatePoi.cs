@@ -12,7 +12,6 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 
 using Oracle.Behaviour.Hooks.FateSelect;
-using Oracle.Data;
 using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Managers;
@@ -44,29 +43,6 @@ namespace Oracle.Behaviour.Hooks
             return true;
         }
 
-        private static bool IsFateTypeEnabled(Fate oracleFate)
-        {
-            switch (oracleFate.Type)
-            {
-                case FateType.Kill:
-                    return FateSettings.Instance.KillFatesEnabled;
-                case FateType.Collect:
-                    return FateSettings.Instance.CollectFatesEnabled;
-                case FateType.Escort:
-                    return FateSettings.Instance.EscortFatesEnabled;
-                case FateType.Defence:
-                    return FateSettings.Instance.DefenceFatesEnabled;
-                case FateType.Boss:
-                    return FateSettings.Instance.BossFatesEnabled;
-                case FateType.MegaBoss:
-                    return FateSettings.Instance.MegaBossFatesEnabled;
-                case FateType.Null:
-                    return true;
-            }
-
-            return true;
-        }
-
         public static async Task<bool> Main()
         {
             if (CommonBehaviors.IsLoading)
@@ -89,18 +65,16 @@ namespace Oracle.Behaviour.Hooks
                 return true;
             }
 
-            if (OracleFateManager.ZoneChangeNeeded())
+            if (OracleClassManager.ZoneChangeNeeded())
             {
                 return false;
             }
 
-            if (PreviousFateChained() && MainSettings.Instance.OracleOperationMode != OracleOperationMode.SpecificFate)
+            if (OracleFateManager.PreviousFateChained() && MainSettings.Instance.OracleOperationMode != OracleOperationMode.SpecificFate)
             {
                 await SelectChainFate();
-                return true;
             }
-
-            if (MainSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate)
+            else if (MainSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate)
             {
                 await SelectSpecificFate();
             }
@@ -118,53 +92,15 @@ namespace Oracle.Behaviour.Hooks
             return IsFateSet() && IsFatePoiSet();
         }
 
-        private static bool PreviousFateChained()
-        {
-            if (OracleFateManager.PreviousFateId == 0)
-            {
-                return false;
-            }
-
-            if (OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainId != 0)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         private static async Task<bool> SelectChainFate()
         {
-            if (OracleFateManager.PreviousFateId == 0)
+            if (!OracleFateManager.WaitingForChainFate())
             {
                 return false;
             }
 
-            var chainId = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainId;
-            if (chainId == 0)
-            {
-                return false;
-            }
-
-            if (!OracleFateManager.ReachedCurrentFate)
-            {
-                Logger.SendLog("Not waiting for the next FATE in the chain: we didn't reach the previous FATE.");
-                return false;
-            }
-
-            var chainOracleFateInfo = OracleFateManager.OracleDatabase.GetFateFromId(chainId);
-            if (!IsFateTypeEnabled(chainOracleFateInfo))
-            {
-                Logger.SendLog("Not waiting for the next FATE in the chain: its type is not enabled.");
-                return false;
-            }
-
-            if (BlacklistSettings.Instance.BlacklistedFates.Contains(chainId))
-            {
-                Logger.SendLog("Not waiting for the next FATE in the chain: it is contained in the user blacklist.");
-                return false;
-            }
-
+            var chainId = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainId;
+            var chainOracleFateInfo = OracleFateManager.FateDatabase.GetFateFromId(chainId);
             if (chainFateTimer == null || !chainFateTimer.IsRunning)
             {
                 chainFateTimer = Stopwatch.StartNew();

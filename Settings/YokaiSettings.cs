@@ -37,6 +37,8 @@ namespace Oracle.Settings
         private int venoctZoneChoice;
         private int whisperMedalsToFarm;
         private int whisperZoneChoice;
+        private int yokaiMedalsToFarm;
+        private int yokaiMedalsZoneChoice;
 
         public YokaiSettings() : base(Path.Combine(SettingsPath, @"Oracle\YokaiSettings.json"))
         {
@@ -463,7 +465,7 @@ namespace Oracle.Settings
             }
         }
 
-        [DefaultValue(3)]
+        [DefaultValue(1)]
         [Setting]
         public int WhisperZoneChoice
         {
@@ -475,6 +477,38 @@ namespace Oracle.Settings
             set
             {
                 whisperZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public int YokaiMedalsToFarm
+        {
+            get
+            {
+                return yokaiMedalsToFarm;
+            }
+
+            set
+            {
+                yokaiMedalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int YokaiMedalZoneChoice
+        {
+            get
+            {
+                return yokaiMedalsZoneChoice;
+            }
+
+            set
+            {
+                yokaiMedalsZoneChoice = value;
                 Save();
             }
         }

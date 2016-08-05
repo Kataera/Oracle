@@ -7,7 +7,6 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 
 using Oracle.Behaviour.Tasks.FateTask;
-using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Managers;
@@ -28,7 +27,7 @@ namespace Oracle.Behaviour.Tasks
 
             if (currentFate != null && Core.Player.Distance(currentFate.Location) > currentFate.Radius * 1.05f)
             {
-                await MoveToFate.MoveToCurrentFate(false);
+                await OracleMovementManager.MoveToCurrentFate(false);
 
                 if (OracleFateManager.CurrentFateId == 0)
                 {
@@ -36,15 +35,15 @@ namespace Oracle.Behaviour.Tasks
                 }
             }
 
-            if (OracleFateManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted)
+            if (OracleFateManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted && (Poi.Current.Type != PoiType.None || Poi.Current.Type != PoiType.Kill))
             {
                 OracleFateManager.ClearPoi("We're being attacked.", false);
                 return true;
             }
 
-            if (currentFate != null && LevelSync.IsLevelSyncNeeded(currentFate))
+            if (currentFate != null && OracleFateManager.IsLevelSyncNeeded(currentFate))
             {
-                await LevelSync.SyncLevel(currentFate);
+                await OracleFateManager.SyncLevel(currentFate);
                 return true;
             }
 
@@ -53,7 +52,7 @@ namespace Oracle.Behaviour.Tasks
 
         private static async Task<bool> RunFate()
         {
-            var oracleFate = OracleFateManager.OracleDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
+            var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
 
             switch (oracleFate.Type)
             {

@@ -79,6 +79,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
@@ -88,6 +89,9 @@
   <ItemGroup>
     <Content Include="Data\Fates\FateData.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Images\OracleMode\SpecificFateBanner.jpg" />
     <Resource Include="Resources\Images\OracleMode\ModeBanner.jpg" />
@@ -143,6 +147,8 @@
     <Compile Include="Behaviour\Modes\AnimaGrind.cs" />
     <Compile Include="Behaviour\Modes\AtmaGrind.cs" />
     <Compile Include="Behaviour\Modes\FateGrind.cs" />
+    <Compile Include="Behaviour\Modes\Levelling.cs" />
+    <Compile Include="Behaviour\Modes\MultiLevelling.cs" />
     <Compile Include="Behaviour\Modes\SpecificFate.cs" />
     <Compile Include="Behaviour\Modes\AnimusGrind.cs" />
     <Compile Include="Behaviour\Modes\YokaiWatchGrind.cs" />
@@ -160,15 +166,19 @@
     <Compile Include="Behaviour\Tasks\FateHandler.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BindHomePoint.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BlacklistMob.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\ChangeClass.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LoadFlightMesh.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\Mount.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SummonMinion.cs" />
-    <Compile Include="Data\YokaiMinion.cs" />
-    <Compile Include="Enumerations\Yokai.cs" />
+    <Compile Include="Enumerations\ClassLevelMode.cs" />
+    <Compile Include="Managers\OracleClassManager.cs" />
+    <Compile Include="Settings\ClassSettings.cs" />
+    <Compile Include="Structs\YokaiMinion.cs" />
+    <Compile Include="Data\YokaiMinions.cs" />
+    <Compile Include="Enumerations\YokaiMinion.cs" />
     <Compile Include="Helpers\XmlParser.cs" />
     <Compile Include="Managers\OracleMovementManager.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SelectGrindTarget.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\Teleport.cs" />
+    <Compile Include="Managers\OracleTeleportManager.cs" />
     <Compile Include="Behaviour\Tasks\WaitHandler.cs" />
     <Compile Include="Behaviour\Tasks\WaitTask\WaitInPlace.cs" />
     <Compile Include="Behaviour\Tasks\WaitTask\GrindMobs.cs" />
@@ -182,18 +192,16 @@
     <Compile Include="Behaviour\Hooks\SetWaitPoi.cs" />
     <Compile Include="Behaviour\Hooks\WaitSelect\ReturnToAetheryte.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LoadOracleDatabase.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\MoveToFate.cs" />
-    <Compile Include="Behaviour\Tasks\ZoneChangeHandler.cs" />
-    <Compile Include="Data\OracleFlightMesh.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\ZoneChange.cs" />
+    <Compile Include="Data\Meshes\FlightMesh.cs" />
     <Compile Include="Enumerations\OracleOperationMode.cs" />
     <Compile Include="Managers\OracleFateManager.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\LevelSync.cs" />
     <Compile Include="Behaviour\Tasks\FateTask\MegaBossFate.cs" />
     <Compile Include="Behaviour\Hooks\SetFatePoi.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SkipDialogue.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\TurnInItem.cs" />
-    <Compile Include="Data\OracleDatabase.cs" />
-    <Compile Include="Data\Fate.cs" />
+    <Compile Include="Data\Fates\FateDatabase.cs" />
+    <Compile Include="Structs\Fate.cs" />
     <Compile Include="Enumerations\FateWaitMode.cs" />
     <Compile Include="Enumerations\FateSelectMode.cs" />
     <Compile Include="Enumerations\FateSupportLevel.cs" />
@@ -258,6 +266,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
-    <VisualStudio AllowExistingFolder="true" />
+    <VisualStudio AllowExistingFolder="true">
+      <UserProperties BuildVersion_StartDate="2000/1/1" />
+    </VisualStudio>
   </ProjectExtensions>
 </Project>
