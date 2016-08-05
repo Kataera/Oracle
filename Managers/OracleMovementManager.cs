@@ -638,7 +638,7 @@ namespace Oracle.Managers
                 }
 
                 // Throttle navigator path generation requests.
-                if (cachedFateLocation.Distance2D(currentFate.Location) > 25)
+                if (cachedFateLocation.Distance2D(currentFate.Location) > 10)
                 {
                     cachedFateLocation = currentFate.Location;
                 }

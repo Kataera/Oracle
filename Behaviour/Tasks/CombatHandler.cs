@@ -51,8 +51,7 @@ namespace Oracle.Behaviour.Tasks
                 lastHpValue = mostRecentBc.CurrentHealth;
             }
 
-            if (noDamageTimeout.Elapsed > TimeSpan.FromMilliseconds(MainSettings.Instance.CombatNoDamageTimeout)
-                && currentBc.CurrentTargetId != Core.Player.ObjectId && currentBc.IsValid && !currentBc.IsDead)
+            if (ShouldBlacklistCombatPoi())
             {
                 OracleFateManager.ClearPoi("Mob's HP has not changed in " + MainSettings.Instance.CombatNoDamageTimeout / 1000
                                            + " seconds, blacklisting and selecting a new mob.");
@@ -120,6 +119,38 @@ namespace Oracle.Behaviour.Tasks
                         await OracleFateManager.SyncLevel(fate);
                     }
                 }
+            }
+
+            return true;
+        }
+
+        private static bool ShouldBlacklistCombatPoi()
+        {
+            var currentBc = Poi.Current.BattleCharacter;
+
+            if (noDamageTimeout.Elapsed <= TimeSpan.FromMilliseconds(MainSettings.Instance.CombatNoDamageTimeout))
+            {
+                return false;
+            }
+
+            if (currentBc.CurrentTargetId == Core.Player.ObjectId)
+            {
+                return false;
+            }
+
+            if (!currentBc.IsValid)
+            {
+                return false;
+            }
+
+            if (currentBc.IsDead)
+            {
+                return false;
+            }
+
+            if (GameObjectManager.Attackers.Contains(currentBc))
+            {
+                return false;
             }
 
             return true;

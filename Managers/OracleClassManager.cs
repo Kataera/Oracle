@@ -58,6 +58,12 @@ namespace Oracle.Managers
             return !lowerLevels.Any(kvp => kvp.Key == Core.Player.CurrentJob);
         }
 
+        public static bool FinishedLevelling()
+        {
+            var enabledLevels = Core.Player.Levels.OrderBy(kvp => kvp.Value).Where(kvp => IsClassJobEnabled(kvp.Key)).ToArray();
+            return enabledLevels.Any(kvp => kvp.Value < ClassSettings.Instance.MaxLevel);
+        }
+
         public static string GetClassJobName(ClassJobType job)
         {
             switch (job)
@@ -301,6 +307,14 @@ namespace Oracle.Managers
                 default:
                     throw new ArgumentOutOfRangeException(nameof(job), job, null);
             }
+        }
+
+        public static bool NoClassesEnabled()
+        {
+            return !ClassSettings.Instance.LevelArcanist && !ClassSettings.Instance.LevelArcher && !ClassSettings.Instance.LevelAstrologian
+                   && !ClassSettings.Instance.LevelConjurer && !ClassSettings.Instance.LevelDarkKnight && !ClassSettings.Instance.LevelGladiator
+                   && !ClassSettings.Instance.LevelLancer && !ClassSettings.Instance.LevelMachinist && !ClassSettings.Instance.LevelMarauder
+                   && !ClassSettings.Instance.LevelPugilist && !ClassSettings.Instance.LevelRogue && !ClassSettings.Instance.LevelThaumaturge;
         }
 
         private static bool SequentialChangeNeeded()

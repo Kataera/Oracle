@@ -9,6 +9,7 @@ using Oracle.Behaviour.Tasks;
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Helpers;
 using Oracle.Managers;
+using Oracle.Settings;
 
 namespace Oracle.Behaviour.Modes
 {
@@ -22,6 +23,18 @@ namespace Oracle.Behaviour.Modes
                 return true;
             }
 
+            if (OracleClassManager.NoClassesEnabled())
+            {
+                Logger.SendErrorLog("You haven't enabled any classes for levelling. Ensure at least one class is enabled and then restart Oracle.");
+                OracleBot.StopOracle("No classes enabled.");
+            }
+
+            if (OracleClassManager.FinishedLevelling())
+            {
+                Logger.SendLog("All enabled classes have reached level " + ClassSettings.Instance.MaxLevel + ". Stopping Oracle.");
+                OracleBot.StopOracle("We're done!");
+            }
+
             if (OracleClassManager.ClassChangeNeeded())
             {
                 if (Core.Player.InCombat || GameObjectManager.Attackers.Any())
@@ -30,10 +43,13 @@ namespace Oracle.Behaviour.Modes
                 }
 
                 Logger.SendLog("Class change is needed.");
-                if (await ChangeClass.Main(OracleClassManager.GetLowestLevelClassJob()) != ChangeClassResult.Success)
+                var changeClassResult = await ChangeClass.Main(OracleClassManager.GetLowestLevelClassJob());
+                if (changeClassResult == ChangeClassResult.NoGearset || changeClassResult == ChangeClassResult.NonCombatClass)
                 {
                     OracleBot.StopOracle("Problem swapping classes.");
                 }
+
+                return true;
             }
 
             if (OracleClassManager.ZoneChangeNeeded())

@@ -36,29 +36,36 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return ChangeClassResult.NoGearset;
             }
 
-            Logger.SendLog("Changing class from " + OracleClassManager.GetClassJobName(Core.Player.CurrentJob) + " to "
-                           + OracleClassManager.GetClassJobName(job) + ".");
-
+            var previousJob = Core.Player.CurrentJob;
             var gearSet = ClassSettings.Instance.ClassGearsets.FirstOrDefault(kvp => kvp.Value.Equals(job)).Key;
+            Logger.SendLog("Changing class from " + OracleClassManager.GetClassJobName(previousJob) + " to " + OracleClassManager.GetClassJobName(job) + ".");
             ChatManager.SendChat("/gs change " + gearSet);
-            await Coroutine.Wait(TimeSpan.FromSeconds(5), () => Core.Player.CurrentJob == job);
+            await Coroutine.Wait(TimeSpan.FromSeconds(7), () => Core.Player.CurrentJob == job);
 
-            // Check whether or not the class change succeeded.
+            if (Core.Player.CurrentJob == previousJob)
+            {
+                Logger.SendDebugLog("Class did not change from " + OracleClassManager.GetClassJobName(Core.Player.CurrentJob)
+                                    + ", likely caused by the game refusing to allow a gearset change.");
+                return ChangeClassResult.Failed;
+            }
+
             if (Core.Player.CurrentJob != job)
             {
-                Logger.SendErrorLog("Class change failed, we've changed to " + OracleClassManager.GetClassJobName(Core.Player.CurrentJob) + " when we expected "
-                                    + OracleClassManager.GetClassJobName(job) + ".");
+                Logger.SendErrorLog("Class change failed, current class or job is " + OracleClassManager.GetClassJobName(Core.Player.CurrentJob)
+                                    + " when we were expecting " + OracleClassManager.GetClassJobName(job) + ".");
                 return ChangeClassResult.WrongClass;
             }
 
             Logger.SendLog("Successfully changed to " + OracleClassManager.GetClassJobName(job) + ".");
-            return ChangeClassResult.Success;
+            return ChangeClassResult.Succeeded;
         }
     }
 
     public enum ChangeClassResult
     {
-        Success,
+        Succeeded,
+
+        Failed,
 
         NonCombatClass,
 
