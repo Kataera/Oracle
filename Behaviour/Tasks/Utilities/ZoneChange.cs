@@ -16,7 +16,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             const uint idyllshireAetheryte = 75;
             uint aetheryteId;
 
-            MovementSettings.Instance.ZoneLevels.TryGetValue(OracleFateManager.GetTrueLevel(), out aetheryteId);
+            MovementSettings.Instance.ZoneLevels.TryGetValue(OracleClassManager.GetTrueLevel(), out aetheryteId);
 
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
             {
@@ -31,7 +31,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             var zoneName = WorldManager.AvailableLocations.FirstOrDefault(teleport => teleport.AetheryteId == aetheryteId).Name;
-            Logger.SendLog("Character is level " + OracleFateManager.GetTrueLevel() + ", teleporting to " + zoneName + ".");
+            Logger.SendLog("Character is level " + OracleClassManager.GetTrueLevel() + ", teleporting to " + zoneName + ".");
             await OracleTeleportManager.TeleportToAetheryte(aetheryteId);
 
             if (WorldManager.ZoneId != WorldManager.GetZoneForAetheryteId(aetheryteId))

@@ -19,7 +19,7 @@ namespace Oracle.Behaviour.Hooks
                 return false;
             }
 
-            if (OracleFateManager.ZoneChangeNeeded())
+            if (OracleClassManager.ZoneChangeNeeded())
             {
                 return false;
             }

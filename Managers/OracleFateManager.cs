@@ -209,12 +209,12 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (fate.Level > GetTrueLevel() + FateSettings.Instance.FateMaxLevelAbove)
+            if (fate.Level > OracleClassManager.GetTrueLevel() + FateSettings.Instance.FateMaxLevelAbove)
             {
                 return false;
             }
 
-            if (fate.Level < GetTrueLevel() - FateSettings.Instance.FateMinLevelBelow
+            if (fate.Level < OracleClassManager.GetTrueLevel() - FateSettings.Instance.FateMinLevelBelow
                 && MainSettings.Instance.OracleOperationMode == OracleOperationMode.FateGrind)
             {
                 return false;
@@ -425,14 +425,6 @@ namespace Oracle.Managers
             return FateManager.GetFateById(PreviousFateId);
         }
 
-        public static uint GetTrueLevel()
-        {
-            var baseClass = GetBaseClass(Core.Player.CurrentJob);
-            var trueLevel = Core.Player.Levels.FirstOrDefault(kvp => kvp.Key == baseClass).Value;
-
-            return trueLevel != 0 ? trueLevel : Core.Player.ClassLevel;
-        }
-
         public static bool IsFateTypeEnabled(Fate oracleFate)
         {
             switch (oracleFate.Type)
@@ -463,7 +455,7 @@ namespace Oracle.Managers
                 return false;
             }
 
-            return fate.MaxLevel < GetTrueLevel() && !Core.Player.IsLevelSynced && fate.Within2D(Core.Player.Location);
+            return fate.MaxLevel < OracleClassManager.GetTrueLevel() && !Core.Player.IsLevelSynced && fate.Within2D(Core.Player.Location);
         }
 
         public static bool IsPlayerBeingAttacked()
@@ -545,47 +537,6 @@ namespace Oracle.Managers
             if (BlacklistSettings.Instance.BlacklistedFates.Contains(chainId))
             {
                 Logger.SendLog("Not waiting for the next FATE in the chain: it is contained in the user blacklist.");
-                return false;
-            }
-
-            return true;
-        }
-
-        public static bool ZoneChangeNeeded()
-        {
-            const ushort dravanianHinterlands = 399;
-
-            if (MainSettings.Instance.OracleOperationMode != OracleOperationMode.FateGrind)
-            {
-                return false;
-            }
-
-            if (Core.Player.IsLevelSynced || Core.Player.IsDead)
-            {
-                return false;
-            }
-
-            if (Poi.Current.Type == PoiType.Kill || Poi.Current.Type == PoiType.Fate || CurrentFateId != 0)
-            {
-                return false;
-            }
-
-            uint aetheryteId;
-            MovementSettings.Instance.ZoneLevels.TryGetValue(GetTrueLevel(), out aetheryteId);
-
-            if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
-            {
-                return false;
-            }
-
-            if (WorldManager.GetZoneForAetheryteId(aetheryteId) == WorldManager.ZoneId)
-            {
-                return false;
-            }
-
-            // Handle Idyllshire.
-            if (aetheryteId == 75 && WorldManager.ZoneId == dravanianHinterlands)
-            {
                 return false;
             }
 

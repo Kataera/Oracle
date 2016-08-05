@@ -145,7 +145,7 @@ namespace Oracle.Providers
                 return false;
             }
 
-            return FateManager.GetFateById(battleCharacter.FateId).MaxLevel < OracleFateManager.GetTrueLevel();
+            return FateManager.GetFateById(battleCharacter.FateId).MaxLevel < OracleClassManager.GetTrueLevel();
         }
 
         private static bool PlayerIsMelee()

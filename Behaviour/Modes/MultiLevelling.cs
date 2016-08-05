@@ -14,7 +14,21 @@ namespace Oracle.Behaviour.Modes
     {
         public static async Task<bool> Main()
         {
-            if (OracleFateManager.ZoneChangeNeeded())
+            if (OracleClassManager.ClassChangeNeeded())
+            {
+                if (Core.Player.InCombat)
+                {
+                    return true;
+                }
+
+                Logger.SendLog("Class change is needed.");
+                if (await ChangeClass.Main(OracleClassManager.GetLowestLevelClassJob()) != ChangeClassResult.Success)
+                {
+                    OracleBot.StopOracle("Problem swapping classes.");
+                }
+            }
+
+            if (OracleClassManager.ZoneChangeNeeded())
             {
                 if (Core.Player.InCombat)
                 {

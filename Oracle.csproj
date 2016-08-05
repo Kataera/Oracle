@@ -166,9 +166,12 @@
     <Compile Include="Behaviour\Tasks\FateHandler.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BindHomePoint.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BlacklistMob.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\ChangeClass.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LoadFlightMesh.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SummonMinion.cs" />
     <Compile Include="Enumerations\ClassLevelMode.cs" />
+    <Compile Include="Managers\OracleClassManager.cs" />
+    <Compile Include="Settings\ClassSettings.cs" />
     <Compile Include="Structs\YokaiMinion.cs" />
     <Compile Include="Data\YokaiMinions.cs" />
     <Compile Include="Enumerations\YokaiMinion.cs" />

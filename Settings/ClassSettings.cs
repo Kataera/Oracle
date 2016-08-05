@@ -6,6 +6,8 @@ using System.IO;
 using ff14bot.Enums;
 using ff14bot.Helpers;
 
+using Oracle.Enumerations;
+
 namespace Oracle.Settings
 {
     internal sealed class ClassSettings : JsonSettings
@@ -14,6 +16,7 @@ namespace Oracle.Settings
         private static volatile ClassSettings instance;
 
         private Dictionary<uint, ClassJobType> classGearsets;
+        private ClassLevelMode classLevelMode;
         private bool levelArcanist;
         private bool levelArcher;
         private bool levelAstrologian;
@@ -26,6 +29,7 @@ namespace Oracle.Settings
         private bool levelPugilist;
         private bool levelRogue;
         private bool levelThaumaturge;
+        private int maxLevel;
 
         public ClassSettings() : base(Path.Combine(SettingsPath, @"Oracle\ClassSettings.json"))
         {
@@ -47,6 +51,21 @@ namespace Oracle.Settings
             set
             {
                 classGearsets = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(ClassLevelMode.Concurrent)]
+        [Setting]
+        public ClassLevelMode ClassLevelMode
+        {
+            get
+            {
+                return classLevelMode;
+            }
+            set
+            {
+                classLevelMode = value;
                 Save();
             }
         }
@@ -248,6 +267,21 @@ namespace Oracle.Settings
             set
             {
                 levelThaumaturge = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(60)]
+        [Setting]
+        public int MaxLevel
+        {
+            get
+            {
+                return maxLevel;
+            }
+            set
+            {
+                maxLevel = value;
                 Save();
             }
         }

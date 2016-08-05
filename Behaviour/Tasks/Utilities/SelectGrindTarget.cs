@@ -94,12 +94,12 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            if (OracleFateManager.GetTrueLevel() - WaitSettings.Instance.MobGrindMinLevelBelow > battleCharacter.ClassLevel)
+            if (OracleClassManager.GetTrueLevel() - WaitSettings.Instance.MobGrindMinLevelBelow > battleCharacter.ClassLevel)
             {
                 return false;
             }
 
-            if (OracleFateManager.GetTrueLevel() + WaitSettings.Instance.MobGrindMaxLevelAbove < battleCharacter.ClassLevel)
+            if (OracleClassManager.GetTrueLevel() + WaitSettings.Instance.MobGrindMaxLevelAbove < battleCharacter.ClassLevel)
             {
                 return false;
             }
