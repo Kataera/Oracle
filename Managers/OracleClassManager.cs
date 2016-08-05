@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 
 using ff14bot;
@@ -13,6 +14,8 @@ namespace Oracle.Managers
 {
     internal static class OracleClassManager
     {
+        public static Stopwatch ClassChangedTimer { get; set; }
+
         public static bool ClassChangeNeeded()
         {
             if (MainSettings.Instance.OracleOperationMode != OracleOperationMode.MultiLevelMode)
