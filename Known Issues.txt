@@ -17,3 +17,5 @@ Oracle will run to a FATE before teleporting to the next zone in Yo-kai Watch Gr
 TODO:
 
 Refactor all tasks to use a result enumeration.
+
+Change target provider to target mobs attacking pets/companion.

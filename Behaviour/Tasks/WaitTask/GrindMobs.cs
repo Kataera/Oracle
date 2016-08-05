@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using ff14bot.Helpers;
@@ -17,6 +18,12 @@ namespace Oracle.Behaviour.Tasks.WaitTask
             if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone) && Poi.Current.Type != PoiType.Kill)
             {
                 OracleFateManager.ClearPoi("We're being attacked.", false);
+                return true;
+            }
+
+            if (OracleClassManager.ClassChangedTimer != null && OracleClassManager.ClassChangedTimer.Elapsed < TimeSpan.FromSeconds(30))
+            {
+                Logger.SendLog("Waiting for class change skill cooldown to expire before selecting a target.");
                 return true;
             }
 

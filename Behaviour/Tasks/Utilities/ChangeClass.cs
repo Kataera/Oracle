@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -57,6 +58,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             }
 
             Logger.SendLog("Successfully changed to " + OracleClassManager.GetClassJobName(job) + ".");
+            OracleClassManager.ClassChangedTimer = Stopwatch.StartNew();
             return ChangeClassResult.Succeeded;
         }
     }

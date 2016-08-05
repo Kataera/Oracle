@@ -153,6 +153,11 @@ namespace Oracle.Behaviour.Tasks
                 return false;
             }
 
+            if (OracleClassManager.ClassChangedTimer != null && OracleClassManager.ClassChangedTimer.Elapsed < TimeSpan.FromSeconds(30))
+            {
+                return false;
+            }
+
             return true;
         }
     }
