@@ -45,8 +45,6 @@ namespace Oracle.Managers
             switch (classJob)
             {
                 case ClassJobType.Adventurer:
-                    Logger.SendErrorLog("You are current an " + GetClassJobName(classJob)
-                                        + ", this is likely an issue with RebornBuddy. Please let Kataera know this occurred on the Protosynth Discord.");
                     return false;
                 case ClassJobType.Gladiator:
                     return true;
@@ -63,37 +61,26 @@ namespace Oracle.Managers
                 case ClassJobType.Thaumaturge:
                     return true;
                 case ClassJobType.Carpenter:
-                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
                     return false;
                 case ClassJobType.Blacksmith:
-                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
                     return false;
                 case ClassJobType.Armorer:
-                    Logger.SendErrorLog("You are currently an " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
                     return false;
                 case ClassJobType.Goldsmith:
-                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
                     return false;
                 case ClassJobType.Leatherworker:
-                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
                     return false;
                 case ClassJobType.Weaver:
-                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
                     return false;
                 case ClassJobType.Alchemist:
-                    Logger.SendErrorLog("You are currently an " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
                     return false;
                 case ClassJobType.Culinarian:
-                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
                     return false;
                 case ClassJobType.Miner:
-                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
                     return false;
                 case ClassJobType.Botanist:
-                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
                     return false;
                 case ClassJobType.Fisher:
-                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
                     return false;
                 case ClassJobType.Paladin:
                     return true;
@@ -110,8 +97,6 @@ namespace Oracle.Managers
                 case ClassJobType.BlackMage:
                     return true;
                 case ClassJobType.Arcanist:
-                    Logger.SendErrorLog("You are currently an " + GetClassJobName(classJob)
-                                        + " which has two possible Zenith relic weapons. Please equip one of the two soul crystals for the class to use Atma grind mode with it.");
                     return false;
                 case ClassJobType.Summoner:
                     return true;
@@ -122,13 +107,10 @@ namespace Oracle.Managers
                 case ClassJobType.Ninja:
                     return true;
                 case ClassJobType.Machinist:
-                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", which does not have a Zenith relic.");
                     return false;
                 case ClassJobType.DarkKnight:
-                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", which does not have a Zenith relic.");
                     return false;
                 case ClassJobType.Astrologian:
-                    Logger.SendErrorLog("You are currently an " + GetClassJobName(classJob) + ", which does not have a Zenith relic.");
                     return false;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(classJob), classJob, null);
