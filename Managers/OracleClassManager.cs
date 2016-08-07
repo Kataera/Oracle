@@ -8,6 +8,7 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 
 using Oracle.Enumerations;
+using Oracle.Helpers;
 using Oracle.Settings;
 
 namespace Oracle.Managers
@@ -39,6 +40,101 @@ namespace Oracle.Managers
             }
         }
 
+        public static bool ClassJobCanFarmAtma(ClassJobType classJob)
+        {
+            switch (classJob)
+            {
+                case ClassJobType.Adventurer:
+                    Logger.SendErrorLog("You are current an " + GetClassJobName(classJob)
+                                        + ", this is likely an issue with RebornBuddy. Please let Kataera know this occurred on the Protosynth Discord.");
+                    return false;
+                case ClassJobType.Gladiator:
+                    return true;
+                case ClassJobType.Pugilist:
+                    return true;
+                case ClassJobType.Marauder:
+                    return true;
+                case ClassJobType.Lancer:
+                    return true;
+                case ClassJobType.Archer:
+                    return true;
+                case ClassJobType.Conjurer:
+                    return true;
+                case ClassJobType.Thaumaturge:
+                    return true;
+                case ClassJobType.Carpenter:
+                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
+                    return false;
+                case ClassJobType.Blacksmith:
+                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
+                    return false;
+                case ClassJobType.Armorer:
+                    Logger.SendErrorLog("You are currently an " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
+                    return false;
+                case ClassJobType.Goldsmith:
+                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
+                    return false;
+                case ClassJobType.Leatherworker:
+                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
+                    return false;
+                case ClassJobType.Weaver:
+                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
+                    return false;
+                case ClassJobType.Alchemist:
+                    Logger.SendErrorLog("You are currently an " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
+                    return false;
+                case ClassJobType.Culinarian:
+                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
+                    return false;
+                case ClassJobType.Miner:
+                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
+                    return false;
+                case ClassJobType.Botanist:
+                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
+                    return false;
+                case ClassJobType.Fisher:
+                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", please switch to a combat class to use Atma grind mode.");
+                    return false;
+                case ClassJobType.Paladin:
+                    return true;
+                case ClassJobType.Monk:
+                    return true;
+                case ClassJobType.Warrior:
+                    return true;
+                case ClassJobType.Dragoon:
+                    return true;
+                case ClassJobType.Bard:
+                    return true;
+                case ClassJobType.WhiteMage:
+                    return true;
+                case ClassJobType.BlackMage:
+                    return true;
+                case ClassJobType.Arcanist:
+                    Logger.SendErrorLog("You are currently an " + GetClassJobName(classJob)
+                                        + " which has two possible Zenith relic weapons. Please equip one of the two soul crystals for the class to use Atma grind mode with it.");
+                    return false;
+                case ClassJobType.Summoner:
+                    return true;
+                case ClassJobType.Scholar:
+                    return true;
+                case ClassJobType.Rogue:
+                    return true;
+                case ClassJobType.Ninja:
+                    return true;
+                case ClassJobType.Machinist:
+                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", which does not have a Zenith relic.");
+                    return false;
+                case ClassJobType.DarkKnight:
+                    Logger.SendErrorLog("You are currently a " + GetClassJobName(classJob) + ", which does not have a Zenith relic.");
+                    return false;
+                case ClassJobType.Astrologian:
+                    Logger.SendErrorLog("You are currently an " + GetClassJobName(classJob) + ", which does not have a Zenith relic.");
+                    return false;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(classJob), classJob, null);
+            }
+        }
+
         private static bool ConcurrentChangeNeeded()
         {
             var enabledLevels = Core.Player.Levels.OrderBy(kvp => kvp.Value).Where(kvp => IsClassJobEnabled(kvp.Key)).ToArray();
@@ -63,8 +159,35 @@ namespace Oracle.Managers
 
         public static bool FinishedLevelling()
         {
-            var enabledLevels = Core.Player.Levels.OrderBy(kvp => kvp.Value).Where(kvp => IsClassJobEnabled(kvp.Key)).ToArray();
-            return enabledLevels.All(kvp => kvp.Value >= ClassSettings.Instance.MaxLevel);
+            switch (MainSettings.Instance.OracleOperationMode)
+            {
+                case OracleOperationMode.MultiLevelMode:
+                    var enabledLevels = Core.Player.Levels.OrderBy(kvp => kvp.Value).Where(kvp => IsClassJobEnabled(kvp.Key)).ToArray();
+                    return enabledLevels.All(kvp => kvp.Value >= ClassSettings.Instance.MaxLevel);
+                case OracleOperationMode.LevelMode:
+                    return GetTrueLevel() >= ClassSettings.Instance.MaxLevel;
+                case OracleOperationMode.FateGrind:
+                    Logger.SendWarningLog("Checking whether or not we've finished levelling in FATE grind mode.");
+                    return false;
+                case OracleOperationMode.SpecificFate:
+                    Logger.SendWarningLog("Checking whether or not we've finished levelling in specific FATE mode.");
+                    return false;
+                case OracleOperationMode.AtmaGrind:
+                    Logger.SendWarningLog("Checking whether or not we've finished levelling in Atma grind mode.");
+                    return false;
+                case OracleOperationMode.AnimusGrind:
+                    Logger.SendWarningLog("Checking whether or not we've finished levelling in Animus grind mode.");
+                    return false;
+                case OracleOperationMode.AnimaGrind:
+                    Logger.SendWarningLog("Checking whether or not we've finished levelling in Anima grind mode.");
+                    return false;
+                case OracleOperationMode.YokaiWatchGrind:
+                    Logger.SendWarningLog("Checking whether or not we've finished levelling in Yo-kai Watch grind mode.");
+                    return false;
+                default:
+                    Logger.SendWarningLog("Checking whether or not we've finished levelling in a non-levelling mode.");
+                    return false;
+            }
         }
 
         public static string GetClassJobName(ClassJobType job)

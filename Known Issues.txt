@@ -12,7 +12,7 @@ Oracle will rarely wait for a follow up FATE even if it didn't manage to get to 
 
 Oracle will run to a FATE before teleporting to the next zone in Yo-kai Watch Grind mode.
 
-
+Starting the bot in Idyllshire will not move to the Dravanian Hinterlands.
 
 TODO:
 

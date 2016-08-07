@@ -27,12 +27,14 @@ namespace Oracle.Behaviour.Modes
             {
                 Logger.SendErrorLog("You haven't enabled any classes for levelling. Ensure at least one class is enabled and then restart Oracle.");
                 OracleBot.StopOracle("No classes enabled.");
+                return true;
             }
 
             if (OracleClassManager.FinishedLevelling())
             {
                 Logger.SendLog("All enabled classes have reached level " + ClassSettings.Instance.MaxLevel + ". Stopping Oracle.");
                 OracleBot.StopOracle("We're done!");
+                return true;
             }
 
             if (OracleClassManager.ClassChangeNeeded())

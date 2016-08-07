@@ -38,7 +38,7 @@ namespace Oracle.Behaviour.Modes
         private static bool ignoreBlizzaria;
         private static bool ignoreManjimutt;
 
-        private static async Task EquipYokaiWatchIfNeeded()
+        private static async Task EquipYokaiWatch()
         {
             var bracerSlot = InventoryManager.EquippedItems.FirstOrDefault(bs => bs.Slot == BracerSlotId);
             if (bracerSlot != null && bracerSlot.RawItemId != YokaiWatchItem)
@@ -185,7 +185,7 @@ namespace Oracle.Behaviour.Modes
 
             if (!ConditionParser.HasAtLeast(YokaiMedal, YokaiSettings.Instance.YokaiMedalsToFarm))
             {
-                await EquipYokaiWatchIfNeeded();
+                await EquipYokaiWatch();
             }
 
             if (!ConditionParser.HasAtLeast(YokaiMinions.Jibanyan.MedalItemId, YokaiSettings.Instance.JibanyanMedalsToFarm) && !ignoreJibanyan)
