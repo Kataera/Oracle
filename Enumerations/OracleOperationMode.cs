@@ -6,19 +6,12 @@ namespace Oracle.Enumerations
     internal enum OracleOperationMode
     {
         FateGrind,
-
         LevelMode,
-
         MultiLevelMode,
-
         SpecificFate,
-
         AtmaGrind,
-
         AnimusGrind,
-
         AnimaGrind,
-
         YokaiWatchGrind
     }
 }

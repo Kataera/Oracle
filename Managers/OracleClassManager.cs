@@ -19,7 +19,7 @@ namespace Oracle.Managers
 
         public static bool ClassChangeNeeded()
         {
-            if (MainSettings.Instance.OracleOperationMode != OracleOperationMode.MultiLevelMode)
+            if (ModeSettings.Instance.OracleOperationMode != OracleOperationMode.MultiLevelMode)
             {
                 return false;
             }
@@ -141,7 +141,7 @@ namespace Oracle.Managers
 
         public static bool FinishedLevelling()
         {
-            switch (MainSettings.Instance.OracleOperationMode)
+            switch (ModeSettings.Instance.OracleOperationMode)
             {
                 case OracleOperationMode.MultiLevelMode:
                     var enabledLevels = Core.Player.Levels.OrderBy(kvp => kvp.Value).Where(kvp => IsClassJobEnabled(kvp.Key)).ToArray();
@@ -434,8 +434,8 @@ namespace Oracle.Managers
         {
             const ushort dravanianHinterlands = 399;
 
-            if (MainSettings.Instance.OracleOperationMode != OracleOperationMode.LevelMode
-                && MainSettings.Instance.OracleOperationMode != OracleOperationMode.MultiLevelMode)
+            if (ModeSettings.Instance.OracleOperationMode != OracleOperationMode.LevelMode
+                && ModeSettings.Instance.OracleOperationMode != OracleOperationMode.MultiLevelMode)
             {
                 return false;
             }

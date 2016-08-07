@@ -5,8 +5,6 @@ using System.Reflection;
 
 using ff14bot.Helpers;
 
-using Oracle.Enumerations;
-
 namespace Oracle.Settings
 {
     internal sealed class MainSettings : JsonSettings
@@ -18,7 +16,6 @@ namespace Oracle.Settings
         private int combatNoDamageTimeout;
         private bool debugEnabled;
         private bool listHooksOnStart;
-        private OracleOperationMode oracleOperationMode;
         private bool overrideRestBehaviour;
         private int restHealthPercent;
         private int restManaPercent;
@@ -109,22 +106,6 @@ namespace Oracle.Settings
             set
             {
                 listHooksOnStart = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(OracleOperationMode.FateGrind)]
-        [Setting]
-        public OracleOperationMode OracleOperationMode
-        {
-            get
-            {
-                return oracleOperationMode;
-            }
-
-            set
-            {
-                oracleOperationMode = value;
                 Save();
             }
         }

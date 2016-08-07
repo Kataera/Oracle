@@ -161,6 +161,29 @@ namespace Oracle.Managers
             return true;
         }
 
+        public static async Task TeleportToClosestCity()
+        {
+            Logger.SendLog("Teleporting to closest city.");
+            await Coroutine.Wait(TimeSpan.FromSeconds(15), WorldManager.CanTeleport);
+
+            if (!WorldManager.CanTeleport())
+            {
+                return;
+            }
+
+            var cityList = new List<WorldManager.TeleportLocation>
+            {
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 8),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 2),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 9),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 70),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 75)
+            };
+
+            cityList = cityList.OrderBy(loc => loc.GilCost).Where(loc => WorldManager.HasAetheryteId(loc.AetheryteId)).ToList();
+            await TeleportToAetheryte(cityList.FirstOrDefault().AetheryteId);
+        }
+
         private static Aetheryte TupleToAetheryte(Tuple<uint, Vector3> tuple, Vector3 location)
         {
             return new Aetheryte {Distance = tuple.Item2.Distance(location), Id = tuple.Item1, Location = tuple.Item2};

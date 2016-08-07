@@ -66,15 +66,10 @@ namespace Oracle.Behaviour.Tasks.Utilities
     public enum ChangeClassResult
     {
         Succeeded,
-
         Failed,
-
         NonCombatClass,
-
         NoGearset,
-
         ClassNotEnabled,
-
         WrongClass
     }
 }

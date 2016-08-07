@@ -27,10 +27,15 @@ namespace Oracle.Managers
     internal static class OracleFateManager
     {
         internal static uint CurrentFateId { get; set; }
+
         internal static bool DeathFlag { get; set; }
+
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
+
         internal static FateDatabase FateDatabase { get; set; }
+
         internal static uint PreviousFateId { get; set; }
+
         internal static bool ReachedCurrentFate { get; set; } = true;
 
         public static async Task<bool> AnyViableFates()
@@ -166,7 +171,7 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (MainSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate && !FateSettings.Instance.SpecificFateList.Contains(fate.Id))
+            if (ModeSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate && !FateSettings.Instance.SpecificFateList.Contains(fate.Id))
             {
                 return false;
             }
@@ -215,7 +220,7 @@ namespace Oracle.Managers
             }
 
             if (fate.Level < OracleClassManager.GetTrueLevel() - FateSettings.Instance.FateMinLevelBelow
-                && MainSettings.Instance.OracleOperationMode == OracleOperationMode.FateGrind)
+                && ModeSettings.Instance.OracleOperationMode == OracleOperationMode.FateGrind)
             {
                 return false;
             }

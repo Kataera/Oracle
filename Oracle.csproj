@@ -171,6 +171,7 @@
     <Compile Include="Behaviour\Tasks\Utilities\SummonMinion.cs" />
     <Compile Include="Enumerations\ClassLevelMode.cs" />
     <Compile Include="Managers\OracleClassManager.cs" />
+    <Compile Include="Managers\OracleInventoryManager.cs" />
     <Compile Include="Settings\ClassSettings.cs" />
     <Compile Include="Structs\YokaiMinion.cs" />
     <Compile Include="Data\YokaiMinions.cs" />
@@ -221,7 +222,7 @@
     <Compile Include="Settings\MainSettings.cs" />
     <Compile Include="OracleBot.cs" />
     <Compile Include="Settings\MovementSettings.cs" />
-    <Compile Include="Settings\YokaiSettings.cs" />
+    <Compile Include="Settings\ModeSettings.cs" />
     <Compile Include="UI\App.xaml.cs" />
     <Compile Include="UI\Pages\Domain\SpecificFateGridViewModel.cs" />
     <Compile Include="UI\Pages\Domain\FateViewModel.cs" />

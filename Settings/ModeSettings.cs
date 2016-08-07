@@ -4,13 +4,17 @@ using System.IO;
 
 using ff14bot.Helpers;
 
+using Oracle.Enumerations;
+
 namespace Oracle.Settings
 {
-    internal sealed class YokaiSettings : JsonSettings
+    internal sealed class ModeSettings : JsonSettings
     {
         private static readonly object SyncRoot = new object();
-        private static volatile YokaiSettings instance;
+        private static volatile ModeSettings instance;
+        private int animaCrystalsToFarm;
 
+        private int atmaToFarm;
         private int blizzariaMedalsToFarm;
         private int blizzariaZoneChoice;
         private int hovernyanMedalsToFarm;
@@ -27,6 +31,7 @@ namespace Oracle.Settings
         private int manjimuttZoneChoice;
         private int nokoMedalsToFarm;
         private int nokoZoneChoice;
+        private OracleOperationMode oracleOperationMode;
         private int robonyanMedalsToFarm;
         private int robonyanZoneChoice;
         private int shogunyanMedalsToFarm;
@@ -40,8 +45,40 @@ namespace Oracle.Settings
         private int yokaiMedalsToFarm;
         private int yokaiMedalsZoneChoice;
 
-        public YokaiSettings() : base(Path.Combine(SettingsPath, @"Oracle\YokaiSettings.json"))
+        public ModeSettings() : base(Path.Combine(SettingsPath, @"Oracle\ModeSettings.json"))
         {
+        }
+
+        [DefaultValue(3)]
+        [Setting]
+        public int AnimaCrystalsToFarm
+        {
+            get
+            {
+                return animaCrystalsToFarm;
+            }
+
+            set
+            {
+                animaCrystalsToFarm = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(1)]
+        [Setting]
+        public int AtmaToFarm
+        {
+            get
+            {
+                return atmaToFarm;
+            }
+
+            set
+            {
+                atmaToFarm = value;
+                Save();
+            }
         }
 
         [DefaultValue(0)]
@@ -108,7 +145,7 @@ namespace Oracle.Settings
             }
         }
 
-        public static YokaiSettings Instance
+        public static ModeSettings Instance
         {
             get
             {
@@ -121,7 +158,7 @@ namespace Oracle.Settings
                 {
                     if (instance == null)
                     {
-                        instance = new YokaiSettings();
+                        instance = new ModeSettings();
                     }
                 }
 
@@ -317,6 +354,22 @@ namespace Oracle.Settings
             set
             {
                 nokoZoneChoice = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(OracleOperationMode.FateGrind)]
+        [Setting]
+        public OracleOperationMode OracleOperationMode
+        {
+            get
+            {
+                return oracleOperationMode;
+            }
+
+            set
+            {
+                oracleOperationMode = value;
                 Save();
             }
         }

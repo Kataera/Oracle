@@ -107,7 +107,7 @@ namespace Oracle
 
         private static void LogCurrentMode()
         {
-            switch (MainSettings.Instance.OracleOperationMode)
+            switch (ModeSettings.Instance.OracleOperationMode)
             {
                 case OracleOperationMode.FateGrind:
                     Logger.SendLog("Starting Oracle in FATE grind mode.");

@@ -58,7 +58,13 @@ namespace Oracle.Behaviour
                 return false;
             }
 
-            switch (MainSettings.Instance.OracleOperationMode)
+            if (Poi.Current.Type == PoiType.Kill)
+            {
+                await CombatHandler.HandleCombat();
+                return false;
+            }
+
+            switch (ModeSettings.Instance.OracleOperationMode)
             {
                 case OracleOperationMode.FateGrind:
                     await FateGrind.Main();
@@ -86,6 +92,16 @@ namespace Oracle.Behaviour
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+
+            if (Poi.Current.Type == PoiType.Fate || OracleFateManager.CurrentFateId != 0)
+            {
+                await FateHandler.HandleFate();
+            }
+
+            else if (Poi.Current.Type == PoiType.Wait)
+            {
+                await WaitHandler.HandleWait();
             }
 
             // Always return false to not block the tree.

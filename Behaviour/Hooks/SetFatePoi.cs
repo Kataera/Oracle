@@ -70,11 +70,11 @@ namespace Oracle.Behaviour.Hooks
                 return false;
             }
 
-            if (OracleFateManager.PreviousFateChained() && MainSettings.Instance.OracleOperationMode != OracleOperationMode.SpecificFate)
+            if (OracleFateManager.PreviousFateChained() && ModeSettings.Instance.OracleOperationMode != OracleOperationMode.SpecificFate)
             {
                 await SelectChainFate();
             }
-            else if (MainSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate)
+            else if (ModeSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate)
             {
                 await SelectSpecificFate();
             }

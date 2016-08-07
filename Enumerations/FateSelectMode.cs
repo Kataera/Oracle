@@ -6,11 +6,8 @@ namespace Oracle.Enumerations
     internal enum FateSelectMode
     {
         Closest,
-
         TypePriority,
-
         ChainPriority,
-
         TypeAndChainPriority
     }
 }

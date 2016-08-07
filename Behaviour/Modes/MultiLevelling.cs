@@ -2,10 +2,8 @@
 using System.Threading.Tasks;
 
 using ff14bot;
-using ff14bot.Helpers;
 using ff14bot.Managers;
 
-using Oracle.Behaviour.Tasks;
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Helpers;
 using Oracle.Managers;
@@ -17,27 +15,18 @@ namespace Oracle.Behaviour.Modes
     {
         public static async Task<bool> Main()
         {
-            if (Poi.Current.Type == PoiType.Kill)
-            {
-                await CombatHandler.HandleCombat();
-                return true;
-            }
-
-            if (OracleClassManager.NoClassesEnabled())
+            if (!Core.Player.InCombat && OracleClassManager.NoClassesEnabled())
             {
                 Logger.SendErrorLog("You haven't enabled any classes for levelling. Ensure at least one class is enabled and then restart Oracle.");
                 OracleBot.StopOracle("No classes enabled.");
-                return true;
             }
-
-            if (OracleClassManager.FinishedLevelling())
+            else if (!Core.Player.InCombat && OracleClassManager.FinishedLevelling())
             {
-                Logger.SendLog("All enabled classes have reached level " + ClassSettings.Instance.MaxLevel + ". Stopping Oracle.");
-                OracleBot.StopOracle("We're done!");
-                return true;
+                Logger.SendLog("We've reached level " + ClassSettings.Instance.MaxLevel + " with all enabled classes! Stopping Oracle.");
+                await OracleTeleportManager.TeleportToClosestCity();
+                OracleBot.StopOracle("We are done!");
             }
-
-            if (OracleClassManager.ClassChangeNeeded())
+            else if (OracleClassManager.ClassChangeNeeded())
             {
                 if (Core.Player.InCombat || GameObjectManager.Attackers.Any())
                 {
@@ -50,11 +39,8 @@ namespace Oracle.Behaviour.Modes
                 {
                     OracleBot.StopOracle("Problem swapping classes.");
                 }
-
-                return true;
             }
-
-            if (OracleClassManager.ZoneChangeNeeded())
+            else if (OracleClassManager.ZoneChangeNeeded())
             {
                 if (Core.Player.InCombat || GameObjectManager.Attackers.Any())
                 {
@@ -63,17 +49,6 @@ namespace Oracle.Behaviour.Modes
 
                 Logger.SendLog("Zone change is needed.");
                 await ZoneChange.HandleZoneChange();
-                return true;
-            }
-
-            if (Poi.Current.Type == PoiType.Fate || OracleFateManager.CurrentFateId != 0)
-            {
-                await FateHandler.HandleFate();
-            }
-
-            else if (Poi.Current.Type == PoiType.Wait)
-            {
-                await WaitHandler.HandleWait();
             }
 
             return true;
