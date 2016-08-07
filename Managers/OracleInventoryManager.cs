@@ -45,6 +45,12 @@ namespace Oracle.Managers
             return InventoryManager.FilledInventoryAndArmory.FirstOrDefault(bs => bs.RawItemId == itemId);
         }
 
+        public static BagSlot GetEmptyBagSlot()
+        {
+            var bags = InventoryManager.GetBagsByInventoryBagId(InventoryBagId.Bag1, InventoryBagId.Bag2, InventoryBagId.Bag3, InventoryBagId.Bag4);
+            return bags.Select(bag => bag.FirstOrDefault(slot => !slot.IsFilled)).FirstOrDefault();
+        }
+
         public static BagSlot GetEquipmentSlotBagSlot(EquipmentSlot slot)
         {
             return InventoryManager.EquippedItems.FirstOrDefault(bs => bs.Slot == (ushort) slot);
