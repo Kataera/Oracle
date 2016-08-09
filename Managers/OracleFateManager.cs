@@ -58,7 +58,11 @@ namespace Oracle.Managers
         {
             if (!WorldManager.CanFly)
             {
-                var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
+                var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget
+                {
+                    Id = fate.Id,
+                    Position = fate.Location
+                });
                 var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
 
                 foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
@@ -264,7 +268,11 @@ namespace Oracle.Managers
 
             if (!WorldManager.CanFly)
             {
-                var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
+                var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget
+                {
+                    Id = fate.Id,
+                    Position = fate.Location
+                });
                 var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
 
                 foreach (var result in navResults.Where(result => result.CanNavigate != 0))
@@ -290,7 +298,11 @@ namespace Oracle.Managers
 
             if (!WorldManager.CanFly)
             {
-                var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget {Id = fate.Id, Position = fate.Location});
+                var navRequest = FateManager.ActiveFates.Select(fate => new CanFullyNavigateTarget
+                {
+                    Id = fate.Id,
+                    Position = fate.Location
+                });
                 var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, location, WorldManager.ZoneId);
 
                 foreach (var result in navResults.Where(result => result.CanNavigate != 0))

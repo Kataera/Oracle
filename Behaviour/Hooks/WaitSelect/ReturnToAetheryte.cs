@@ -26,7 +26,11 @@ namespace Oracle.Behaviour.Hooks.WaitSelect
             }
 
             var aetherytes = OracleFateManager.GetAetheryteIdsForZone(WorldManager.ZoneId);
-            var navRequest = aetherytes.Select(target => new CanFullyNavigateTarget {Id = target.Item1, Position = target.Item2});
+            var navRequest = aetherytes.Select(target => new CanFullyNavigateTarget
+            {
+                Id = target.Item1,
+                Position = target.Item2
+            });
             var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
 
             foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))

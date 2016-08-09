@@ -77,8 +77,11 @@ namespace Oracle.Managers
     internal enum EquipItemResult
     {
         ItemNotFound,
+
         BagSlotNotFound,
+
         Success,
+
         Failure
     }
 }

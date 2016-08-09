@@ -174,8 +174,8 @@
     <Compile Include="Managers\OracleInventoryManager.cs" />
     <Compile Include="Settings\ClassSettings.cs" />
     <Compile Include="Structs\YokaiMinion.cs" />
-    <Compile Include="Data\YokaiMinions.cs" />
-    <Compile Include="Enumerations\YokaiMinion.cs" />
+    <Compile Include="Data\YokaiWatchGrindData.cs" />
+    <Compile Include="Enumerations\YokaiMinionId.cs" />
     <Compile Include="Helpers\XmlParser.cs" />
     <Compile Include="Managers\OracleMovementManager.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SelectGrindTarget.cs" />

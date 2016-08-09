@@ -30,7 +30,11 @@ namespace Oracle.Behaviour.Hooks.WaitSelect
 
                 var locations = WaitSettings.Instance.FateWaitLocations;
                 var navRequest =
-                    locations.Select(target => new CanFullyNavigateTarget {Id = target.Key, Position = target.Value})
+                    locations.Select(target => new CanFullyNavigateTarget
+                    {
+                        Id = target.Key,
+                        Position = target.Value
+                    })
                              .Where(target => target.Id == WorldManager.ZoneId);
                 var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
 

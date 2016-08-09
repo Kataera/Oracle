@@ -134,7 +134,7 @@ namespace Oracle
                     Logger.SendLog("Starting Oracle in Yo-kai Watch grind mode. You cannot use your chocobo in this mode.");
                     break;
                 default:
-                    Logger.SendErrorLog("No setting chosen for operation mode. Defaulting to FATE grind mode.");
+                    Logger.SendWarningLog("No setting chosen for operation mode. Defaulting to FATE grind mode.");
                     Logger.SendLog("Starting Oracle in FATE grind mode.");
                     break;
             }

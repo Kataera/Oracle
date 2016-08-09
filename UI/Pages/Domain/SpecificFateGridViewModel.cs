@@ -50,7 +50,12 @@ namespace Oracle.UI.Pages.Domain
             var collection = new ObservableCollection<FateViewModel>();
             foreach (var fate in specificFates)
             {
-                collection.Add(new FateViewModel {FateId = fate, IsSelected = true, Name = "Test"});
+                collection.Add(new FateViewModel
+                {
+                    FateId = fate,
+                    IsSelected = true,
+                    Name = "Test"
+                });
             }
 
             return collection;

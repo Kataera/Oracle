@@ -37,7 +37,11 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
                 if (!WorldManager.CanFly)
                 {
-                    var navRequest = targets.Select(target => new CanFullyNavigateTarget {Id = target.ObjectId, Position = target.Location});
+                    var navRequest = targets.Select(target => new CanFullyNavigateTarget
+                    {
+                        Id = target.ObjectId,
+                        Position = target.Location
+                    });
                     var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
 
                     var viableTargets = new Dictionary<BattleCharacter, float>();
