@@ -37,6 +37,12 @@ namespace Oracle.Behaviour.Tasks.Utilities
                             Logger.SendDebugLog("Deserialising the mesh file.");
                             var flightMesh = await Coroutine.ExternalTask(Task.Factory.StartNew(() => JsonConvert.DeserializeObject<FlightMesh>(json)));
 
+                            if (flightMesh.Graph == null)
+                            {
+                                Logger.SendErrorLog("Flight mesh loading failed.");
+                                return null;
+                            }
+
                             Logger.SendLog("Flight mesh loaded successfully!");
                             return flightMesh;
                         }
