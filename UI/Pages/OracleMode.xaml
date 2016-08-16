@@ -126,17 +126,42 @@
                                 Text="Selects the way in which Oracle will operate. See below for the descriptions of each mode:" />
                         </TextBlock.Inlines>
                     </TextBlock>
-                    <StackPanel Grid.Row="3" Margin="48,0,16,20">
+                    <StackPanel Grid.Row="3" Margin="28,0,16,20">
                         <TextBlock TextWrapping="Wrap" Margin="0 0 0 6"
+                                   Foreground="{DynamicResource MaterialDesignBody}"
+                                   VerticalAlignment="Center">
+                            <TextBlock.Inlines>
+                                <Run Text="Regular Modes:" FontWeight="Bold" FontSize="16" />
+                            </TextBlock.Inlines>
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap" Margin="28 0 0 6"
                                    Foreground="{DynamicResource MaterialDesignBody}"
                                    VerticalAlignment="Center">
                             <TextBlock.Inlines>
                                 <Run Text="FATE Grind:" FontWeight="Bold" />
                                 <Run
-                                    Text="This mode will look for viable FATEs in the current zone, and run them. The default Oracle behaviour." />
+                                    Text="This mode will look for viable FATEs in the zone you start RebornBuddy in, and run them. The default Oracle behaviour." />
                             </TextBlock.Inlines>
                         </TextBlock>
-                        <TextBlock TextWrapping="Wrap" Margin="0 0 0 6"
+                        <TextBlock TextWrapping="Wrap" Margin="28 0 0 6"
+                                   Foreground="{DynamicResource MaterialDesignBody}"
+                                   VerticalAlignment="Center">
+                            <TextBlock.Inlines>
+                                <Run Text="Single Class Level Mode:" FontWeight="Bold" />
+                                <Run
+                                    Text="This mode will level the class you start RebornBuddy with up to the level you define. It will change change zones at the levels you set in the Zone Changing menu." />
+                            </TextBlock.Inlines>
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap" Margin="28 0 0 6"
+                                   Foreground="{DynamicResource MaterialDesignBody}"
+                                   VerticalAlignment="Center">
+                            <TextBlock.Inlines>
+                                <Run Text="Multiple Class Level Mode:" FontWeight="Bold" />
+                                <Run
+                                    Text="This mode will level the classes you enable in the settings below (make sure you enter your gearsets too). It will change change zones at the levels you set in the Zone Changing menu." />
+                            </TextBlock.Inlines>
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap" Margin="28 0 0 6"
                                    Foreground="{DynamicResource MaterialDesignBody}"
                                    VerticalAlignment="Center">
                             <TextBlock.Inlines>
@@ -145,7 +170,14 @@
                                     Text="This mode will only search for the FATE(s) selected below. If it finds one of them, Oracle will run it and then return to searching." />
                             </TextBlock.Inlines>
                         </TextBlock>
-                        <TextBlock TextWrapping="Wrap" Margin="0 0 0 6"
+                        <TextBlock TextWrapping="Wrap" Margin="0,6"
+                                   Foreground="{DynamicResource MaterialDesignBody}"
+                                   VerticalAlignment="Center">
+                            <TextBlock.Inlines>
+                                <Run Text="Relic Weapon Modes:" FontWeight="Bold" FontSize="16" />
+                            </TextBlock.Inlines>
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap" Margin="28 0 0 6"
                                    Foreground="{DynamicResource MaterialDesignBody}"
                                    VerticalAlignment="Center">
                             <TextBlock.Inlines>
@@ -162,17 +194,16 @@
                                 <Run Text="to run this mode." />
                             </TextBlock.Inlines>
                         </TextBlock>
-                        <TextBlock TextWrapping="Wrap" Margin="0 0 0 6"
+                        <TextBlock TextWrapping="Wrap" Margin="28 0 0 6"
                                    Foreground="{DynamicResource MaterialDesignBody}"
                                    VerticalAlignment="Center">
                             <TextBlock.Inlines>
                                 <Run Text="Animus Grind:" FontWeight="Bold" />
                                 <Run
                                     Text="This mode is for the Animus stage of the Zodiac weapon questline. It will run the specific FATEs needed for the current Animus book." />
-                                <Run Text="Not yet implemented." Foreground="#D32F2F" />
                             </TextBlock.Inlines>
                         </TextBlock>
-                        <TextBlock TextWrapping="Wrap" Margin="0 0 0 6"
+                        <TextBlock TextWrapping="Wrap" Margin="28 0 0 6"
                                    Foreground="{DynamicResource MaterialDesignBody}"
                                    VerticalAlignment="Center">
                             <TextBlock.Inlines>
@@ -182,7 +213,14 @@
                                 <Run Text="Not yet implemented." Foreground="#D32F2F" />
                             </TextBlock.Inlines>
                         </TextBlock>
-                        <TextBlock TextWrapping="Wrap" Margin="0 0 0 6"
+                        <TextBlock TextWrapping="Wrap" Margin="0 6 0 6"
+                                   Foreground="{DynamicResource MaterialDesignBody}"
+                                   VerticalAlignment="Center">
+                            <TextBlock.Inlines>
+                                <Run Text="Seasonal Event Modes:" FontWeight="Bold" FontSize="16" />
+                            </TextBlock.Inlines>
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap" Margin="28 0 0 6"
                                    Foreground="{DynamicResource MaterialDesignBody}"
                                    VerticalAlignment="Center">
                             <TextBlock.Inlines>
@@ -204,8 +242,7 @@
                                            RequestNavigate="Hyperlink_RequestNavigate">
                                     <Run Text="Legendary Yo-kai Medals" FontStyle="Italic" />
                                 </Hyperlink>
-                                <Run Text="for the pets, mount and weapons." />
-                                <Run Text="Not yet implemented." Foreground="#D32F2F" />
+                                <Run Text="for the pets, mounts and weapons." />
                             </TextBlock.Inlines>
                         </TextBlock>
                     </StackPanel>
@@ -233,12 +270,23 @@
                         <ComboBox Grid.Column="1" materialDesign:HintAssist.Hint="Mode"
                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                   VerticalAlignment="Center">
+                            <ComboBoxItem IsEnabled="False">
+                                <Run Text="Regular Modes:" FontWeight="Bold" FontSize="16" />
+                            </ComboBoxItem>
                             <ComboBoxItem>FATE Grind</ComboBoxItem>
+                            <ComboBoxItem>Single Class Levelling</ComboBoxItem>
+                            <ComboBoxItem>Multiple Class Levelling</ComboBoxItem>
                             <ComboBoxItem>Specific FATE(s)</ComboBoxItem>
+                            <ComboBoxItem IsEnabled="False">
+                                <Run Text="Relic Weapon Modes:" FontWeight="Bold" FontSize="16" />
+                            </ComboBoxItem>
                             <ComboBoxItem>Anima Grind</ComboBoxItem>
                             <ComboBoxItem IsEnabled="False" Foreground="#D32F2F">Animus Grind</ComboBoxItem>
-                            <ComboBoxItem IsEnabled="False" Foreground="#D32F2F">Atma Grind</ComboBoxItem>
-                            <ComboBoxItem IsEnabled="False" Foreground="#D32F2F">Yo-kai Watch Grind</ComboBoxItem>
+                            <ComboBoxItem>Atma Grind</ComboBoxItem>
+                            <ComboBoxItem IsEnabled="False">
+                                <Run Text="Seasonal Event Modes:" FontWeight="Bold" FontSize="16" />
+                            </ComboBoxItem>
+                            <ComboBoxItem>Yo-kai Watch Grind</ComboBoxItem>
                         </ComboBox>
                     </Grid>
                 </Grid>
