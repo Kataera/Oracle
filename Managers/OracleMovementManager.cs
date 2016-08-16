@@ -308,12 +308,36 @@ namespace Oracle.Managers
             return path;
         }
 
-        private static Vector3 GenerateRandomLocationInRadius(Vector3 location, float radius)
+        private static async Task<Vector3> GenerateRandomLocationInRadius(Vector3 location, float radius)
         {
-            // Pick a location that is in the general direction we're facing.
-            return MathEx.GetPointAt(location,
-                                     radius * Convert.ToSingle(MathEx.Random(0.5, 0.9)),
-                                     Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.4 * Math.PI, 0.4 * Math.PI)));
+            var potentialSpots = new List<Vector3>();
+
+            // Generate locations in the direction we're facing.
+            for (var i = 0; i < 10; i++)
+            {
+                potentialSpots.Add(MathEx.GetPointAt(location,
+                                                     radius * Convert.ToSingle(MathEx.Random(0.5, 0.9)),
+                                                     Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.4 * Math.PI, 0.4 * Math.PI))));
+            }
+
+            var bestSpot = Vector3.Zero;
+            float bestScore = 0;
+            foreach (var spot in potentialSpots)
+            {
+                var closestEnemies =
+                    GameObjectManager.GameObjects.OrderBy(enemy => enemy.Distance2D(spot)).Where(enemy => enemy.Type == GameObjectType.BattleNpc).Take(10);
+
+                var currentScore = closestEnemies.Sum(enemy => enemy.Distance2D(spot));
+                if (!(currentScore > bestScore))
+                {
+                    continue;
+                }
+
+                bestSpot = spot;
+                bestScore = currentScore;
+            }
+
+            return bestSpot;
         }
 
         private static Node GetClosestNodeToFate(FateData fate)
@@ -340,12 +364,11 @@ namespace Oracle.Managers
             elevatedFateLocation.Y = Core.Player.Location.Y;
 
             Logger.SendDebugLog("Generating a landing spot.");
-            var potentialLandingLocation = GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
 
+            var potentialLandingLocation = await GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
             while (await CommonTasks.CanLand(potentialLandingLocation) == CanLandResult.No)
             {
-                potentialLandingLocation = GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
-                await Coroutine.Yield();
+                potentialLandingLocation = await GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
             }
 
             // Raycast from generated location to ground to get position closer to ground.
