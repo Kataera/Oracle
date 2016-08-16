@@ -366,9 +366,10 @@ namespace Oracle.Managers
             Logger.SendDebugLog("Generating a landing spot.");
 
             var potentialLandingLocation = await GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
-            while (await CommonTasks.CanLand(potentialLandingLocation) == CanLandResult.No)
+            if (await CommonTasks.CanLand(potentialLandingLocation) == CanLandResult.No)
             {
-                potentialLandingLocation = await GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
+                Logger.SendDebugLog("Landing spot generation failed: we can't land at the proposed spot.");
+                return Core.Player.Location;
             }
 
             // Raycast from generated location to ground to get position closer to ground.
