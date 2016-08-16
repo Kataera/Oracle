@@ -11,7 +11,7 @@ namespace Oracle.Behaviour.Tasks.WaitTask
 {
     internal static class ReturnToAetheryte
     {
-        public static async Task<bool> Main()
+        public static async Task<bool> HandleReturnToAetheryte()
         {
             if (Core.Player.Location.Distance2D(Poi.Current.Location) < 15f)
             {

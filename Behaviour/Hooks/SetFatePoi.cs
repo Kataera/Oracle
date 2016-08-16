@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,6 @@ using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 
-using Oracle.Behaviour.Hooks.FateSelect;
 using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Managers;
@@ -22,6 +22,62 @@ namespace Oracle.Behaviour.Hooks
     internal static class SetFatePoi
     {
         private static Stopwatch chainFateTimer;
+
+        private static async Task<Dictionary<FateData, float>> GetFateDistances()
+        {
+            if (!MovementSettings.Instance.TeleportIfQuicker || !MovementSettings.Instance.ConsiderAetheryteFateDistances || WorldManager.CanFly)
+            {
+                return await OracleFateManager.GetActiveFateDistances();
+            }
+
+            Logger.SendDebugLog("Taking into account the distance to a FATE if we teleport to it.");
+            var fateDistances = await OracleFateManager.GetActiveFateDistances();
+            var fateDistancesFromAetherytes = new List<Dictionary<FateData, float>>();
+            foreach (var aetheryte in
+                OracleFateManager.GetAetheryteIdsForZone(WorldManager.ZoneId).Where(item => WorldManager.KnownAetheryteIds.Contains(item.Item1)))
+            {
+                fateDistancesFromAetherytes.Add(await OracleFateManager.GetActiveFateDistances(aetheryte.Item2));
+            }
+
+            foreach (var fateDistance in await OracleFateManager.GetActiveFateDistances())
+            {
+                if (fateDistance.Key.Progress < MovementSettings.Instance.FateProgressTeleportLimit)
+                {
+                    continue;
+                }
+
+                Logger.SendDebugLog("Ignoring teleport distance for " + fateDistance.Key.Name + ", its progress (" + fateDistance.Key.Progress
+                                    + "%) equals or exceeds the limit (" + MovementSettings.Instance.FateProgressTeleportLimit + "%).");
+            }
+
+            foreach (var aetheryteDistanceDict in fateDistancesFromAetherytes)
+            {
+                foreach (var fateDistance in aetheryteDistanceDict)
+                {
+                    float currentDistance;
+                    if (!fateDistances.TryGetValue(fateDistance.Key, out currentDistance))
+                    {
+                        continue;
+                    }
+
+                    if (fateDistance.Key.Progress >= MovementSettings.Instance.FateProgressTeleportLimit)
+                    {
+                        continue;
+                    }
+
+                    // Add the minimum distance delta to ensure we don't teleport if distance saved is under that amount.
+                    if (fateDistance.Value + MovementSettings.Instance.MinDistanceToTeleport >= currentDistance)
+                    {
+                        continue;
+                    }
+
+                    fateDistances.Remove(fateDistance.Key);
+                    fateDistances.Add(fateDistance.Key, fateDistance.Value);
+                }
+            }
+
+            return fateDistances;
+        }
 
         private static bool IsFatePoiSet()
         {
@@ -80,7 +136,7 @@ namespace Oracle.Behaviour.Hooks
             }
             else
             {
-                await SelectFate();
+                await SelectClosestFate();
             }
 
             if (OracleFateManager.GetCurrentFateData() != null && MovementSettings.Instance.DelayFateMovement && !OracleFateManager.DoNotWaitBeforeMovingFlag)
@@ -136,27 +192,41 @@ namespace Oracle.Behaviour.Hooks
             return true;
         }
 
-        private static async Task<bool> SelectFate()
+        private static async Task<bool> SelectClosestFate()
         {
-            switch (FateSettings.Instance.FateSelectMode)
+            if (!await OracleFateManager.AnyViableFates())
             {
-                case FateSelectMode.Closest:
-                    await Closest.Main();
-                    return true;
-                case FateSelectMode.TypePriority:
-                    await Closest.Main();
-                    return true;
-                case FateSelectMode.ChainPriority:
-                    await Closest.Main();
-                    return true;
-                case FateSelectMode.TypeAndChainPriority:
-                    await Closest.Main();
-                    return true;
-                default:
-                    Logger.SendDebugLog("Cannot determine FATE selection strategy, defaulting to closest FATE.");
-                    await Closest.Main();
-                    return true;
+                return false;
             }
+
+            var fateDistances = await GetFateDistances();
+            var closestFates = fateDistances.OrderBy(kvp => kvp.Value).Where(fate => OracleFateManager.FateFilter(fate.Key)).ToArray();
+            foreach (var fate in closestFates)
+            {
+                if (fate.Value > 0)
+                {
+                    Logger.SendDebugLog("Found FATE '" + fate.Key.Name + "'. Distance to it is " + Math.Round(fate.Value, 2) + " yalms.");
+                }
+                else
+                {
+                    Logger.SendDebugLog("Found FATE '" + fate.Key.Name + "'. Distance to it is 0 yalms.");
+                }
+            }
+
+            if (!closestFates.Any())
+            {
+                return false;
+            }
+
+            Logger.SendLog("Selecting closest FATE.");
+            var closestFate = closestFates.FirstOrDefault().Key;
+
+            Logger.SendLog("Selected FATE: '" + closestFate.Name + "'.");
+            Logger.SendDebugLog("Location of FATE: " + closestFate.Location);
+            OracleFateManager.CurrentFateId = closestFate.Id;
+            Poi.Current = new Poi(closestFate, PoiType.Fate);
+
+            return true;
         }
 
         private static async Task<bool> SelectSpecificFate()

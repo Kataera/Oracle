@@ -26,64 +26,51 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
         public static async Task<BattleCharacter> Main()
         {
-            if (checkForTargetCooldown == null || checkForTargetCooldown.Elapsed > TimeSpan.FromSeconds(5))
+            if (checkForTargetCooldown != null && checkForTargetCooldown.Elapsed <= TimeSpan.FromSeconds(5))
             {
-                var targets = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(MobFilter).OrderBy(bc => bc.Distance()).Take(8);
+                return null;
+            }
 
-                if (!targets.Any())
+            var targets = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(MobFilter).OrderBy(bc => bc.Distance()).Take(8).ToList();
+            if (!targets.Any())
+            {
+                return null;
+            }
+
+            var navRequest = targets.Select(target => new CanFullyNavigateTarget
+            {
+                Id = target.ObjectId,
+                Position = target.Location
+            });
+            var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+
+            var viableTargets = new Dictionary<BattleCharacter, float>();
+            foreach (var result in navResults)
+            {
+                if (result.CanNavigate == 0)
                 {
-                    return null;
-                }
-
-                if (!WorldManager.CanFly)
-                {
-                    var navRequest = targets.Select(target => new CanFullyNavigateTarget
+                    var blacklistEntry = Blacklist.GetEntry(result.Id);
+                    if (blacklistEntry == null)
                     {
-                        Id = target.ObjectId,
-                        Position = target.Location
-                    });
-                    var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
-
-                    var viableTargets = new Dictionary<BattleCharacter, float>();
-                    foreach (var result in navResults)
-                    {
-                        if (result.CanNavigate == 0)
-                        {
-                            var blacklistEntry = Blacklist.GetEntry(result.Id);
-                            if (blacklistEntry == null)
-                            {
-                                var mob = GameObjectManager.GetObjectByObjectId(result.Id);
-                                Logger.SendDebugLog("Blacklisting " + mob.Name + " (" + mob.ObjectId.ToString("X") + "). It can't be navigated to.");
-                                Blacklist.Add(mob, BlacklistFlags.Combat, TimeSpan.FromMinutes(15), "Can't navigate to mob.");
-                            }
-                        }
-                        else
-                        {
-                            var battleCharacter = targets.FirstOrDefault(target => target.ObjectId == result.Id);
-                            if (battleCharacter != null)
-                            {
-                                viableTargets.Add(battleCharacter, result.PathLength);
-                            }
-                        }
-
-                        await Coroutine.Yield();
+                        var mob = GameObjectManager.GetObjectByObjectId(result.Id);
+                        Logger.SendDebugLog("Blacklisting " + mob.Name + " (" + mob.ObjectId.ToString("X") + "). It can't be navigated to.");
+                        Blacklist.Add(mob, BlacklistFlags.Combat, TimeSpan.FromMinutes(15), "Can't navigate to mob.");
                     }
-
-                    checkForTargetCooldown = Stopwatch.StartNew();
-                    return viableTargets.OrderBy(order => order.Value).FirstOrDefault().Key;
                 }
                 else
                 {
-                    var viableTargets = GameObjectManager.GetObjectsOfType<BattleCharacter>()
-                                                         .Where(MobFilter)
-                                                         .ToDictionary(result => result, result => result.Distance());
-
-                    checkForTargetCooldown = Stopwatch.StartNew();
-                    return viableTargets.OrderBy(order => order.Value).FirstOrDefault().Key;
+                    var battleCharacter = targets.FirstOrDefault(target => target.ObjectId == result.Id);
+                    if (battleCharacter != null)
+                    {
+                        viableTargets.Add(battleCharacter, result.PathLength);
+                    }
                 }
+
+                await Coroutine.Yield();
             }
 
-            return null;
+            checkForTargetCooldown = Stopwatch.StartNew();
+            return viableTargets.OrderBy(order => order.Value).FirstOrDefault().Key;
         }
 
         private static bool MobFilter(BattleCharacter battleCharacter)

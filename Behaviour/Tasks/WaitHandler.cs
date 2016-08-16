@@ -33,16 +33,16 @@ namespace Oracle.Behaviour.Tasks
             switch (WaitSettings.Instance.FateWaitMode)
             {
                 case FateWaitMode.ReturnToAetheryte:
-                    await ReturnToAetheryte.Main();
+                    await ReturnToAetheryte.HandleReturnToAetheryte();
                     return true;
                 case FateWaitMode.MoveToWaitLocation:
-                    await MoveToWaitLocation.Main();
+                    await MoveToWaitLocation.HandleMoveToLocation();
                     return true;
                 case FateWaitMode.GrindMobs:
-                    await GrindMobs.Main();
+                    await GrindMobs.HandleGrindMobs();
                     return true;
                 case FateWaitMode.WaitInPlace:
-                    await WaitInPlace.Main();
+                    await WaitInPlace.HandleWaitInPlace();
                     return true;
             }
 

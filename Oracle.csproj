@@ -159,10 +159,6 @@
     <Compile Include="Behaviour\Hooks\WaitSelect\WaitInPlace.cs" />
     <Compile Include="Behaviour\OracleBehaviour.cs" />
     <Compile Include="Behaviour\Hooks\SelectPoiType.cs" />
-    <Compile Include="Behaviour\Hooks\FateSelect\ChainAndTypePriority.cs" />
-    <Compile Include="Behaviour\Hooks\FateSelect\ChainPriority.cs" />
-    <Compile Include="Behaviour\Hooks\FateSelect\Closest.cs" />
-    <Compile Include="Behaviour\Hooks\FateSelect\TypePriority.cs" />
     <Compile Include="Behaviour\Tasks\CombatHandler.cs" />
     <Compile Include="Behaviour\Tasks\DeathHandler.cs" />
     <Compile Include="Behaviour\Tasks\FateHandler.cs" />
@@ -206,7 +202,6 @@
     <Compile Include="Data\Fates\FateDatabase.cs" />
     <Compile Include="Structs\Fate.cs" />
     <Compile Include="Enumerations\FateWaitMode.cs" />
-    <Compile Include="Enumerations\FateSelectMode.cs" />
     <Compile Include="Enumerations\FateSupportLevel.cs" />
     <Compile Include="Enumerations\FateType.cs" />
     <Compile Include="Helpers\Logger.cs" />

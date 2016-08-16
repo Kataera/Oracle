@@ -10,7 +10,7 @@ namespace Oracle.Behaviour.Tasks.WaitTask
 {
     internal static class WaitInPlace
     {
-        public static async Task<bool> Main()
+        public static async Task<bool> HandleWaitInPlace()
         {
             if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone))
             {

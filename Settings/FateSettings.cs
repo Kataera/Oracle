@@ -23,7 +23,6 @@ namespace Oracle.Settings
         private bool escortFatesEnabled;
         private int fateMaxLevelAbove;
         private int fateMinLevelBelow;
-        private FateSelectMode fateSelectMode;
         private bool ignoreLowDuration;
         private bool killFatesEnabled;
         private int lowFateDuration;
@@ -184,22 +183,6 @@ namespace Oracle.Settings
             set
             {
                 fateMinLevelBelow = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(FateSelectMode.Closest)]
-        [Setting]
-        public FateSelectMode FateSelectMode
-        {
-            get
-            {
-                return fateSelectMode;
-            }
-
-            set
-            {
-                fateSelectMode = value;
                 Save();
             }
         }
