@@ -84,6 +84,10 @@
             <Pattern>Oracle.Data.Meshes.FlightMesh::ZoneId:System.UInt32</Pattern>
             <Description>Disable Renaming</Description>
           </Rule>
+          <Rule name="OracleSettingsNoRename" feature="renaming" exclude="true" applyToMembers="true">
+            <Pattern>Oracle.Settings.*</Pattern>
+            <Description>Disable Renaming</Description>
+          </Rule>
         </Rules>
       </XmlRules>
     </PropertyGroup>

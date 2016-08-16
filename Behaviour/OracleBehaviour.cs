@@ -29,7 +29,7 @@ namespace Oracle.Behaviour
 
         private static async Task<bool> Main()
         {
-            OracleFateManager.UpdateGameCache();
+            OracleFateManager.ForceUpdateGameCache();
 
             if (OracleFateManager.FateDatabase == null)
             {
@@ -58,6 +58,8 @@ namespace Oracle.Behaviour
                 return false;
             }
 
+            await ChocoboHandler.HandleChocobo();
+
             if (Poi.Current.Type == PoiType.Kill)
             {
                 await CombatHandler.HandleCombat();
@@ -67,28 +69,28 @@ namespace Oracle.Behaviour
             switch (ModeSettings.Instance.OracleOperationMode)
             {
                 case OracleOperationMode.FateGrind:
-                    await FateGrind.Main();
+                    await FateGrind.HandleFateGrind();
                     break;
                 case OracleOperationMode.LevelMode:
-                    await Levelling.Main();
+                    await Levelling.HandleLevelling();
                     break;
                 case OracleOperationMode.MultiLevelMode:
-                    await MultiLevelling.Main();
+                    await MultiLevelling.HandleMultiLevelling();
                     break;
-                case OracleOperationMode.SpecificFate:
-                    await SpecificFate.Main();
+                case OracleOperationMode.SpecificFates:
+                    await SpecificFates.HandleSpecificFates();
                     break;
                 case OracleOperationMode.AtmaGrind:
-                    await AtmaGrind.Main();
+                    await AtmaGrind.HandleAtmaGrind();
                     break;
                 case OracleOperationMode.AnimusGrind:
-                    await AnimusGrind.Main();
+                    await AnimusGrind.HandleAnimusGrind();
                     break;
                 case OracleOperationMode.AnimaGrind:
-                    await AnimaGrind.Main();
+                    await AnimaGrind.HandleAnimaGrind();
                     break;
                 case OracleOperationMode.YokaiWatchGrind:
-                    await YokaiWatchGrind.Main();
+                    await YokaiWatchGrind.HandleYokaiWatchGrind();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -98,7 +98,7 @@ namespace Oracle
                 foreach (var composite in hook.Value)
                 {
                     count++;
-                    Logger.SendDebugLog("\tComposite " + count + ": " + composite + ".");
+                    Logger.SendDebugLog("\tComposite " + count + ": " + composite.GetType().FullName + ".");
                 }
 
                 Logger.SendDebugLog(string.Empty);
@@ -118,7 +118,7 @@ namespace Oracle
                 case OracleOperationMode.MultiLevelMode:
                     Logger.SendLog("Starting Oracle in multiple-class levelling mode.");
                     break;
-                case OracleOperationMode.SpecificFate:
+                case OracleOperationMode.SpecificFates:
                     Logger.SendLog("Starting Oracle in specific FATE(s) mode.");
                     break;
                 case OracleOperationMode.AtmaGrind:
@@ -185,7 +185,7 @@ namespace Oracle
                 TreeHooks.Instance.ReplaceHook("Rest", Rest.Behaviour);
             }
 
-            if (MainSettings.Instance.ListHooksOnStart && MainSettings.Instance.DebugEnabled)
+            if (MainSettings.Instance.ListHooksOnStart && MainSettings.Instance.ShowDebugInConsole)
             {
                 ListHooks();
             }

@@ -70,11 +70,11 @@ namespace Oracle.Behaviour.Hooks
                 return false;
             }
 
-            if (OracleFateManager.PreviousFateChained() && ModeSettings.Instance.OracleOperationMode != OracleOperationMode.SpecificFate)
+            if (OracleFateManager.PreviousFateChained() && ModeSettings.Instance.OracleOperationMode != OracleOperationMode.SpecificFates)
             {
                 await SelectChainFate();
             }
-            else if (ModeSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate)
+            else if (ModeSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFates)
             {
                 await SelectSpecificFate();
             }
@@ -101,6 +101,7 @@ namespace Oracle.Behaviour.Hooks
 
             var chainId = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.PreviousFateId).ChainId;
             var chainOracleFateInfo = OracleFateManager.FateDatabase.GetFateFromId(chainId);
+
             if (chainFateTimer == null || !chainFateTimer.IsRunning)
             {
                 chainFateTimer = Stopwatch.StartNew();
@@ -160,9 +161,7 @@ namespace Oracle.Behaviour.Hooks
 
         private static async Task<bool> SelectSpecificFate()
         {
-            // TODO: Fix.
-            var specificFate = FateManager.ActiveFates.FirstOrDefault(result => result.Name.Equals(FateSettings.Instance.SpecificFateList));
-
+            var specificFate = FateManager.ActiveFates.FirstOrDefault(result => FateSettings.Instance.SpecificFateList.Contains(result.Id));
             if (specificFate == null)
             {
                 return false;

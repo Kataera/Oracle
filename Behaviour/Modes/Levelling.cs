@@ -11,7 +11,7 @@ namespace Oracle.Behaviour.Modes
 {
     public class Levelling
     {
-        public static async Task<bool> Main()
+        public static async Task<bool> HandleLevelling()
         {
             if (!Core.Player.InCombat && OracleClassManager.FinishedLevelling())
             {

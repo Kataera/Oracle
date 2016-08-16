@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -16,6 +17,69 @@ namespace Oracle.Managers
     internal static class OracleClassManager
     {
         public static Stopwatch ClassChangedTimer { get; set; }
+
+        public static IEnumerable<ClassJobType> CombatClassJobs
+        {
+            get
+            {
+                var combatClassJobs = new List<ClassJobType>();
+                combatClassJobs.AddRange(HealerClassJobs);
+                combatClassJobs.AddRange(TankClassJobs);
+                combatClassJobs.AddRange(DpsClassJobs);
+
+                return combatClassJobs;
+            }
+        }
+
+        public static IEnumerable<ClassJobType> DpsClassJobs
+        {
+            get
+            {
+                var dpsClassJobs = new List<ClassJobType>();
+                dpsClassJobs.AddRange(MeleeDpsClassJobs);
+                dpsClassJobs.AddRange(RangedDpsClassJobs);
+
+                return dpsClassJobs;
+            }
+        }
+
+        public static IEnumerable<ClassJobType> HealerClassJobs => new List<ClassJobType>
+        {
+            ClassJobType.Astrologian,
+            ClassJobType.Conjurer,
+            ClassJobType.Scholar,
+            ClassJobType.WhiteMage
+        };
+
+        public static IEnumerable<ClassJobType> MeleeDpsClassJobs => new List<ClassJobType>
+        {
+            ClassJobType.Dragoon,
+            ClassJobType.Lancer,
+            ClassJobType.Monk,
+            ClassJobType.Ninja,
+            ClassJobType.Pugilist,
+            ClassJobType.Rogue
+        };
+
+        public static IEnumerable<ClassJobType> RangedDpsClassJobs => new List<ClassJobType>
+        {
+            ClassJobType.Arcanist,
+            ClassJobType.Archer,
+            ClassJobType.Bard,
+            ClassJobType.BlackMage,
+            ClassJobType.Machinist,
+            ClassJobType.Summoner,
+            ClassJobType.Thaumaturge
+        };
+
+        public static IEnumerable<ClassJobType> TankClassJobs => new List<ClassJobType>
+        {
+            ClassJobType.DarkKnight,
+            ClassJobType.Gladiator,
+            ClassJobType.Marauder,
+            ClassJobType.Paladin,
+            ClassJobType.Warrior
+        };
 
         public static bool ClassChangeNeeded()
         {
@@ -151,7 +215,7 @@ namespace Oracle.Managers
                 case OracleOperationMode.FateGrind:
                     Logger.SendWarningLog("Checking whether or not we've finished levelling in FATE grind mode.");
                     return false;
-                case OracleOperationMode.SpecificFate:
+                case OracleOperationMode.SpecificFates:
                     Logger.SendWarningLog("Checking whether or not we've finished levelling in specific FATE mode.");
                     return false;
                 case OracleOperationMode.AtmaGrind:
@@ -342,79 +406,22 @@ namespace Oracle.Managers
 
         public static bool IsCombatClassJob(ClassJobType job)
         {
-            switch (job)
-            {
-                case ClassJobType.Adventurer:
-                    return false;
-                case ClassJobType.Gladiator:
-                    return true;
-                case ClassJobType.Pugilist:
-                    return true;
-                case ClassJobType.Marauder:
-                    return true;
-                case ClassJobType.Lancer:
-                    return true;
-                case ClassJobType.Archer:
-                    return true;
-                case ClassJobType.Conjurer:
-                    return true;
-                case ClassJobType.Thaumaturge:
-                    return true;
-                case ClassJobType.Carpenter:
-                    return false;
-                case ClassJobType.Blacksmith:
-                    return false;
-                case ClassJobType.Armorer:
-                    return false;
-                case ClassJobType.Goldsmith:
-                    return false;
-                case ClassJobType.Leatherworker:
-                    return false;
-                case ClassJobType.Weaver:
-                    return false;
-                case ClassJobType.Alchemist:
-                    return false;
-                case ClassJobType.Culinarian:
-                    return false;
-                case ClassJobType.Miner:
-                    return false;
-                case ClassJobType.Botanist:
-                    return false;
-                case ClassJobType.Fisher:
-                    return false;
-                case ClassJobType.Paladin:
-                    return true;
-                case ClassJobType.Monk:
-                    return true;
-                case ClassJobType.Warrior:
-                    return true;
-                case ClassJobType.Dragoon:
-                    return true;
-                case ClassJobType.Bard:
-                    return true;
-                case ClassJobType.WhiteMage:
-                    return true;
-                case ClassJobType.BlackMage:
-                    return true;
-                case ClassJobType.Arcanist:
-                    return true;
-                case ClassJobType.Summoner:
-                    return true;
-                case ClassJobType.Scholar:
-                    return true;
-                case ClassJobType.Rogue:
-                    return true;
-                case ClassJobType.Ninja:
-                    return true;
-                case ClassJobType.Machinist:
-                    return true;
-                case ClassJobType.DarkKnight:
-                    return true;
-                case ClassJobType.Astrologian:
-                    return true;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(job), job, null);
-            }
+            return CombatClassJobs.Contains(job);
+        }
+
+        public static bool IsDpsClassJob(ClassJobType job)
+        {
+            return DpsClassJobs.Contains(job);
+        }
+
+        public static bool IsHealerClassJob(ClassJobType job)
+        {
+            return HealerClassJobs.Contains(job);
+        }
+
+        public static bool IsTankClassJob(ClassJobType job)
+        {
+            return TankClassJobs.Contains(job);
         }
 
         public static bool NoClassesEnabled()

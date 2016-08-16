@@ -23,7 +23,7 @@ namespace Oracle.Helpers
                 return;
             }
 
-            if (!MainSettings.Instance.DebugEnabled)
+            if (!MainSettings.Instance.ShowDebugInConsole)
             {
                 Logging.WriteQuiet(LoggerDebugColour, log);
             }

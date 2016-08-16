@@ -8,9 +8,9 @@ using Oracle.Settings;
 
 namespace Oracle.Behaviour.Modes
 {
-    internal static class SpecificFate
+    internal static class SpecificFates
     {
-        public static async Task<bool> Main()
+        public static async Task<bool> HandleSpecificFates()
         {
             if (!Core.Player.InCombat && !FateSettings.Instance.SpecificFateList.Any())
             {

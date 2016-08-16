@@ -75,7 +75,7 @@
     <Reference Include="RebornBuddy, Version=1.0.345.0, Culture=neutral, PublicKeyToken=48d7174f8a943034, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\RebornBuddy.exe</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -144,13 +144,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviour\Tasks\ChocoboHandler.cs" />
     <Compile Include="Behaviour\Hooks\Rest.cs" />
     <Compile Include="Behaviour\Modes\AnimaGrind.cs" />
     <Compile Include="Behaviour\Modes\AtmaGrind.cs" />
     <Compile Include="Behaviour\Modes\FateGrind.cs" />
     <Compile Include="Behaviour\Modes\Levelling.cs" />
     <Compile Include="Behaviour\Modes\MultiLevelling.cs" />
-    <Compile Include="Behaviour\Modes\SpecificFate.cs" />
+    <Compile Include="Behaviour\Modes\SpecificFates.cs" />
     <Compile Include="Behaviour\Modes\AnimusGrind.cs" />
     <Compile Include="Behaviour\Modes\YokaiWatchGrind.cs" />
     <Compile Include="Behaviour\Hooks\WaitSelect\GrindMobs.cs" />

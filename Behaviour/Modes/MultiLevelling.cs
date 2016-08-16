@@ -13,7 +13,7 @@ namespace Oracle.Behaviour.Modes
 {
     public class MultiLevelling
     {
-        public static async Task<bool> Main()
+        public static async Task<bool> HandleMultiLevelling()
         {
             if (!Core.Player.InCombat && OracleClassManager.NoClassesEnabled())
             {

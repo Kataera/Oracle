@@ -175,7 +175,7 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (ModeSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFate && !FateSettings.Instance.SpecificFateList.Contains(fate.Id))
+            if (ModeSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFates && !FateSettings.Instance.SpecificFateList.Contains(fate.Id))
             {
                 return false;
             }
@@ -260,6 +260,13 @@ namespace Oracle.Managers
             }
 
             return false;
+        }
+
+        public static void ForceUpdateGameCache()
+        {
+            FateManager.Update();
+            GameObjectManager.Clear();
+            GameObjectManager.Update();
         }
 
         public static async Task<Dictionary<FateData, float>> GetActiveFateDistances()
@@ -511,13 +518,6 @@ namespace Oracle.Managers
             }
 
             return true;
-        }
-
-        public static void UpdateGameCache()
-        {
-            FateManager.Update();
-            GameObjectManager.Clear();
-            GameObjectManager.Update();
         }
 
         public static bool WaitingForChainFate()

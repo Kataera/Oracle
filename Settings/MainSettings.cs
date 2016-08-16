@@ -13,12 +13,14 @@ namespace Oracle.Settings
         private static volatile MainSettings instance;
 
         private int actionDelay;
+        private bool chocoboHandlingEnabled;
+        private int chocoboHealerStanceThreshold;
         private int combatNoDamageTimeout;
-        private bool debugEnabled;
         private bool listHooksOnStart;
         private bool overrideRestBehaviour;
         private int restHealthPercent;
         private int restManaPercent;
+        private bool showDebugInConsole;
         private int targetListCacheDuration;
 
         private MainSettings() : base(Path.Combine(SettingsPath, @"Oracle\MainSettings.json"))
@@ -41,6 +43,38 @@ namespace Oracle.Settings
             }
         }
 
+        [DefaultValue(true)]
+        [Setting]
+        public bool ChocoboHandlingEnabled
+        {
+            get
+            {
+                return chocoboHandlingEnabled;
+            }
+
+            set
+            {
+                chocoboHandlingEnabled = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(70)]
+        [Setting]
+        public int ChocoboHealerStanceThreshold
+        {
+            get
+            {
+                return chocoboHealerStanceThreshold;
+            }
+
+            set
+            {
+                chocoboHealerStanceThreshold = value;
+                Save();
+            }
+        }
+
         [DefaultValue(15000)]
         [Setting]
         public int CombatNoDamageTimeout
@@ -53,22 +87,6 @@ namespace Oracle.Settings
             set
             {
                 combatNoDamageTimeout = value;
-                Save();
-            }
-        }
-
-        [DefaultValue(true)]
-        [Setting]
-        public bool DebugEnabled
-        {
-            get
-            {
-                return debugEnabled;
-            }
-
-            set
-            {
-                debugEnabled = value;
                 Save();
             }
         }
@@ -154,6 +172,22 @@ namespace Oracle.Settings
             set
             {
                 restManaPercent = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool ShowDebugInConsole
+        {
+            get
+            {
+                return showDebugInConsole;
+            }
+
+            set
+            {
+                showDebugInConsole = value;
                 Save();
             }
         }

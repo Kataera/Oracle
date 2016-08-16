@@ -70,7 +70,7 @@ namespace Oracle.Behaviour.Modes
             return HandleMinionResult.InProgress;
         }
 
-        public static async Task<bool> Main()
+        public static async Task<bool> HandleYokaiWatchGrind()
         {
             // Summoning a chocobo dismisses your minion, meaning we can't use it here.
             if (!Chocobo.BlockSummon)
