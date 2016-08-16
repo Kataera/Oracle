@@ -1,14 +1,13 @@
 ﻿using System.Threading.Tasks;
 
 using ff14bot;
-using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.NeoProfiles;
 
-using Oracle.Behaviour.Tasks;
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Helpers;
 using Oracle.Managers;
+using Oracle.Settings;
 
 namespace Oracle.Behaviour.Modes
 {
@@ -31,7 +30,7 @@ namespace Oracle.Behaviour.Modes
         private const ushort ZoneDravanianHinterlands = 399;
         private const ushort ZoneSeaOfClouds = 401;
 
-        public static async Task<bool> Main()
+        public static async Task<bool> HandleAnimaGrind()
         {
             if (!ConditionParser.HasQuest(AnimaQuest))
             {
@@ -50,13 +49,7 @@ namespace Oracle.Behaviour.Modes
                 return true;
             }
 
-            if (Poi.Current.Type == PoiType.Kill)
-            {
-                await CombatHandler.HandleCombat();
-                return true;
-            }
-
-            if (!ConditionParser.HasAtLeast(LuminousIceCrystal, 3))
+            if (!ConditionParser.HasAtLeast(LuminousIceCrystal, ModeSettings.Instance.AnimaCrystalsToFarm))
             {
                 if (OracleClassManager.GetTrueLevel() < 50)
                 {
@@ -65,13 +58,15 @@ namespace Oracle.Behaviour.Modes
                     return true;
                 }
 
-                if (WorldManager.ZoneId != ZoneCoerthasWesternHighlands)
+                if (Core.Player.InCombat || !WorldManager.CanTeleport() || WorldManager.ZoneId == ZoneCoerthasWesternHighlands)
                 {
-                    Logger.SendLog("We need more Luminous Ice Crystals. Teleporting to Coerthas Western Highlands.");
-                    await ZoneChange.HandleZoneChange(ZoneCoerthasWesternHighlands);
+                    return true;
                 }
-            }
 
+                Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousIceCrystal))
+                               + " more Luminous Ice Crystals.");
+                await ZoneChange.HandleZoneChange(ZoneCoerthasWesternHighlands);
+            }
             else if (!ConditionParser.HasAtLeast(LuminousWindCrystal, 3))
             {
                 if (OracleClassManager.GetTrueLevel() < 50)
@@ -81,13 +76,15 @@ namespace Oracle.Behaviour.Modes
                     return true;
                 }
 
-                if (WorldManager.ZoneId != ZoneSeaOfClouds)
+                if (Core.Player.InCombat || !WorldManager.CanTeleport() || WorldManager.ZoneId == ZoneSeaOfClouds)
                 {
-                    Logger.SendLog("We need more Luminous Wind Crystals. Teleporting to The Sea of Clouds.");
-                    await ZoneChange.HandleZoneChange(ZoneSeaOfClouds);
+                    return true;
                 }
-            }
 
+                Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousWindCrystal))
+                               + " more Luminous Wind Crystals.");
+                await ZoneChange.HandleZoneChange(ZoneSeaOfClouds);
+            }
             else if (!ConditionParser.HasAtLeast(LuminousEarthCrystal, 3))
             {
                 if (OracleClassManager.GetTrueLevel() < 50)
@@ -97,13 +94,15 @@ namespace Oracle.Behaviour.Modes
                     return true;
                 }
 
-                if (WorldManager.ZoneId != ZoneDravanianForelands)
+                if (Core.Player.InCombat || !WorldManager.CanTeleport() || WorldManager.ZoneId == ZoneDravanianForelands)
                 {
-                    Logger.SendLog("We need more Luminous Earth Crystals. Teleporting to The Dravanian Forelands.");
-                    await ZoneChange.HandleZoneChange(ZoneDravanianForelands);
+                    return true;
                 }
-            }
 
+                Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousEarthCrystal))
+                               + " more Luminous Earth Crystals.");
+                await ZoneChange.HandleZoneChange(ZoneDravanianForelands);
+            }
             else if (!ConditionParser.HasAtLeast(LuminousLightningCrystal, 3))
             {
                 if (OracleClassManager.GetTrueLevel() < 52)
@@ -113,13 +112,15 @@ namespace Oracle.Behaviour.Modes
                     return true;
                 }
 
-                if (WorldManager.ZoneId != ZoneChurningMists)
+                if (Core.Player.InCombat || !WorldManager.CanTeleport() || WorldManager.ZoneId == ZoneChurningMists)
                 {
-                    Logger.SendLog("We need more Luminous Lightning Crystals. Teleporting to The Churning Mists.");
-                    await ZoneChange.HandleZoneChange(ZoneChurningMists);
+                    return true;
                 }
-            }
 
+                Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousLightningCrystal))
+                               + " more Luminous Lightning Crystals.");
+                await ZoneChange.HandleZoneChange(ZoneChurningMists);
+            }
             else if (!ConditionParser.HasAtLeast(LuminousWaterCrystal, 3))
             {
                 if (OracleClassManager.GetTrueLevel() < 54)
@@ -129,13 +130,15 @@ namespace Oracle.Behaviour.Modes
                     return true;
                 }
 
-                if (WorldManager.ZoneId != ZoneDravanianHinterlands)
+                if (Core.Player.InCombat || !WorldManager.CanTeleport() || WorldManager.ZoneId == ZoneDravanianHinterlands)
                 {
-                    Logger.SendLog("We need more Luminous Water Crystals. Teleporting to The Dravanian Hinterlands.");
-                    await ZoneChange.HandleZoneChange(ZoneDravanianHinterlands);
+                    return true;
                 }
-            }
 
+                Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousWaterCrystal))
+                               + " more Luminous Water Crystals.");
+                await ZoneChange.HandleZoneChange(ZoneDravanianHinterlands);
+            }
             else if (!ConditionParser.HasAtLeast(LuminousFireCrystal, 3))
             {
                 if (OracleClassManager.GetTrueLevel() < 55)
@@ -145,30 +148,20 @@ namespace Oracle.Behaviour.Modes
                     return true;
                 }
 
-                if (WorldManager.ZoneId != ZoneAzysLla)
+                if (Core.Player.InCombat || !WorldManager.CanTeleport() || WorldManager.ZoneId == ZoneAzysLla)
                 {
-                    Logger.SendLog("We need more Luminous Fire Crystals. Teleporting to Azys Lla.");
-                    await ZoneChange.HandleZoneChange(ZoneAzysLla);
+                    return true;
                 }
-            }
 
+                Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousFireCrystal))
+                               + " more Luminous Fire Crystals.");
+                await ZoneChange.HandleZoneChange(ZoneAzysLla);
+            }
             else if (!Core.Player.InCombat)
             {
-                Logger.SendLog("You have gathered all the crystals needed! Teleporting to Limsa Lominsa and stopping Oracle.");
-                await OracleTeleportManager.TeleportToAetheryte(8);
-
+                Logger.SendLog("We have collected " + ModeSettings.Instance.AnimaCrystalsToFarm + " of every crystal! Stopping Oracle.");
+                await OracleTeleportManager.TeleportToClosestCity();
                 OracleBot.StopOracle("We are done!");
-                return true;
-            }
-
-            if (Poi.Current.Type == PoiType.Fate || OracleFateManager.CurrentFateId != 0)
-            {
-                await FateHandler.HandleFate();
-            }
-
-            else if (Poi.Current.Type == PoiType.Wait)
-            {
-                await WaitHandler.HandleWait();
             }
 
             return true;

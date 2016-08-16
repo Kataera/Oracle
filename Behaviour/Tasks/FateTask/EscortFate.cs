@@ -40,6 +40,48 @@ namespace Oracle.Behaviour.Tasks.FateTask
             return TimeSpan.FromMilliseconds(rng.Next(500, 1500));
         }
 
+        public static async Task<bool> HandleEscortFate()
+        {
+            var currentFate = OracleFateManager.GetCurrentFateData();
+            var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
+
+            if (currentFate == null || currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
+            {
+                await ClearFate();
+                return true;
+            }
+
+            if (movementTimer == null)
+            {
+                movementTimer = Stopwatch.StartNew();
+            }
+
+            if (movementCooldown == null)
+            {
+                movementCooldown = GetRandomTimeSpan();
+            }
+
+            if (currentFate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
+            {
+                SelectTarget();
+            }
+            else if (currentFate.Status != FateStatus.NOTACTIVE)
+            {
+                var escortNpc = GameObjectManager.GetObjectByNPCId(oracleFate.NpcId)
+                                ?? GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
+
+                if (escortNpc == null || !currentFate.Within2D(Core.Player.Location))
+                {
+                    await MoveToFateCentre();
+                    return true;
+                }
+
+                await MoveToNpc(escortNpc);
+            }
+
+            return true;
+        }
+
         private static bool IsEscortNpc(BattleCharacter battleCharacter)
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
@@ -81,48 +123,6 @@ namespace Oracle.Behaviour.Tasks.FateTask
         private static bool IsViableTarget(BattleCharacter target)
         {
             return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleFateManager.CurrentFateId;
-        }
-
-        public static async Task<bool> Main()
-        {
-            var currentFate = OracleFateManager.GetCurrentFateData();
-            var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
-
-            if (currentFate == null || currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
-            {
-                await ClearFate();
-                return true;
-            }
-
-            if (movementTimer == null)
-            {
-                movementTimer = Stopwatch.StartNew();
-            }
-
-            if (movementCooldown == null)
-            {
-                movementCooldown = GetRandomTimeSpan();
-            }
-
-            if (currentFate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
-            {
-                SelectTarget();
-            }
-            else if (currentFate.Status != FateStatus.NOTACTIVE)
-            {
-                var escortNpc = GameObjectManager.GetObjectByNPCId(oracleFate.NpcId)
-                                ?? GameObjectManager.GetObjectsOfType<BattleCharacter>().FirstOrDefault(IsEscortNpc);
-
-                if (escortNpc == null || !currentFate.Within2D(Core.Player.Location))
-                {
-                    await MoveToFateCentre();
-                    return true;
-                }
-
-                await MoveToNpc(escortNpc);
-            }
-
-            return true;
         }
 
         private static async Task<bool> MoveToFateCentre()

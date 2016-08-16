@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 using ff14bot;
@@ -98,7 +99,7 @@ namespace Oracle
                 foreach (var composite in hook.Value)
                 {
                     count++;
-                    Logger.SendDebugLog("\tComposite " + count + ": " + composite + ".");
+                    Logger.SendDebugLog("\tComposite " + count + ": " + composite.GetType().FullName + ".");
                 }
 
                 Logger.SendDebugLog(string.Empty);
@@ -107,7 +108,7 @@ namespace Oracle
 
         private static void LogCurrentMode()
         {
-            switch (MainSettings.Instance.OracleOperationMode)
+            switch (ModeSettings.Instance.OracleOperationMode)
             {
                 case OracleOperationMode.FateGrind:
                     Logger.SendLog("Starting Oracle in FATE grind mode.");
@@ -118,7 +119,7 @@ namespace Oracle
                 case OracleOperationMode.MultiLevelMode:
                     Logger.SendLog("Starting Oracle in multiple-class levelling mode.");
                     break;
-                case OracleOperationMode.SpecificFate:
+                case OracleOperationMode.SpecificFates:
                     Logger.SendLog("Starting Oracle in specific FATE(s) mode.");
                     break;
                 case OracleOperationMode.AtmaGrind:
@@ -134,7 +135,7 @@ namespace Oracle
                     Logger.SendLog("Starting Oracle in Yo-kai Watch grind mode. You cannot use your chocobo in this mode.");
                     break;
                 default:
-                    Logger.SendErrorLog("No setting chosen for operation mode. Defaulting to FATE grind mode.");
+                    Logger.SendWarningLog("No setting chosen for operation mode. Defaulting to FATE grind mode.");
                     Logger.SendLog("Starting Oracle in FATE grind mode.");
                     break;
             }
@@ -185,12 +186,13 @@ namespace Oracle
                 TreeHooks.Instance.ReplaceHook("Rest", Rest.Behaviour);
             }
 
-            if (MainSettings.Instance.ListHooksOnStart && MainSettings.Instance.DebugEnabled)
+            if (MainSettings.Instance.ListHooksOnStart && MainSettings.Instance.ShowDebugInConsole)
             {
                 ListHooks();
             }
 
             LogCurrentMode();
+            WarnAboutPlugins();
         }
 
         public void Stop()
@@ -226,6 +228,14 @@ namespace Oracle
         internal static void StopOracle(string reason)
         {
             TreeRoot.Stop(" " + reason);
+        }
+
+        private static void WarnAboutPlugins()
+        {
+            if (PluginManager.GetEnabledPlugins().Contains("Enable Flight"))
+            {
+                Logger.SendWarningLog("Detected ExBuddy's flight plugin; it's advised that you do not run this and Oracle's own flight navigator together.");
+            }
         }
     }
 }

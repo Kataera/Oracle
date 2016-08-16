@@ -3,7 +3,6 @@
     public enum ClassLevelMode
     {
         Concurrent,
-
         Sequential
     }
 }

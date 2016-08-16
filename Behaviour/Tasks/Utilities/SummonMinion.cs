@@ -94,9 +94,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
     internal enum SummonMinionResult
     {
         Success,
-
         WrongMinionActive,
-
         NoMinionActive
     }
 }

@@ -9,17 +9,18 @@
             Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Blue.Accent.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="{StaticResource Primary200}" po:Freeze="True" />
-    <SolidColorBrush x:Key="PrimaryHueLightForegroundBrush" Color="{StaticResource Primary200Foreground}"
-                     po:Freeze="True" />
-    <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="{StaticResource Primary600}" po:Freeze="True" />
-    <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="{StaticResource Primary600Foreground}"
-                     po:Freeze="True" />
-    <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="{StaticResource Primary800}" po:Freeze="True" />
-    <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="{StaticResource Primary800Foreground}"
-                     po:Freeze="True" />
-    <SolidColorBrush x:Key="SecondaryAccentBrush" Color="{StaticResource Accent100}" po:Freeze="True" />
-    <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="{StaticResource Accent100Foreground}"
-                     po:Freeze="True" />
+    <!-- Material Design brushes. -->
+    <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="{StaticResource Primary200}" />
+    <SolidColorBrush x:Key="PrimaryHueLightForegroundBrush" Color="{StaticResource Primary200Foreground}" />
+    <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="{StaticResource Primary600}" />
+    <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="{StaticResource Primary600Foreground}" />
+    <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="{StaticResource Primary800}" />
+    <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="{StaticResource Primary800Foreground}" />
+    <SolidColorBrush x:Key="SecondaryAccentBrush" Color="{StaticResource Accent100}" />
+    <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="{StaticResource Accent100Foreground}" />
+
+    <!-- Custom brushes. -->
+    <SolidColorBrush x:Key="NavigationMenuHeading" Color="#E0E9F2" />
+    <SolidColorBrush x:Key="NavigationMenuItem" Color="#C8CDD3" />
 
 </ResourceDictionary>

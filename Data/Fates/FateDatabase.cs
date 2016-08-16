@@ -59,7 +59,10 @@ namespace Oracle.Data.Fates
             }
 
             // Create a null fate with Unsupported flag if we can't find it.
-            fate = new Fate {SupportLevel = FateSupportLevel.Unsupported};
+            fate = new Fate
+            {
+                SupportLevel = FateSupportLevel.Unsupported
+            };
             Logger.SendDebugLog("Fate with id: '" + fateData.Id + "' not found, flagging as unsupported.");
 
             return fate;
@@ -82,7 +85,10 @@ namespace Oracle.Data.Fates
             }
 
             // Create a null fate with Unsupported flag if we can't find it.
-            fate = new Fate {SupportLevel = FateSupportLevel.Unsupported};
+            fate = new Fate
+            {
+                SupportLevel = FateSupportLevel.Unsupported
+            };
             Logger.SendDebugLog("Fate with id: '" + id + "' not found, flagging as unsupported.");
 
             return fate;

@@ -3490,7 +3490,7 @@
     <Name>On Melancholic Hill</Name>
     <Level>58</Level>
     <Type>&Boss;</Type>
-    <OracleSupport>&FullSupport;</OracleSupport>
+    <OracleSupport>&Problematic;</OracleSupport>
   </Fate>
   <Fate>
     <ID>773</ID>
@@ -4544,13 +4544,13 @@
     <Name>In Deep Water</Name>
     <Level>30</Level>
     <Type>&Kill;</Type>
-    <OracleSupport>&FullSupport;</OracleSupport>
+    <OracleSupport>&Problematic;</OracleSupport>
   </Fate>
   <Fate>
     <ID>946</ID>
     <Name>Trial By Fire</Name>
     <Level>30</Level>
     <Type>&Kill;</Type>
-    <OracleSupport>&FullSupport;</OracleSupport>
+    <OracleSupport>&Problematic;</OracleSupport>
   </Fate>
 </Fates>

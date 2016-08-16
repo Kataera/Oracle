@@ -28,6 +28,13 @@ namespace Oracle.Managers
 {
     internal static class OracleMovementManager
     {
+        private const ushort CoerthasWesternHighlandsZoneId = 397;
+        private const ushort DravanianForelandsZoneId = 398;
+        private const ushort DravanianHinterlandsZoneId = 399;
+        private const ushort ChurningMistsZoneId = 400;
+        private const ushort SeaOfCloudsZoneId = 401;
+        private const ushort AzysLlaZoneId = 402;
+
         internal static FlightMesh ZoneFlightMesh { get; set; }
 
         private static async Task ClearExpiredFate()
@@ -301,12 +308,36 @@ namespace Oracle.Managers
             return path;
         }
 
-        private static Vector3 GenerateRandomLocationInRadius(Vector3 location, float radius)
+        private static async Task<Vector3> GenerateRandomLocationInRadius(Vector3 location, float radius)
         {
-            // Pick a location that is in the general direction we're facing.
-            return MathEx.GetPointAt(location,
-                                     radius * Convert.ToSingle(MathEx.Random(0.5, 0.9)),
-                                     Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.4 * Math.PI, 0.4 * Math.PI)));
+            var potentialSpots = new List<Vector3>();
+
+            // Generate locations in the direction we're facing.
+            for (var i = 0; i < 10; i++)
+            {
+                potentialSpots.Add(MathEx.GetPointAt(location,
+                                                     radius * Convert.ToSingle(MathEx.Random(0.5, 0.9)),
+                                                     Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.4 * Math.PI, 0.4 * Math.PI))));
+            }
+
+            var bestSpot = Vector3.Zero;
+            float bestScore = 0;
+            foreach (var spot in potentialSpots)
+            {
+                var closestEnemies =
+                    GameObjectManager.GameObjects.OrderBy(enemy => enemy.Distance2D(spot)).Where(enemy => enemy.Type == GameObjectType.BattleNpc).Take(10);
+
+                var currentScore = closestEnemies.Sum(enemy => enemy.Distance2D(spot));
+                if (!(currentScore > bestScore))
+                {
+                    continue;
+                }
+
+                bestSpot = spot;
+                bestScore = currentScore;
+            }
+
+            return bestSpot;
         }
 
         private static Node GetClosestNodeToFate(FateData fate)
@@ -333,12 +364,12 @@ namespace Oracle.Managers
             elevatedFateLocation.Y = Core.Player.Location.Y;
 
             Logger.SendDebugLog("Generating a landing spot.");
-            var potentialLandingLocation = GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
 
-            while (await CommonTasks.CanLand(potentialLandingLocation) == CanLandResult.No)
+            var potentialLandingLocation = await GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
+            if (await CommonTasks.CanLand(potentialLandingLocation) == CanLandResult.No)
             {
-                potentialLandingLocation = GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
-                await Coroutine.Yield();
+                Logger.SendDebugLog("Landing spot generation failed: we can't land at the proposed spot.");
+                return Core.Player.Location;
             }
 
             // Raycast from generated location to ground to get position closer to ground.
@@ -408,17 +439,9 @@ namespace Oracle.Managers
                 return true;
             }
 
-            // TODO: Place these in an enum.
-            const ushort coerthasWesternHighlands = 397;
-            const ushort dravanianForelands = 398;
-            const ushort dravanianHinterlands = 399;
-            const ushort churningMists = 400;
-            const ushort seaOfClouds = 401;
-            const ushort azysLla = 402;
-
             switch (WorldManager.ZoneId)
             {
-                case coerthasWesternHighlands:
+                case CoerthasWesternHighlandsZoneId:
                     if (!MovementSettings.Instance.CoerthasWesternHighlandsFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for Coerthas Western Highlands.");
@@ -429,7 +452,7 @@ namespace Oracle.Managers
                     await LoadFlightMesh.Main();
                     return true;
 
-                case dravanianForelands:
+                case DravanianForelandsZoneId:
                     if (!MovementSettings.Instance.DravanianForelandsFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for The Dravanian Forelands.");
@@ -439,7 +462,7 @@ namespace Oracle.Managers
                     Logger.SendLog("Loading The Dravanian Forelands flight mesh.");
                     await LoadFlightMesh.Main();
                     return true;
-                case dravanianHinterlands:
+                case DravanianHinterlandsZoneId:
                     if (!MovementSettings.Instance.DravanianForelandsFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for The Dravanian Hinterlands.");
@@ -449,7 +472,7 @@ namespace Oracle.Managers
                     Logger.SendLog("Loading The Dravanian Hinterlands flight mesh.");
                     await LoadFlightMesh.Main();
                     return true;
-                case churningMists:
+                case ChurningMistsZoneId:
                     if (!MovementSettings.Instance.ChurningMistsFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for The Churning Mists.");
@@ -459,7 +482,7 @@ namespace Oracle.Managers
                     Logger.SendLog("Loading The Churning Mists flight mesh.");
                     await LoadFlightMesh.Main();
                     return true;
-                case seaOfClouds:
+                case SeaOfCloudsZoneId:
                     if (!MovementSettings.Instance.SeaOfCloudsFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for The Sea of Clouds.");
@@ -469,7 +492,7 @@ namespace Oracle.Managers
                     Logger.SendLog("Loading The Sea of Clouds flight mesh.");
                     await LoadFlightMesh.Main();
                     return true;
-                case azysLla:
+                case AzysLlaZoneId:
                     if (!MovementSettings.Instance.AzysLlaFlight)
                     {
                         Logger.SendDebugLog("Flight mesh is available, but disabled for Azys Lla.");

@@ -15,7 +15,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\BotBases\Oracle\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -24,14 +24,15 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\BotBases\Oracle\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <NoWarn>CS1998</NoWarn>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>Oracle</RootNamespace>
@@ -143,13 +144,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviour\Tasks\ChocoboHandler.cs" />
     <Compile Include="Behaviour\Hooks\Rest.cs" />
     <Compile Include="Behaviour\Modes\AnimaGrind.cs" />
     <Compile Include="Behaviour\Modes\AtmaGrind.cs" />
     <Compile Include="Behaviour\Modes\FateGrind.cs" />
     <Compile Include="Behaviour\Modes\Levelling.cs" />
     <Compile Include="Behaviour\Modes\MultiLevelling.cs" />
-    <Compile Include="Behaviour\Modes\SpecificFate.cs" />
+    <Compile Include="Behaviour\Modes\SpecificFates.cs" />
     <Compile Include="Behaviour\Modes\AnimusGrind.cs" />
     <Compile Include="Behaviour\Modes\YokaiWatchGrind.cs" />
     <Compile Include="Behaviour\Hooks\WaitSelect\GrindMobs.cs" />
@@ -157,10 +159,6 @@
     <Compile Include="Behaviour\Hooks\WaitSelect\WaitInPlace.cs" />
     <Compile Include="Behaviour\OracleBehaviour.cs" />
     <Compile Include="Behaviour\Hooks\SelectPoiType.cs" />
-    <Compile Include="Behaviour\Hooks\FateSelect\ChainAndTypePriority.cs" />
-    <Compile Include="Behaviour\Hooks\FateSelect\ChainPriority.cs" />
-    <Compile Include="Behaviour\Hooks\FateSelect\Closest.cs" />
-    <Compile Include="Behaviour\Hooks\FateSelect\TypePriority.cs" />
     <Compile Include="Behaviour\Tasks\CombatHandler.cs" />
     <Compile Include="Behaviour\Tasks\DeathHandler.cs" />
     <Compile Include="Behaviour\Tasks\FateHandler.cs" />
@@ -171,10 +169,11 @@
     <Compile Include="Behaviour\Tasks\Utilities\SummonMinion.cs" />
     <Compile Include="Enumerations\ClassLevelMode.cs" />
     <Compile Include="Managers\OracleClassManager.cs" />
+    <Compile Include="Managers\OracleInventoryManager.cs" />
     <Compile Include="Settings\ClassSettings.cs" />
     <Compile Include="Structs\YokaiMinion.cs" />
-    <Compile Include="Data\YokaiMinions.cs" />
-    <Compile Include="Enumerations\YokaiMinion.cs" />
+    <Compile Include="Data\YokaiWatchGrindData.cs" />
+    <Compile Include="Enumerations\YokaiMinionId.cs" />
     <Compile Include="Helpers\XmlParser.cs" />
     <Compile Include="Managers\OracleMovementManager.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SelectGrindTarget.cs" />
@@ -203,7 +202,6 @@
     <Compile Include="Data\Fates\FateDatabase.cs" />
     <Compile Include="Structs\Fate.cs" />
     <Compile Include="Enumerations\FateWaitMode.cs" />
-    <Compile Include="Enumerations\FateSelectMode.cs" />
     <Compile Include="Enumerations\FateSupportLevel.cs" />
     <Compile Include="Enumerations\FateType.cs" />
     <Compile Include="Helpers\Logger.cs" />
@@ -221,7 +219,7 @@
     <Compile Include="Settings\MainSettings.cs" />
     <Compile Include="OracleBot.cs" />
     <Compile Include="Settings\MovementSettings.cs" />
-    <Compile Include="Settings\YokaiSettings.cs" />
+    <Compile Include="Settings\ModeSettings.cs" />
     <Compile Include="UI\App.xaml.cs" />
     <Compile Include="UI\Pages\Domain\SpecificFateGridViewModel.cs" />
     <Compile Include="UI\Pages\Domain\FateViewModel.cs" />

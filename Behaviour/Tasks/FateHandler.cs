@@ -57,25 +57,25 @@ namespace Oracle.Behaviour.Tasks
             switch (oracleFate.Type)
             {
                 case FateType.Kill:
-                    await KillFate.Main();
+                    await KillFate.HandleKillFate();
                     return true;
                 case FateType.Collect:
-                    await CollectFate.Main();
+                    await CollectFate.HandleCollectFate();
                     return true;
                 case FateType.Escort:
-                    await EscortFate.Main();
+                    await EscortFate.HandleEscortFate();
                     return true;
                 case FateType.Defence:
-                    await DefenceFate.Main();
+                    await DefenceFate.HandleDefenceFate();
                     return true;
                 case FateType.Boss:
-                    await BossFate.Main();
+                    await BossFate.HandleBossFate();
                     return true;
                 case FateType.MegaBoss:
-                    await MegaBossFate.Main();
+                    await MegaBossFate.HandleMegaBossFate();
                     return true;
                 case FateType.Null:
-                    Logger.SendDebugLog("Cannot find FATE in database, using Rebornbuddy's FATE type identifier.");
+                    Logger.SendWarningLog("Cannot find FATE in database, using Rebornbuddy's FATE type identifier.");
                     break;
             }
 
@@ -89,20 +89,20 @@ namespace Oracle.Behaviour.Tasks
             switch (currentFate.Icon)
             {
                 case FateIconType.Battle:
-                    await KillFate.Main();
+                    await KillFate.HandleKillFate();
                     return true;
                 case FateIconType.Boss:
-                    Logger.SendDebugLog("Cannot determine if FATE is a regular or mega-boss, assuming regular.");
-                    await BossFate.Main();
+                    Logger.SendWarningLog("Cannot determine if FATE is a regular or mega-boss, assuming regular.");
+                    await BossFate.HandleBossFate();
                     return true;
                 case FateIconType.KillHandIn:
-                    await CollectFate.Main();
+                    await CollectFate.HandleCollectFate();
                     return true;
                 case FateIconType.ProtectNPC:
-                    await EscortFate.Main();
+                    await EscortFate.HandleEscortFate();
                     return true;
                 case FateIconType.ProtectNPC2:
-                    await DefenceFate.Main();
+                    await DefenceFate.HandleDefenceFate();
                     return true;
             }
 

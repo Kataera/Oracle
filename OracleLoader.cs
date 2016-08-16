@@ -18,7 +18,7 @@ using Action = TreeSharp.Action;
 
 namespace Oracle
 {
-    public class LisbethLoader : BotBase
+    public class OracleLoader : BotBase
     {
         private const string ProjectName = "Oracle";
         private const string ProjectClass = "Oracle.OracleBot";
@@ -30,7 +30,7 @@ namespace Oracle
         private static readonly Color LogColor = Color.FromRgb(179, 179, 255);
         private static volatile bool updaterStarted, updaterFinished, loaded;
 
-        public LisbethLoader()
+        public OracleLoader()
         {
             if (updaterStarted)
             {

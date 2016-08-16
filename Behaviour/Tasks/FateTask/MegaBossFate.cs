@@ -25,12 +25,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
             await OracleFateManager.ClearCurrentFate("Current FATE is finished.");
         }
 
-        private static bool IsViableTarget(BattleCharacter target)
-        {
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleFateManager.CurrentFateId;
-        }
-
-        public static async Task<bool> Main()
+        public static async Task<bool> HandleMegaBossFate()
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
 
@@ -40,7 +35,8 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 return true;
             }
 
-            if (currentFate.Status != FateStatus.NOTACTIVE && currentFate.Progress < FateSettings.Instance.MegaBossEngagePercentage)
+            if (currentFate.Status != FateStatus.NOTACTIVE && currentFate.Progress < FateSettings.Instance.MegaBossEngagePercentage
+                && !OracleFateManager.PreviousFateChained())
             {
                 if (!FateSettings.Instance.WaitAtMegaBossForProgress)
                 {
@@ -60,6 +56,11 @@ namespace Oracle.Behaviour.Tasks.FateTask
             }
 
             return true;
+        }
+
+        private static bool IsViableTarget(BattleCharacter target)
+        {
+            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleFateManager.CurrentFateId;
         }
 
         private static void SelectTarget()

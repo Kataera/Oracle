@@ -83,7 +83,14 @@ namespace Oracle.Managers
 
             if (!WorldManager.CanFly)
             {
-                var navRequest = new List<CanFullyNavigateTarget> {new CanFullyNavigateTarget {Id = fate.ObjectId, Position = fate.Location}};
+                var navRequest = new List<CanFullyNavigateTarget>
+                {
+                    new CanFullyNavigateTarget
+                    {
+                        Id = fate.ObjectId,
+                        Position = fate.Location
+                    }
+                };
                 var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
                 var navResult = navResults.FirstOrDefault();
 
@@ -109,7 +116,11 @@ namespace Oracle.Managers
 
             if (!WorldManager.CanFly)
             {
-                var navRequest = allAetherytes.Select(target => new CanFullyNavigateTarget {Id = target.Id, Position = target.Location});
+                var navRequest = allAetherytes.Select(target => new CanFullyNavigateTarget
+                {
+                    Id = target.Id,
+                    Position = target.Location
+                });
                 var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, fate.Location, WorldManager.ZoneId);
 
                 foreach (var navResult in navResults.Where(result => result.CanNavigate != 0))
@@ -161,9 +172,37 @@ namespace Oracle.Managers
             return true;
         }
 
+        public static async Task TeleportToClosestCity()
+        {
+            Logger.SendLog("Teleporting to closest city.");
+            await Coroutine.Wait(TimeSpan.FromSeconds(15), WorldManager.CanTeleport);
+
+            if (!WorldManager.CanTeleport())
+            {
+                return;
+            }
+
+            var cityList = new List<WorldManager.TeleportLocation>
+            {
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 8),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 2),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 9),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 70),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 75)
+            };
+
+            cityList = cityList.OrderBy(loc => loc.GilCost).Where(loc => WorldManager.HasAetheryteId(loc.AetheryteId)).ToList();
+            await TeleportToAetheryte(cityList.FirstOrDefault().AetheryteId);
+        }
+
         private static Aetheryte TupleToAetheryte(Tuple<uint, Vector3> tuple, Vector3 location)
         {
-            return new Aetheryte {Distance = tuple.Item2.Distance(location), Id = tuple.Item1, Location = tuple.Item2};
+            return new Aetheryte
+            {
+                Distance = tuple.Item2.Distance(location),
+                Id = tuple.Item1,
+                Location = tuple.Item2
+            };
         }
 
         public struct Aetheryte

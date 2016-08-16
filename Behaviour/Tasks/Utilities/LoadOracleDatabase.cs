@@ -51,8 +51,14 @@ namespace Oracle.Behaviour.Tasks.Utilities
             await SerialiseFateData();
             Logger.SendLog("Loading Oracle's FATE database.");
             OracleFateManager.FateDatabase = await DeserialiseFateData();
-            Logger.SendLog("Oracle's FATE database loaded successfully.");
 
+            if (OracleFateManager.FateDatabase == null)
+            {
+                Logger.SendErrorLog("FATE database loading failed.");
+                return false;
+            }
+
+            Logger.SendLog("Oracle's FATE database loaded successfully!");
             return true;
         }
 
