@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 using ff14bot;
@@ -191,6 +192,7 @@ namespace Oracle
             }
 
             LogCurrentMode();
+            WarnAboutPlugins();
         }
 
         public void Stop()
@@ -226,6 +228,14 @@ namespace Oracle
         internal static void StopOracle(string reason)
         {
             TreeRoot.Stop(" " + reason);
+        }
+
+        private static void WarnAboutPlugins()
+        {
+            if (PluginManager.GetEnabledPlugins().Contains("Enable Flight"))
+            {
+                Logger.SendWarningLog("Detected ExBuddy's flight plugin; it's advised that you do not run this and Oracle's own flight navigator together.");
+            }
         }
     }
 }

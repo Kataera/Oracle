@@ -58,7 +58,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return false;
             }
 
-            Logger.SendLog("Oracle's FATE database loaded successfully.");
+            Logger.SendLog("Oracle's FATE database loaded successfully!");
             return true;
         }
 

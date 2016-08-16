@@ -133,7 +133,6 @@ namespace Oracle.Behaviour.Tasks
             Logger.SendLog("Attempting to summon our Chocobo.");
             await Coroutine.Sleep(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay));
             Chocobo.Summon();
-            await Coroutine.Wait(TimeSpan.FromSeconds(5), () => Chocobo.Summoned);
             await Coroutine.Sleep(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay));
 
             return Chocobo.Summoned ? SummonChocoboResult.Success : SummonChocoboResult.Failure;
