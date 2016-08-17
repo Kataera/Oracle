@@ -37,7 +37,15 @@ namespace Oracle.Behaviour.Tasks
                     return "Chocobo";
                 }
 
-                var chocobo = PartyManager.AllMembers.FirstOrDefault(member => member.GameObject.SummonerGameObject == Core.Player);
+                GameObject chocobo = null;
+                foreach (var member in PartyManager.AllMembers)
+                {
+                    if (member.GameObject != null && member.GameObject.SummonerGameObject == Core.Player)
+                    {
+                        chocobo = member.GameObject;
+                    }
+                }
+
                 return chocobo == null ? "Chocobo" : chocobo.Name;
             }
         }

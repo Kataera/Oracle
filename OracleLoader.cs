@@ -24,7 +24,7 @@ namespace Oracle
         private const string ProjectClass = "Oracle.OracleBot";
         private static readonly object Locker = new object();
         private static readonly string ProjectAssembly = Path.Combine(Environment.CurrentDirectory, @"BotBases\Oracle\Oracle.dll");
-        private static readonly string ProjectAssembly64 = Path.Combine(Environment.CurrentDirectory, @"BotBases\Oracle\Oracle_64.dll");
+        private static readonly string ProjectAssembly64 = Path.Combine(Environment.CurrentDirectory, @"BotBases\Oracle\Oracle64.dll");
         private static readonly string VersionPath = Path.Combine(Environment.CurrentDirectory, @"BotBases\Oracle\version.txt");
         private static readonly string BaseDir = Path.Combine(Environment.CurrentDirectory, @"BotBases\Oracle");
         private static readonly string ProjectTypeFolder = Path.Combine(Environment.CurrentDirectory, @"BotBases");

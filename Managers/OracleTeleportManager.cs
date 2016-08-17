@@ -174,14 +174,6 @@ namespace Oracle.Managers
 
         public static async Task TeleportToClosestCity()
         {
-            Logger.SendLog("Teleporting to closest city.");
-            await Coroutine.Wait(TimeSpan.FromSeconds(15), WorldManager.CanTeleport);
-
-            if (!WorldManager.CanTeleport())
-            {
-                return;
-            }
-
             var cityList = new List<WorldManager.TeleportLocation>
             {
                 WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 8),
@@ -190,6 +182,19 @@ namespace Oracle.Managers
                 WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 70),
                 WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 75)
             };
+
+            if (cityList.Any(city => city.ZoneId == WorldManager.ZoneId))
+            {
+                return;
+            }
+
+            Logger.SendLog("Teleporting to closest city.");
+            await Coroutine.Wait(TimeSpan.FromSeconds(15), WorldManager.CanTeleport);
+
+            if (!WorldManager.CanTeleport())
+            {
+                return;
+            }
 
             cityList = cityList.OrderBy(loc => loc.GilCost).Where(loc => WorldManager.HasAetheryteId(loc.AetheryteId)).ToList();
             await TeleportToAetheryte(cityList.FirstOrDefault().AetheryteId);

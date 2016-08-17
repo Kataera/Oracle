@@ -192,7 +192,7 @@ namespace Oracle
             }
 
             LogCurrentMode();
-            WarnAboutPlugins();
+            WarnAboutPotentialIssues();
         }
 
         public void Stop()
@@ -230,11 +230,16 @@ namespace Oracle
             TreeRoot.Stop(" " + reason);
         }
 
-        private static void WarnAboutPlugins()
+        private static void WarnAboutPotentialIssues()
         {
             if (PluginManager.GetEnabledPlugins().Contains("Enable Flight"))
             {
                 Logger.SendWarningLog("Detected ExBuddy's flight plugin; it's advised that you do not run this and Oracle's own flight navigator together.");
+            }
+
+            if (Environment.Is64BitProcess)
+            {
+                Logger.SendWarningLog("Running Oracle in 64-bit mode. If you have any issues, please try running in 32-bit mode prior to seeking assistance.");
             }
         }
     }
