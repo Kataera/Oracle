@@ -79,7 +79,7 @@ namespace Oracle.Behaviour.Tasks
 
                 if (WaitSettings.Instance.FateWaitMode == FateWaitMode.GrindMobs)
                 {
-                    var target = await SelectGrindTarget.Main();
+                    var target = await SelectGrindTarget.HandleSelectGrindTarget();
                     if (target == null)
                     {
                         return true;

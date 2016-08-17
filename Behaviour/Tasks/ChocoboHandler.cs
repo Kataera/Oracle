@@ -32,6 +32,11 @@ namespace Oracle.Behaviour.Tasks
                     return "Chocobo";
                 }
 
+                if (PartyManager.AllMembers == null)
+                {
+                    return "Chocobo";
+                }
+
                 var chocobo = PartyManager.AllMembers.FirstOrDefault(member => member.GameObject.SummonerGameObject == Core.Player);
                 return chocobo == null ? "Chocobo" : chocobo.Name;
             }
@@ -73,6 +78,11 @@ namespace Oracle.Behaviour.Tasks
                 }
 
                 return true;
+            }
+
+            if (!Chocobo.Summoned)
+            {
+                return false;
             }
 
             if (Core.Player.CurrentHealthPercent < MainSettings.Instance.ChocoboHealerStanceThreshold)

@@ -58,7 +58,7 @@ namespace Oracle.Managers
 
         public static uint GetItemAmount(uint itemId)
         {
-            return GetBagSlotByItemId(itemId).Item.ItemCount();
+            return GetBagSlotByItemId(itemId) == null ? 0 : GetBagSlotByItemId(itemId).Item.ItemCount();
         }
 
         public static bool IsItemEquipped(uint itemId, EquipmentSlot slot)

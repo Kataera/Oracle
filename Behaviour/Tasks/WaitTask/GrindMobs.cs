@@ -27,7 +27,7 @@ namespace Oracle.Behaviour.Tasks.WaitTask
                 return true;
             }
 
-            var target = await SelectGrindTarget.Main();
+            var target = await SelectGrindTarget.HandleSelectGrindTarget();
             if (target == null)
             {
                 return true;

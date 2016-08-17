@@ -24,7 +24,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
     {
         private static Stopwatch checkForTargetCooldown;
 
-        public static async Task<BattleCharacter> Main()
+        public static async Task<BattleCharacter> HandleSelectGrindTarget()
         {
             if (checkForTargetCooldown != null && checkForTargetCooldown.Elapsed <= TimeSpan.FromSeconds(5))
             {

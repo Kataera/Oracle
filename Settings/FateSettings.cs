@@ -5,8 +5,6 @@ using System.IO;
 
 using ff14bot.Helpers;
 
-using Oracle.Enumerations;
-
 namespace Oracle.Settings
 {
     internal sealed class FateSettings : JsonSettings

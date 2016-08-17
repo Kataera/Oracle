@@ -17,6 +17,8 @@ using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Settings;
 
+using NeoGaia.ConnectionHandler;
+
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Data.Meshes;
 using Oracle.Helpers;
@@ -308,33 +310,67 @@ namespace Oracle.Managers
             return path;
         }
 
-        private static async Task<Vector3> GenerateRandomLocationInRadius(Vector3 location, float radius)
+        private static async Task<Vector3> GenerateRandomSpot(Vector3 location, float radius)
         {
-            var potentialSpots = new List<Vector3>();
+            var potentialSpots = new Dictionary<uint, Vector3>();
 
-            // Generate locations in the direction we're facing.
-            for (var i = 0; i < 10; i++)
+            // Get the true FATE location.
+            Vector3 collision;
+            var elevatedFateLocation = new Vector3(location.X, location.Y + 20, location.Z);
+            if (WorldManager.Raycast(elevatedFateLocation, new Vector3(location.X, location.Y - 100, location.Z), out collision))
             {
-                potentialSpots.Add(MathEx.GetPointAt(location,
+                location = collision;
+            }
+
+            // Generate spots in the direction we're facing.
+            for (uint i = 0; i < 10; i++)
+            {
+                potentialSpots.Add(i,
+                                   MathEx.GetPointAt(location,
                                                      radius * Convert.ToSingle(MathEx.Random(0.5, 0.9)),
                                                      Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.4 * Math.PI, 0.4 * Math.PI))));
             }
 
+            // Remove any spots where we can't navigate to the FATE centre from.
+            var navRequest = potentialSpots.Select(target => new CanFullyNavigateTarget
+            {
+                Id = target.Key,
+                Position = target.Value
+            });
+
+            var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, location, WorldManager.ZoneId);
+            foreach (var result in navResults)
+            {
+                if (result.CanNavigate == 0)
+                {
+                    potentialSpots.Remove(result.Id);
+                }
+            }
+
+            // Get the weights for each spot and return the best.
             var bestSpot = Vector3.Zero;
             float bestScore = 0;
             foreach (var spot in potentialSpots)
             {
                 var closestEnemies =
-                    GameObjectManager.GameObjects.OrderBy(enemy => enemy.Distance2D(spot)).Where(enemy => enemy.Type == GameObjectType.BattleNpc).Take(10);
+                    GameObjectManager.GameObjects.OrderBy(enemy => enemy.Distance2D(spot.Value)).Where(enemy => enemy.Type == GameObjectType.BattleNpc).Take(10);
 
-                var currentScore = closestEnemies.Sum(enemy => enemy.Distance2D(spot));
+                var currentScore = closestEnemies.Sum(enemy => enemy.Distance2D(spot.Value));
                 if (!(currentScore > bestScore))
                 {
                     continue;
                 }
 
-                bestSpot = spot;
+                bestSpot = spot.Value;
                 bestScore = currentScore;
+            }
+
+            // Get the correct y co-ordinate.
+            bestSpot.Y = bestSpot.Y + 20;
+            var groundVector = new Vector3(bestSpot.X, bestSpot.Y - 100, bestSpot.Z);
+            if (WorldManager.Raycast(bestSpot, groundVector, out collision))
+            {
+                bestSpot = collision;
             }
 
             return bestSpot;
@@ -360,35 +396,30 @@ namespace Oracle.Managers
         {
             var oracleFate = OracleFateManager.GetCurrentOracleFate();
             var currentFate = OracleFateManager.GetCurrentFateData();
-            var elevatedFateLocation = currentFate.Location;
-            elevatedFateLocation.Y = Core.Player.Location.Y;
 
             Logger.SendDebugLog("Generating a landing spot.");
 
-            var potentialLandingLocation = await GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
-            if (await CommonTasks.CanLand(potentialLandingLocation) == CanLandResult.No)
+            var landingLocation = await GenerateRandomSpot(currentFate.Location, currentFate.Radius * oracleFate.LandingRadius);
+            if (await CommonTasks.CanLand(landingLocation) == CanLandResult.No)
             {
-                Logger.SendDebugLog("Landing spot generation failed: we can't land at the proposed spot.");
+                Logger.SendDebugLog("Landing spot generation failed: we can't land at " + landingLocation + ".");
                 return Core.Player.Location;
             }
 
-            // Raycast from generated location to ground to get position closer to ground.
-            Vector3 collision;
-            var groundVector = new Vector3(potentialLandingLocation.X, potentialLandingLocation.Y - 100, potentialLandingLocation.Z);
-            if (WorldManager.Raycast(potentialLandingLocation, groundVector, out collision))
-            {
-                potentialLandingLocation = new Vector3(collision.X, collision.Y + Convert.ToSingle(MathEx.Random(7, 13)), collision.Z);
-            }
+            // Add a random height to the landing location so we fly above it, then land using the landing task.
+            landingLocation.Y = landingLocation.Y + Convert.ToSingle(MathEx.Random(7, 13));
 
             // Raycast to generated location from current location to check we can move there.
-            if (WorldManager.Raycast(Core.Player.Location, potentialLandingLocation, out collision))
+            Vector3 collision;
+            if (WorldManager.Raycast(Core.Player.Location, landingLocation, out collision)
+                && WorldManager.Raycast(landingLocation, Core.Player.Location, out collision))
             {
-                Logger.SendDebugLog("Landing spot generation failed: there's obstacles in the way.");
+                Logger.SendDebugLog("Landing spot generation failed: there's a collision at " + collision + ".");
                 return Core.Player.Location;
             }
 
             Logger.SendDebugLog("Landing spot generation succeeded.");
-            return potentialLandingLocation;
+            return landingLocation;
         }
 
         public static bool IsFlightMeshLoaded()
