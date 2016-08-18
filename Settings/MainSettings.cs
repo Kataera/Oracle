@@ -93,7 +93,7 @@ namespace Oracle.Settings
             }
         }
 
-        [DefaultValue(90)]
+        [DefaultValue(85)]
         [Setting]
         public int ChocoboStanceReturnToAttackThreshold
         {

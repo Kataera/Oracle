@@ -12,6 +12,7 @@ using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+using ff14bot.Objects;
 using ff14bot.RemoteWindows;
 
 using NeoGaia.ConnectionHandler;
@@ -486,7 +487,11 @@ namespace Oracle.Managers
 
         public static bool IsPlayerBeingAttacked()
         {
-            return GameObjectManager.Attackers.Any(mob => mob.IsValid && mob.HasTarget && mob.CurrentTargetId == Core.Player.ObjectId && !mob.IsFateGone);
+            return GameObjectManager.Attackers.Any(mob =>
+                                                   mob.IsValid
+                                                   && mob.HasTarget
+                                                   && (mob.CurrentTargetId == Core.Player.ObjectId || mob.CurrentTargetId == Chocobo.Object.ObjectId)
+                                                   && !mob.IsFateGone);
         }
 
         public static bool PreviousFateChained()
