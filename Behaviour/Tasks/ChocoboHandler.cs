@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Buddy.Coroutines;
@@ -37,12 +36,12 @@ namespace Oracle.Behaviour.Tasks
                     return "Chocobo";
                 }
 
-                GameObject chocobo = null;
+                PartyMember chocobo = null;
                 foreach (var member in PartyManager.AllMembers)
                 {
                     if (member.GameObject != null && member.GameObject.SummonerGameObject == Core.Player)
                     {
-                        chocobo = member.GameObject;
+                        chocobo = member;
                     }
                 }
 
@@ -88,16 +87,26 @@ namespace Oracle.Behaviour.Tasks
                 return true;
             }
 
-            if (!Chocobo.Summoned)
+            // Safety checks for when the Chocobo may be summoned, but can't be accessed by RebornBuddy.
+            if (!Chocobo.Summoned || Chocobo.Object == null || !Chocobo.Object.IsValid)
             {
+                OracleFateManager.ForceUpdateGameCache();
                 return false;
             }
 
-            if (Core.Player.CurrentHealthPercent < MainSettings.Instance.ChocoboHealerStanceThreshold)
+            if (Core.Player.CurrentHealthPercent < MainSettings.Instance.ChocoboStancePlayerHealthThreshold)
             {
                 await SetChocoboStance(CompanionStance.Healer);
             }
-            else
+            else if (Chocobo.Object.CurrentHealthPercent < MainSettings.Instance.ChocoboStanceChocoboHealthThreshold)
+            {
+                await SetChocoboStance(CompanionStance.Healer);
+            }
+            else if (Core.Player.CurrentHealthPercent >= MainSettings.Instance.ChocoboStanceReturnToAttackThreshold)
+            {
+                await SetChocoboStance(CompanionStance.Attacker);
+            }
+            else if (Chocobo.Stance != CompanionStance.Attacker && Chocobo.Stance != CompanionStance.Healer)
             {
                 await SetChocoboStance(CompanionStance.Attacker);
             }

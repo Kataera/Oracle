@@ -14,7 +14,9 @@ namespace Oracle.Settings
 
         private int actionDelay;
         private bool chocoboHandlingEnabled;
-        private int chocoboHealerStanceThreshold;
+        private int chocoboStanceChocoboHealthThreshold;
+        private int chocoboStancePlayerHealthThreshold;
+        private int chocoboStanceReturnToAttackThreshold;
         private int combatNoDamageTimeout;
         private bool listHooksOnStart;
         private bool overrideRestBehaviour;
@@ -59,18 +61,50 @@ namespace Oracle.Settings
             }
         }
 
-        [DefaultValue(70)]
+        [DefaultValue(50)]
         [Setting]
-        public int ChocoboHealerStanceThreshold
+        public int ChocoboStanceChocoboHealthThreshold
         {
             get
             {
-                return chocoboHealerStanceThreshold;
+                return chocoboStanceChocoboHealthThreshold;
             }
 
             set
             {
-                chocoboHealerStanceThreshold = value;
+                chocoboStanceChocoboHealthThreshold = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(70)]
+        [Setting]
+        public int ChocoboStancePlayerHealthThreshold
+        {
+            get
+            {
+                return chocoboStancePlayerHealthThreshold;
+            }
+
+            set
+            {
+                chocoboStancePlayerHealthThreshold = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(90)]
+        [Setting]
+        public int ChocoboStanceReturnToAttackThreshold
+        {
+            get
+            {
+                return chocoboStanceReturnToAttackThreshold;
+            }
+
+            set
+            {
+                chocoboStanceReturnToAttackThreshold = value;
                 Save();
             }
         }

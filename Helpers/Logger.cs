@@ -35,11 +35,45 @@ namespace Oracle.Helpers
             lastLog = log;
         }
 
+        internal static void SendDebugLog(string log, bool sendMultiple)
+        {
+            log = "[Oracle v" + OracleBot.Version + "] [DEBUG]: " + log;
+
+            if (!sendMultiple && log.Equals(lastLog))
+            {
+                return;
+            }
+
+            if (!MainSettings.Instance.ShowDebugInConsole)
+            {
+                Logging.WriteQuiet(LoggerDebugColour, log);
+            }
+            else
+            {
+                Logging.WriteVerbose(LoggerDebugColour, log);
+            }
+
+            lastLog = log;
+        }
+
         internal static void SendErrorLog(string log)
         {
             log = "[Oracle v" + OracleBot.Version + "] [ERROR]: " + log;
 
             if (log.Equals(lastLog))
+            {
+                return;
+            }
+
+            Logging.Write(LoggerErrorColour, log);
+            lastLog = log;
+        }
+
+        internal static void SendErrorLog(string log, bool sendMultiple)
+        {
+            log = "[Oracle v" + OracleBot.Version + "] [ERROR]: " + log;
+
+            if (!sendMultiple && log.Equals(lastLog))
             {
                 return;
             }
@@ -61,11 +95,37 @@ namespace Oracle.Helpers
             lastLog = log;
         }
 
+        internal static void SendLog(string log, bool sendMultiple)
+        {
+            log = "[Oracle v" + OracleBot.Version + "]: " + log;
+
+            if (!sendMultiple && log.Equals(lastLog))
+            {
+                return;
+            }
+
+            Logging.Write(LoggerRegularColour, log);
+            lastLog = log;
+        }
+
         internal static void SendWarningLog(string log)
         {
             log = "[Oracle v" + OracleBot.Version + "] [WARNING]: " + log;
 
             if (log.Equals(lastLog))
+            {
+                return;
+            }
+
+            Logging.Write(LoggerWarningColour, log);
+            lastLog = log;
+        }
+
+        internal static void SendWarningLog(string log, bool sendMultiple)
+        {
+            log = "[Oracle v" + OracleBot.Version + "] [WARNING]: " + log;
+
+            if (!sendMultiple && log.Equals(lastLog))
             {
                 return;
             }

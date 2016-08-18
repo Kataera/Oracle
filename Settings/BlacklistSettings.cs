@@ -371,6 +371,15 @@ namespace Oracle.Settings
             const uint scarredAntelope = 1992;
             BlacklistedMobs.Add(scarredAntelope);
 
+            /*
+			 * ---------------
+			 * Unkillable Mobs
+			 *----------------
+			 */
+
+            const uint trainingDummy = 541;
+            BlacklistedMobs.Add(trainingDummy);
+
             BlacklistedMobs.Sort();
         }
     }

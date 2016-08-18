@@ -34,11 +34,11 @@ namespace Oracle.Managers
 
         internal static FateDatabase FateDatabase { get; set; }
 
+        internal static bool PausePoiSetting { get; set; }
+
         internal static uint PreviousFateId { get; set; }
 
         internal static bool ReachedCurrentFate { get; set; } = true;
-
-        internal static bool PausePoiSetting { get; set; }
 
         public static async Task<bool> AnyViableFates()
         {
