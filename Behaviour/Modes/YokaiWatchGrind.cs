@@ -65,7 +65,7 @@ namespace Oracle.Behaviour.Modes
 
             var medalsToFarm = YokaiWatchGrindData.GetMedalsToFarm(minion) - OracleInventoryManager.GetItemAmount(minion.MedalItemId);
             Logger.SendLog("We need " + medalsToFarm + " Legendary " + minion.EnglishName + " Medal(s). Teleporting to your chosen zone.");
-            await ZoneChange.HandleZoneChange(GetMinionMedalZone(minion));
+            await ZoneChange.HandleZoneChange(GetMinionMedalZone(minion), true);
 
             return HandleMinionResult.InProgress;
         }
@@ -145,7 +145,7 @@ namespace Oracle.Behaviour.Modes
         {
             if (!Core.Player.InCombat && WorldManager.CanTeleport() && WorldManager.ZoneId != zone)
             {
-                await ZoneChange.HandleZoneChange(zone);
+                await ZoneChange.HandleZoneChange(zone, true);
             }
         }
     }

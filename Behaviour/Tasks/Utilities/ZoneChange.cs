@@ -52,7 +52,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return true;
         }
 
-        public static async Task<bool> HandleZoneChange(uint zoneId)
+        public static async Task<bool> HandleZoneChange(uint zoneId, bool bind)
         {
             const ushort dravanianHinterlands = 399;
             const uint idyllshireAetheryte = 75;
@@ -96,7 +96,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
                 return true;
             }
 
-            if (MovementSettings.Instance.BindHomePoint)
+            if (bind && MovementSettings.Instance.BindHomePoint)
             {
                 await BindHomePoint.Main(aetheryteId);
             }

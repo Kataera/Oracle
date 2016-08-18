@@ -207,7 +207,7 @@ namespace Oracle.Behaviour.Modes
                 }
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AtmaToFarm - OracleInventoryManager.GetItemAmount(AtmaLionItemId)) + " Atma of the Lion.");
-                await ZoneChange.HandleZoneChange(AtmaLionZoneId);
+                await ZoneChange.HandleZoneChange(AtmaLionZoneId, true);
             }
             else if (!ConditionParser.HasAtLeast(AtmaWaterBearerItemId, ModeSettings.Instance.AtmaToFarm))
             {
@@ -218,7 +218,7 @@ namespace Oracle.Behaviour.Modes
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AtmaToFarm - OracleInventoryManager.GetItemAmount(AtmaWaterBearerItemId))
                                + " Atma of the Water-bearer.");
-                await ZoneChange.HandleZoneChange(AtmaWaterBearerZoneId);
+                await ZoneChange.HandleZoneChange(AtmaWaterBearerZoneId, true);
             }
             else if (!ConditionParser.HasAtLeast(AtmaRamItemId, ModeSettings.Instance.AtmaToFarm))
             {
@@ -228,7 +228,7 @@ namespace Oracle.Behaviour.Modes
                 }
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AtmaToFarm - OracleInventoryManager.GetItemAmount(AtmaRamItemId)) + " Atma of the Ram.");
-                await ZoneChange.HandleZoneChange(AtmaRamZoneId);
+                await ZoneChange.HandleZoneChange(AtmaRamZoneId, true);
             }
             else if (!ConditionParser.HasAtLeast(AtmaCrabItemId, ModeSettings.Instance.AtmaToFarm))
             {
@@ -238,7 +238,7 @@ namespace Oracle.Behaviour.Modes
                 }
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AtmaToFarm - OracleInventoryManager.GetItemAmount(AtmaCrabItemId)) + " Atma of the Crab.");
-                await ZoneChange.HandleZoneChange(AtmaCrabZoneId);
+                await ZoneChange.HandleZoneChange(AtmaCrabZoneId, true);
             }
             else if (!ConditionParser.HasAtLeast(AtmaFishItemId, ModeSettings.Instance.AtmaToFarm))
             {
@@ -248,7 +248,7 @@ namespace Oracle.Behaviour.Modes
                 }
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AtmaToFarm - OracleInventoryManager.GetItemAmount(AtmaFishItemId)) + " Atma of the Fish.");
-                await ZoneChange.HandleZoneChange(AtmaFishZoneId);
+                await ZoneChange.HandleZoneChange(AtmaFishZoneId, true);
             }
             else if (!ConditionParser.HasAtLeast(AtmaBullItemId, ModeSettings.Instance.AtmaToFarm))
             {
@@ -258,7 +258,7 @@ namespace Oracle.Behaviour.Modes
                 }
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AtmaToFarm - OracleInventoryManager.GetItemAmount(AtmaBullItemId)) + " Atma of the Bull.");
-                await ZoneChange.HandleZoneChange(AtmaBullZoneId);
+                await ZoneChange.HandleZoneChange(AtmaBullZoneId, true);
             }
             else if (!ConditionParser.HasAtLeast(AtmaScalesItemId, ModeSettings.Instance.AtmaToFarm))
             {
@@ -268,7 +268,7 @@ namespace Oracle.Behaviour.Modes
                 }
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AtmaToFarm - OracleInventoryManager.GetItemAmount(AtmaScalesItemId)) + " Atma of the Scales.");
-                await ZoneChange.HandleZoneChange(AtmaScalesZoneId);
+                await ZoneChange.HandleZoneChange(AtmaScalesZoneId, true);
             }
             else if (!ConditionParser.HasAtLeast(AtmaTwinsItemId, ModeSettings.Instance.AtmaToFarm))
             {
@@ -278,7 +278,7 @@ namespace Oracle.Behaviour.Modes
                 }
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AtmaToFarm - OracleInventoryManager.GetItemAmount(AtmaTwinsItemId)) + " Atma of the Twins.");
-                await ZoneChange.HandleZoneChange(AtmaTwinsZoneId);
+                await ZoneChange.HandleZoneChange(AtmaTwinsZoneId, true);
             }
             else if (!ConditionParser.HasAtLeast(AtmaScorpionItemId, ModeSettings.Instance.AtmaToFarm))
             {
@@ -289,7 +289,7 @@ namespace Oracle.Behaviour.Modes
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AtmaToFarm - OracleInventoryManager.GetItemAmount(AtmaScorpionItemId))
                                + " Atma of the Scorpion.");
-                await ZoneChange.HandleZoneChange(AtmaScorpionZoneId);
+                await ZoneChange.HandleZoneChange(AtmaScorpionZoneId, true);
             }
             else if (!ConditionParser.HasAtLeast(AtmaArcherItemId, ModeSettings.Instance.AtmaToFarm))
             {
@@ -299,7 +299,7 @@ namespace Oracle.Behaviour.Modes
                 }
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AtmaToFarm - OracleInventoryManager.GetItemAmount(AtmaArcherItemId)) + " Atma of the Archer.");
-                await ZoneChange.HandleZoneChange(AtmaArcherZoneId);
+                await ZoneChange.HandleZoneChange(AtmaArcherZoneId, true);
             }
             else if (!ConditionParser.HasAtLeast(AtmaGoatItemId, ModeSettings.Instance.AtmaToFarm))
             {
@@ -309,7 +309,7 @@ namespace Oracle.Behaviour.Modes
                 }
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AtmaToFarm - OracleInventoryManager.GetItemAmount(AtmaGoatItemId)) + " Atma of the Goat.");
-                await ZoneChange.HandleZoneChange(AtmaGoatZoneId);
+                await ZoneChange.HandleZoneChange(AtmaGoatZoneId, true);
             }
             else if (!ConditionParser.HasAtLeast(AtmaMaidenItemId, ModeSettings.Instance.AtmaToFarm))
             {
@@ -319,7 +319,7 @@ namespace Oracle.Behaviour.Modes
                 }
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AtmaToFarm - OracleInventoryManager.GetItemAmount(AtmaMaidenItemId)) + " Atma of the Maiden.");
-                await ZoneChange.HandleZoneChange(AtmaMaidenZoneId);
+                await ZoneChange.HandleZoneChange(AtmaMaidenZoneId, true);
             }
             else if (!Core.Player.InCombat)
             {

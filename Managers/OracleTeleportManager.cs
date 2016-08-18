@@ -143,6 +143,7 @@ namespace Oracle.Managers
 
         public static async Task<bool> TeleportToAetheryte(uint aetheryteId)
         {
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay));
             await CommonBehaviors.CreateTeleportBehavior(vr => aetheryteId, vr => WorldManager.GetZoneForAetheryteId(aetheryteId)).ExecuteCoroutine();
             await Coroutine.Wait(TimeSpan.FromSeconds(10), () => !Core.Player.IsCasting || Core.Player.InCombat);
             await Coroutine.Wait(TimeSpan.FromSeconds(2), () => Core.Player.InCombat);
