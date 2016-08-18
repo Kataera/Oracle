@@ -184,7 +184,7 @@ namespace Oracle.Managers
         private static bool ConcurrentChangeNeeded()
         {
             var enabledLevels = Core.Player.Levels.OrderBy(kvp => kvp.Value).Where(kvp => IsClassJobEnabled(kvp.Key)).ToArray();
-            ushort highestLevel = 0;
+            var highestLevel = ushort.MinValue;
 
             foreach (var classLevel in enabledLevels)
             {
@@ -196,11 +196,12 @@ namespace Oracle.Managers
 
             if (!enabledLevels.Any(kvp => kvp.Value < highestLevel))
             {
+                Logger.SendDebugLog("There are no classes that are lower level than our highest level class.");
                 return false;
             }
 
             var lowerLevels = enabledLevels.Where(kvp => kvp.Value < highestLevel).ToArray();
-            return !lowerLevels.Any(kvp => kvp.Key == Core.Player.CurrentJob);
+            return lowerLevels.Any(kvp => kvp.Key != Core.Player.CurrentJob && kvp.Value < GetTrueLevel());
         }
 
         public static bool FinishedLevelling()
