@@ -227,7 +227,9 @@ namespace Oracle.Managers
             }
 
             if (fate.Level < OracleClassManager.GetTrueLevel() - FateSettings.Instance.FateMinLevelBelow
-                && ModeSettings.Instance.OracleOperationMode == OracleOperationMode.FateGrind)
+                && (ModeSettings.Instance.OracleOperationMode == OracleOperationMode.FateGrind
+                    || ModeSettings.Instance.OracleOperationMode == OracleOperationMode.LevelMode
+                    || ModeSettings.Instance.OracleOperationMode == OracleOperationMode.MultiLevelMode))
             {
                 return false;
             }
