@@ -35,8 +35,6 @@ namespace Oracle.Managers
 
         internal static FateDatabase FateDatabase { get; set; }
 
-        public static bool FateInProgress => CurrentFateId != 0;
-
         internal static bool PausePoiSetting { get; set; }
 
         internal static uint PreviousFateId { get; set; }

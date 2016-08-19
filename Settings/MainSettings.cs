@@ -160,7 +160,7 @@ namespace Oracle.Settings
             }
         }
 
-        [DefaultValue(15000)]
+        [DefaultValue(30000)]
         [Setting]
         public int CombatNoDamageTimeout
         {

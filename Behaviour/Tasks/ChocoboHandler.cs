@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Buddy.Coroutines;
@@ -78,6 +79,11 @@ namespace Oracle.Behaviour.Tasks
 
             if (!Chocobo.Summoned && Chocobo.CanSummon)
             {
+                if (PartyManager.IsInParty && PartyManager.AllMembers.Any(member => member.GameObject.SummonerGameObject == Core.Player))
+                {
+                    return false;
+                }
+
                 var summonResult = await SummonChocobo();
                 if (summonResult == SummonChocoboResult.Success)
                 {

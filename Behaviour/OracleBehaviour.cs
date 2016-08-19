@@ -66,7 +66,7 @@ namespace Oracle.Behaviour
                 return false;
             }
 
-            if (OracleInventoryManager.ShouldRestockGreens() && !OracleFateManager.FateInProgress)
+            if (OracleInventoryManager.ShouldRestockGreens())
             {
                 await RestockGysahlGreens.HandleRestockGyshalGreens();
                 return false;

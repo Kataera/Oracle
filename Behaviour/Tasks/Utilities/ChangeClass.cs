@@ -39,9 +39,11 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             var previousJob = Core.Player.CurrentJob;
             var gearSet = ClassSettings.Instance.ClassGearsets.FirstOrDefault(kvp => kvp.Value.Equals(job)).Key;
-            Logger.SendLog("Changing class from " + OracleClassManager.GetClassJobName(previousJob) + " to " + OracleClassManager.GetClassJobName(job) + ".");
+            Logger.SendLog("Changing class from " + OracleClassManager.GetClassJobName(previousJob) + " to " + OracleClassManager.GetClassJobName(job)
+                           + ". Waiting ~7 seconds to ensure game will let us change.");
+            await Coroutine.Sleep(TimeSpan.FromSeconds(7));
             ChatManager.SendChat("/gs change " + gearSet);
-            await Coroutine.Wait(TimeSpan.FromSeconds(7), () => Core.Player.CurrentJob == job);
+            await Coroutine.Wait(TimeSpan.FromSeconds(2), () => Core.Player.CurrentJob == job);
 
             if (Core.Player.CurrentJob == previousJob)
             {
