@@ -81,7 +81,7 @@ namespace Oracle.Behaviour.Tasks
             if (!Chocobo.Summoned && Chocobo.CanSummon)
             {
                 // Check for whether or not the dead/dismissed/expired Chocobo is still in the party. If it is, game won't let us summon.
-                if (PartyManager.IsInParty && PartyManager.AllMembers.Any(member => member.GameObject.SummonerGameObject == Core.Player))
+                if (PartyManager.IsInParty && PartyManager.AllMembers != null && PartyManager.AllMembers.Any(member => member.GameObject.SummonerGameObject == Core.Player))
                 {
                     return false;
                 }

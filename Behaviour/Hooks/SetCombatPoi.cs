@@ -17,7 +17,7 @@ namespace Oracle.Behaviour.Hooks
 
             if (GameObjectManager.Attackers.Any())
             {
-                var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
+                var target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault(attacker => GameObjectManager.Attackers.Contains(attacker));
                 if (target == null)
                 {
                     return false;
