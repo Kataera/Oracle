@@ -13,7 +13,10 @@ namespace Oracle.Settings
         private static volatile MainSettings instance;
 
         private int actionDelay;
+        private int chocoboGreensRestockAmount;
+        private bool chocoboGreensRestockEnabled;
         private bool chocoboHandlingEnabled;
+        private int chocoboMinRemainingGreensToRestock;
         private int chocoboStanceChocoboHealthThreshold;
         private int chocoboStancePlayerHealthThreshold;
         private int chocoboStanceReturnToAttackThreshold;
@@ -21,7 +24,7 @@ namespace Oracle.Settings
         private bool listHooksOnStart;
         private bool overrideRestBehaviour;
         private int restHealthPercent;
-        private int restManaPercent;
+        private int restTpManaPercent;
         private bool showDebugInConsole;
         private int targetListCacheDuration;
 
@@ -45,6 +48,38 @@ namespace Oracle.Settings
             }
         }
 
+        [DefaultValue(99)]
+        [Setting]
+        public int ChocoboGreensRestockAmount
+        {
+            get
+            {
+                return chocoboGreensRestockAmount;
+            }
+
+            set
+            {
+                chocoboGreensRestockAmount = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool ChocoboGreensRestockEnabled
+        {
+            get
+            {
+                return chocoboGreensRestockEnabled;
+            }
+
+            set
+            {
+                chocoboGreensRestockEnabled = value;
+                Save();
+            }
+        }
+
         [DefaultValue(true)]
         [Setting]
         public bool ChocoboHandlingEnabled
@@ -57,6 +92,22 @@ namespace Oracle.Settings
             set
             {
                 chocoboHandlingEnabled = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(5)]
+        [Setting]
+        public int ChocoboMinRemainingGreensToRestock
+        {
+            get
+            {
+                return chocoboMinRemainingGreensToRestock;
+            }
+
+            set
+            {
+                chocoboMinRemainingGreensToRestock = value;
                 Save();
             }
         }
@@ -196,16 +247,16 @@ namespace Oracle.Settings
 
         [DefaultValue(30)]
         [Setting]
-        public int RestManaPercent
+        public int RestTPManaPercent
         {
             get
             {
-                return restManaPercent;
+                return restTpManaPercent;
             }
 
             set
             {
-                restManaPercent = value;
+                restTpManaPercent = value;
                 Save();
             }
         }

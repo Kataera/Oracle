@@ -1,16 +1,48 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+
+using Buddy.Coroutines;
 
 using ff14bot.Enums;
 using ff14bot.Managers;
 using ff14bot.NeoProfiles;
+using ff14bot.RemoteWindows;
 
 using Oracle.Helpers;
+using Oracle.Settings;
 
 namespace Oracle.Managers
 {
     internal static class OracleInventoryManager
     {
+        public static async Task<BuyItemResult> BuyItem(uint itemId, uint itemAmount)
+        {
+            if (!Shop.Open)
+            {
+                return BuyItemResult.ShopNotOpen;
+            }
+
+            if (!Shop.Items.Any(item => item.ItemId == itemId))
+            {
+                return BuyItemResult.ItemNotFound;
+            }
+
+            if (itemAmount > 99)
+            {
+                return BuyItemResult.TooManyItemsRequested;
+            }
+
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay));
+            Shop.Purchase(itemId, itemAmount);
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay));
+            SelectYesno.ClickYes();
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay));
+            Shop.Close();
+
+            return GetItemAmount(itemId) >= itemAmount ? BuyItemResult.Success : BuyItemResult.Failure;
+        }
+
         public static async Task<EquipItemResult> EquipItem(uint itemId, EquipmentSlot slot)
         {
             var equipmentBagSlot = GetEquipmentSlotBagSlot(slot);
@@ -72,6 +104,17 @@ namespace Oracle.Managers
 
             return equipmentBagSlot.RawItemId == itemId;
         }
+
+        public static bool ShouldRestockGreens()
+        {
+            const uint gysahlGreensItemId = 4868;
+            if (!MainSettings.Instance.ChocoboGreensRestockEnabled)
+            {
+                return false;
+            }
+
+            return GetItemAmount(gysahlGreensItemId) < MainSettings.Instance.ChocoboMinRemainingGreensToRestock;
+        }
     }
 
     internal enum EquipItemResult
@@ -79,6 +122,19 @@ namespace Oracle.Managers
         ItemNotFound,
 
         BagSlotNotFound,
+
+        Success,
+
+        Failure
+    }
+
+    internal enum BuyItemResult
+    {
+        ShopNotOpen,
+
+        ItemNotFound,
+
+        TooManyItemsRequested,
 
         Success,
 

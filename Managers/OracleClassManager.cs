@@ -16,6 +16,14 @@ namespace Oracle.Managers
 {
     internal static class OracleClassManager
     {
+        public static IEnumerable<ClassJobType> CasterDpsClassJobs => new List<ClassJobType>
+        {
+            ClassJobType.Arcanist,
+            ClassJobType.BlackMage,
+            ClassJobType.Summoner,
+            ClassJobType.Thaumaturge
+        };
+
         public static Stopwatch ClassChangedTimer { get; set; }
 
         public static IEnumerable<ClassJobType> CombatClassJobs
@@ -23,9 +31,9 @@ namespace Oracle.Managers
             get
             {
                 var combatClassJobs = new List<ClassJobType>();
+                combatClassJobs.AddRange(DpsClassJobs);
                 combatClassJobs.AddRange(HealerClassJobs);
                 combatClassJobs.AddRange(TankClassJobs);
-                combatClassJobs.AddRange(DpsClassJobs);
 
                 return combatClassJobs;
             }
@@ -36,6 +44,7 @@ namespace Oracle.Managers
             get
             {
                 var dpsClassJobs = new List<ClassJobType>();
+                dpsClassJobs.AddRange(CasterDpsClassJobs);
                 dpsClassJobs.AddRange(MeleeDpsClassJobs);
                 dpsClassJobs.AddRange(RangedDpsClassJobs);
 
@@ -63,13 +72,9 @@ namespace Oracle.Managers
 
         public static IEnumerable<ClassJobType> RangedDpsClassJobs => new List<ClassJobType>
         {
-            ClassJobType.Arcanist,
             ClassJobType.Archer,
             ClassJobType.Bard,
-            ClassJobType.BlackMage,
-            ClassJobType.Machinist,
-            ClassJobType.Summoner,
-            ClassJobType.Thaumaturge
+            ClassJobType.Machinist
         };
 
         public static IEnumerable<ClassJobType> TankClassJobs => new List<ClassJobType>
@@ -328,6 +333,11 @@ namespace Oracle.Managers
             return trueLevel != 0 ? trueLevel : Core.Player.ClassLevel;
         }
 
+        internal static bool IsCasterClassJob(ClassJobType job)
+        {
+            return CasterDpsClassJobs.Contains(job);
+        }
+
         public static bool IsClassJobEnabled(ClassJobType job)
         {
             switch (job)
@@ -418,6 +428,16 @@ namespace Oracle.Managers
         public static bool IsHealerClassJob(ClassJobType job)
         {
             return HealerClassJobs.Contains(job);
+        }
+
+        internal static bool IsMeleeDpsClassJob(ClassJobType job)
+        {
+            return MeleeDpsClassJobs.Contains(job);
+        }
+
+        internal static bool IsRangedDpsClassJob(ClassJobType job)
+        {
+            return RangedDpsClassJobs.Contains(job);
         }
 
         public static bool IsTankClassJob(ClassJobType job)

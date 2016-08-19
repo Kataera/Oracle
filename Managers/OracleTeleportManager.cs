@@ -180,7 +180,6 @@ namespace Oracle.Managers
                 WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 8),
                 WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 2),
                 WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 9),
-                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 70),
                 WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 75)
             };
 

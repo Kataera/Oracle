@@ -66,6 +66,12 @@ namespace Oracle.Behaviour
                 return false;
             }
 
+            if (OracleInventoryManager.ShouldRestockGreens() && !OracleFateManager.FateInProgress)
+            {
+                await RestockGysahlGreens.HandleRestockGyshalGreens();
+                return false;
+            }
+
             switch (ModeSettings.Instance.OracleOperationMode)
             {
                 case OracleOperationMode.FateGrind:
@@ -99,9 +105,10 @@ namespace Oracle.Behaviour
             if (Poi.Current.Type == PoiType.Fate || OracleFateManager.CurrentFateId != 0)
             {
                 await FateHandler.HandleFate();
+                return false;
             }
 
-            else if (Poi.Current.Type == PoiType.Wait)
+            if (Poi.Current.Type == PoiType.Wait)
             {
                 await WaitHandler.HandleWait();
             }

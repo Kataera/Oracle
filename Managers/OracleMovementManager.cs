@@ -48,6 +48,11 @@ namespace Oracle.Managers
 
         public static async Task<bool> FlyToCurrentFate()
         {
+            if (Actionmanager.CanMount != 0 && !Core.Player.IsMounted)
+            {
+                return false;
+            }
+
             OracleFateManager.ReachedCurrentFate = false;
             var currentFate = OracleFateManager.GetCurrentFateData();
             if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
@@ -130,6 +135,11 @@ namespace Oracle.Managers
             {
                 await NavigateToLocation(location, precision, stopOnFateSpawn);
                 return true;
+            }
+
+            if (Actionmanager.CanMount != 0 && !Core.Player.IsMounted)
+            {
+                return false;
             }
 
             if (!Core.Player.IsMounted)
@@ -634,7 +644,7 @@ namespace Oracle.Managers
             }
 
             var distanceToFateBoundary = Core.Player.Location.Distance2D(currentFate.Location) - currentFate.Radius;
-            if (!ignoreCombat && IsMountNeeded(distanceToFateBoundary) && !Core.Player.IsMounted && currentFate.IsValid)
+            if (Actionmanager.CanMount == 0 && !ignoreCombat && IsMountNeeded(distanceToFateBoundary) && !Core.Player.IsMounted && currentFate.IsValid)
             {
                 await MountUp();
             }
@@ -680,7 +690,7 @@ namespace Oracle.Managers
                 }
 
                 var distanceToFateBoundary = Core.Player.Location.Distance2D(cachedFateLocation) - currentFateRadius;
-                if (!Core.Player.IsMounted && IsMountNeeded(distanceToFateBoundary) && Actionmanager.AvailableMounts.Any())
+                if (Actionmanager.CanMount == 0 && !Core.Player.IsMounted && IsMountNeeded(distanceToFateBoundary) && Actionmanager.AvailableMounts.Any())
                 {
                     Navigator.Stop();
                     if (!ignoreCombat && Core.Player.InCombat)
@@ -710,7 +720,8 @@ namespace Oracle.Managers
         {
             while (Core.Player.Location.Distance(location) > precision)
             {
-                if (!Core.Player.IsMounted && IsMountNeeded(Core.Player.Location.Distance(location)) && Actionmanager.AvailableMounts.Any())
+                if (Actionmanager.CanMount == 0 && !Core.Player.IsMounted && IsMountNeeded(Core.Player.Location.Distance(location))
+                    && Actionmanager.AvailableMounts.Any())
                 {
                     Navigator.Stop();
                     if (Core.Player.InCombat)

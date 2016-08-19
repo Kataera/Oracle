@@ -188,6 +188,7 @@
     <Compile Include="Behaviour\Tasks\Utilities\BlacklistMob.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\ChangeClass.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LoadFlightMesh.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\RestockGysahlGreens.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SummonMinion.cs" />
     <Compile Include="Enumerations\ClassLevelMode.cs" />
     <Compile Include="Managers\OracleClassManager.cs" />
@@ -227,9 +228,9 @@
     <Compile Include="Enumerations\FateSupportLevel.cs" />
     <Compile Include="Enumerations\FateType.cs" />
     <Compile Include="Helpers\Logger.cs" />
-    <Compile Include="OracleLoader.cs">
+    <None Include="OracleLoader.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    </None>
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
