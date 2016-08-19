@@ -186,7 +186,6 @@
     <Compile Include="Behaviour\Tasks\DeathHandler.cs" />
     <Compile Include="Behaviour\Tasks\FateHandler.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BindHomePoint.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\ChangeClass.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LoadFlightMesh.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\RestockGysahlGreens.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SummonMinion.cs" />
