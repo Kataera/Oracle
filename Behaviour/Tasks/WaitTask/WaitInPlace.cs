@@ -12,7 +12,7 @@ namespace Oracle.Behaviour.Tasks.WaitTask
     {
         internal static async Task<bool> HandleWaitInPlace()
         {
-            if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone))
+            if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone) && (Poi.Current.Type != PoiType.Kill || Poi.Current.Type != PoiType.None))
             {
                 OracleFateManager.ClearPoi("We're being attacked.", false);
                 return true;

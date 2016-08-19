@@ -14,6 +14,8 @@ Oracle will run to a FATE before teleporting to the next zone in Yo-kai Watch Gr
 
 Starting the bot in Idyllshire will not move to the Dravanian Hinterlands.
 
+Sometimes the Chocobo will be clubbed to death and bot does nothing, no idea what's causing this.
+
 TODO:
 
 Refactor all tasks to use a result enumeration.

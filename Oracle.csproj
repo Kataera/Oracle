@@ -166,6 +166,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviour\Hooks\SetCombatPoi.cs" />
     <Compile Include="Behaviour\Tasks\ChocoboHandler.cs" />
     <Compile Include="Behaviour\Hooks\Rest.cs" />
     <Compile Include="Behaviour\Modes\AnimaGrind.cs" />

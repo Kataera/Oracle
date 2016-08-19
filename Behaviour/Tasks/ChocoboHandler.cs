@@ -7,6 +7,7 @@ using Buddy.Coroutines;
 using ff14bot;
 using ff14bot.Enums;
 using ff14bot.Managers;
+using ff14bot.Navigation;
 using ff14bot.Objects;
 
 using Oracle.Enumerations;
@@ -165,6 +166,7 @@ namespace Oracle.Behaviour.Tasks
             }
 
             Logger.SendLog("Attempting to summon our Chocobo.");
+            Navigator.Clear();
             await Coroutine.Sleep(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay));
             Chocobo.Summon();
 
