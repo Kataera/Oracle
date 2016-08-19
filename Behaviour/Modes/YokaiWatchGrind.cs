@@ -15,7 +15,7 @@ using Oracle.Structs;
 
 namespace Oracle.Behaviour.Modes
 {
-    public static class YokaiWatchGrind
+    internal static class YokaiWatchGrind
     {
         private static bool ignoreNormalMedals;
 
@@ -70,7 +70,7 @@ namespace Oracle.Behaviour.Modes
             return HandleMinionResult.InProgress;
         }
 
-        public static async Task<bool> HandleYokaiWatchGrind()
+        internal static async Task<bool> HandleYokaiWatchGrind()
         {
             // Summoning a chocobo dismisses your minion, meaning we can't use it here.
             if (!Chocobo.BlockSummon)
@@ -123,7 +123,7 @@ namespace Oracle.Behaviour.Modes
             return true;
         }
 
-        public static void ResetIgnoredYokai()
+        internal static void ResetIgnoredYokai()
         {
             ignoreNormalMedals = false;
             YokaiWatchGrindData.Jibanyan.Ignored = false;

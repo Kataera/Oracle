@@ -33,7 +33,7 @@ namespace Oracle
 
         private static readonly string VersionPath = Path.Combine(Environment.CurrentDirectory, @"BotBases\Oracle\version.txt");
 
-        public Composite Root => root;
+        internal Composite Root => root;
 
         internal static string Version
         {
@@ -83,7 +83,7 @@ namespace Oracle
             return Root;
         }
 
-        public void Initialize()
+        internal void Initialize()
         {
             Logger.SendLog("Initialising Oracle.");
         }

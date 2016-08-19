@@ -11,7 +11,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class ZoneChange
     {
-        public static async Task<bool> HandleZoneChange()
+        internal static async Task<bool> HandleZoneChange()
         {
             const uint idyllshireAetheryte = 75;
             uint aetheryteId;
@@ -52,7 +52,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return true;
         }
 
-        public static async Task<bool> HandleZoneChange(uint zoneId, bool bind)
+        internal static async Task<bool> HandleZoneChange(uint zoneId, bool bind)
         {
             const ushort dravanianHinterlands = 399;
             const uint idyllshireAetheryte = 75;

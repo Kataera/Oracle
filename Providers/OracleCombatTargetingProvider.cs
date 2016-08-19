@@ -16,7 +16,7 @@ using Oracle.Structs;
 
 namespace Oracle.Providers
 {
-    internal class OracleCombatTargetingProvider : ITargetingProvider
+    public class OracleCombatTargetingProvider : ITargetingProvider
     {
         public List<BattleCharacter> GetObjectsByWeight()
         {

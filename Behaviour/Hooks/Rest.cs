@@ -18,7 +18,7 @@ namespace Oracle.Behaviour.Hooks
 {
     internal static class Rest
     {
-        public static Composite Behaviour => CreateBehaviour();
+        internal static Composite Behaviour => CreateBehaviour();
 
         private static Composite CreateBehaviour()
         {

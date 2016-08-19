@@ -40,7 +40,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
             return TimeSpan.FromMilliseconds(rng.Next(500, 1500));
         }
 
-        public static async Task<bool> HandleEscortFate()
+        internal static async Task<bool> HandleEscortFate()
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
             var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);

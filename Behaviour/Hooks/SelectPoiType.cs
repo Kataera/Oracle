@@ -8,7 +8,7 @@ namespace Oracle.Behaviour.Hooks
 {
     internal static class SelectPoiType
     {
-        public static Composite Behaviour => CreateBehaviour();
+        internal static Composite Behaviour => CreateBehaviour();
 
         private static Composite CreateBehaviour()
         {

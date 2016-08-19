@@ -34,7 +34,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
         private static readonly Vector3 RoarichLocation = new Vector3(-31.04098f, 9f, -85.05112f);
         private static readonly Vector3 JunkmongerLocation = new Vector3(-2.882056f, 206.4994f, 54.65067f);
 
-        public static async Task<RestockGysahlGreensResult> HandleRestockGyshalGreens()
+        internal static async Task<RestockGysahlGreensResult> HandleRestockGyshalGreens()
         {
             if (!OracleInventoryManager.ShouldRestockGreens())
             {

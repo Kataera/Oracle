@@ -48,7 +48,7 @@ namespace Oracle.Helpers
             return fate;
         }
 
-        public static async Task<FateDatabase> GetFateDatabase()
+        internal static async Task<FateDatabase> GetFateDatabase()
         {
             if (database == null)
             {
@@ -58,7 +58,7 @@ namespace Oracle.Helpers
             return database;
         }
 
-        public static async Task<FateDatabase> GetFateDatabase(bool forceReparse)
+        internal static async Task<FateDatabase> GetFateDatabase(bool forceReparse)
         {
             if (forceReparse || database == null)
             {

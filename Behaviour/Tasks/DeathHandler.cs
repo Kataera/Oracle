@@ -9,7 +9,7 @@ namespace Oracle.Behaviour.Tasks
 {
     internal static class DeathHandler
     {
-        public static async Task<bool> HandleDeath()
+        internal static async Task<bool> HandleDeath()
         {
             await Coroutine.Wait(TimeSpan.FromSeconds(5), () => CommonBehaviors.IsLoading);
             await CommonTasks.HandleLoading();

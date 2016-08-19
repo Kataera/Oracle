@@ -177,7 +177,7 @@ namespace Oracle.Behaviour.Modes
             }
         }
 
-        public static async Task<bool> HandleAtmaGrind()
+        internal static async Task<bool> HandleAtmaGrind()
         {
             if (!OracleClassManager.ClassJobCanFarmAtma(Core.Player.CurrentJob))
             {

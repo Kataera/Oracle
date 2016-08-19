@@ -18,9 +18,9 @@ using TreeSharp;
 
 namespace Oracle.Behaviour.Tasks
 {
-    public class ChocoboHandler
+    internal class ChocoboHandler
     {
-        public static Composite Behaviour => CreateBehaviour();
+        internal static Composite Behaviour => CreateBehaviour();
 
         private static string ChocoboName
         {
@@ -79,6 +79,7 @@ namespace Oracle.Behaviour.Tasks
 
             if (!Chocobo.Summoned && Chocobo.CanSummon)
             {
+                // Check for whether or not the dead/dismissed/expired Chocobo is still in the party. If it is, game won't let us summon.
                 if (PartyManager.IsInParty && PartyManager.AllMembers.Any(member => member.GameObject.SummonerGameObject == Core.Player))
                 {
                     return false;
@@ -177,7 +178,7 @@ namespace Oracle.Behaviour.Tasks
         }
     }
 
-    public enum SummonChocoboResult
+    internal enum SummonChocoboResult
     {
         Success,
 
@@ -186,7 +187,7 @@ namespace Oracle.Behaviour.Tasks
         Disabled
     }
 
-    public enum SetChocoboStanceResult
+    internal enum SetChocoboStanceResult
     {
         Success,
 

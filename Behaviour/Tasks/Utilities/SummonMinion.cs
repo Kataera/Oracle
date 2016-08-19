@@ -15,9 +15,9 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class SummonMinion
     {
-        public static GameObject CurrentMinion => GameObjectManager.GetObjectByObjectId(1);
+        internal static GameObject CurrentMinion => GameObjectManager.GetObjectByObjectId(1);
 
-        public static bool CanSummonMinion()
+        internal static bool CanSummonMinion()
         {
             if (Core.Player.IsMounted)
             {
@@ -37,7 +37,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return true;
         }
 
-        public static async Task<bool> IsMinionSummoned(string minionName)
+        internal static async Task<bool> IsMinionSummoned(string minionName)
         {
             if (Core.Player.IsMounted)
             {
@@ -48,7 +48,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return CurrentMinion != null && CurrentMinion.EnglishName.Equals(minionName);
         }
 
-        public static async Task<SummonMinionResult> Main(string minionName)
+        internal static async Task<SummonMinionResult> Main(string minionName)
         {
             Logger.SendLog("Summoning " + minionName + ".");
 

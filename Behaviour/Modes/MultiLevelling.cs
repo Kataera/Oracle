@@ -11,9 +11,9 @@ using Oracle.Settings;
 
 namespace Oracle.Behaviour.Modes
 {
-    public class MultiLevelling
+    internal class MultiLevelling
     {
-        public static async Task<bool> HandleMultiLevelling()
+        internal static async Task<bool> HandleMultiLevelling()
         {
             if (!Core.Player.InCombat && OracleClassManager.NoClassesEnabled())
             {
@@ -34,7 +34,7 @@ namespace Oracle.Behaviour.Modes
                 }
 
                 Logger.SendLog("Class change is needed.");
-                var changeClassResult = await ChangeClass.Main(OracleClassManager.GetLowestLevelClassJob());
+                var changeClassResult = await OracleClassManager.ChangeClassJob(OracleClassManager.GetLowestLevelClassJob());
                 if (changeClassResult == ChangeClassResult.NoGearset || changeClassResult == ChangeClassResult.NonCombatClass)
                 {
                     OracleBot.StopOracle("Problem swapping classes.");

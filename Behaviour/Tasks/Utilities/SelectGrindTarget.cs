@@ -20,11 +20,11 @@ using Oracle.Settings;
 
 namespace Oracle.Behaviour.Tasks.Utilities
 {
-    public class SelectGrindTarget
+    internal class SelectGrindTarget
     {
         private static Stopwatch checkForTargetCooldown;
 
-        public static async Task<BattleCharacter> HandleSelectGrindTarget()
+        internal static async Task<BattleCharacter> HandleSelectGrindTarget()
         {
             if (checkForTargetCooldown != null && checkForTargetCooldown.Elapsed <= TimeSpan.FromSeconds(5))
             {

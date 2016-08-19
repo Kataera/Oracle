@@ -15,7 +15,7 @@ namespace Oracle.Behaviour.Tasks
 {
     internal static class FateHandler
     {
-        public static async Task<bool> HandleFate()
+        internal static async Task<bool> HandleFate()
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
 

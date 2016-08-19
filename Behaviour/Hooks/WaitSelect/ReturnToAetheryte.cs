@@ -69,7 +69,7 @@ namespace Oracle.Behaviour.Hooks.WaitSelect
             return location;
         }
 
-        public static async Task<bool> Main()
+        internal static async Task<bool> Main()
         {
             await BlacklistUnnavigableAetherytes();
             var aetheryteLocation = GetClosestAetheryteLocation();

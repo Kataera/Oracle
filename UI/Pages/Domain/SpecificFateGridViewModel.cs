@@ -7,7 +7,7 @@ using Oracle.Settings;
 
 namespace Oracle.UI.Pages.Domain
 {
-    public class SpecificFateGridViewModel : INotifyPropertyChanged
+    internal class SpecificFateGridViewModel : INotifyPropertyChanged
     {
         private bool? isAllItems3Selected;
 

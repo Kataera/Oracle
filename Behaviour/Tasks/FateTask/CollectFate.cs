@@ -35,7 +35,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
             await OracleFateManager.ClearCurrentFate("Current FATE is ending or is finished.");
         }
 
-        public static async Task<bool> HandleCollectFate()
+        internal static async Task<bool> HandleCollectFate()
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
             var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);

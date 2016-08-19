@@ -13,7 +13,7 @@ namespace Oracle.Behaviour.Tasks.WaitTask
 {
     internal static class GrindMobs
     {
-        public static async Task<bool> HandleGrindMobs()
+        internal static async Task<bool> HandleGrindMobs()
         {
             if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone) && Poi.Current.Type != PoiType.Kill)
             {

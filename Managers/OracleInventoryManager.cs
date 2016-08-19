@@ -16,7 +16,7 @@ namespace Oracle.Managers
 {
     internal static class OracleInventoryManager
     {
-        public static async Task<BuyItemResult> BuyItem(uint itemId, uint itemAmount)
+        internal static async Task<BuyItemResult> BuyItem(uint itemId, uint itemAmount)
         {
             if (!Shop.Open)
             {
@@ -43,7 +43,7 @@ namespace Oracle.Managers
             return GetItemAmount(itemId) >= itemAmount ? BuyItemResult.Success : BuyItemResult.Failure;
         }
 
-        public static async Task<EquipItemResult> EquipItem(uint itemId, EquipmentSlot slot)
+        internal static async Task<EquipItemResult> EquipItem(uint itemId, EquipmentSlot slot)
         {
             var equipmentBagSlot = GetEquipmentSlotBagSlot(slot);
             if (equipmentBagSlot == null)
@@ -72,28 +72,28 @@ namespace Oracle.Managers
             return equipmentBagSlot.RawItemId == itemId ? EquipItemResult.Success : EquipItemResult.Failure;
         }
 
-        public static BagSlot GetBagSlotByItemId(uint itemId)
+        internal static BagSlot GetBagSlotByItemId(uint itemId)
         {
             return InventoryManager.FilledInventoryAndArmory.FirstOrDefault(bs => bs.RawItemId == itemId);
         }
 
-        public static BagSlot GetEmptyBagSlot()
+        internal static BagSlot GetEmptyBagSlot()
         {
             var bags = InventoryManager.GetBagsByInventoryBagId(InventoryBagId.Bag1, InventoryBagId.Bag2, InventoryBagId.Bag3, InventoryBagId.Bag4);
             return bags.Select(bag => bag.FirstOrDefault(slot => !slot.IsFilled)).FirstOrDefault();
         }
 
-        public static BagSlot GetEquipmentSlotBagSlot(EquipmentSlot slot)
+        internal static BagSlot GetEquipmentSlotBagSlot(EquipmentSlot slot)
         {
             return InventoryManager.EquippedItems.FirstOrDefault(bs => bs.Slot == (ushort) slot);
         }
 
-        public static uint GetItemAmount(uint itemId)
+        internal static uint GetItemAmount(uint itemId)
         {
             return GetBagSlotByItemId(itemId) == null ? 0 : GetBagSlotByItemId(itemId).Item.ItemCount();
         }
 
-        public static bool IsItemEquipped(uint itemId, EquipmentSlot slot)
+        internal static bool IsItemEquipped(uint itemId, EquipmentSlot slot)
         {
             var equipmentBagSlot = InventoryManager.EquippedItems.FirstOrDefault(bs => bs.Slot == (ushort) slot);
             if (equipmentBagSlot == null)
@@ -105,7 +105,7 @@ namespace Oracle.Managers
             return equipmentBagSlot.RawItemId == itemId;
         }
 
-        public static bool ShouldRestockGreens()
+        internal static bool ShouldRestockGreens()
         {
             const uint gysahlGreensItemId = 4868;
             if (!MainSettings.Instance.ChocoboGreensRestockEnabled)

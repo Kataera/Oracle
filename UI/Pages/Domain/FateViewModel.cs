@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Oracle.UI.Pages.Domain
 {
-    public class FateViewModel : INotifyPropertyChanged
+    internal class FateViewModel : INotifyPropertyChanged
     {
         private uint fateId;
         private bool isSelected;

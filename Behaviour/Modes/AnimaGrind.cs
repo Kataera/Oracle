@@ -36,7 +36,7 @@ namespace Oracle.Behaviour.Modes
         private const ushort ZoneDravanianHinterlands = 399;
         private const ushort ZoneSeaOfClouds = 401;
 
-        public static async Task<bool> HandleAnimaGrind()
+        internal static async Task<bool> HandleAnimaGrind()
         {
             if (!ConditionParser.HasQuest(AnimaQuest))
             {

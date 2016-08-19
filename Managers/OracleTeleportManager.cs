@@ -32,7 +32,7 @@ namespace Oracle.Managers
             return results;
         }
 
-        public static async Task<bool> FasterToTeleport(FateData fate)
+        internal static async Task<bool> FasterToTeleport(FateData fate)
         {
             if (WorldManager.CanFly)
             {
@@ -69,7 +69,7 @@ namespace Oracle.Managers
             return false;
         }
 
-        public static async Task<Aetheryte> GetClosestAetheryte(FateData fate)
+        internal static async Task<Aetheryte> GetClosestAetheryte(FateData fate)
         {
             var aetherytes = await GetNavigableAetherytes(fate);
             var closestAetheryte = aetherytes.OrderBy(node => node.Distance).FirstOrDefault();
@@ -141,7 +141,7 @@ namespace Oracle.Managers
             return viableAetherytes;
         }
 
-        public static async Task<bool> TeleportToAetheryte(uint aetheryteId)
+        internal static async Task<bool> TeleportToAetheryte(uint aetheryteId)
         {
             await Coroutine.Sleep(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay));
             await CommonBehaviors.CreateTeleportBehavior(vr => aetheryteId, vr => WorldManager.GetZoneForAetheryteId(aetheryteId)).ExecuteCoroutine();
@@ -153,7 +153,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> TeleportToClosestAetheryte(FateData fate)
+        internal static async Task<bool> TeleportToClosestAetheryte(FateData fate)
         {
             var aetheryte = await GetClosestAetheryte(fate);
 
@@ -173,7 +173,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task TeleportToClosestCity()
+        internal static async Task TeleportToClosestCity()
         {
             var cityList = new List<WorldManager.TeleportLocation>
             {
@@ -210,11 +210,11 @@ namespace Oracle.Managers
             };
         }
 
-        public struct Aetheryte
+        internal struct Aetheryte
         {
-            public float Distance;
-            public uint Id;
-            public Vector3 Location;
+            internal float Distance;
+            internal uint Id;
+            internal Vector3 Location;
         }
     }
 }

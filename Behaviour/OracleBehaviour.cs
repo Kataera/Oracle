@@ -20,7 +20,7 @@ namespace Oracle.Behaviour
 {
     internal static class OracleBehaviour
     {
-        public static Composite Behaviour => CreateBehaviour();
+        internal static Composite Behaviour => CreateBehaviour();
 
         private static Composite CreateBehaviour()
         {

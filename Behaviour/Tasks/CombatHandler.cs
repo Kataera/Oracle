@@ -23,7 +23,7 @@ namespace Oracle.Behaviour.Tasks
         private static uint lastHpValue;
         private static Stopwatch noDamageTimeout;
 
-        public static async Task<bool> HandleCombat()
+        internal static async Task<bool> HandleCombat()
         {
             var currentBc = Poi.Current.BattleCharacter;
 

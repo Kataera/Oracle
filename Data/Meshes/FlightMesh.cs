@@ -4,14 +4,14 @@ namespace Oracle.Data.Meshes
 {
     internal class FlightMesh
     {
-        public FlightMesh(uint zoneId, Graph graph)
+        internal FlightMesh(uint zoneId, Graph graph)
         {
             ZoneId = zoneId;
             Graph = graph;
         }
 
-        public Graph Graph { get; set; }
+        internal Graph Graph { get; set; }
 
-        public uint ZoneId { get; set; }
+        internal uint ZoneId { get; set; }
     }
 }

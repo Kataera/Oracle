@@ -9,7 +9,7 @@ namespace Oracle.Behaviour.Hooks.WaitSelect
 {
     internal static class WaitInPlace
     {
-        public static async Task<bool> Main()
+        internal static async Task<bool> Main()
         {
             Logger.SendLog("Waiting in place for a viable FATE.");
             Poi.Current = new Poi(Core.Player.Location, PoiType.Wait);

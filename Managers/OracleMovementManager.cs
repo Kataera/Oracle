@@ -46,7 +46,7 @@ namespace Oracle.Managers
             Navigator.Stop();
         }
 
-        public static async Task<bool> FlyToCurrentFate()
+        internal static async Task<bool> FlyToCurrentFate()
         {
             if (Actionmanager.CanMount != 0 && !Core.Player.IsMounted)
             {
@@ -129,7 +129,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> FlyToLocation(Vector3 location, float precision, bool land, bool stopOnFateSpawn)
+        internal static async Task<bool> FlyToLocation(Vector3 location, float precision, bool land, bool stopOnFateSpawn)
         {
             if (!IsFlightMeshLoaded())
             {
@@ -432,12 +432,12 @@ namespace Oracle.Managers
             return landingLocation;
         }
 
-        public static bool IsFlightMeshLoaded()
+        internal static bool IsFlightMeshLoaded()
         {
             return ZoneFlightMesh != null && ZoneFlightMesh.ZoneId == WorldManager.ZoneId;
         }
 
-        public static bool IsMountNeeded(float distance)
+        internal static bool IsMountNeeded(float distance)
         {
             return distance > CharacterSettings.Instance.MountDistance;
         }
@@ -473,7 +473,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> LoadFlightMeshIfAvailable()
+        internal static async Task<bool> LoadFlightMeshIfAvailable()
         {
             if (ZoneFlightMesh != null && ZoneFlightMesh.ZoneId == WorldManager.ZoneId)
             {
@@ -549,7 +549,7 @@ namespace Oracle.Managers
             }
         }
 
-        public static async Task<bool> MountUp()
+        internal static async Task<bool> MountUp()
         {
             if (!Actionmanager.AvailableMounts.Any())
             {
@@ -580,7 +580,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> MoveOutOfIdyllshire()
+        internal static async Task<bool> MoveOutOfIdyllshire()
         {
             Logger.SendLog("We're in Idyllshire, moving to The Dravanian Hinterlands.");
             await MountUp();
@@ -603,7 +603,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> MoveToCurrentFate(bool ignoreCombat)
+        internal static async Task<bool> MoveToCurrentFate(bool ignoreCombat)
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
 
@@ -661,7 +661,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> NavigateToCurrentFate(bool ignoreCombat)
+        internal static async Task<bool> NavigateToCurrentFate(bool ignoreCombat)
         {
             OracleFateManager.ReachedCurrentFate = false;
             var currentFate = OracleFateManager.GetCurrentFateData();
@@ -716,7 +716,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> NavigateToLocation(Vector3 location, float precision, bool stopOnFateSpawn)
+        internal static async Task<bool> NavigateToLocation(Vector3 location, float precision, bool stopOnFateSpawn)
         {
             while (Core.Player.Location.Distance(location) > precision)
             {

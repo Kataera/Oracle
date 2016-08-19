@@ -17,7 +17,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
 {
     internal static class LoadFlightMesh
     {
-        public static FileStream MeshFileStream { get; set; }
+        internal static FileStream MeshFileStream { get; set; }
 
         private static async Task<FlightMesh> LoadMesh(ushort zoneId)
         {
@@ -54,7 +54,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return null;
         }
 
-        public static async Task<bool> Main()
+        internal static async Task<bool> Main()
         {
             OracleMovementManager.ZoneFlightMesh = await LoadMesh(WorldManager.ZoneId);
             return true;

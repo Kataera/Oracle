@@ -11,7 +11,7 @@ namespace Oracle.Behaviour.Tasks
 {
     internal static class WaitHandler
     {
-        public static async Task<bool> HandleWait()
+        internal static async Task<bool> HandleWait()
         {
             if (OracleFateManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted)
             {

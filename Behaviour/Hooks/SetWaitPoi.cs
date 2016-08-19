@@ -12,7 +12,7 @@ namespace Oracle.Behaviour.Hooks
 {
     internal static class SetWaitPoi
     {
-        public static async Task<bool> Main()
+        internal static async Task<bool> Main()
         {
             if (CommonBehaviors.IsLoading)
             {

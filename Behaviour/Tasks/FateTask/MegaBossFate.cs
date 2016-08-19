@@ -25,7 +25,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
             await OracleFateManager.ClearCurrentFate("Current FATE is finished.");
         }
 
-        public static async Task<bool> HandleMegaBossFate()
+        internal static async Task<bool> HandleMegaBossFate()
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
 

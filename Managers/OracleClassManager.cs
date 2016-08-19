@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
+
+using Buddy.Coroutines;
 
 using ff14bot;
 using ff14bot.Enums;
@@ -16,7 +19,7 @@ namespace Oracle.Managers
 {
     internal static class OracleClassManager
     {
-        public static IEnumerable<ClassJobType> CasterDpsClassJobs => new List<ClassJobType>
+        internal static IEnumerable<ClassJobType> CasterDpsClassJobs => new List<ClassJobType>
         {
             ClassJobType.Arcanist,
             ClassJobType.BlackMage,
@@ -24,9 +27,9 @@ namespace Oracle.Managers
             ClassJobType.Thaumaturge
         };
 
-        public static Stopwatch ClassChangedTimer { get; set; }
+        internal static Stopwatch ClassChangedTimer { get; set; }
 
-        public static IEnumerable<ClassJobType> CombatClassJobs
+        internal static IEnumerable<ClassJobType> CombatClassJobs
         {
             get
             {
@@ -39,7 +42,7 @@ namespace Oracle.Managers
             }
         }
 
-        public static IEnumerable<ClassJobType> DpsClassJobs
+        internal static IEnumerable<ClassJobType> DpsClassJobs
         {
             get
             {
@@ -52,7 +55,7 @@ namespace Oracle.Managers
             }
         }
 
-        public static IEnumerable<ClassJobType> HealerClassJobs => new List<ClassJobType>
+        internal static IEnumerable<ClassJobType> HealerClassJobs => new List<ClassJobType>
         {
             ClassJobType.Astrologian,
             ClassJobType.Conjurer,
@@ -60,7 +63,7 @@ namespace Oracle.Managers
             ClassJobType.WhiteMage
         };
 
-        public static IEnumerable<ClassJobType> MeleeDpsClassJobs => new List<ClassJobType>
+        internal static IEnumerable<ClassJobType> MeleeDpsClassJobs => new List<ClassJobType>
         {
             ClassJobType.Dragoon,
             ClassJobType.Lancer,
@@ -70,14 +73,14 @@ namespace Oracle.Managers
             ClassJobType.Rogue
         };
 
-        public static IEnumerable<ClassJobType> RangedDpsClassJobs => new List<ClassJobType>
+        internal static IEnumerable<ClassJobType> RangedDpsClassJobs => new List<ClassJobType>
         {
             ClassJobType.Archer,
             ClassJobType.Bard,
             ClassJobType.Machinist
         };
 
-        public static IEnumerable<ClassJobType> TankClassJobs => new List<ClassJobType>
+        internal static IEnumerable<ClassJobType> TankClassJobs => new List<ClassJobType>
         {
             ClassJobType.DarkKnight,
             ClassJobType.Gladiator,
@@ -86,7 +89,61 @@ namespace Oracle.Managers
             ClassJobType.Warrior
         };
 
-        public static bool ClassChangeNeeded()
+        internal static async Task<ChangeClassResult> ChangeClassJob(ClassJobType job)
+        {
+            if (!IsCombatClassJob(job))
+            {
+                Logger.SendErrorLog("Attempted to swap to a non-combat class.");
+                return ChangeClassResult.NonCombatClass;
+            }
+
+            if (!IsClassJobEnabled(job))
+            {
+                Logger.SendErrorLog("Attempted to swap to a disabled class.");
+                return ChangeClassResult.ClassNotEnabled;
+            }
+
+            if (!ClassSettings.Instance.ClassGearsets.ContainsValue(job))
+            {
+                Logger.SendErrorLog("Attempted to swap to a class with no assigned gearset.");
+                return ChangeClassResult.NoGearset;
+            }
+
+            var previousJob = Core.Player.CurrentJob;
+            var gearSet = ClassSettings.Instance.ClassGearsets.FirstOrDefault(kvp => kvp.Value.Equals(job)).Key;
+            Logger.SendLog("Changing class from " + GetClassJobName(previousJob) + " to " + GetClassJobName(job)
+                           + ". Waiting 10 seconds to ensure game will let us change.");
+            await Coroutine.Wait(TimeSpan.FromSeconds(10), () => Core.Player.InCombat || GameObjectManager.Attackers.Any());
+
+            if (Core.Player.InCombat || GameObjectManager.Attackers.Any())
+            {
+                Logger.SendLog("We're in combat, cancelling class change.");
+                return ChangeClassResult.Failed;
+            }
+
+            ChatManager.SendChat("/gs change " + gearSet);
+            await Coroutine.Wait(TimeSpan.FromSeconds(2), () => Core.Player.CurrentJob == job);
+
+            if (Core.Player.CurrentJob == previousJob)
+            {
+                Logger.SendDebugLog("Class did not change from " + GetClassJobName(Core.Player.CurrentJob)
+                                    + ", likely caused by the game refusing to allow a gearset change.");
+                return ChangeClassResult.Failed;
+            }
+
+            if (Core.Player.CurrentJob != job)
+            {
+                Logger.SendErrorLog("Class change failed, current class or job is " + GetClassJobName(Core.Player.CurrentJob)
+                                    + " when we were expecting " + GetClassJobName(job) + ".");
+                return ChangeClassResult.WrongClass;
+            }
+
+            Logger.SendLog("Successfully changed to " + GetClassJobName(job) + ".");
+            ClassChangedTimer = Stopwatch.StartNew();
+            return ChangeClassResult.Succeeded;
+        }
+
+        internal static bool ClassChangeNeeded()
         {
             if (ModeSettings.Instance.OracleOperationMode != OracleOperationMode.MultiLevelMode)
             {
@@ -109,7 +166,7 @@ namespace Oracle.Managers
             }
         }
 
-        public static bool ClassJobCanFarmAtma(ClassJobType classJob)
+        internal static bool ClassJobCanFarmAtma(ClassJobType classJob)
         {
             switch (classJob)
             {
@@ -209,7 +266,7 @@ namespace Oracle.Managers
             return lowerLevels.Any(kvp => kvp.Key != Core.Player.CurrentJob && kvp.Value < GetTrueLevel());
         }
 
-        public static bool FinishedLevelling()
+        internal static bool FinishedLevelling()
         {
             switch (ModeSettings.Instance.OracleOperationMode)
             {
@@ -242,7 +299,7 @@ namespace Oracle.Managers
             }
         }
 
-        public static string GetClassJobName(ClassJobType job)
+        internal static string GetClassJobName(ClassJobType job)
         {
             switch (job)
             {
@@ -319,13 +376,13 @@ namespace Oracle.Managers
             }
         }
 
-        public static ClassJobType GetLowestLevelClassJob()
+        internal static ClassJobType GetLowestLevelClassJob()
         {
             var enabledLevels = Core.Player.Levels.OrderBy(kvp => kvp.Value).Where(kvp => IsClassJobEnabled(kvp.Key)).ToArray();
             return enabledLevels.FirstOrDefault().Key;
         }
 
-        public static uint GetTrueLevel()
+        internal static uint GetTrueLevel()
         {
             var baseClass = OracleFateManager.GetBaseClass(Core.Player.CurrentJob);
             var trueLevel = Core.Player.Levels.FirstOrDefault(kvp => kvp.Key == baseClass).Value;
@@ -338,7 +395,7 @@ namespace Oracle.Managers
             return CasterDpsClassJobs.Contains(job);
         }
 
-        public static bool IsClassJobEnabled(ClassJobType job)
+        internal static bool IsClassJobEnabled(ClassJobType job)
         {
             switch (job)
             {
@@ -415,17 +472,17 @@ namespace Oracle.Managers
             }
         }
 
-        public static bool IsCombatClassJob(ClassJobType job)
+        internal static bool IsCombatClassJob(ClassJobType job)
         {
             return CombatClassJobs.Contains(job);
         }
 
-        public static bool IsDpsClassJob(ClassJobType job)
+        internal static bool IsDpsClassJob(ClassJobType job)
         {
             return DpsClassJobs.Contains(job);
         }
 
-        public static bool IsHealerClassJob(ClassJobType job)
+        internal static bool IsHealerClassJob(ClassJobType job)
         {
             return HealerClassJobs.Contains(job);
         }
@@ -440,12 +497,12 @@ namespace Oracle.Managers
             return RangedDpsClassJobs.Contains(job);
         }
 
-        public static bool IsTankClassJob(ClassJobType job)
+        internal static bool IsTankClassJob(ClassJobType job)
         {
             return TankClassJobs.Contains(job);
         }
 
-        public static bool NoClassesEnabled()
+        internal static bool NoClassesEnabled()
         {
             return !ClassSettings.Instance.LevelArcanist && !ClassSettings.Instance.LevelArcher && !ClassSettings.Instance.LevelAstrologian
                    && !ClassSettings.Instance.LevelConjurer && !ClassSettings.Instance.LevelDarkKnight && !ClassSettings.Instance.LevelGladiator
@@ -458,7 +515,7 @@ namespace Oracle.Managers
             return GetTrueLevel() >= ClassSettings.Instance.MaxLevel;
         }
 
-        public static bool ZoneChangeNeeded()
+        internal static bool ZoneChangeNeeded()
         {
             const ushort dravanianHinterlands = 399;
 
@@ -499,5 +556,15 @@ namespace Oracle.Managers
 
             return true;
         }
+    }
+
+    internal enum ChangeClassResult
+    {
+        Succeeded,
+        Failed,
+        NonCombatClass,
+        NoGearset,
+        ClassNotEnabled,
+        WrongClass
     }
 }

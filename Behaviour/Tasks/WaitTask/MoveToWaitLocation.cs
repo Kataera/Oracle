@@ -11,7 +11,7 @@ namespace Oracle.Behaviour.Tasks.WaitTask
 {
     internal static class MoveToWaitLocation
     {
-        public static async Task<bool> HandleMoveToLocation()
+        internal static async Task<bool> HandleMoveToLocation()
         {
             if (Core.Player.Location.Distance(Poi.Current.Location) < 15f)
             {

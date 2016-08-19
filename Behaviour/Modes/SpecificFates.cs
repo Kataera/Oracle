@@ -10,7 +10,7 @@ namespace Oracle.Behaviour.Modes
 {
     internal static class SpecificFates
     {
-        public static async Task<bool> HandleSpecificFates()
+        internal static async Task<bool> HandleSpecificFates()
         {
             if (!Core.Player.InCombat && !FateSettings.Instance.SpecificFateList.Any())
             {

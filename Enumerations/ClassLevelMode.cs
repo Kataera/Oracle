@@ -1,6 +1,6 @@
 ﻿namespace Oracle.Enumerations
 {
-    public enum ClassLevelMode
+    internal enum ClassLevelMode
     {
         Concurrent,
         Sequential
