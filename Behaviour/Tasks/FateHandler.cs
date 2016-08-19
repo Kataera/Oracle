@@ -35,7 +35,7 @@ namespace Oracle.Behaviour.Tasks
                 }
             }
 
-            if (OracleFateManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted && (Poi.Current.Type != PoiType.Kill || Poi.Current.Type != PoiType.None))
+            if (OracleFateManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted && Poi.Current.Type != PoiType.Kill && Poi.Current.Type != PoiType.None)
             {
                 OracleFateManager.ClearPoi("We're being attacked.", false);
                 return true;
