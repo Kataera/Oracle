@@ -15,7 +15,7 @@ namespace Oracle.Behaviour.Tasks.WaitTask
         {
             if (Core.Player.Location.Distance2D(Poi.Current.Location) < 15f)
             {
-                if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone) && (Poi.Current.Type != PoiType.Kill || Poi.Current.Type != PoiType.None))
+                if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone) && Poi.Current.Type != PoiType.Kill && Poi.Current.Type != PoiType.None)
                 {
                     OracleFateManager.ClearPoi("We're being attacked.", false);
                 }

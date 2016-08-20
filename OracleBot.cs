@@ -164,6 +164,31 @@ namespace Oracle
             YokaiWatchGrind.ResetIgnoredYokai();
         }
 
+        private static void SetUpHooks()
+        {
+            // Add Oracle's behaviour to the start of the behaviour tree.
+            TreeHooks.Instance.AddHook("TreeStart", OracleBehaviour.Behaviour);
+
+            // Clear unused or to be replaced hooks.
+            TreeHooks.Instance.ClearHook("HotspotPoi");
+            TreeHooks.Instance.ClearHook("SetHotspotPoi");
+            TreeHooks.Instance.ClearHook("SetCombatPoi");
+
+            // Replace with our own hooks.
+            TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
+
+            if (MainSettings.Instance.OverrideRestBehaviour)
+            {
+                Logger.SendDebugLog("Replacing the combat routine's rest behaviour.");
+                TreeHooks.Instance.ReplaceHook("Rest", Rest.Behaviour);
+            }
+
+            if (MainSettings.Instance.ListHooksOnStart && MainSettings.Instance.ShowDebugInConsole)
+            {
+                ListHooks();
+            }
+        }
+
         public void Start()
         {
             Navigator.NavigationProvider = new GaiaNavigator();
@@ -177,19 +202,7 @@ namespace Oracle
 
             TreeHooks.Instance.ClearAll();
             root = BrainBehavior.CreateBrain();
-            TreeHooks.Instance.AddHook("TreeStart", OracleBehaviour.Behaviour);
-            TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
-
-            if (MainSettings.Instance.OverrideRestBehaviour)
-            {
-                Logger.SendDebugLog("Replacing the combat routine's rest behaviour.");
-                TreeHooks.Instance.ReplaceHook("Rest", Rest.Behaviour);
-            }
-
-            if (MainSettings.Instance.ListHooksOnStart && MainSettings.Instance.ShowDebugInConsole)
-            {
-                ListHooks();
-            }
+            SetUpHooks();
 
             LogCurrentMode();
             WarnAboutPotentialIssues();

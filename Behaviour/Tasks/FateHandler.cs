@@ -19,13 +19,20 @@ namespace Oracle.Behaviour.Tasks
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
 
-            if (currentFate != null && currentFate.Status == FateStatus.NOTACTIVE)
+            if (currentFate == null)
+            {
+                Logger.SendDebugLog("Current FATE could not be found, assuming it's finished.");
+                await OracleFateManager.ClearCurrentFate("FATE is no longer active.");
+                return false;
+            }
+
+            if (currentFate.Status == FateStatus.NOTACTIVE)
             {
                 await OracleFateManager.ClearCurrentFate("FATE is no longer active.");
                 return false;
             }
 
-            if (currentFate != null && Core.Player.Distance(currentFate.Location) > currentFate.Radius * 1.05f)
+            if (Core.Player.Distance(currentFate.Location) > currentFate.Radius * 1.05f)
             {
                 await OracleMovementManager.MoveToCurrentFate(false);
 
@@ -41,7 +48,7 @@ namespace Oracle.Behaviour.Tasks
                 return true;
             }
 
-            if (currentFate != null && OracleFateManager.IsLevelSyncNeeded(currentFate))
+            if (OracleFateManager.IsLevelSyncNeeded(currentFate))
             {
                 await OracleFateManager.SyncLevel(currentFate);
                 return true;
@@ -77,6 +84,8 @@ namespace Oracle.Behaviour.Tasks
                 case FateType.Null:
                     Logger.SendWarningLog("Cannot find FATE in database, using Rebornbuddy's FATE type identifier.");
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             var currentFate = OracleFateManager.GetCurrentFateData();
@@ -104,13 +113,12 @@ namespace Oracle.Behaviour.Tasks
                 case FateIconType.ProtectNPC2:
                     await DefenceFate.HandleDefenceFate();
                     return true;
+                default:
+                    Logger.SendDebugLog("Cannot determine FATE type, blacklisting until end of session.");
+                    Blacklist.Add(currentFate.Id, BlacklistFlags.Node, TimeSpan.MaxValue, "Cannot determine FATE type.");
+                    await OracleFateManager.ClearCurrentFate("Cannot determine FATE type.");
+                    return false;
             }
-
-            Logger.SendDebugLog("Cannot determine FATE type, blacklisting.");
-            Blacklist.Add(currentFate.Id, BlacklistFlags.Node, TimeSpan.MaxValue, "Cannot determine FATE type.");
-            await OracleFateManager.ClearCurrentFate("Cannot determine FATE type.");
-
-            return false;
         }
     }
 }

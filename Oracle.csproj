@@ -191,6 +191,7 @@
     <Compile Include="Behaviour\Tasks\Utilities\SummonMinion.cs" />
     <Compile Include="Enumerations\ClassLevelMode.cs" />
     <Compile Include="Managers\OracleClassManager.cs" />
+    <Compile Include="Managers\OracleCombatManager.cs" />
     <Compile Include="Managers\OracleInventoryManager.cs" />
     <Compile Include="Settings\ClassSettings.cs" />
     <Compile Include="Structs\YokaiMinion.cs" />

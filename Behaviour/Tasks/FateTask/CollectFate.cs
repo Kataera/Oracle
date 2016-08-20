@@ -6,7 +6,6 @@ using Buddy.Coroutines;
 
 using ff14bot;
 using ff14bot.Enums;
-using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.NeoProfiles;
@@ -21,11 +20,6 @@ namespace Oracle.Behaviour.Tasks.FateTask
 {
     internal static class CollectFate
     {
-        private static bool AnyViableTargets()
-        {
-            return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableTarget).Any();
-        }
-
         private static async Task ClearFate()
         {
             // Band-aid fix to stop a bug where the bot waits after turning in last items when FATE ends.
@@ -86,17 +80,12 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 return true;
             }
 
-            if (currentFate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
+            if (currentFate.Status != FateStatus.NOTACTIVE && OracleCombatManager.AnyViableFateTargets())
             {
-                SelectTarget();
+                OracleCombatManager.SelectFateTarget();
             }
 
             return true;
-        }
-
-        private static bool IsViableTarget(BattleCharacter target)
-        {
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleFateManager.CurrentFateId;
         }
 
         private static async Task<bool> MoveToTurnInNpc(GameObject turnInNpc)
@@ -121,37 +110,6 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
             Navigator.Stop();
             return true;
-        }
-
-        private static void SelectTarget()
-        {
-            var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
-            BattleCharacter target = null;
-
-            if (oracleFate.PreferredTargetId.Any())
-            {
-                var targets = GameObjectManager.GetObjectsByNPCIds<BattleCharacter>(oracleFate.PreferredTargetId.ToArray());
-                target = targets.OrderBy(bc => bc.Distance(Core.Player)).FirstOrDefault(bc => bc.IsValid && bc.IsAlive);
-
-                if (target == null)
-                {
-                    Logger.SendDebugLog("Could not find any mobs with the preferred targets' NPC id.");
-                }
-                else
-                {
-                    Logger.SendDebugLog("Found preferred target '" + target.Name + "' (" + target.NpcId + ").");
-                }
-            }
-
-            if (target == null)
-            {
-                target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
-            }
-
-            if (target != null)
-            {
-                Poi.Current = new Poi(target, PoiType.Kill);
-            }
         }
 
         private static async Task<bool> TurnInFateItems(GameObject turnInNpc)

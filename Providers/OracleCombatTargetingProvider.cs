@@ -25,16 +25,16 @@ namespace Oracle.Providers
                 return new List<BattleCharacter>();
             }
 
-            var allTargets = GameObjectManager.GetObjectsOfType<BattleCharacter>().ToArray();
-            return allTargets.Where(bc => Filter(Core.Player.InCombat, bc)).OrderByDescending(GetWeight).ToList();
+            var allTargets = GameObjectManager.GetObjectsOfType<BattleCharacter>();
+            return allTargets.Where(Filter).OrderByDescending(GetWeight).ToList();
         }
 
-        private static bool Filter(bool inCombat, BattleCharacter battleCharacter)
+        private static bool Filter(BattleCharacter battleCharacter)
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
             var blacklistEntry = Blacklist.GetEntry(battleCharacter);
 
-            if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible || battleCharacter.CurrentHealthPercent <= 0f)
+            if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible)
             {
                 return false;
             }
@@ -64,6 +64,16 @@ namespace Oracle.Providers
                 return true;
             }
 
+            if (battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Core.Player.ObjectId)
+            {
+                return true;
+            }
+
+            if (Chocobo.Object != null && battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Chocobo.Object.ObjectId)
+            {
+                return true;
+            }
+
             if (!battleCharacter.IsFate && currentFate != null)
             {
                 return false;
@@ -79,7 +89,7 @@ namespace Oracle.Providers
                 return false;
             }
 
-            return !inCombat;
+            return !Core.Player.InCombat;
         }
 
         private static double GetWeight(BattleCharacter battleCharacter)
