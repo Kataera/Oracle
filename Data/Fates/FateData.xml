@@ -2640,7 +2640,7 @@
     <Name>Fate Is a Fecal Mistress</Name>
     <Level>31</Level>
     <Type>&Kill;</Type>
-    <OracleSupport>&FullSupport;</OracleSupport>
+    <OracleSupport>&Problematic;</OracleSupport>
   </Fate>
   <Fate>
     <ID>628</ID>
