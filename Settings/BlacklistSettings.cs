@@ -363,13 +363,16 @@ namespace Oracle.Settings
             BlacklistedMobs.Add(whiteJoker);
 
             /*
-             * ----------
-             * Elite Mobs
-             * ----------
+             * ----------------------
+             * Difficult / Elite Mobs
+             * ----------------------
              */
 
             const uint scarredAntelope = 1992;
             BlacklistedMobs.Add(scarredAntelope);
+
+            const uint bygoneBombard = 4964;
+            BlacklistedMobs.Add(bygoneBombard);
 
             /*
 			 * ---------------
