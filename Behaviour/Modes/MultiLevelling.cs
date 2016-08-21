@@ -28,7 +28,7 @@ namespace Oracle.Behaviour.Modes
             }
             else if (OracleClassManager.ClassChangeNeeded())
             {
-                if (Core.Player.InCombat || GameObjectManager.Attackers.Any())
+                if (GameObjectManager.Attackers.Any())
                 {
                     return true;
                 }

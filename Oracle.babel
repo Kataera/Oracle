@@ -1,34 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 	Babel Obfuscator MSBuild Project File
-	Version 8.6.0.1
+	Version 8.6.0.2
 -->
 <Project DefaultTargets="Oracle;Oracle64" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <UsingTask TaskName="Babel" AssemblyName="Babel.Build, Version=8.0.0.0, Culture=neutral, PublicKeyToken=138d17b5bd621ab7" />
   <Target Name="Oracle">
     <PropertyGroup>
       <BabelInputFile>..\..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\BotBases\Oracle\Oracle.dll</BabelInputFile>
-      <CleanAttributes>\[mscorlib\]System.Runtime.CompilerServices.CompilerGeneratedAttribute;\[mscorlib\]System.Diagnostics.DebuggerDisplayAttribute;\[mscorlib\]System.Diagnostics.DebuggerBrowsableAttribute;\[mscorlib\]System.Diagnostics.DebuggerNonUserCodeAttribute;\[mscorlib\]System.Diagnostics.DebuggerHiddenAttribute;\[mscorlib\]System.Diagnostics.DebuggerStepThroughAttribute;False</CleanAttributes>
-      <ConstRemoval>false</ConstRemoval>
-      <ControlFlowObfuscation>token=false;underflow=false;goto=true;if=false;switch=false;case=false;call=false;value=false;true</ControlFlowObfuscation>
+      <CleanAttributes>\[mscorlib\]System.Runtime.CompilerServices.CompilerGeneratedAttribute;\[mscorlib\]System.Diagnostics.DebuggerDisplayAttribute;\[mscorlib\]System.Diagnostics.DebuggerBrowsableAttribute;\[mscorlib\]System.Diagnostics.DebuggerNonUserCodeAttribute;\[mscorlib\]System.Diagnostics.DebuggerHiddenAttribute;\[mscorlib\]System.Diagnostics.DebuggerStepThroughAttribute;True</CleanAttributes>
+      <ConstRemoval>true</ConstRemoval>
+      <ControlFlowObfuscation>goto=true;switch=true;case=true;if=true;call=true;value=true;token=true;underflow=true;true</ControlFlowObfuscation>
       <CopyAttributes>True</CopyAttributes>
       <DeadCodeElimination>False</DeadCodeElimination>
       <DisgregateRemoval>false</DisgregateRemoval>
-      <DynamicProxy>None</DynamicProxy>
-      <EmitInvalidOpcodes>true</EmitInvalidOpcodes>
+      <DynamicProxy>All</DynamicProxy>
+      <EmitInvalidOpcodes>false</EmitInvalidOpcodes>
       <EnableObfuscationAgent>true</EnableObfuscationAgent>
-      <EnumRemoval>false</EnumRemoval>
+      <EnumRemoval>true</EnumRemoval>
       <FlattenNamespaces>Oracle</FlattenNamespaces>
       <GenerateDebug>False</GenerateDebug>
       <GenerateLogFile>false</GenerateLogFile>
       <GenerateMapOutFile>false</GenerateMapOutFile>
-      <ILIterations>10</ILIterations>
-      <InlineExpansion>false</InlineExpansion>
+      <ILIterations>3</ILIterations>
+      <InlineExpansion>true</InlineExpansion>
       <Instrument>false</Instrument>
       <InstrumentEmptyMethods>true</InstrumentEmptyMethods>
-      <Internalize>false</Internalize>
+      <Internalize>true</Internalize>
       <ModuleInitializer>false</ModuleInitializer>
-      <MsilEncryption>False</MsilEncryption>
+      <MsilEncryption>True</MsilEncryption>
       <ObfuscateEvents>true</ObfuscateEvents>
       <ObfuscateFields>true</ObfuscateFields>
       <ObfuscateMethods>true</ObfuscateMethods>
@@ -37,88 +37,52 @@
       <ObfuscateTypes>true</ObfuscateTypes>
       <ObfuscateXaml>false</ObfuscateXaml>
       <OverloadedRenaming>false</OverloadedRenaming>
-      <ResourceEncryption>false</ResourceEncryption>
-      <SealClasses>false</SealClasses>
+      <ResourceEncryption>encrypt=true;compress=true;true</ResourceEncryption>
+      <SealClasses>true</SealClasses>
       <SearchSatelliteAssemblies>true</SearchSatelliteAssemblies>
       <ShowLogo>true</ShowLogo>
       <ShowStatistics>true</ShowStatistics>
-      <StringEncryption>True</StringEncryption>
+      <StringEncryption>hash</StringEncryption>
       <SuppressIldasm>true</SuppressIldasm>
       <SuppressReflection>False</SuppressReflection>
-      <TamperingDetection>false</TamperingDetection>
+      <TamperingDetection>true</TamperingDetection>
       <UnicodeNormalization>True</UnicodeNormalization>
-      <ValueEncryption>false</ValueEncryption>
+      <ValueEncryption>int32=true;int64=true;single=true;double=true;array=true;true</ValueEncryption>
       <VerboseLevel>1</VerboseLevel>
       <VirtualFunctions>true</VirtualFunctions>
       <XmlRules>
         <Rules targetAssembly="Oracle">
-          <Rule name="OracleRootNoRename" feature="renaming" exclude="true">
+          <Rule name="NoRenameGetRoot" feature="renaming" exclude="true">
             <Target>Methods</Target>
             <Pattern>Oracle.OracleBot::GetRoot():TreeSharp.Composite</Pattern>
             <Description>Disable Renaming</Description>
           </Rule>
-          <Rule name="OracleSettingsWindowNoRename" feature="renaming" exclude="true">
+          <Rule name="NoRenameSettingsButton" feature="renaming" exclude="true">
             <Target>Methods</Target>
             <Pattern>Oracle.OracleBot::OnButtonPress():System.Void</Pattern>
             <Description>Disable Renaming</Description>
           </Rule>
-          <Rule name="OracleStartNoRename" feature="renaming" exclude="true">
+          <Rule name="NoRenameBotStart" feature="renaming" exclude="true">
             <Target>Methods</Target>
             <Pattern>Oracle.OracleBot::Start():System.Void</Pattern>
             <Description>Disable Renaming</Description>
           </Rule>
-          <Rule name="OracleStopNoRename" feature="renaming" exclude="true">
+          <Rule name="NoRenameBotStop" feature="renaming" exclude="true">
             <Target>Methods</Target>
             <Pattern>Oracle.OracleBot::Stop():System.Void</Pattern>
             <Description>Disable Renaming</Description>
           </Rule>
-          <Rule name="FateDatabaseDisableRename" feature="renaming" exclude="true" applyToMembers="true">
+          <Rule name="NoRenameFateDatabase" feature="renaming" exclude="true" applyToMembers="true">
             <Pattern>Oracle.Data.Fates.FateDatabase*</Pattern>
             <Description>Disable Renaming</Description>
           </Rule>
-          <Rule name="FlightMeshDisableRename" feature="renaming" exclude="true" applyToMembers="true">
+          <Rule name="NoRenameFlightMesh" feature="renaming" exclude="true" applyToMembers="true">
             <Pattern>Oracle.Data.Meshes.FlightMesh*</Pattern>
             <Description>Disable Renaming</Description>
           </Rule>
-          <Rule name="OracleSettingsNoRename" feature="renaming" exclude="true" applyToMembers="true">
-            <Target>Properties</Target>
+          <Rule name="NoRenameSettings" feature="renaming" exclude="true" applyToMembers="true">
             <Pattern>Oracle.Settings.*</Pattern>
             <Description>Disable Renaming</Description>
-          </Rule>
-          <Rule name="BlacklistSettingsInstanceRename" feature="renaming" exclude="false" applyToMembers="true">
-            <Target>Properties,Methods</Target>
-            <Pattern>Oracle.Settings.BlacklistSettings::Instance:Oracle.Settings.BlacklistSettings</Pattern>
-            <Description>Enable Renaming</Description>
-          </Rule>
-          <Rule name="ClassSettingsInstanceEnableRename" feature="renaming" exclude="false" applyToMembers="true">
-            <Target>Properties,Methods</Target>
-            <Pattern>Oracle.Settings.ClassSettings::Instance:Oracle.Settings.ClassSettings</Pattern>
-            <Description>Enable Renaming</Description>
-          </Rule>
-          <Rule name="FateSettingsInstanceEnableRename" feature="renaming" exclude="false" applyToMembers="true">
-            <Target>Properties,Methods</Target>
-            <Pattern>Oracle.Settings.FateSettings::Instance:Oracle.Settings.FateSettings</Pattern>
-            <Description>Enable Renaming</Description>
-          </Rule>
-          <Rule name="MainSettingsInstanceEnableRename" feature="renaming" exclude="false" applyToMembers="true">
-            <Target>Properties,Methods</Target>
-            <Pattern>Oracle.Settings.MainSettings::Instance:Oracle.Settings.MainSettings</Pattern>
-            <Description>Enable Renaming</Description>
-          </Rule>
-          <Rule name="ModeSettingsInstanceEnableRename" feature="renaming" exclude="false" applyToMembers="true">
-            <Target>Properties,Methods</Target>
-            <Pattern>Oracle.Settings.ModeSettings::Instance:Oracle.Settings.ModeSettings</Pattern>
-            <Description>Enable Renaming</Description>
-          </Rule>
-          <Rule name="MovementSettingsInstanceEnableRename" feature="renaming" exclude="false" applyToMembers="true">
-            <Target>Properties,Methods</Target>
-            <Pattern>Oracle.Settings.MovementSettings::Instance:Oracle.Settings.MovementSettings</Pattern>
-            <Description>Enable Renaming</Description>
-          </Rule>
-          <Rule name="WaitSettingsInstanceEnableRename" feature="renaming" exclude="false" applyToMembers="true">
-            <Target>Properties,Methods</Target>
-            <Pattern>Oracle.Settings.WaitSettings::Instance:Oracle.Settings.WaitSettings</Pattern>
-            <Description>Enable Renaming</Description>
           </Rule>
         </Rules>
       </XmlRules>
@@ -129,27 +93,27 @@
   <Target Name="Oracle64">
     <PropertyGroup>
       <BabelInputFile>..\..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\BotBases\Oracle\Oracle64.dll</BabelInputFile>
-      <CleanAttributes>\[mscorlib\]System.Runtime.CompilerServices.CompilerGeneratedAttribute;\[mscorlib\]System.Diagnostics.DebuggerDisplayAttribute;\[mscorlib\]System.Diagnostics.DebuggerBrowsableAttribute;\[mscorlib\]System.Diagnostics.DebuggerNonUserCodeAttribute;\[mscorlib\]System.Diagnostics.DebuggerHiddenAttribute;\[mscorlib\]System.Diagnostics.DebuggerStepThroughAttribute;False</CleanAttributes>
-      <ConstRemoval>false</ConstRemoval>
-      <ControlFlowObfuscation>token=false;underflow=false;goto=true;if=false;switch=false;case=false;call=false;value=false;true</ControlFlowObfuscation>
+      <CleanAttributes>\[mscorlib\]System.Runtime.CompilerServices.CompilerGeneratedAttribute;\[mscorlib\]System.Diagnostics.DebuggerDisplayAttribute;\[mscorlib\]System.Diagnostics.DebuggerBrowsableAttribute;\[mscorlib\]System.Diagnostics.DebuggerNonUserCodeAttribute;\[mscorlib\]System.Diagnostics.DebuggerHiddenAttribute;\[mscorlib\]System.Diagnostics.DebuggerStepThroughAttribute;True</CleanAttributes>
+      <ConstRemoval>true</ConstRemoval>
+      <ControlFlowObfuscation>goto=true;switch=true;case=true;if=true;call=true;value=true;token=true;underflow=true;true</ControlFlowObfuscation>
       <CopyAttributes>True</CopyAttributes>
       <DeadCodeElimination>False</DeadCodeElimination>
       <DisgregateRemoval>false</DisgregateRemoval>
-      <DynamicProxy>None</DynamicProxy>
+      <DynamicProxy>All</DynamicProxy>
       <EmitInvalidOpcodes>false</EmitInvalidOpcodes>
       <EnableObfuscationAgent>true</EnableObfuscationAgent>
-      <EnumRemoval>false</EnumRemoval>
+      <EnumRemoval>true</EnumRemoval>
       <FlattenNamespaces>Oracle</FlattenNamespaces>
       <GenerateDebug>False</GenerateDebug>
       <GenerateLogFile>false</GenerateLogFile>
       <GenerateMapOutFile>false</GenerateMapOutFile>
       <ILIterations>3</ILIterations>
-      <InlineExpansion>false</InlineExpansion>
+      <InlineExpansion>true</InlineExpansion>
       <Instrument>false</Instrument>
       <InstrumentEmptyMethods>true</InstrumentEmptyMethods>
-      <Internalize>false</Internalize>
+      <Internalize>true</Internalize>
       <ModuleInitializer>false</ModuleInitializer>
-      <MsilEncryption>False</MsilEncryption>
+      <MsilEncryption>True</MsilEncryption>
       <ObfuscateEvents>true</ObfuscateEvents>
       <ObfuscateFields>true</ObfuscateFields>
       <ObfuscateMethods>true</ObfuscateMethods>
@@ -158,88 +122,52 @@
       <ObfuscateTypes>true</ObfuscateTypes>
       <ObfuscateXaml>false</ObfuscateXaml>
       <OverloadedRenaming>false</OverloadedRenaming>
-      <ResourceEncryption>false</ResourceEncryption>
-      <SealClasses>false</SealClasses>
+      <ResourceEncryption>encrypt=true;compress=true;true</ResourceEncryption>
+      <SealClasses>true</SealClasses>
       <SearchSatelliteAssemblies>true</SearchSatelliteAssemblies>
       <ShowLogo>true</ShowLogo>
       <ShowStatistics>true</ShowStatistics>
-      <StringEncryption>True</StringEncryption>
+      <StringEncryption>hash</StringEncryption>
       <SuppressIldasm>true</SuppressIldasm>
       <SuppressReflection>False</SuppressReflection>
-      <TamperingDetection>false</TamperingDetection>
+      <TamperingDetection>true</TamperingDetection>
       <UnicodeNormalization>True</UnicodeNormalization>
-      <ValueEncryption>false</ValueEncryption>
+      <ValueEncryption>int32=true;int64=true;single=true;double=true;array=true;true</ValueEncryption>
       <VerboseLevel>1</VerboseLevel>
       <VirtualFunctions>true</VirtualFunctions>
       <XmlRules>
         <Rules targetAssembly="Oracle">
-          <Rule name="OracleRootNoRename" feature="renaming" exclude="true">
+          <Rule name="NoRenameGetRoot" feature="renaming" exclude="true">
             <Target>Methods</Target>
             <Pattern>Oracle.OracleBot::GetRoot():TreeSharp.Composite</Pattern>
             <Description>Disable Renaming</Description>
           </Rule>
-          <Rule name="OracleSettingsWindowNoRename" feature="renaming" exclude="true">
+          <Rule name="NoRenameSettingsButton" feature="renaming" exclude="true">
             <Target>Methods</Target>
             <Pattern>Oracle.OracleBot::OnButtonPress():System.Void</Pattern>
             <Description>Disable Renaming</Description>
           </Rule>
-          <Rule name="OracleStartNoRename" feature="renaming" exclude="true">
+          <Rule name="NoRenameBotStart" feature="renaming" exclude="true">
             <Target>Methods</Target>
             <Pattern>Oracle.OracleBot::Start():System.Void</Pattern>
             <Description>Disable Renaming</Description>
           </Rule>
-          <Rule name="OracleStopNoRename" feature="renaming" exclude="true">
+          <Rule name="NoRenameBotStop" feature="renaming" exclude="true">
             <Target>Methods</Target>
             <Pattern>Oracle.OracleBot::Stop():System.Void</Pattern>
             <Description>Disable Renaming</Description>
           </Rule>
-          <Rule name="FateDatabaseDisableRename" feature="renaming" exclude="true" applyToMembers="true">
+          <Rule name="NoRenameFateDatabase" feature="renaming" exclude="true" applyToMembers="true">
             <Pattern>Oracle.Data.Fates.FateDatabase*</Pattern>
             <Description>Disable Renaming</Description>
           </Rule>
-          <Rule name="FlightMeshDisableRename" feature="renaming" exclude="true" applyToMembers="true">
+          <Rule name="NoRenameFlightMesh" feature="renaming" exclude="true" applyToMembers="true">
             <Pattern>Oracle.Data.Meshes.FlightMesh*</Pattern>
             <Description>Disable Renaming</Description>
           </Rule>
-          <Rule name="OracleSettingsNoRename" feature="renaming" exclude="true" applyToMembers="true">
-            <Target>Properties</Target>
+          <Rule name="NoRenameSettings" feature="renaming" exclude="true" applyToMembers="true">
             <Pattern>Oracle.Settings.*</Pattern>
             <Description>Disable Renaming</Description>
-          </Rule>
-          <Rule name="BlacklistSettingsInstanceRename" feature="renaming" exclude="false" applyToMembers="true">
-            <Target>Properties,Methods</Target>
-            <Pattern>Oracle.Settings.BlacklistSettings::Instance:Oracle.Settings.BlacklistSettings</Pattern>
-            <Description>Enable Renaming</Description>
-          </Rule>
-          <Rule name="ClassSettingsInstanceEnableRename" feature="renaming" exclude="false" applyToMembers="true">
-            <Target>Properties,Methods</Target>
-            <Pattern>Oracle.Settings.ClassSettings::Instance:Oracle.Settings.ClassSettings</Pattern>
-            <Description>Enable Renaming</Description>
-          </Rule>
-          <Rule name="FateSettingsInstanceEnableRename" feature="renaming" exclude="false" applyToMembers="true">
-            <Target>Properties,Methods</Target>
-            <Pattern>Oracle.Settings.FateSettings::Instance:Oracle.Settings.FateSettings</Pattern>
-            <Description>Enable Renaming</Description>
-          </Rule>
-          <Rule name="MainSettingsInstanceEnableRename" feature="renaming" exclude="false" applyToMembers="true">
-            <Target>Properties,Methods</Target>
-            <Pattern>Oracle.Settings.MainSettings::Instance:Oracle.Settings.MainSettings</Pattern>
-            <Description>Enable Renaming</Description>
-          </Rule>
-          <Rule name="ModeSettingsInstanceEnableRename" feature="renaming" exclude="false" applyToMembers="true">
-            <Target>Properties,Methods</Target>
-            <Pattern>Oracle.Settings.ModeSettings::Instance:Oracle.Settings.ModeSettings</Pattern>
-            <Description>Enable Renaming</Description>
-          </Rule>
-          <Rule name="MovementSettingsInstanceEnableRename" feature="renaming" exclude="false" applyToMembers="true">
-            <Target>Properties,Methods</Target>
-            <Pattern>Oracle.Settings.MovementSettings::Instance:Oracle.Settings.MovementSettings</Pattern>
-            <Description>Enable Renaming</Description>
-          </Rule>
-          <Rule name="WaitSettingsInstanceEnableRename" feature="renaming" exclude="false" applyToMembers="true">
-            <Target>Properties,Methods</Target>
-            <Pattern>Oracle.Settings.WaitSettings::Instance:Oracle.Settings.WaitSettings</Pattern>
-            <Description>Enable Renaming</Description>
           </Rule>
         </Rules>
       </XmlRules>

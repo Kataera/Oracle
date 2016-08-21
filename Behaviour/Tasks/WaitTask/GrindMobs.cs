@@ -33,7 +33,7 @@ namespace Oracle.Behaviour.Tasks.WaitTask
                 return true;
             }
 
-            Logger.SendLog("Selecting '" + target.Name + "' as the next target to kill.", true);
+            Logger.SendLog("Selecting " + target.Name + " (" + target.ObjectId.ToString("X") + ") as the next target to kill.", true);
             Poi.Current = new Poi(target, PoiType.Kill);
             return true;
         }

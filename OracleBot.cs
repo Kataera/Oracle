@@ -183,7 +183,7 @@ namespace Oracle
                 TreeHooks.Instance.ReplaceHook("Rest", Rest.Behaviour);
             }
 
-            if (MainSettings.Instance.ListHooksOnStart && MainSettings.Instance.ShowDebugInConsole)
+            if (MainSettings.Instance.ListHooksOnStart)
             {
                 ListHooks();
             }

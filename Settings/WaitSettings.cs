@@ -45,7 +45,9 @@ namespace Oracle.Settings
             }
         }
 
-        [DefaultValue(FateWaitMode.GrindMobs)]
+        // Use literal value rather than enum for obfuscator.
+        // 0 = FateWaitMode.ReturnToAetheryte
+        [DefaultValue(0)]
         [Setting]
         public FateWaitMode FateWaitMode
         {

@@ -25,11 +25,11 @@ namespace Oracle.Helpers
 
             if (!MainSettings.Instance.ShowDebugInConsole)
             {
-                Logging.WriteQuiet(LoggerDebugColour, log);
+                Logging.WriteToFileSync(LogLevel.Diagnostic, log);
             }
             else
             {
-                Logging.WriteVerbose(LoggerDebugColour, log);
+                Logging.Write(LoggerDebugColour, log);
             }
 
             lastLog = log;
@@ -46,11 +46,11 @@ namespace Oracle.Helpers
 
             if (!MainSettings.Instance.ShowDebugInConsole)
             {
-                Logging.WriteQuiet(LoggerDebugColour, log);
+                Logging.WriteToFileSync(LogLevel.Diagnostic, log);
             }
             else
             {
-                Logging.WriteVerbose(LoggerDebugColour, log);
+                Logging.Write(LoggerDebugColour, log);
             }
 
             lastLog = log;

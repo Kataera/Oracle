@@ -28,7 +28,7 @@ namespace Oracle.Behaviour.Hooks
                     return false;
                 }
 
-                Logger.SendDebugLog("Setting " + target.Name + " (" + target.ObjectId + ") as kill Poi.");
+                Logger.SendDebugLog("Setting " + target.Name + " (" + target.ObjectId.ToString("X") + ") as kill Poi.");
                 Poi.Current = new Poi(target, PoiType.Kill);
                 return true;
             }

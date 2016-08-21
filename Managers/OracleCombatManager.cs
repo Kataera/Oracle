@@ -10,7 +10,7 @@ using Oracle.Helpers;
 
 namespace Oracle.Managers
 {
-    public class OracleCombatManager
+    internal class OracleCombatManager
     {
         internal static bool AnyViableFateTargets()
         {

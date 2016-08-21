@@ -55,7 +55,9 @@ namespace Oracle.Settings
             }
         }
 
-        [DefaultValue(ClassLevelMode.Concurrent)]
+        // Use literal value rather than enum for obfuscator.
+        // 0 = ClassLevelMode.Concurrent
+        [DefaultValue(0)]
         [Setting]
         public ClassLevelMode ClassLevelMode
         {

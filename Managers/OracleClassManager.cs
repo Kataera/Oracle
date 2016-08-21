@@ -113,9 +113,9 @@ namespace Oracle.Managers
             var gearSet = ClassSettings.Instance.ClassGearsets.FirstOrDefault(kvp => kvp.Value.Equals(job)).Key;
             Logger.SendLog("Changing class from " + GetClassJobName(previousJob) + " to " + GetClassJobName(job)
                            + ". Waiting 10 seconds to ensure game will let us change.");
-            await Coroutine.Wait(TimeSpan.FromSeconds(10), () => Core.Player.InCombat || GameObjectManager.Attackers.Any());
+            await Coroutine.Wait(TimeSpan.FromSeconds(10), () => GameObjectManager.Attackers.Any());
 
-            if (Core.Player.InCombat || GameObjectManager.Attackers.Any())
+            if (GameObjectManager.Attackers.Any())
             {
                 Logger.SendLog("We're in combat, cancelling class change.");
                 return ChangeClassResult.Failed;
