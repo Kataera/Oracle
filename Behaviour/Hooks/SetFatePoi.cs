@@ -159,7 +159,7 @@ namespace Oracle.Behaviour.Hooks
                 chainFateTimer.Reset();
             }
 
-            Logger.SendLog("Waiting for the follow up FATE.");
+            Logger.SendLog("Waiting for the follow up FATE: " + chainOracleFateInfo.Name + ".");
             var chainFateData = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainId);
             if (chainFateData == null)
             {
@@ -208,7 +208,7 @@ namespace Oracle.Behaviour.Hooks
                 return false;
             }
 
-            Logger.SendLog("Selecting closest FATE.");
+            Logger.SendLog("Selecting closest viable FATE.");
             var closestFate = closestFates.FirstOrDefault().Key;
 
             Logger.SendLog("Selected FATE: " + closestFate.Name + ".");
