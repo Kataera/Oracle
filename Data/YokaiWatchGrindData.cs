@@ -9,10 +9,10 @@ namespace Oracle.Data
 {
     internal class YokaiWatchGrindData
     {
-        public const uint YokaiMedal = 15167;
-        public const uint YokaiWatchItem = 15222;
+        internal const uint YokaiMedal = 15167;
+        internal const uint YokaiWatchItem = 15222;
 
-        public static YokaiMinion Jibanyan = new YokaiMinion
+        internal static YokaiMinion Jibanyan = new YokaiMinion
         {
             MinionId = YokaiMinionId.Jibanyan,
             EnglishName = "Jibanyan",
@@ -23,7 +23,7 @@ namespace Oracle.Data
             Ignored = false
         };
 
-        public static YokaiMinion Komasan = new YokaiMinion
+        internal static YokaiMinion Komasan = new YokaiMinion
         {
             MinionId = YokaiMinionId.Komasan,
             EnglishName = "Komasan",
@@ -34,7 +34,7 @@ namespace Oracle.Data
             Ignored = false
         };
 
-        public static YokaiMinion Usapyon = new YokaiMinion
+        internal static YokaiMinion Usapyon = new YokaiMinion
         {
             MinionId = YokaiMinionId.Usapyon,
             EnglishName = "USApyon",
@@ -45,7 +45,7 @@ namespace Oracle.Data
             Ignored = false
         };
 
-        public static YokaiMinion Whisper = new YokaiMinion
+        internal static YokaiMinion Whisper = new YokaiMinion
         {
             MinionId = YokaiMinionId.Whisper,
             EnglishName = "Whisper",
@@ -56,7 +56,7 @@ namespace Oracle.Data
             Ignored = false
         };
 
-        public static YokaiMinion Shogunyan = new YokaiMinion
+        internal static YokaiMinion Shogunyan = new YokaiMinion
         {
             MinionId = YokaiMinionId.Shogunyan,
             EnglishName = "Shogunyan",
@@ -67,7 +67,7 @@ namespace Oracle.Data
             Ignored = false
         };
 
-        public static YokaiMinion Hovernyan = new YokaiMinion
+        internal static YokaiMinion Hovernyan = new YokaiMinion
         {
             MinionId = YokaiMinionId.Hovernyan,
             EnglishName = "Hovernyan",
@@ -78,7 +78,7 @@ namespace Oracle.Data
             Ignored = false
         };
 
-        public static YokaiMinion Komajiro = new YokaiMinion
+        internal static YokaiMinion Komajiro = new YokaiMinion
         {
             MinionId = YokaiMinionId.Komajiro,
             EnglishName = "Komajiro",
@@ -89,7 +89,7 @@ namespace Oracle.Data
             Ignored = false
         };
 
-        public static YokaiMinion Noko = new YokaiMinion
+        internal static YokaiMinion Noko = new YokaiMinion
         {
             MinionId = YokaiMinionId.Noko,
             EnglishName = "Noko",
@@ -100,7 +100,7 @@ namespace Oracle.Data
             Ignored = false
         };
 
-        public static YokaiMinion Venoct = new YokaiMinion
+        internal static YokaiMinion Venoct = new YokaiMinion
         {
             MinionId = YokaiMinionId.Venoct,
             EnglishName = "Venoct",
@@ -111,7 +111,7 @@ namespace Oracle.Data
             Ignored = false
         };
 
-        public static YokaiMinion Kyubi = new YokaiMinion
+        internal static YokaiMinion Kyubi = new YokaiMinion
         {
             MinionId = YokaiMinionId.Kyubi,
             EnglishName = "Kyubi",
@@ -122,7 +122,7 @@ namespace Oracle.Data
             Ignored = false
         };
 
-        public static YokaiMinion Robonyan = new YokaiMinion
+        internal static YokaiMinion Robonyan = new YokaiMinion
         {
             MinionId = YokaiMinionId.Robonyan,
             EnglishName = "Robonyan F-type",
@@ -133,7 +133,7 @@ namespace Oracle.Data
             Ignored = false
         };
 
-        public static YokaiMinion Blizzaria = new YokaiMinion
+        internal static YokaiMinion Blizzaria = new YokaiMinion
         {
             MinionId = YokaiMinionId.Blizzaria,
             EnglishName = "Blizzaria",
@@ -144,7 +144,7 @@ namespace Oracle.Data
             Ignored = false
         };
 
-        public static YokaiMinion Manjimutt = new YokaiMinion
+        internal static YokaiMinion Manjimutt = new YokaiMinion
         {
             MinionId = YokaiMinionId.Manjimutt,
             EnglishName = "Manjimutt",
@@ -155,7 +155,7 @@ namespace Oracle.Data
             Ignored = false
         };
 
-        public static IEnumerable<YokaiMinion> Minions => new List<YokaiMinion>
+        internal static IEnumerable<YokaiMinion> Minions => new List<YokaiMinion>
         {
             Jibanyan,
             Komasan,
@@ -172,7 +172,7 @@ namespace Oracle.Data
             Manjimutt
         };
 
-        public static int GetMedalsToFarm(YokaiMinion minion)
+        internal static int GetMedalsToFarm(YokaiMinion minion)
         {
             switch (minion.MinionId)
             {
@@ -207,7 +207,7 @@ namespace Oracle.Data
             }
         }
 
-        public static uint GetNormalMedalZone()
+        internal static uint GetNormalMedalZone()
         {
             switch (ModeSettings.Instance.YokaiMedalZoneChoice)
             {
@@ -242,7 +242,7 @@ namespace Oracle.Data
             }
         }
 
-        public static int GetZoneChoice(YokaiMinion minion)
+        internal static int GetZoneChoice(YokaiMinion minion)
         {
             switch (minion.MinionId)
             {

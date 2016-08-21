@@ -1,8 +1,5 @@
-﻿using System;
-
-namespace Oracle.Enumerations
+﻿namespace Oracle.Enumerations
 {
-    [Serializable]
     internal enum FateWaitMode
     {
         ReturnToAetheryte,

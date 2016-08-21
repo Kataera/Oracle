@@ -24,7 +24,7 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -32,14 +32,14 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <NoWarn>CS1998</NoWarn>
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>Oracle</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
+    <OutputPath>bin\x86\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <NoWarn>CS1998</NoWarn>
     <DebugType>full</DebugType>
@@ -48,16 +48,40 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
+    <OutputPath>bin\x86\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>CS1998</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <NoWarn>CS1998</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>none</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>CS1998</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -72,9 +96,8 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="RebornBuddy, Version=1.0.345.0, Culture=neutral, PublicKeyToken=48d7174f8a943034, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\RebornBuddy.exe</HintPath>
+    <Reference Include="RebornBuddy">
+      <HintPath>..\..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB64\RebornBuddy.exe</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -82,7 +105,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
@@ -144,6 +166,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviour\Hooks\SetCombatPoi.cs" />
     <Compile Include="Behaviour\Tasks\ChocoboHandler.cs" />
     <Compile Include="Behaviour\Hooks\Rest.cs" />
     <Compile Include="Behaviour\Modes\AnimaGrind.cs" />
@@ -160,15 +183,14 @@
     <Compile Include="Behaviour\OracleBehaviour.cs" />
     <Compile Include="Behaviour\Hooks\SelectPoiType.cs" />
     <Compile Include="Behaviour\Tasks\CombatHandler.cs" />
-    <Compile Include="Behaviour\Tasks\DeathHandler.cs" />
     <Compile Include="Behaviour\Tasks\FateHandler.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BindHomePoint.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\BlacklistMob.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\ChangeClass.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LoadFlightMesh.cs" />
+    <Compile Include="Behaviour\Tasks\Utilities\RestockGysahlGreens.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\SummonMinion.cs" />
     <Compile Include="Enumerations\ClassLevelMode.cs" />
     <Compile Include="Managers\OracleClassManager.cs" />
+    <Compile Include="Managers\OracleCombatManager.cs" />
     <Compile Include="Managers\OracleInventoryManager.cs" />
     <Compile Include="Settings\ClassSettings.cs" />
     <Compile Include="Structs\YokaiMinion.cs" />
@@ -205,9 +227,9 @@
     <Compile Include="Enumerations\FateSupportLevel.cs" />
     <Compile Include="Enumerations\FateType.cs" />
     <Compile Include="Helpers\Logger.cs" />
-    <Compile Include="OracleLoader.cs">
+    <None Include="OracleLoader.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    </None>
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -268,4 +290,18 @@
       <UserProperties BuildVersion_StartDate="2000/1/1" />
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>if not exist "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\BotBases\Oracle" mkdir "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\BotBases\Oracle"
+if not exist "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB64\BotBases\Oracle" mkdir "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB64\BotBases\Oracle"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>if "$(PlatformName)" == "x86" ( 
+xcopy /E /Y /R "C:\Users\Caitlin\Documents\Visual Studio 2015\Projects\Oracle\bin\x86" "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\BotBases\Oracle"
+xcopy /E /Y /R "C:\Users\Caitlin\Documents\Visual Studio 2015\Projects\Oracle\bin\x86" "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB64\BotBases\Oracle"
+)
+if "$(PlatformName)" == "x64" ( 
+copy /Y "$(TargetDir)$(TargetName).dll" "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\BotBases\Oracle\$(ProjectName)64.dll"
+copy /Y "$(TargetDir)$(TargetName).dll" "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB64\BotBases\Oracle\$(ProjectName)64.dll"
+)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

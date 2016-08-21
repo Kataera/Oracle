@@ -1,4 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+
+using Buddy.Coroutines;
+
+using Clio.Utilities;
 
 using ff14bot;
 using ff14bot.Managers;
@@ -23,6 +28,7 @@ namespace Oracle.Behaviour.Modes
         private const uint LuminousWaterCrystal = 13574;
         private const uint LuminousWindCrystal = 13570;
 
+        private const ushort ZoneMorDhona = 156;
         private const ushort ZoneAzysLla = 402;
         private const ushort ZoneChurningMists = 400;
         private const ushort ZoneCoerthasWesternHighlands = 397;
@@ -30,23 +36,78 @@ namespace Oracle.Behaviour.Modes
         private const ushort ZoneDravanianHinterlands = 399;
         private const ushort ZoneSeaOfClouds = 401;
 
-        public static async Task<bool> HandleAnimaGrind()
+        internal static async Task<bool> HandleAnimaGrind()
         {
             if (!ConditionParser.HasQuest(AnimaQuest))
             {
                 Logger.SendErrorLog("You do not have the quest 'Soul Without Life', which is required to run in Anima grind mode.");
-
                 OracleBot.StopOracle("Required quest is not picked up.");
                 return true;
             }
 
             if (ConditionParser.GetQuestStep(AnimaQuest) != AnimaQuestStep)
             {
-                Logger.SendErrorLog("You are not at the correct step of 'Soul Without Life'. You must be at the objective that says "
-                                    + "\"Deliver the astral nodule and umbral nodule to Ardashir in Azys Lla.\" to run in Anima grind mode.");
+                OracleFateManager.PausePoiSetting = true;
 
-                OracleBot.StopOracle("Not at required step of quest.");
-                return true;
+                if (WorldManager.ZoneId != ZoneMorDhona)
+                {
+                    await ZoneChange.HandleZoneChange(ZoneMorDhona, false);
+                }
+
+                // Step 1: Talk to Rowena.
+                if (ConditionParser.GetQuestStep(AnimaQuest) == 1)
+                {
+                    var rowenaLocation = new Vector3(25.65759f, 29f, -822.5876f);
+                    if (Core.Player.Distance(rowenaLocation) > 10f)
+                    {
+                        await OracleMovementManager.NavigateToLocation(rowenaLocation, 2f, false);
+                    }
+
+                    const uint rowenaNpcId = 1001304;
+                    var rowenaGameObject = GameObjectManager.GameObjects.FirstOrDefault(npc => npc.NpcId == rowenaNpcId);
+                    if (rowenaGameObject != null)
+                    {
+                        if (Core.Player.Distance2D(rowenaGameObject.Location) > 4f)
+                        {
+                            await OracleMovementManager.NavigateToLocation(rowenaGameObject.Location, 4f, false);
+                        }
+
+                        rowenaGameObject.Interact();
+                        await Coroutine.Sleep(MainSettings.Instance.ActionDelay);
+                        await SkipDialogue.Main();
+                    }
+                }
+
+                // Step 2: Talk to Syndony.
+                if (ConditionParser.GetQuestStep(AnimaQuest) == 2)
+                {
+                    var syndonyLocation = new Vector3(56.6797f, 50f, -777.5304f);
+                    if (Core.Player.Distance(syndonyLocation) > 10f)
+                    {
+                        await OracleMovementManager.NavigateToLocation(syndonyLocation, 2f, false);
+                    }
+
+                    const uint syndonyNpcId = 1016289;
+                    var syndonyGameObject = GameObjectManager.GameObjects.FirstOrDefault(npc => npc.NpcId == syndonyNpcId);
+                    if (syndonyGameObject != null)
+                    {
+                        if (Core.Player.Distance2D(syndonyGameObject.Location) > 4f)
+                        {
+                            await OracleMovementManager.NavigateToLocation(syndonyGameObject.Location, 4f, false);
+                        }
+
+                        syndonyGameObject.Interact();
+                        await Coroutine.Sleep(MainSettings.Instance.ActionDelay);
+                        await SkipDialogue.Main();
+                    }
+                }
+            }
+            else
+            {
+                if (OracleFateManager.PausePoiSetting)
+                {
+                    OracleFateManager.PausePoiSetting = false;
+                }
             }
 
             if (!ConditionParser.HasAtLeast(LuminousIceCrystal, ModeSettings.Instance.AnimaCrystalsToFarm))
@@ -65,7 +126,7 @@ namespace Oracle.Behaviour.Modes
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousIceCrystal))
                                + " more Luminous Ice Crystals.");
-                await ZoneChange.HandleZoneChange(ZoneCoerthasWesternHighlands);
+                await ZoneChange.HandleZoneChange(ZoneCoerthasWesternHighlands, true);
             }
             else if (!ConditionParser.HasAtLeast(LuminousWindCrystal, 3))
             {
@@ -83,7 +144,7 @@ namespace Oracle.Behaviour.Modes
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousWindCrystal))
                                + " more Luminous Wind Crystals.");
-                await ZoneChange.HandleZoneChange(ZoneSeaOfClouds);
+                await ZoneChange.HandleZoneChange(ZoneSeaOfClouds, true);
             }
             else if (!ConditionParser.HasAtLeast(LuminousEarthCrystal, 3))
             {
@@ -101,7 +162,7 @@ namespace Oracle.Behaviour.Modes
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousEarthCrystal))
                                + " more Luminous Earth Crystals.");
-                await ZoneChange.HandleZoneChange(ZoneDravanianForelands);
+                await ZoneChange.HandleZoneChange(ZoneDravanianForelands, true);
             }
             else if (!ConditionParser.HasAtLeast(LuminousLightningCrystal, 3))
             {
@@ -119,7 +180,7 @@ namespace Oracle.Behaviour.Modes
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousLightningCrystal))
                                + " more Luminous Lightning Crystals.");
-                await ZoneChange.HandleZoneChange(ZoneChurningMists);
+                await ZoneChange.HandleZoneChange(ZoneChurningMists, true);
             }
             else if (!ConditionParser.HasAtLeast(LuminousWaterCrystal, 3))
             {
@@ -137,7 +198,7 @@ namespace Oracle.Behaviour.Modes
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousWaterCrystal))
                                + " more Luminous Water Crystals.");
-                await ZoneChange.HandleZoneChange(ZoneDravanianHinterlands);
+                await ZoneChange.HandleZoneChange(ZoneDravanianHinterlands, true);
             }
             else if (!ConditionParser.HasAtLeast(LuminousFireCrystal, 3))
             {
@@ -155,7 +216,7 @@ namespace Oracle.Behaviour.Modes
 
                 Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousFireCrystal))
                                + " more Luminous Fire Crystals.");
-                await ZoneChange.HandleZoneChange(ZoneAzysLla);
+                await ZoneChange.HandleZoneChange(ZoneAzysLla, true);
             }
             else if (!Core.Player.InCombat)
             {

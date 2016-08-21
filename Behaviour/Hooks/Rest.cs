@@ -18,7 +18,7 @@ namespace Oracle.Behaviour.Hooks
 {
     internal static class Rest
     {
-        public static Composite Behaviour => CreateBehaviour();
+        internal static Composite Behaviour => CreateBehaviour();
 
         private static Composite CreateBehaviour()
         {
@@ -27,10 +27,26 @@ namespace Oracle.Behaviour.Hooks
 
         internal static async Task<bool> Main()
         {
-            if (Core.Player.CurrentHealthPercent >= MainSettings.Instance.RestHealthPercent
-                && Core.Player.CurrentManaPercent >= MainSettings.Instance.RestManaPercent)
+            if (Core.Player.CurrentHealthPercent >= MainSettings.Instance.RestHealthPercent)
             {
                 return false;
+            }
+
+            if (OracleClassManager.IsTankClassJob(Core.Player.CurrentJob) || OracleClassManager.IsMeleeDpsClassJob(Core.Player.CurrentJob)
+                || OracleClassManager.IsRangedDpsClassJob(Core.Player.CurrentJob))
+            {
+                if (Core.Player.CurrentTPPercent >= MainSettings.Instance.RestTPManaPercent)
+                {
+                    return false;
+                }
+            }
+
+            if (OracleClassManager.IsCasterClassJob(Core.Player.CurrentJob) || OracleClassManager.IsHealerClassJob(Core.Player.CurrentJob))
+            {
+                if (Core.Player.CurrentManaPercent >= MainSettings.Instance.RestTPManaPercent)
+                {
+                    return false;
+                }
             }
 
             if (Poi.Current.Type != PoiType.Kill)
@@ -50,7 +66,8 @@ namespace Oracle.Behaviour.Hooks
                 Navigator.PlayerMover.MoveStop();
             }
 
-            Logger.SendLog("Resting until HP is over " + MainSettings.Instance.RestHealthPercent + "% and mana is over " + MainSettings.Instance.RestManaPercent
+            Logger.SendLog("Resting until HP is over " + MainSettings.Instance.RestHealthPercent + "% and mana is over "
+                           + MainSettings.Instance.RestTPManaPercent
                            + "%.");
             return true;
         }

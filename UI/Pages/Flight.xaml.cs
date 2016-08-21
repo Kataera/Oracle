@@ -17,7 +17,7 @@ namespace Oracle.UI.Pages
         private const bool DravanianHinterlandsDefaultValue = true;
         private const bool AzysLlaDefaultValue = true;
 
-        public Flight()
+        internal Flight()
         {
             InitializeComponent();
             RetrieveSettings();

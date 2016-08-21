@@ -11,11 +11,11 @@ namespace Oracle.Behaviour.Tasks.WaitTask
 {
     internal static class MoveToWaitLocation
     {
-        public static async Task<bool> HandleMoveToLocation()
+        internal static async Task<bool> HandleMoveToLocation()
         {
             if (Core.Player.Location.Distance(Poi.Current.Location) < 15f)
             {
-                if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone))
+                if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone) && Poi.Current.Type != PoiType.Kill && Poi.Current.Type != PoiType.None)
                 {
                     OracleFateManager.ClearPoi("We're being attacked.", false);
                 }

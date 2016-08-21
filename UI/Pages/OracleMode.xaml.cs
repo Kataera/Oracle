@@ -12,7 +12,7 @@ namespace Oracle.UI.Pages
     {
         private const bool CoerthasWesternHighlandsDefaultValue = true;
 
-        public OracleMode()
+        internal OracleMode()
         {
             InitializeComponent();
             RetrieveSettings();

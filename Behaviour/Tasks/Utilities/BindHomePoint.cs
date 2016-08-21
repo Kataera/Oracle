@@ -22,7 +22,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return GameObjectManager.GameObjects.FirstOrDefault(obj => obj.Type == GameObjectType.AetheryteObject && obj.NpcId == aetheryteId);
         }
 
-        public static async Task<bool> Main(uint aetheryteId)
+        internal static async Task<bool> Main(uint aetheryteId)
         {
             Logger.SendLog("Binding to the aetheryte crystal.");
             var aetheryteObject = GetAetheryteObject(aetheryteId);

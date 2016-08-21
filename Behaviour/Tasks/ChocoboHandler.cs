@@ -7,6 +7,7 @@ using Buddy.Coroutines;
 using ff14bot;
 using ff14bot.Enums;
 using ff14bot.Managers;
+using ff14bot.Navigation;
 using ff14bot.Objects;
 
 using Oracle.Enumerations;
@@ -18,9 +19,9 @@ using TreeSharp;
 
 namespace Oracle.Behaviour.Tasks
 {
-    public class ChocoboHandler
+    internal class ChocoboHandler
     {
-        public static Composite Behaviour => CreateBehaviour();
+        internal static Composite Behaviour => CreateBehaviour();
 
         private static string ChocoboName
         {
@@ -32,7 +33,20 @@ namespace Oracle.Behaviour.Tasks
                     return "Chocobo";
                 }
 
-                var chocobo = PartyManager.AllMembers.FirstOrDefault(member => member.GameObject.SummonerGameObject == Core.Player);
+                if (PartyManager.AllMembers == null)
+                {
+                    return "Chocobo";
+                }
+
+                PartyMember chocobo = null;
+                foreach (var member in PartyManager.AllMembers)
+                {
+                    if (member.GameObject != null && member.GameObject.SummonerGameObject == Core.Player)
+                    {
+                        chocobo = member;
+                    }
+                }
+
                 return chocobo == null ? "Chocobo" : chocobo.Name;
             }
         }
@@ -66,6 +80,25 @@ namespace Oracle.Behaviour.Tasks
 
             if (!Chocobo.Summoned && Chocobo.CanSummon)
             {
+                try
+                {
+                    // Check for whether or not the dead/dismissed/expired Chocobo is still in the party. If it is, game won't let us summon.
+                    if (PartyManager.IsInParty && PartyManager.AllMembers != null
+                        && PartyManager.AllMembers.Any(member => member.GameObject.SummonerGameObject == Core.Player))
+                    {
+                        return false;
+                    }
+                }
+                catch (NullReferenceException e)
+                {
+                    // LINQ very rarely throws exceptions here due to party members changing. No point printing stack trace out to user.
+                    Logger.SendWarningLog(
+                                          "LINQ null reference exception occurred when attempting to access party member data. Stack trace can be found in the log.");
+                    Logger.SendStackTrace(e.StackTrace);
+
+                    return false;
+                }
+
                 var summonResult = await SummonChocobo();
                 if (summonResult == SummonChocoboResult.Success)
                 {
@@ -75,11 +108,26 @@ namespace Oracle.Behaviour.Tasks
                 return true;
             }
 
-            if (Core.Player.CurrentHealthPercent < MainSettings.Instance.ChocoboHealerStanceThreshold)
+            // Safety checks for when the Chocobo may be summoned, but can't be accessed by RebornBuddy.
+            if (!Chocobo.Summoned || Chocobo.Object == null || !Chocobo.Object.IsValid)
+            {
+                OracleFateManager.ForceUpdateGameCache();
+                return false;
+            }
+
+            if (Core.Player.CurrentHealthPercent < MainSettings.Instance.ChocoboStancePlayerHealthThreshold)
             {
                 await SetChocoboStance(CompanionStance.Healer);
             }
-            else
+            else if (Chocobo.Object.CurrentHealthPercent < MainSettings.Instance.ChocoboStanceChocoboHealthThreshold)
+            {
+                await SetChocoboStance(CompanionStance.Healer);
+            }
+            else if (Core.Player.CurrentHealthPercent >= MainSettings.Instance.ChocoboStanceReturnToAttackThreshold)
+            {
+                await SetChocoboStance(CompanionStance.Attacker);
+            }
+            else if (Chocobo.Stance != CompanionStance.Attacker && Chocobo.Stance != CompanionStance.Healer)
             {
                 await SetChocoboStance(CompanionStance.Attacker);
             }
@@ -131,15 +179,21 @@ namespace Oracle.Behaviour.Tasks
             }
 
             Logger.SendLog("Attempting to summon our Chocobo.");
+            Navigator.Clear();
             await Coroutine.Sleep(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay));
             Chocobo.Summon();
-            await Coroutine.Sleep(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay));
 
+            if (!Core.Player.InCombat)
+            {
+                await Coroutine.Wait(TimeSpan.FromSeconds(3), () => Chocobo.Summoned);
+            }
+
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay));
             return Chocobo.Summoned ? SummonChocoboResult.Success : SummonChocoboResult.Failure;
         }
     }
 
-    public enum SummonChocoboResult
+    internal enum SummonChocoboResult
     {
         Success,
 
@@ -148,7 +202,7 @@ namespace Oracle.Behaviour.Tasks
         Disabled
     }
 
-    public enum SetChocoboStanceResult
+    internal enum SetChocoboStanceResult
     {
         Success,
 

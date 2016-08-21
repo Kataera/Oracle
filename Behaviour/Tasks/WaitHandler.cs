@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 
 using ff14bot;
+using ff14bot.Helpers;
 
 using Oracle.Behaviour.Tasks.WaitTask;
 using Oracle.Enumerations;
@@ -11,9 +12,9 @@ namespace Oracle.Behaviour.Tasks
 {
     internal static class WaitHandler
     {
-        public static async Task<bool> HandleWait()
+        internal static async Task<bool> HandleWait()
         {
-            if (OracleFateManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted)
+            if (OracleFateManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted && Poi.Current.Type != PoiType.Kill && Poi.Current.Type != PoiType.None)
             {
                 OracleFateManager.ClearPoi("We're being attacked.", false);
                 return true;

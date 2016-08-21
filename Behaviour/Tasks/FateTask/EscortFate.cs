@@ -9,7 +9,6 @@ using Clio.Utilities;
 
 using ff14bot;
 using ff14bot.Enums;
-using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Objects;
@@ -24,11 +23,6 @@ namespace Oracle.Behaviour.Tasks.FateTask
         private static TimeSpan? movementCooldown;
         private static Stopwatch movementTimer;
 
-        private static bool AnyViableTargets()
-        {
-            return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableTarget).Any();
-        }
-
         private static async Task ClearFate()
         {
             await OracleFateManager.ClearCurrentFate("Current FATE is finished.");
@@ -40,7 +34,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
             return TimeSpan.FromMilliseconds(rng.Next(500, 1500));
         }
 
-        public static async Task<bool> HandleEscortFate()
+        internal static async Task<bool> HandleEscortFate()
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
             var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
@@ -61,9 +55,9 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 movementCooldown = GetRandomTimeSpan();
             }
 
-            if (currentFate.Status != FateStatus.NOTACTIVE && AnyViableTargets())
+            if (currentFate.Status != FateStatus.NOTACTIVE && OracleCombatManager.AnyViableFateTargets())
             {
-                SelectTarget();
+                OracleCombatManager.SelectFateTarget();
             }
             else if (currentFate.Status != FateStatus.NOTACTIVE)
             {
@@ -120,11 +114,6 @@ namespace Oracle.Behaviour.Tasks.FateTask
             return true;
         }
 
-        private static bool IsViableTarget(BattleCharacter target)
-        {
-            return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleFateManager.CurrentFateId;
-        }
-
         private static async Task<bool> MoveToFateCentre()
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
@@ -143,6 +132,19 @@ namespace Oracle.Behaviour.Tasks.FateTask
                     Navigator.Stop();
                     await ClearFate();
                     return true;
+                }
+
+                var distanceToFateBoundary = Core.Player.Location.Distance2D(cachedLocation) - currentFate.Radius;
+                if (Actionmanager.CanMount == 0 && !Core.Player.IsMounted && OracleMovementManager.IsMountNeeded(distanceToFateBoundary)
+                    && Actionmanager.AvailableMounts.Any())
+                {
+                    Navigator.Stop();
+                    if (Core.Player.InCombat)
+                    {
+                        return true;
+                    }
+
+                    await OracleMovementManager.MountUp();
                 }
 
                 // Throttle navigator path generation requests.
@@ -216,37 +218,6 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
             Logger.SendDebugLog("Waiting " + movementCooldown.Value.TotalMilliseconds + "ms before moving again.");
             return true;
-        }
-
-        private static void SelectTarget()
-        {
-            var oracleFate = OracleFateManager.FateDatabase.GetFateFromId(OracleFateManager.CurrentFateId);
-            BattleCharacter target = null;
-
-            if (oracleFate.PreferredTargetId.Any())
-            {
-                var targets = GameObjectManager.GetObjectsByNPCIds<BattleCharacter>(oracleFate.PreferredTargetId.ToArray());
-                target = targets.OrderBy(bc => bc.Distance(Core.Player)).FirstOrDefault(bc => bc.IsValid && bc.IsAlive);
-
-                if (target == null)
-                {
-                    Logger.SendDebugLog("Could not find any mobs with the preferred targets' NPC id.");
-                }
-                else
-                {
-                    Logger.SendDebugLog("Found preferred target '" + target.Name + "' (" + target.NpcId + ").");
-                }
-            }
-
-            if (target == null)
-            {
-                target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault();
-            }
-
-            if (target != null)
-            {
-                Poi.Current = new Poi(target, PoiType.Kill);
-            }
         }
     }
 }

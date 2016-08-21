@@ -13,9 +13,9 @@ namespace Oracle.Behaviour.Tasks.WaitTask
 {
     internal static class GrindMobs
     {
-        public static async Task<bool> HandleGrindMobs()
+        internal static async Task<bool> HandleGrindMobs()
         {
-            if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone) && Poi.Current.Type != PoiType.Kill)
+            if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone) && Poi.Current.Type != PoiType.Kill && Poi.Current.Type != PoiType.None)
             {
                 OracleFateManager.ClearPoi("We're being attacked.", false);
                 return true;
@@ -27,13 +27,13 @@ namespace Oracle.Behaviour.Tasks.WaitTask
                 return true;
             }
 
-            var target = await SelectGrindTarget.Main();
+            var target = await SelectGrindTarget.HandleSelectGrindTarget();
             if (target == null)
             {
                 return true;
             }
 
-            Logger.SendLog("Selecting '" + target.Name + "' as the next target to kill.");
+            Logger.SendLog("Selecting " + target.Name + " (" + target.ObjectId.ToString("X") + ") as the next target to kill.", true);
             Poi.Current = new Poi(target, PoiType.Kill);
             return true;
         }

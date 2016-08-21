@@ -41,7 +41,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return null;
         }
 
-        public static async Task<bool> Main()
+        internal static async Task<bool> Main()
         {
             if (OracleFateManager.FateDatabase != null)
             {

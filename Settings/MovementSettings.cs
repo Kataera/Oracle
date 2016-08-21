@@ -360,13 +360,13 @@ namespace Oracle.Settings
                     ZoneLevels.Add(i, aleport);
                 }
 
-                // 18-24: East Shroud (The Hawthorne Hut).
-                else if (i < 24)
+                // 18-23: East Shroud (The Hawthorne Hut).
+                else if (i < 23)
                 {
                     ZoneLevels.Add(i, hawthorneHut);
                 }
 
-                // 24-29: South Shroud (Quarrymill).
+                // 23-29: South Shroud (Quarrymill).
                 else if (i < 29)
                 {
                     ZoneLevels.Add(i, quarrymill);

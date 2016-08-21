@@ -358,7 +358,9 @@ namespace Oracle.Settings
             }
         }
 
-        [DefaultValue(OracleOperationMode.FateGrind)]
+        // Use literal value rather than enum for obfuscator.
+        // 0 = OracleOperationMode.FateGrind
+        [DefaultValue(0)]
         [Setting]
         public OracleOperationMode OracleOperationMode
         {

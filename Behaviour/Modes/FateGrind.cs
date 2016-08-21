@@ -2,9 +2,9 @@
 
 namespace Oracle.Behaviour.Modes
 {
-    public class FateGrind
+    internal class FateGrind
     {
-        public static async Task<bool> HandleFateGrind()
+        internal static async Task<bool> HandleFateGrind()
         {
             // Class is here for parity, FATE grind only uses standard behaviours.
             return true;

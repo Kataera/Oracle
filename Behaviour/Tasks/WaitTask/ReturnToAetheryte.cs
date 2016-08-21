@@ -11,11 +11,11 @@ namespace Oracle.Behaviour.Tasks.WaitTask
 {
     internal static class ReturnToAetheryte
     {
-        public static async Task<bool> HandleReturnToAetheryte()
+        internal static async Task<bool> HandleReturnToAetheryte()
         {
             if (Core.Player.Location.Distance2D(Poi.Current.Location) < 15f)
             {
-                if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone))
+                if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone) && Poi.Current.Type != PoiType.Kill && Poi.Current.Type != PoiType.None)
                 {
                     OracleFateManager.ClearPoi("We're being attacked.", false);
                 }

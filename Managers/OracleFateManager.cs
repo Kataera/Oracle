@@ -12,6 +12,7 @@ using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+using ff14bot.Objects;
 using ff14bot.RemoteWindows;
 
 using NeoGaia.ConnectionHandler;
@@ -28,17 +29,17 @@ namespace Oracle.Managers
     {
         internal static uint CurrentFateId { get; set; }
 
-        internal static bool DeathFlag { get; set; }
-
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
 
         internal static FateDatabase FateDatabase { get; set; }
+
+        internal static bool PausePoiSetting { get; set; }
 
         internal static uint PreviousFateId { get; set; }
 
         internal static bool ReachedCurrentFate { get; set; } = true;
 
-        public static async Task<bool> AnyViableFates()
+        internal static async Task<bool> AnyViableFates()
         {
             if (!FateManager.ActiveFates.Any(FateFilter))
             {
@@ -54,7 +55,7 @@ namespace Oracle.Managers
             return FateManager.ActiveFates.Any(FateFilter);
         }
 
-        public static async Task BlacklistBadFates()
+        internal static async Task BlacklistBadFates()
         {
             if (!WorldManager.CanFly)
             {
@@ -79,7 +80,7 @@ namespace Oracle.Managers
             }
         }
 
-        public static async Task ClearCurrentFate(string reason)
+        internal static async Task ClearCurrentFate(string reason)
         {
             Logger.SendLog(reason);
             PreviousFateId = CurrentFateId;
@@ -91,7 +92,7 @@ namespace Oracle.Managers
             }
         }
 
-        public static async Task ClearCurrentFate(string reason, bool setAsPrevious)
+        internal static async Task ClearCurrentFate(string reason, bool setAsPrevious)
         {
             Logger.SendLog(reason);
             PreviousFateId = setAsPrevious ? CurrentFateId : 0;
@@ -103,13 +104,13 @@ namespace Oracle.Managers
             }
         }
 
-        public static void ClearPoi(string reason)
+        internal static void ClearPoi(string reason)
         {
             Logger.SendLog(reason);
             Poi.Clear(reason);
         }
 
-        public static void ClearPoi(string reason, bool sendLog)
+        internal static void ClearPoi(string reason, bool sendLog)
         {
             if (sendLog)
             {
@@ -119,7 +120,7 @@ namespace Oracle.Managers
             Poi.Clear(reason);
         }
 
-        public static bool CurrentFateHasChain()
+        internal static bool CurrentFateHasChain()
         {
             var oracleFate = FateDatabase.GetFateFromId(CurrentFateId);
 
@@ -131,7 +132,7 @@ namespace Oracle.Managers
             return false;
         }
 
-        public static async Task<bool> DesyncLevel()
+        internal static async Task<bool> DesyncLevel()
         {
             if (Core.Player.IsLevelSynced)
             {
@@ -141,7 +142,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static bool FateFilter(FateData fate)
+        internal static bool FateFilter(FateData fate)
         {
             var oracleFateData = FateDatabase.GetFateFromFateData(fate);
 
@@ -224,7 +225,9 @@ namespace Oracle.Managers
             }
 
             if (fate.Level < OracleClassManager.GetTrueLevel() - FateSettings.Instance.FateMinLevelBelow
-                && ModeSettings.Instance.OracleOperationMode == OracleOperationMode.FateGrind)
+                && (ModeSettings.Instance.OracleOperationMode == OracleOperationMode.FateGrind
+                    || ModeSettings.Instance.OracleOperationMode == OracleOperationMode.LevelMode
+                    || ModeSettings.Instance.OracleOperationMode == OracleOperationMode.MultiLevelMode))
             {
                 return false;
             }
@@ -232,7 +235,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static bool FateProgressionMet(FateData fate)
+        internal static bool FateProgressionMet(FateData fate)
         {
             if (FateDatabase.GetFateFromFateData(fate).Type != FateType.Boss && FateDatabase.GetFateFromFateData(fate).Type != FateType.MegaBoss)
             {
@@ -262,14 +265,14 @@ namespace Oracle.Managers
             return false;
         }
 
-        public static void ForceUpdateGameCache()
+        internal static void ForceUpdateGameCache()
         {
             FateManager.Update();
             GameObjectManager.Clear();
             GameObjectManager.Update();
         }
 
-        public static async Task<Dictionary<FateData, float>> GetActiveFateDistances()
+        internal static async Task<Dictionary<FateData, float>> GetActiveFateDistances()
         {
             var activeFates = new Dictionary<FateData, float>();
 
@@ -299,7 +302,7 @@ namespace Oracle.Managers
             return activeFates;
         }
 
-        public static async Task<Dictionary<FateData, float>> GetActiveFateDistances(Vector3 location)
+        internal static async Task<Dictionary<FateData, float>> GetActiveFateDistances(Vector3 location)
         {
             var activeFates = new Dictionary<FateData, float>();
 
@@ -329,7 +332,7 @@ namespace Oracle.Managers
             return activeFates;
         }
 
-        public static Tuple<uint, Vector3>[] GetAetheryteIdsForZone(uint zoneId)
+        internal static Tuple<uint, Vector3>[] GetAetheryteIdsForZone(uint zoneId)
         {
             var baseResults = WorldManager.AetheryteIdsForZone(zoneId).ToList();
             foreach (var result in WorldManager.AetheryteIdsForZone(zoneId))
@@ -345,7 +348,7 @@ namespace Oracle.Managers
             return baseResults.ToArray();
         }
 
-        public static ClassJobType GetBaseClass(ClassJobType job)
+        internal static ClassJobType GetBaseClass(ClassJobType job)
         {
             switch (job)
             {
@@ -422,34 +425,34 @@ namespace Oracle.Managers
             }
         }
 
-        public static FateData GetChainFate(FateData fate)
+        internal static FateData GetChainFate(FateData fate)
         {
             var oracleFate = FateDatabase.GetFateFromFateData(fate);
             return oracleFate.ChainId != 0 ? FateManager.GetFateById(oracleFate.ChainId) : null;
         }
 
-        public static FateData GetChainFate(uint fateId)
+        internal static FateData GetChainFate(uint fateId)
         {
             var oracleFate = FateDatabase.GetFateFromId(fateId);
             return oracleFate.ChainId != 0 ? FateManager.GetFateById(oracleFate.ChainId) : null;
         }
 
-        public static FateData GetCurrentFateData()
+        internal static FateData GetCurrentFateData()
         {
             return FateManager.GetFateById(CurrentFateId);
         }
 
-        public static Fate GetCurrentOracleFate()
+        internal static Fate GetCurrentOracleFate()
         {
             return FateDatabase.GetFateFromId(CurrentFateId);
         }
 
-        public static FateData GetPreviousFateData()
+        internal static FateData GetPreviousFateData()
         {
             return FateManager.GetFateById(PreviousFateId);
         }
 
-        public static bool IsFateTypeEnabled(Fate oracleFate)
+        internal static bool IsFateTypeEnabled(Fate oracleFate)
         {
             switch (oracleFate.Type)
             {
@@ -472,7 +475,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static bool IsLevelSyncNeeded(FateData fate)
+        internal static bool IsLevelSyncNeeded(FateData fate)
         {
             if (!fate.IsValid || fate.Status == FateStatus.NOTACTIVE || fate.Status == FateStatus.COMPLETE)
             {
@@ -482,12 +485,21 @@ namespace Oracle.Managers
             return fate.MaxLevel < OracleClassManager.GetTrueLevel() && !Core.Player.IsLevelSynced && fate.Within2D(Core.Player.Location);
         }
 
-        public static bool IsPlayerBeingAttacked()
+        internal static bool IsPlayerBeingAttacked()
         {
-            return GameObjectManager.Attackers.Any(mob => mob.IsValid && mob.HasTarget && mob.CurrentTargetId == Core.Player.ObjectId && !mob.IsFateGone);
+            if (GameObjectManager.Attackers == null)
+            {
+                return Core.Player.InCombat;
+            }
+
+            return GameObjectManager.Attackers.Any(mob =>
+                                                   mob.IsValid
+                                                   && mob.HasTarget
+                                                   && (mob.CurrentTargetId == Core.Player.ObjectId || mob.CurrentTargetId == Chocobo.Object.ObjectId)
+                                                   && !mob.IsFateGone);
         }
 
-        public static bool PreviousFateChained()
+        internal static bool PreviousFateChained()
         {
             if (PreviousFateId == 0)
             {
@@ -502,7 +514,7 @@ namespace Oracle.Managers
             return false;
         }
 
-        public static async Task<bool> SyncLevel(FateData fate)
+        internal static async Task<bool> SyncLevel(FateData fate)
         {
             if (!IsLevelSyncNeeded(fate))
             {
@@ -520,7 +532,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static bool WaitingForChainFate()
+        internal static bool WaitingForChainFate()
         {
             if (!FateSettings.Instance.WaitForChain)
             {

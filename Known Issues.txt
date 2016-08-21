@@ -14,8 +14,14 @@ Oracle will run to a FATE before teleporting to the next zone in Yo-kai Watch Gr
 
 Starting the bot in Idyllshire will not move to the Dravanian Hinterlands.
 
+Sometimes the Chocobo will be clubbed to death and bot does nothing, no idea what's causing this.
+
 TODO:
 
 Refactor all tasks to use a result enumeration.
 
 Change target provider to target mobs attacking pets/companion.
+
+Refactor escort FATE's move to FATE centre to use the default OracleMovementManager move to FATE behaviour.
+
+Rewrite home point binding to work on all locales.

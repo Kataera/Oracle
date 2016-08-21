@@ -15,7 +15,7 @@ using Oracle.Structs;
 
 namespace Oracle.Behaviour.Modes
 {
-    public static class YokaiWatchGrind
+    internal static class YokaiWatchGrind
     {
         private static bool ignoreNormalMedals;
 
@@ -65,12 +65,12 @@ namespace Oracle.Behaviour.Modes
 
             var medalsToFarm = YokaiWatchGrindData.GetMedalsToFarm(minion) - OracleInventoryManager.GetItemAmount(minion.MedalItemId);
             Logger.SendLog("We need " + medalsToFarm + " Legendary " + minion.EnglishName + " Medal(s). Teleporting to your chosen zone.");
-            await ZoneChange.HandleZoneChange(GetMinionMedalZone(minion));
+            await ZoneChange.HandleZoneChange(GetMinionMedalZone(minion), true);
 
             return HandleMinionResult.InProgress;
         }
 
-        public static async Task<bool> HandleYokaiWatchGrind()
+        internal static async Task<bool> HandleYokaiWatchGrind()
         {
             // Summoning a chocobo dismisses your minion, meaning we can't use it here.
             if (!Chocobo.BlockSummon)
@@ -123,7 +123,7 @@ namespace Oracle.Behaviour.Modes
             return true;
         }
 
-        public static void ResetIgnoredYokai()
+        internal static void ResetIgnoredYokai()
         {
             ignoreNormalMedals = false;
             YokaiWatchGrindData.Jibanyan.Ignored = false;
@@ -145,7 +145,7 @@ namespace Oracle.Behaviour.Modes
         {
             if (!Core.Player.InCombat && WorldManager.CanTeleport() && WorldManager.ZoneId != zone)
             {
-                await ZoneChange.HandleZoneChange(zone);
+                await ZoneChange.HandleZoneChange(zone, true);
             }
         }
     }

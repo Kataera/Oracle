@@ -23,7 +23,7 @@ namespace Oracle.Behaviour.Tasks
         private static uint lastHpValue;
         private static Stopwatch noDamageTimeout;
 
-        public static async Task<bool> HandleCombat()
+        internal static async Task<bool> HandleCombat()
         {
             var currentBc = Poi.Current.BattleCharacter;
 
@@ -79,13 +79,13 @@ namespace Oracle.Behaviour.Tasks
 
                 if (WaitSettings.Instance.FateWaitMode == FateWaitMode.GrindMobs)
                 {
-                    var target = await SelectGrindTarget.Main();
+                    var target = await SelectGrindTarget.HandleSelectGrindTarget();
                     if (target == null)
                     {
                         return true;
                     }
 
-                    Logger.SendLog("Selecting '" + target.Name + "' as the next target to kill.");
+                    Logger.SendLog("Selecting " + target.Name + " (" + target.ObjectId.ToString("X") + ") as the next target to kill.", true);
                     Poi.Current = new Poi(target, PoiType.Kill);
                 }
 

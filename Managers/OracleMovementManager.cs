@@ -17,6 +17,8 @@ using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Settings;
 
+using NeoGaia.ConnectionHandler;
+
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Data.Meshes;
 using Oracle.Helpers;
@@ -44,8 +46,13 @@ namespace Oracle.Managers
             Navigator.Stop();
         }
 
-        public static async Task<bool> FlyToCurrentFate()
+        internal static async Task<bool> FlyToCurrentFate()
         {
+            if (Actionmanager.CanMount != 0 && !Core.Player.IsMounted)
+            {
+                return false;
+            }
+
             OracleFateManager.ReachedCurrentFate = false;
             var currentFate = OracleFateManager.GetCurrentFateData();
             if (currentFate == null || !currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
@@ -122,12 +129,17 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> FlyToLocation(Vector3 location, float precision, bool land, bool stopOnFateSpawn)
+        internal static async Task<bool> FlyToLocation(Vector3 location, float precision, bool land, bool stopOnFateSpawn)
         {
             if (!IsFlightMeshLoaded())
             {
                 await NavigateToLocation(location, precision, stopOnFateSpawn);
                 return true;
+            }
+
+            if (Actionmanager.CanMount != 0 && !Core.Player.IsMounted)
+            {
+                return false;
             }
 
             if (!Core.Player.IsMounted)
@@ -308,33 +320,67 @@ namespace Oracle.Managers
             return path;
         }
 
-        private static async Task<Vector3> GenerateRandomLocationInRadius(Vector3 location, float radius)
+        private static async Task<Vector3> GenerateRandomSpot(Vector3 location, float radius)
         {
-            var potentialSpots = new List<Vector3>();
+            var potentialSpots = new Dictionary<uint, Vector3>();
 
-            // Generate locations in the direction we're facing.
-            for (var i = 0; i < 10; i++)
+            // Get the true FATE location.
+            Vector3 collision;
+            var elevatedFateLocation = new Vector3(location.X, location.Y + 20, location.Z);
+            if (WorldManager.Raycast(elevatedFateLocation, new Vector3(location.X, location.Y - 100, location.Z), out collision))
             {
-                potentialSpots.Add(MathEx.GetPointAt(location,
+                location = collision;
+            }
+
+            // Generate spots in the direction we're facing.
+            for (uint i = 0; i < 10; i++)
+            {
+                potentialSpots.Add(i,
+                                   MathEx.GetPointAt(location,
                                                      radius * Convert.ToSingle(MathEx.Random(0.5, 0.9)),
                                                      Core.Player.Heading + Convert.ToSingle(MathEx.Random(-0.4 * Math.PI, 0.4 * Math.PI))));
             }
 
+            // Remove any spots where we can't navigate to the FATE centre from.
+            var navRequest = potentialSpots.Select(target => new CanFullyNavigateTarget
+            {
+                Id = target.Key,
+                Position = target.Value
+            });
+
+            var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, location, WorldManager.ZoneId);
+            foreach (var result in navResults)
+            {
+                if (result.CanNavigate == 0)
+                {
+                    potentialSpots.Remove(result.Id);
+                }
+            }
+
+            // Get the weights for each spot and return the best.
             var bestSpot = Vector3.Zero;
             float bestScore = 0;
             foreach (var spot in potentialSpots)
             {
                 var closestEnemies =
-                    GameObjectManager.GameObjects.OrderBy(enemy => enemy.Distance2D(spot)).Where(enemy => enemy.Type == GameObjectType.BattleNpc).Take(10);
+                    GameObjectManager.GameObjects.OrderBy(enemy => enemy.Distance2D(spot.Value)).Where(enemy => enemy.Type == GameObjectType.BattleNpc).Take(10);
 
-                var currentScore = closestEnemies.Sum(enemy => enemy.Distance2D(spot));
+                var currentScore = closestEnemies.Sum(enemy => enemy.Distance2D(spot.Value));
                 if (!(currentScore > bestScore))
                 {
                     continue;
                 }
 
-                bestSpot = spot;
+                bestSpot = spot.Value;
                 bestScore = currentScore;
+            }
+
+            // Get the correct y co-ordinate.
+            bestSpot.Y = bestSpot.Y + 20;
+            var groundVector = new Vector3(bestSpot.X, bestSpot.Y - 100, bestSpot.Z);
+            if (WorldManager.Raycast(bestSpot, groundVector, out collision))
+            {
+                bestSpot = collision;
             }
 
             return bestSpot;
@@ -360,43 +406,38 @@ namespace Oracle.Managers
         {
             var oracleFate = OracleFateManager.GetCurrentOracleFate();
             var currentFate = OracleFateManager.GetCurrentFateData();
-            var elevatedFateLocation = currentFate.Location;
-            elevatedFateLocation.Y = Core.Player.Location.Y;
 
             Logger.SendDebugLog("Generating a landing spot.");
 
-            var potentialLandingLocation = await GenerateRandomLocationInRadius(elevatedFateLocation, currentFate.Radius * oracleFate.LandingRadius);
-            if (await CommonTasks.CanLand(potentialLandingLocation) == CanLandResult.No)
+            var landingLocation = await GenerateRandomSpot(currentFate.Location, currentFate.Radius * oracleFate.LandingRadius);
+            if (await CommonTasks.CanLand(landingLocation) == CanLandResult.No)
             {
-                Logger.SendDebugLog("Landing spot generation failed: we can't land at the proposed spot.");
+                Logger.SendDebugLog("Landing spot generation failed: we can't land at " + landingLocation + ".");
                 return Core.Player.Location;
             }
 
-            // Raycast from generated location to ground to get position closer to ground.
-            Vector3 collision;
-            var groundVector = new Vector3(potentialLandingLocation.X, potentialLandingLocation.Y - 100, potentialLandingLocation.Z);
-            if (WorldManager.Raycast(potentialLandingLocation, groundVector, out collision))
-            {
-                potentialLandingLocation = new Vector3(collision.X, collision.Y + Convert.ToSingle(MathEx.Random(7, 13)), collision.Z);
-            }
+            // Add a random height to the landing location so we fly above it, then land using the landing task.
+            landingLocation.Y = landingLocation.Y + Convert.ToSingle(MathEx.Random(7, 13));
 
             // Raycast to generated location from current location to check we can move there.
-            if (WorldManager.Raycast(Core.Player.Location, potentialLandingLocation, out collision))
+            Vector3 collision;
+            if (WorldManager.Raycast(Core.Player.Location, landingLocation, out collision)
+                && WorldManager.Raycast(landingLocation, Core.Player.Location, out collision))
             {
-                Logger.SendDebugLog("Landing spot generation failed: there's obstacles in the way.");
+                Logger.SendDebugLog("Landing spot generation failed: there's a collision at " + collision + ".");
                 return Core.Player.Location;
             }
 
             Logger.SendDebugLog("Landing spot generation succeeded.");
-            return potentialLandingLocation;
+            return landingLocation;
         }
 
-        public static bool IsFlightMeshLoaded()
+        internal static bool IsFlightMeshLoaded()
         {
             return ZoneFlightMesh != null && ZoneFlightMesh.ZoneId == WorldManager.ZoneId;
         }
 
-        public static bool IsMountNeeded(float distance)
+        internal static bool IsMountNeeded(float distance)
         {
             return distance > CharacterSettings.Instance.MountDistance;
         }
@@ -432,7 +473,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> LoadFlightMeshIfAvailable()
+        internal static async Task<bool> LoadFlightMeshIfAvailable()
         {
             if (ZoneFlightMesh != null && ZoneFlightMesh.ZoneId == WorldManager.ZoneId)
             {
@@ -508,7 +549,7 @@ namespace Oracle.Managers
             }
         }
 
-        public static async Task<bool> MountUp()
+        internal static async Task<bool> MountUp()
         {
             if (!Actionmanager.AvailableMounts.Any())
             {
@@ -539,7 +580,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> MoveOutOfIdyllshire()
+        internal static async Task<bool> MoveOutOfIdyllshire()
         {
             Logger.SendLog("We're in Idyllshire, moving to The Dravanian Hinterlands.");
             await MountUp();
@@ -562,7 +603,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> MoveToCurrentFate(bool ignoreCombat)
+        internal static async Task<bool> MoveToCurrentFate(bool ignoreCombat)
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
 
@@ -603,7 +644,7 @@ namespace Oracle.Managers
             }
 
             var distanceToFateBoundary = Core.Player.Location.Distance2D(currentFate.Location) - currentFate.Radius;
-            if (!ignoreCombat && IsMountNeeded(distanceToFateBoundary) && !Core.Player.IsMounted && currentFate.IsValid)
+            if (Actionmanager.CanMount == 0 && !ignoreCombat && IsMountNeeded(distanceToFateBoundary) && !Core.Player.IsMounted && currentFate.IsValid)
             {
                 await MountUp();
             }
@@ -620,7 +661,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> NavigateToCurrentFate(bool ignoreCombat)
+        internal static async Task<bool> NavigateToCurrentFate(bool ignoreCombat)
         {
             OracleFateManager.ReachedCurrentFate = false;
             var currentFate = OracleFateManager.GetCurrentFateData();
@@ -649,7 +690,7 @@ namespace Oracle.Managers
                 }
 
                 var distanceToFateBoundary = Core.Player.Location.Distance2D(cachedFateLocation) - currentFateRadius;
-                if (!Core.Player.IsMounted && IsMountNeeded(distanceToFateBoundary) && Actionmanager.AvailableMounts.Any())
+                if (Actionmanager.CanMount == 0 && !Core.Player.IsMounted && IsMountNeeded(distanceToFateBoundary) && Actionmanager.AvailableMounts.Any())
                 {
                     Navigator.Stop();
                     if (!ignoreCombat && Core.Player.InCombat)
@@ -675,11 +716,12 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> NavigateToLocation(Vector3 location, float precision, bool stopOnFateSpawn)
+        internal static async Task<bool> NavigateToLocation(Vector3 location, float precision, bool stopOnFateSpawn)
         {
             while (Core.Player.Location.Distance(location) > precision)
             {
-                if (!Core.Player.IsMounted && IsMountNeeded(Core.Player.Location.Distance(location)) && Actionmanager.AvailableMounts.Any())
+                if (Actionmanager.CanMount == 0 && !Core.Player.IsMounted && IsMountNeeded(Core.Player.Location.Distance(location))
+                    && Actionmanager.AvailableMounts.Any())
                 {
                     Navigator.Stop();
                     if (Core.Player.InCombat)

@@ -28,7 +28,7 @@ namespace Oracle.Behaviour.Tasks.Utilities
             return bagSlot;
         }
 
-        public static async Task<bool> Main()
+        internal static async Task<bool> Main()
         {
             if (!Request.IsOpen)
             {

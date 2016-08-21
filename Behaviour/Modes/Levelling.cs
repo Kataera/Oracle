@@ -9,9 +9,9 @@ using Oracle.Settings;
 
 namespace Oracle.Behaviour.Modes
 {
-    public class Levelling
+    internal class Levelling
     {
-        public static async Task<bool> HandleLevelling()
+        internal static async Task<bool> HandleLevelling()
         {
             if (!Core.Player.InCombat && OracleClassManager.FinishedLevelling())
             {

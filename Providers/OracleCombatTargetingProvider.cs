@@ -16,7 +16,7 @@ using Oracle.Structs;
 
 namespace Oracle.Providers
 {
-    internal class OracleCombatTargetingProvider : ITargetingProvider
+    public class OracleCombatTargetingProvider : ITargetingProvider
     {
         public List<BattleCharacter> GetObjectsByWeight()
         {
@@ -25,16 +25,16 @@ namespace Oracle.Providers
                 return new List<BattleCharacter>();
             }
 
-            var allTargets = GameObjectManager.GetObjectsOfType<BattleCharacter>().ToArray();
-            return allTargets.Where(bc => Filter(Core.Player.InCombat, bc)).OrderByDescending(GetWeight).ToList();
+            var allTargets = GameObjectManager.GetObjectsOfType<BattleCharacter>();
+            return allTargets.Where(Filter).OrderByDescending(GetWeight).ToList();
         }
 
-        private static bool Filter(bool inCombat, BattleCharacter battleCharacter)
+        private static bool Filter(BattleCharacter battleCharacter)
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
             var blacklistEntry = Blacklist.GetEntry(battleCharacter);
 
-            if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible || battleCharacter.CurrentHealthPercent <= 0f)
+            if (!battleCharacter.IsValid || battleCharacter.IsDead || !battleCharacter.IsVisible)
             {
                 return false;
             }
@@ -64,6 +64,16 @@ namespace Oracle.Providers
                 return true;
             }
 
+            if (battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Core.Player.ObjectId)
+            {
+                return true;
+            }
+
+            if (Chocobo.Object != null && battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Chocobo.Object.ObjectId)
+            {
+                return true;
+            }
+
             if (!battleCharacter.IsFate && currentFate != null)
             {
                 return false;
@@ -79,7 +89,7 @@ namespace Oracle.Providers
                 return false;
             }
 
-            return !inCombat;
+            return !Core.Player.InCombat;
         }
 
         private static double GetWeight(BattleCharacter battleCharacter)
@@ -130,7 +140,8 @@ namespace Oracle.Providers
             }
 
             // Prefer nearer targets in combat if melee, and always out of combat.
-            if (PlayerIsMelee() || !Core.Player.InCombat)
+            if (OracleClassManager.IsMeleeDpsClassJob(Core.Player.CurrentJob) || OracleClassManager.IsTankClassJob(Core.Player.CurrentJob)
+                || !Core.Player.InCombat)
             {
                 weight -= battleCharacter.Distance(Core.Player) * 30;
             }
@@ -146,83 +157,6 @@ namespace Oracle.Providers
             }
 
             return FateManager.GetFateById(battleCharacter.FateId).MaxLevel < OracleClassManager.GetTrueLevel();
-        }
-
-        private static bool PlayerIsMelee()
-        {
-            switch (Core.Player.CurrentJob)
-            {
-                case ClassJobType.Adventurer:
-                    return false;
-                case ClassJobType.Gladiator:
-                    return true;
-                case ClassJobType.Pugilist:
-                    return true;
-                case ClassJobType.Marauder:
-                    return true;
-                case ClassJobType.Lancer:
-                    return true;
-                case ClassJobType.Archer:
-                    return false;
-                case ClassJobType.Conjurer:
-                    return false;
-                case ClassJobType.Thaumaturge:
-                    return false;
-                case ClassJobType.Carpenter:
-                    return false;
-                case ClassJobType.Blacksmith:
-                    return false;
-                case ClassJobType.Armorer:
-                    return false;
-                case ClassJobType.Goldsmith:
-                    return false;
-                case ClassJobType.Leatherworker:
-                    return false;
-                case ClassJobType.Weaver:
-                    return false;
-                case ClassJobType.Alchemist:
-                    return false;
-                case ClassJobType.Culinarian:
-                    return false;
-                case ClassJobType.Miner:
-                    return false;
-                case ClassJobType.Botanist:
-                    return false;
-                case ClassJobType.Fisher:
-                    return false;
-                case ClassJobType.Paladin:
-                    return true;
-                case ClassJobType.Monk:
-                    return true;
-                case ClassJobType.Warrior:
-                    return true;
-                case ClassJobType.Dragoon:
-                    return true;
-                case ClassJobType.Bard:
-                    return false;
-                case ClassJobType.WhiteMage:
-                    return false;
-                case ClassJobType.BlackMage:
-                    return false;
-                case ClassJobType.Arcanist:
-                    return false;
-                case ClassJobType.Summoner:
-                    return false;
-                case ClassJobType.Scholar:
-                    return false;
-                case ClassJobType.Rogue:
-                    return true;
-                case ClassJobType.Ninja:
-                    return true;
-                case ClassJobType.Machinist:
-                    return false;
-                case ClassJobType.DarkKnight:
-                    return true;
-                case ClassJobType.Astrologian:
-                    return false;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
         }
 
         private static bool ReadyToTurnIn()

@@ -20,7 +20,7 @@ namespace Oracle.Behaviour
 {
     internal static class OracleBehaviour
     {
-        public static Composite Behaviour => CreateBehaviour();
+        internal static Composite Behaviour => CreateBehaviour();
 
         private static Composite CreateBehaviour()
         {
@@ -42,17 +42,11 @@ namespace Oracle.Behaviour
                 return false;
             }
 
-            if (Poi.Current.Type == PoiType.Death || OracleFateManager.DeathFlag || Core.Player.IsDead)
+            if (Poi.Current.Type == PoiType.Death || Core.Player.IsDead)
             {
                 if (Poi.Current.Type == PoiType.Death || Core.Player.IsDead)
                 {
                     Logger.SendLog("We died, attempting to recover.");
-                    OracleFateManager.DeathFlag = true;
-                }
-                else if (OracleFateManager.DeathFlag)
-                {
-                    await DeathHandler.HandleDeath();
-                    OracleFateManager.DeathFlag = false;
                 }
 
                 return false;
@@ -63,6 +57,12 @@ namespace Oracle.Behaviour
             if (Poi.Current.Type == PoiType.Kill)
             {
                 await CombatHandler.HandleCombat();
+                return false;
+            }
+
+            if (OracleInventoryManager.ShouldRestockGreens())
+            {
+                await RestockGysahlGreens.HandleRestockGyshalGreens();
                 return false;
             }
 
@@ -99,9 +99,10 @@ namespace Oracle.Behaviour
             if (Poi.Current.Type == PoiType.Fate || OracleFateManager.CurrentFateId != 0)
             {
                 await FateHandler.HandleFate();
+                return false;
             }
 
-            else if (Poi.Current.Type == PoiType.Wait)
+            if (Poi.Current.Type == PoiType.Wait)
             {
                 await WaitHandler.HandleWait();
             }

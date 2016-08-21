@@ -32,7 +32,7 @@ namespace Oracle.Managers
             return results;
         }
 
-        public static async Task<bool> FasterToTeleport(FateData fate)
+        internal static async Task<bool> FasterToTeleport(FateData fate)
         {
             if (WorldManager.CanFly)
             {
@@ -69,7 +69,7 @@ namespace Oracle.Managers
             return false;
         }
 
-        public static async Task<Aetheryte> GetClosestAetheryte(FateData fate)
+        internal static async Task<Aetheryte> GetClosestAetheryte(FateData fate)
         {
             var aetherytes = await GetNavigableAetherytes(fate);
             var closestAetheryte = aetherytes.OrderBy(node => node.Distance).FirstOrDefault();
@@ -141,8 +141,9 @@ namespace Oracle.Managers
             return viableAetherytes;
         }
 
-        public static async Task<bool> TeleportToAetheryte(uint aetheryteId)
+        internal static async Task<bool> TeleportToAetheryte(uint aetheryteId)
         {
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay));
             await CommonBehaviors.CreateTeleportBehavior(vr => aetheryteId, vr => WorldManager.GetZoneForAetheryteId(aetheryteId)).ExecuteCoroutine();
             await Coroutine.Wait(TimeSpan.FromSeconds(10), () => !Core.Player.IsCasting || Core.Player.InCombat);
             await Coroutine.Wait(TimeSpan.FromSeconds(2), () => Core.Player.InCombat);
@@ -152,7 +153,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task<bool> TeleportToClosestAetheryte(FateData fate)
+        internal static async Task<bool> TeleportToClosestAetheryte(FateData fate)
         {
             var aetheryte = await GetClosestAetheryte(fate);
 
@@ -172,8 +173,21 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static async Task TeleportToClosestCity()
+        internal static async Task TeleportToClosestCity()
         {
+            var cityList = new List<WorldManager.TeleportLocation>
+            {
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 8),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 2),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 9),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 75)
+            };
+
+            if (cityList.Any(city => city.ZoneId == WorldManager.ZoneId))
+            {
+                return;
+            }
+
             Logger.SendLog("Teleporting to closest city.");
             await Coroutine.Wait(TimeSpan.FromSeconds(15), WorldManager.CanTeleport);
 
@@ -181,15 +195,6 @@ namespace Oracle.Managers
             {
                 return;
             }
-
-            var cityList = new List<WorldManager.TeleportLocation>
-            {
-                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 8),
-                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 2),
-                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 9),
-                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 70),
-                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 75)
-            };
 
             cityList = cityList.OrderBy(loc => loc.GilCost).Where(loc => WorldManager.HasAetheryteId(loc.AetheryteId)).ToList();
             await TeleportToAetheryte(cityList.FirstOrDefault().AetheryteId);
@@ -205,11 +210,11 @@ namespace Oracle.Managers
             };
         }
 
-        public struct Aetheryte
+        internal struct Aetheryte
         {
-            public float Distance;
-            public uint Id;
-            public Vector3 Location;
+            internal float Distance;
+            internal uint Id;
+            internal Vector3 Location;
         }
     }
 }

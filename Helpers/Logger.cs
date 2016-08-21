@@ -25,11 +25,32 @@ namespace Oracle.Helpers
 
             if (!MainSettings.Instance.ShowDebugInConsole)
             {
-                Logging.WriteQuiet(LoggerDebugColour, log);
+                Logging.WriteToFileSync(LogLevel.Diagnostic, log);
             }
             else
             {
-                Logging.WriteVerbose(LoggerDebugColour, log);
+                Logging.Write(LoggerDebugColour, log);
+            }
+
+            lastLog = log;
+        }
+
+        internal static void SendDebugLog(string log, bool sendMultiple)
+        {
+            log = "[Oracle v" + OracleBot.Version + "] [DEBUG]: " + log;
+
+            if (!sendMultiple && log.Equals(lastLog))
+            {
+                return;
+            }
+
+            if (!MainSettings.Instance.ShowDebugInConsole)
+            {
+                Logging.WriteToFileSync(LogLevel.Diagnostic, log);
+            }
+            else
+            {
+                Logging.Write(LoggerDebugColour, log);
             }
 
             lastLog = log;
@@ -40,6 +61,19 @@ namespace Oracle.Helpers
             log = "[Oracle v" + OracleBot.Version + "] [ERROR]: " + log;
 
             if (log.Equals(lastLog))
+            {
+                return;
+            }
+
+            Logging.Write(LoggerErrorColour, log);
+            lastLog = log;
+        }
+
+        internal static void SendErrorLog(string log, bool sendMultiple)
+        {
+            log = "[Oracle v" + OracleBot.Version + "] [ERROR]: " + log;
+
+            if (!sendMultiple && log.Equals(lastLog))
             {
                 return;
             }
@@ -61,11 +95,44 @@ namespace Oracle.Helpers
             lastLog = log;
         }
 
+        internal static void SendLog(string log, bool sendMultiple)
+        {
+            log = "[Oracle v" + OracleBot.Version + "]: " + log;
+
+            if (!sendMultiple && log.Equals(lastLog))
+            {
+                return;
+            }
+
+            Logging.Write(LoggerRegularColour, log);
+            lastLog = log;
+        }
+
+        public static void SendStackTrace(string log)
+        {
+            log = "[Oracle v" + OracleBot.Version + "] [EXCEPTION]: " + log;
+            Logging.WriteToFileSync(LogLevel.Diagnostic, log);
+            lastLog = log;
+        }
+
         internal static void SendWarningLog(string log)
         {
             log = "[Oracle v" + OracleBot.Version + "] [WARNING]: " + log;
 
             if (log.Equals(lastLog))
+            {
+                return;
+            }
+
+            Logging.Write(LoggerWarningColour, log);
+            lastLog = log;
+        }
+
+        internal static void SendWarningLog(string log, bool sendMultiple)
+        {
+            log = "[Oracle v" + OracleBot.Version + "] [WARNING]: " + log;
+
+            if (!sendMultiple && log.Equals(lastLog))
             {
                 return;
             }

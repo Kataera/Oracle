@@ -18,7 +18,7 @@ namespace Oracle.UI
         private const int WsSysmenu = 0x80000;
         private IntPtr windowHandle;
 
-        public Settings()
+        internal Settings()
         {
             InitializeComponent();
             SourceInitialized += Settings_SourceInitialized;

@@ -33,7 +33,7 @@ namespace Oracle
 
         private static readonly string VersionPath = Path.Combine(Environment.CurrentDirectory, @"BotBases\Oracle\version.txt");
 
-        public Composite Root => root;
+        internal Composite Root => root;
 
         internal static string Version
         {
@@ -83,7 +83,7 @@ namespace Oracle
             return Root;
         }
 
-        public void Initialize()
+        internal void Initialize()
         {
             Logger.SendLog("Initialising Oracle.");
         }
@@ -164,6 +164,31 @@ namespace Oracle
             YokaiWatchGrind.ResetIgnoredYokai();
         }
 
+        private static void SetUpHooks()
+        {
+            // Add Oracle's behaviour to the start of the behaviour tree.
+            TreeHooks.Instance.AddHook("TreeStart", OracleBehaviour.Behaviour);
+
+            // Clear unused or to be replaced hooks.
+            TreeHooks.Instance.ClearHook("HotspotPoi");
+            TreeHooks.Instance.ClearHook("SetHotspotPoi");
+            TreeHooks.Instance.ClearHook("SetCombatPoi");
+
+            // Replace with our own hooks.
+            TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
+
+            if (MainSettings.Instance.OverrideRestBehaviour)
+            {
+                Logger.SendDebugLog("Replacing the combat routine's rest behaviour.");
+                TreeHooks.Instance.ReplaceHook("Rest", Rest.Behaviour);
+            }
+
+            if (MainSettings.Instance.ListHooksOnStart)
+            {
+                ListHooks();
+            }
+        }
+
         public void Start()
         {
             Navigator.NavigationProvider = new GaiaNavigator();
@@ -177,22 +202,10 @@ namespace Oracle
 
             TreeHooks.Instance.ClearAll();
             root = BrainBehavior.CreateBrain();
-            TreeHooks.Instance.AddHook("TreeStart", OracleBehaviour.Behaviour);
-            TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
-
-            if (MainSettings.Instance.OverrideRestBehaviour)
-            {
-                Logger.SendDebugLog("Replacing the combat routine's rest behaviour.");
-                TreeHooks.Instance.ReplaceHook("Rest", Rest.Behaviour);
-            }
-
-            if (MainSettings.Instance.ListHooksOnStart && MainSettings.Instance.ShowDebugInConsole)
-            {
-                ListHooks();
-            }
+            SetUpHooks();
 
             LogCurrentMode();
-            WarnAboutPlugins();
+            WarnAboutPotentialIssues();
         }
 
         public void Stop()
@@ -230,11 +243,16 @@ namespace Oracle
             TreeRoot.Stop(" " + reason);
         }
 
-        private static void WarnAboutPlugins()
+        private static void WarnAboutPotentialIssues()
         {
             if (PluginManager.GetEnabledPlugins().Contains("Enable Flight"))
             {
                 Logger.SendWarningLog("Detected ExBuddy's flight plugin; it's advised that you do not run this and Oracle's own flight navigator together.");
+            }
+
+            if (Environment.Is64BitProcess)
+            {
+                Logger.SendWarningLog("Running Oracle in 64-bit mode. If you have any issues, please try running in 32-bit mode prior to seeking assistance.");
             }
         }
     }
