@@ -19,10 +19,7 @@ namespace Oracle.Behaviour.Hooks
             Composite[] composites =
             {
                 new HookExecutor("SetDeathPoi"),
-
-                //new Decorator(check => !OracleFateManager.DeathFlag, new HookExecutor("SetCombatPoi")),
-                new Decorator(check => !OracleFateManager.DeathFlag,
-                              new HookExecutor("SetCombatPoi", "A hook to help defend the character when their Chocobo is under attack.", setCombatPoi)),
+                new HookExecutor("SetCombatPoi", "A hook to help defend the character when their Chocobo is under attack.", setCombatPoi),
                 new Decorator(check => !OracleFateManager.PausePoiSetting,
                               new HookExecutor("SetFatePoi", "A hook that selects a viable FATE based in user settings and assigns it as the Poi.", setFatePoi)),
                 new Decorator(check => !OracleFateManager.PausePoiSetting,
