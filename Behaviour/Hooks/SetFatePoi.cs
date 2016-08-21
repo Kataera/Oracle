@@ -211,7 +211,7 @@ namespace Oracle.Behaviour.Hooks
             Logger.SendLog("Selecting closest FATE.");
             var closestFate = closestFates.FirstOrDefault().Key;
 
-            Logger.SendLog("Selected FATE: '" + closestFate.Name + "'.");
+            Logger.SendLog("Selected FATE: " + closestFate.Name + ".");
             Logger.SendDebugLog("Location of FATE: " + closestFate.Location);
             OracleFateManager.CurrentFateId = closestFate.Id;
             Poi.Current = new Poi(closestFate, PoiType.Fate);
@@ -227,7 +227,8 @@ namespace Oracle.Behaviour.Hooks
                 return false;
             }
 
-            Logger.SendLog("Selected FATE: '" + specificFate.Name + "'.");
+            Logger.SendLog("Selected FATE: " + specificFate.Name + "" +
+                           ".");
             OracleFateManager.CurrentFateId = specificFate.Id;
             Poi.Current = new Poi(specificFate, PoiType.Fate);
             return true;
