@@ -50,7 +50,9 @@ namespace Oracle.Managers
 
             if (target == null)
             {
-                target = CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault(bc => bc.IsFate);
+                target = GameObjectManager.Attackers.Any()
+                             ? CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault()
+                             : CombatTargeting.Instance.Provider.GetObjectsByWeight().FirstOrDefault(bc => bc.IsFate);
             }
 
             if (target != null)
