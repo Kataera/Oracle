@@ -183,7 +183,6 @@
     <Compile Include="Behaviour\OracleBehaviour.cs" />
     <Compile Include="Behaviour\Hooks\SelectPoiType.cs" />
     <Compile Include="Behaviour\Tasks\CombatHandler.cs" />
-    <Compile Include="Behaviour\Tasks\DeathHandler.cs" />
     <Compile Include="Behaviour\Tasks\FateHandler.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\BindHomePoint.cs" />
     <Compile Include="Behaviour\Tasks\Utilities\LoadFlightMesh.cs" />

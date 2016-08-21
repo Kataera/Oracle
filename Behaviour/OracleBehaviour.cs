@@ -42,17 +42,11 @@ namespace Oracle.Behaviour
                 return false;
             }
 
-            if (Poi.Current.Type == PoiType.Death || OracleFateManager.DeathFlag || Core.Player.IsDead)
+            if (Poi.Current.Type == PoiType.Death || Core.Player.IsDead)
             {
                 if (Poi.Current.Type == PoiType.Death || Core.Player.IsDead)
                 {
                     Logger.SendLog("We died, attempting to recover.");
-                    OracleFateManager.DeathFlag = true;
-                }
-                else if (OracleFateManager.DeathFlag)
-                {
-                    await DeathHandler.HandleDeath();
-                    OracleFateManager.DeathFlag = false;
                 }
 
                 return false;

@@ -24,7 +24,7 @@ namespace Oracle.Behaviour.Hooks
 
                 if (target == null)
                 {
-                    Logger.SendErrorLog("Couldn't find a target to set as kill Poi.");
+                    Logger.SendDebugLog("Couldn't find a target to set as kill Poi.");
                     return false;
                 }
 

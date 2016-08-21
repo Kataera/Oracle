@@ -29,8 +29,6 @@ namespace Oracle.Managers
     {
         internal static uint CurrentFateId { get; set; }
 
-        internal static bool DeathFlag { get; set; }
-
         internal static bool DoNotWaitBeforeMovingFlag { get; set; }
 
         internal static FateDatabase FateDatabase { get; set; }
