@@ -487,6 +487,11 @@ namespace Oracle.Managers
 
         internal static bool IsPlayerBeingAttacked()
         {
+            if (GameObjectManager.Attackers == null)
+            {
+                return Core.Player.InCombat;
+            }
+
             return GameObjectManager.Attackers.Any(mob =>
                                                    mob.IsValid
                                                    && mob.HasTarget

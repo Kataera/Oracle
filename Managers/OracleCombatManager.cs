@@ -57,6 +57,7 @@ namespace Oracle.Managers
 
             if (target != null)
             {
+                Logger.SendLog("Selected " + target.Name + " (" + target.ObjectId + ") as the next target.");
                 Poi.Current = new Poi(target, PoiType.Kill);
             }
         }

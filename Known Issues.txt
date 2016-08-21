@@ -21,3 +21,7 @@ TODO:
 Refactor all tasks to use a result enumeration.
 
 Change target provider to target mobs attacking pets/companion.
+
+Refactor escort FATE's move to FATE centre to use the default OracleMovementManager move to FATE behaviour.
+
+Rewrite home point binding to work on all locales.
