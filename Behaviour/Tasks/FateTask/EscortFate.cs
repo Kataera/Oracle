@@ -134,6 +134,18 @@ namespace Oracle.Behaviour.Tasks.FateTask
                     return true;
                 }
 
+                var distanceToFateBoundary = Core.Player.Location.Distance2D(cachedLocation) - currentFate.Radius;
+                if (Actionmanager.CanMount == 0 && !Core.Player.IsMounted && OracleMovementManager.IsMountNeeded(distanceToFateBoundary) && Actionmanager.AvailableMounts.Any())
+                {
+                    Navigator.Stop();
+                    if (Core.Player.InCombat)
+                    {
+                        return true;
+                    }
+
+                    await OracleMovementManager.MountUp();
+                }
+
                 // Throttle navigator path generation requests.
                 if (cachedLocation.Distance2D(currentFate.Location) > 10)
                 {
