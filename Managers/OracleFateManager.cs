@@ -12,7 +12,6 @@ using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
-using ff14bot.Objects;
 using ff14bot.RemoteWindows;
 
 using NeoGaia.ConnectionHandler;
@@ -80,7 +79,7 @@ namespace Oracle.Managers
             }
         }
 
-        internal static async Task ClearCurrentFate(string reason)
+        internal static void ClearCurrentFate(string reason)
         {
             Logger.SendLog(reason);
             PreviousFateId = CurrentFateId;
@@ -483,20 +482,6 @@ namespace Oracle.Managers
             }
 
             return fate.MaxLevel < OracleClassManager.GetTrueLevel() && !Core.Player.IsLevelSynced && fate.Within2D(Core.Player.Location);
-        }
-
-        internal static bool IsPlayerBeingAttacked()
-        {
-            if (GameObjectManager.Attackers == null)
-            {
-                return Core.Player.InCombat;
-            }
-
-            return GameObjectManager.Attackers.Any(mob =>
-                                                   mob.IsValid
-                                                   && mob.HasTarget
-                                                   && (mob.CurrentTargetId == Core.Player.ObjectId || mob.CurrentTargetId == Chocobo.Object.ObjectId)
-                                                   && !mob.IsFateGone);
         }
 
         internal static bool PreviousFateChained()

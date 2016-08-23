@@ -23,11 +23,6 @@ namespace Oracle.Behaviour.Tasks.FateTask
         private static TimeSpan? movementCooldown;
         private static Stopwatch movementTimer;
 
-        private static async Task ClearFate()
-        {
-            await OracleFateManager.ClearCurrentFate("Current FATE is finished.");
-        }
-
         private static TimeSpan GetRandomTimeSpan()
         {
             var rng = new Random();
@@ -41,7 +36,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
             if (currentFate == null || currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
             {
-                await ClearFate();
+                OracleFateManager.ClearCurrentFate("Current FATE is finished.");
                 return true;
             }
 
@@ -120,7 +115,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
             if (currentFate == null)
             {
-                await ClearFate();
+                OracleFateManager.ClearCurrentFate("Current FATE is finished.");
                 return true;
             }
 
@@ -130,7 +125,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 if (currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
                 {
                     Navigator.Stop();
-                    await ClearFate();
+                    OracleFateManager.ClearCurrentFate("Current FATE is finished.");
                     return true;
                 }
 
@@ -203,7 +198,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 {
                     Navigator.PlayerMover.MoveStop();
                     timeout.Reset();
-                    await ClearFate();
+                    OracleFateManager.ClearCurrentFate("Current FATE is finished.");
 
                     return true;
                 }

@@ -22,13 +22,13 @@ namespace Oracle.Behaviour.Tasks
             if (currentFate == null)
             {
                 Logger.SendDebugLog("Current FATE could not be found, assuming it's finished.");
-                await OracleFateManager.ClearCurrentFate("FATE is no longer active.");
+                OracleFateManager.ClearCurrentFate("FATE is no longer active.");
                 return false;
             }
 
             if (currentFate.Status == FateStatus.NOTACTIVE)
             {
-                await OracleFateManager.ClearCurrentFate("FATE is no longer active.");
+                OracleFateManager.ClearCurrentFate("FATE is no longer active.");
                 return false;
             }
 
@@ -42,7 +42,7 @@ namespace Oracle.Behaviour.Tasks
                 }
             }
 
-            if (OracleFateManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted && Poi.Current.Type != PoiType.Kill && Poi.Current.Type != PoiType.None)
+            if (OracleCombatManager.IsPlayerBeingAttacked() && !Core.Player.IsMounted && Poi.Current.Type != PoiType.Kill && Poi.Current.Type != PoiType.None)
             {
                 OracleFateManager.ClearPoi("We're being attacked.", false);
                 return true;
@@ -91,7 +91,7 @@ namespace Oracle.Behaviour.Tasks
             var currentFate = OracleFateManager.GetCurrentFateData();
             if (currentFate == null)
             {
-                await OracleFateManager.ClearCurrentFate("Cannot determine FATE type and FateData is null");
+                OracleFateManager.ClearCurrentFate("Cannot determine FATE type and FateData is null");
                 return true;
             }
 
@@ -116,7 +116,7 @@ namespace Oracle.Behaviour.Tasks
                 default:
                     Logger.SendDebugLog("Cannot determine FATE type, blacklisting until end of session.");
                     Blacklist.Add(currentFate.Id, BlacklistFlags.Node, TimeSpan.MaxValue, "Cannot determine FATE type.");
-                    await OracleFateManager.ClearCurrentFate("Cannot determine FATE type.");
+                    OracleFateManager.ClearCurrentFate("Cannot determine FATE type.");
                     return false;
             }
         }

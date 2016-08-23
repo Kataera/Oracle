@@ -81,7 +81,23 @@ namespace Oracle.Behaviour.Hooks
 
         private static bool IsFatePoiSet()
         {
-            return Poi.Current.Type == PoiType.Fate && Poi.Current.Fate.Id == OracleFateManager.GetCurrentFateData().Id;
+            if (Poi.Current.Type != PoiType.Fate)
+            {
+                return false;
+            }
+
+            if (Poi.Current.Fate == null)
+            {
+                return false;
+            }
+
+            if (!Poi.Current.Fate.IsValid)
+            {
+                OracleFateManager.ClearCurrentFate("FATE is no longer valid.");
+                return false;
+            }
+
+            return Poi.Current.Fate.Id == OracleFateManager.GetCurrentFateData().Id;
         }
 
         private static bool IsFateSet()

@@ -10,18 +10,13 @@ namespace Oracle.Behaviour.Tasks.FateTask
 {
     internal static class MegaBossFate
     {
-        private static async Task ClearFate()
-        {
-            await OracleFateManager.ClearCurrentFate("Current FATE is finished.");
-        }
-
         internal static async Task<bool> HandleMegaBossFate()
         {
             var currentFate = OracleFateManager.GetCurrentFateData();
 
             if (currentFate == null || currentFate.Status == FateStatus.NOTACTIVE || currentFate.Status == FateStatus.COMPLETE)
             {
-                await ClearFate();
+                OracleFateManager.ClearCurrentFate("Current FATE is finished.");
                 return true;
             }
 

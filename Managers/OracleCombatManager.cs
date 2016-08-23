@@ -17,6 +17,46 @@ namespace Oracle.Managers
             return GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(IsViableFateTarget).Any();
         }
 
+        private static bool IsNpcAttackingPlayer(BattleCharacter attacker)
+        {
+            if (!attacker.IsValid)
+            {
+                return false;
+            }
+
+            if (attacker.IsFateGone)
+            {
+                return false;
+            }
+
+            if (!attacker.HasTarget)
+            {
+                return false;
+            }
+
+            if (attacker.CurrentTargetId == Core.Player.ObjectId)
+            {
+                return true;
+            }
+
+            if (Chocobo.Object != null && Chocobo.Object.IsValid && attacker.CurrentTargetId == Chocobo.Object.ObjectId)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        internal static bool IsPlayerBeingAttacked()
+        {
+            if (GameObjectManager.Attackers == null)
+            {
+                return Core.Player.InCombat;
+            }
+
+            return GameObjectManager.Attackers.Any(IsNpcAttackingPlayer);
+        }
+
         internal static bool IsViableFateTarget(BattleCharacter target)
         {
             return target.IsFate && !target.IsFateGone && target.CanAttack && target.FateId == OracleFateManager.CurrentFateId;

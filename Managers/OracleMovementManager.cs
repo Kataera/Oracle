@@ -643,6 +643,9 @@ namespace Oracle.Managers
                 }
             }
 
+            // Refresh current fate data.
+            currentFate = OracleFateManager.GetCurrentFateData();
+
             var distanceToFateBoundary = Core.Player.Location.Distance2D(currentFate.Location) - currentFate.Radius;
             if (Actionmanager.CanMount == 0 && !ignoreCombat && IsMountNeeded(distanceToFateBoundary) && !Core.Player.IsMounted && currentFate.IsValid)
             {
