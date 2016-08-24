@@ -198,6 +198,12 @@ namespace Oracle.Managers
                 }
             }
 
+            // Always ignore FATEs under 60 seconds if they're collection FATEs (stops reselecting FATE after final turn in).
+            if (oracleFateData.Type == FateType.Collect && fate.TimeLeft < TimeSpan.FromSeconds(60))
+            {
+                return false;
+            }
+
             if (oracleFateData.SupportLevel == FateSupportLevel.Unsupported)
             {
                 return false;
