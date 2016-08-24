@@ -1,12 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
 using ff14bot.Helpers;
 using ff14bot.Managers;
 
-using Oracle.Behaviour.Tasks.Utilities;
-using Oracle.Helpers;
 using Oracle.Managers;
 
 namespace Oracle.Behaviour.Tasks.WaitTask
@@ -21,20 +18,7 @@ namespace Oracle.Behaviour.Tasks.WaitTask
                 return true;
             }
 
-            if (OracleClassManager.ClassChangedTimer != null && OracleClassManager.ClassChangedTimer.Elapsed < TimeSpan.FromSeconds(30))
-            {
-                Logger.SendLog("Waiting for class change skill cooldown to expire before selecting a target.");
-                return true;
-            }
-
-            var target = await SelectGrindTarget.HandleSelectGrindTarget();
-            if (target == null)
-            {
-                return true;
-            }
-
-            Logger.SendLog("Selecting " + target.Name + " (" + target.ObjectId.ToString("X") + ") as the next target to kill.", true);
-            Poi.Current = new Poi(target, PoiType.Kill);
+            await OracleCombatManager.SelectGrindTarget();
             return true;
         }
     }

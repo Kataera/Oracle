@@ -156,6 +156,7 @@ namespace Oracle.Behaviour.Tasks
                     throw new ArgumentOutOfRangeException(nameof(stance), stance, null);
             }
 
+            await Coroutine.Wait(TimeSpan.FromMilliseconds(200), () => Chocobo.Stance == stance);
             return Chocobo.Stance == stance ? SetChocoboStanceResult.Success : SetChocoboStanceResult.Failure;
         }
 

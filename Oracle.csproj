@@ -198,7 +198,6 @@
     <Compile Include="Enumerations\YokaiMinionId.cs" />
     <Compile Include="Helpers\XmlParser.cs" />
     <Compile Include="Managers\OracleMovementManager.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\SelectGrindTarget.cs" />
     <Compile Include="Managers\OracleTeleportManager.cs" />
     <Compile Include="Behaviour\Tasks\WaitHandler.cs" />
     <Compile Include="Behaviour\Tasks\WaitTask\WaitInPlace.cs" />

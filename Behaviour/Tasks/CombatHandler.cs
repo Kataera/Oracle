@@ -9,7 +9,6 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Objects;
 
-using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Managers;
@@ -79,7 +78,7 @@ namespace Oracle.Behaviour.Tasks
 
                 if (WaitSettings.Instance.FateWaitMode == FateWaitMode.GrindMobs)
                 {
-                    var target = await SelectGrindTarget.HandleSelectGrindTarget();
+                    var target = await OracleCombatManager.GetGrindTarget();
                     if (target == null)
                     {
                         return true;
