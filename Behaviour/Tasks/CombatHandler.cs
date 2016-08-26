@@ -66,6 +66,7 @@ namespace Oracle.Behaviour.Tasks
                 && OracleFateManager.CurrentFateId != 0)
             {
                 OracleFateManager.ClearPoi("Targeted unit is not in combat with us, nor part of the current FATE.", false);
+                Blacklist.Add(currentBc, BlacklistFlags.Combat, TimeSpan.FromSeconds(30), "Not a FATE mob.");
                 return true;
             }
 
