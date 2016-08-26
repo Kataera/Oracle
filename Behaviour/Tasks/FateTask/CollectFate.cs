@@ -53,6 +53,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
                     {
                         Logger.SendLog("Turning in what we've collected.");
                         await TurnInFateItems(GameObjectManager.GetObjectByNPCId(oracleFate.NpcId));
+                        return true;
                     }
                 }
             }
@@ -89,10 +90,20 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static async Task<bool> MoveToTurnInNpc(GameObject turnInNpc)
         {
-            Logger.SendLog("Moving to interact with " + turnInNpc.Name + ".");
+            if (turnInNpc == null || !turnInNpc.IsValid)
+            {
+                return false;
+            }
 
+            Logger.SendLog("Moving to interact with " + turnInNpc.Name + ".");
             while (Core.Player.Distance2D(turnInNpc.Location) > 3f)
             {
+                if (!turnInNpc.IsValid)
+                {
+                    Navigator.Stop();
+                    return false;
+                }
+
                 if (!Core.Player.IsMounted && OracleMovementManager.IsMountNeeded(Core.Player.Location.Distance(turnInNpc.Location))
                     && Actionmanager.AvailableMounts.Any())
                 {
@@ -113,9 +124,19 @@ namespace Oracle.Behaviour.Tasks.FateTask
 
         private static async Task<bool> TurnInFateItems(GameObject turnInNpc)
         {
+            if (turnInNpc == null || !turnInNpc.IsValid)
+            {
+                return false;
+            }
+
             if (Core.Player.Distance2D(turnInNpc.Location) > 4f)
             {
                 await MoveToTurnInNpc(turnInNpc);
+            }
+
+            if (!turnInNpc.IsValid)
+            {
+                return false;
             }
 
             if (GameObjectManager.Attackers.Any())

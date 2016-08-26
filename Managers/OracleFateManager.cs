@@ -45,11 +45,6 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (WaitingForChainFate() && !FateManager.ActiveFates.Contains(GetChainFate(PreviousFateId)))
-            {
-                return false;
-            }
-
             await BlacklistBadFates();
             return FateManager.ActiveFates.Any(FateFilter);
         }
@@ -171,6 +166,11 @@ namespace Oracle.Managers
             }
 
             if (oracleFateData.Type == FateType.MegaBoss && !FateSettings.Instance.MegaBossFatesEnabled)
+            {
+                return false;
+            }
+
+            if (WaitingForChainFate() && GetChainFate(PreviousFateId).Id != fate.Id)
             {
                 return false;
             }
@@ -544,6 +544,7 @@ namespace Oracle.Managers
             if (!ReachedCurrentFate)
             {
                 Logger.SendLog("Not waiting for the next FATE in the chain: we didn't reach the previous FATE.");
+                PreviousFateId = 0;
                 return false;
             }
 
@@ -551,12 +552,14 @@ namespace Oracle.Managers
             if (!IsFateTypeEnabled(chainOracleFateInfo))
             {
                 Logger.SendLog("Not waiting for the next FATE in the chain: its type is not enabled.");
+                PreviousFateId = 0;
                 return false;
             }
 
             if (BlacklistSettings.Instance.BlacklistedFates.Contains(chainId))
             {
                 Logger.SendLog("Not waiting for the next FATE in the chain: it is contained in the user blacklist.");
+                PreviousFateId = 0;
                 return false;
             }
 
