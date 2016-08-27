@@ -108,6 +108,12 @@ namespace Oracle.Managers
         internal static bool ShouldRestockGreens()
         {
             const uint gysahlGreensItemId = 4868;
+
+            if (OracleCombatManager.IsPlayerBeingAttacked())
+            {
+                return false;
+            }
+
             if (!MainSettings.Instance.ChocoboGreensRestockEnabled)
             {
                 return false;
