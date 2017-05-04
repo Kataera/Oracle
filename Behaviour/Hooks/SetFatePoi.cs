@@ -81,7 +81,23 @@ namespace Oracle.Behaviour.Hooks
 
         private static bool IsFatePoiSet()
         {
-            return Poi.Current.Type == PoiType.Fate && Poi.Current.Fate.Id == OracleFateManager.GetCurrentFateData().Id;
+            if (Poi.Current.Type != PoiType.Fate)
+            {
+                return false;
+            }
+
+            if (Poi.Current.Fate == null)
+            {
+                return false;
+            }
+
+            if (!Poi.Current.Fate.IsValid)
+            {
+                OracleFateManager.ClearCurrentFate("FATE is no longer valid.");
+                return false;
+            }
+
+            return Poi.Current.Fate.Id == OracleFateManager.GetCurrentFateData().Id;
         }
 
         private static bool IsFateSet()
@@ -159,7 +175,7 @@ namespace Oracle.Behaviour.Hooks
                 chainFateTimer.Reset();
             }
 
-            Logger.SendLog("Waiting for the follow up FATE.");
+            Logger.SendLog("Waiting for the follow up FATE: " + chainOracleFateInfo.Name + ".");
             var chainFateData = FateManager.ActiveFates.FirstOrDefault(result => result.Id == chainId);
             if (chainFateData == null)
             {
@@ -208,7 +224,7 @@ namespace Oracle.Behaviour.Hooks
                 return false;
             }
 
-            Logger.SendLog("Selecting closest FATE.");
+            Logger.SendLog("Selecting closest viable FATE.");
             var closestFate = closestFates.FirstOrDefault().Key;
 
             Logger.SendLog("Selected FATE: " + closestFate.Name + ".");

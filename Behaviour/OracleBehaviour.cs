@@ -49,6 +49,11 @@ namespace Oracle.Behaviour
                     Logger.SendLog("We died, attempting to recover.");
                 }
 
+                if (Poi.Current.Type != PoiType.Death)
+                {
+                    Poi.Current = new Poi(Core.Player, PoiType.Death);
+                }
+
                 return false;
             }
 

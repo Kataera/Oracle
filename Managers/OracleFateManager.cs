@@ -12,7 +12,6 @@ using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
-using ff14bot.Objects;
 using ff14bot.RemoteWindows;
 
 using NeoGaia.ConnectionHandler;
@@ -46,11 +45,6 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (WaitingForChainFate() && !FateManager.ActiveFates.Contains(GetChainFate(PreviousFateId)))
-            {
-                return false;
-            }
-
             await BlacklistBadFates();
             return FateManager.ActiveFates.Any(FateFilter);
         }
@@ -80,7 +74,7 @@ namespace Oracle.Managers
             }
         }
 
-        internal static async Task ClearCurrentFate(string reason)
+        internal static void ClearCurrentFate(string reason)
         {
             Logger.SendLog(reason);
             PreviousFateId = CurrentFateId;
@@ -176,6 +170,11 @@ namespace Oracle.Managers
                 return false;
             }
 
+            if (WaitingForChainFate() && GetChainFate(PreviousFateId).Id != fate.Id)
+            {
+                return false;
+            }
+
             if (ModeSettings.Instance.OracleOperationMode == OracleOperationMode.SpecificFates && !FateSettings.Instance.SpecificFateList.Contains(fate.Id))
             {
                 return false;
@@ -197,6 +196,12 @@ namespace Oracle.Managers
                 {
                     return false;
                 }
+            }
+
+            // Always ignore FATEs under 60 seconds if they're collection FATEs (stops reselecting FATE after final turn in).
+            if (oracleFateData.Type == FateType.Collect && fate.TimeLeft < TimeSpan.FromSeconds(60))
+            {
+                return false;
             }
 
             if (oracleFateData.SupportLevel == FateSupportLevel.Unsupported)
@@ -485,20 +490,6 @@ namespace Oracle.Managers
             return fate.MaxLevel < OracleClassManager.GetTrueLevel() && !Core.Player.IsLevelSynced && fate.Within2D(Core.Player.Location);
         }
 
-        internal static bool IsPlayerBeingAttacked()
-        {
-            if (GameObjectManager.Attackers == null)
-            {
-                return Core.Player.InCombat;
-            }
-
-            return GameObjectManager.Attackers.Any(mob =>
-                                                   mob.IsValid
-                                                   && mob.HasTarget
-                                                   && (mob.CurrentTargetId == Core.Player.ObjectId || mob.CurrentTargetId == Chocobo.Object.ObjectId)
-                                                   && !mob.IsFateGone);
-        }
-
         internal static bool PreviousFateChained()
         {
             if (PreviousFateId == 0)
@@ -553,6 +544,7 @@ namespace Oracle.Managers
             if (!ReachedCurrentFate)
             {
                 Logger.SendLog("Not waiting for the next FATE in the chain: we didn't reach the previous FATE.");
+                PreviousFateId = 0;
                 return false;
             }
 
@@ -560,12 +552,14 @@ namespace Oracle.Managers
             if (!IsFateTypeEnabled(chainOracleFateInfo))
             {
                 Logger.SendLog("Not waiting for the next FATE in the chain: its type is not enabled.");
+                PreviousFateId = 0;
                 return false;
             }
 
             if (BlacklistSettings.Instance.BlacklistedFates.Contains(chainId))
             {
                 Logger.SendLog("Not waiting for the next FATE in the chain: it is contained in the user blacklist.");
+                PreviousFateId = 0;
                 return false;
             }
 

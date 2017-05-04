@@ -21,7 +21,7 @@
       <FlattenNamespaces>Oracle</FlattenNamespaces>
       <GenerateDebug>False</GenerateDebug>
       <GenerateLogFile>false</GenerateLogFile>
-      <GenerateMapOutFile>false</GenerateMapOutFile>
+      <GenerateMapOutFile>true</GenerateMapOutFile>
       <ILIterations>3</ILIterations>
       <InlineExpansion>true</InlineExpansion>
       <Instrument>false</Instrument>
@@ -106,7 +106,7 @@
       <FlattenNamespaces>Oracle</FlattenNamespaces>
       <GenerateDebug>False</GenerateDebug>
       <GenerateLogFile>false</GenerateLogFile>
-      <GenerateMapOutFile>false</GenerateMapOutFile>
+      <GenerateMapOutFile>true</GenerateMapOutFile>
       <ILIterations>3</ILIterations>
       <InlineExpansion>true</InlineExpansion>
       <Instrument>false</Instrument>

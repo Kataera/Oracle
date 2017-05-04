@@ -9,7 +9,6 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Objects;
 
-using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Managers;
@@ -67,6 +66,7 @@ namespace Oracle.Behaviour.Tasks
                 && OracleFateManager.CurrentFateId != 0)
             {
                 OracleFateManager.ClearPoi("Targeted unit is not in combat with us, nor part of the current FATE.", false);
+                Blacklist.Add(currentBc, BlacklistFlags.Combat, TimeSpan.FromSeconds(30), "Not a FATE mob.");
                 return true;
             }
 
@@ -79,7 +79,7 @@ namespace Oracle.Behaviour.Tasks
 
                 if (WaitSettings.Instance.FateWaitMode == FateWaitMode.GrindMobs)
                 {
-                    var target = await SelectGrindTarget.HandleSelectGrindTarget();
+                    var target = await OracleCombatManager.GetGrindTarget();
                     if (target == null)
                     {
                         return true;

@@ -217,9 +217,7 @@ namespace Oracle
                 LoadFlightMesh.MeshFileStream.Dispose();
             }
 
-            var navProvider = Navigator.NavigationProvider as GaiaNavigator;
-            navProvider?.Dispose();
-
+            (Navigator.NavigationProvider as GaiaNavigator)?.Dispose();
             Navigator.NavigationProvider = null;
 
             CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();

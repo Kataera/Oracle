@@ -643,6 +643,9 @@ namespace Oracle.Managers
                 }
             }
 
+            // Refresh current fate data.
+            currentFate = OracleFateManager.GetCurrentFateData();
+
             var distanceToFateBoundary = Core.Player.Location.Distance2D(currentFate.Location) - currentFate.Radius;
             if (Actionmanager.CanMount == 0 && !ignoreCombat && IsMountNeeded(distanceToFateBoundary) && !Core.Player.IsMounted && currentFate.IsValid)
             {
@@ -680,7 +683,7 @@ namespace Oracle.Managers
             var cachedFateLocation = currentFate.Location;
             var currentFateRadius = currentFate.Radius;
 
-            while (Core.Player.Distance(cachedFateLocation) > currentFateRadius * 0.65f)
+            while (Core.Player.Distance(cachedFateLocation) > currentFateRadius * 0.65f || !currentFate.Within2D(Core.Player.Location))
             {
                 if (!currentFate.IsValid || currentFate.Status == FateStatus.COMPLETE || currentFate.Status == FateStatus.NOTACTIVE)
                 {
@@ -702,7 +705,7 @@ namespace Oracle.Managers
                 }
 
                 // Throttle navigator path generation requests.
-                if (cachedFateLocation.Distance2D(currentFate.Location) > 10)
+                if (cachedFateLocation.Distance2D(currentFate.Location) > 15f)
                 {
                     cachedFateLocation = currentFate.Location;
                 }

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using ff14bot.Helpers;
-using ff14bot.Managers;
 
-using Oracle.Behaviour.Tasks.Utilities;
-using Oracle.Helpers;
 using Oracle.Managers;
 
 namespace Oracle.Behaviour.Tasks.WaitTask
@@ -15,26 +10,13 @@ namespace Oracle.Behaviour.Tasks.WaitTask
     {
         internal static async Task<bool> HandleGrindMobs()
         {
-            if (GameObjectManager.Attackers.Any(bc => !bc.IsFateGone) && Poi.Current.Type != PoiType.Kill && Poi.Current.Type != PoiType.None)
+            if (OracleCombatManager.IsPlayerBeingAttacked() && Poi.Current.Type != PoiType.Kill && Poi.Current.Type != PoiType.None)
             {
                 OracleFateManager.ClearPoi("We're being attacked.", false);
                 return true;
             }
 
-            if (OracleClassManager.ClassChangedTimer != null && OracleClassManager.ClassChangedTimer.Elapsed < TimeSpan.FromSeconds(30))
-            {
-                Logger.SendLog("Waiting for class change skill cooldown to expire before selecting a target.");
-                return true;
-            }
-
-            var target = await SelectGrindTarget.HandleSelectGrindTarget();
-            if (target == null)
-            {
-                return true;
-            }
-
-            Logger.SendLog("Selecting " + target.Name + " (" + target.ObjectId.ToString("X") + ") as the next target to kill.", true);
-            Poi.Current = new Poi(target, PoiType.Kill);
+            await OracleCombatManager.SelectGrindTarget();
             return true;
         }
     }
