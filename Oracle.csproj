@@ -97,8 +97,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RebornBuddy">
-      <HintPath>..\..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB64\RebornBuddy.exe</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB\RebornBuddy.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -290,17 +289,14 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>if not exist "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\BotBases\Oracle" mkdir "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\BotBases\Oracle"
-if not exist "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB64\BotBases\Oracle" mkdir "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB64\BotBases\Oracle"</PreBuildEvent>
+    <PreBuildEvent>if not exist "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB\BotBases\Oracle" mkdir "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB\BotBases\Oracle"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>if "$(PlatformName)" == "x86" ( 
-xcopy /E /Y /R "C:\Users\Caitlin\Documents\Visual Studio 2015\Projects\Oracle\bin\x86" "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\BotBases\Oracle"
-xcopy /E /Y /R "C:\Users\Caitlin\Documents\Visual Studio 2015\Projects\Oracle\bin\x86" "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB64\BotBases\Oracle"
+xcopy /E /Y /R "C:\Users\Caitlin\Documents\Projects\Oracle\bin\x86" "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB\BotBases\Oracle"
 )
 if "$(PlatformName)" == "x64" ( 
-copy /Y "$(TargetDir)$(TargetName).dll" "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB Dev\BotBases\Oracle\$(ProjectName)64.dll"
-copy /Y "$(TargetDir)$(TargetName).dll" "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB64\BotBases\Oracle\$(ProjectName)64.dll"
+copy /Y "$(TargetDir)$(TargetName).dll" "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB\BotBases\Oracle\$(ProjectName)64.dll"
 )</PostBuildEvent>
   </PropertyGroup>
 </Project>

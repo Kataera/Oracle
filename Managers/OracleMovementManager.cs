@@ -492,7 +492,6 @@ namespace Oracle.Managers
                     Logger.SendLog("Loading the Coerthas Western Highlands flight mesh.");
                     await LoadFlightMesh.Main();
                     return true;
-
                 case DravanianForelandsZoneId:
                     if (!MovementSettings.Instance.DravanianForelandsFlight)
                     {

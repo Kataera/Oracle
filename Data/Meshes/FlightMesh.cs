@@ -1,9 +1,13 @@
-﻿using Pathfinding;
+﻿using Newtonsoft.Json;
+
+using Pathfinding;
 
 namespace Oracle.Data.Meshes
 {
     internal class FlightMesh
     {
+
+        [JsonConstructor]
         internal FlightMesh(uint zoneId, Graph graph)
         {
             ZoneId = zoneId;
