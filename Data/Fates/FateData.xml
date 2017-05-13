@@ -3564,7 +3564,7 @@
     <Name>Toad Alone</Name>
     <Level>59</Level>
     <Type>&Boss;</Type>
-    <OracleSupport>&FullSupport;</OracleSupport>
+    <OracleSupport>&Problematic;</OracleSupport>
   </Fate>
   <Fate>
     <ID>784</ID>
