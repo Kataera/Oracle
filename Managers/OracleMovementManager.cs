@@ -369,7 +369,8 @@ namespace Oracle.Managers
             foreach (var spot in potentialSpots)
             {
                 var closestEnemies =
-                    GameObjectManager.GameObjects.OrderBy(enemy => enemy.Distance2D(spot.Value)).Where(enemy => enemy.Type == GameObjectType.BattleNpc).Take(10);
+                    GameObjectManager.GameObjects.OrderBy(enemy => enemy.Distance2D(spot.Value)).Where(enemy => enemy.Type == GameObjectType.BattleNpc)
+                                     .Take(10);
 
                 var currentScore = closestEnemies.Sum(enemy => enemy.Distance2D(spot.Value));
                 if (!(currentScore > bestScore))

@@ -141,6 +141,19 @@ namespace Oracle.Managers
             return viableAetherytes;
         }
 
+        internal static bool InCity()
+        {
+            var cityList = new List<WorldManager.TeleportLocation>
+            {
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 8),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 2),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 9),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 75)
+            };
+
+            return cityList.Any(city => city.ZoneId == WorldManager.ZoneId);
+        }
+
         internal static async Task<bool> TeleportToAetheryte(uint aetheryteId)
         {
             await Coroutine.Sleep(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay));

@@ -22,7 +22,9 @@ namespace Oracle.Behaviour.Tasks
             if (currentFate == null)
             {
                 Logger.SendDebugLog("Current FATE could not be found, assuming it's finished.");
-                OracleFateManager.ClearCurrentFate("FATE is no longer active.");
+                OracleFateManager.ClearCurrentFate("FATE is "
+                                                   + "no longer"
+                                                   + " active.");
                 return false;
             }
 

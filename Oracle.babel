@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 	Babel Obfuscator MSBuild Project File
-	Version 8.6.0.2
+	Version 8.11.0.0
 -->
 <Project DefaultTargets="Oracle;Oracle64" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <UsingTask TaskName="Babel" AssemblyName="Babel.Build, Version=8.0.0.0, Culture=neutral, PublicKeyToken=138d17b5bd621ab7" />
   <Target Name="Oracle">
     <PropertyGroup>
-      <BabelInputFile>..\..\..\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB\BotBases\Oracle\Oracle.dll</BabelInputFile>
+      <BabelInputFile>..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB\BotBases\Oracle\Oracle.dll</BabelInputFile>
       <CleanAttributes>\[mscorlib\]System.Runtime.CompilerServices.CompilerGeneratedAttribute;\[mscorlib\]System.Diagnostics.DebuggerDisplayAttribute;\[mscorlib\]System.Diagnostics.DebuggerBrowsableAttribute;\[mscorlib\]System.Diagnostics.DebuggerNonUserCodeAttribute;\[mscorlib\]System.Diagnostics.DebuggerHiddenAttribute;\[mscorlib\]System.Diagnostics.DebuggerStepThroughAttribute;True</CleanAttributes>
       <ConstRemoval>true</ConstRemoval>
       <ControlFlowObfuscation>goto=true;switch=true;case=true;if=true;call=true;value=true;token=true;underflow=true;true</ControlFlowObfuscation>
@@ -92,7 +92,7 @@
   </Target>
   <Target Name="Oracle64">
     <PropertyGroup>
-      <BabelInputFile>..\..\..\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB\BotBases\Oracle\Oracle64.dll</BabelInputFile>
+      <BabelInputFile>..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB\BotBases\Oracle\Oracle64.dll</BabelInputFile>
       <CleanAttributes>\[mscorlib\]System.Runtime.CompilerServices.CompilerGeneratedAttribute;\[mscorlib\]System.Diagnostics.DebuggerDisplayAttribute;\[mscorlib\]System.Diagnostics.DebuggerBrowsableAttribute;\[mscorlib\]System.Diagnostics.DebuggerNonUserCodeAttribute;\[mscorlib\]System.Diagnostics.DebuggerHiddenAttribute;\[mscorlib\]System.Diagnostics.DebuggerStepThroughAttribute;True</CleanAttributes>
       <ConstRemoval>true</ConstRemoval>
       <ControlFlowObfuscation>goto=true;switch=true;case=true;if=true;call=true;value=true;token=true;underflow=true;true</ControlFlowObfuscation>

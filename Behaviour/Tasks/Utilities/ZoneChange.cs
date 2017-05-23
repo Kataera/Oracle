@@ -14,9 +14,10 @@ namespace Oracle.Behaviour.Tasks.Utilities
         internal static async Task<bool> HandleZoneChange()
         {
             const uint idyllshireAetheryte = 75;
-            uint aetheryteId;
+            MovementSettings.Instance.ZoneLevels.TryGetValue(OracleClassManager.GetTrueLevel(), out uint aetheryteId);
 
-            MovementSettings.Instance.ZoneLevels.TryGetValue(OracleClassManager.GetTrueLevel(), out aetheryteId);
+            // Ensure we have no FATE selected to prevent null references.
+            await OracleFateManager.ClearCurrentFate("Zone change needed.", false);
 
             if (aetheryteId == 0 || !WorldManager.HasAetheryteId(aetheryteId))
             {
@@ -57,6 +58,9 @@ namespace Oracle.Behaviour.Tasks.Utilities
             const ushort dravanianHinterlands = 399;
             const uint idyllshireAetheryte = 75;
             uint aetheryteId;
+
+            // Ensure we have no FATE selected to prevent null references.
+            await OracleFateManager.ClearCurrentFate("Zone change needed.", false);
 
             if (zoneId == dravanianHinterlands)
             {
