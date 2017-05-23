@@ -19,10 +19,7 @@ namespace Oracle.UI.Pages.Domain
 
         public bool? IsAllItems3Selected
         {
-            get
-            {
-                return isAllItems3Selected;
-            }
+            get => isAllItems3Selected;
             set
             {
                 if (isAllItems3Selected == value)

@@ -45,10 +45,7 @@ namespace Oracle.Settings
         [Setting]
         public int BossEngagePercentage
         {
-            get
-            {
-                return bossEngagePercentage;
-            }
+            get => bossEngagePercentage;
 
             set
             {
@@ -61,10 +58,7 @@ namespace Oracle.Settings
         [Setting]
         public bool BossFatesEnabled
         {
-            get
-            {
-                return bossFatesEnabled;
-            }
+            get => bossFatesEnabled;
 
             set
             {
@@ -77,10 +71,7 @@ namespace Oracle.Settings
         [Setting]
         public int ChainWaitTimeout
         {
-            get
-            {
-                return chainWaitTimeout;
-            }
+            get => chainWaitTimeout;
 
             set
             {
@@ -93,10 +84,7 @@ namespace Oracle.Settings
         [Setting]
         public bool CollectFatesEnabled
         {
-            get
-            {
-                return collectFatesEnabled;
-            }
+            get => collectFatesEnabled;
 
             set
             {
@@ -109,10 +97,7 @@ namespace Oracle.Settings
         [Setting]
         public int CollectTurnInAmount
         {
-            get
-            {
-                return collectTurnInAmount;
-            }
+            get => collectTurnInAmount;
 
             set
             {
@@ -125,10 +110,7 @@ namespace Oracle.Settings
         [Setting]
         public bool DefenceFatesEnabled
         {
-            get
-            {
-                return defenceFatesEnabled;
-            }
+            get => defenceFatesEnabled;
 
             set
             {
@@ -141,10 +123,7 @@ namespace Oracle.Settings
         [Setting]
         public bool EscortFatesEnabled
         {
-            get
-            {
-                return escortFatesEnabled;
-            }
+            get => escortFatesEnabled;
 
             set
             {
@@ -157,10 +136,7 @@ namespace Oracle.Settings
         [Setting]
         public int FateMaxLevelAbove
         {
-            get
-            {
-                return fateMaxLevelAbove;
-            }
+            get => fateMaxLevelAbove;
 
             set
             {
@@ -173,10 +149,7 @@ namespace Oracle.Settings
         [Setting]
         public int FateMinLevelBelow
         {
-            get
-            {
-                return fateMinLevelBelow;
-            }
+            get => fateMinLevelBelow;
 
             set
             {
@@ -189,10 +162,7 @@ namespace Oracle.Settings
         [Setting]
         public bool IgnoreLowDuration
         {
-            get
-            {
-                return ignoreLowDuration;
-            }
+            get => ignoreLowDuration;
 
             set
             {
@@ -226,10 +196,7 @@ namespace Oracle.Settings
         [Setting]
         public bool KillFatesEnabled
         {
-            get
-            {
-                return killFatesEnabled;
-            }
+            get => killFatesEnabled;
 
             set
             {
@@ -242,10 +209,7 @@ namespace Oracle.Settings
         [Setting]
         public int LowFateDuration
         {
-            get
-            {
-                return lowFateDuration;
-            }
+            get => lowFateDuration;
 
             set
             {
@@ -258,10 +222,7 @@ namespace Oracle.Settings
         [Setting]
         public int MegaBossEngagePercentage
         {
-            get
-            {
-                return megaBossEngagePercentage;
-            }
+            get => megaBossEngagePercentage;
 
             set
             {
@@ -274,10 +235,7 @@ namespace Oracle.Settings
         [Setting]
         public bool MegaBossFatesEnabled
         {
-            get
-            {
-                return megaBossFatesEnabled;
-            }
+            get => megaBossFatesEnabled;
 
             set
             {
@@ -290,10 +248,7 @@ namespace Oracle.Settings
         [Setting]
         public bool RunProblematicFates
         {
-            get
-            {
-                return runProblematicFates;
-            }
+            get => runProblematicFates;
 
             set
             {
@@ -305,10 +260,7 @@ namespace Oracle.Settings
         [Setting]
         public List<uint> SpecificFateList
         {
-            get
-            {
-                return specificFateList;
-            }
+            get => specificFateList;
 
             set
             {
@@ -321,10 +273,7 @@ namespace Oracle.Settings
         [Setting]
         public bool WaitAtBossForProgress
         {
-            get
-            {
-                return waitAtBossForProgress;
-            }
+            get => waitAtBossForProgress;
 
             set
             {
@@ -337,10 +286,7 @@ namespace Oracle.Settings
         [Setting]
         public bool WaitAtMegaBossForProgress
         {
-            get
-            {
-                return waitAtMegaBossForProgress;
-            }
+            get => waitAtMegaBossForProgress;
 
             set
             {
@@ -353,10 +299,7 @@ namespace Oracle.Settings
         [Setting]
         public bool WaitForChain
         {
-            get
-            {
-                return waitForChain;
-            }
+            get => waitForChain;
 
             set
             {

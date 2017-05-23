@@ -49,14 +49,11 @@ namespace Oracle.Settings
         {
         }
 
-        [DefaultValue(3)]
+        [DefaultValue(1)]
         [Setting]
         public int AnimaCrystalsToFarm
         {
-            get
-            {
-                return animaCrystalsToFarm;
-            }
+            get => animaCrystalsToFarm;
 
             set
             {
@@ -69,10 +66,7 @@ namespace Oracle.Settings
         [Setting]
         public int AtmaToFarm
         {
-            get
-            {
-                return atmaToFarm;
-            }
+            get => atmaToFarm;
 
             set
             {
@@ -85,10 +79,7 @@ namespace Oracle.Settings
         [Setting]
         public int BlizzariaMedalsToFarm
         {
-            get
-            {
-                return blizzariaMedalsToFarm;
-            }
+            get => blizzariaMedalsToFarm;
 
             set
             {
@@ -101,10 +92,7 @@ namespace Oracle.Settings
         [Setting]
         public int BlizzariaZoneChoice
         {
-            get
-            {
-                return blizzariaZoneChoice;
-            }
+            get => blizzariaZoneChoice;
 
             set
             {
@@ -117,10 +105,7 @@ namespace Oracle.Settings
         [Setting]
         public int HovernyanMedalsToFarm
         {
-            get
-            {
-                return hovernyanMedalsToFarm;
-            }
+            get => hovernyanMedalsToFarm;
 
             set
             {
@@ -133,10 +118,7 @@ namespace Oracle.Settings
         [Setting]
         public int HovernyanZoneChoice
         {
-            get
-            {
-                return hovernyanZoneChoice;
-            }
+            get => hovernyanZoneChoice;
 
             set
             {
@@ -170,10 +152,7 @@ namespace Oracle.Settings
         [Setting]
         public int JibanyanMedalsToFarm
         {
-            get
-            {
-                return jibanyanMedalsToFarm;
-            }
+            get => jibanyanMedalsToFarm;
 
             set
             {
@@ -186,10 +165,7 @@ namespace Oracle.Settings
         [Setting]
         public int JibanyanZoneChoice
         {
-            get
-            {
-                return jibanyanZoneChoice;
-            }
+            get => jibanyanZoneChoice;
 
             set
             {
@@ -202,10 +178,7 @@ namespace Oracle.Settings
         [Setting]
         public int KomajiroMedalsToFarm
         {
-            get
-            {
-                return komajiroMedalsToFarm;
-            }
+            get => komajiroMedalsToFarm;
 
             set
             {
@@ -218,10 +191,7 @@ namespace Oracle.Settings
         [Setting]
         public int KomajiroZoneChoice
         {
-            get
-            {
-                return komajiroZoneChoice;
-            }
+            get => komajiroZoneChoice;
 
             set
             {
@@ -234,10 +204,7 @@ namespace Oracle.Settings
         [Setting]
         public int KomasanMedalsToFarm
         {
-            get
-            {
-                return komasanMedalsToFarm;
-            }
+            get => komasanMedalsToFarm;
 
             set
             {
@@ -250,10 +217,7 @@ namespace Oracle.Settings
         [Setting]
         public int KomasanZoneChoice
         {
-            get
-            {
-                return komasanZoneChoice;
-            }
+            get => komasanZoneChoice;
 
             set
             {
@@ -266,10 +230,7 @@ namespace Oracle.Settings
         [Setting]
         public int KyubiMedalsToFarm
         {
-            get
-            {
-                return kyubiMedalsToFarm;
-            }
+            get => kyubiMedalsToFarm;
 
             set
             {
@@ -282,10 +243,7 @@ namespace Oracle.Settings
         [Setting]
         public int KyubiZoneChoice
         {
-            get
-            {
-                return kyubiZoneChoice;
-            }
+            get => kyubiZoneChoice;
 
             set
             {
@@ -298,10 +256,7 @@ namespace Oracle.Settings
         [Setting]
         public int ManjimuttMedalsToFarm
         {
-            get
-            {
-                return manjimuttMedalsToFarm;
-            }
+            get => manjimuttMedalsToFarm;
 
             set
             {
@@ -314,10 +269,7 @@ namespace Oracle.Settings
         [Setting]
         public int ManjimuttZoneChoice
         {
-            get
-            {
-                return manjimuttZoneChoice;
-            }
+            get => manjimuttZoneChoice;
 
             set
             {
@@ -330,10 +282,7 @@ namespace Oracle.Settings
         [Setting]
         public int NokoMedalsToFarm
         {
-            get
-            {
-                return nokoMedalsToFarm;
-            }
+            get => nokoMedalsToFarm;
 
             set
             {
@@ -346,10 +295,7 @@ namespace Oracle.Settings
         [Setting]
         public int NokoZoneChoice
         {
-            get
-            {
-                return nokoZoneChoice;
-            }
+            get => nokoZoneChoice;
 
             set
             {
@@ -364,10 +310,7 @@ namespace Oracle.Settings
         [Setting]
         public OracleOperationMode OracleOperationMode
         {
-            get
-            {
-                return oracleOperationMode;
-            }
+            get => oracleOperationMode;
 
             set
             {
@@ -380,10 +323,7 @@ namespace Oracle.Settings
         [Setting]
         public int RobonyanMedalsToFarm
         {
-            get
-            {
-                return robonyanMedalsToFarm;
-            }
+            get => robonyanMedalsToFarm;
 
             set
             {
@@ -396,10 +336,7 @@ namespace Oracle.Settings
         [Setting]
         public int RobonyanZoneChoice
         {
-            get
-            {
-                return robonyanZoneChoice;
-            }
+            get => robonyanZoneChoice;
 
             set
             {
@@ -412,10 +349,7 @@ namespace Oracle.Settings
         [Setting]
         public int ShogunyanMedalsToFarm
         {
-            get
-            {
-                return shogunyanMedalsToFarm;
-            }
+            get => shogunyanMedalsToFarm;
 
             set
             {
@@ -428,10 +362,7 @@ namespace Oracle.Settings
         [Setting]
         public int ShogunyanZoneChoice
         {
-            get
-            {
-                return shogunyanZoneChoice;
-            }
+            get => shogunyanZoneChoice;
 
             set
             {
@@ -444,10 +375,7 @@ namespace Oracle.Settings
         [Setting]
         public int UsapyonMedalsToFarm
         {
-            get
-            {
-                return usapyonMedalsToFarm;
-            }
+            get => usapyonMedalsToFarm;
 
             set
             {
@@ -460,10 +388,7 @@ namespace Oracle.Settings
         [Setting]
         public int UsapyonZoneChoice
         {
-            get
-            {
-                return usapyonZoneChoice;
-            }
+            get => usapyonZoneChoice;
 
             set
             {
@@ -476,10 +401,7 @@ namespace Oracle.Settings
         [Setting]
         public int VenoctMedalsToFarm
         {
-            get
-            {
-                return venoctMedalsToFarm;
-            }
+            get => venoctMedalsToFarm;
 
             set
             {
@@ -492,10 +414,7 @@ namespace Oracle.Settings
         [Setting]
         public int VenoctZoneChoice
         {
-            get
-            {
-                return venoctZoneChoice;
-            }
+            get => venoctZoneChoice;
 
             set
             {
@@ -508,10 +427,7 @@ namespace Oracle.Settings
         [Setting]
         public int WhisperMedalsToFarm
         {
-            get
-            {
-                return whisperMedalsToFarm;
-            }
+            get => whisperMedalsToFarm;
 
             set
             {
@@ -524,10 +440,7 @@ namespace Oracle.Settings
         [Setting]
         public int WhisperZoneChoice
         {
-            get
-            {
-                return whisperZoneChoice;
-            }
+            get => whisperZoneChoice;
 
             set
             {
@@ -540,10 +453,7 @@ namespace Oracle.Settings
         [Setting]
         public int YokaiMedalsToFarm
         {
-            get
-            {
-                return yokaiMedalsToFarm;
-            }
+            get => yokaiMedalsToFarm;
 
             set
             {
@@ -556,10 +466,7 @@ namespace Oracle.Settings
         [Setting]
         public int YokaiMedalZoneChoice
         {
-            get
-            {
-                return yokaiMedalsZoneChoice;
-            }
+            get => yokaiMedalsZoneChoice;
 
             set
             {

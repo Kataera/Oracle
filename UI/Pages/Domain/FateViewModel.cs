@@ -11,10 +11,7 @@ namespace Oracle.UI.Pages.Domain
 
         public uint FateId
         {
-            get
-            {
-                return fateId;
-            }
+            get => fateId;
             set
             {
                 if (fateId == value)
@@ -27,10 +24,7 @@ namespace Oracle.UI.Pages.Domain
 
         public bool IsSelected
         {
-            get
-            {
-                return isSelected;
-            }
+            get => isSelected;
             set
             {
                 if (isSelected == value)
@@ -43,10 +37,7 @@ namespace Oracle.UI.Pages.Domain
 
         public string Name
         {
-            get
-            {
-                return name;
-            }
+            get => name;
             set
             {
                 if (name == value)

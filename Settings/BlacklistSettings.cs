@@ -33,10 +33,7 @@ namespace Oracle.Settings
         [Setting]
         public List<uint> BlacklistedFates
         {
-            get
-            {
-                return blacklistedFates;
-            }
+            get => blacklistedFates;
 
             set
             {
@@ -48,10 +45,7 @@ namespace Oracle.Settings
         [Setting]
         public List<uint> BlacklistedMobs
         {
-            get
-            {
-                return blacklistedMobs;
-            }
+            get => blacklistedMobs;
 
             set
             {
