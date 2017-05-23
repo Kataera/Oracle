@@ -26,4 +26,8 @@ Refactor escort FATE's move to FATE centre to use the default OracleMovementMana
 
 Rewrite home point binding to work on all locales.
 
+<<<<<<< HEAD
 Fix restocking of Greens in Idyllshire.
+=======
+If a FATE ends while trying to land, weird things happen.
+>>>>>>> eb53fa8a70782a8cf395a8826c66a8940830e769
