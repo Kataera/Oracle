@@ -33,10 +33,7 @@ namespace Oracle.Settings
         [Setting]
         public Dictionary<uint, Vector3> FateWaitLocations
         {
-            get
-            {
-                return fateWaitLocations;
-            }
+            get => fateWaitLocations;
 
             set
             {
@@ -51,10 +48,7 @@ namespace Oracle.Settings
         [Setting]
         public FateWaitMode FateWaitMode
         {
-            get
-            {
-                return fateWaitMode;
-            }
+            get => fateWaitMode;
 
             set
             {
@@ -88,10 +82,7 @@ namespace Oracle.Settings
         [Setting]
         public int MobGrindMaxLevelAbove
         {
-            get
-            {
-                return mobGrindMaxLevelAbove;
-            }
+            get => mobGrindMaxLevelAbove;
 
             set
             {
@@ -104,10 +95,7 @@ namespace Oracle.Settings
         [Setting]
         public int MobGrindMinLevelBelow
         {
-            get
-            {
-                return mobGrindMinLevelBelow;
-            }
+            get => mobGrindMinLevelBelow;
 
             set
             {

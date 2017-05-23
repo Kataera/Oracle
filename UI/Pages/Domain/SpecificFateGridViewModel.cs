@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 using Oracle.Settings;
@@ -18,10 +19,7 @@ namespace Oracle.UI.Pages.Domain
 
         public bool? IsAllItems3Selected
         {
-            get
-            {
-                return isAllItems3Selected;
-            }
+            get => isAllItems3Selected;
             set
             {
                 if (isAllItems3Selected == value)

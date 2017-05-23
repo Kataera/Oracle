@@ -36,10 +36,7 @@ namespace Oracle.Settings
         [Setting]
         public int ActionDelay
         {
-            get
-            {
-                return actionDelay;
-            }
+            get => actionDelay;
 
             set
             {
@@ -52,10 +49,7 @@ namespace Oracle.Settings
         [Setting]
         public int ChocoboGreensRestockAmount
         {
-            get
-            {
-                return chocoboGreensRestockAmount;
-            }
+            get => chocoboGreensRestockAmount;
 
             set
             {
@@ -68,10 +62,7 @@ namespace Oracle.Settings
         [Setting]
         public bool ChocoboGreensRestockEnabled
         {
-            get
-            {
-                return chocoboGreensRestockEnabled;
-            }
+            get => chocoboGreensRestockEnabled;
 
             set
             {
@@ -84,10 +75,7 @@ namespace Oracle.Settings
         [Setting]
         public bool ChocoboHandlingEnabled
         {
-            get
-            {
-                return chocoboHandlingEnabled;
-            }
+            get => chocoboHandlingEnabled;
 
             set
             {
@@ -100,10 +88,7 @@ namespace Oracle.Settings
         [Setting]
         public int ChocoboMinRemainingGreensToRestock
         {
-            get
-            {
-                return chocoboMinRemainingGreensToRestock;
-            }
+            get => chocoboMinRemainingGreensToRestock;
 
             set
             {
@@ -116,10 +101,7 @@ namespace Oracle.Settings
         [Setting]
         public int ChocoboStanceChocoboHealthThreshold
         {
-            get
-            {
-                return chocoboStanceChocoboHealthThreshold;
-            }
+            get => chocoboStanceChocoboHealthThreshold;
 
             set
             {
@@ -132,10 +114,7 @@ namespace Oracle.Settings
         [Setting]
         public int ChocoboStancePlayerHealthThreshold
         {
-            get
-            {
-                return chocoboStancePlayerHealthThreshold;
-            }
+            get => chocoboStancePlayerHealthThreshold;
 
             set
             {
@@ -148,10 +127,7 @@ namespace Oracle.Settings
         [Setting]
         public int ChocoboStanceReturnToAttackThreshold
         {
-            get
-            {
-                return chocoboStanceReturnToAttackThreshold;
-            }
+            get => chocoboStanceReturnToAttackThreshold;
 
             set
             {
@@ -164,10 +140,7 @@ namespace Oracle.Settings
         [Setting]
         public int CombatNoDamageTimeout
         {
-            get
-            {
-                return combatNoDamageTimeout;
-            }
+            get => combatNoDamageTimeout;
 
             set
             {
@@ -201,10 +174,7 @@ namespace Oracle.Settings
         [Setting]
         public bool ListHooksOnStart
         {
-            get
-            {
-                return listHooksOnStart;
-            }
+            get => listHooksOnStart;
 
             set
             {
@@ -217,10 +187,7 @@ namespace Oracle.Settings
         [Setting]
         public bool OverrideRestBehaviour
         {
-            get
-            {
-                return overrideRestBehaviour;
-            }
+            get => overrideRestBehaviour;
 
             set
             {
@@ -233,10 +200,7 @@ namespace Oracle.Settings
         [Setting]
         public int RestHealthPercent
         {
-            get
-            {
-                return restHealthPercent;
-            }
+            get => restHealthPercent;
 
             set
             {
@@ -249,10 +213,7 @@ namespace Oracle.Settings
         [Setting]
         public int RestTPManaPercent
         {
-            get
-            {
-                return restTpManaPercent;
-            }
+            get => restTpManaPercent;
 
             set
             {
@@ -265,10 +226,7 @@ namespace Oracle.Settings
         [Setting]
         public bool ShowDebugInConsole
         {
-            get
-            {
-                return showDebugInConsole;
-            }
+            get => showDebugInConsole;
 
             set
             {
@@ -281,10 +239,7 @@ namespace Oracle.Settings
         [Setting]
         public int TargetListCacheDuration
         {
-            get
-            {
-                return targetListCacheDuration;
-            }
+            get => targetListCacheDuration;
 
             set
             {

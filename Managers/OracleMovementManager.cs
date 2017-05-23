@@ -205,6 +205,12 @@ namespace Oracle.Managers
                         return true;
                     }
 
+                    if (Core.Player.IsDead)
+                    {
+                        OracleFateManager.ClearPoi("Died while moving.");
+                        return true;
+                    }
+
                     Logger.SendLog("Flying to hop: " + processedStep);
                     Navigator.PlayerMover.MoveTowards(processedStep);
                     await Coroutine.Yield();
@@ -492,7 +498,6 @@ namespace Oracle.Managers
                     Logger.SendLog("Loading the Coerthas Western Highlands flight mesh.");
                     await LoadFlightMesh.Main();
                     return true;
-
                 case DravanianForelandsZoneId:
                     if (!MovementSettings.Instance.DravanianForelandsFlight)
                     {
@@ -704,6 +709,13 @@ namespace Oracle.Managers
                     await MountUp();
                 }
 
+                if (Core.Player.IsDead)
+                {
+                    OracleFateManager.ClearPoi("Died while moving.");
+                    Navigator.Stop();
+                    return true;
+                }
+
                 // Throttle navigator path generation requests.
                 if (cachedFateLocation.Distance2D(currentFate.Location) > 15f)
                 {
@@ -739,6 +751,13 @@ namespace Oracle.Managers
                 {
                     Navigator.Stop();
                     OracleFateManager.ClearPoi("FATE found.");
+                    return true;
+                }
+
+                if (Core.Player.IsDead)
+                {
+                    OracleFateManager.ClearPoi("Died while moving.");
+                    Navigator.Stop();
                     return true;
                 }
 

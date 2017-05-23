@@ -43,10 +43,7 @@ namespace Oracle.Settings
         [Setting]
         public Dictionary<uint, ClassJobType> ClassGearsets
         {
-            get
-            {
-                return classGearsets;
-            }
+            get => classGearsets;
 
             set
             {
@@ -61,10 +58,7 @@ namespace Oracle.Settings
         [Setting]
         public ClassLevelMode ClassLevelMode
         {
-            get
-            {
-                return classLevelMode;
-            }
+            get => classLevelMode;
             set
             {
                 classLevelMode = value;
@@ -97,10 +91,7 @@ namespace Oracle.Settings
         [Setting]
         public bool LevelArcanist
         {
-            get
-            {
-                return levelArcanist;
-            }
+            get => levelArcanist;
             set
             {
                 levelArcanist = value;
@@ -112,10 +103,7 @@ namespace Oracle.Settings
         [Setting]
         public bool LevelArcher
         {
-            get
-            {
-                return levelArcher;
-            }
+            get => levelArcher;
             set
             {
                 levelArcher = value;
@@ -127,10 +115,7 @@ namespace Oracle.Settings
         [Setting]
         public bool LevelAstrologian
         {
-            get
-            {
-                return levelAstrologian;
-            }
+            get => levelAstrologian;
             set
             {
                 levelAstrologian = value;
@@ -142,10 +127,7 @@ namespace Oracle.Settings
         [Setting]
         public bool LevelConjurer
         {
-            get
-            {
-                return levelConjurer;
-            }
+            get => levelConjurer;
             set
             {
                 levelConjurer = value;
@@ -157,10 +139,7 @@ namespace Oracle.Settings
         [Setting]
         public bool LevelDarkKnight
         {
-            get
-            {
-                return levelDarkKnight;
-            }
+            get => levelDarkKnight;
             set
             {
                 levelDarkKnight = value;
@@ -172,10 +151,7 @@ namespace Oracle.Settings
         [Setting]
         public bool LevelGladiator
         {
-            get
-            {
-                return levelGladiator;
-            }
+            get => levelGladiator;
             set
             {
                 levelGladiator = value;
@@ -187,10 +163,7 @@ namespace Oracle.Settings
         [Setting]
         public bool LevelLancer
         {
-            get
-            {
-                return levelLancer;
-            }
+            get => levelLancer;
             set
             {
                 levelLancer = value;
@@ -202,10 +175,7 @@ namespace Oracle.Settings
         [Setting]
         public bool LevelMachinist
         {
-            get
-            {
-                return levelMachinist;
-            }
+            get => levelMachinist;
             set
             {
                 levelMachinist = value;
@@ -217,10 +187,7 @@ namespace Oracle.Settings
         [Setting]
         public bool LevelMarauder
         {
-            get
-            {
-                return levelMarauder;
-            }
+            get => levelMarauder;
             set
             {
                 levelMarauder = value;
@@ -232,10 +199,7 @@ namespace Oracle.Settings
         [Setting]
         public bool LevelPugilist
         {
-            get
-            {
-                return levelPugilist;
-            }
+            get => levelPugilist;
             set
             {
                 levelPugilist = value;
@@ -247,10 +211,7 @@ namespace Oracle.Settings
         [Setting]
         public bool LevelRogue
         {
-            get
-            {
-                return levelRogue;
-            }
+            get => levelRogue;
             set
             {
                 levelRogue = value;
@@ -262,10 +223,7 @@ namespace Oracle.Settings
         [Setting]
         public bool LevelThaumaturge
         {
-            get
-            {
-                return levelThaumaturge;
-            }
+            get => levelThaumaturge;
             set
             {
                 levelThaumaturge = value;
@@ -277,10 +235,7 @@ namespace Oracle.Settings
         [Setting]
         public int MaxLevel
         {
-            get
-            {
-                return maxLevel;
-            }
+            get => maxLevel;
             set
             {
                 maxLevel = value;

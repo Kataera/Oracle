@@ -44,10 +44,7 @@ namespace Oracle.Settings
         [Setting]
         public bool AzysLlaFlight
         {
-            get
-            {
-                return azysLlaFlight;
-            }
+            get => azysLlaFlight;
 
             set
             {
@@ -60,10 +57,7 @@ namespace Oracle.Settings
         [Setting]
         public bool BindHomePoint
         {
-            get
-            {
-                return bindHomePoint;
-            }
+            get => bindHomePoint;
 
             set
             {
@@ -76,10 +70,7 @@ namespace Oracle.Settings
         [Setting]
         public bool ChurningMistsFlight
         {
-            get
-            {
-                return churningMistsFlight;
-            }
+            get => churningMistsFlight;
 
             set
             {
@@ -92,10 +83,7 @@ namespace Oracle.Settings
         [Setting]
         public bool CoerthasWesternHighlandsFlight
         {
-            get
-            {
-                return coerthasWesternHighlandsFlight;
-            }
+            get => coerthasWesternHighlandsFlight;
 
             set
             {
@@ -108,10 +96,7 @@ namespace Oracle.Settings
         [Setting]
         public bool ConsiderAetheryteFateDistances
         {
-            get
-            {
-                return considerAetheryteFateDistances;
-            }
+            get => considerAetheryteFateDistances;
 
             set
             {
@@ -124,10 +109,7 @@ namespace Oracle.Settings
         [Setting]
         public bool DelayFateMovement
         {
-            get
-            {
-                return delayFateMovement;
-            }
+            get => delayFateMovement;
 
             set
             {
@@ -140,10 +122,7 @@ namespace Oracle.Settings
         [Setting]
         public int DelayFateMovementMax
         {
-            get
-            {
-                return delayFateMovementMax;
-            }
+            get => delayFateMovementMax;
 
             set
             {
@@ -156,10 +135,7 @@ namespace Oracle.Settings
         [Setting]
         public int DelayFateMovementMin
         {
-            get
-            {
-                return delayFateMovementMin;
-            }
+            get => delayFateMovementMin;
 
             set
             {
@@ -172,10 +148,7 @@ namespace Oracle.Settings
         [Setting]
         public bool DravanianForelandsFlight
         {
-            get
-            {
-                return dravanianForelandsFlight;
-            }
+            get => dravanianForelandsFlight;
 
             set
             {
@@ -188,10 +161,7 @@ namespace Oracle.Settings
         [Setting]
         public bool DravanianHinterlandsFlight
         {
-            get
-            {
-                return dravanianHinterlandsFlight;
-            }
+            get => dravanianHinterlandsFlight;
 
             set
             {
@@ -204,10 +174,7 @@ namespace Oracle.Settings
         [Setting]
         public float FateProgressTeleportLimit
         {
-            get
-            {
-                return fateProgressTeleportFateMaxProgress;
-            }
+            get => fateProgressTeleportFateMaxProgress;
 
             set
             {
@@ -241,10 +208,7 @@ namespace Oracle.Settings
         [Setting]
         public double LandingTimeOut
         {
-            get
-            {
-                return landingTimeOut;
-            }
+            get => landingTimeOut;
 
             set
             {
@@ -257,10 +221,7 @@ namespace Oracle.Settings
         [Setting]
         public int MinDistanceToTeleport
         {
-            get
-            {
-                return minDistanceToTeleport;
-            }
+            get => minDistanceToTeleport;
 
             set
             {
@@ -273,10 +234,7 @@ namespace Oracle.Settings
         [Setting]
         public bool ProcessFlightPath
         {
-            get
-            {
-                return processFlightPath;
-            }
+            get => processFlightPath;
 
             set
             {
@@ -289,10 +247,7 @@ namespace Oracle.Settings
         [Setting]
         public bool SeaOfCloudsFlight
         {
-            get
-            {
-                return seaOfCloudsFlight;
-            }
+            get => seaOfCloudsFlight;
 
             set
             {
@@ -305,10 +260,7 @@ namespace Oracle.Settings
         [Setting]
         public bool TeleportIfQuicker
         {
-            get
-            {
-                return teleportIfQuicker;
-            }
+            get => teleportIfQuicker;
 
             set
             {
@@ -320,10 +272,7 @@ namespace Oracle.Settings
         [Setting]
         public Dictionary<uint, uint> ZoneLevels
         {
-            get
-            {
-                return zoneLevels;
-            }
+            get => zoneLevels;
 
             set
             {

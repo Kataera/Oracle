@@ -128,7 +128,7 @@ namespace Oracle.Behaviour.Modes
                                + " more Luminous Ice Crystals.");
                 await ZoneChange.HandleZoneChange(ZoneCoerthasWesternHighlands, true);
             }
-            else if (!ConditionParser.HasAtLeast(LuminousWindCrystal, 3))
+            else if (!ConditionParser.HasAtLeast(LuminousWindCrystal, ModeSettings.Instance.AnimaCrystalsToFarm))
             {
                 if (OracleClassManager.GetTrueLevel() < 50)
                 {
@@ -146,7 +146,7 @@ namespace Oracle.Behaviour.Modes
                                + " more Luminous Wind Crystals.");
                 await ZoneChange.HandleZoneChange(ZoneSeaOfClouds, true);
             }
-            else if (!ConditionParser.HasAtLeast(LuminousEarthCrystal, 3))
+            else if (!ConditionParser.HasAtLeast(LuminousEarthCrystal, ModeSettings.Instance.AnimaCrystalsToFarm))
             {
                 if (OracleClassManager.GetTrueLevel() < 50)
                 {
@@ -164,7 +164,7 @@ namespace Oracle.Behaviour.Modes
                                + " more Luminous Earth Crystals.");
                 await ZoneChange.HandleZoneChange(ZoneDravanianForelands, true);
             }
-            else if (!ConditionParser.HasAtLeast(LuminousLightningCrystal, 3))
+            else if (!ConditionParser.HasAtLeast(LuminousLightningCrystal, ModeSettings.Instance.AnimaCrystalsToFarm))
             {
                 if (OracleClassManager.GetTrueLevel() < 52)
                 {
@@ -182,7 +182,7 @@ namespace Oracle.Behaviour.Modes
                                + " more Luminous Lightning Crystals.");
                 await ZoneChange.HandleZoneChange(ZoneChurningMists, true);
             }
-            else if (!ConditionParser.HasAtLeast(LuminousWaterCrystal, 3))
+            else if (!ConditionParser.HasAtLeast(LuminousWaterCrystal, ModeSettings.Instance.AnimaCrystalsToFarm))
             {
                 if (OracleClassManager.GetTrueLevel() < 54)
                 {
@@ -200,7 +200,7 @@ namespace Oracle.Behaviour.Modes
                                + " more Luminous Water Crystals.");
                 await ZoneChange.HandleZoneChange(ZoneDravanianHinterlands, true);
             }
-            else if (!ConditionParser.HasAtLeast(LuminousFireCrystal, 3))
+            else if (!ConditionParser.HasAtLeast(LuminousFireCrystal, ModeSettings.Instance.AnimaCrystalsToFarm))
             {
                 if (OracleClassManager.GetTrueLevel() < 55)
                 {
