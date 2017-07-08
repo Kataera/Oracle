@@ -1,6 +1,6 @@
 ﻿namespace Oracle.Managers
 {
-    internal static class OracleFateManager
+    internal class OracleTargetManager
     {
     }
 }

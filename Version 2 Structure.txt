@@ -1,0 +1,62 @@
+Oracle V2 structure:
+
+Behaviour/OracleBehaviour.cs				-- Root behaviour.
+
+Behaviour/HookOverrides/Rest.cs				-- Default rest behaviour override.
+Behaviour/HookOverrides/SelectPoiType.cs
+Behaviour/HookOverrides/SetCombatPoi.cs
+Behaviour/HookOverrides/SetFatePoi.cs
+Behaviour/HookOverrides/SetWaitPoi.cs
+
+Behaviour/Modes/AnimaGrind.cs
+Behaviour/Modes/AnimusGrind.cs
+Behaviour/Modes/AtmaGrind.cs
+Behaviour/Modes/FateGrind.cs
+Behaviour/Modes/Levelling.cs
+Behaviour/Modes/MultiLevelling.cs
+Behaviour/Modes/SpecificFates.cs
+
+Behaviour/BotBase/Fate/Fate.cs				-- Abstract class containing common behaviour.
+Behaviour/BotBase/Fate/Boss.cs
+Behaviour/BotBase/Fate/Collect.cs
+Behaviour/BotBase/Fate/Defence.cs
+Behaviour/BotBase/Fate/Escort.cs
+Behaviour/BotBase/Fate/Kill.cs
+Behaviour/BotBase/Fate/MegaBoss.cs
+
+Behaviour/BotBase/Idle/Idle.cs				-- Abstract class containing common behaviour.
+Behaviour/BotBase/Idle/Aetheryte.cs
+Behaviour/BotBase/Idle/DoNothing.cs
+Behaviour/BotBase/Idle/Grind.cs
+Behaviour/BotBase/Idle/Location.cs
+
+Behaviour/BotBase/Handler/ChocoboHandler.cs
+Behaviour/BotBase/Handler/CombatHandler.cs
+Behaviour/BotBase/Handler/FateHandler.cs
+Behaviour/BotBase/Handler/IdleHandler.cs
+
+Data/Fates/FateData.json
+Data/Fates/FateData.cs
+Data/Meshes/MeshData.bin
+Data/Meshes/MeshData.cs
+
+Enumerations/..								-- Relevant enumerations here.
+
+Helpers/Logger.cs							-- Logging methods.
+
+Managers/OracleClassManager.cs				-- Class data and changing methods.
+Managers/OracleTargetManager.cs				-- Target selection methods.
+Managers/OracleFateManager.cs				-- Fate data and methods.
+Managers/OracleInventoryManagaer.cs			-- Inventory data and methods.
+Managers/OracleNavigationManager.cs			-- Navigation, movement and teleportation methods.
+
+Providers/OracleTargetProvider.cs
+
+Settings/Authentication.cs					-- Contains autherntication settings.
+Settings/OracleSettings.cs					-- Contains all settings for Oracle.
+
+UI/...										-- Contains settings UI.
+
+OracleBot.cs
+OracleLoader.cs
+

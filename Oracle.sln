@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oracle", "Oracle.csproj", "{7B0A56F8-369B-42F8-B689-FC54194A0AD3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OracleTest", "OracleTest\OracleTest.csproj", "{9FB14B1D-44F9-48B3-8015-DCE96AA27132}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,23 +21,15 @@ Global
 		{7B0A56F8-369B-42F8-B689-FC54194A0AD3}.Release|x64.Build.0 = Release|x64
 		{7B0A56F8-369B-42F8-B689-FC54194A0AD3}.Release|x86.ActiveCfg = Release|x86
 		{7B0A56F8-369B-42F8-B689-FC54194A0AD3}.Release|x86.Build.0 = Release|x86
-		{9FB14B1D-44F9-48B3-8015-DCE96AA27132}.Debug|x64.ActiveCfg = Debug|x64
-		{9FB14B1D-44F9-48B3-8015-DCE96AA27132}.Debug|x64.Build.0 = Debug|x64
-		{9FB14B1D-44F9-48B3-8015-DCE96AA27132}.Debug|x86.ActiveCfg = Debug|x86
-		{9FB14B1D-44F9-48B3-8015-DCE96AA27132}.Debug|x86.Build.0 = Debug|x86
-		{9FB14B1D-44F9-48B3-8015-DCE96AA27132}.Release|x64.ActiveCfg = Release|x64
-		{9FB14B1D-44F9-48B3-8015-DCE96AA27132}.Release|x64.Build.0 = Release|x64
-		{9FB14B1D-44F9-48B3-8015-DCE96AA27132}.Release|x86.ActiveCfg = Release|x86
-		{9FB14B1D-44F9-48B3-8015-DCE96AA27132}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_BuildVersioningStyle = None.None.Increment.None
-		BuildVersion_UpdateAssemblyVersion = True
-		BuildVersion_UpdateFileVersion = True
-		BuildVersion_StartDate = 2000/1/1
 		BuildVersion_AssemblyInfoFilename = Properties\AssemblyInfo.cs
+		BuildVersion_StartDate = 2000/1/1
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_BuildVersioningStyle = None.None.Increment.None
 	EndGlobalSection
 EndGlobal

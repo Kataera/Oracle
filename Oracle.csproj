@@ -113,9 +113,6 @@
     <Content Include="Data\Fates\FateData.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="version.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Resources\Images\OracleMode\SpecificFateBanner.jpg" />
     <Resource Include="Resources\Images\OracleMode\ModeBanner.jpg" />
     <Resource Include="Resources\Images\Logo.png" />
@@ -136,39 +133,14 @@
     <None Include="Resources\Images\SourceImages\Sea of Clouds.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Fates\FateData.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Meshes\zone_398.gz">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Meshes\zone_399.gz">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Meshes\zone_400.gz">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Meshes\zone_401.gz">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Meshes\zone_402.gz">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Meshes\zone_397.gz">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="packages.config" />
     <None Include="Resources\Images\SourceImages\Crystal.psd" />
     <None Include="Resources\Images\SourceImages\Logo.psd" />
-    <None Include="UI\App.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviour\Hooks\SetCombatPoi.cs" />
-    <Compile Include="Behaviour\Tasks\ChocoboHandler.cs" />
-    <Compile Include="Behaviour\Hooks\Rest.cs" />
+    <Compile Include="Behaviour\HookOverrides\SetCombatPoi.cs" />
+    <Compile Include="Behaviour\BotBase\Handler\ChocoboHandler.cs" />
+    <Compile Include="Behaviour\HookOverrides\Rest.cs" />
     <Compile Include="Behaviour\Modes\AnimaGrind.cs" />
     <Compile Include="Behaviour\Modes\AtmaGrind.cs" />
     <Compile Include="Behaviour\Modes\FateGrind.cs" />
@@ -176,55 +148,31 @@
     <Compile Include="Behaviour\Modes\MultiLevelling.cs" />
     <Compile Include="Behaviour\Modes\SpecificFates.cs" />
     <Compile Include="Behaviour\Modes\AnimusGrind.cs" />
-    <Compile Include="Behaviour\Modes\YokaiWatchGrind.cs" />
-    <Compile Include="Behaviour\Hooks\WaitSelect\GrindMobs.cs" />
-    <Compile Include="Behaviour\Hooks\WaitSelect\MoveToWaitLocation.cs" />
-    <Compile Include="Behaviour\Hooks\WaitSelect\WaitInPlace.cs" />
     <Compile Include="Behaviour\OracleBehaviour.cs" />
-    <Compile Include="Behaviour\Hooks\SelectPoiType.cs" />
-    <Compile Include="Behaviour\Tasks\CombatHandler.cs" />
-    <Compile Include="Behaviour\Tasks\FateHandler.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\BindHomePoint.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\LoadFlightMesh.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\RestockGysahlGreens.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\SummonMinion.cs" />
-    <Compile Include="Enumerations\ClassLevelMode.cs" />
+    <Compile Include="Behaviour\HookOverrides\SelectPoiType.cs" />
+    <Compile Include="Behaviour\BotBase\Handler\CombatHandler.cs" />
+    <Compile Include="Behaviour\BotBase\Handler\FateHandler.cs" />
+    <Compile Include="Data\Fates\FateData.cs" />
     <Compile Include="Managers\OracleClassManager.cs" />
-    <Compile Include="Managers\OracleCombatManager.cs" />
+    <Compile Include="Managers\OracleTargetManager.cs" />
     <Compile Include="Managers\OracleInventoryManager.cs" />
-    <Compile Include="Settings\ClassSettings.cs" />
-    <Compile Include="Structs\YokaiMinion.cs" />
-    <Compile Include="Data\YokaiWatchGrindData.cs" />
-    <Compile Include="Enumerations\YokaiMinionId.cs" />
-    <Compile Include="Helpers\XmlParser.cs" />
-    <Compile Include="Managers\OracleMovementManager.cs" />
-    <Compile Include="Managers\OracleTeleportManager.cs" />
-    <Compile Include="Behaviour\Tasks\WaitHandler.cs" />
-    <Compile Include="Behaviour\Tasks\WaitTask\WaitInPlace.cs" />
-    <Compile Include="Behaviour\Tasks\WaitTask\GrindMobs.cs" />
-    <Compile Include="Behaviour\Tasks\WaitTask\ReturnToAetheryte.cs" />
-    <Compile Include="Behaviour\Tasks\WaitTask\MoveToWaitLocation.cs" />
-    <Compile Include="Behaviour\Tasks\FateTask\BossFate.cs" />
-    <Compile Include="Behaviour\Tasks\FateTask\CollectFate.cs" />
-    <Compile Include="Behaviour\Tasks\FateTask\DefenceFate.cs" />
-    <Compile Include="Behaviour\Tasks\FateTask\EscortFate.cs" />
-    <Compile Include="Behaviour\Tasks\FateTask\KillFate.cs" />
-    <Compile Include="Behaviour\Hooks\SetWaitPoi.cs" />
-    <Compile Include="Behaviour\Hooks\WaitSelect\ReturnToAetheryte.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\LoadOracleDatabase.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\ZoneChange.cs" />
-    <Compile Include="Data\Meshes\FlightMesh.cs" />
-    <Compile Include="Enumerations\OracleOperationMode.cs" />
+    <Compile Include="Settings\Authentication.cs" />
+    <Compile Include="Managers\OracleNavigationManager.cs" />
+    <Compile Include="Behaviour\BotBase\Handler\WaitHandler.cs" />
+    <Compile Include="Behaviour\BotBase\Idle\WaitInPlace.cs" />
+    <Compile Include="Behaviour\BotBase\Idle\GrindMobs.cs" />
+    <Compile Include="Behaviour\BotBase\Idle\ReturnToAetheryte.cs" />
+    <Compile Include="Behaviour\BotBase\Idle\MoveToWaitLocation.cs" />
+    <Compile Include="Behaviour\BotBase\Fate\BossFate.cs" />
+    <Compile Include="Behaviour\BotBase\Fate\CollectFate.cs" />
+    <Compile Include="Behaviour\BotBase\Fate\DefenceFate.cs" />
+    <Compile Include="Behaviour\BotBase\Fate\EscortFate.cs" />
+    <Compile Include="Behaviour\BotBase\Fate\KillFate.cs" />
+    <Compile Include="Behaviour\HookOverrides\SetWaitPoi.cs" />
+    <Compile Include="Data\Meshes\MeshData.cs" />
     <Compile Include="Managers\OracleFateManager.cs" />
-    <Compile Include="Behaviour\Tasks\FateTask\MegaBossFate.cs" />
-    <Compile Include="Behaviour\Hooks\SetFatePoi.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\SkipDialogue.cs" />
-    <Compile Include="Behaviour\Tasks\Utilities\TurnInItem.cs" />
-    <Compile Include="Data\Fates\FateDatabase.cs" />
-    <Compile Include="Structs\Fate.cs" />
-    <Compile Include="Enumerations\FateWaitMode.cs" />
-    <Compile Include="Enumerations\FateSupportLevel.cs" />
-    <Compile Include="Enumerations\FateType.cs" />
+    <Compile Include="Behaviour\BotBase\Fate\MegaBossFate.cs" />
+    <Compile Include="Behaviour\HookOverrides\SetFatePoi.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <None Include="OracleLoader.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -233,26 +181,9 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs" />
-    <Compile Include="Providers\OracleCombatTargetingProvider.cs" />
-    <Compile Include="Settings\BlacklistSettings.cs" />
-    <Compile Include="Settings\WaitSettings.cs" />
-    <Compile Include="Settings\FateSettings.cs" />
-    <Compile Include="Settings\MainSettings.cs" />
+    <Compile Include="Providers\OracleTargetProvider.cs" />
+    <Compile Include="Settings\OracleSettings.cs" />
     <Compile Include="OracleBot.cs" />
-    <Compile Include="Settings\MovementSettings.cs" />
-    <Compile Include="Settings\ModeSettings.cs" />
-    <Compile Include="UI\App.xaml.cs" />
-    <Compile Include="UI\Pages\Domain\SpecificFateGridViewModel.cs" />
-    <Compile Include="UI\Pages\Domain\FateViewModel.cs" />
-    <Compile Include="UI\Pages\Flight.xaml.cs">
-      <DependentUpon>Flight.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Pages\OracleMode.xaml.cs">
-      <DependentUpon>OracleMode.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Settings.xaml.cs">
-      <DependentUpon>Settings.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -261,28 +192,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UI\App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\Pages\Flight.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Pages\OracleMode.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Theme\Colours.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\Settings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Folder Include="Enumerations\TaskResults\" />
+    <Folder Include="UI\" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true">
