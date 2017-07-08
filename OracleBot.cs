@@ -10,6 +10,7 @@ using ff14bot.Pathing.Service_Navigation;
 
 using Oracle.Behaviour.HookOverrides;
 using Oracle.Helpers;
+using Oracle.Managers;
 
 using TreeSharp;
 
@@ -68,6 +69,11 @@ namespace Oracle
             };
         }
 
+        private void ClearBotVariables()
+        {
+            OracleFateManager.ClearFate();
+        }
+
         public Composite GetRoot()
         {
             return Root;
@@ -122,6 +128,8 @@ namespace Oracle
 
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;
+
+            ClearBotVariables();
 
             Logger.SendLog("Stopping Oracle.");
         }
