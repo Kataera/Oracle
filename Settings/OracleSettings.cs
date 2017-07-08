@@ -21,8 +21,8 @@ namespace Oracle.Settings
         private List<uint> blacklistedMobs;
         private IdleBehaviour idleBehaviour;
         private Dictionary<uint, Vector3> idleLocations;
-        private ushort mobGrindMaxLevel;
-        private ushort mobGrindMinLevel;
+        private int mobGrindMaxLevel;
+        private int mobGrindMinLevel;
         private bool showDebug;
 
         private OracleSettings() : base(Path.Combine(SettingsPath, @"Oracle\OracleSettings.json"))
@@ -119,7 +119,7 @@ namespace Oracle.Settings
 
         [DefaultValue(4)]
         [Setting]
-        public ushort MobGrindMaxLevel
+        public int MobGrindMaxLevel
         {
             get => mobGrindMaxLevel;
 
@@ -132,7 +132,7 @@ namespace Oracle.Settings
 
         [DefaultValue(6)]
         [Setting]
-        public ushort MobGrindMinLevel
+        public int MobGrindMinLevel
         {
             get => mobGrindMinLevel;
 
