@@ -1,4 +1,4 @@
-﻿namespace Oracle.Providers
+namespace Oracle.Providers
 {
     public class OracleTargetProvider
     {

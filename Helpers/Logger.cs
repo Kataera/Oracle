@@ -23,7 +23,7 @@ namespace Oracle.Helpers
                 return;
             }
 
-            if (!OracleSettings.Instance.ShowDebugInConsole)
+            if (!OracleSettings.Instance.ShowDebug)
             {
                 Logging.WriteToFileSync(LogLevel.Diagnostic, log);
             }
@@ -44,7 +44,7 @@ namespace Oracle.Helpers
                 return;
             }
 
-            if (!OracleSettings.Instance.ShowDebugInConsole)
+            if (!OracleSettings.Instance.ShowDebug)
             {
                 Logging.WriteToFileSync(LogLevel.Diagnostic, log);
             }
