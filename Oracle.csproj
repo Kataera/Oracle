@@ -97,7 +97,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RebornBuddy">
-      <HintPath>..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB\RebornBuddy.exe</HintPath>
+      <HintPath>..\..\My Games\FINAL FANTASY XIV - A Realm Reborn\RB64\RebornBuddy.exe</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -294,10 +294,10 @@
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>if "$(PlatformName)" == "x86" ( 
-xcopy /E /Y /R "C:\Users\Caitlin\Documents\Projects\Oracle\bin\x86" "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB\BotBases\Oracle"
+xcopy /E /Y /R "C:\Users\Caitlin\Documents\Projects\Oracle\bin\x86" "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB64\BotBases\Oracle"
 )
 if "$(PlatformName)" == "x64" ( 
-copy /Y "$(TargetDir)$(TargetName).dll" "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB\BotBases\Oracle\$(ProjectName)64.dll"
+copy /Y "$(TargetDir)$(TargetName).dll" "C:\Users\Caitlin\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn\RB64\BotBases\Oracle\$(ProjectName)64.dll"
 )</PostBuildEvent>
   </PropertyGroup>
 </Project>

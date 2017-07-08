@@ -4210,7 +4210,7 @@
     <Name>The Root of Evil</Name>
     <Level>59</Level>
     <Type>&Kill;</Type>
-    <OracleSupport>&FullSupport;</OracleSupport>
+    <OracleSupport>&Problematic;</OracleSupport>
   </Fate>
   <Fate>
     <ID>887</ID>

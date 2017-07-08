@@ -8,6 +8,7 @@ using ff14bot.Enums;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Objects;
+using ff14bot.Pathing;
 using ff14bot.RemoteWindows;
 
 using Oracle.Helpers;
@@ -35,9 +36,16 @@ namespace Oracle.Behaviour.Tasks.Utilities
 
             if (!WorldManager.CanFly)
             {
+                var movementParams = new MoveToParameters
+                {
+                    Destination = "Aetheryte crystal",
+                    Location = aetheryteObject.Location,
+                    DistanceTolerance = 8f
+                };
+
                 while (aetheryteObject.Distance(Core.Player) > 8f)
                 {
-                    Navigator.MoveTo(aetheryteObject.Location, "Aetheryte crystal.");
+                    Navigator.MoveTo(movementParams);
                     await Coroutine.Yield();
                 }
 

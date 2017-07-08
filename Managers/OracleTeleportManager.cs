@@ -11,8 +11,7 @@ using ff14bot;
 using ff14bot.Behavior;
 using ff14bot.Managers;
 using ff14bot.Navigation;
-
-using NeoGaia.ConnectionHandler;
+using ff14bot.ServiceClient;
 
 using Oracle.Helpers;
 using Oracle.Settings;
@@ -91,7 +90,8 @@ namespace Oracle.Managers
                         Position = fate.Location
                     }
                 };
-                var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+                var navTask = Navigator.NavigationProvider.CanFullyNavigateTo(navRequest, Core.Player.Location, WorldManager.ZoneId);
+                var navResults = await Coroutine.ExternalTask(navTask);
                 var navResult = navResults.FirstOrDefault();
 
                 if (navResult != null)
@@ -120,8 +120,9 @@ namespace Oracle.Managers
                 {
                     Id = target.Id,
                     Position = target.Location
-                });
-                var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, fate.Location, WorldManager.ZoneId);
+                }).ToList();
+                var navTask = Navigator.NavigationProvider.CanFullyNavigateTo(navRequest, fate.Location, WorldManager.ZoneId);
+                var navResults = await Coroutine.ExternalTask(navTask);
 
                 foreach (var navResult in navResults.Where(result => result.CanNavigate != 0))
                 {
@@ -139,6 +140,19 @@ namespace Oracle.Managers
             }
 
             return viableAetherytes;
+        }
+
+        internal static bool InCity()
+        {
+            var cityList = new List<WorldManager.TeleportLocation>
+            {
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 8),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 2),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 9),
+                WorldManager.AvailableLocations.FirstOrDefault(loc => loc.AetheryteId == 75)
+            };
+
+            return cityList.Any(city => city.ZoneId == WorldManager.ZoneId);
         }
 
         internal static async Task<bool> TeleportToAetheryte(uint aetheryteId)

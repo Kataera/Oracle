@@ -69,7 +69,7 @@ namespace Oracle.Providers
                 return true;
             }
 
-            if (Chocobo.Object != null && battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Chocobo.Object.ObjectId)
+            if (ChocoboManager.Object != null && battleCharacter.HasTarget && battleCharacter.CurrentTargetId == ChocoboManager.Object.ObjectId)
             {
                 return true;
             }
@@ -119,7 +119,7 @@ namespace Oracle.Providers
                 weight += 750;
             }
 
-            if (Chocobo.Object != null && battleCharacter.HasTarget && battleCharacter.CurrentTargetId == Chocobo.Object.ObjectId)
+            if (ChocoboManager.Object != null && battleCharacter.HasTarget && battleCharacter.CurrentTargetId == ChocoboManager.Object.ObjectId)
             {
                 weight += 400;
             }

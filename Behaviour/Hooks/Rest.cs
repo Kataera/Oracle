@@ -32,7 +32,10 @@ namespace Oracle.Behaviour.Hooks
             OracleFateManager.ForceUpdateGameCache();
             if (!Poi.Current.BattleCharacter.IsValid || Poi.Current.BattleCharacter.IsDead)
             {
-                OracleFateManager.ClearPoi("Mob is no longer valid.", false);
+                OracleFateManager.ClearPoi("Mob is "
+                                           + "no longer"
+                                           + " valid.",
+                                           false);
                 return false;
             }
 

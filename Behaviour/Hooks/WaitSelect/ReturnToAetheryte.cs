@@ -2,14 +2,15 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using Buddy.Coroutines;
+
 using Clio.Utilities;
 
 using ff14bot;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
-
-using NeoGaia.ConnectionHandler;
+using ff14bot.ServiceClient;
 
 using Oracle.Helpers;
 using Oracle.Managers;
@@ -30,8 +31,9 @@ namespace Oracle.Behaviour.Hooks.WaitSelect
             {
                 Id = target.Item1,
                 Position = target.Item2
-            });
-            var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+            }).ToList();
+            var navTask = Navigator.NavigationProvider.CanFullyNavigateTo(navRequest, Core.Player.Location, WorldManager.ZoneId);
+            var navResults = await Coroutine.ExternalTask(navTask);
 
             foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
             {

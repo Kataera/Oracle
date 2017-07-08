@@ -15,7 +15,9 @@ namespace Oracle.UI.Pages.Domain
             set
             {
                 if (fateId == value)
+                {
                     return;
+                }
 
                 fateId = value;
                 OnPropertyChanged();
@@ -28,7 +30,9 @@ namespace Oracle.UI.Pages.Domain
             set
             {
                 if (isSelected == value)
+                {
                     return;
+                }
 
                 isSelected = value;
                 OnPropertyChanged();
@@ -41,7 +45,9 @@ namespace Oracle.UI.Pages.Domain
             set
             {
                 if (name == value)
+                {
                     return;
+                }
 
                 name = value;
                 OnPropertyChanged();

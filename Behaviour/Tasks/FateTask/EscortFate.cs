@@ -130,8 +130,8 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 }
 
                 var distanceToFateBoundary = Core.Player.Location.Distance2D(cachedLocation) - currentFate.Radius;
-                if (Actionmanager.CanMount == 0 && !Core.Player.IsMounted && OracleMovementManager.IsMountNeeded(distanceToFateBoundary)
-                    && Actionmanager.AvailableMounts.Any())
+                if (ActionManager.CanMount == 0 && !Core.Player.IsMounted && OracleMovementManager.IsMountNeeded(distanceToFateBoundary)
+                    && ActionManager.AvailableMounts.Any())
                 {
                     Navigator.Stop();
                     if (Core.Player.InCombat)

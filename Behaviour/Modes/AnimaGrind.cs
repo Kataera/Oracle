@@ -124,8 +124,16 @@ namespace Oracle.Behaviour.Modes
                     return true;
                 }
 
-                Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousIceCrystal))
-                               + " more Luminous Ice Crystals.");
+                var amountNeeded = ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousIceCrystal);
+                if (amountNeeded == 1)
+                {
+                    Logger.SendLog("We need " + amountNeeded + " more Luminous Ice Crystal.");
+                }
+                else
+                {
+                    Logger.SendLog("We need " + amountNeeded + " more Luminous Ice Crystals.");
+                }
+
                 await ZoneChange.HandleZoneChange(ZoneCoerthasWesternHighlands, true);
             }
             else if (!ConditionParser.HasAtLeast(LuminousWindCrystal, ModeSettings.Instance.AnimaCrystalsToFarm))
@@ -142,8 +150,16 @@ namespace Oracle.Behaviour.Modes
                     return true;
                 }
 
-                Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousWindCrystal))
-                               + " more Luminous Wind Crystals.");
+                var amountNeeded = ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousWindCrystal);
+                if (amountNeeded == 1)
+                {
+                    Logger.SendLog("We need " + amountNeeded + " more Luminous Wind Crystal.");
+                }
+                else
+                {
+                    Logger.SendLog("We need " + amountNeeded + " more Luminous Wind Crystals.");
+                }
+
                 await ZoneChange.HandleZoneChange(ZoneSeaOfClouds, true);
             }
             else if (!ConditionParser.HasAtLeast(LuminousEarthCrystal, ModeSettings.Instance.AnimaCrystalsToFarm))
@@ -160,8 +176,16 @@ namespace Oracle.Behaviour.Modes
                     return true;
                 }
 
-                Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousEarthCrystal))
-                               + " more Luminous Earth Crystals.");
+                var amountNeeded = ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousEarthCrystal);
+                if (amountNeeded == 1)
+                {
+                    Logger.SendLog("We need " + amountNeeded + " more Luminous Earth Crystal.");
+                }
+                else
+                {
+                    Logger.SendLog("We need " + amountNeeded + " more Luminous Earth Crystals.");
+                }
+
                 await ZoneChange.HandleZoneChange(ZoneDravanianForelands, true);
             }
             else if (!ConditionParser.HasAtLeast(LuminousLightningCrystal, ModeSettings.Instance.AnimaCrystalsToFarm))
@@ -178,8 +202,16 @@ namespace Oracle.Behaviour.Modes
                     return true;
                 }
 
-                Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousLightningCrystal))
-                               + " more Luminous Lightning Crystals.");
+                var amountNeeded = ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousLightningCrystal);
+                if (amountNeeded == 1)
+                {
+                    Logger.SendLog("We need " + amountNeeded + " more Luminous Lightning Crystal.");
+                }
+                else
+                {
+                    Logger.SendLog("We need " + amountNeeded + " more Luminous Lightning Crystals.");
+                }
+
                 await ZoneChange.HandleZoneChange(ZoneChurningMists, true);
             }
             else if (!ConditionParser.HasAtLeast(LuminousWaterCrystal, ModeSettings.Instance.AnimaCrystalsToFarm))
@@ -196,8 +228,16 @@ namespace Oracle.Behaviour.Modes
                     return true;
                 }
 
-                Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousWaterCrystal))
-                               + " more Luminous Water Crystals.");
+                var amountNeeded = ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousWaterCrystal);
+                if (amountNeeded == 1)
+                {
+                    Logger.SendLog("We need " + amountNeeded + " more Luminous Water Crystal.");
+                }
+                else
+                {
+                    Logger.SendLog("We need " + amountNeeded + " more Luminous Water Crystals.");
+                }
+
                 await ZoneChange.HandleZoneChange(ZoneDravanianHinterlands, true);
             }
             else if (!ConditionParser.HasAtLeast(LuminousFireCrystal, ModeSettings.Instance.AnimaCrystalsToFarm))
@@ -214,15 +254,28 @@ namespace Oracle.Behaviour.Modes
                     return true;
                 }
 
-                Logger.SendLog("We need " + (ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousFireCrystal))
-                               + " more Luminous Fire Crystals.");
+                var amountNeeded = ModeSettings.Instance.AnimaCrystalsToFarm - OracleInventoryManager.GetItemAmount(LuminousFireCrystal);
+                if (amountNeeded == 1)
+                {
+                    Logger.SendLog("We need " + amountNeeded + " more Luminous Fire Crystal.");
+                }
+                else
+                {
+                    Logger.SendLog("We need " + amountNeeded + " more Luminous Fire Crystals.");
+                }
+
                 await ZoneChange.HandleZoneChange(ZoneAzysLla, true);
             }
             else if (!Core.Player.InCombat)
             {
                 Logger.SendLog("We have collected " + ModeSettings.Instance.AnimaCrystalsToFarm + " of every crystal! Stopping Oracle.");
+
                 await OracleTeleportManager.TeleportToClosestCity();
-                OracleBot.StopOracle("We are done!");
+
+                if (OracleTeleportManager.InCity())
+                {
+                    OracleBot.StopOracle("We are done!");
+                }
             }
 
             return true;

@@ -8,7 +8,6 @@ using ff14bot;
 using ff14bot.Enums;
 using ff14bot.Managers;
 using ff14bot.Navigation;
-using ff14bot.Objects;
 
 using Oracle.Enumerations;
 using Oracle.Helpers;
@@ -68,7 +67,7 @@ namespace Oracle.Behaviour.Tasks
                 return false;
             }
 
-            if (Chocobo.BlockSummon)
+            if (ChocoboManager.BlockSummon)
             {
                 return false;
             }
@@ -78,7 +77,7 @@ namespace Oracle.Behaviour.Tasks
                 return false;
             }
 
-            if (!Chocobo.Summoned && Chocobo.CanSummon)
+            if (!ChocoboManager.Summoned && ChocoboManager.CanSummon)
             {
                 // Check for whether or not the dead/dismissed/expired Chocobo is still in the party. If it is, game won't let us summon.
                 if (PartyManager.IsInParty && PartyManager.AllMembers != null
@@ -97,7 +96,7 @@ namespace Oracle.Behaviour.Tasks
             }
 
             // Safety checks for when the Chocobo may be summoned, but can't be accessed by RebornBuddy.
-            if (!Chocobo.Summoned || Chocobo.Object == null || !Chocobo.Object.IsValid)
+            if (!ChocoboManager.Summoned || ChocoboManager.Object == null || !ChocoboManager.Object.IsValid)
             {
                 OracleFateManager.ForceUpdateGameCache();
                 return false;
@@ -107,7 +106,7 @@ namespace Oracle.Behaviour.Tasks
             {
                 await SetChocoboStance(CompanionStance.Healer);
             }
-            else if (Chocobo.Object.CurrentHealthPercent < MainSettings.Instance.ChocoboStanceChocoboHealthThreshold)
+            else if (ChocoboManager.Object.CurrentHealthPercent < MainSettings.Instance.ChocoboStanceChocoboHealthThreshold)
             {
                 await SetChocoboStance(CompanionStance.Healer);
             }
@@ -115,7 +114,7 @@ namespace Oracle.Behaviour.Tasks
             {
                 await SetChocoboStance(CompanionStance.Attacker);
             }
-            else if (Chocobo.Stance != CompanionStance.Attacker && Chocobo.Stance != CompanionStance.Healer)
+            else if (ChocoboManager.Stance != CompanionStance.Attacker && ChocoboManager.Stance != CompanionStance.Healer)
             {
                 await SetChocoboStance(CompanionStance.Attacker);
             }
@@ -125,7 +124,7 @@ namespace Oracle.Behaviour.Tasks
 
         private static async Task<SetChocoboStanceResult> SetChocoboStance(CompanionStance stance)
         {
-            if (Chocobo.Stance == stance)
+            if (ChocoboManager.Stance == stance)
             {
                 return SetChocoboStanceResult.Success;
             }
@@ -134,35 +133,35 @@ namespace Oracle.Behaviour.Tasks
             {
                 case CompanionStance.Follow:
                     Logger.SendLog("Switching " + ChocoboName + " to follow stance.");
-                    Chocobo.Follow();
+                    ChocoboManager.Follow();
                     break;
                 case CompanionStance.Free:
                     Logger.SendLog("Switching " + ChocoboName + " to free stance.");
-                    Chocobo.FreeStance();
+                    ChocoboManager.FreeStance();
                     break;
                 case CompanionStance.Defender:
                     Logger.SendLog("Switching " + ChocoboName + " to defender stance.");
-                    Chocobo.DefenderStance();
+                    ChocoboManager.DefenderStance();
                     break;
                 case CompanionStance.Attacker:
                     Logger.SendLog("Switching " + ChocoboName + " to attacker stance.");
-                    Chocobo.AttackerStance();
+                    ChocoboManager.AttackerStance();
                     break;
                 case CompanionStance.Healer:
                     Logger.SendLog("Switching " + ChocoboName + " to healer stance.");
-                    Chocobo.HealerStance();
+                    ChocoboManager.HealerStance();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(stance), stance, null);
             }
 
-            await Coroutine.Wait(TimeSpan.FromMilliseconds(200), () => Chocobo.Stance == stance);
-            return Chocobo.Stance == stance ? SetChocoboStanceResult.Success : SetChocoboStanceResult.Failure;
+            await Coroutine.Wait(TimeSpan.FromMilliseconds(200), () => ChocoboManager.Stance == stance);
+            return ChocoboManager.Stance == stance ? SetChocoboStanceResult.Success : SetChocoboStanceResult.Failure;
         }
 
         private static async Task<SummonChocoboResult> SummonChocobo()
         {
-            if (Chocobo.BlockSummon)
+            if (ChocoboManager.BlockSummon)
             {
                 return SummonChocoboResult.Disabled;
             }
@@ -170,15 +169,15 @@ namespace Oracle.Behaviour.Tasks
             Logger.SendLog("Attempting to summon our Chocobo.");
             Navigator.Clear();
             await Coroutine.Sleep(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay));
-            Chocobo.Summon();
+            ChocoboManager.Summon();
 
             if (!Core.Player.InCombat)
             {
-                await Coroutine.Wait(TimeSpan.FromSeconds(3), () => Chocobo.Summoned);
+                await Coroutine.Wait(TimeSpan.FromSeconds(3), () => ChocoboManager.Summoned);
             }
 
             await Coroutine.Sleep(TimeSpan.FromMilliseconds(MainSettings.Instance.ActionDelay));
-            return Chocobo.Summoned ? SummonChocoboResult.Success : SummonChocoboResult.Failure;
+            return ChocoboManager.Summoned ? SummonChocoboResult.Success : SummonChocoboResult.Failure;
         }
     }
 

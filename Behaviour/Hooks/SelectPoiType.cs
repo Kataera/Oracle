@@ -21,7 +21,9 @@ namespace Oracle.Behaviour.Hooks
                 new HookExecutor("SetDeathPoi"),
                 new HookExecutor("SetCombatPoi", "A hook to help defend the character when their Chocobo is under attack.", setCombatPoi),
                 new Decorator(check => !OracleFateManager.PausePoiSetting,
-                              new HookExecutor("SetFatePoi", "A hook that selects a viable FATE based in user settings and assigns it as the Poi.", setFatePoi)),
+                              new HookExecutor("SetFatePoi",
+                                               "A hook that selects a viable FATE based in user settings and assigns it as the Poi.",
+                                               setFatePoi)),
                 new Decorator(check => !OracleFateManager.PausePoiSetting,
                               new HookExecutor("SetWaitPoi", "A hook that sets the correct wait Poi based on user settings.", setWaitPoi))
             };
