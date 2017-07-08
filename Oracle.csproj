@@ -156,6 +156,7 @@
     <Compile Include="Behaviour\BotBase\Handler\CombatHandler.cs" />
     <Compile Include="Behaviour\BotBase\Handler\FateHandler.cs" />
     <Compile Include="Data\Fates\FateData.cs" />
+    <Compile Include="Enumerations\IdleBehaviour.cs" />
     <Compile Include="Managers\OracleClassManager.cs" />
     <Compile Include="Managers\OracleTargetManager.cs" />
     <Compile Include="Managers\OracleInventoryManager.cs" />
@@ -163,9 +164,9 @@
     <Compile Include="Managers\OracleNavigationManager.cs" />
     <Compile Include="Behaviour\BotBase\Handler\WaitHandler.cs" />
     <Compile Include="Behaviour\BotBase\Idle\WaitInPlace.cs" />
-    <Compile Include="Behaviour\BotBase\Idle\GrindMobs.cs" />
-    <Compile Include="Behaviour\BotBase\Idle\ReturnToAetheryte.cs" />
-    <Compile Include="Behaviour\BotBase\Idle\MoveToWaitLocation.cs" />
+    <Compile Include="Behaviour\BotBase\Idle\Grind.cs" />
+    <Compile Include="Behaviour\BotBase\Idle\Aetheryte.cs" />
+    <Compile Include="Behaviour\BotBase\Idle\Location.cs" />
     <Compile Include="Behaviour\BotBase\Fate\BossFate.cs" />
     <Compile Include="Behaviour\BotBase\Fate\CollectFate.cs" />
     <Compile Include="Behaviour\BotBase\Fate\DefenceFate.cs" />

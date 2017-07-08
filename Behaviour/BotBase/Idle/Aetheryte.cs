@@ -1,6 +1,6 @@
 ﻿namespace Oracle.Behaviour.BotBase.Idle
 {
-    internal static class ReturnToAetheryte
+    internal static class Aetheryte
     {
     }
 }

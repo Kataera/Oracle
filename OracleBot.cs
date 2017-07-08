@@ -69,8 +69,9 @@ namespace Oracle
             };
         }
 
-        private void ClearBotVariables()
+        private static void ClearBotVariables()
         {
+            Poi.Clear("Oracle stopping.");
             OracleFateManager.ClearFate();
         }
 

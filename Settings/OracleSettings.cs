@@ -4,7 +4,11 @@ using System.Configuration;
 using System.IO;
 using System.Reflection;
 
+using Clio.Utilities;
+
 using ff14bot.Helpers;
+
+using Oracle.Enumerations;
 
 namespace Oracle.Settings
 {
@@ -12,9 +16,13 @@ namespace Oracle.Settings
     {
         private static readonly object SyncRoot = new object();
         private static volatile OracleSettings instance;
+
         private List<uint> blacklistedFates;
         private List<uint> blacklistedMobs;
-
+        private IdleBehaviour idleBehaviour;
+        private Dictionary<uint, Vector3> idleLocations;
+        private ushort mobGrindMaxLevel;
+        private ushort mobGrindMinLevel;
         private bool showDebug;
 
         private OracleSettings() : base(Path.Combine(SettingsPath, @"Oracle\OracleSettings.json"))
@@ -29,6 +37,12 @@ namespace Oracle.Settings
             {
                 BlacklistedMobs = new List<uint>();
                 PopulateMobBlacklist();
+                Save();
+            }
+
+            if (IdleLocations == null)
+            {
+                IdleLocations = new Dictionary<uint, Vector3>();
                 Save();
             }
         }
@@ -57,6 +71,31 @@ namespace Oracle.Settings
             }
         }
 
+        [DefaultValue(0)]
+        [Setting]
+        public IdleBehaviour IdleBehaviour
+        {
+            get => idleBehaviour;
+
+            set
+            {
+                idleBehaviour = value;
+                Save();
+            }
+        }
+
+        [Setting]
+        public Dictionary<uint, Vector3> IdleLocations
+        {
+            get => idleLocations;
+
+            set
+            {
+                idleLocations = value;
+                Save();
+            }
+        }
+
         public static OracleSettings Instance
         {
             get
@@ -75,6 +114,32 @@ namespace Oracle.Settings
                 }
 
                 return instance;
+            }
+        }
+
+        [DefaultValue(4)]
+        [Setting]
+        public ushort MobGrindMaxLevel
+        {
+            get => mobGrindMaxLevel;
+
+            set
+            {
+                mobGrindMaxLevel = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(6)]
+        [Setting]
+        public ushort MobGrindMinLevel
+        {
+            get => mobGrindMinLevel;
+
+            set
+            {
+                mobGrindMinLevel = value;
+                Save();
             }
         }
 
