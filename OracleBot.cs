@@ -8,6 +8,7 @@ using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Pathing.Service_Navigation;
 
+using Oracle.Behaviour.HookOverrides;
 using Oracle.Helpers;
 
 using TreeSharp;
@@ -92,7 +93,7 @@ namespace Oracle
             TreeHooks.Instance.ClearHook("SetCombatPoi");
 
             // Replace with our own hooks.
-            //TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
+            TreeHooks.Instance.ReplaceHook("SelectPoiType", SelectPoiType.Behaviour);
         }
 
         public void Start()

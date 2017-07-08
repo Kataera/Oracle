@@ -39,7 +39,8 @@ namespace Oracle.Settings
             }
         }
 
-        [DefaultValue(false)]
+        // TODO: Change default value to false.
+        [DefaultValue(true)]
         [Setting]
         public bool ShowDebug
         {
