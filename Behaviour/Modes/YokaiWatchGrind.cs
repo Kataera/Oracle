@@ -4,7 +4,6 @@ using ff14bot;
 using ff14bot.Enums;
 using ff14bot.Managers;
 using ff14bot.NeoProfiles;
-using ff14bot.Objects;
 
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Data;
@@ -73,14 +72,14 @@ namespace Oracle.Behaviour.Modes
         internal static async Task<bool> HandleYokaiWatchGrind()
         {
             // Summoning a chocobo dismisses your minion, meaning we can't use it here.
-            if (!Chocobo.BlockSummon)
+            if (!ChocoboManager.BlockSummon)
             {
-                Chocobo.BlockSummon = true;
+                ChocoboManager.BlockSummon = true;
             }
 
-            if (Chocobo.Summoned)
+            if (ChocoboManager.Summoned)
             {
-                await Chocobo.DismissChocobo();
+                await ChocoboManager.DismissChocobo();
             }
 
             if (!ConditionParser.HasAtLeast(YokaiWatchGrindData.YokaiMedal, ModeSettings.Instance.YokaiMedalsToFarm))

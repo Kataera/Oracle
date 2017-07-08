@@ -15,9 +15,9 @@ using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+using ff14bot.Pathing;
 using ff14bot.Settings;
-
-using NeoGaia.ConnectionHandler;
+using ff14bot.ServiceClient;
 
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Data.Meshes;
@@ -48,7 +48,7 @@ namespace Oracle.Managers
 
         internal static async Task<bool> FlyToCurrentFate()
         {
-            if (Actionmanager.CanMount != 0 && !Core.Player.IsMounted)
+            if (ActionManager.CanMount != 0 && !Core.Player.IsMounted)
             {
                 return false;
             }
@@ -92,7 +92,7 @@ namespace Oracle.Managers
                         return true;
                     }
 
-                    if (!Core.Player.IsMounted && Actionmanager.AvailableMounts.Any())
+                    if (!Core.Player.IsMounted && ActionManager.AvailableMounts.Any())
                     {
                         Navigator.PlayerMover.MoveStop();
                         if (Core.Player.InCombat)
@@ -137,7 +137,7 @@ namespace Oracle.Managers
                 return true;
             }
 
-            if (Actionmanager.CanMount != 0 && !Core.Player.IsMounted)
+            if (ActionManager.CanMount != 0 && !Core.Player.IsMounted)
             {
                 return false;
             }
@@ -181,7 +181,7 @@ namespace Oracle.Managers
 
                 while (Core.Player.Location.Distance(processedStep) > 2f)
                 {
-                    if (!Core.Player.IsMounted && Actionmanager.AvailableMounts.Any())
+                    if (!Core.Player.IsMounted && ActionManager.AvailableMounts.Any())
                     {
                         Navigator.PlayerMover.MoveStop();
                         if (Core.Player.InCombat)
@@ -352,9 +352,10 @@ namespace Oracle.Managers
             {
                 Id = target.Key,
                 Position = target.Value
-            });
+            }).ToList();
+            var navTask = Navigator.NavigationProvider.CanFullyNavigateTo(navRequest, location, WorldManager.ZoneId);
+            var navResults = await Coroutine.ExternalTask(navTask);
 
-            var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, location, WorldManager.ZoneId);
             foreach (var result in navResults)
             {
                 if (result.CanNavigate == 0)
@@ -557,7 +558,7 @@ namespace Oracle.Managers
 
         internal static async Task<bool> MountUp()
         {
-            if (!Actionmanager.AvailableMounts.Any())
+            if (!ActionManager.AvailableMounts.Any())
             {
                 Logger.SendDebugLog("Character does not have any mount available, skipping mount task.");
                 return true;
@@ -575,9 +576,9 @@ namespace Oracle.Managers
                     return false;
                 }
 
-                if (Actionmanager.CanMount == 0)
+                if (ActionManager.CanMount == 0)
                 {
-                    Actionmanager.Mount();
+                    ActionManager.Mount();
                 }
 
                 await Coroutine.Yield();
@@ -591,10 +592,16 @@ namespace Oracle.Managers
             Logger.SendLog("We're in Idyllshire, moving to The Dravanian Hinterlands.");
             await MountUp();
 
-            var location = new Vector3(142.6006f, 207f, 114.136f);
-            while (Core.Player.Distance(location) > 5f)
+            var movementParams = new MoveToParameters
             {
-                Navigator.MoveTo(location, "Leaving Idyllshire");
+                Destination = "Idyllshire Exit",
+                Location = new Vector3(142.6006f, 207f, 114.136f),
+                DistanceTolerance = 5f
+            };
+
+            while (Core.Player.Distance(movementParams.Location) > 5f)
+            {
+                Navigator.MoveTo(movementParams);
                 await Coroutine.Yield();
             }
 
@@ -653,7 +660,7 @@ namespace Oracle.Managers
             currentFate = OracleFateManager.GetCurrentFateData();
 
             var distanceToFateBoundary = Core.Player.Location.Distance2D(currentFate.Location) - currentFate.Radius;
-            if (Actionmanager.CanMount == 0 && !ignoreCombat && IsMountNeeded(distanceToFateBoundary) && !Core.Player.IsMounted && currentFate.IsValid)
+            if (ActionManager.CanMount == 0 && !ignoreCombat && IsMountNeeded(distanceToFateBoundary) && !Core.Player.IsMounted && currentFate.IsValid)
             {
                 await MountUp();
             }
@@ -699,7 +706,7 @@ namespace Oracle.Managers
                 }
 
                 var distanceToFateBoundary = Core.Player.Location.Distance2D(cachedFateLocation) - currentFateRadius;
-                if (Actionmanager.CanMount == 0 && !Core.Player.IsMounted && IsMountNeeded(distanceToFateBoundary) && Actionmanager.AvailableMounts.Any())
+                if (ActionManager.CanMount == 0 && !Core.Player.IsMounted && IsMountNeeded(distanceToFateBoundary) && ActionManager.AvailableMounts.Any())
                 {
                     Navigator.Stop();
                     if (!ignoreCombat && Core.Player.InCombat)
@@ -734,10 +741,16 @@ namespace Oracle.Managers
 
         internal static async Task<bool> NavigateToLocation(Vector3 location, float precision, bool stopOnFateSpawn)
         {
+            var movementParams = new MoveToParameters
+            {
+                Location = location,
+                DistanceTolerance = precision
+            };
+
             while (Core.Player.Location.Distance(location) > precision)
             {
-                if (Actionmanager.CanMount == 0 && !Core.Player.IsMounted && IsMountNeeded(Core.Player.Location.Distance(location))
-                    && Actionmanager.AvailableMounts.Any())
+                if (ActionManager.CanMount == 0 && !Core.Player.IsMounted && IsMountNeeded(Core.Player.Location.Distance(location))
+                    && ActionManager.AvailableMounts.Any())
                 {
                     Navigator.Stop();
                     if (Core.Player.InCombat)
@@ -762,7 +775,7 @@ namespace Oracle.Managers
                     return true;
                 }
 
-                Navigator.MoveTo(location);
+                Navigator.MoveTo(movementParams);
                 await Coroutine.Yield();
             }
 

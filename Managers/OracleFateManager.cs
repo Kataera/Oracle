@@ -13,8 +13,7 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.RemoteWindows;
-
-using NeoGaia.ConnectionHandler;
+using ff14bot.ServiceClient;
 
 using Oracle.Data.Fates;
 using Oracle.Enumerations;
@@ -57,8 +56,9 @@ namespace Oracle.Managers
                 {
                     Id = fate.Id,
                     Position = fate.Location
-                });
-                var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+                }).ToList();
+                var navTask = Navigator.NavigationProvider.CanFullyNavigateTo(navRequest, Core.Player.Location, WorldManager.ZoneId);
+                var navResults = await Coroutine.ExternalTask(navTask);
 
                 foreach (var navResult in navResults.Where(result => result.CanNavigate == 0))
                 {
@@ -287,8 +287,9 @@ namespace Oracle.Managers
                 {
                     Id = fate.Id,
                     Position = fate.Location
-                });
-                var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+                }).ToList();
+                var navTask = Navigator.NavigationProvider.CanFullyNavigateTo(navRequest, Core.Player.Location, WorldManager.ZoneId);
+                var navResults = await Coroutine.ExternalTask(navTask);
 
                 foreach (var result in navResults.Where(result => result.CanNavigate != 0))
                 {
@@ -317,8 +318,9 @@ namespace Oracle.Managers
                 {
                     Id = fate.Id,
                     Position = fate.Location
-                });
-                var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, location, WorldManager.ZoneId);
+                }).ToList();
+                var navTask = Navigator.NavigationProvider.CanFullyNavigateTo(navRequest, location, WorldManager.ZoneId);
+                var navResults = await Coroutine.ExternalTask(navTask);
 
                 foreach (var result in navResults.Where(result => result.CanNavigate != 0))
                 {

@@ -10,6 +10,7 @@ using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.NeoProfiles;
 using ff14bot.Objects;
+using ff14bot.Pathing;
 
 using Oracle.Behaviour.Tasks.Utilities;
 using Oracle.Helpers;
@@ -96,6 +97,13 @@ namespace Oracle.Behaviour.Tasks.FateTask
             }
 
             Logger.SendLog("Moving to interact with " + turnInNpc.Name + ".");
+            var movementParams = new MoveToParameters
+            {
+                Destination = turnInNpc.Name,
+                Location = turnInNpc.Location,
+                DistanceTolerance = 3f
+            };
+
             while (Core.Player.Distance2D(turnInNpc.Location) > 3f)
             {
                 if (!turnInNpc.IsValid)
@@ -105,7 +113,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
                 }
 
                 if (!Core.Player.IsMounted && OracleMovementManager.IsMountNeeded(Core.Player.Location.Distance(turnInNpc.Location))
-                    && Actionmanager.AvailableMounts.Any())
+                    && ActionManager.AvailableMounts.Any())
                 {
                     Navigator.Stop();
                     if (!Core.Player.InCombat)
@@ -114,7 +122,7 @@ namespace Oracle.Behaviour.Tasks.FateTask
                     }
                 }
 
-                Navigator.MoveTo(turnInNpc.Location, "Moving to NPC.");
+                Navigator.MoveTo(movementParams);
                 await Coroutine.Yield();
             }
 

@@ -8,7 +8,7 @@ using ff14bot.Behavior;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
-using ff14bot.Objects;
+using ff14bot.Pathing.Service_Navigation;
 
 using Oracle.Behaviour;
 using Oracle.Behaviour.Hooks;
@@ -191,7 +191,7 @@ namespace Oracle
 
         public void Start()
         {
-            Navigator.NavigationProvider = new GaiaNavigator();
+            Navigator.NavigationProvider = new ServiceNavigationProvider();
             Navigator.PlayerMover = new SlideMover();
             CombatTargeting.Instance.Provider = new OracleCombatTargetingProvider();
 
@@ -217,12 +217,12 @@ namespace Oracle
                 LoadFlightMesh.MeshFileStream.Dispose();
             }
 
-            (Navigator.NavigationProvider as GaiaNavigator)?.Dispose();
+            (Navigator.NavigationProvider as ServiceNavigationProvider)?.Dispose();
             Navigator.NavigationProvider = null;
 
             CombatTargeting.Instance.Provider = new DefaultCombatTargetingProvider();
             Blacklist.Flush();
-            Chocobo.BlockSummon = false;
+            ChocoboManager.BlockSummon = false;
 
             GameSettingsManager.FaceTargetOnAction = playerFaceTargetOnAction;
             GameSettingsManager.FlightMode = playerFlightMode;

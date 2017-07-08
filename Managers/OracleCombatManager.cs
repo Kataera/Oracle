@@ -11,8 +11,7 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Objects;
-
-using NeoGaia.ConnectionHandler;
+using ff14bot.ServiceClient;
 
 using Oracle.Helpers;
 using Oracle.Settings;
@@ -51,8 +50,9 @@ namespace Oracle.Managers
             {
                 Id = target.ObjectId,
                 Position = target.Location
-            });
-            var navResults = await Navigator.NavigationProvider.CanFullyNavigateToAsync(navRequest, Core.Player.Location, WorldManager.ZoneId);
+            }).ToList();
+            var navTask = Navigator.NavigationProvider.CanFullyNavigateTo(navRequest, Core.Player.Location, WorldManager.ZoneId);
+            var navResults = await Coroutine.ExternalTask(navTask);
 
             var viableTargets = new Dictionary<BattleCharacter, float>();
             foreach (var result in navResults)
@@ -160,7 +160,7 @@ namespace Oracle.Managers
                 return true;
             }
 
-            if (Chocobo.Object != null && Chocobo.Object.IsValid && attacker.CurrentTargetId == Chocobo.Object.ObjectId)
+            if (ChocoboManager.Object != null && ChocoboManager.Object.IsValid && attacker.CurrentTargetId == ChocoboManager.Object.ObjectId)
             {
                 return true;
             }
