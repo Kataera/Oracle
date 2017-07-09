@@ -69,8 +69,12 @@ namespace Oracle.Behaviour.HookOverrides
         private static async Task<bool> SetGrindPoi()
         {
             var target = await OracleTargetManager.SelectGrindTarget();
-            Logger.SendLog($"Selecting {target.Name} as the next target to kill.");
+            if (target == null)
+            {
+                return false;
+            }
 
+            Logger.SendLog($"Selecting {target.Name} as the next target to kill.");
             Poi.Current = new Poi(target, PoiType.Kill);
             return true;
         }
