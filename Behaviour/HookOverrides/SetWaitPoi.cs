@@ -54,16 +54,15 @@ namespace Oracle.Behaviour.HookOverrides
         private static async Task<bool> SetAetherytePoi()
         {
             var aetheryte = await OracleNavigationManager.GetClosestAetheryte(WorldManager.ZoneId);
-            if (aetheryte != null)
+            if (aetheryte == null)
             {
-                Logger.SendDebugLog($"Closest Aetheryte is at {aetheryte.Item2}");
-
-                Poi.Current = new Poi(aetheryte.Item2, PoiType.Wait);
-                return true;
+                Logger.SendLog($"Couldn't find a reachable aetheryte for this zone, staying where we are.");
+                return await SetWaitInPlacePoi();
             }
 
-            Logger.SendLog($"Couldn't find a reachable aetheryte for this zone, staying where we are.");
-            return await SetWaitInPlacePoi();
+            Logger.SendDebugLog($"Closest Aetheryte is at {aetheryte.Item2}");
+            Poi.Current = new Poi(aetheryte.Item2, PoiType.Wait);
+            return true;
         }
 
         private static async Task<bool> SetGrindPoi()
@@ -83,17 +82,15 @@ namespace Oracle.Behaviour.HookOverrides
         {
             Vector3 location;
             OracleSettings.Instance.IdleLocations.TryGetValue(WorldManager.ZoneId, out location);
-
-            if (location != Vector3.Zero)
+            if (location == Vector3.Zero)
             {
-                Logger.SendDebugLog($"Found location for zone ID {WorldManager.ZoneId} - {location}.");
-
-                Poi.Current = new Poi(location, PoiType.Wait);
-                return true;
+                Logger.SendDebugLog($"Could not find location for zone ID {WorldManager.ZoneId}, moving to closest aetheryte instead.");
+                return await SetAetherytePoi();
             }
 
-            Logger.SendDebugLog($"Could not find location for zone ID {WorldManager.ZoneId}, moving to closest aetheryte instead.");
-            return await SetAetherytePoi();
+            Logger.SendDebugLog($"Found location for zone ID {WorldManager.ZoneId} - {location}.");
+            Poi.Current = new Poi(location, PoiType.Wait);
+            return true;
         }
 
         private static async Task<bool> SetWaitInPlacePoi()
