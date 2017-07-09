@@ -76,7 +76,15 @@ namespace Oracle.Managers
                 return true;
             }
 
+            Logger.SendLog("Loading Oracle's FATE data, this may take a few seconds.");
             OracleFateData = await DeserialiseOracleFateData();
+
+            if (OracleFateData == null)
+            {
+                return false;
+            }
+
+            Logger.SendLog($"Successfully loaded data on {OracleFateData.OracleFateDictionary.Count} fates.");
             return true;
         }
 
