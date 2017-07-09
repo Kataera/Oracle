@@ -67,7 +67,7 @@ namespace Oracle.Behaviour.HookOverrides
 
         private static async Task<bool> SetGrindPoi()
         {
-            var target = await OracleTargetManager.SelectGrindTarget();
+            var target = await OracleTargetManager.GetGrindTarget();
             if (target == null)
             {
                 return false;

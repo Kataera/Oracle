@@ -1,4 +1,4 @@
-﻿namespace Oracle.Behaviour.BotBase.Fate
+﻿namespace Oracle.Behaviour.BotBase.Fates
 {
     internal static class CollectFate
     {

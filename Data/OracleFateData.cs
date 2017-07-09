@@ -12,19 +12,19 @@ namespace Oracle.Data
     [Serializable]
     internal class OracleFateData
     {
-        public OracleFateData()
+        internal OracleFateData()
         {
             OracleFateDictionary = new Dictionary<uint, Fate>();
         }
 
-        public OracleFateData(Dictionary<uint, Fate> oracleFateDictionary)
+        internal OracleFateData(Dictionary<uint, Fate> oracleFateDictionary)
         {
             OracleFateDictionary = oracleFateDictionary;
         }
 
-        public Dictionary<uint, Fate> OracleFateDictionary { get; }
+        internal Dictionary<uint, Fate> OracleFateDictionary { get; }
 
-        public void AddFateToDatabase(Fate fate)
+        internal void AddFateToDatabase(Fate fate)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace Oracle.Data
             }
         }
 
-        public Fate GetFateData(FateData fateData)
+        internal Fate GetFateData(FateData fateData)
         {
             Fate fate;
             try
@@ -68,7 +68,7 @@ namespace Oracle.Data
             return fate;
         }
 
-        public Fate GetFateData(uint id)
+        internal Fate GetFateData(uint id)
         {
             Fate fate;
             try

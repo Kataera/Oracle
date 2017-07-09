@@ -29,7 +29,7 @@ namespace Oracle.Behaviour.HookOverrides
 
             if (Poi.Current.Type == PoiType.None || Poi.Current.Type == PoiType.Wait)
             {
-                var fate = FateManager.GetFateById(OracleFateManager.CurrentFate);
+                var fate = FateManager.GetFateById(OracleFateManager.CurrentFateId);
                 Poi.Current = new Poi(fate, PoiType.Fate);
             }
 

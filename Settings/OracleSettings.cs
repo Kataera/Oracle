@@ -6,6 +6,7 @@ using System.Reflection;
 
 using Clio.Utilities;
 
+using ff14bot.Enums;
 using ff14bot.Helpers;
 
 using Oracle.Enumerations;
@@ -16,14 +17,31 @@ namespace Oracle.Settings
     {
         private static readonly object SyncRoot = new object();
         private static volatile OracleSettings instance;
-        private int actionDelay;
 
+        private int actionDelay;
         private List<uint> blacklistedFates;
         private List<uint> blacklistedMobs;
+        private Dictionary<uint, ClassJobType> classGearsets;
         private IdleBehaviour idleBehaviour;
         private Dictionary<uint, Vector3> idleLocations;
+        private bool levelArcanist;
+        private bool levelArcher;
+        private bool levelAstrologian;
+        private bool levelConjurer;
+        private bool levelDarkKnight;
+        private bool levelGladiator;
+        private bool levelLancer;
+        private bool levelMachinist;
+        private bool levelMarauder;
+        private bool levelPugilist;
+        private bool levelRedMage;
+        private bool levelRogue;
+        private bool levelSamurai;
+        private bool levelThaumaturge;
+        private int maxLevel;
         private int mobGrindMaxLevel;
         private int mobGrindMinLevel;
+        private OracleFateMode oracleFateMode;
         private bool showDebug;
 
         private OracleSettings() : base(Path.Combine(SettingsPath, @"Oracle\OracleSettings.json"))
@@ -38,6 +56,12 @@ namespace Oracle.Settings
             {
                 BlacklistedMobs = new List<uint>();
                 PopulateMobBlacklist();
+                Save();
+            }
+
+            if (ClassGearsets == null)
+            {
+                ClassGearsets = new Dictionary<uint, ClassJobType>();
                 Save();
             }
 
@@ -81,6 +105,18 @@ namespace Oracle.Settings
             set
             {
                 blacklistedMobs = value;
+                Save();
+            }
+        }
+
+        [Setting]
+        public Dictionary<uint, ClassJobType> ClassGearsets
+        {
+            get => classGearsets;
+
+            set
+            {
+                classGearsets = value;
                 Save();
             }
         }
@@ -131,6 +167,186 @@ namespace Oracle.Settings
             }
         }
 
+        [DefaultValue(false)]
+        [Setting]
+        public bool LevelArcanist
+        {
+            get => levelArcanist;
+            set
+            {
+                levelArcanist = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool LevelArcher
+        {
+            get => levelArcher;
+            set
+            {
+                levelArcher = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool LevelAstrologian
+        {
+            get => levelAstrologian;
+            set
+            {
+                levelAstrologian = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool LevelConjurer
+        {
+            get => levelConjurer;
+            set
+            {
+                levelConjurer = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool LevelDarkKnight
+        {
+            get => levelDarkKnight;
+            set
+            {
+                levelDarkKnight = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool LevelGladiator
+        {
+            get => levelGladiator;
+            set
+            {
+                levelGladiator = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool LevelLancer
+        {
+            get => levelLancer;
+            set
+            {
+                levelLancer = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool LevelMachinist
+        {
+            get => levelMachinist;
+            set
+            {
+                levelMachinist = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool LevelMarauder
+        {
+            get => levelMarauder;
+            set
+            {
+                levelMarauder = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool LevelPugilist
+        {
+            get => levelPugilist;
+            set
+            {
+                levelPugilist = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool LevelRedMage
+        {
+            get => levelRedMage;
+            set
+            {
+                levelRedMage = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool LevelRogue
+        {
+            get => levelRogue;
+            set
+            {
+                levelRogue = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool LevelSamurai
+        {
+            get => levelSamurai;
+            set
+            {
+                levelSamurai = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(false)]
+        [Setting]
+        public bool LevelThaumaturge
+        {
+            get => levelThaumaturge;
+            set
+            {
+                levelThaumaturge = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(60)]
+        [Setting]
+        public int MaxLevel
+        {
+            get => maxLevel;
+            set
+            {
+                maxLevel = value;
+                Save();
+            }
+        }
+
         [DefaultValue(4)]
         [Setting]
         internal int MobGrindMaxLevel
@@ -153,6 +369,19 @@ namespace Oracle.Settings
             set
             {
                 mobGrindMinLevel = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(0)]
+        [Setting]
+        public OracleFateMode OracleFateMode
+        {
+            get => oracleFateMode;
+
+            set
+            {
+                oracleFateMode = value;
                 Save();
             }
         }

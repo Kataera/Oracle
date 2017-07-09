@@ -139,43 +139,45 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviour\HookOverrides\SetCombatPoi.cs" />
-    <Compile Include="Behaviour\BotBase\Handler\ChocoboHandler.cs" />
+    <Compile Include="Behaviour\BotBase\Handlers\ChocoboHandler.cs" />
     <Compile Include="Behaviour\HookOverrides\Rest.cs" />
-    <Compile Include="Behaviour\Modes\AnimaGrind.cs" />
-    <Compile Include="Behaviour\Modes\AtmaGrind.cs" />
-    <Compile Include="Behaviour\Modes\FateGrind.cs" />
-    <Compile Include="Behaviour\Modes\Levelling.cs" />
-    <Compile Include="Behaviour\Modes\MultiLevelling.cs" />
-    <Compile Include="Behaviour\Modes\SpecificFates.cs" />
-    <Compile Include="Behaviour\Modes\AnimusGrind.cs" />
+    <Compile Include="Behaviour\BotBase\Modes\AnimaGrind.cs" />
+    <Compile Include="Behaviour\BotBase\Modes\AtmaGrind.cs" />
+    <Compile Include="Behaviour\BotBase\Modes\FateGrind.cs" />
+    <Compile Include="Behaviour\BotBase\Modes\Levelling.cs" />
+    <Compile Include="Behaviour\BotBase\Modes\MultiLevelling.cs" />
+    <Compile Include="Behaviour\BotBase\Modes\SpecificFates.cs" />
+    <Compile Include="Behaviour\BotBase\Modes\AnimusGrind.cs" />
     <Compile Include="Behaviour\OracleBehaviour.cs" />
     <Compile Include="Behaviour\HookOverrides\SelectPoiType.cs" />
-    <Compile Include="Behaviour\BotBase\Handler\CombatHandler.cs" />
-    <Compile Include="Behaviour\BotBase\Handler\FateHandler.cs" />
+    <Compile Include="Behaviour\BotBase\Handlers\CombatHandler.cs" />
+    <Compile Include="Behaviour\BotBase\Handlers\FateHandler.cs" />
     <Compile Include="Data\OracleFateData.cs" />
     <Compile Include="Data\Structs\Fate.cs" />
     <Compile Include="Enumerations\FateType.cs" />
     <Compile Include="Enumerations\IdleBehaviour.cs" />
+    <Compile Include="Enumerations\OracleFateMode.cs" />
     <Compile Include="Enumerations\SupportLevel.cs" />
+    <Compile Include="Enumerations\TaskResults\ClassChangeResult.cs" />
     <Compile Include="Managers\OracleClassManager.cs" />
     <Compile Include="Managers\OracleTargetManager.cs" />
     <Compile Include="Managers\OracleInventoryManager.cs" />
     <Compile Include="Settings\Authentication.cs" />
     <Compile Include="Managers\OracleNavigationManager.cs" />
-    <Compile Include="Behaviour\BotBase\Handler\WaitHandler.cs" />
-    <Compile Include="Behaviour\BotBase\Idle\WaitInPlace.cs" />
-    <Compile Include="Behaviour\BotBase\Idle\Grind.cs" />
-    <Compile Include="Behaviour\BotBase\Idle\Aetheryte.cs" />
-    <Compile Include="Behaviour\BotBase\Idle\Location.cs" />
-    <Compile Include="Behaviour\BotBase\Fate\BossFate.cs" />
-    <Compile Include="Behaviour\BotBase\Fate\CollectFate.cs" />
-    <Compile Include="Behaviour\BotBase\Fate\DefenceFate.cs" />
-    <Compile Include="Behaviour\BotBase\Fate\EscortFate.cs" />
-    <Compile Include="Behaviour\BotBase\Fate\KillFate.cs" />
+    <Compile Include="Behaviour\BotBase\Handlers\WaitHandler.cs" />
+    <Compile Include="Behaviour\BotBase\Idles\WaitInPlace.cs" />
+    <Compile Include="Behaviour\BotBase\Idles\Grind.cs" />
+    <Compile Include="Behaviour\BotBase\Idles\Aetheryte.cs" />
+    <Compile Include="Behaviour\BotBase\Idles\Location.cs" />
+    <Compile Include="Behaviour\BotBase\Fates\BossFate.cs" />
+    <Compile Include="Behaviour\BotBase\Fates\CollectFate.cs" />
+    <Compile Include="Behaviour\BotBase\Fates\DefenceFate.cs" />
+    <Compile Include="Behaviour\BotBase\Fates\EscortFate.cs" />
+    <Compile Include="Behaviour\BotBase\Fates\KillFate.cs" />
     <Compile Include="Behaviour\HookOverrides\SetWaitPoi.cs" />
-    <Compile Include="Data\Meshes\MeshData.cs" />
+    <Compile Include="Data\OracleMeshData.cs" />
     <Compile Include="Managers\OracleFateManager.cs" />
-    <Compile Include="Behaviour\BotBase\Fate\MegaBossFate.cs" />
+    <Compile Include="Behaviour\BotBase\Fates\MegaBossFate.cs" />
     <Compile Include="Behaviour\HookOverrides\SetFatePoi.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <None Include="OracleLoader.cs">
@@ -196,8 +198,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Enumerations\TaskResults\" />
-    <Folder Include="UI\" />
+    <Folder Include="Data\Meshes\" />
+    <Folder Include="Settings\UI\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>

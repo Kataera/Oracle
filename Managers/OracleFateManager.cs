@@ -13,6 +13,8 @@ using ff14bot.Settings;
 using Newtonsoft.Json;
 
 using Oracle.Data;
+using Oracle.Data.Structs;
+using Oracle.Enumerations;
 using Oracle.Helpers;
 using Oracle.Settings;
 
@@ -20,18 +22,38 @@ namespace Oracle.Managers
 {
     internal static class OracleFateManager
     {
-        public static uint CurrentFate { get; private set; }
-
-        public static OracleFateData OracleFateData { get; private set; }
-
-        public static void ClearFate()
+        internal static Fate CurrentFate
         {
-            CurrentFate = 0;
+            get
+            {
+                if (OracleFateData == null || CurrentFateId == 0)
+                {
+                    return new Fate();
+                }
+
+                return OracleFateData.GetFateData(CurrentFateId);
+            }
+        }
+
+        internal static uint CurrentFateId { get; private set; }
+
+        internal static FateData GameFateData => CurrentFateId == 0 ? null : FateManager.GetFateById(CurrentFateId);
+
+        internal static OracleFateData OracleFateData { get; private set; }
+
+        internal static void ClearFate()
+        {
+            CurrentFateId = 0;
 
             if (Poi.Current.Type == PoiType.Fate)
             {
                 Poi.Clear("FATE cleared.");
             }
+        }
+
+        internal static bool CurrentFateHasPreferredTarget()
+        {
+            return CurrentFate.PreferredTargetId != 0;
         }
 
         private static async Task<OracleFateData> DeserialiseOracleFateData()
@@ -59,17 +81,55 @@ namespace Oracle.Managers
             return null;
         }
 
-        public static bool IsFateAvailable()
+        internal static bool IsCurrentFateValid()
+        {
+            if (CurrentFateId == 0)
+            {
+                return false;
+            }
+
+            var fateData = FateManager.GetFateById(CurrentFateId);
+            if (fateData == null)
+            {
+                return false;
+            }
+
+            if (!fateData.IsValid)
+            {
+                return false;
+            }
+
+            if (fateData.Progress >= 100f && CurrentFate.Type != FateType.Collect)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        internal static bool IsFateAvailable()
         {
             return FateManager.AllFates.Any(ViableFate);
         }
 
-        public static bool IsFateSet()
+        internal static bool IsFateSet()
         {
-            return CurrentFate != 0;
+            return CurrentFateId != 0;
         }
 
-        public static async Task<bool> LoadFateData()
+        public static bool IsLevelSyncNeeded(uint fateId)
+        {
+            var fateData = FateManager.GetFateById(fateId);
+
+            if (fateData == null || !fateData.IsValid)
+            {
+                return false;
+            }
+
+            return OracleClassManager.GetTrueLevel() > fateData.MaxLevel;
+        }
+
+        internal static async Task<bool> LoadFateData()
         {
             if (OracleFateData != null)
             {
@@ -88,7 +148,7 @@ namespace Oracle.Managers
             return true;
         }
 
-        public static void SelectFate()
+        internal static void SelectFate()
         {
             Logger.SendLog("Selecting a FATE.");
             var fates = FateManager.AllFates.Where(ViableFate).OrderBy(f => Core.Player.Location.Distance2D(f.Location));
@@ -108,7 +168,7 @@ namespace Oracle.Managers
             if (potentialFate != null)
             {
                 Logger.SendLog($"Selected \"{potentialFate.Name}\" as the next FATE.");
-                CurrentFate = potentialFate.Id;
+                CurrentFateId = potentialFate.Id;
             }
         }
 

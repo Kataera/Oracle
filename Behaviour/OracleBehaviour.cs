@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 
+using Oracle.Behaviour.BotBase.Handlers;
 using Oracle.Managers;
 
 using TreeSharp;
@@ -21,6 +22,10 @@ namespace Oracle.Behaviour
             {
                 await OracleFateManager.LoadFateData();
             }
+
+            await ChocoboHandler.Main();
+            await FateHandler.Main();
+            await WaitHandler.Main();
 
             // Always return false to not block the tree.
             return false;

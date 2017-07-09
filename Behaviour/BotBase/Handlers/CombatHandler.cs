@@ -1,4 +1,4 @@
-﻿namespace Oracle.Behaviour.BotBase.Handler
+﻿namespace Oracle.Behaviour.BotBase.Handlers
 {
     internal static class CombatHandler
     {

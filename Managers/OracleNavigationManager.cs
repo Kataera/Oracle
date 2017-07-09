@@ -8,8 +8,11 @@ using Buddy.Coroutines;
 using Clio.Utilities;
 
 using ff14bot;
+using ff14bot.Behavior;
+using ff14bot.Enums;
 using ff14bot.Managers;
 using ff14bot.Navigation;
+using ff14bot.Pathing;
 using ff14bot.ServiceClient;
 
 namespace Oracle.Managers
@@ -40,30 +43,10 @@ namespace Oracle.Managers
             }
         }
 
-        public static async Task<bool[]> AreLocationsNavigable(Vector3[] locations)
+        internal static async Task<List<CanFullyNavigateResult>> AreLocationsNavigable(List<CanFullyNavigateTarget> targets)
         {
-            var navRequest = new List<CanFullyNavigateTarget>();
-            uint index = 0;
-            foreach (var location in locations)
-            {
-                // Don't send too many requests.
-                if (index > 7)
-                {
-                    continue;
-                }
-
-                navRequest.Add(new CanFullyNavigateTarget
-                {
-                    Id = index,
-                    Position = location
-                });
-                index++;
-            }
-
-            var navTask = Navigator.NavigationProvider.CanFullyNavigateTo(navRequest, Core.Player.Location, WorldManager.ZoneId);
-            var navResults = await Coroutine.ExternalTask(navTask);
-
-            return navResults.Select(navResult => navResult.CanNavigate != 0).ToArray();
+            var navTask = Navigator.NavigationProvider.CanFullyNavigateTo(targets, Core.Player.Location, WorldManager.ZoneId);
+            return await Coroutine.ExternalTask(navTask);
         }
 
         internal static Tuple<uint, Vector3> GetAetheryteById(uint id)
@@ -96,44 +79,40 @@ namespace Oracle.Managers
         internal static async Task<Tuple<uint, Vector3>> GetClosestAetheryte(uint zoneId)
         {
             var aetherytes = GetAetherytesForZone(zoneId);
-            var locations = aetherytes.Select(aetheryte => aetheryte.Item2).ToArray();
-
-            var navigableResults = await AreLocationsNavigable(locations);
-
-            var navigableAetherytes = new List<Tuple<uint, Vector3>>();
-            for (var i = 0; i < navigableResults.Length; i++)
+            var navRequest = aetherytes.Select(aetheryte => new CanFullyNavigateTarget
             {
-                if (navigableResults[i])
-                {
-                    navigableAetherytes.Add(GetAetheryteByLocation(locations[i]));
-                }
-            }
+                Id = aetheryte.Item1,
+                Position = aetheryte.Item2
+            }).ToList();
+
+            var navResults = await AreLocationsNavigable(navRequest);
+            var navigableAetherytes = navResults.Where(result => result.CanNavigate != 0).Select(result => GetAetheryteById(result.Id)).ToList();
 
             navigableAetherytes.Sort((x, y) => Core.Player.Location.Distance2D(x.Item2).CompareTo(Core.Player.Location.Distance2D(y.Item2)));
             return navigableAetherytes.FirstOrDefault();
         }
 
-        public static async Task<bool> IsLocationNavigable(Vector3 location)
+        internal static async Task<MoveResult> NavigateTo(Vector3 location)
         {
-            var navRequest = new List<CanFullyNavigateTarget>
+            var movementParams = new MoveToParameters
             {
-                new CanFullyNavigateTarget
-                {
-                    Id = 0,
-                    Position = location
-                }
+                Location = location,
+                MoveImmediately = true
             };
 
-            var navTask = Navigator.NavigationProvider.CanFullyNavigateTo(navRequest, Core.Player.Location, WorldManager.ZoneId);
-            var navResults = await Coroutine.ExternalTask(navTask);
+            return await CommonTasks.MoveTo(movementParams);
+        }
 
-            var result = navResults.FirstOrDefault();
-            if (result == null)
+        internal static async Task<MoveResult> NavigateTo(Vector3 location, ushort mapId)
+        {
+            var movementParams = new MoveToParameters
             {
-                return false;
-            }
+                Location = location,
+                MapId = mapId,
+                MoveImmediately = true
+            };
 
-            return result.CanNavigate != 0;
+            return await CommonTasks.MoveTo(movementParams);
         }
     }
 }
