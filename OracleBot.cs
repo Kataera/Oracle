@@ -8,6 +8,7 @@ using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Pathing.Service_Navigation;
 
+using Oracle.Behaviour;
 using Oracle.Behaviour.HookOverrides;
 using Oracle.Helpers;
 using Oracle.Managers;
@@ -92,7 +93,7 @@ namespace Oracle
         private static void SetUpHooks()
         {
             // Add Oracle's behaviour to the start of the behaviour tree.
-            //TreeHooks.Instance.AddHook("TreeStart", OracleBehaviour.Behaviour);
+            TreeHooks.Instance.AddHook("TreeStart", OracleBehaviour.Behaviour);
 
             // Clear unused or to be replaced hooks.
             TreeHooks.Instance.ClearHook("HotspotPoi");
