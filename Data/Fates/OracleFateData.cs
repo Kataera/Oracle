@@ -1,6 +1,6 @@
 ﻿namespace Oracle.Data.Fates
 {
-    internal class FateData
+    internal class OracleFateData
     {
     }
 }

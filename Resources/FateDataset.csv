@@ -1,0 +1,955 @@
+Id,Name,Level,Type,ItemId,Support,ChainID,PreferredTargetId
+120,Clever Girls,5,Kill,0,Full,0,0
+121,One Enchanted Eve,4,Kill,0,Full,0,0
+122,Sprig Cleaning,30,Kill,0,Full,0,0
+123,Something in the Water,8,Boss,0,Full,0,0
+124,The Sting,11,Kill,0,Full,0,0
+125,Asipatra Attacks,34,Boss,0,Full,0,0
+126,Leader of the Pack,9,Boss,0,Full,0,0
+127,A Mother Scorned,8,Kill,0,Full,0,0
+128,Alux of the Draw,9,Boss,0,Full,0,0
+130,エバーシェイドの収穫祭,14,Collect,2000193,None,0,0
+131,Lethe on My Mind,10,Kill,0,Full,0,0
+136,Training Day,5,Defence,0,Full,0,0
+137,Bleeding Green,13,Boss,0,Full,0,0
+138,Tastes Like Chick,10,Kill,0,Full,0,0
+139,Sleep Tight,12,Kill,0,Full,0,0
+140,Spirithold Run,10,Kill,0,Full,0,0
+141,Love Is in the Air,11,Kill,0,Full,0,0
+142,There's Something about Lou,14,Boss,0,Full,0,0
+143,Now I See Bees I Won,11,Defence,0,Full,0,0
+144,Royal Rumble,16,Boss,0,Full,0,0
+145,戦場までは何マルム？,19,Kill,0,None,0,0
+148,What a Bee Wants,10,Kill,0,Full,0,0
+149,Stopping the Spread,17,Kill,0,Full,0,0
+150,Jack of All Trades,19,Boss,0,Full,0,535
+151,リトルブリッジの戦い,24,Kill,0,None,0,0
+152,Protecting the Patch,20,Kill,0,Full,0,0
+153,The Hunted,23,Boss,0,Full,0,0
+154,Eft for Dead,34,Kill,0,Full,0,0
+158,The Negotiators,28,Kill,0,Full,0,0
+159,Breaching the Hive,32,Kill,0,Partial,160,0
+160,Clearing the Hive,32,Boss,0,Partial,162,0
+161,Defending the Hive,32,Defence,0,Partial,0,0
+162,Keeping the Hive,32,Defence,0,Partial,0,0
+163,Kickin' It with the Kedtraps,22,Kill,0,Full,0,0
+164,The Coeurl King,29,Boss,0,Full,0,0
+166,Another Round,22,Defence,0,Full,0,0
+167,Stag Parting,21,Kill,0,Full,0,0
+168,Hide and Seek,29,Collect,2000251,Partial,0,0
+169,A Tale of Two-tails,32,Boss,0,Full,0,0
+170,To Whom the Toll Goes,22,Kill,0,Full,0,0
+171,"Eat In, Hide Out",24,Kill,0,None,0,0
+172,Robbin' Goblins,29,Collect,2000252,Full,0,0
+173,※β1不要：ウォータースプライトの大量発生,34,Kill,0,None,0,0
+174,No Birds Allowed,5,Kill,0,Full,0,0
+178,Dschubba Snacks,3,Boss,0,Full,0,0
+179,Now Fall,25,Kill,0,None,0,0
+180,That Which Binds Us,28,Collect,2000253,Full,0,0
+182,真理は死んだ,29,Kill,0,None,0,0
+183,Breaking Bud,3,Kill,0,Full,0,0
+184,The Magical Fruit,7,Defence,0,Full,0,0
+185,Micromanaging,8,Boss,0,Full,0,0
+187,The Big Issue,25,Defence,0,Full,0,0
+188,It Ziz What It Is,27,Kill,0,Full,0,0
+189,Hare Today,27,Kill,0,Full,0,0
+190,Where the Stone Rolls,33,Boss,0,None,0,0
+191,Attack on Highbridge: Prelude,26,Kill,0,Full,192,0
+192,Attack on Highbridge: Act I,26,Kill,0,Full,193,0
+193,Attack on Highbridge: Act II,26,Boss,0,Full,194,0
+194,Attack on Highbridge: Act III,26,Boss,0,Full,0,1242
+195,Attack on Highbridge: Denouement,26,Boss,0,Full,0,1242
+196,Steel Reign,50,MegaBoss,0,None,0,0
+197,Steel Reign,50,MegaBoss,0,None,0,0
+198,Steel Reign,50,MegaBoss,0,None,0,0
+199,Steel Reign,50,MegaBoss,0,None,0,0
+200,Steel Reign,50,MegaBoss,0,None,0,0
+201,Steel Reign,50,MegaBoss,0,None,0,0
+202,Steel Reign,50,MegaBoss,0,None,0,0
+203,Steel Reign,50,MegaBoss,0,None,0,0
+204,Steel Reign,50,MegaBoss,0,None,0,0
+205,Steel Reign,50,MegaBoss,0,None,0,0
+206,Steel Reign,50,MegaBoss,0,None,0,0
+207,Steel Reign,50,MegaBoss,0,None,0,0
+208,Lady Killer,7,Kill,0,Full,0,0
+209,My Baby Green,31,Boss,0,Full,0,0
+212,Ivy League,19,Kill,0,Full,0,0
+213,Thunderstruck,23,Kill,0,Full,0,538
+214,Carrion Baggage,11,Kill,0,Full,0,0
+215,Conspiracy Theory,24,Kill,0,Full,0,0
+216,Waiting for a Moon to Fall,28,Kill,0,Full,0,0
+217,What Have You Done for Mead Lately,21,Escort,0,Full,0,0
+218,Lazy for You,20,MegaBoss,0,Full,0,0
+220,Menuis at Work,8,Boss,0,Full,0,0
+221,Overnight Migration,5,Kill,0,Full,0,0
+222,Go Wespe,13,Kill,0,Full,0,0
+223,"A Mad, Mad, Mad Sergeant",14,Defence,0,Full,0,0
+225,Thwack-a-Mole,6,Kill,0,Full,0,0
+226,Yellow-bellied Greenbacks,5,Kill,0,Full,0,0
+227,On the Lamb,3,Kill,0,Full,0,0
+229,The Orange Boxes,9,Defence,0,Full,0,0
+231,Shearing Is Caring,10,Boss,0,Full,0,0
+233,The Boy Who Cried Jackal,14,Kill,0,Full,238,0
+235,Sister Crustacean,12,Kill,0,Full,0,0
+237,"Hello, Work",7,Kill,0,Full,0,0
+238,The Truth Is out There,14,Boss,0,Full,0,0
+239,Taking It to the Streams,4,Kill,0,Full,0,0
+240,Crying over Spilled Salt,7,Kill,0,Full,0,0
+245,One Prince,13,Boss,0,Full,0,0
+246,Fight the Flower,5,Kill,0,Full,0,0
+249,You Call That a Toad,4,Kill,0,Full,0,0
+250,Caving In,7,Kill,0,Full,0,0
+251,Man of the Flour,8,Kill,0,Full,0,0
+257,I Melt with You,3,Boss,0,Full,0,0
+260,Away in a Bilge Hold,11,Defence,0,Full,0,0
+261,In the Name of Love,10,Boss,0,Full,0,0
+262,Don't Drink the Water,12,Kill,0,Full,0,0
+264,Enter Beastman,9,Kill,0,Full,265,0
+265,One Pickman Enters,9,Kill,0,Full,0,0
+267,Finding Wine,32,Defence,0,Full,0,0
+268,The Thirst,32,Kill,0,Full,0,0
+271,Thrill of the Hunt,33,Defence,0,Full,0,0
+272,The Pelican Briefing,32,Collect,2001054,Full,0,0
+274,Them,33,Kill,0,Full,0,0
+278,Careless Whiskers,30,Kill,0,Full,0,0
+279,No Lip,33,Collect,2000561,Full,0,0
+280,Jewels of the Isle,32,Boss,0,Full,0,858
+282,Crab and Go,30,Kill,0,Full,0,0
+286,Follow the Light,33,Kill,0,Full,0,0
+287,Just a Matter of Rut,31,Kill,0,Full,0,894
+289,"Absolutely, Positively",16,Escort,0,Full,0,0
+290,Tender Buttons,12,Boss,0,Full,0,0
+291,The Killing Fields,10,Kill,0,Full,0,0
+295,(I Just) Died in Six Arms Tonight,13,Boss,0,Full,0,0
+297,Iron Contra Affair,18,Collect,2000258,Full,0,0
+298,Don't Call Him a Fishback,17,Kill,0,Full,0,0
+303,Letters from Tidegate,17,Defence,0,Full,0,0
+304,The Last Straw,12,Kill,0,Full,0,1362
+306,Barometz Soup,10,Boss,0,Full,0,0
+308,Goblin Chain,15,Kill,0,Full,0,0
+309,Tryp Fantastic,18,Boss,0,Full,0,0
+310,Between Aurochs,15,Kill,0,Full,0,0
+312,In the Sac,16,Kill,0,Full,0,0
+314,Simurgh Is the Word,23,Boss,0,Full,0,0
+317,Surprise,34,Defence,0,Full,0,0
+320,The Road More Traveled,30,Kill,0,Full,0,0
+321,Nine-ilm Snails,31,Kill,0,Full,0,0
+322,Truth in Faerie Tales,30,Boss,0,Full,0,0
+323,Giant Enemy Crab,21,Boss,0,Full,0,0
+329,Shell Shocked,31,Boss,0,Full,0,0
+331,Peeping Ja,33,Boss,0,Full,0,0
+332,"Hop, Skip, and a Jump",33,Kill,0,Full,0,0
+333,Under the Bridge,10,Boss,0,Full,0,0
+334,"Consigned, Sealed, and Undelivered",33,Escort,0,Full,0,0
+335,It's Not Lupus,32,MegaBoss,0,Full,0,0
+336,The Mandragoras,45,Boss,0,Partial,0,0
+342,Needles to Slay,5,Kill,0,Full,0,0
+343,Things that Make You Go Home,6,Kill,0,Full,0,0
+344,Deface the Facts,8,Defence,0,Full,0,0
+345,"Please Hammers, Don't Hurt Them",8,Kill,0,Full,0,0
+346,The Cores,8,Collect,2000254,Full,0,0
+347,Doomed,9,Boss,0,Full,0,0
+348,The Villain,9,Boss,0,Full,0,0
+349,Copied Peistes,10,Kill,0,Full,0,0
+350,Dog Eat Dog,10,Kill,0,Full,0,0
+352,Bigger Fish to Fry,13,Kill,0,Full,0,0
+353,Bubble Trouble,13,Boss,0,Full,0,0
+354,Tripped up by the Fruit of Another,22,Escort,0,Full,0,0
+355,Juggernaut Down,23,Kill,0,Full,0,0
+356,A Matter of Rust,5,Kill,0,Full,0,0
+357,There Might Be Giants,21,Boss,0,Full,0,0
+361,Pound for Pound,10,Kill,0,Full,0,0
+366,He's Got Legs,22,Boss,0,Full,0,0
+367,Staying Dead,20,Kill,0,Full,0,0
+370,Something to Prove,5,Boss,0,Full,0,0
+373,Like an Eft out of Water,5,Kill,0,Full,0,0
+374,Wrecked Rats,7,Defence,0,Full,0,0
+375,Survivor Rats,6,Kill,0,Full,0,0
+376,Cracked,9,Boss,0,Full,0,0
+377,Orobon Part Two: The Spawning,14,Kill,0,Full,0,0
+378,Let them Eat Cactus,5,Collect,2000256,Full,0,0
+379,For the Queen,9,Kill,0,Full,0,0
+381,A Few Arrows Short of a Quiver,11,Collect,2000255,Full,0,0
+383,Big Time,7,Kill,0,Full,0,0
+385,Cold-blooded,14,Boss,0,Full,0,0
+389,A Warm Welcome,7,Boss,0,Full,0,0
+393,Leaving the Nest,12,Boss,0,Full,0,0
+394,Men Who See Goats,19,Kill,0,Full,0,0
+395,License to Quill,15,Kill,0,Full,0,0
+397,Westward Bound,18,Kill,0,Full,0,0
+398,Bad Camp,18,Boss,0,Full,0,0
+400,Bazaar Blood Triangle,17,Kill,0,Full,0,0
+401,Grim Undertakings,17,Boss,0,Full,0,0
+402,Simple Minds,17,Kill,0,Full,0,0
+406,Manifest Destiny,27,Kill,0,Full,0,0
+407,Spare the Hair,29,Boss,0,Full,0,0
+409,Desert Rose,26,Kill,0,Full,0,0
+412,Almost Paradise,17,Kill,0,Full,0,0
+413,Deep in the Heart of Sagolii,17,Kill,0,Full,0,0
+419,Adventures in Throat Slitting,28,Boss,0,Full,0,883
+420,The Corpse Bribe,27,Kill,0,Full,0,0
+421,Downwind,25,Kill,0,Full,0,0
+422,Soul Man,29,Collect,2000257,Full,0,0
+423,Bigger than Life,46,Boss,0,Full,0,0
+424,Heroes of the 2nd,45,Kill,0,Full,0,0
+427,Diamond in the Rough,48,Boss,0,Full,0,0
+429,Children of the Sands,31,Kill,0,Full,0,0
+430,Return to Cinder,49,Boss,0,Full,0,1506
+431,Hunters and the Hunted,49,Kill,0,Full,0,0
+432,From Point A,32,Escort,0,Full,0,0
+434,Run Like a Flame,26,Escort,0,Full,0,0
+436,"Blood, Augur, Hex, Magicks",32,Boss,0,Full,0,884
+437,Fish out of Water,31,Kill,0,Full,0,0
+441,"Harder, Bigger, Faster, Stronger",28,Kill,0,Full,0,0
+446,With One Eye Open,49,Boss,0,Full,0,0
+447,Under the Nails,49,Kill,0,Full,0,0
+449,Boom Goes the Ceruleum,49,Kill,0,Full,0,0
+450,Knock on Steel,49,Boss,0,Full,0,0
+451,Poor Maid's Mess,20,Defence,0,Full,0,0
+452,Poor Maid's Mishap,20,Boss,0,Full,0,0
+453,Poor Maid's Misfortune,20,Boss,0,Full,0,0
+454,Poor Maid's Misadventure,20,Boss,0,Full,0,0
+455,Revenge of the Worms,32,Kill,0,Full,0,885
+456,Bump and Grind,28,Boss,0,Full,0,0
+457,Reverse Engineering,49,Collect,2001052,Full,0,0
+460,Twelve Ilms of Snow,35,Kill,0,Full,0,0
+463,Baa Baa Black Sheep,36,Boss,0,Full,0,0
+464,Gavial,35,Boss,0,Full,0,0
+465,Whiteout,36,Kill,0,Full,0,0
+466,A Log Up,35,Defence,0,Full,0,0
+467,Croc-y Road,36,Kill,0,Full,0,0
+469,The Grey,38,Defence,0,Full,0,0
+470,Simply Red,38,Kill,0,Full,0,0
+472,"Spring Forward, Fall Back",38,Collect,2001051,Full,0,0
+473,A Fire in the Distance,37,Kill,0,Full,0,0
+474,Coming to a Head,37,Kill,0,Full,0,0
+475,Bellyful,39,Boss,0,Full,0,0
+479,A Freeze Is Coming,39,Boss,0,Full,0,0
+480,Giant Seps,40,Boss,0,Full,0,0
+482,Riddle Me This,40,Kill,0,Full,0,0
+483,"Judge, Jury, and Executioner",39,Kill,0,Full,0,0
+484,In the Saint's Wake,45,Boss,0,Full,0,0
+486,Tower of Power,45,Kill,0,Full,0,0
+487,Turn Off Your Hearthlight,47,Kill,0,Full,0,0
+489,What's on Your Mind,47,Kill,0,Full,0,0
+490,The Bigger They Are,46,Boss,0,Full,0,0
+491,Wish Upon a Star,36,Escort,0,Full,0,0
+493,The Taste of Fear,40,Boss,0,Full,0,0
+494,Roc of Ages,39,Boss,0,Full,0,0
+496,Front and Center,40,Kill,0,Full,0,0
+497,If This Wall Could Talk,40,Kill,0,Full,0,0
+498,Does Anyone Hear It,48,Kill,0,Full,0,0
+499,The Four Winds,49,Boss,0,Full,0,0
+500,Inspector Hatchet,49,Boss,0,Full,0,0
+501,Svara's Flight,38,Escort,0,Full,502,0
+502,Svara's Fear,38,Kill,0,Full,503,0
+503,Svara's Fall,38,Boss,0,Full,0,0
+504,Svara's Fury,38,Boss,0,Full,0,0
+505,Behold Now Behemoth,50,MegaBoss,0,None,0,0
+506,He Taketh It with His Eyes,50,MegaBoss,0,None,0,0
+507,The Eyes Have It,39,MegaBoss,0,Full,0,0
+508,The Storm Caller,49,Boss,0,Full,0,0
+512,Toll Collector,45,Kill,0,Full,0,0
+514,Mud about You,44,Kill,0,Full,0,0
+516,Black and Nburu,45,Boss,0,Full,0,0
+517,Good to Be Bud,44,Kill,0,Full,0,0
+520,Standing Guard,46,Kill,0,Full,0,0
+521,Another Notch on the Torch,48,Boss,0,Full,0,0
+522,One Giant Leap,46,Defence,0,Full,0,0
+523,Among Giants,45,Kill,0,Full,0,0
+524,"Another Day, Another Demon",46,Kill,0,Full,0,0
+525,That's What Adventurers Are For,46,Boss,0,Full,0,0
+526,Home Is Where the Horn Is,46,Kill,0,Full,0,0
+527,Gone with the Shadow,46,Boss,0,Full,0,0
+529,The Prodigal Son,45,Escort,0,Full,0,0
+530,V for Vinedetta,44,Boss,0,Full,0,0
+532,Return of the King,32,Defence,0,None,0,0
+533,Return of the King,5,Defence,0,None,0,0
+534,Return of the King,13,Defence,0,None,0,0
+535,Return of the King,5,Defence,0,None,0,0
+536,Return of the King,15,Defence,0,None,0,0
+537,Return of the King,11,Defence,0,None,0,0
+538,Return of the King,6,Defence,0,None,0,0
+540,Quartz Coupling,42,Kill,0,Full,0,0
+541,A Man Rides Through,40,Kill,0,Full,0,0
+542,Bad Hair Day,42,Boss,0,Partial,0,0
+543,The Big Bagoly Theory,42,Boss,0,Full,0,0
+545,"Call Me, Mayhaps",46,Kill,0,Full,0,0
+546,Book of Pride,46,Boss,0,Full,0,0
+548,"Tempered, Tempered",46,Kill,0,Full,0,0
+549,Full of Rigor Mortis,46,Kill,0,Full,0,0
+550,An Inconvenient Truth,48,Kill,0,Full,0,0
+551,Future Shock,48,Kill,0,Full,0,0
+552,Taken,45,Kill,0,Full,0,0
+553,Gyve Talk,49,Kill,0,Full,0,0
+554,Spark off the Bench,49,Boss,0,Full,0,0
+555,Fallen Corpses Writhe in Style,46,Kill,0,Full,0,0
+556,Core Blimey,49,Collect,2000254,Full,0,0
+557,Quenching the Flame,49,Boss,0,Full,0,0
+558,He's a Firestarter,48,Boss,0,Full,0,0
+560,9 to 5,32,Kill,0,Full,0,0
+561,Closing Time,34,Boss,0,Full,0,0
+562,Sweeter than Honey,33,Collect,2001057,Full,0,0
+563,Ho Ho Ho,33,Boss,0,Full,0,0
+564,Say My Name,32,Boss,0,Full,0,0
+565,Long Way Home,33,Kill,0,Full,0,0
+566,Cliff Hanger,32,Kill,0,Full,0,0
+568,Gauging North Tidegate,44,Kill,0,Full,569,0
+569,Breaching North Tidegate,44,Boss,0,Full,0,0
+570,Gauging South Tidegate,45,Kill,0,Full,571,0
+571,Breaching South Tidegate,45,Boss,0,Full,0,0
+572,Sharknado,44,Boss,0,Full,0,0
+574,Tail of a Whale,46,Kill,0,Full,0,0
+575,Watch Your Tongue,48,Boss,0,Full,0,0
+576,Dead Man's Rest,40,Kill,0,Full,0,0
+577,The King's Justice,40,Boss,0,Full,0,0
+578,Making Waves,49,Boss,0,Full,0,0
+580,The Only Way Is Up,34,Kill,0,Full,0,0
+581,By a Whisker,34,Boss,0,Full,0,0
+583,When the Coeurl's Away,34,Kill,0,Full,0,0
+586,The Miner in the Mirror,44,Boss,0,Full,0,0
+587,Schism,41,Boss,0,Full,0,1702
+588,Fire in the Hole,41,Kill,0,Full,0,0
+589,Make It Rain,41,Boss,0,Full,0,0
+591,"Peryton, Perhaps",30,Boss,0,Full,0,0
+593,Restless in O'Ghomoro,34,Kill,0,Full,0,0
+594,"I'm a Rock, Not a Number",34,Boss,0,Full,0,0
+595,Overlooking the Obvious,34,Defence,0,Full,0,0
+597,Full Metal Alchemist,48,Boss,0,Full,0,1670
+598,Spandy Balidet,47,Boss,0,Full,0,0
+599,Stopping the Shakes,47,Boss,0,Full,0,0
+600,The Lindwurm Has Turned,31,Kill,0,Full,0,0
+601,What's Your Poison,30,Collect,2001053,Full,0,0
+602,Revenant Things,31,Kill,0,Full,0,0
+603,If I Only Had a Soul,33,Collect,2001056,Full,0,0
+604,In Spite of It All,43,Boss,0,Full,0,0
+607,Collecting Keepsakes,40,Collect,2001055,Full,0,0
+608,All Vine and No Popotoes,40,Kill,0,Full,0,0
+609,The Squirrel Trapper's Wife,43,Boss,0,Partial,0,0
+610,The Enemy of My Enemy,42,Kill,0,Full,611,0
+611,The Enmity of My Enemy,42,Defence,0,Full,0,0
+612,Below His Station,44,Boss,0,Full,0,1663
+615,Got Milkroot,46,Kill,0,Full,0,0
+616,Breaking Dawn,47,Boss,0,Full,0,0
+618,Handful of Dreams,49,Kill,0,Full,0,0
+619,Bush Blade,47,Boss,0,Full,0,0
+620,Everything's Better,49,Kill,0,Full,0,0
+622,The Gale that Rocks the Cradle,49,Boss,0,Full,0,0
+624,Rogue on the Water,33,Kill,0,Full,0,0
+626,To Train a Tortoise,30,Kill,0,Full,0,0
+627,Fate Is a Fecal Mistress,31,Kill,0,Partial,0,0
+628,What Gored Before,46,Boss,0,Full,0,0
+631,Don't Disturb This Grove,37,Kill,0,Full,0,0
+632,Rude Awakening,48,Boss,0,Full,0,0
+633,Air Supply,47,Kill,0,Full,0,0
+634,Smells Like Tree Spirit,37,Boss,0,Full,0,0
+637,The Red Baron,49,Boss,0,Full,0,0
+638,Just a Sip,49,Kill,0,Full,0,0
+639,East Meets Worst,49,Kill,0,Full,0,0
+641,"Twinkle, Twinkle Little Trap",49,Kill,0,Full,0,0
+642,The Ceruleum Road,49,Escort,0,Full,0,0
+643,Dark Devices - The Plea,49,Kill,0,Full,644,0
+644,Dark Devices - The Bait,49,Kill,0,Full,645,0
+645,Dark Devices - The Switch,49,Boss,0,Full,646,0
+646,Dark Devices - The End,49,Boss,0,Full,0,0
+647,"Go, Go, Gorgimera",49,MegaBoss,0,Full,0,0
+649,Sister Crustacean,12,Kill,0,Full,0,0
+650,Tender Buttons,12,Boss,0,Full,0,0
+651,Lightning Strikes - Armored Beast,26,Boss,0,Full,0,0
+652,Lightning Strikes - Armored Beast,26,Boss,0,Full,0,0
+653,Lightning Strikes - Dread on Arrival,38,Boss,0,Full,0,0
+654,Lightning Strikes - Dread on Arrival,38,Boss,0,Full,0,0
+655,Lightning Strikes - Anubys Assault,45,Kill,0,Full,0,0
+656,Lightning Strikes - Anubys Assault,45,Kill,0,Full,0,0
+657,Lightning Strikes - On Wings of Chaos,45,Boss,0,Full,0,0
+658,Lightning Strikes - On Wings of Chaos,45,Boss,0,Full,0,0
+660,Brick by Brick,7,Kill,0,Full,0,0
+661,Brick by Stone Brick,7,Boss,0,Full,0,0
+662,Brick by Brick,29,Kill,0,Full,0,0
+663,Brick by Stone Brick,29,Boss,0,Full,0,0
+664,Brick by Brick,29,Kill,0,Full,0,0
+665,Brick by Gold Brick,29,Boss,0,Full,0,0
+666,Brick by Brick,7,Kill,0,Full,0,0
+667,Brick by Stone Brick,7,Boss,0,Full,0,0
+668,Brick by Brick,30,Kill,0,Full,0,0
+669,Brick by Stone Brick,30,Boss,0,Full,0,0
+670,Brick by Brick,30,Kill,0,Full,0,0
+671,Brick by Gold Brick,30,Boss,0,Full,0,0
+672,Brick by Brick,7,Kill,0,Full,0,0
+673,Brick by Stone Brick,7,Boss,0,Full,0,0
+674,Brick by Brick,28,Kill,0,Full,0,0
+675,Brick by Stone Brick,28,Boss,0,Full,0,0
+676,Brick by Brick,28,Kill,0,Full,0,0
+677,Brick by Gold Brick,28,Boss,0,Full,0,0
+679,Embiggened Spriggans,11,Boss,0,Full,680,0
+680,Tower of Power,11,Boss,0,Full,0,0
+681,Embiggened Spriggans,33,Boss,0,Full,682,0
+682,Tower of Power,33,Boss,0,Full,0,0
+683,Embiggened Spriggans,10,Boss,0,Full,684,0
+684,Tower of Power,10,Boss,0,Full,0,0
+685,Embiggened Spriggans,31,Boss,0,Full,686,0
+686,Tower of Power,31,Boss,0,Full,0,0
+687,Embiggened Spriggans,12,Boss,0,Full,688,0
+688,Tower of Power,12,Boss,0,Full,0,0
+689,Embiggened Spriggans,32,Boss,0,Full,690,0
+690,Tower of Power,32,Boss,0,Full,0,0
+691,A Wrench in the Works,42,Boss,0,Full,0,0
+692,What a Boar,49,Boss,0,Full,0,0
+693,Stay Frosty,5,Defence,0,Full,0,0
+694,Stay Frosty,13,Defence,0,Full,0,0
+695,Stay Frosty,5,Defence,0,Full,0,0
+696,Stay Frosty,15,Defence,0,Full,0,0
+697,Stay Frosty,11,Defence,0,Full,0,0
+698,Stay Frosty,6,Defence,0,Full,0,0
+699,Stay Frosty,47,Defence,0,Full,0,0
+700,Making the Rounds,47,Boss,0,Full,0,0
+701,What's Yours Is Mine,32,Kill,0,Full,0,0
+702,Eggcelsior,41,Boss,0,Full,0,0
+703,What's Yours Is Mine,23,Kill,0,Full,0,0
+704,What's Yours Is Mine,23,Kill,0,Full,0,0
+705,Eggcelsior,44,Boss,0,Full,0,0
+706,What's Yours Is Mine,31,Kill,0,Full,0,0
+707,What's Yours Is Mine,14,Kill,0,Full,0,0
+708,What's Yours Is Mine,34,Kill,0,Full,0,0
+709,Eggcelsior,46,Boss,0,Full,0,0
+716,Main Street Spectral Parade,1,Escort,0,None,0,0
+717,Gloria in Eggcelsis,5,Boss,0,Full,0,0
+718,Gloria in Eggcelsis,5,Boss,0,Full,0,0
+719,Gloria in Eggcelsis,5,Boss,0,Full,0,0
+720,Gloria in Eggcelsis,5,Boss,0,Full,0,0
+722,Gloria in Eggcelsis,5,Boss,0,Full,0,0
+725,Wave Good-bye,54,Kill,0,Full,0,0
+726,The Nuts,54,Kill,0,Full,0,0
+727,Glycon Air,54,Boss,0,Full,0,0
+728,Coin Toss,55,Collect,2001788,Full,0,0
+731,Supper Time,54,Kill,0,Full,0,0
+732,Sprite Club,54,Kill,0,Full,0,0
+735,Whole Food,54,Boss,0,Full,0,0
+736,Say it Tulihand,54,Kill,0,Full,737,0
+737,Vouivre Believre,54,Kill,0,Full,0,0
+738,Waugyl Waugyl Waugyl,54,Boss,0,Full,0,0
+740,How to Cane Your Dragon,54,Kill,0,Full,741,0
+741,Aevis Has Left the Building,54,Kill,0,Full,0,0
+742,"Asah, I Came, I Conquered",54,Boss,0,Full,0,0
+744,Waiting for Fjalar to Stall,55,Kill,0,Full,0,0
+746,Don't Know Wyvern,56,Kill,0,Full,0,0
+747,From Dusk Till Gone,55,Boss,0,Full,0,0
+748,Treehouse of the Spirits,55,Kill,0,Full,0,0
+751,As the World Burns,56,Boss,0,Full,0,0
+752,"It's the Moogle, Reinvented",54,Escort,0,Full,0,0
+753,Corporal Pomishment,54,Boss,0,Full,0,0
+754,Infamous,55,Defence,0,Full,0,0
+755,Ain't Misbehaving,54,Boss,0,Full,0,0
+756,Metal Gears Rising,58,Collect,2001796,Full,757,0
+757,Metal Gears Revengeance,58,Kill,0,Full,758,0
+758,Metal Gears Revengeance 2,58,MegaBoss,0,Full,0,0
+759,"Tarantula Hawk, Pro Stinger",58,Kill,0,Full,0,0
+760,Wild Wilde Death,58,Kill,0,Full,0,0
+761,Gets the Red Out,58,Boss,0,Full,0,0
+762,Makes the Very Best...Nests,59,Kill,0,Full,0,0
+763,Olympus Has Pollen,58,Kill,0,Full,0,0
+764,"Feed Me, See More",58,Boss,0,Full,0,0
+766,Pop Goes the Whizzle,58,Defence,0,Full,767,0
+767,Revenge of the Vengeful Revengeance,58,Boss,0,Full,0,0
+768,Ratel and Hum,58,Kill,0,Full,0,0
+769,Dobharch Did It for the Best,58,Boss,0,Full,0,0
+770,Infant Vangob,58,Kill,0,Full,0,0
+771,Morbol Man,59,Kill,0,Full,0,0
+772,On Melancholic Hill,58,Boss,0,Partial,0,0
+773,"Sun Bear, Sun Bear, What Do You Eat",58,Kill,0,Full,0,0
+774,The Bear Up There,58,Boss,0,Full,0,0
+775,The Birds and the Bears,58,Kill,0,Full,0,0
+777,Poroggo Stuck,59,Escort,0,Full,0,0
+778,Frog Days of Summer,59,Kill,0,Full,0,0
+779,Toss 'Em Back,58,Kill,0,Full,0,0
+780,Tome Raider,58,Collect,2001794,Full,0,0
+781,Cockatrice Block,59,Kill,0,Full,0,0
+782,Come Shells or High Water,59,Kill,0,Full,0,0
+783,Toad Alone,59,Boss,0,Partial,0,0
+784,How Do You Feed a Hungry Manlike Monster,59,Boss,0,Full,0,0
+785,Out of the Woodwork,58,Kill,0,Full,0,0
+786,Silkworm,58,Boss,0,Full,0,0
+787,Eye in the Sky,50,Kill,0,Full,0,0
+788,A Dung Deal,50,Kill,0,Full,0,0
+789,Land of the Freeze,50,Kill,0,Full,0,0
+791,Dawn of the Mylodons,50,Kill,0,Full,792,0
+792,Don of the Mylodons,50,Boss,0,Full,0,0
+793,We Fought a Dzu,51,MegaBoss,0,Full,0,0
+794,True Convictions,51,Kill,0,Full,0,0
+795,The Polar Express,51,Kill,0,Full,0,0
+796,Apparent Trap,50,Boss,0,Full,0,0
+798,Abominable Me,51,Kill,0,Full,0,0
+800,Requiem for a Dragon,51,Kill,0,Full,0,0
+801,Follow the Sleet,50,Kill,0,Full,0,0
+802,Sick Pack,51,Kill,0,Partial,0,0
+805,In Command,51,Kill,0,Full,0,0
+807,What You See Is What You Get,50,Boss,0,Full,0,0
+809,Panic Rheum,50,Kill,0,Full,810,0
+810,"Sugar, Sugar",50,Boss,0,Full,0,0
+811,Unsilent Vigil,51,Kill,0,Full,812,0
+812,Pico de Gallows,51,Boss,0,Full,0,0
+813,"Run, Riders, Run",50,Kill,0,Full,0,0
+814,"One Whiskey, One Goat, One Spear",50,Boss,0,Full,0,0
+815,"No Ifs, Ands, or Butts",50,Boss,0,Full,816,0
+816,Null and Void,50,Kill,0,Full,0,0
+817,Dishonored,51,Boss,0,Full,0,0
+818,By the Horns,52,Boss,0,Full,0,0
+819,Ladies First,52,Kill,0,Full,0,0
+820,"Run, Run Away",52,Boss,0,Full,0,0
+821,Birds of a Feather,52,Collect,2001885,Full,0,0
+822,"Glawackus On, Glawackus Off",52,Boss,0,Full,0,0
+823,Bear Apparent,52,Kill,0,Full,0,0
+824,Who's the Moss,52,Defence,0,Full,0,0
+825,The Rite Stuff,52,Kill,0,Full,0,0
+826,Dead Meat,52,Kill,0,Full,0,0
+827,The Whole Truth,52,Kill,0,Full,828,0
+828,Nothing but the Truth,52,Boss,0,Full,0,0
+829,Drone Under,52,Kill,0,Full,0,0
+830,El Miacid,53,Kill,0,Full,0,0
+831,Cerf's Up,53,Kill,0,Full,0,0
+832,Elephant in the Brume,53,Boss,0,Full,0,0
+833,The Migas Touch,52,Boss,0,Full,0,0
+834,Hearing Voices,53,Kill,0,Full,0,0
+835,The Mourning After,53,Boss,0,Full,0,0
+836,Stamp the Yard,53,Kill,0,Full,0,0
+837,Come to My Arms,57,Kill,0,Full,0,0
+838,Special Tarasque Force,53,MegaBoss,0,Full,0,0
+839,Mint Condition,50,Defence,0,Full,0,0
+840,Saved the Nests for Last,50,Kill,0,Full,841,4010
+841,One Turned Over the Cloudkin's Nest,50,Boss,0,Full,0,0
+842,Food Fight,50,Kill,0,Full,0,0
+843,Leech the Sky,50,Kill,0,Full,0,0
+844,Anzu Trois,50,Kill,0,Full,0,0
+845,Youth Must Be Severed,50,Kill,0,Full,0,0
+846,A Long Way Down,50,Boss,0,Full,0,0
+847,This Is How We Gundu,50,Kill,0,Full,0,0
+851,Come to My Window,57,Kill,0,Full,0,0
+852,Obey their Thirst,57,Collect,2001877,Full,0,0
+853,The Fugitive,57,Escort,0,Full,0,0
+854,Zuns on the Run,57,Defence,0,Full,0,0
+855,On Dangerous Ground,57,MegaBoss,0,Full,0,0
+856,Leather and Mace,57,Kill,0,Full,0,0
+857,"Hearts Like Steel, Fists Like Thunder",57,Kill,0,Full,0,0
+860,Bones,57,Boss,0,Full,0,0
+861,Bismarcking Time,59,Boss,0,Full,862,0
+862,Let There Be Acolytes,59,Kill,0,Full,863,0
+863,A Disturbing Lack of Faith,59,Boss,0,Full,0,0
+864,Guano a Mano,59,Kill,0,Full,0,0
+865,The Sound of Madness,59,Boss,0,Full,0,0
+866,You Eat What You Aren't,59,Boss,0,Full,0,0
+867,"A Dream, Perchance to Eat",59,Kill,0,Full,0,0
+868,Darkscale Descendeth,55,MegaBoss,0,Full,869,0
+869,Darkscale Disappeareth,55,MegaBoss,0,Full,870,0
+870,Darkscale Devoureth,55,MegaBoss,0,Full,0,0
+871,Vedrfolnir Devoteth,56,MegaBoss,0,Full,0,0
+872,End of the Rainbow,54,Defence,0,Full,0,0
+873,Rastaban Vibration,55,Kill,0,Full,0,0
+874,Mogicide,54,Boss,0,Full,0,0
+875,Rebel Yehl,59,Boss,0,Full,0,0
+877,Prey Online,59,MegaBoss,0,None,0,0
+878,Prey Online,59,MegaBoss,0,None,0,0
+879,Prey Online,59,MegaBoss,0,None,0,0
+880,A Bug's Death,59,Defence,0,Full,0,0
+881,The Late Escape,59,Kill,0,Full,0,0
+882,Still Ticking,59,Boss,0,Full,0,0
+883,Life of Brain,59,Boss,0,Full,0,0
+884,The Monster Mass,59,Kill,0,Full,0,0
+885,"Pet, Smart",59,Boss,0,Full,0,0
+886,The Root of Evil,59,Kill,0,Partial,0,0
+887,The Mystery Machine,59,Kill,0,Full,0,0
+888,Rampant Speculation,59,Kill,0,Full,0,0
+889,Put the Knives Down,59,Kill,0,Full,0,0
+890,Scared Sylla,59,Boss,0,Full,0,0
+891,Phi Slamma Gamma East,59,Kill,0,Full,0,0
+892,Phi Slamma Gamma West,59,Kill,0,Full,0,0
+893,Phi Slamma Gamma South,59,Kill,0,Full,0,0
+894,Yak it Up,59,Kill,0,Full,0,0
+895,No Greater Goryshche,59,Boss,0,Full,0,0
+897,Harvest Moon,59,Kill,0,Full,0,0
+898,"Out of Sight, Out of Mind",59,Boss,0,Full,0,0
+899,A Room Without Books,59,Kill,0,Full,0,0
+900,Curiously Strong Things,59,Kill,0,Full,0,0
+901,Do Spinners Dream of Electric Rooks,59,Boss,0,Full,0,0
+902,Long Live the Coeurl,52,MegaBoss,0,None,0,0
+903,Coeurls Chase Boys,57,MegaBoss,0,None,0,0
+904,Coeurls Chase Boys,57,MegaBoss,0,None,0,0
+905,Coeurls Chase Boys Chase Coeurls,60,MegaBoss,0,None,0,0
+906,Coeurls Chase Boys Chase Coeurls,60,MegaBoss,0,None,0,0
+907,Coeurls Chase Boys Chase Coeurls,60,MegaBoss,0,None,0,0
+908,Sphenopalatine Ganglioneuralgia,56,Kill,0,Full,0,0
+909,A Stihi Situation,56,Boss,0,Full,0,0
+910,Ware the Maiden Fair,57,Boss,0,Full,0,0
+911,Recurring Bugs,9,Kill,0,Full,0,0
+912,Recurring Bugs,9,Kill,0,Full,0,0
+913,The Sarong Song,30,Boss,0,Full,0,0
+914,The Belle of the Beach,30,Kill,0,Full,0,0
+915,Sparking Up the Wrong Beach,30,Kill,0,Full,0,0
+916,It Came from Beneath the Deep,30,Boss,0,Full,0,0
+917,Life's a Beach,30,Defence,0,Full,0,0
+918,Feeling Groggy,30,Collect,2001895,Full,0,0
+932,Our Favorite Pastime,30,Defence,0,Full,0,0
+933,The Way of the Samurai,31,Defence,0,Full,0,0
+934,Serket Breaker,32,Defence,0,Full,0,0
+935,The Key to Amatsu: Kyori,33,Boss,0,Partial,0,0
+936,"Pounding Rice, Pounding Hearts",5,Collect,2001940,Partial,0,0
+937,"Pounding Rice, Pounding Hearts",13,Collect,2001940,Partial,0,0
+938,"Pounding Rice, Pounding Hearts",5,Collect,2001940,Partial,0,0
+939,"Pounding Rice, Pounding Hearts",15,Collect,2001940,Partial,0,0
+940,"Pounding Rice, Pounding Hearts",11,Collect,2001940,Partial,0,0
+941,"Pounding Rice, Pounding Hearts",6,Collect,2001940,Partial,0,0
+942,Eggstract and Eggspedite,1,Collect,2001972,Full,0,0
+943,Eggstract and Eggspedite,1,Collect,2001972,Full,0,0
+944,Eggstract and Eggspedite,1,Collect,2001972,Full,0,0
+945,In Deep Water,30,Kill,0,Partial,0,0
+946,Trial by Fire,30,Defence,0,Partial,0,0
+959,"Pounding More Mochi, Pounding More Hearts",5,Collect,2001940,Partial,0,0
+960,"Pounding More Mochi, Pounding More Hearts",13,Collect,2001940,Partial,0,0
+963,Excitable Boys,60,Kill,0,Full,0,0
+964,Mad Ventures in Retainer-sitting,60,Defence,0,Full,0,0
+965,Excitable Boys,60,Kill,0,Full,0,0
+966,Prepare for Gory,60,Kill,0,Full,0,0
+967,Prepare for Gory,60,Kill,0,Full,0,0
+968,Secret of the Lost Legend,60,Boss,0,Full,0,0
+969,Excitable Boys,60,Kill,0,Full,0,0
+970,Slaughter of the Lost Legend,60,Kill,0,Full,0,0
+971,Embrace of the Serpent,60,Boss,0,Full,0,0
+972,The Pelican Grief,60,Kill,0,Full,0,0
+973,Excitable Boys,60,Kill,0,Full,0,0
+974,Late Night Torama Queen,60,Kill,0,Full,0,0
+975,Late Night Torama Queen,60,Kill,0,Full,0,0
+976,Mad Ventures in Retainer-sitting,60,Defence,0,Full,0,0
+977,Crawllateral Damage,60,Kill,0,Full,0,0
+978,Excitable Boys,60,Kill,0,Full,0,0
+979,Mad Ventures in Retainer-sitting,60,Defence,0,Full,0,0
+980,I Can Wring a Rainbow,60,Kill,0,Full,0,0
+981,I Can Wring a Rainbow,60,Kill,0,Full,0,0
+982,I Can Wring a Rainbow,60,Kill,0,Full,0,0
+983,Excitable Boys,60,Kill,0,Full,0,0
+984,Excitable Boys,60,Kill,0,Full,0,0
+985,Shard to Get,60,Collect,2002037,Full,0,0
+986,Shard to Get,60,Collect,2002037,Full,0,0
+987,Shard to Get,60,Collect,2002037,Full,0,0
+988,Shard to Get,60,Collect,2002036,Full,0,0
+989,Shard to Get,60,Collect,2002036,Full,0,0
+990,Shard to Get,60,Collect,2002036,Full,0,0
+991,Shard to Get,60,Collect,2002038,Full,0,0
+992,Shard to Get,60,Collect,2002038,Full,0,0
+993,Shard to Get,60,Collect,2002038,Full,0,0
+994,Shard to Get,60,Collect,2002035,Full,0,0
+995,Shard to Get,60,Collect,2002035,Full,0,0
+996,Shard to Get,60,Collect,2002035,Full,0,0
+997,Excitable Boys,60,Kill,0,Full,0,0
+998,How I Met Your Marid,60,Kill,0,Full,0,0
+999,Shard to Get,60,Collect,2002040,Full,0,0
+1000,Shard to Get,60,Collect,2002040,Full,0,0
+1001,Shard to Get,60,Collect,2002040,Full,0,0
+1002,Shard to Get,60,Collect,2002039,Full,0,0
+1003,Shard to Get,60,Collect,2002039,Full,0,0
+1004,Shard to Get,60,Collect,2002039,Full,0,0
+1005,Root of the Problem,60,Kill,0,Full,0,0
+1006,Root of the Problem,60,Kill,0,Full,0,0
+1007,Root of the Problem,60,Kill,0,Full,0,0
+1008,Nice Pirates,60,Defence,0,Full,0,0
+1009,Excitable Boys,60,Kill,0,Full,0,0
+1010,Pretty Flies,60,Kill,0,Full,0,0
+1011,Late-night Snack,60,Kill,0,Full,0,0
+1012,Late-night Snack,60,Kill,0,Full,0,0
+1013,Any Which Way,60,Kill,0,Full,0,0
+1014,Any Which Way,60,Kill,0,Full,0,0
+1015,Nice Pirates,60,Defence,0,Full,0,0
+1016,Who'll Stop the Sovereign,60,Kill,0,Full,0,0
+1017,Who'll Stop the Sovereign,60,Kill,0,Full,0,0
+1018,Who'll Stop the Sovereign,1,0,0,Full,0,0
+1019,Hard of Heren,60,Kill,0,Full,0,0
+1020,Battle Toads,60,Kill,0,Full,0,0
+1021,Battle Toads,60,Kill,0,Full,0,0
+1022,Battle Toads,60,Kill,0,Full,0,0
+1023,Excitable Boys,60,Kill,0,Full,0,0
+1024,Loose Endymions,60,Kill,0,Full,0,0
+1025,Bounty Hunter,60,Kill,0,Full,0,0
+1026,Bounty Hunter,60,Kill,0,Full,0,0
+1027,Lords of the Sting,60,Kill,0,Full,0,0
+1028,Lords of the Sting,60,Kill,0,Full,0,0
+1029,Lords of the Sting,60,Kill,0,Full,0,0
+1030,Lords of the Sting,60,Kill,0,Full,0,0
+1031,Cloudy with a Chance of...Thal's Balls,60,Kill,0,Full,0,0
+1032,Cloudy with a Chance of...Thal's Balls,60,Kill,0,Full,0,0
+1033,Cloudy with a Chance of...Thal's Balls,60,Kill,0,Full,0,0
+1034,Mad Ventures in Retainer-sitting,60,Defence,0,Full,0,0
+1035,Where's the Beef,60,Boss,0,Full,0,0
+1036,Excitable Boys,60,Kill,0,Full,0,0
+1037,Sticking Celphies,60,Kill,0,Full,0,0
+1038,Can You Smell the Blood Tonight,60,Kill,0,Full,0,0
+1039,Can You Smell the Blood Tonight,60,Kill,0,Full,0,0
+1040,Excitable Boys,60,Kill,0,Full,0,0
+1041,Hail to the E,60,Kill,0,Full,0,0
+1042,Lunantishee in the Sky,60,Kill,0,Full,0,0
+1043,Lunantishee in the Sky,60,Kill,0,Full,0,0
+1044,Excitable Boys,60,Kill,0,Full,0,0
+1045,Excitable Boys,60,Kill,0,Full,0,0
+1046,Excitable Boys,60,Kill,0,Full,0,0
+1047,Whiplash,60,Kill,0,Full,0,0
+1048,Whiplash,60,Kill,0,Full,0,0
+1049,Excitable Boys,60,Kill,0,Full,0,0
+1050,Blood Wings,60,Kill,0,Full,0,0
+1051,Excitable Boys,60,Kill,0,Full,0,0
+1052,NOT THE TREES,60,Kill,0,Full,0,0
+1053,NOT THE TREES,60,Kill,0,Full,0,0
+1054,NOT THE TREES,60,Kill,0,Full,0,0
+1055,Excitable Boys,60,Kill,0,Full,0,0
+1056,Tightropen,60,Kill,0,Full,0,0
+1057,I'm the Scatman,60,Kill,0,Full,0,0
+1058,Wild Hunt,60,Kill,0,Full,0,0
+1059,Wild Hunt,60,Kill,0,Full,0,0
+1060,Excitable Boys,60,Kill,0,Full,0,0
+1061,Excitable Boys,60,Kill,0,Full,0,0
+1062,Mad Ventures in Retainer-sitting,60,Defence,0,Full,0,0
+1063,(You're) Killing My Mitelings,60,Kill,0,Full,0,0
+1064,(You're) Killing My Mitelings,60,Kill,0,Full,0,0
+1065,(You're) Killing My Mitelings,60,Kill,0,Full,0,0
+1066,(You're) Killing My Mitelings,60,Kill,0,Full,0,0
+1067,(You're) Having My Mitelings,60,Kill,0,Full,0,0
+1068,Nice Pirates,60,Defence,0,Full,0,0
+1069,Excitable Boys,60,Kill,0,Full,0,0
+1070,(You're Not) Having My Mitelings,60,Kill,0,Full,0,0
+1071,(You're Not) Having My Mitelings,60,Kill,0,Full,0,0
+1072,Root of the Problem,60,Kill,0,Full,0,0
+1073,Good-bye Solo,60,Kill,0,Full,0,0
+1074,Purple Haze,60,Boss,0,Full,0,0
+1075,Excitable Boys,60,Kill,0,Full,0,0
+1076,Fly by Day,60,Kill,0,Full,0,0
+1077,Excitable Boys,60,Kill,0,Full,0,0
+1078,Excitable Boys,60,Kill,0,Full,0,0
+1079,Forest for the Trees,60,Kill,0,Full,0,0
+1080,Forest for the Trees,60,Kill,0,Full,0,0
+1081,Excitable Boys,60,Kill,0,Full,0,0
+1082,Hard of Heren,60,Kill,0,Full,0,0
+1083,Excitable Boys,60,Kill,0,Full,0,0
+1084,The Other White Meat,60,Kill,0,Full,0,0
+1085,Mad Ventures in Retainer-sitting,60,Defence,0,Full,0,0
+1086,Excitable Boys,60,Kill,0,Full,0,0
+1087,Westwhirled,60,Kill,0,Full,0,0
+1088,Am I Blue,60,Kill,0,Full,0,0
+1089,Excitable Boys,60,Kill,0,Full,0,0
+1090,Excitable Boys,60,Kill,0,Full,0,0
+1091,Who's for Dinner,60,Kill,0,Full,0,0
+1092,Who's for Dinner,60,Kill,0,Full,0,0
+1093,Who's for Dinner,60,Kill,0,Full,0,0
+1094,On the Inside,60,Boss,0,Full,0,0
+1095,Blacker than the Foulest Witch,60,Kill,0,Full,0,0
+1096,Blacker than the Foulest Witch,60,Kill,0,Full,0,0
+1097,Blacker than the Foulest Witch,60,Kill,0,Full,0,0
+1098,How I Met Your Marid,60,Kill,0,Full,0,0
+1099,Lunantishee in the Sky,60,Kill,0,Full,0,0
+1100,Pretty Flies,60,Kill,0,Full,0,0
+1103,A Horse Outside,70,MegaBoss,0,None,0,0
+1104,A Horse Outside,70,MegaBoss,0,None,0,0
+1105,A Horse Outside,70,MegaBoss,0,None,0,0
+1106,Foxy Lady,70,MegaBoss,0,None,0,0
+1107,Foxy Lady,70,MegaBoss,0,None,0,0
+1108,Foxy Lady,70,MegaBoss,0,None,0,0
+1109,Outfoxed,67,Kill,0,Full,0,0
+1110,Freedom Flies,64,Kill,0,,0,0
+1111,More to Offer,67,Collect,2002389,,0,0
+1112,Showing the Recruits What For,60,Kill,0,,0,0
+1113,Showing the Officers What For,60,Kill,0,,0,0
+1114,Showing the Commanders What For,60,Boss,0,,0,0
+1115,Death Beckons,60,Kill,0,,0,0
+1116,Unbearable,60,Kill,0,,0,0
+1117,The Secret Life of Plants,61,Kill,0,,0,0
+1118,Dizzy Miss Grizzly,60,Boss,0,,0,0
+1119,Roid Rage,60,Boss,0,,0,0
+1120,Keeping the Peace,60,Escort,0,,0,0
+1121,Keeping More Peace,60,Escort,0,,0,0
+1122,Double Dhara,60,Defence,0,,0,0
+1124,Bold This Way,60,Kill,0,,0,0
+1125,The Morning After,61,Kill,0,,0,0
+1126,Thank You for Not Mossling,60,Kill,0,,0,0
+1127,The Mail Must Get Through,61,Defence,0,,0,0
+1128,Diakka Round,61,Kill,0,,0,0
+1129,The Evil Seed,61,MegaBoss,0,,0,0
+1130,The Spiderweb Chronicles,61,Boss,0,,0,0
+1131,The Antlion's Share,67,Defence,0,,0,0
+1132,Really Don't Keratyrannos,67,Boss,0,,0,0
+1133,Get Sharp,67,Collect,2002234,,0,0
+1134,The Tele-tale Hunt,67,Kill,0,,0,0
+1135,Pop the Trunk,67,Boss,0,,0,0
+1136,A Pain in the Neck,67,Collect,2002235,,0,0
+1137,Flappy Berda,67,Boss,0,,0,0
+1138,Ananta and Her Sisters,67,Boss,0,,0,0
+1139,Raisin' Hell,67,Boss,0,,0,0
+1140,"Yes, This Is Dogs",61,Kill,0,,0,0
+1141,M Bop,67,Kill,0,,0,0
+1142,Wet,62,Boss,0,,0,0
+1143,Clean Bill of Health,62,Kill,0,,0,0
+1144,Quoth the Raven,63,Boss,0,,0,0
+1145,Lay of the Lang,63,Boss,0,,0,0
+1146,Pool Party,62,Kill,0,,0,0
+1147,Soak Up the Sun,62,Boss,0,,0,0
+1148,Agni's Philosophy,62,Boss,0,,0,0
+1149,The Coral High Ground,62,Collect,2002268,,0,0
+1150,The Big Banquet Theory,62,Kill,0,,0,0
+1151,Uncivil Serpents,62,Kill,0,,0,0
+1152,Ray Band,62,Defence,0,,0,0
+1153,"Princess, Princess",62,Boss,0,,0,0
+1154,Kill the Messenger,63,Kill,0,,0,0
+1155,The F-bomb,62,Kill,0,,0,0
+1156,Raise the Red Flag,62,Kill,0,,0,0
+1157,Double Dream Clams,63,Kill,0,,0,0
+1158,There Be Dragonflies,63,Kill,0,,0,0
+1159,Bilge-hold Jin,62,Boss,0,,0,0
+1160,Days of Plunder,62,Defence,0,,0,0
+1161,Forever Younglier,62,Boss,0,,0,0
+1162,Treasure Island,63,Collect,2002269,,0,0
+1163,Sailor Marooned,63,Kill,0,,0,0
+1164,Jumping the Shark,62,Kill,0,,0,0
+1165,Red Cliff,63,Boss,0,,0,0
+1166,Ranging Bull,62,Kill,0,,0,0
+1167,Another One Bites the Dust,62,Boss,0,,0,0
+1168,Turtle Power,62,Defence,0,,0,0
+1170,Crab Mentality,62,Kill,0,,0,0
+1171,Independence Ray,63,Kill,0,,0,0
+1172,Never Say Daimyo,62,MegaBoss,0,,0,0
+1173,A New Leaf,60,Escort,0,,0,0
+1174,Salad Days,60,Kill,0,,0,0
+1175,A Bone to Pick,60,Boss,0,,0,0
+1176,And the Bandits Played On,60,Defence,0,,0,0
+1177,Of Mice and Men,60,Kill,0,,0,0
+1178,Churlish Chapuli,60,Boss,0,,0,0
+1179,Down with the Sickness,60,Kill,0,,0,0
+1180,Child's Plague,60,Kill,0,,0,0
+1181,You Don't Know Jack,61,Boss,0,,0,0
+1182,Winging It,60,Boss,0,,0,0
+1184,Beat Boxes,60,Kill,0,,0,0
+1185,Barbershoppe,61,Boss,0,,0,0
+1186,Fletching Returns,68,Collect,2002267,,0,0
+1187,Days of Fluturini Past,60,Kill,0,,0,0
+1188,Diceman Cometh,61,Boss,0,,0,0
+1189,Stuck in the Muud,61,Kill,0,,0,0
+1190,Eat Big or Go Home,68,Kill,0,,0,0
+1191,"Love Me, Tindalos",68,Boss,0,,0,0
+1193,Home on the Range,68,Kill,0,,0,0
+1194,Rattle and Humbaba,68,MegaBoss,0,,0,0
+1195,Forget-me-not,68,Defence,0,,0,0
+1196,The Day of the Griffins,68,Kill,0,,0,0
+1197,Venting,60,Boss,0,,0,0
+1198,Breakneck,68,Boss,0,,0,0
+1199,Attack of the Groans,60,Kill,0,,0,0
+1200,Moth to a Flame,60,Boss,0,,0,0
+1201,"Resist, Die, Repeat",60,Defence,0,,0,0
+1202,Slaughterwife-five,68,Boss,0,,0,0
+1203,Das Bhoot,60,Kill,0,,0,0
+1204,5-year Energy,68,Boss,0,,0,0
+1205,Mouth for Water,68,Defence,0,,0,0
+1207,The Magitek Is Back,68,60727,0,,0,0
+1208,"A Tisket, A Tasket",64,Defence,0,,0,0
+1209,A Fish to Fry,64,Defence,0,,0,0
+1210,Falling Drown,64,Boss,0,,0,0
+1211,Scared Straightheart,67,Defence,0,,0,0
+1212,Wolves of a Feather,67,Kill,0,,0,0
+1213,Goodwill Hunterling,67,Boss,0,,0,0
+1214,Stay of Eggsecution,64,Kill,0,,0,0
+1215,Get Ready for a Nu Wave,64,Boss,0,,0,0
+1216,Deep Red Sea,64,Kill,0,,0,0
+1217,To Catch a Weasel,64,Boss,0,,0,0
+1218,Footing the Bills,64,Kill,0,,0,0
+1219,Tiger Need,64,Kill,0,,0,0
+1220,Leave the Meters Running,64,Kill,0,,0,0
+1221,The Long and Rhino Road,64,Kill,0,,0,0
+1222,Raze the Red Lantern,64,Kill,0,,0,0
+1223,"Long Hands, Long Fingers",64,Kill,0,,0,0
+1224,Rice and Shine,64,Collect,2002270,,0,0
+1225,In One Basket,64,Collect,2002271,,0,0
+1226,Tsurubebi Snugly,64,Boss,0,,0,0
+1227,Motherly Love,64,Boss,0,,0,0
+1228,Killer Apsaras,64,Boss,0,,0,0
+1229,Linquan Continental,64,Boss,0,,0,0
+1230,"This Is a Da, This Is a Peng",64,Boss,0,,0,0
+1231,Oneblade Wonder,64,Defence,0,,0,0
+1232,Mister Whiskers,67,Kill,0,,0,0
+1233,Crying Wolves,67,Kill,0,,0,0
+1234,Mada's Ilk,67,Kill,0,,0,0
+1235,Tora Tora Tora,67,Kill,0,,0,0
+1236,Ragoh to Extremes,67,Boss,0,,0,0
+1237,Très Bian,67,Boss,0,,0,0
+1238,Curiosity Killed the Catfish,67,MegaBoss,0,,0,0
+1239,The Virgin Homicides,64,Kill,0,,0,0
+1240,Dead to Rites: Kiyofusa,64,Kill,0,,0,0
+1241,Dead to Rites: Koja,64,Kill,0,,0,0
+1242,Don't You Mean Kirata,66,Boss,0,,0,0
+1243,The State of Reunion,65,Boss,0,,0,0
+1244,Cold Comes the Wind,66,Boss,0,,0,0
+1245,A Tall Order,65,Kill,0,,0,0
+1246,Duck and Cover,65,Boss,0,,0,0
+1247,Feel the Noise,66,Boss,0,,0,0
+1248,Get Out the Vochu,66,Boss,0,,0,0
+1249,Buzzkill,66,Kill,0,,0,0
+1250,A Good Day to Die,65,Boss,0,,0,0
+1251,Wooly Boys,65,Defence,0,,0,0
+1252,Razing the Baras,66,Kill,0,,0,0
+1253,The Fangover,66,Kill,0,,0,0
+1254,Hat's Off,66,Boss,0,,0,0
+1255,Rock for Food,65,Kill,0,,0,0
+1256,Purbol Reign,65,Kill,0,,0,0
+1257,Eat You Better,65,Boss,0,,0,0
+1258,Man to Mangas,65,Boss,0,,0,0
+1259,Not Just a Tribute,65,Boss,0,,0,0
+1260,Good Day to Mate,65,Kill,0,,0,0
+1261,Killing Dzo,65,Defence,0,,0,0
+1262,Burn After Evening,66,Kill,0,,0,0
+1263,"Hey, Manzasiri",66,Kill,0,,0,0
+1264,Khan Artist,66,Boss,0,,0,0
+1265,"Hook, Like, and Stinker",65,Boss,0,,0,0
+1266,Fired,66,Kill,0,,0,0
+1267,"Wham, Bam, Thank You, Mammoth",65,MegaBoss,0,,0,0
+1268,More than You Chaochu,65,Kill,0,,0,0
+1269,They Shall Not Want,65,Kill,0,,0,0
+1270,A Walk Through the Valley,65,Escort,0,,0,0
+1271,Live for the Mettle,65,Boss,0,,0,0
+1272,Off Their Yabby,69,Kill,0,,0,0
+1273,Foul Bachelor Frogamander,69,Boss,0,,0,0
+1274,Old Bucket of Boruta,69,Boss,0,,0,0
+1275,Dusk Till Abaddon,69,Kill,0,,0,0
+1276,The Smell That Leeched Her Heart,69,Boss,0,,0,0
+1277,Tall Tale,69,MegaBoss,0,,0,0
+1278,Taking Kurrea Business,69,Boss,0,,0,0
+1279,"Dude, Where's My Karya",69,Boss,0,,0,0
+1280,Sisyphus Cooling,69,Boss,0,,0,0
+1281,Minotaurs on My Mind,69,Boss,0,,0,0
+1282,Dive In,69,Kill,0,,0,0
+1283,Pounding Salt,69,Kill,0,,0,0
+1284,Lalla Land,69,Boss,0,,0,0
+1285,When It Pains It Pours,69,Kill,0,,0,0
+1286,Sob Story,69,Boss,0,,0,0
+1287,Par for the Course,69,Kill,0,,0,0
+1288,Sip When I'm Dead,69,Kill,0,,0,0
+1289,Who's Phoebad,69,Kill,0,,0,0
+1290,Yabby Hunters,69,Boss,0,,0,0
+1291,Enemy Territory,69,Kill,0,,0,0
+1292,One Bad Mother Chukwa,69,Boss,0,,0,0
+1293,Give Bees a Chance,69,Kill,0,,0,0
+1294,About Face,69,Kill,0,,0,0
+1295,No Time Is a Good Time,69,Boss,0,,0,0
+1296,Mazeless Runner,69,Kill,0,,0,0
+1297,Kingsgrave,69,Kill,0,,0,0
+1298,Fate No Morpho,69,Defence,0,,0,0
+1299,I Can Feel the Earth Move,69,Kill,0,,0,0
+1300,To Leech His Own,69,Kill,0,,0,0
+1301,Tellus a Tale,69,Boss,0,,0,0
+1302,"OK, Golem",69,Kill,0,,0,0
+1303,Ancelot's Fear,69,Kill,0,,0,0
+1304,Ancelot's Folly,69,Kill,0,,0,0
+1305,Ancelot's Finale,69,Boss,0,,0,0
+1306,The Dataqi Chronicles: Departures,65,Defence,0,,0,0
+1307,The Dataqi Chronicles: Distractions,65,Defence,0,,0,0
+1308,The Dataqi Chronicles: Duty,65,Collect,2002385,,0,0
+1309,The Dataqi Chronicles: Deprivation,65,Kill,0,,0,0
+1310,The Dataqi Chronicles: Deterrence,65,Defence,0,,0,0
+1311,The Dataqi Chronicles: Desperation,65,Defence,0,,0,0
+1312,The Dataqi Chronicles: Distress,65,Defence,0,,0,0
+1313,The Dataqi Chronicles: Displacement,65,Kill,0,,0,0
+1315,The Dataqi Chronicles: Diplomacy,65,Defence,0,,0,0
+1316,The Dataqi Chronicles: Decimation,65,Defence,0,,0,0
+1318,The Dataqi Chronicles: Divergence,65,Defence,0,,0,0
+1319,The Dataqi Chronicles: Declarations,65,Defence,0,,0,0
+1320,The Dataqi Chronicles: Dominion,65,Defence,0,,0,0

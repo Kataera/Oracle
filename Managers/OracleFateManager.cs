@@ -1,10 +1,18 @@
 ﻿using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+
+using Buddy.Coroutines;
 
 using ff14bot;
 using ff14bot.Helpers;
 using ff14bot.Managers;
+using ff14bot.Settings;
 
+using Newtonsoft.Json;
+
+using Oracle.Data.Fates;
 using Oracle.Helpers;
 using Oracle.Settings;
 
@@ -13,6 +21,8 @@ namespace Oracle.Managers
     internal static class OracleFateManager
     {
         public static uint CurrentFate { get; private set; }
+
+        public static OracleFateData OracleFateData { get; private set; }
 
         public static void ClearFate()
         {
@@ -24,6 +34,31 @@ namespace Oracle.Managers
             }
         }
 
+        private static async Task<OracleFateData> DeserialiseOracleFateData()
+        {
+            var path = GlobalSettings.Instance.BotBasePath + @"\Oracle\Data\Fates\FateData.json";
+
+            if (File.Exists(path))
+            {
+                using (var databaseFileStream = new FileStream(path, FileMode.Open))
+                {
+                    using (var sr = new StreamReader(databaseFileStream))
+                    {
+                        Logger.SendDebugLog("Reading the database file.");
+                        var json = await Coroutine.ExternalTask(sr.ReadToEndAsync());
+
+                        Logger.SendDebugLog("Deserialising the database file.");
+                        var oracleDatabase = await Coroutine.ExternalTask(Task.Factory.StartNew(() => JsonConvert.DeserializeObject<OracleFateData>(json)));
+
+                        return oracleDatabase;
+                    }
+                }
+            }
+
+            Logger.SendErrorLog("Could not find Oracle's FATE database. Oracle will likely not work correctly without it.");
+            return null;
+        }
+
         public static bool IsFateAvailable()
         {
             return FateManager.AllFates.Any(ViableFate);
@@ -32,6 +67,17 @@ namespace Oracle.Managers
         public static bool IsFateSet()
         {
             return CurrentFate != 0;
+        }
+
+        public static async Task<bool> LoadFateData()
+        {
+            if (OracleFateData != null)
+            {
+                return true;
+            }
+
+            OracleFateData = await DeserialiseOracleFateData();
+            return true;
         }
 
         public static void SelectFate()

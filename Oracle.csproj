@@ -155,7 +155,7 @@
     <Compile Include="Behaviour\HookOverrides\SelectPoiType.cs" />
     <Compile Include="Behaviour\BotBase\Handler\CombatHandler.cs" />
     <Compile Include="Behaviour\BotBase\Handler\FateHandler.cs" />
-    <Compile Include="Data\Fates\FateData.cs" />
+    <Compile Include="Data\Fates\OracleFateData.cs" />
     <Compile Include="Enumerations\IdleBehaviour.cs" />
     <Compile Include="Managers\OracleClassManager.cs" />
     <Compile Include="Managers\OracleTargetManager.cs" />

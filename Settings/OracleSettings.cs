@@ -16,6 +16,7 @@ namespace Oracle.Settings
     {
         private static readonly object SyncRoot = new object();
         private static volatile OracleSettings instance;
+        private int actionDelay;
 
         private List<uint> blacklistedFates;
         private List<uint> blacklistedMobs;
@@ -43,6 +44,19 @@ namespace Oracle.Settings
             if (IdleLocations == null)
             {
                 IdleLocations = new Dictionary<uint, Vector3>();
+                Save();
+            }
+        }
+
+        [DefaultValue(1500)]
+        [Setting]
+        public int ActionDelay
+        {
+            get => actionDelay;
+
+            set
+            {
+                actionDelay = value;
                 Save();
             }
         }
