@@ -1,6 +1,6 @@
 namespace Oracle.Providers
 {
-    public class OracleTargetProvider
+    internal class OracleTargetProvider
     {
     }
 }

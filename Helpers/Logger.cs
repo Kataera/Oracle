@@ -108,7 +108,7 @@ namespace Oracle.Helpers
             lastLog = log;
         }
 
-        public static void SendStackTrace(string log)
+        internal static void SendStackTrace(string log)
         {
             log = "[Oracle v" + OracleBot.Version + "] [EXCEPTION]: " + log;
             Logging.WriteToFileSync(LogLevel.Diagnostic, log);

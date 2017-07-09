@@ -50,7 +50,7 @@ namespace Oracle.Settings
 
         [DefaultValue(1500)]
         [Setting]
-        public int ActionDelay
+        internal int ActionDelay
         {
             get => actionDelay;
 
@@ -62,7 +62,7 @@ namespace Oracle.Settings
         }
 
         [Setting]
-        public List<uint> BlacklistedFates
+        internal List<uint> BlacklistedFates
         {
             get => blacklistedFates;
 
@@ -74,7 +74,7 @@ namespace Oracle.Settings
         }
 
         [Setting]
-        public List<uint> BlacklistedMobs
+        internal List<uint> BlacklistedMobs
         {
             get => blacklistedMobs;
 
@@ -87,7 +87,7 @@ namespace Oracle.Settings
 
         [DefaultValue(0)]
         [Setting]
-        public IdleBehaviour IdleBehaviour
+        internal IdleBehaviour IdleBehaviour
         {
             get => idleBehaviour;
 
@@ -99,7 +99,7 @@ namespace Oracle.Settings
         }
 
         [Setting]
-        public Dictionary<uint, Vector3> IdleLocations
+        internal Dictionary<uint, Vector3> IdleLocations
         {
             get => idleLocations;
 
@@ -110,7 +110,7 @@ namespace Oracle.Settings
             }
         }
 
-        public static OracleSettings Instance
+        internal static OracleSettings Instance
         {
             get
             {
@@ -133,7 +133,7 @@ namespace Oracle.Settings
 
         [DefaultValue(4)]
         [Setting]
-        public int MobGrindMaxLevel
+        internal int MobGrindMaxLevel
         {
             get => mobGrindMaxLevel;
 
@@ -146,7 +146,7 @@ namespace Oracle.Settings
 
         [DefaultValue(6)]
         [Setting]
-        public int MobGrindMinLevel
+        internal int MobGrindMinLevel
         {
             get => mobGrindMinLevel;
 
@@ -159,7 +159,7 @@ namespace Oracle.Settings
 
         [DefaultValue(false)]
         [Setting]
-        public bool ShowDebug
+        internal bool ShowDebug
         {
             get => showDebug;
 
@@ -170,7 +170,7 @@ namespace Oracle.Settings
             }
         }
 
-        public static T GetDefaultValue<T>(string propertyName)
+        internal static T GetDefaultValue<T>(string propertyName)
         {
             var property = typeof(OracleSettings).GetProperty(propertyName);
             var attribute = (DefaultValueAttribute) property.GetCustomAttribute(typeof(DefaultValueAttribute));
@@ -178,7 +178,7 @@ namespace Oracle.Settings
             return (T) attribute.Value;
         }
 
-        public void PopulateMobBlacklist()
+        internal void PopulateMobBlacklist()
         {
             /*
              * -------------------------

@@ -1,6 +1,6 @@
 ﻿namespace Oracle.Enumerations
 {
-    public enum IdleBehaviour
+    internal enum IdleBehaviour
     {
         Aetheryte,
         Location,

@@ -110,9 +110,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Fates\FateData.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="version.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -155,8 +152,11 @@
     <Compile Include="Behaviour\HookOverrides\SelectPoiType.cs" />
     <Compile Include="Behaviour\BotBase\Handler\CombatHandler.cs" />
     <Compile Include="Behaviour\BotBase\Handler\FateHandler.cs" />
-    <Compile Include="Data\Fates\OracleFateData.cs" />
+    <Compile Include="Data\OracleFateData.cs" />
+    <Compile Include="Data\Structs\Fate.cs" />
+    <Compile Include="Enumerations\FateType.cs" />
     <Compile Include="Enumerations\IdleBehaviour.cs" />
+    <Compile Include="Enumerations\SupportLevel.cs" />
     <Compile Include="Managers\OracleClassManager.cs" />
     <Compile Include="Managers\OracleTargetManager.cs" />
     <Compile Include="Managers\OracleInventoryManager.cs" />

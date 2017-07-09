@@ -12,7 +12,7 @@ using ff14bot.Settings;
 
 using Newtonsoft.Json;
 
-using Oracle.Data.Fates;
+using Oracle.Data;
 using Oracle.Helpers;
 using Oracle.Settings;
 
