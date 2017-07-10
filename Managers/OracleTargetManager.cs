@@ -87,6 +87,11 @@ namespace Oracle.Managers
             return !Core.Player.InCombat;
         }
 
+        internal static BattleCharacter GetAttacker()
+        {
+            return !GameObjectManager.Attackers.Any() ? null : GameObjectManager.Attackers.FirstOrDefault();
+        }
+
         internal static async Task<BattleCharacter> GetFateTarget()
         {
             if (OracleClassManager.IsOnClassChangeCooldown())

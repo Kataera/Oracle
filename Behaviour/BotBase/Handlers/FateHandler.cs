@@ -22,9 +22,15 @@ namespace Oracle.Behaviour.BotBase.Handlers
                 return true;
             }
 
+            // Move to FATE if we're too far away.
             if (Core.Player.Distance2D(OracleFateManager.GameFateData.Location) > OracleFateManager.GameFateData.Radius * 0.8)
             {
-                await OracleNavigationManager.NavigateTo(OracleFateManager.GameFateData.Location);
+                await OracleNavigationManager.NavigateToFate();
+            }
+
+            if (Poi.Current.Type != PoiType.Fate)
+            {
+                return true;
             }
 
             return true;

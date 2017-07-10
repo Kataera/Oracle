@@ -9,7 +9,7 @@ using Clio.Utilities;
 
 using ff14bot;
 using ff14bot.Behavior;
-using ff14bot.Enums;
+using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Pathing;
@@ -92,27 +92,88 @@ namespace Oracle.Managers
             return navigableAetherytes.FirstOrDefault();
         }
 
-        internal static async Task<MoveResult> NavigateTo(Vector3 location)
+        internal static bool InterruptNavigation(bool interruptOnFateInvalid)
         {
-            var movementParams = new MoveToParameters
+            // Handle combat.
+            if (!Core.Player.IsMounted && Core.Player.InCombat)
             {
-                Location = location,
-                MoveImmediately = true
-            };
+                var attacker = OracleTargetManager.GetAttacker();
+                if (attacker != null)
+                {
+                    Poi.Current = new Poi(attacker, PoiType.Kill);
+                    return true;
+                }
+            }
 
-            return await CommonTasks.MoveTo(movementParams);
+            // Handle death.
+            if (Core.Player.IsDead)
+            {
+                Poi.Clear("Died while moving.");
+                return true;
+            }
+
+            if (interruptOnFateInvalid && OracleFateManager.IsCurrentFateValid())
+            {
+                OracleFateManager.ClearFate();
+                return true;
+            }
+
+            return false;
         }
 
-        internal static async Task<MoveResult> NavigateTo(Vector3 location, ushort mapId)
+        internal static async Task<bool> NavigateToFate()
+        {
+            if (!OracleFateManager.IsCurrentFateValid())
+            {
+                OracleFateManager.ClearFate();
+            }
+
+            var movementParams = new MoveToParameters
+            {
+                Location = OracleFateManager.GameFateData.Location,
+                MoveImmediately = true
+            };
+
+            while (Core.Player.Location.Distance2D(OracleFateManager.GameFateData.Location) > OracleFateManager.GameFateData.Radius * 0.8)
+            {
+                Navigator.MoveTo(movementParams);
+
+                if (InterruptNavigation(true))
+                {
+                    Navigator.Stop();
+                    return true;
+                }
+
+                await Coroutine.Yield();
+            }
+
+            await CommonTasks.StopAndDismount();
+            return true;
+        }
+
+        internal static async Task<bool> NavigateToLocation(Vector3 location, float range)
         {
             var movementParams = new MoveToParameters
             {
                 Location = location,
-                MapId = mapId,
                 MoveImmediately = true
             };
 
-            return await CommonTasks.MoveTo(movementParams);
+            while (Core.Player.Location.Distance2D(location) > range)
+            {
+                Navigator.MoveTo(movementParams);
+
+                if (InterruptNavigation(false))
+                {
+                    Navigator.Stop();
+                    return true;
+                }
+
+                await Coroutine.Yield();
+            }
+
+            await CommonTasks.StopAndDismount();
+            return true;
         }
     }
 }

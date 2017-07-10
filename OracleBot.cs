@@ -73,6 +73,7 @@ namespace Oracle
         private static void ClearBotVariables()
         {
             Poi.Clear("Oracle stopping.");
+            OracleFateManager.FlushOracleFateData();
             OracleFateManager.ClearFate();
         }
 

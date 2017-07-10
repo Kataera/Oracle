@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Buddy.Coroutines;
 
 using ff14bot;
+using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Settings;
@@ -81,6 +82,11 @@ namespace Oracle.Managers
             return null;
         }
 
+        internal static void FlushOracleFateData()
+        {
+            OracleFateData = null;
+        }
+
         internal static bool IsCurrentFateValid()
         {
             if (CurrentFateId == 0)
@@ -144,7 +150,7 @@ namespace Oracle.Managers
                 return false;
             }
 
-            Logger.SendLog($"Successfully loaded data on {OracleFateData.OracleFateDictionary.Count} fates.");
+            Logger.SendLog($"Successfully loaded data on fates.");
             return true;
         }
 
@@ -175,6 +181,21 @@ namespace Oracle.Managers
         private static bool ViableFate(FateData fate)
         {
             if (OracleSettings.Instance.BlacklistedFates.Contains(fate.Id))
+            {
+                return false;
+            }
+
+            if (!fate.IsValid && fate.Status != FateStatus.PREPARING)
+            {
+                return false;
+            }
+
+            if (fate.Status == FateStatus.COMPLETE)
+            {
+                return false;
+            }
+
+            if (fate.Status == FateStatus.NOTACTIVE)
             {
                 return false;
             }
