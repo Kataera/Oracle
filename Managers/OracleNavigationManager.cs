@@ -112,7 +112,7 @@ namespace Oracle.Managers
                 return true;
             }
 
-            if (interruptOnFateInvalid && OracleFateManager.IsCurrentFateValid())
+            if (interruptOnFateInvalid && !OracleFateManager.IsCurrentFateValid())
             {
                 OracleFateManager.ClearFate();
                 return true;
