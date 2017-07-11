@@ -17,7 +17,8 @@ namespace Oracle.Managers
 {
     internal class OracleTargetManager
     {
-        private const uint ForlornMaiden = 6737;
+        private const uint ForlornMaidenNpcId = 6737;
+        private const uint TheForlornNpcId = 6738;
 
         private static Stopwatch targetThrottleTimer;
 
@@ -137,10 +138,16 @@ namespace Oracle.Managers
             var viableTargets = GetViableTargets(navResults);
             targetThrottleTimer = Stopwatch.StartNew();
 
-            if (OracleSettings.Instance.PrioritiseForlornMaiden && viableTargets.Keys.Any(bc => bc.NpcId == ForlornMaiden))
+            if (OracleSettings.Instance.PrioritiseTheForlorn && viableTargets.Keys.Any(bc => bc.NpcId == TheForlornNpcId))
             {
-                Logger.SendLog("Detected a Forlorn Maiden.");
-                return viableTargets.Keys.FirstOrDefault(bc => bc.NpcId == ForlornMaiden);
+                Logger.SendLog("Detected The Forlorn, prioritising it.");
+                return viableTargets.Keys.FirstOrDefault(bc => bc.NpcId == TheForlornNpcId);
+            }
+
+            if (OracleSettings.Instance.PrioritiseForlornMaiden && viableTargets.Keys.Any(bc => bc.NpcId == ForlornMaidenNpcId))
+            {
+                Logger.SendLog("Detected a Forlorn Maiden, prioritising it.");
+                return viableTargets.Keys.FirstOrDefault(bc => bc.NpcId == ForlornMaidenNpcId);
             }
 
             return viableTargets.OrderBy(order => order.Value).FirstOrDefault().Key;
