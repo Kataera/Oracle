@@ -47,7 +47,7 @@ namespace Oracle.Managers
             Logger.SendLog("Attempting to hand over " + turnInBagSlot.Count + " of the item '" + turnInBagSlot.Name + "'.");
             turnInBagSlot.Handover();
 
-            await Coroutine.Sleep(500);
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
             if (!Request.IsOpen || !Request.HandOverButtonClickable)
             {
                 Logger.SendErrorLog("Hand over failed.");
@@ -58,7 +58,7 @@ namespace Oracle.Managers
 
             Logger.SendDebugLog("Pressing 'Hand Over' button.");
             Request.HandOver();
-            await Coroutine.Sleep(500);
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
 
             return true;
         }
@@ -89,7 +89,7 @@ namespace Oracle.Managers
                 await Coroutine.Yield();
             }
 
-            await Coroutine.Sleep(500);
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
             return timeout.Elapsed <= TimeSpan.FromSeconds(10);
         }
 
@@ -99,25 +99,25 @@ namespace Oracle.Managers
             await OracleNavigationManager.NavigateToLocation(npc.Location, 2f);
 
             // Interact with the NPC.
-            await Coroutine.Sleep(500);
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
             npc.Interact();
-            await Coroutine.Sleep(500);
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
 
             while (Talk.DialogOpen)
             {
                 await SkipDialogue();
-                await Coroutine.Sleep(500);
+                await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
                 await Coroutine.Yield();
             }
 
             // Click yes.
             SelectYesno.ClickYes();
-            await Coroutine.Sleep(500);
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
 
             while (Talk.DialogOpen)
             {
                 await SkipDialogue();
-                await Coroutine.Sleep(500);
+                await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
                 await Coroutine.Yield();
             }
         }
@@ -152,6 +152,7 @@ namespace Oracle.Managers
 
                 if (OracleFateManager.GameFateData.Status == FateStatus.ACTIVE)
                 {
+                    Logger.SendLog($"Sucessfully started the FATE \"{OracleFateManager.GameFateData.Name}\".");
                     return true;
                 }
             }
@@ -174,6 +175,7 @@ namespace Oracle.Managers
 
                     if (OracleFateManager.GameFateData.Status == FateStatus.ACTIVE)
                     {
+                        Logger.SendLog($"Sucessfully started the FATE \"{OracleFateManager.GameFateData.Name}\".");
                         break;
                     }
                 }

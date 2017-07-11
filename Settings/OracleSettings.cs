@@ -47,6 +47,7 @@ namespace Oracle.Settings
         private int restockGreensAmount;
         private int restockGreensMin;
         private bool showDebug;
+        private bool startInactiveFates;
 
         private OracleSettings() : base(Path.Combine(SettingsPath, @"Oracle\OracleSettings.json"))
         {
@@ -111,7 +112,6 @@ namespace Oracle.Settings
                 Save();
             }
         }
-
 
         [DefaultValue(0)]
         [Setting]
@@ -452,6 +452,19 @@ namespace Oracle.Settings
             set
             {
                 showDebug = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool StartInactiveFates
+        {
+            get => startInactiveFates;
+
+            set
+            {
+                startInactiveFates = value;
                 Save();
             }
         }

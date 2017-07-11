@@ -35,7 +35,7 @@ namespace Oracle.Behaviour.BotBase.Handlers
             }
 
             // If our FATE is inactive, let's activate it.
-            if (OracleFateManager.GameFateData.Status == FateStatus.PREPARING)
+            if (OracleSettings.Instance.StartInactiveFates && OracleFateManager.GameFateData.Status == FateStatus.PREPARING)
             {
                 await OracleDialogueManager.StartInactiveFate();
                 return true;

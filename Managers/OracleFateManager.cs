@@ -209,6 +209,11 @@ namespace Oracle.Managers
                 return false;
             }
 
+            if (!OracleSettings.Instance.StartInactiveFates && fate.Status == FateStatus.PREPARING)
+            {
+                return false;
+            }
+
             if (fate.Status == FateStatus.COMPLETE)
             {
                 return false;

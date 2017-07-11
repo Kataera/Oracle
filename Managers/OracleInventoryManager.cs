@@ -210,8 +210,6 @@ namespace Oracle.Managers
 
         internal static bool ShouldRestockGreens()
         {
-            const uint gysahlGreensItemId = 4868;
-
             if (Core.Player.InCombat)
             {
                 return false;
@@ -222,7 +220,7 @@ namespace Oracle.Managers
                 return false;
             }
 
-            return GetItemAmount(gysahlGreensItemId) < OracleSettings.Instance.RestockGreensMin;
+            return GetItemAmount(GysahlGreenItemId) < OracleSettings.Instance.RestockGreensMin;
         }
     }
 }
