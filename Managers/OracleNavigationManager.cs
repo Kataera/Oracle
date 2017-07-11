@@ -175,5 +175,15 @@ namespace Oracle.Managers
             await CommonTasks.StopAndDismount();
             return true;
         }
+
+        public static Task TeleportToAetheryte(uint aetheryteId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static Task TeleportToClosestCity()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

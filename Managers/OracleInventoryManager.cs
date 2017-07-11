@@ -1,13 +1,20 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Buddy.Coroutines;
 
 using Clio.Utilities;
 
+using ff14bot;
+using ff14bot.Enums;
 using ff14bot.Managers;
+using ff14bot.NeoProfiles;
 using ff14bot.RemoteWindows;
 
+using Oracle.Enumerations;
+using Oracle.Enumerations.TaskResults;
+using Oracle.Helpers;
 using Oracle.Settings;
 
 namespace Oracle.Managers
@@ -30,10 +37,115 @@ namespace Oracle.Managers
         private static readonly Vector3 RoarichLocation = new Vector3(-31.04098f, 9f, -85.05112f);
         private static readonly Vector3 JunkmongerLocation = new Vector3(-2.882056f, 206.4994f, 54.65067f);
 
-        /*
+        internal static async Task<BuyItemResult> BuyItem(uint itemId, uint itemAmount)
+        {
+            if (!Shop.Open)
+            {
+                return BuyItemResult.ShopNotOpen;
+            }
+
+            if (!Shop.Items.Any(item => item.ItemId == itemId))
+            {
+                return BuyItemResult.ItemNotFound;
+            }
+
+            if (itemAmount > 99)
+            {
+                return BuyItemResult.TooManyItemsRequested;
+            }
+
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
+            Shop.Purchase(itemId, itemAmount);
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
+            SelectYesno.ClickYes();
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
+            Shop.Close();
+
+            return GetItemAmount(itemId) >= itemAmount ? BuyItemResult.Success : BuyItemResult.Failure;
+        }
+
+        internal static async Task<EquipItemResult> EquipItem(uint itemId, EquipmentSlot slot)
+        {
+            var equipmentBagSlot = GetEquipmentSlotBagSlot(slot);
+            if (equipmentBagSlot == null)
+            {
+                return EquipItemResult.Failure;
+            }
+
+            if (equipmentBagSlot.RawItemId == itemId)
+            {
+                return EquipItemResult.Success;
+            }
+
+            if (!ConditionParser.HasItem(itemId))
+            {
+                return EquipItemResult.ItemNotFound;
+            }
+
+            var itemBagSlot = GetBagSlotByItemId(itemId);
+            if (itemBagSlot == null)
+            {
+                return EquipItemResult.BagSlotNotFound;
+            }
+
+            Logger.SendDebugLog(itemBagSlot.EnglishName + " is in bag: " + itemBagSlot.BagId + ", slot: " + itemBagSlot.Slot + ".");
+            itemBagSlot.Move(equipmentBagSlot);
+            return equipmentBagSlot.RawItemId == itemId ? EquipItemResult.Success : EquipItemResult.Failure;
+        }
+
+        internal static BagSlot GetBagSlotByItemId(uint itemId)
+        {
+            return InventoryManager.FilledInventoryAndArmory.FirstOrDefault(bs => bs.RawItemId == itemId);
+        }
+
+        internal static BagSlot GetBagSlotFromItemId(uint itemId)
+        {
+            BagSlot bagSlot = null;
+            foreach (var bagslot in InventoryManager.FilledSlots)
+            {
+                if (bagslot.TrueItemId == itemId)
+                {
+                    bagSlot = bagslot;
+                }
+            }
+
+            return bagSlot;
+        }
+
+        internal static BagSlot GetEquipmentSlotBagSlot(EquipmentSlot slot)
+        {
+            return InventoryManager.EquippedItems.FirstOrDefault(bs => bs.Slot == (ushort) slot);
+        }
+
+        internal static uint GetItemAmount(uint itemId)
+        {
+            return GetBagSlotByItemId(itemId) == null ? 0 : GetBagSlotByItemId(itemId).Item.ItemCount();
+        }
+
+        internal static async Task<bool> OpenShopWindow(uint npcId)
+        {
+            if (WorldManager.ZoneId == IdyllshireZoneId)
+            {
+                return true;
+            }
+
+            var npc = GameObjectManager.GetObjectByNPCId(npcId);
+            if (npc == null)
+            {
+                return false;
+            }
+
+            npc.Interact();
+            await Coroutine.Sleep(TimeSpan.FromMilliseconds(500));
+            SelectIconString.ClickSlot(0);
+            await Coroutine.Wait(TimeSpan.FromMilliseconds(500), () => Shop.Open);
+
+            return Shop.Open;
+        }
+
         internal static async Task<bool> RestockGyshalGreens()
         {
-            if (!OracleInventoryManager.ShouldRestockGreens())
+            if (!ShouldRestockGreens())
             {
                 return true;
             }
@@ -70,7 +182,7 @@ namespace Oracle.Managers
             Logger.SendDebugLog("Going to NPC " + vendorNpcId + " at " + vendorLocation + ".");
             if (Core.Player.Distance(vendorLocation) > 4f)
             {
-                await OracleNavigationManager.NavigateTo(vendorLocation, 2f, false);
+                await OracleNavigationManager.NavigateToLocation(vendorLocation, 2f);
             }
 
             var openCorrectShopResult = await OpenShopWindow(vendorNpcId);
@@ -79,45 +191,38 @@ namespace Oracle.Managers
                 return false;
             }
 
-            var amountToBuy = Convert.ToUInt32(MainSettings.Instance.ChocoboGreensRestockAmount) - OracleInventoryManager.GetItemAmount(GysahlGreenItemId);
-            var buyItemResult = await OracleInventoryManager.BuyItem(GysahlGreenItemId, amountToBuy);
+            var amountToBuy = Convert.ToUInt32(OracleSettings.Instance.RestockGreensAmount) - GetItemAmount(GysahlGreenItemId);
+            var buyItemResult = await BuyItem(GysahlGreenItemId, amountToBuy);
 
             if (buyItemResult != BuyItemResult.Success)
             {
                 return false;
             }
 
-            if (ModeSettings.Instance.OracleOperationMode != OracleOperationMode.LevelMode
-                && ModeSettings.Instance.OracleOperationMode != OracleOperationMode.MultiLevelMode)
+            if (OracleSettings.Instance.OracleFateMode != OracleFateMode.LevelMode
+                && OracleSettings.Instance.OracleFateMode != OracleFateMode.MultiLevelMode)
             {
                 await OracleNavigationManager.TeleportToAetheryte(WorldManager.GetZoneForAetheryteId(originZoneId));
             }
 
-            return OracleInventoryManager.GetItemAmount(GysahlGreenItemId) >= MainSettings.Instance.ChocoboGreensRestockAmount
-                       ? RestockGysahlGreensResult.Success
-                       : RestockGysahlGreensResult.Failure;
+            return GetItemAmount(GysahlGreenItemId) >= OracleSettings.Instance.RestockGreensAmount;
         }
-        */
 
-        private static async Task<bool> OpenShopWindow(uint npcId)
+        internal static bool ShouldRestockGreens()
         {
-            if (WorldManager.ZoneId == IdyllshireZoneId)
-            {
-                return true;
-            }
+            const uint gysahlGreensItemId = 4868;
 
-            var npc = GameObjectManager.GetObjectByNPCId(npcId);
-            if (npc == null)
+            if (Core.Player.InCombat)
             {
                 return false;
             }
 
-            npc.Interact();
-            await Coroutine.Sleep(TimeSpan.FromMilliseconds(OracleSettings.Instance.ActionDelay));
-            SelectIconString.ClickSlot(0);
-            await Coroutine.Wait(TimeSpan.FromMilliseconds(OracleSettings.Instance.ActionDelay), () => Shop.Open);
+            if (!OracleSettings.Instance.RestockGreens)
+            {
+                return false;
+            }
 
-            return Shop.Open;
+            return GetItemAmount(gysahlGreensItemId) < OracleSettings.Instance.RestockGreensMin;
         }
     }
 }

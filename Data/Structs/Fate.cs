@@ -22,5 +22,7 @@ namespace Oracle.Data.Structs
         public SupportLevel SupportLevel { get; set; }
 
         public FateType Type { get; set; }
+
+        public uint StartNpc { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 
 using ff14bot;
+using ff14bot.Enums;
 using ff14bot.Helpers;
 
 using Oracle.Behaviour.BotBase.Modes;
@@ -30,11 +31,13 @@ namespace Oracle.Behaviour.BotBase.Handlers
             if (Core.Player.Distance2D(OracleFateManager.GameFateData.Location) > OracleFateManager.GameFateData.Radius * 0.8)
             {
                 await OracleNavigationManager.NavigateToCurrentFate();
+                return true;
             }
 
-            // Navigation can clear our FATE if it expires, check to see if it's still active.
-            if (Poi.Current.Type != PoiType.Fate)
+            // If our FATE is inactive, let's activate it.
+            if (OracleFateManager.GameFateData.Status == FateStatus.PREPARING)
             {
+                await OracleDialogueManager.StartInactiveFate();
                 return true;
             }
 

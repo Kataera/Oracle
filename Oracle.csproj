@@ -158,7 +158,9 @@
     <Compile Include="Enumerations\IdleBehaviour.cs" />
     <Compile Include="Enumerations\OracleFateMode.cs" />
     <Compile Include="Enumerations\SupportLevel.cs" />
+    <Compile Include="Enumerations\TaskResults\BuyItemResult.cs" />
     <Compile Include="Enumerations\TaskResults\ClassChangeResult.cs" />
+    <Compile Include="Enumerations\TaskResults\EquipItemResult.cs" />
     <Compile Include="Managers\OracleClassManager.cs" />
     <Compile Include="Managers\OracleDialogueManager.cs" />
     <Compile Include="Managers\OracleTargetManager.cs" />

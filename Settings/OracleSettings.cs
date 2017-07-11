@@ -18,7 +18,6 @@ namespace Oracle.Settings
         private static readonly object SyncRoot = new object();
         private static volatile OracleSettings instance;
 
-        private int actionDelay;
         private List<uint> blacklistedFates;
         private List<uint> blacklistedMobs;
         private Dictionary<uint, ClassJobType> classGearsets;
@@ -44,6 +43,9 @@ namespace Oracle.Settings
         private OracleFateMode oracleFateMode;
         private bool prioritiseForlornMaiden;
         private bool prioritiseTheForlorn;
+        private bool restockGreens;
+        private int restockGreensAmount;
+        private int restockGreensMin;
         private bool showDebug;
 
         private OracleSettings() : base(Path.Combine(SettingsPath, @"Oracle\OracleSettings.json"))
@@ -70,19 +72,6 @@ namespace Oracle.Settings
             if (IdleLocations == null)
             {
                 IdleLocations = new Dictionary<uint, Vector3>();
-                Save();
-            }
-        }
-
-        [DefaultValue(1500)]
-        [Setting]
-        internal int ActionDelay
-        {
-            get => actionDelay;
-
-            set
-            {
-                actionDelay = value;
                 Save();
             }
         }
@@ -122,6 +111,7 @@ namespace Oracle.Settings
                 Save();
             }
         }
+
 
         [DefaultValue(0)]
         [Setting]
@@ -337,7 +327,7 @@ namespace Oracle.Settings
             }
         }
 
-        [DefaultValue(60)]
+        [DefaultValue(70)]
         [Setting]
         public int MaxLevel
         {
@@ -410,6 +400,45 @@ namespace Oracle.Settings
             set
             {
                 prioritiseTheForlorn = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool RestockGreens
+        {
+            get => restockGreens;
+
+            set
+            {
+                restockGreens = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(99)]
+        [Setting]
+        public int RestockGreensAmount
+        {
+            get => restockGreensAmount;
+
+            set
+            {
+                restockGreensAmount = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(5)]
+        [Setting]
+        public int RestockGreensMin
+        {
+            get => restockGreensMin;
+
+            set
+            {
+                restockGreensMin = value;
                 Save();
             }
         }
