@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using ff14bot;
 using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
+using ff14bot.ServiceClient;
 using ff14bot.Settings;
 
 using Newtonsoft.Json;
@@ -100,7 +102,7 @@ namespace Oracle.Managers
                 return false;
             }
 
-            if (!fateData.IsValid)
+            if (!fateData.IsValid && fateData.Status != FateStatus.PREPARING)
             {
                 return false;
             }
@@ -154,15 +156,32 @@ namespace Oracle.Managers
             return true;
         }
 
-        internal static void SelectFate()
+        internal static async Task SelectFate()
         {
             Logger.SendLog("Selecting a FATE.");
             var fates = FateManager.AllFates.Where(ViableFate).OrderBy(f => Core.Player.Location.Distance2D(f.Location));
 
-            if (fates.Any())
+            var navRequest = fates.Select(fate => new CanFullyNavigateTarget
+            {
+                Id = fate.Id,
+                Position = fate.Location
+            }).ToList();
+            var navResults = await OracleNavigationManager.AreLocationsNavigable(navRequest);
+
+            var viableFates = fates.ToList();
+            foreach (var fate in fates)
+            {
+                var result = navResults.Find(r => r.Id == fate.Id);
+                if (result != null && result.CanNavigate == 0)
+                {
+                    viableFates.Remove(fate);
+                }
+            }
+
+            if (viableFates.Any())
             {
                 Logger.SendDebugLog("FATEs found:");
-                foreach (var fate in fates)
+                foreach (var fate in viableFates)
                 {
                     var fateDistance = Core.Player.Location.Distance2D(fate.Location).ToString(CultureInfo.InvariantCulture);
                     Logger.SendDebugLog($"\"{fate.Name}\" found at {fateDistance} yalms away.");
@@ -170,7 +189,7 @@ namespace Oracle.Managers
             }
 
             // Select closest FATE.
-            var potentialFate = fates.FirstOrDefault();
+            var potentialFate = viableFates.FirstOrDefault();
             if (potentialFate != null)
             {
                 Logger.SendLog($"Selected \"{potentialFate.Name}\" as the next FATE.");
@@ -196,6 +215,12 @@ namespace Oracle.Managers
             }
 
             if (fate.Status == FateStatus.NOTACTIVE)
+            {
+                return false;
+            }
+
+            // Is FATE finished?
+            if (Math.Abs(fate.Progress - 100f) < 0.1)
             {
                 return false;
             }

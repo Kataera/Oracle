@@ -17,11 +17,26 @@ namespace Oracle.Managers
 {
     internal class OracleTargetManager
     {
+        private const uint ForlornMaiden = 6737;
+
         private static Stopwatch targetThrottleTimer;
 
-        public static bool AnyViableFateTargets()
+        public static async Task<bool> AnyViableFateTargets()
         {
-            throw new NotImplementedException();
+            var targets = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(FateMobFilter).OrderBy(bc => bc.Distance()).Take(8).ToList();
+            if (!targets.Any())
+            {
+                return false;
+            }
+
+            var navRequest = targets.Select(target => new CanFullyNavigateTarget
+            {
+                Id = target.ObjectId,
+                Position = target.Location
+            }).ToList();
+            var navResults = await OracleNavigationManager.AreLocationsNavigable(navRequest);
+
+            return navResults.Any(result => result.CanNavigate == 1);
         }
 
         internal static bool FateMobFilter(BattleCharacter battleCharacter)
@@ -89,7 +104,8 @@ namespace Oracle.Managers
 
         internal static BattleCharacter GetAttacker()
         {
-            return !GameObjectManager.Attackers.Any() ? null : GameObjectManager.Attackers.FirstOrDefault();
+            var attackers = GameObjectManager.Attackers;
+            return attackers.All(a => a.IsFateGone || a.IsDead) ? null : attackers.FirstOrDefault(a => !a.IsFateGone && !a.IsDead);
         }
 
         internal static async Task<BattleCharacter> GetFateTarget()
@@ -120,6 +136,13 @@ namespace Oracle.Managers
 
             var viableTargets = GetViableTargets(navResults);
             targetThrottleTimer = Stopwatch.StartNew();
+
+            if (OracleSettings.Instance.PrioritiseForlornMaiden && viableTargets.Keys.Any(bc => bc.NpcId == ForlornMaiden))
+            {
+                Logger.SendLog("Detected a Forlorn Maiden.");
+                return viableTargets.Keys.FirstOrDefault(bc => bc.NpcId == ForlornMaiden);
+            }
+
             return viableTargets.OrderBy(order => order.Value).FirstOrDefault().Key;
         }
 

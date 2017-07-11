@@ -24,7 +24,7 @@ namespace Oracle.Behaviour.HookOverrides
                     return false;
                 }
 
-                OracleFateManager.SelectFate();
+                await OracleFateManager.SelectFate();
             }
 
             if (Poi.Current.Type == PoiType.None || Poi.Current.Type == PoiType.Wait)

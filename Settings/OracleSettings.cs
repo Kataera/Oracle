@@ -42,6 +42,7 @@ namespace Oracle.Settings
         private int mobGrindMaxLevel;
         private int mobGrindMinLevel;
         private OracleFateMode oracleFateMode;
+        private bool prioritiseForlornMaiden;
         private bool showDebug;
 
         private OracleSettings() : base(Path.Combine(SettingsPath, @"Oracle\OracleSettings.json"))
@@ -382,6 +383,19 @@ namespace Oracle.Settings
             set
             {
                 oracleFateMode = value;
+                Save();
+            }
+        }
+
+        [DefaultValue(true)]
+        [Setting]
+        public bool PrioritiseForlornMaiden
+        {
+            get => prioritiseForlornMaiden;
+
+            set
+            {
+                prioritiseForlornMaiden = value;
                 Save();
             }
         }

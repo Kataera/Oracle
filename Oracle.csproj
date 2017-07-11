@@ -160,6 +160,7 @@
     <Compile Include="Enumerations\SupportLevel.cs" />
     <Compile Include="Enumerations\TaskResults\ClassChangeResult.cs" />
     <Compile Include="Managers\OracleClassManager.cs" />
+    <Compile Include="Managers\OracleDialogueManager.cs" />
     <Compile Include="Managers\OracleTargetManager.cs" />
     <Compile Include="Managers\OracleInventoryManager.cs" />
     <Compile Include="Settings\Authentication.cs" />

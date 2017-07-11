@@ -18,7 +18,7 @@ namespace Oracle.Behaviour.BotBase.Fates
                 return true;
             }
 
-            if (OracleFateManager.GameFateData.Status != FateStatus.NOTACTIVE && OracleTargetManager.AnyViableFateTargets())
+            if (OracleFateManager.GameFateData.Status != FateStatus.NOTACTIVE && await OracleTargetManager.AnyViableFateTargets())
             {
                 var target = await OracleTargetManager.GetFateTarget();
                 if (target != null)

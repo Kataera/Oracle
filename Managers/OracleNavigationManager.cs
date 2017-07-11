@@ -121,7 +121,7 @@ namespace Oracle.Managers
             return false;
         }
 
-        internal static async Task<bool> NavigateToFate()
+        internal static async Task<bool> NavigateToCurrentFate()
         {
             if (!OracleFateManager.IsCurrentFateValid())
             {
